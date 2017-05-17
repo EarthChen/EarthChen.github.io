@@ -5,11 +5,11 @@
     
   <url>
     <loc>http://earthchen.cn/2017/05/17/ubuntu_open_port/</loc>
-    <lastmod>2017-05-17T06:24:13.000Z</lastmod>
+    <lastmod>2017-05-17T07:18:10.000Z</lastmod>
     <data>
         <display>
         <title>ubuntu开放指定端口</title>
-        <pubTime>2017-05-17T06:24:13.173Z</pubTime>
+        <pubTime>2017-05-17T07:18:10.917Z</pubTime>
         
         <tag>Linux</tag>
          
@@ -443,9 +443,9 @@
         <title>跨域请求的解决方案</title>
         <pubTime>2017-05-17T06:03:09.838Z</pubTime>
         
-        <tag>解决方案</tag>
-         
         <tag>Nginx</tag>
+         
+        <tag>解决方案</tag>
          
         <tag>AJAX</tag>
          
