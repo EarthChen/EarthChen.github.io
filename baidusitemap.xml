@@ -4,12 +4,12 @@
 
     
   <url>
-    <loc>http://earthchen.cn/2017/05/17/ubuntu_supervisor/</loc>
-    <lastmod>2017-05-17T05:55:20.957Z</lastmod>
+    <loc>http://earthchen.cn/2017/05/17/ubuntu_open_port/</loc>
+    <lastmod>2017-05-17T06:24:13.000Z</lastmod>
     <data>
         <display>
-        <title>ubuntu下的进程控制系统————Supervisor</title>
-        <pubTime>2017-05-17T06:03:09.850Z</pubTime>
+        <title>ubuntu开放指定端口</title>
+        <pubTime>2017-05-17T06:24:13.173Z</pubTime>
         
         <tag>Linux</tag>
          
@@ -24,15 +24,20 @@
 
     
   <url>
-    <loc>http://earthchen.cn/2017/05/17/ubuntu_open_port/</loc>
-    <lastmod>2017-05-16T11:30:26.619Z</lastmod>
+    <loc>http://earthchen.cn/2017/05/17/ubuntu_supervisor/</loc>
+    <lastmod>2017-05-17T05:55:20.957Z</lastmod>
     <data>
         <display>
-        <title></title>
+        <title>ubuntu下的进程控制系统————Supervisor</title>
         <pubTime>2017-05-17T06:03:09.850Z</pubTime>
         
+        <tag>Linux</tag>
+         
          
            
+             
+              <breadCrumb title="编程" url="http://earthchen.cn/categories/%E7%BC%96%E7%A8%8B/"/>
+          
         </display>
     </data>
     </url>
