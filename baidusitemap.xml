@@ -4,6 +4,46 @@
 
     
   <url>
+    <loc>http://earthchen.cn/2017/05/26/%E8%B5%84%E6%BA%90%E6%94%B6%E9%9B%86/</loc>
+    <lastmod>2017-05-26T09:41:08.366Z</lastmod>
+    <data>
+        <display>
+        <title>ubuntu在双系统下开机卡死或关机卡死的解决办法</title>
+        <pubTime>2017-05-26T09:41:08.366Z</pubTime>
+        
+        <tag>资源</tag>
+         
+         
+           
+             
+              <breadCrumb title="随笔" url="http://earthchen.cn/categories/%E9%9A%8F%E7%AC%94/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://earthchen.cn/2017/05/26/ubuntu%E5%AE%89%E8%A3%85%E5%9C%A8%E5%8F%8C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0%E6%9C%AC%E4%B8%8B%E5%BC%80%E6%9C%BA%E6%88%96%E5%85%B3%E6%9C%BA%E5%8D%A1%E6%AD%BB.1/</loc>
+    <lastmod>2017-05-26T09:32:09.867Z</lastmod>
+    <data>
+        <display>
+        <title>ubuntu在双系统下开机卡死或关机卡死的解决办法</title>
+        <pubTime>2017-05-26T09:32:09.867Z</pubTime>
+        
+        <tag>解决方案</tag>
+         
+         
+           
+             
+              <breadCrumb title="随笔" url="http://earthchen.cn/categories/%E9%9A%8F%E7%AC%94/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://earthchen.cn/2017/05/17/ubuntu_open_port/</loc>
     <lastmod>2017-05-17T07:18:10.000Z</lastmod>
     <data>
@@ -443,9 +483,9 @@
         <title>跨域请求的解决方案</title>
         <pubTime>2017-05-17T06:03:09.838Z</pubTime>
         
-        <tag>Nginx</tag>
-         
         <tag>解决方案</tag>
+         
+        <tag>Nginx</tag>
          
         <tag>AJAX</tag>
          
@@ -453,26 +493,6 @@
            
              
               <breadCrumb title="编程" url="http://earthchen.cn/categories/%E7%BC%96%E7%A8%8B/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://earthchen.cn/2017/05/17/ubuntu%E5%AE%89%E8%A3%85%E5%9C%A8%E5%8F%8C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0%E6%9C%AC%E4%B8%8B%E5%BC%80%E6%9C%BA%E6%88%96%E5%85%B3%E6%9C%BA%E5%8D%A1%E6%AD%BB/</loc>
-    <lastmod>2017-04-04T14:19:18.771Z</lastmod>
-    <data>
-        <display>
-        <title>ubuntu在双系统下开机卡死或关机卡死的解决办法</title>
-        <pubTime>2017-05-17T06:03:09.850Z</pubTime>
-        
-        <tag>解决方案</tag>
-         
-         
-           
-             
-              <breadCrumb title="日常" url="http://earthchen.cn/categories/%E6%97%A5%E5%B8%B8/"/>
           
         </display>
     </data>

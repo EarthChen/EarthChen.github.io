@@ -15,17 +15,12 @@
 
 
 
-<meta name="description" content="今天在服务器上开启web服务让别人访问的时候遇到一些问题，在内网中别人使用ip加端口访问的时候一直访问不到，折腾了半天，发现原来使端口没开放了解到一般linux中端口都是默认关闭的，需要开启的时候需要自己开启 开放端口">
-<meta name="keywords" content="Linux">
-<meta property="og:type" content="article">
-<meta property="og:title" content="ubuntu开放指定端口">
-<meta property="og:url" content="http://earthchen.cn/2017/05/17/ubuntu_open_port/index.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="EarthChen&#39;s Blog">
+<meta property="og:url" content="http://earthchen.cn/tags/资源/index.html">
 <meta property="og:site_name" content="EarthChen&#39;s Blog">
-<meta property="og:description" content="今天在服务器上开启web服务让别人访问的时候遇到一些问题，在内网中别人使用ip加端口访问的时候一直访问不到，折腾了半天，发现原来使端口没开放了解到一般linux中端口都是默认关闭的，需要开启的时候需要自己开启 开放端口">
-<meta property="og:updated_time" content="2017-05-17T07:18:10.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ubuntu开放指定端口">
-<meta name="twitter:description" content="今天在服务器上开启web服务让别人访问的时候遇到一些问题，在内网中别人使用ip加端口访问的时候一直访问不到，折腾了半天，发现原来使端口没开放了解到一般linux中端口都是默认关闭的，需要开启的时候需要自己开启 开放端口">
+<meta name="twitter:title" content="EarthChen&#39;s Blog">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -57,7 +52,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>ubuntu开放指定端口 | EarthChen&#39;s Blog</title>
+<title>Tag: 资源 | EarthChen&#39;s Blog</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -67,9 +62,9 @@
         fancybox: true,
         animate: true,
         isHome: false,
-        isPost: true,
+        isPost: false,
         isArchive: false,
-        isTag: false,
+        isTag: true,
         isCategory: false,
         fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
         scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
@@ -292,229 +287,60 @@
     </div>
     <link class="menu-list" tags="Tags" friends="Friends" about="About Me"/>
 </nav>
-      <div class="body-wrap"><article id="post-ubuntu_open_port" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap">
   
-    <div class="article-meta">
-      <a href="/2017/05/17/ubuntu_open_port/" class="article-date">
-      <time datetime="2017-05-17T07:18:10.917Z" itemprop="datePublished">2017-05-17</time>
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2017" class="archive-year">2017</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+          <div class="article-meta">
+              <a href="/2017/05/26/资源收集/" class="archive-article-date">
+      <time datetime="2017-05-26T09:41:08.366Z" itemprop="datePublished">05-26</time>
 </a>
 
 
-    </div>
+        </div>
+         
   
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      ubuntu开放指定端口
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/05/26/资源收集/">ubuntu在双系统下开机卡死或关机卡死的解决办法</a>
     </h1>
   
 
-      </header>
-      
-      <div class="article-info article-info-post">
-        
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/编程/">编程</a>
-    </div>
-
-
-        
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
-    </div>
-
-        <div class="clearfix"></div>
-      </div>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
+        <div class="article-info info-on-archive">
           
-        <p>今天在服务器上开启web服务让别人访问的时候遇到一些问题，在内网中别人使用ip加端口访问的时候一直访问不到，折腾了半天，发现原来使端口没开放<br>了解到一般linux中端口都是默认关闭的，需要开启的时候需要自己开启</p>
-<h2 id="开放端口"><a href="#开放端口" class="headerlink" title="开放端口"></a>开放端口</h2><a id="more"></a>
-<p>由于我的服务器使用的os是Ubuntu,所以这里就介绍一下Ubuntu下的方法，其他linux应该也是大同小异，需要自己去尝试</p>
-<h3 id="安装iptables"><a href="#安装iptables" class="headerlink" title="安装iptables"></a>安装iptables</h3><p>一般情况下，ubuntu安装好的时候，iptables会被安装上，如果没有的话那就安装上吧</p>
-<ol>
-<li><p>安装<br>在终端输入</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo apt-get install iptables</div></pre></td></tr></table></figure>
-</li>
-<li><p>添加规则<br>在终端输入</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ iptables -I INPUT -p tcp --dport 80 -j ACCEPT</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>中间的80为所需要开放的端口</p>
-<ol>
-<li>保存规则<br>在终端输入<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ iptables-save</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>完成上述命令我们就完成了开放指定的端口，但是如果此时服务器重启，上述规则就没有了，所以我们需要对规则进行一下持续化操作</p>
-<h3 id="持续化规则"><a href="#持续化规则" class="headerlink" title="持续化规则"></a>持续化规则</h3><p>这里我们需要在安装一下工具来帮我们实现，这里我们使用 iptables-persistent</p>
-<ol>
-<li><p>安装iptables-persistent</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo apt-get install iptables-persistent</div></pre></td></tr></table></figure>
-</li>
-<li><p>持久化规则</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ sudo netfilter-persistent save</div><div class="line">$ sudo netfilter-persistent reload</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>完成上述操作就可以永久打开我们需要的端口了</p>
-<blockquote>
-<p>注：</p>
-<ul>
-<li>上述环境在<strong>ubuntu16.04 lts</strong>中测试成功</li>
-<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
-</ul>
-</blockquote>
-
-      
-    </div>
-    
-  </div>
-  
-    
-    <div class="copyright">
-        <p><span>Title:</span><a href="/2017/05/17/ubuntu_open_port/">ubuntu开放指定端口</a></p>
-        <p><span>Author:</span><a href="/" title="Back to Homepage">EarthChen</a></p>
-        <p><span>Created:</span>2017-05-17, 15:18:10</p>
-        <p><span>Updated:</span>2017-05-17, 15:18:10</p>
-        <p>
-            <span>Full URL:</span><a class="post-url" href="/2017/05/17/ubuntu_open_port/" title="ubuntu开放指定端口">http://earthchen.cn/2017/05/17/ubuntu_open_port/</a>
-            <span class="copy-path" data-clipboard-text="From http://earthchen.cn/2017/05/17/ubuntu_open_port/　　By EarthChen" title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
-            <script> var clipboard = new Clipboard('.copy-path'); </script>
-        </p>
-        <p>
-            <span>License:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"CC BY-NC-SA 4.0"</a> Keep Link &amp; Author if Distribute.
-        </p>
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/随笔/">随笔</a>
     </div>
 
 
-
-    <nav id="article-nav">
-        
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2017/05/26/ubuntu安装在双系统笔记本下开机或关机卡死.1/">
-                    ubuntu在双系统下开机卡死或关机卡死的解决办法
-                </a>
-            </div>
-        
-        
-            <div id="article-nav-older" class="article-nav-title">
-                <a href="/2017/05/17/python_requirements/">
-                    python生成项目所需依赖文件
-                </a>
-            </div>
-        
-    </nav>
-
-  
-</article>
-
-    <div id="toc" class="toc-article">
-        <strong class="toc-title">Contents</strong>
-        
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#开放端口"><span class="toc-number">1.</span> <span class="toc-text">开放端口</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装iptables"><span class="toc-number">1.1.</span> <span class="toc-text">安装iptables</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#持续化规则"><span class="toc-number">1.2.</span> <span class="toc-text">持续化规则</span></a></li></ol></li></ol>
-        
+          
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/资源/">资源</a></li></ul>
     </div>
-    <style>
-        .left-col .switch-btn,
-        .left-col .switch-area {
-            display: none;
-        }
-        .toc-level-5 i,
-        .toc-level-5 ol {
-            display: none !important;
-        }
-    </style>
 
-    <input type="button" id="tocButton" value="Hide"  title="Show or Hide Table of Contents">
-
-    <script>
-        yiliaConfig.toc = ["Hide", "Show", !!"false"];
-    </script>
-
-
-
-    
-<div class="share">
-    
-        <div class="bdsharebuttonbox">
-            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
-            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
-            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
-            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
-            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
-            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
-            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
         </div>
-        <script>
-            window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"ubuntu开放指定端口　| EarthChen's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
-        </script>
-    
+        <div class="clearfix"></div>
+    </header>
+  </div>
+</article>
+  
+  
+    </div></section>
+  
 
     
-</div>
 
-
-
-
-
-
-
-    
-      <div class="duoshuo" id="comments">
-    <div id="comment-box" ></div>
-    <div class="ds-thread" id="ds-thread" data-thread-key="2017/05/17/ubuntu_open_port/" data-title="ubuntu开放指定端口" data-url="http://earthchen.cn/2017/05/17/ubuntu_open_port/"></div>
-    <script>
-        var duoshuoQuery = {short_name:"earthchen"};
-        var loadComment = function(){
-            var d = document, s = d.createElement('script');
-            s.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-            s.async = true; s.charset = 'UTF-8';
-            (d.head || d.body).appendChild(s);
-        }
-
-        
-    </script>
-    
-    <script> loadComment(); </script>
-
-</div>
-    
-
-
-
-
-    <div class="scroll" id="post-nav-button">
-        
-            <a href="/2017/05/26/ubuntu安装在双系统笔记本下开机或关机卡死.1/" title="Pre: ubuntu在双系统下开机卡死或关机卡死的解决办法">
-                <i class="fa fa-angle-left"></i>
-            </a>
-        
-
-        <a title="Mini Archives"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
-
-        
-            <a href="/2017/05/17/python_requirements/" title="Next: python生成项目所需依赖文件">
-                <i class="fa fa-angle-right"></i>
-            </a>
-        
-    </div>
-
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/05/26/资源收集/">ubuntu在双系统下开机卡死或关机卡死的解决办法</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/26/ubuntu安装在双系统笔记本下开机或关机卡死.1/">ubuntu在双系统下开机卡死或关机卡死的解决办法</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/ubuntu_open_port/">ubuntu开放指定端口</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/python_requirements/">python生成项目所需依赖文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/django数据库操作/">Django操作数据库</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/ubuntu_supervisor/">ubuntu下的进程控制系统————Supervisor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/python2和Python3的区别/">Python2和Python3的区别简单总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/django_rest_framework_study/">django-rest-framework框架学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/C语言队列的基本操作/">C语言队列的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/django常用语句/">Django常用语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/git_study/">Git学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/Android_qq_Menu/">Android仿qq侧滑菜单</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/django连接mysql数据库/">Django连接MySql使用models处理数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/django环境搭建/">Django环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/django_rest_framework_jwt/">django-rest-framework配置json web token进行接口的认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/django_address_baiduapi_marker_show/">Django调用百度地图api在地图上批量增加标记点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/ubuntu_do_something_use/">ubuntu日常使用的安装配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/C语言共享栈/">C语言共享栈</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/ubuntu_do_something_coding/">ubuntu搭建常见开发环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/hexo_github_coding_blog/">利用hexo和github或coding 搭免费个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/c语言中缀表达式变后缀表达式/">C语言中缀表达式转后缀表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/C语言二叉树基本操作/">C语言二叉树的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/C语言中缀表达式计算器/">C语言中缀表达式计算器</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/django_timing_task/">django使用django-crontab实现定时任务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/跨域请求解决方案/">跨域请求的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/C语言逆波兰计算器/">C语言逆波兰表达式计算(后缀表达式计算器)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/django渲染模板/">Django渲染模板</a></li></ul>
-
-
-
-
-    <script>
-        
-    </script>
 </div>
       <footer id="footer">
     <div class="outer">
