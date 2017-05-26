@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>http://earthchen.cn/2017/05/26/redis_study/</loc>
+    <lastmod>2017-05-26T14:46:04.290Z</lastmod>
+    <data>
+        <display>
+        <title>Redis学习笔记</title>
+        <pubTime>2017-05-26T14:46:04.290Z</pubTime>
+        
+        <tag>Redis</tag>
+         
+         
+           
+             
+              <breadCrumb title="编程" url="http://earthchen.cn/categories/%E7%BC%96%E7%A8%8B/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://earthchen.cn/2017/05/26/%E8%B5%84%E6%BA%90%E6%94%B6%E9%9B%86/</loc>
     <lastmod>2017-05-26T09:43:36.000Z</lastmod>
     <data>
@@ -327,11 +347,11 @@
         <title>利用hexo和github或coding 搭免费个人博客</title>
         <pubTime>2017-05-17T06:03:09.842Z</pubTime>
         
+        <tag>Git</tag>
+         
         <tag>Node.js</tag>
          
         <tag>Hexo</tag>
-         
-        <tag>Git</tag>
          
         <tag>JavaScript</tag>
          
