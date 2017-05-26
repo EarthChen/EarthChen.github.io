@@ -4,12 +4,12 @@
 
     
   <url>
-    <loc>http://earthchen.cn/2017/05/26/redis_study_2/</loc>
-    <lastmod>2017-05-26T15:59:28.000Z</lastmod>
+    <loc>http://earthchen.cn/2017/05/27/redis_study_2/</loc>
+    <lastmod>2017-05-26T16:00:23.000Z</lastmod>
     <data>
         <display>
         <title>Redis学习笔记 -- 2</title>
-        <pubTime>2017-05-26T15:59:28.264Z</pubTime>
+        <pubTime>2017-05-26T16:00:23.111Z</pubTime>
         
         <tag>Redis</tag>
          
@@ -367,11 +367,11 @@
         <title>利用hexo和github或coding 搭免费个人博客</title>
         <pubTime>2017-05-17T06:03:09.842Z</pubTime>
         
+        <tag>Git</tag>
+         
         <tag>Node.js</tag>
          
         <tag>Hexo</tag>
-         
-        <tag>Git</tag>
          
         <tag>JavaScript</tag>
          
@@ -523,9 +523,9 @@
         <title>跨域请求的解决方案</title>
         <pubTime>2017-05-17T06:03:09.838Z</pubTime>
         
-        <tag>解决方案</tag>
-         
         <tag>Nginx</tag>
+         
+        <tag>解决方案</tag>
          
         <tag>AJAX</tag>
          
