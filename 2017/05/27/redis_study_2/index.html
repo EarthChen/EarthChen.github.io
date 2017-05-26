@@ -22,7 +22,7 @@
 <meta property="og:url" content="http://earthchen.cn/2017/05/27/redis_study_2/index.html">
 <meta property="og:site_name" content="EarthChen&#39;s Blog">
 <meta property="og:description" content="接着上一篇接着介绍redis的知识 Redis">
-<meta property="og:updated_time" content="2017-05-26T16:02:58.700Z">
+<meta property="og:updated_time" content="2017-05-26T16:24:22.733Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Redis学习笔记 -- 2">
 <meta name="twitter:description" content="接着上一篇接着介绍redis的知识 Redis">
@@ -296,7 +296,7 @@
   
     <div class="article-meta">
       <a href="/2017/05/27/redis_study_2/" class="article-date">
-      <time datetime="2017-05-26T16:02:58.700Z" itemprop="datePublished">2017-05-27</time>
+      <time datetime="2017-05-26T16:24:22.733Z" itemprop="datePublished">2017-05-27</time>
 </a>
 
 
@@ -490,6 +490,74 @@
 </tr>
 </tbody>
 </table>
+<h3 id="Redis-哈希-Hash"><a href="#Redis-哈希-Hash" class="headerlink" title="Redis 哈希(Hash)"></a>Redis 哈希(Hash)</h3><p>Redis hash 是一个string类型的field和value的映射表，hash特别适合用于存储对象。。</p>
+<ol>
+<li>实例<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt;HMSET w3ckey name <span class="string">"redis tutorial"</span> description <span class="string">"redis basic commands for caching"</span> likes 20 visitors 2300</div><div class="line">OK</div><div class="line">127.0.0.1:6379&gt; HGETALL w3ckey</div><div class="line">1) <span class="string">"name"</span></div><div class="line">2) <span class="string">"redis tutorial"</span></div><div class="line">3) <span class="string">"description"</span></div><div class="line">4) <span class="string">"redis basic commands for caching"</span></div><div class="line">5) <span class="string">"likes"</span></div><div class="line">6) <span class="string">"20"</span></div><div class="line">7) <span class="string">"visitors"</span></div><div class="line">8) <span class="string">"23000"</span></div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>设置了 redis 的一些描述信息(name, description, likes, visitors) 到哈希表的 w3ckey 中。</p>
+<h4 id="Redis-hash-命令"><a href="#Redis-hash-命令" class="headerlink" title="Redis hash 命令"></a>Redis hash 命令</h4><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>HDEL key field2 [field2]</strong></td>
+<td>删除一个或多个哈希表字段</td>
+</tr>
+<tr>
+<td><strong>HEXISTS key field</strong></td>
+<td>查看哈希表 key 中，指定的字段是否存在</td>
+</tr>
+<tr>
+<td><strong>HGET key field</strong></td>
+<td>获取存储在哈希表中指定字段的值</td>
+</tr>
+<tr>
+<td><strong>HGETALL key</strong></td>
+<td>获取在哈希表中指定 key 的所有字段和值</td>
+</tr>
+<tr>
+<td><strong>HINCRBY key field increment</strong></td>
+<td>为哈希表 key 中的指定字段的整数值加上增量 increment</td>
+</tr>
+<tr>
+<td><strong>HINCRBYFLOAT key field increment</strong></td>
+<td>为哈希表 key 中的指定字段的浮点数值加上增量 increment</td>
+</tr>
+<tr>
+<td><strong>HKEYS key</strong></td>
+<td>获取所有哈希表中的字段</td>
+</tr>
+<tr>
+<td><strong>HLEN key</strong></td>
+<td>获取哈希表中字段的数量</td>
+</tr>
+<tr>
+<td><strong>HMGET key field1 [field2]</strong></td>
+<td>获取所有给定字段的值</td>
+</tr>
+<tr>
+<td><strong>HMSET key field1 value1 [field2 value2 ]</strong></td>
+<td>同时将多个 field-value (域-值)对设置到哈希表 key 中</td>
+</tr>
+<tr>
+<td><strong>HSETNX key field value</strong></td>
+<td>只有在字段 field 不存在时，设置哈希表字段的值。</td>
+</tr>
+<tr>
+<td><strong>HVALS key</strong></td>
+<td>获取哈希表中所有值</td>
+</tr>
+<tr>
+<td><strong>HSCAN key cursor [MATCH pattern] [COUNT count]</strong></td>
+<td>迭代哈希表中的键值对</td>
+</tr>
+</tbody>
+</table>
 <blockquote>
 <p>注：</p>
 <ul>
@@ -507,8 +575,8 @@
     <div class="copyright">
         <p><span>本文标题:</span><a href="/2017/05/27/redis_study_2/">Redis学习笔记 -- 2</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">EarthChen</a></p>
-        <p><span>发布时间:</span>2017-05-27, 00:02:58</p>
-        <p><span>最后更新:</span>2017-05-27, 00:02:58</p>
+        <p><span>发布时间:</span>2017-05-27, 00:24:22</p>
+        <p><span>最后更新:</span>2017-05-27, 00:24:22</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2017/05/27/redis_study_2/" title="Redis学习笔记 -- 2">http://earthchen.cn/2017/05/27/redis_study_2/</a>
             <span class="copy-path" data-clipboard-text="原文: http://earthchen.cn/2017/05/27/redis_study_2/　　作者: EarthChen" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -538,7 +606,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis"><span class="toc-number">1.</span> <span class="toc-text">Redis</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis-键-key"><span class="toc-number">1.1.</span> <span class="toc-text">Redis 键(key)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Redis-keys-相关命令"><span class="toc-number">1.1.1.</span> <span class="toc-text">Redis keys 相关命令</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis-字符串-String"><span class="toc-number">1.2.</span> <span class="toc-text">Redis 字符串(String)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Redis-keys-相关命令-1"><span class="toc-number">1.2.1.</span> <span class="toc-text">Redis keys 相关命令</span></a></li></ol></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis"><span class="toc-number">1.</span> <span class="toc-text">Redis</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis-键-key"><span class="toc-number">1.1.</span> <span class="toc-text">Redis 键(key)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Redis-keys-相关命令"><span class="toc-number">1.1.1.</span> <span class="toc-text">Redis keys 相关命令</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis-字符串-String"><span class="toc-number">1.2.</span> <span class="toc-text">Redis 字符串(String)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Redis-keys-相关命令-1"><span class="toc-number">1.2.1.</span> <span class="toc-text">Redis keys 相关命令</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis-哈希-Hash"><span class="toc-number">1.3.</span> <span class="toc-text">Redis 哈希(Hash)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Redis-hash-命令"><span class="toc-number">1.3.1.</span> <span class="toc-text">Redis hash 命令</span></a></li></ol></li></ol></li></ol>
         
     </div>
     <style>
@@ -625,7 +693,7 @@
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/05/27/redis_study_2/">Redis学习笔记 -- 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/26/redis_study_1/">Redis学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/26/资源收集/">资源收集共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/26/ubuntu安装在双系统笔记本下开机或关机卡死.1/">ubuntu在双系统下开机卡死或关机卡死的解决办法</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/ubuntu_open_port/">ubuntu开放指定端口</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/python_requirements/">python生成项目所需依赖文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/django_rest_framework_study/">django-rest-framework框架学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/django常用语句/">Django常用语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/ubuntu_supervisor/">ubuntu下的进程控制系统————Supervisor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/django数据库操作/">Django操作数据库</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/C语言队列的基本操作/">C语言队列的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/git_study/">Git学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/python2和Python3的区别/">Python2和Python3的区别简单总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/django环境搭建/">Django环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/django_rest_framework_jwt/">django-rest-framework配置json web token进行接口的认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/django连接mysql数据库/">Django连接MySql使用models处理数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/C语言共享栈/">C语言共享栈</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/Android_qq_Menu/">Android仿qq侧滑菜单</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/django_address_baiduapi_marker_show/">Django调用百度地图api在地图上批量增加标记点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/ubuntu_do_something_use/">ubuntu日常使用的安装配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/hexo_github_coding_blog/">利用hexo和github或coding 搭免费个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/C语言二叉树基本操作/">C语言二叉树的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/ubuntu_do_something_coding/">ubuntu搭建常见开发环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/django_timing_task/">django使用django-crontab实现定时任务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/c语言中缀表达式变后缀表达式/">C语言中缀表达式转后缀表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/C语言中缀表达式计算器/">C语言中缀表达式计算器</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/django渲染模板/">Django渲染模板</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/C语言逆波兰计算器/">C语言逆波兰表达式计算(后缀表达式计算器)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/跨域请求解决方案/">跨域请求的解决方案</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/05/27/redis_study_2/">Redis学习笔记 -- 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/26/redis_study_1/">Redis学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/26/资源收集/">资源收集共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/26/ubuntu安装在双系统笔记本下开机或关机卡死.1/">ubuntu在双系统下开机卡死或关机卡死的解决办法</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/ubuntu_open_port/">ubuntu开放指定端口</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/python_requirements/">python生成项目所需依赖文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/ubuntu_supervisor/">ubuntu下的进程控制系统————Supervisor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/django数据库操作/">Django操作数据库</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/C语言队列的基本操作/">C语言队列的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/python2和Python3的区别/">Python2和Python3的区别简单总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/git_study/">Git学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/django_rest_framework_study/">django-rest-framework框架学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/django常用语句/">Django常用语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/C语言共享栈/">C语言共享栈</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/django_address_baiduapi_marker_show/">Django调用百度地图api在地图上批量增加标记点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/django环境搭建/">Django环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/Android_qq_Menu/">Android仿qq侧滑菜单</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/ubuntu_do_something_use/">ubuntu日常使用的安装配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/django_rest_framework_jwt/">django-rest-framework配置json web token进行接口的认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/django连接mysql数据库/">Django连接MySql使用models处理数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/hexo_github_coding_blog/">利用hexo和github或coding 搭免费个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/C语言中缀表达式计算器/">C语言中缀表达式计算器</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/django_timing_task/">django使用django-crontab实现定时任务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/ubuntu_do_something_coding/">ubuntu搭建常见开发环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/c语言中缀表达式变后缀表达式/">C语言中缀表达式转后缀表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/C语言二叉树基本操作/">C语言二叉树的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/django渲染模板/">Django渲染模板</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/C语言逆波兰计算器/">C语言逆波兰表达式计算(后缀表达式计算器)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/跨域请求解决方案/">跨域请求的解决方案</a></li></ul>
 
 
 
