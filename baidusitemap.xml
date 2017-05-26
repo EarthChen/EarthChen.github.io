@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>http://earthchen.cn/2017/05/26/redis_study_2/</loc>
+    <lastmod>2017-05-26T15:52:45.110Z</lastmod>
+    <data>
+        <display>
+        <title>Redis学习笔记 -- 2</title>
+        <pubTime>2017-05-26T15:52:45.110Z</pubTime>
+        
+        <tag>Redis</tag>
+         
+         
+           
+             
+              <breadCrumb title="编程" url="http://earthchen.cn/categories/%E7%BC%96%E7%A8%8B/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://earthchen.cn/2017/05/26/redis_study_1/</loc>
     <lastmod>2017-05-26T15:00:20.364Z</lastmod>
     <data>

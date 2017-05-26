@@ -15,19 +15,17 @@
 
 
 
-<meta name="description" content="在做一个django项目的时候，我遇到了一个定时任务的需求，我这里是需要定时扫描数据库并发送邮件，在查阅相关资料后，总结出如下几个方法  使用while创建一个死循环，判断时间，从而执行一些函数 使用APScheduler库实现定时任务 （详情可以见http://blog.csdn.net/hui3909/article/details/46652623） django-crontab实现定时任务">
-<meta name="keywords" content="Python,Django">
+<meta name="description" content="接着上一篇接着介绍redis的知识 Redis">
+<meta name="keywords" content="Redis">
 <meta property="og:type" content="article">
-<meta property="og:title" content="django使用django-crontab实现定时任务">
-<meta property="og:url" content="http://earthchen.cn/2017/05/17/django_timing_task/index.html">
+<meta property="og:title" content="Redis学习笔记 -- 2">
+<meta property="og:url" content="http://earthchen.cn/2017/05/26/redis_study_2/index.html">
 <meta property="og:site_name" content="EarthChen&#39;s Blog">
-<meta property="og:description" content="在做一个django项目的时候，我遇到了一个定时任务的需求，我这里是需要定时扫描数据库并发送邮件，在查阅相关资料后，总结出如下几个方法  使用while创建一个死循环，判断时间，从而执行一些函数 使用APScheduler库实现定时任务 （详情可以见http://blog.csdn.net/hui3909/article/details/46652623） django-crontab实现定时任务">
-<meta property="og:image" content="http://objects.earthchen.cn/django_timing_task_django-crontab%E5%AE%89%E8%A3%85.png">
-<meta property="og:updated_time" content="2017-05-10T16:22:36.241Z">
+<meta property="og:description" content="接着上一篇接着介绍redis的知识 Redis">
+<meta property="og:updated_time" content="2017-05-26T15:52:45.110Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="django使用django-crontab实现定时任务">
-<meta name="twitter:description" content="在做一个django项目的时候，我遇到了一个定时任务的需求，我这里是需要定时扫描数据库并发送邮件，在查阅相关资料后，总结出如下几个方法  使用while创建一个死循环，判断时间，从而执行一些函数 使用APScheduler库实现定时任务 （详情可以见http://blog.csdn.net/hui3909/article/details/46652623） django-crontab实现定时任务">
-<meta name="twitter:image" content="http://objects.earthchen.cn/django_timing_task_django-crontab%E5%AE%89%E8%A3%85.png">
+<meta name="twitter:title" content="Redis学习笔记 -- 2">
+<meta name="twitter:description" content="接着上一篇接着介绍redis的知识 Redis">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -59,7 +57,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>django使用django-crontab实现定时任务 | EarthChen&#39;s Blog</title>
+<title>Redis学习笔记 -- 2 | EarthChen&#39;s Blog</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -294,11 +292,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-django_timing_task" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-redis_study_2" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/05/17/django_timing_task/" class="article-date">
-      <time datetime="2017-05-17T06:03:09.842Z" itemprop="datePublished">2017-05-17</time>
+      <a href="/2017/05/26/redis_study_2/" class="article-date">
+      <time datetime="2017-05-26T15:52:45.110Z" itemprop="datePublished">2017-05-26</time>
 </a>
 
 
@@ -313,7 +311,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      django使用django-crontab实现定时任务
+      Redis学习笔记 -- 2
     </h1>
   
 
@@ -328,7 +326,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django/">Django</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/">Redis</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -338,41 +336,34 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>在做一个django项目的时候，我遇到了一个定时任务的需求，我这里是需要定时扫描数据库并发送邮件，在查阅相关资料后，总结出如下几个方法</p>
+        <p>接着上一篇接着介绍redis的知识</p>
+<h2 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h2><a id="more"></a>
+<h3 id="Redis-键-key"><a href="#Redis-键-key" class="headerlink" title="Redis 键(key)"></a>Redis 键(key)</h3><p>Redis 键命令用于管理 redis 的键。</p>
 <ol>
-<li>使用while创建一个死循环，判断时间，从而执行一些函数</li>
-<li>使用APScheduler库实现定时任务 （详情可以见<a href="http://blog.csdn.net/hui3909/article/details/46652623）" target="_blank" rel="external">http://blog.csdn.net/hui3909/article/details/46652623）</a></li>
-<li>django-crontab实现定时任务</li>
-<li>django-celery实现定时任务</li>
+<li><p>语法</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; COMMAND KEY_NAME</div></pre></td></tr></table></figure>
+</li>
+<li><p>实例</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; SET w3ckey redis</div><div class="line">OK</div><div class="line">127.0.0.1:6379&gt; DEL w3ckey</div><div class="line">(<span class="built_in">integer</span>) 1</div></pre></td></tr></table></figure>
+<p>DEL 是一个命令， w3ckey 是一个键。 如果键被删除成功，命令执行后输出 (integer) 1，否则将输出 (integer) 0</p>
+<h4 id="Redis-keys-相关命令"><a href="#Redis-keys-相关命令" class="headerlink" title="Redis keys 相关命令"></a>Redis keys 相关命令</h4><p>| 命令                    | 描述          |<br>| ——————– |:————-:|<br>| <strong>DEL key</strong>      | 在 key 存在是删除 key |<br>| <strong>DUMP key</strong>     | 序列化给定 key ，并返回被序列化的值  |<br>| <strong>EXISTS key</strong> | 检查给定 key 是否存在      |<br>| <strong>EXPIRE key seconds</strong> | 给定 key 设置过期时间 |<br>| <strong>EXPIREAT key timestamp</strong> | EXPIREAT 的作用和 EXPIRE 类似，都用于为 key 设置过期时间。 不同在于 EXPIREAT 命令接受的时间参数是 UNIX 时间戳(unix timestamp)    |<br>| <strong>KEYS pattern</strong> | 查找所有符合给定模式( pattern)的 key|<br>| <strong>MOVE key db</strong> | 将当前数据库的 key 移动到给定的数据库 db 当中|<br>| <strong>PERSIST key</strong> | 移除 key 的过期时间，key 将持久保持|<br>| <strong>PTTL key</strong> |以毫秒为单位返回 key 的剩余的过期时间|<br>| <strong>RENAME key newkey</strong> |修改 key 的名称|<br>| <strong>RENAMENX key newkey</strong> |仅当 newkey 不存在时，将 key 改名为 newkey|<br>| <strong>TYPE key</strong> |返回 key 所储存的值的类型|  </p>
+</li>
 </ol>
-<h2 id="django-crontab实现定时任务"><a href="#django-crontab实现定时任务" class="headerlink" title="django-crontab实现定时任务"></a>django-crontab实现定时任务</h2><p>在我斟酌再三，最终还是选择了django-crontab这个方法，这个方法最契合我的需求，同时也相对简单，所以本文也就着重介绍一下</p>
-<a id="more"></a>
-<h3 id="django-crontab安装"><a href="#django-crontab安装" class="headerlink" title="django-crontab安装"></a>django-crontab安装</h3><h4 id="安装django-crontab库"><a href="#安装django-crontab库" class="headerlink" title="安装django-crontab库"></a>安装django-crontab库</h4><p>这里使用pip安装即可，在终端输入以下命令即可<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install django-crontab</div></pre></td></tr></table></figure></p>
-<h4 id="在工程里使用django-crontab"><a href="#在工程里使用django-crontab" class="headerlink" title="在工程里使用django-crontab"></a>在工程里使用django-crontab</h4><p>在django项目的<strong>settings.py</strong>的<strong>INSTALLED_APPS</strong>添加django-crontab<br><img src="http://objects.earthchen.cn/django_timing_task_django-crontab%E5%AE%89%E8%A3%85.png" alt="在app中加入django-crontab"><br>如图示即可</p>
-<h3 id="django-crontab配置"><a href="#django-crontab配置" class="headerlink" title="django-crontab配置"></a>django-crontab配置</h3><p>django-crontab可以定时运行自定义命令和函数两种方式</p>
-<h4 id="定时函数"><a href="#定时函数" class="headerlink" title="定时函数"></a>定时函数</h4><p>在django项目的<strong>settings.py</strong>中添加以下命令<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">CRONJOBS = (</div><div class="line">    (<span class="string">'*/1 * * * *'</span>, <span class="string">'你的app名.定时函数所在的py文件名.定时函数名'</span>),</div><div class="line">    (<span class="string">'0   0 1 * *'</span>, <span class="string">'你的app名.定时函数所在的py文件名.定时函数名'</span>, <span class="string">'&gt; 输出文件路径和名称'</span>),</div><div class="line">)</div></pre></td></tr></table></figure></p>
-<ul>
-<li>第一种的意思就是每一分钟执行一次你的定时函数</li>
-<li>第二种时定时函数输出的内容到指定文件（如果该路径或文件不存在将会自动创建）</li>
-</ul>
-<h4 id="定时命令"><a href="#定时命令" class="headerlink" title="定时命令"></a>定时命令</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">CRONJOBS = (</div><div class="line">    (<span class="string">'10 12 * * *'</span>, <span class="string">'django.core.management.call_command'</span>, [<span class="string">'要执行的命令'</span>]),</div><div class="line">)</div></pre></td></tr></table></figure>
-<ul>
-<li>意思是在12点10分执行命令</li>
-</ul>
-<h3 id="定时任务的操作"><a href="#定时任务的操作" class="headerlink" title="定时任务的操作"></a>定时任务的操作</h3><ol>
-<li>python manage.py crontab add　　添加定时任务</li>
-<li>python manage.py crontab remove  清除定时任务</li>
-<li>python manage.py crontab show   显示定时任务</li>
+<h3 id="Redis-字符串-String"><a href="#Redis-字符串-String" class="headerlink" title="Redis 字符串(String)"></a>Redis 字符串(String)</h3><p>Redis 字符串数据类型的相关命令用于管理 redis 字符串值，基本语法如下：</p>
+<ol>
+<li><p>语法</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; COMMAND KEY_NAME</div></pre></td></tr></table></figure>
+</li>
+<li><p>实例</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; SET w3ckey redis</div><div class="line">OK</div><div class="line">127.0.0.1:6379&gt; GET w3ckey</div><div class="line"> <span class="string">"redis"</span></div></pre></td></tr></table></figure>
+<p>SET 和 GET 命令，键为 w3ckey。<br>DEL 是一个命令， w3ckey 是一个键。 如果键被删除成功，命令执行后输出 (integer) 1，否则将输出 (integer) 0</p>
+<h4 id="Redis-keys-相关命令-1"><a href="#Redis-keys-相关命令-1" class="headerlink" title="Redis keys 相关命令"></a>Redis keys 相关命令</h4><p>| 命令                    | 描述          |<br>| ——————– |:————-:|<br>| <strong>SET key value</strong>      | 设置指定 key 的值 |<br>| <strong>GET key</strong>     | 获取指定 key 的值 |<br>| <strong>GETRANGE key start end</strong> |返回 key 中字符串值的子字符  |<br>| <strong>GETSET key value</strong> | 将给定 key 的值设为 value ，并返回 key 的旧值(old value) |<br>| <strong>GETBIT key offset</strong> | 对 key 所储存的字符串值，获取指定偏移量上的位(bit) |<br>| <strong>MGET key1 [key2..]</strong> | 获取所有(一个或多个)给定 key 的值|<br>| <strong>SETEX key seconds value</strong> | 将值 value 关联到 key ，并将 key 的过期时间设为 seconds (以秒为单位)|<br>| <strong>SETNX key value</strong> | 只有在 key 不存在时设置 key 的值|<br>| <strong>STRLEN key</strong> |返回 key 所储存的字符串值的长度|<br>| <strong>MSET key value [key value …]</strong> |同时设置一个或多个 key-value 对|<br>| <strong>INCR key</strong> |将 key 中储存的数字值增一|<br>| <strong>NCRBY key increment</strong> |将 key 所储存的值加上给定的增量值（increment）|<br>| <strong>NCRBYFLOAT key increment</strong> |将 key 所储存的值加上给定的浮点增量值（increment）|<br>| <strong>DECR key</strong> |将 key 中储存的数字值减一|<br>| <strong>DECRBY key decrement</strong> | key所储存的值减去给定的减量值（decrement|<br>| <strong>APPEND key value</strong> |如果 key 已经存在并且是一个字符串， APPEND 命令将 value 追加到 key 原来的值的末尾|  </p>
+</li>
 </ol>
-<ul>
-<li>当你添加了或者修改的定时任务，只需执行命令1即可</li>
-<li>如果你想删除定时任务，请执行命令2</li>
-</ul>
 <blockquote>
 <p>注：</p>
 <ul>
-<li>当定时任务执行时，如果你只是一些输出语句，那么你将看不到任何内容。请不要怀疑没有执行</li>
-<li>上述环境在<strong>ubuntu16.04 lts</strong>  <strong>django1.9</strong>中测试成功</li>
+<li>上述环境在<strong>ubuntu16.04 lts</strong>中测试成功</li>
 <li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
 </ul>
 </blockquote>
@@ -384,13 +375,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/05/17/django_timing_task/">django使用django-crontab实现定时任务</a></p>
+        <p><span>本文标题:</span><a href="/2017/05/26/redis_study_2/">Redis学习笔记 -- 2</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">EarthChen</a></p>
-        <p><span>发布时间:</span>2017-05-17, 14:03:09</p>
-        <p><span>最后更新:</span>2017-05-11, 00:22:36</p>
+        <p><span>发布时间:</span>2017-05-26, 23:52:45</p>
+        <p><span>最后更新:</span>2017-05-26, 23:52:45</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/05/17/django_timing_task/" title="django使用django-crontab实现定时任务">http://earthchen.cn/2017/05/17/django_timing_task/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://earthchen.cn/2017/05/17/django_timing_task/　　作者: EarthChen" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2017/05/26/redis_study_2/" title="Redis学习笔记 -- 2">http://earthchen.cn/2017/05/26/redis_study_2/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://earthchen.cn/2017/05/26/redis_study_2/　　作者: EarthChen" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -402,16 +393,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2017/05/17/C语言中缀表达式计算器/">
-                    C语言中缀表达式计算器
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2017/05/17/c语言中缀表达式变后缀表达式/">
-                    C语言中缀表达式转后缀表达式
+                <a href="/2017/05/26/redis_study_1/">
+                    Redis学习笔记 -- 1
                 </a>
             </div>
         
@@ -423,7 +408,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#django-crontab实现定时任务"><span class="toc-number">1.</span> <span class="toc-text">django-crontab实现定时任务</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#django-crontab安装"><span class="toc-number">1.1.</span> <span class="toc-text">django-crontab安装</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#安装django-crontab库"><span class="toc-number">1.1.1.</span> <span class="toc-text">安装django-crontab库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#在工程里使用django-crontab"><span class="toc-number">1.1.2.</span> <span class="toc-text">在工程里使用django-crontab</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#django-crontab配置"><span class="toc-number">1.2.</span> <span class="toc-text">django-crontab配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#定时函数"><span class="toc-number">1.2.1.</span> <span class="toc-text">定时函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#定时命令"><span class="toc-number">1.2.2.</span> <span class="toc-text">定时命令</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#定时任务的操作"><span class="toc-number">1.3.</span> <span class="toc-text">定时任务的操作</span></a></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis"><span class="toc-number">1.</span> <span class="toc-text">Redis</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis-键-key"><span class="toc-number">1.1.</span> <span class="toc-text">Redis 键(key)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Redis-keys-相关命令"><span class="toc-number">1.1.1.</span> <span class="toc-text">Redis keys 相关命令</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis-字符串-String"><span class="toc-number">1.2.</span> <span class="toc-text">Redis 字符串(String)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Redis-keys-相关命令-1"><span class="toc-number">1.2.1.</span> <span class="toc-text">Redis keys 相关命令</span></a></li></ol></li></ol></li></ol>
         
     </div>
     <style>
@@ -459,7 +444,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"django使用django-crontab实现定时任务　| EarthChen's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"Redis学习笔记 -- 2　| EarthChen's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -475,7 +460,7 @@
     
       <div class="duoshuo" id="comments">
     <div id="comment-box" ></div>
-    <div class="ds-thread" id="ds-thread" data-thread-key="2017/05/17/django_timing_task/" data-title="django使用django-crontab实现定时任务" data-url="http://earthchen.cn/2017/05/17/django_timing_task/"></div>
+    <div class="ds-thread" id="ds-thread" data-thread-key="2017/05/26/redis_study_2/" data-title="Redis学习笔记 -- 2" data-url="http://earthchen.cn/2017/05/26/redis_study_2/"></div>
     <script>
         var duoshuoQuery = {short_name:"earthchen"};
         var loadComment = function(){
@@ -498,15 +483,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2017/05/17/C语言中缀表达式计算器/" title="上一篇: C语言中缀表达式计算器">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2017/05/17/c语言中缀表达式变后缀表达式/" title="下一篇: C语言中缀表达式转后缀表达式">
+            <a href="/2017/05/26/redis_study_1/" title="下一篇: Redis学习笔记 -- 1">
                 <i class="fa fa-angle-right"></i>
             </a>
         
