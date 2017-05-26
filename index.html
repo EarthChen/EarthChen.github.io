@@ -298,19 +298,19 @@
 </nav>
       <div class="body-wrap">
   
-    <article id="post-redis_study" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-redis_study_1" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/05/26/redis_study/" class="article-date">
-      <time datetime="2017-05-26T14:46:04.290Z" itemprop="datePublished">2017-05-26</time>
+      <a href="/2017/05/26/redis_study_1/" class="article-date">
+      <time datetime="2017-05-26T15:00:20.362Z" itemprop="datePublished">2017-05-26</time>
 </a>
 
  
-    <a href="/2017/05/26/redis_study/#comments" title="查看评论">
+    <a href="/2017/05/26/redis_study_1/#comments" title="查看评论">
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
-            <span class="ds-thread-count"  data-thread-key="2017/05/26/redis_study/" ></span>
+            <span class="ds-thread-count"  data-thread-key="2017/05/26/redis_study_1/" ></span>
         
         
     </a>
@@ -326,7 +326,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/05/26/redis_study/">Redis学习笔记</a>
+      <a class="article-title" href="/2017/05/26/redis_study_1/">Redis学习笔记 -- 1</a>
     </h1>
   
 
@@ -357,7 +357,7 @@
 
       
         <p class="article-more-link">
-          <a href="/2017/05/26/redis_study/#more">more >></a>
+          <a href="/2017/05/26/redis_study_1/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -686,19 +686,19 @@
 
 
   
-    <article id="post-ubuntu_supervisor" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-C语言队列的基本操作" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/05/17/ubuntu_supervisor/" class="article-date">
+      <a href="/2017/05/17/C语言队列的基本操作/" class="article-date">
       <time datetime="2017-05-17T06:03:09.850Z" itemprop="datePublished">2017-05-17</time>
 </a>
 
  
-    <a href="/2017/05/17/ubuntu_supervisor/#comments" title="查看评论">
+    <a href="/2017/05/17/C语言队列的基本操作/#comments" title="查看评论">
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
-            <span class="ds-thread-count"  data-thread-key="2017/05/17/ubuntu_supervisor/" ></span>
+            <span class="ds-thread-count"  data-thread-key="2017/05/17/C语言队列的基本操作/" ></span>
         
         
     </a>
@@ -714,7 +714,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/05/17/ubuntu_supervisor/">ubuntu下的进程控制系统————Supervisor</a>
+      <a class="article-title" href="/2017/05/17/C语言队列的基本操作/">C语言队列的基本操作</a>
     </h1>
   
 
@@ -724,9 +724,9 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <p>我们在部署网站或者在ssh到服务器上去进行一些长时间操作的任务时候，通常不喜欢长时间开启终端在其中等待，尤其是Windows下putty这类软件，长时间不操作就会结束，尴尬的是，我们跑的进程也会直接终端，为了解决这个问题，我们需要把进程扔到后台，让他自己运行</p>
-<p>在这里我们介绍一个名叫<strong>Supervisor</strong>的进程控制系统，<br>它是一个C/S系统(注意: 其提供WEB接口给用户查询和控制), 它允许用户去监控和控制在类UNIX系统的进程. 它的目标与launchd, daemontools和runit有些相似, 但是与它们不一样的是, 它不是作为init(进程号pid是1)运行. 它是被用来控制进程, 并且它在启动的时候和一般程序并无二致<br>supervisor是一个制作守护进程的工具,用户可以在UNIX系统中监控、管理进程。常用于管理与某个用户或项目相关的进程。去帮我们维护各种服务器的进程，即使有软件崩了也能帮我们自动重启</p>
-<h2 id="Supervisor"><a href="#Supervisor" class="headerlink" title="Supervisor"></a>Supervisor</h2>
+              <p>本篇介绍一下编程中比较重要的一个数据结构队列，队列有个很显著的标志，对其中的数据是先进先出，如果是顺序存储结构可以说就是一个受限的数组，对链式存储结构就只能说是符合先进先出的规则了，这种数据结构在我们真正的编程中还是相当常用的。实际中根据需要去定制自己的队列。</p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="顺序队列的操作"><a href="#顺序队列的操作" class="headerlink" title="顺序队列的操作"></a>顺序队列的操作</h3><p>首先我们来介绍一下顺序存储结构下的队列的定义和基本操作</p>
+<h4 id="添加适当的头文件，定义一个顺序存储数据结构，"><a href="#添加适当的头文件，定义一个顺序存储数据结构，" class="headerlink" title="添加适当的头文件，定义一个顺序存储数据结构，"></a>添加适当的头文件，定义一个顺序存储数据结构，</h4><p>这里需要添加头文件和定义一个队列的顺序数据结构<br>
           
       
     </div>
@@ -741,12 +741,12 @@
 
       
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构/">数据结构</a></li></ul>
     </div>
 
       
         <p class="article-more-link">
-          <a href="/2017/05/17/ubuntu_supervisor/#more">more >></a>
+          <a href="/2017/05/17/C语言队列的基本操作/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -844,19 +844,19 @@
 
 
   
-    <article id="post-C语言队列的基本操作" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-django常用语句" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/05/17/C语言队列的基本操作/" class="article-date">
+      <a href="/2017/05/17/django常用语句/" class="article-date">
       <time datetime="2017-05-17T06:03:09.850Z" itemprop="datePublished">2017-05-17</time>
 </a>
 
  
-    <a href="/2017/05/17/C语言队列的基本操作/#comments" title="查看评论">
+    <a href="/2017/05/17/django常用语句/#comments" title="查看评论">
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
-            <span class="ds-thread-count"  data-thread-key="2017/05/17/C语言队列的基本操作/" ></span>
+            <span class="ds-thread-count"  data-thread-key="2017/05/17/django常用语句/" ></span>
         
         
     </a>
@@ -872,7 +872,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/05/17/C语言队列的基本操作/">C语言队列的基本操作</a>
+      <a class="article-title" href="/2017/05/17/django常用语句/">Django常用语句</a>
     </h1>
   
 
@@ -882,9 +882,12 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <p>本篇介绍一下编程中比较重要的一个数据结构队列，队列有个很显著的标志，对其中的数据是先进先出，如果是顺序存储结构可以说就是一个受限的数组，对链式存储结构就只能说是符合先进先出的规则了，这种数据结构在我们真正的编程中还是相当常用的。实际中根据需要去定制自己的队列。</p>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="顺序队列的操作"><a href="#顺序队列的操作" class="headerlink" title="顺序队列的操作"></a>顺序队列的操作</h3><p>首先我们来介绍一下顺序存储结构下的队列的定义和基本操作</p>
-<h4 id="添加适当的头文件，定义一个顺序存储数据结构，"><a href="#添加适当的头文件，定义一个顺序存储数据结构，" class="headerlink" title="添加适当的头文件，定义一个顺序存储数据结构，"></a>添加适当的头文件，定义一个顺序存储数据结构，</h4><p>这里需要添加头文件和定义一个队列的顺序数据结构<br>
+              <p>本篇主要介绍我们在使用django框架开发的时候使用的常用语句，为了增加开发效率，建议将这些语句记住并多多练习，</p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="新建工程"><a href="#新建工程" class="headerlink" title="新建工程"></a>新建工程</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">django-admin startproject project-name</div></pre></td></tr></table></figure>
+<p>这是一个django开发的开始，当然也可以用pycharm这个ide创建工程，这个东西还是看个人习惯了。但最好还是记住，</p>
+<ul>
+<li>project-name —— 项目名称(需要符合Python 的变量命名规则（以下划线或字母开头))</li>
+<li>有些版本的django可能是django-admin.py(根据个人需求选择)
           
       
     </div>
@@ -899,12 +902,12 @@
 
       
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构/">数据结构</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django/">Django</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
     </div>
 
       
         <p class="article-more-link">
-          <a href="/2017/05/17/C语言队列的基本操作/#more">more >></a>
+          <a href="/2017/05/17/django常用语句/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -1001,19 +1004,19 @@
 
 
   
-    <article id="post-django常用语句" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-git_study" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/05/17/django常用语句/" class="article-date">
+      <a href="/2017/05/17/git_study/" class="article-date">
       <time datetime="2017-05-17T06:03:09.850Z" itemprop="datePublished">2017-05-17</time>
 </a>
 
  
-    <a href="/2017/05/17/django常用语句/#comments" title="查看评论">
+    <a href="/2017/05/17/git_study/#comments" title="查看评论">
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
-            <span class="ds-thread-count"  data-thread-key="2017/05/17/django常用语句/" ></span>
+            <span class="ds-thread-count"  data-thread-key="2017/05/17/git_study/" ></span>
         
         
     </a>
@@ -1029,7 +1032,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/05/17/django常用语句/">Django常用语句</a>
+      <a class="article-title" href="/2017/05/17/git_study/">Git学习笔记</a>
     </h1>
   
 
@@ -1039,12 +1042,8 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <p>本篇主要介绍我们在使用django框架开发的时候使用的常用语句，为了增加开发效率，建议将这些语句记住并多多练习，</p>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="新建工程"><a href="#新建工程" class="headerlink" title="新建工程"></a>新建工程</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">django-admin startproject project-name</div></pre></td></tr></table></figure>
-<p>这是一个django开发的开始，当然也可以用pycharm这个ide创建工程，这个东西还是看个人习惯了。但最好还是记住，</p>
-<ul>
-<li>project-name —— 项目名称(需要符合Python 的变量命名规则（以下划线或字母开头))</li>
-<li>有些版本的django可能是django-admin.py(根据个人需求选择)
+              <p>git是目前好用的版本控制系统，本文记录一下笔者的git学习过程<br>注册github和安装git这个就不多说了</p>
+<h2 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h2>
           
       
     </div>
@@ -1059,12 +1058,12 @@
 
       
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django/">Django</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git/">Git</a></li></ul>
     </div>
 
       
         <p class="article-more-link">
-          <a href="/2017/05/17/django常用语句/#more">more >></a>
+          <a href="/2017/05/17/git_study/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
