@@ -298,19 +298,19 @@
 </nav>
       <div class="body-wrap">
   
-    <article id="post-C语言队列的基本操作" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-ubuntu_supervisor" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/05/17/C语言队列的基本操作/" class="article-date">
+      <a href="/2017/05/17/ubuntu_supervisor/" class="article-date">
       <time datetime="2017-05-17T06:03:09.850Z" itemprop="datePublished">2017-05-17</time>
 </a>
 
  
-    <a href="/2017/05/17/C语言队列的基本操作/#comments" title="查看评论">
+    <a href="/2017/05/17/ubuntu_supervisor/#comments" title="查看评论">
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
-            <span class="ds-thread-count"  data-thread-key="2017/05/17/C语言队列的基本操作/" ></span>
+            <span class="ds-thread-count"  data-thread-key="2017/05/17/ubuntu_supervisor/" ></span>
         
         
     </a>
@@ -326,7 +326,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/05/17/C语言队列的基本操作/">C语言队列的基本操作</a>
+      <a class="article-title" href="/2017/05/17/ubuntu_supervisor/">ubuntu下的进程控制系统————Supervisor</a>
     </h1>
   
 
@@ -336,9 +336,9 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <p>本篇介绍一下编程中比较重要的一个数据结构队列，队列有个很显著的标志，对其中的数据是先进先出，如果是顺序存储结构可以说就是一个受限的数组，对链式存储结构就只能说是符合先进先出的规则了，这种数据结构在我们真正的编程中还是相当常用的。实际中根据需要去定制自己的队列。</p>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="顺序队列的操作"><a href="#顺序队列的操作" class="headerlink" title="顺序队列的操作"></a>顺序队列的操作</h3><p>首先我们来介绍一下顺序存储结构下的队列的定义和基本操作</p>
-<h4 id="添加适当的头文件，定义一个顺序存储数据结构，"><a href="#添加适当的头文件，定义一个顺序存储数据结构，" class="headerlink" title="添加适当的头文件，定义一个顺序存储数据结构，"></a>添加适当的头文件，定义一个顺序存储数据结构，</h4><p>这里需要添加头文件和定义一个队列的顺序数据结构<br>
+              <p>我们在部署网站或者在ssh到服务器上去进行一些长时间操作的任务时候，通常不喜欢长时间开启终端在其中等待，尤其是Windows下putty这类软件，长时间不操作就会结束，尴尬的是，我们跑的进程也会直接终端，为了解决这个问题，我们需要把进程扔到后台，让他自己运行</p>
+<p>在这里我们介绍一个名叫<strong>Supervisor</strong>的进程控制系统，<br>它是一个C/S系统(注意: 其提供WEB接口给用户查询和控制), 它允许用户去监控和控制在类UNIX系统的进程. 它的目标与launchd, daemontools和runit有些相似, 但是与它们不一样的是, 它不是作为init(进程号pid是1)运行. 它是被用来控制进程, 并且它在启动的时候和一般程序并无二致<br>supervisor是一个制作守护进程的工具,用户可以在UNIX系统中监控、管理进程。常用于管理与某个用户或项目相关的进程。去帮我们维护各种服务器的进程，即使有软件崩了也能帮我们自动重启</p>
+<h2 id="Supervisor"><a href="#Supervisor" class="headerlink" title="Supervisor"></a>Supervisor</h2>
           
       
     </div>
@@ -353,12 +353,90 @@
 
       
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构/">数据结构</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
     </div>
 
       
         <p class="article-more-link">
-          <a href="/2017/05/17/C语言队列的基本操作/#more">more >></a>
+          <a href="/2017/05/17/ubuntu_supervisor/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-git_study" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/05/17/git_study/" class="article-date">
+      <time datetime="2017-05-17T06:03:09.850Z" itemprop="datePublished">2017-05-17</time>
+</a>
+
+ 
+    <a href="/2017/05/17/git_study/#comments" title="查看评论">
+        <i class="fa fa-comments-o" aria-hidden="true"></i>
+        <span class="count-comment"></span>
+        
+            <span class="ds-thread-count"  data-thread-key="2017/05/17/git_study/" ></span>
+        
+        
+    </a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/17/git_study/">Git学习笔记</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>git是目前好用的版本控制系统，本文记录一下笔者的git学习过程<br>注册github和安装git这个就不多说了</p>
+<h2 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h2>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/编程/">编程</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git/">Git</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2017/05/17/git_study/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -435,398 +513,7 @@
 
       
         <p class="article-more-link">
-          <a href="/2017/05/17/python2和Python3的区别/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-django数据库操作" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/05/17/django数据库操作/" class="article-date">
-      <time datetime="2017-05-17T06:03:09.850Z" itemprop="datePublished">2017-05-17</time>
-</a>
-
- 
-    <a href="/2017/05/17/django数据库操作/#comments" title="查看评论">
-        <i class="fa fa-comments-o" aria-hidden="true"></i>
-        <span class="count-comment"></span>
-        
-            <span class="ds-thread-count"  data-thread-key="2017/05/17/django数据库操作/" ></span>
-        
-        
-    </a>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/05/17/django数据库操作/">Django操作数据库</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>本篇主要介绍我们在使用django框架开发的时候使用的操作数据库的语句，这在动态网站部分是很重要的，因为我们需要连接数据库进行操作，然后把数据处理的结果显示在前端页面上，在其他地方我们都是直接用sql语句来手动输入，这样容易造成错误，还影响效率，在django中，内置了很多处理数据库操作的函数，能更便利的帮我们操作数据库</p>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="实例代码"><a href="#实例代码" class="headerlink" title="实例代码"></a>实例代码</h3><p><strong>models.py</strong><br>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/编程/">编程</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django/">Django</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2017/05/17/django数据库操作/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-C语言共享栈" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/05/17/C语言共享栈/" class="article-date">
-      <time datetime="2017-05-17T06:03:09.846Z" itemprop="datePublished">2017-05-17</time>
-</a>
-
- 
-    <a href="/2017/05/17/C语言共享栈/#comments" title="查看评论">
-        <i class="fa fa-comments-o" aria-hidden="true"></i>
-        <span class="count-comment"></span>
-        
-            <span class="ds-thread-count"  data-thread-key="2017/05/17/C语言共享栈/" ></span>
-        
-        
-    </a>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/05/17/C语言共享栈/">C语言共享栈</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>栈的操作我相信大家都应该了解了弄懂了，  如果没弄懂希望可以去再去看看相关的资料，我博客中的<a href="/2016/10/18/c%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8F%98%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F/">C语言中缀表达式转后缀表达式</a>中涉及到了一下栈的基本操作，有兴趣的朋友也可以看看。<br>所谓共享栈，就是两个栈共同使用一块内存空间，其中一个栈的栈底作为另一个栈的栈顶，反之亦然。</p>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="思路分析"><a href="#思路分析" class="headerlink" title="思路分析"></a>思路分析</h3><blockquote>
-<p>因为两个栈公用一个空间，假设一个栈为0#，规定其为空时top[0]==-1；另一个栈为1#规定其为空时，top[1]==MaxSize；<br>入栈时，先确定栈号是否合法，然后查看是对0#栈还是1#栈进行操作，入栈操作和顺序栈的入栈操作并无太大不同。<br>选定之后进行入栈操作。这里应该注意此共享栈是否已满，如果已满则不能进行入栈操作。如若入栈成功则返回0；入栈失败则返回-1；<br>出栈时，先确定栈号是否合法，然后查看是对0#栈还是1#栈进行操作，出栈操作和顺序栈的出栈操作并无太大不同。<br>选定之后进行出栈操作。如果出栈成功返回0；出栈失败返回-1；<br>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/编程/">编程</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构/">数据结构</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2017/05/17/C语言共享栈/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Android_qq_Menu" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/05/17/Android_qq_Menu/" class="article-date">
-      <time datetime="2017-05-17T06:03:09.846Z" itemprop="datePublished">2017-05-17</time>
-</a>
-
- 
-    <a href="/2017/05/17/Android_qq_Menu/#comments" title="查看评论">
-        <i class="fa fa-comments-o" aria-hidden="true"></i>
-        <span class="count-comment"></span>
-        
-            <span class="ds-thread-count"  data-thread-key="2017/05/17/Android_qq_Menu/" ></span>
-        
-        
-    </a>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/05/17/Android_qq_Menu/">Android仿qq侧滑菜单</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>我们经常能看到各种app中都有应用侧滑菜单（SlidingMenu）,效果很好的一种显示方式，今天我就向大家展示可以说是很简单就能实现和qq的侧滑菜单很相似的效果。现在侧滑菜单的框架在github上也有很多，有兴趣的可以去搜一下，今天我就给大家展示一个简单的仿qq侧滑菜单的例子。</p>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h3><p>我们可以自定义一个view，然后用一个水平滚动条HorizontalScrollView匹配父容器<br>原理如图:<img src="http://objects.earthchen.cn/qq_menu%E5%8E%9F%E7%90%86.png" alt="qq_menu原理"><br>要有这个HorizontalScrollView要有两倍屏幕的宽度，用这个Android自带的水平滚动条来实现左右滑动的效果。是不是很简单呢。原理就是这么简单。下面我将我的代码贴出来，大家可以参考，或修改。</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/编程/">编程</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2017/05/17/Android_qq_Menu/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-django_address_baiduapi_marker_show" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/05/17/django_address_baiduapi_marker_show/" class="article-date">
-      <time datetime="2017-05-17T06:03:09.846Z" itemprop="datePublished">2017-05-17</time>
-</a>
-
- 
-    <a href="/2017/05/17/django_address_baiduapi_marker_show/#comments" title="查看评论">
-        <i class="fa fa-comments-o" aria-hidden="true"></i>
-        <span class="count-comment"></span>
-        
-            <span class="ds-thread-count"  data-thread-key="2017/05/17/django_address_baiduapi_marker_show/" ></span>
-        
-        
-    </a>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/05/17/django_address_baiduapi_marker_show/">Django调用百度地图api在地图上批量增加标记点</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>在调用百度地图api进行web开发时遇到了一个需求，我们需要在网页中内嵌一个div  然后在div中调用百度地图的js显示我们所需要的地区。根据需求坐标在地图上添加若干个标记点，并批量的为各个标记点设置监听函数，使之显示我们所需要的信息</p>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="创建工程"><a href="#创建工程" class="headerlink" title="创建工程"></a>创建工程</h3><p>首先，创建一个测试用的工程来测试我们的需要，可以使用<strong>pycharm</strong>或者<strong>django</strong>自带的命令创建工程<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">django-admin startproject addressdemo</div></pre></td></tr></table></figure></p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/编程/">编程</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django/">Django</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2017/05/17/django_address_baiduapi_marker_show/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-django_rest_framework_jwt" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/05/17/django_rest_framework_jwt/" class="article-date">
-      <time datetime="2017-05-17T06:03:09.846Z" itemprop="datePublished">2017-05-17</time>
-</a>
-
- 
-    <a href="/2017/05/17/django_rest_framework_jwt/#comments" title="查看评论">
-        <i class="fa fa-comments-o" aria-hidden="true"></i>
-        <span class="count-comment"></span>
-        
-            <span class="ds-thread-count"  data-thread-key="2017/05/17/django_rest_framework_jwt/" ></span>
-        
-        
-    </a>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/05/17/django_rest_framework_jwt/">django-rest-framework配置json web token进行接口的认证</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>使用django-rest-framework开发api并使用json web token进行身份验证<br>在这里使用django-rest-framework-jwt这个库来帮助我们简单的使用jwt进行身份验证<br>并解决一些前后端分离而产生的跨域问题</p>
-<h2 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h2>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/编程/">编程</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django/">Django</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2017/05/17/django_rest_framework_jwt/#more">more >></a>
+          <a href="/2017/05/17/python2和Python3的区别/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -913,7 +600,7 @@
 
       
         <p class="article-more-link">
-          <a href="/2017/05/17/django环境搭建/#more">more >></a>
+          <a href="/2017/05/17/django环境搭建/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -991,7 +678,85 @@
 
       
         <p class="article-more-link">
-          <a href="/2017/05/17/ubuntu_do_something_use/#more">more >></a>
+          <a href="/2017/05/17/ubuntu_do_something_use/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-django_address_baiduapi_marker_show" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/05/17/django_address_baiduapi_marker_show/" class="article-date">
+      <time datetime="2017-05-17T06:03:09.846Z" itemprop="datePublished">2017-05-17</time>
+</a>
+
+ 
+    <a href="/2017/05/17/django_address_baiduapi_marker_show/#comments" title="查看评论">
+        <i class="fa fa-comments-o" aria-hidden="true"></i>
+        <span class="count-comment"></span>
+        
+            <span class="ds-thread-count"  data-thread-key="2017/05/17/django_address_baiduapi_marker_show/" ></span>
+        
+        
+    </a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/17/django_address_baiduapi_marker_show/">Django调用百度地图api在地图上批量增加标记点</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>在调用百度地图api进行web开发时遇到了一个需求，我们需要在网页中内嵌一个div  然后在div中调用百度地图的js显示我们所需要的地区。根据需求坐标在地图上添加若干个标记点，并批量的为各个标记点设置监听函数，使之显示我们所需要的信息</p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="创建工程"><a href="#创建工程" class="headerlink" title="创建工程"></a>创建工程</h3><p>首先，创建一个测试用的工程来测试我们的需要，可以使用<strong>pycharm</strong>或者<strong>django</strong>自带的命令创建工程<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">django-admin startproject addressdemo</div></pre></td></tr></table></figure></p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/编程/">编程</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django/">Django</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2017/05/17/django_address_baiduapi_marker_show/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -1069,7 +834,242 @@
 
       
         <p class="article-more-link">
-          <a href="/2017/05/17/django连接mysql数据库/#more">more >></a>
+          <a href="/2017/05/17/django连接mysql数据库/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Android_qq_Menu" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/05/17/Android_qq_Menu/" class="article-date">
+      <time datetime="2017-05-17T06:03:09.846Z" itemprop="datePublished">2017-05-17</time>
+</a>
+
+ 
+    <a href="/2017/05/17/Android_qq_Menu/#comments" title="查看评论">
+        <i class="fa fa-comments-o" aria-hidden="true"></i>
+        <span class="count-comment"></span>
+        
+            <span class="ds-thread-count"  data-thread-key="2017/05/17/Android_qq_Menu/" ></span>
+        
+        
+    </a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/17/Android_qq_Menu/">Android仿qq侧滑菜单</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>我们经常能看到各种app中都有应用侧滑菜单（SlidingMenu）,效果很好的一种显示方式，今天我就向大家展示可以说是很简单就能实现和qq的侧滑菜单很相似的效果。现在侧滑菜单的框架在github上也有很多，有兴趣的可以去搜一下，今天我就给大家展示一个简单的仿qq侧滑菜单的例子。</p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h3><p>我们可以自定义一个view，然后用一个水平滚动条HorizontalScrollView匹配父容器<br>原理如图:<img src="http://objects.earthchen.cn/qq_menu%E5%8E%9F%E7%90%86.png" alt="qq_menu原理"><br>要有这个HorizontalScrollView要有两倍屏幕的宽度，用这个Android自带的水平滚动条来实现左右滑动的效果。是不是很简单呢。原理就是这么简单。下面我将我的代码贴出来，大家可以参考，或修改。</p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/编程/">编程</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2017/05/17/Android_qq_Menu/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-django_rest_framework_jwt" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/05/17/django_rest_framework_jwt/" class="article-date">
+      <time datetime="2017-05-17T06:03:09.846Z" itemprop="datePublished">2017-05-17</time>
+</a>
+
+ 
+    <a href="/2017/05/17/django_rest_framework_jwt/#comments" title="查看评论">
+        <i class="fa fa-comments-o" aria-hidden="true"></i>
+        <span class="count-comment"></span>
+        
+            <span class="ds-thread-count"  data-thread-key="2017/05/17/django_rest_framework_jwt/" ></span>
+        
+        
+    </a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/17/django_rest_framework_jwt/">django-rest-framework配置json web token进行接口的认证</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>使用django-rest-framework开发api并使用json web token进行身份验证<br>在这里使用django-rest-framework-jwt这个库来帮助我们简单的使用jwt进行身份验证<br>并解决一些前后端分离而产生的跨域问题</p>
+<h2 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h2>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/编程/">编程</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django/">Django</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2017/05/17/django_rest_framework_jwt/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-C语言共享栈" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/05/17/C语言共享栈/" class="article-date">
+      <time datetime="2017-05-17T06:03:09.846Z" itemprop="datePublished">2017-05-17</time>
+</a>
+
+ 
+    <a href="/2017/05/17/C语言共享栈/#comments" title="查看评论">
+        <i class="fa fa-comments-o" aria-hidden="true"></i>
+        <span class="count-comment"></span>
+        
+            <span class="ds-thread-count"  data-thread-key="2017/05/17/C语言共享栈/" ></span>
+        
+        
+    </a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/17/C语言共享栈/">C语言共享栈</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>栈的操作我相信大家都应该了解了弄懂了，  如果没弄懂希望可以去再去看看相关的资料，我博客中的<a href="/2016/10/18/c%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8F%98%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F/">C语言中缀表达式转后缀表达式</a>中涉及到了一下栈的基本操作，有兴趣的朋友也可以看看。<br>所谓共享栈，就是两个栈共同使用一块内存空间，其中一个栈的栈底作为另一个栈的栈顶，反之亦然。</p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="思路分析"><a href="#思路分析" class="headerlink" title="思路分析"></a>思路分析</h3><blockquote>
+<p>因为两个栈公用一个空间，假设一个栈为0#，规定其为空时top[0]==-1；另一个栈为1#规定其为空时，top[1]==MaxSize；<br>入栈时，先确定栈号是否合法，然后查看是对0#栈还是1#栈进行操作，入栈操作和顺序栈的入栈操作并无太大不同。<br>选定之后进行入栈操作。这里应该注意此共享栈是否已满，如果已满则不能进行入栈操作。如若入栈成功则返回0；入栈失败则返回-1；<br>出栈时，先确定栈号是否合法，然后查看是对0#栈还是1#栈进行操作，出栈操作和顺序栈的出栈操作并无太大不同。<br>选定之后进行出栈操作。如果出栈成功返回0；出栈失败返回-1；<br>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/编程/">编程</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构/">数据结构</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2017/05/17/C语言共享栈/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
