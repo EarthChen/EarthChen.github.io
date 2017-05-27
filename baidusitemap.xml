@@ -5,11 +5,11 @@
     
   <url>
     <loc>http://earthchen.cn/2017/05/27/redis_study_2/</loc>
-    <lastmod>2017-05-26T16:24:22.733Z</lastmod>
+    <lastmod>2017-05-27T15:15:04.000Z</lastmod>
     <data>
         <display>
         <title>Redis学习笔记 -- 2</title>
-        <pubTime>2017-05-26T16:24:22.733Z</pubTime>
+        <pubTime>2017-05-27T15:15:04.584Z</pubTime>
         
         <tag>Redis</tag>
          
@@ -24,12 +24,12 @@
 
     
   <url>
-    <loc>http://earthchen.cn/2017/05/26/redis_study_1/</loc>
-    <lastmod>2017-05-26T15:00:20.364Z</lastmod>
+    <loc>http://earthchen.cn/2017/05/27/redis_study_1/</loc>
+    <lastmod>2017-05-27T15:14:57.000Z</lastmod>
     <data>
         <display>
         <title>Redis学习笔记 -- 1</title>
-        <pubTime>2017-05-26T15:00:20.362Z</pubTime>
+        <pubTime>2017-05-27T15:14:57.396Z</pubTime>
         
         <tag>Redis</tag>
          
@@ -367,11 +367,11 @@
         <title>利用hexo和github或coding 搭免费个人博客</title>
         <pubTime>2017-05-17T06:03:09.842Z</pubTime>
         
-        <tag>Git</tag>
-         
         <tag>Node.js</tag>
          
         <tag>Hexo</tag>
+         
+        <tag>Git</tag>
          
         <tag>JavaScript</tag>
          
