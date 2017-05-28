@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>http://earthchen.cn/2017/05/28/%E8%B5%84%E6%BA%90%E6%94%B6%E9%9B%86/</loc>
+    <lastmod>2017-05-28T15:58:28.000Z</lastmod>
+    <data>
+        <display>
+        <title>资源收集共享</title>
+        <pubTime>2017-05-28T15:58:28.606Z</pubTime>
+        
+        <tag>资源</tag>
+         
+         
+           
+             
+              <breadCrumb title="随笔" url="http://earthchen.cn/categories/%E9%9A%8F%E7%AC%94/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://earthchen.cn/2017/05/27/redis_study_2/</loc>
     <lastmod>2017-05-27T15:15:04.000Z</lastmod>
     <data>
@@ -37,26 +57,6 @@
            
              
               <breadCrumb title="编程" url="http://earthchen.cn/categories/%E7%BC%96%E7%A8%8B/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://earthchen.cn/2017/05/26/%E8%B5%84%E6%BA%90%E6%94%B6%E9%9B%86/</loc>
-    <lastmod>2017-05-26T09:43:36.000Z</lastmod>
-    <data>
-        <display>
-        <title>资源收集共享</title>
-        <pubTime>2017-05-26T09:43:36.653Z</pubTime>
-        
-        <tag>资源</tag>
-         
-         
-           
-             
-              <breadCrumb title="随笔" url="http://earthchen.cn/categories/%E9%9A%8F%E7%AC%94/"/>
           
         </display>
     </data>
@@ -367,11 +367,11 @@
         <title>利用hexo和github或coding 搭免费个人博客</title>
         <pubTime>2017-05-17T06:03:09.842Z</pubTime>
         
+        <tag>Git</tag>
+         
         <tag>Node.js</tag>
          
         <tag>Hexo</tag>
-         
-        <tag>Git</tag>
          
         <tag>JavaScript</tag>
          

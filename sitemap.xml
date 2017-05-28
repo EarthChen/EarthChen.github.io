@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://earthchen.cn/2017/05/28/%E8%B5%84%E6%BA%90%E6%94%B6%E9%9B%86/</loc>
+    
+    <lastmod>2017-05-28T15:58:28.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://earthchen.cn/2017/05/27/redis_study_2/</loc>
     
     <lastmod>2017-05-27T15:15:04.000Z</lastmod>
@@ -12,13 +19,6 @@
     <loc>http://earthchen.cn/2017/05/27/redis_study_1/</loc>
     
     <lastmod>2017-05-27T15:14:57.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://earthchen.cn/2017/05/26/%E8%B5%84%E6%BA%90%E6%94%B6%E9%9B%86/</loc>
-    
-    <lastmod>2017-05-26T09:43:36.000Z</lastmod>
     
   </url>
   
