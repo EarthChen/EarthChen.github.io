@@ -162,13 +162,13 @@
                 <div class="tips-box hide">
                     <div class="tips-arrow"></div>
                     <ul class="tips-inner">
-                        <li>Menu</li>
-                        <li>Tags</li>
+                        <li>菜单</li>
+                        <li>标签</li>
                         
-                        <li>Friends</li>
+                        <li>友情链接</li>
                         
                         
-                        <li>About Me</li>
+                        <li>关于我</li>
                         
                     </ul>
                 </div>
@@ -294,9 +294,88 @@
             </nav>
         </header>                
     </div>
-    <link class="menu-list" tags="Tags" friends="Friends" about="About Me"/>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-django_rest_framework_study" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/05/17/django_rest_framework_study/" class="article-date">
+      <time datetime="2017-05-17T06:03:09.850Z" itemprop="datePublished">2017-05-17</time>
+</a>
+
+ 
+    <a href="/2017/05/17/django_rest_framework_study/#comments" title="查看评论">
+        <i class="fa fa-comments-o" aria-hidden="true"></i>
+        <span class="count-comment"></span>
+        
+            <span class="ds-thread-count"  data-thread-key="2017/05/17/django_rest_framework_study/" ></span>
+        
+        
+    </a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/17/django_rest_framework_study/">django-rest-framework框架学习</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>现在新一代web应用都开始采用前后端分离的方式来进行，淘汰了以前的服务器端渲染的方式。前后端分离方式有许多好处，比如<br>1、可以前后端并行开发，提高开发效率<br>2、页面都在客户端进行渲染，提高了渲染速度，减小了服务器的压力<br>3、一套api提供给多个客户端使用，而且不限制客户端的类型（web，app均可）</p>
+<p>提到前后端分离必然会提到restful，目标这是最流行的接口规范，想要了解的可以去<a href="http://www.ruanyifeng.com/blog/2011/09/restful" target="_blank" rel="external">阮老师的博客</a>看一下<br>越来越多的大型应用开始使用restful规范，restful强调一种无状态，资源的方式<br>在django中很著名的一个框架是django-rest-framework，帮我们减少了很多工作量，尤其在序列化与反序列化成我们需要的格式帮了我们省了很多事<br>在这里就记录一下个人的学习过程</p>
+<h2 id="django-rest-framework"><a href="#django-rest-framework" class="headerlink" title="django-rest-framework"></a>django-rest-framework</h2>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/编程/">编程</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django/">Django</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2017/05/17/django_rest_framework_study/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-django常用语句" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -306,7 +385,7 @@
 </a>
 
  
-    <a href="/2017/05/17/django常用语句/#comments" title="Comments">
+    <a href="/2017/05/17/django常用语句/#comments" title="查看评论">
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
@@ -380,163 +459,6 @@
 
 
   
-    <article id="post-django数据库操作" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/05/17/django数据库操作/" class="article-date">
-      <time datetime="2017-05-17T06:03:09.850Z" itemprop="datePublished">2017-05-17</time>
-</a>
-
- 
-    <a href="/2017/05/17/django数据库操作/#comments" title="Comments">
-        <i class="fa fa-comments-o" aria-hidden="true"></i>
-        <span class="count-comment"></span>
-        
-            <span class="ds-thread-count"  data-thread-key="2017/05/17/django数据库操作/" ></span>
-        
-        
-    </a>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/05/17/django数据库操作/">Django操作数据库</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>本篇主要介绍我们在使用django框架开发的时候使用的操作数据库的语句，这在动态网站部分是很重要的，因为我们需要连接数据库进行操作，然后把数据处理的结果显示在前端页面上，在其他地方我们都是直接用sql语句来手动输入，这样容易造成错误，还影响效率，在django中，内置了很多处理数据库操作的函数，能更便利的帮我们操作数据库</p>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="实例代码"><a href="#实例代码" class="headerlink" title="实例代码"></a>实例代码</h3><p><strong>models.py</strong><br>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/编程/">编程</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django/">Django</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2017/05/17/django数据库操作/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-ubuntu_supervisor" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/05/17/ubuntu_supervisor/" class="article-date">
-      <time datetime="2017-05-17T06:03:09.850Z" itemprop="datePublished">2017-05-17</time>
-</a>
-
- 
-    <a href="/2017/05/17/ubuntu_supervisor/#comments" title="Comments">
-        <i class="fa fa-comments-o" aria-hidden="true"></i>
-        <span class="count-comment"></span>
-        
-            <span class="ds-thread-count"  data-thread-key="2017/05/17/ubuntu_supervisor/" ></span>
-        
-        
-    </a>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/05/17/ubuntu_supervisor/">ubuntu下的进程控制系统————Supervisor</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>我们在部署网站或者在ssh到服务器上去进行一些长时间操作的任务时候，通常不喜欢长时间开启终端在其中等待，尤其是Windows下putty这类软件，长时间不操作就会结束，尴尬的是，我们跑的进程也会直接终端，为了解决这个问题，我们需要把进程扔到后台，让他自己运行</p>
-<p>在这里我们介绍一个名叫<strong>Supervisor</strong>的进程控制系统，<br>它是一个C/S系统(注意: 其提供WEB接口给用户查询和控制), 它允许用户去监控和控制在类UNIX系统的进程. 它的目标与launchd, daemontools和runit有些相似, 但是与它们不一样的是, 它不是作为init(进程号pid是1)运行. 它是被用来控制进程, 并且它在启动的时候和一般程序并无二致<br>supervisor是一个制作守护进程的工具,用户可以在UNIX系统中监控、管理进程。常用于管理与某个用户或项目相关的进程。去帮我们维护各种服务器的进程，即使有软件崩了也能帮我们自动重启</p>
-<h2 id="Supervisor"><a href="#Supervisor" class="headerlink" title="Supervisor"></a>Supervisor</h2>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/编程/">编程</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2017/05/17/ubuntu_supervisor/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
     <article id="post-git_study" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -545,7 +467,7 @@
 </a>
 
  
-    <a href="/2017/05/17/git_study/#comments" title="Comments">
+    <a href="/2017/05/17/git_study/#comments" title="查看评论">
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
@@ -615,6 +537,162 @@
 
 
   
+    <article id="post-django数据库操作" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/05/17/django数据库操作/" class="article-date">
+      <time datetime="2017-05-17T06:03:09.850Z" itemprop="datePublished">2017-05-17</time>
+</a>
+
+ 
+    <a href="/2017/05/17/django数据库操作/#comments" title="查看评论">
+        <i class="fa fa-comments-o" aria-hidden="true"></i>
+        <span class="count-comment"></span>
+        
+            <span class="ds-thread-count"  data-thread-key="2017/05/17/django数据库操作/" ></span>
+        
+        
+    </a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/17/django数据库操作/">Django操作数据库</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>本篇主要介绍我们在使用django框架开发的时候使用的操作数据库的语句，这在动态网站部分是很重要的，因为我们需要连接数据库进行操作，然后把数据处理的结果显示在前端页面上，在其他地方我们都是直接用sql语句来手动输入，这样容易造成错误，还影响效率，在django中，内置了很多处理数据库操作的函数，能更便利的帮我们操作数据库</p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="实例代码"><a href="#实例代码" class="headerlink" title="实例代码"></a>实例代码</h3><p><strong>models.py</strong><br>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/编程/">编程</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django/">Django</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2017/05/17/django数据库操作/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-ubuntu_do_something_use" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/05/17/ubuntu_do_something_use/" class="article-date">
+      <time datetime="2017-05-17T06:03:09.846Z" itemprop="datePublished">2017-05-17</time>
+</a>
+
+ 
+    <a href="/2017/05/17/ubuntu_do_something_use/#comments" title="查看评论">
+        <i class="fa fa-comments-o" aria-hidden="true"></i>
+        <span class="count-comment"></span>
+        
+            <span class="ds-thread-count"  data-thread-key="2017/05/17/ubuntu_do_something_use/" ></span>
+        
+        
+    </a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/17/ubuntu_do_something_use/">ubuntu日常使用的安装配置</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>本文将继续上篇<a href="http://earthchen.cn/2017/03/10/ubuntu_do_something_coding/">ubuntu搭建常见开发环境</a><br>上篇介绍了一些关于开发环境的配置，这篇我们来总结一下日常使用中所需要安装和配置的一些东西<br>比如一些中文输入法、浏览器、flash、科学上网等等。。。。。</p>
+<h2 id="日常使用软件的安装与配置"><a href="#日常使用软件的安装与配置" class="headerlink" title="日常使用软件的安装与配置"></a>日常使用软件的安装与配置</h2>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/编程/">编程</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2017/05/17/ubuntu_do_something_use/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-django_address_baiduapi_marker_show" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -623,7 +701,7 @@
 </a>
 
  
-    <a href="/2017/05/17/django_address_baiduapi_marker_show/#comments" title="Comments">
+    <a href="/2017/05/17/django_address_baiduapi_marker_show/#comments" title="查看评论">
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
@@ -701,7 +779,7 @@
 </a>
 
  
-    <a href="/2017/05/17/Android_qq_Menu/#comments" title="Comments">
+    <a href="/2017/05/17/Android_qq_Menu/#comments" title="查看评论">
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
@@ -771,240 +849,6 @@
 
 
   
-    <article id="post-django_rest_framework_jwt" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/05/17/django_rest_framework_jwt/" class="article-date">
-      <time datetime="2017-05-17T06:03:09.846Z" itemprop="datePublished">2017-05-17</time>
-</a>
-
- 
-    <a href="/2017/05/17/django_rest_framework_jwt/#comments" title="Comments">
-        <i class="fa fa-comments-o" aria-hidden="true"></i>
-        <span class="count-comment"></span>
-        
-            <span class="ds-thread-count"  data-thread-key="2017/05/17/django_rest_framework_jwt/" ></span>
-        
-        
-    </a>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/05/17/django_rest_framework_jwt/">django-rest-framework配置json web token进行接口的认证</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>使用django-rest-framework开发api并使用json web token进行身份验证<br>在这里使用django-rest-framework-jwt这个库来帮助我们简单的使用jwt进行身份验证<br>并解决一些前后端分离而产生的跨域问题</p>
-<h2 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h2>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/编程/">编程</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django/">Django</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2017/05/17/django_rest_framework_jwt/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-ubuntu_do_something_use" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/05/17/ubuntu_do_something_use/" class="article-date">
-      <time datetime="2017-05-17T06:03:09.846Z" itemprop="datePublished">2017-05-17</time>
-</a>
-
- 
-    <a href="/2017/05/17/ubuntu_do_something_use/#comments" title="Comments">
-        <i class="fa fa-comments-o" aria-hidden="true"></i>
-        <span class="count-comment"></span>
-        
-            <span class="ds-thread-count"  data-thread-key="2017/05/17/ubuntu_do_something_use/" ></span>
-        
-        
-    </a>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/05/17/ubuntu_do_something_use/">ubuntu日常使用的安装配置</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>本文将继续上篇<a href="http://earthchen.cn/2017/03/10/ubuntu_do_something_coding/">ubuntu搭建常见开发环境</a><br>上篇介绍了一些关于开发环境的配置，这篇我们来总结一下日常使用中所需要安装和配置的一些东西<br>比如一些中文输入法、浏览器、flash、科学上网等等。。。。。</p>
-<h2 id="日常使用软件的安装与配置"><a href="#日常使用软件的安装与配置" class="headerlink" title="日常使用软件的安装与配置"></a>日常使用软件的安装与配置</h2>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/编程/">编程</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2017/05/17/ubuntu_do_something_use/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-django连接mysql数据库" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/05/17/django连接mysql数据库/" class="article-date">
-      <time datetime="2017-05-17T06:03:09.846Z" itemprop="datePublished">2017-05-17</time>
-</a>
-
- 
-    <a href="/2017/05/17/django连接mysql数据库/#comments" title="Comments">
-        <i class="fa fa-comments-o" aria-hidden="true"></i>
-        <span class="count-comment"></span>
-        
-            <span class="ds-thread-count"  data-thread-key="2017/05/17/django连接mysql数据库/" ></span>
-        
-        
-    </a>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/05/17/django连接mysql数据库/">Django连接MySql使用models处理数据</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>在页面上显示内容可以简单的用django.http.HttpResponse来显示我们需要的内容，但是当我们需要一些处理一些复杂的数据或者从数据库读出来的操作要显示在html标签内或者js代码中就需要用渲染模板的方法。</p>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="创建工程"><a href="#创建工程" class="headerlink" title="创建工程"></a>创建工程</h3><p>首先，使用一下代码创建一个名为DjangoModels的工程(读者可以根据需要设置自己的工程名)：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">django-admin startproject DjangoModels</div></pre></td></tr></table></figure></p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/编程/">编程</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django/">Django</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2017/05/17/django连接mysql数据库/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
     <article id="post-C语言共享栈" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -1013,7 +857,7 @@
 </a>
 
  
-    <a href="/2017/05/17/C语言共享栈/#comments" title="Comments">
+    <a href="/2017/05/17/C语言共享栈/#comments" title="查看评论">
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
@@ -1084,6 +928,171 @@
 
 
   
+    <article id="post-django环境搭建" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/05/17/django环境搭建/" class="article-date">
+      <time datetime="2017-05-17T06:03:09.846Z" itemprop="datePublished">2017-05-17</time>
+</a>
+
+ 
+    <a href="/2017/05/17/django环境搭建/#comments" title="查看评论">
+        <i class="fa fa-comments-o" aria-hidden="true"></i>
+        <span class="count-comment"></span>
+        
+            <span class="ds-thread-count"  data-thread-key="2017/05/17/django环境搭建/" ></span>
+        
+        
+    </a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/17/django环境搭建/">Django环境搭建</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>大家搜索django并看到本文的时候，相信已经知道django是用来干嘛的了，我也就不在多说废话了。django是一个新一代的web框架基于Python，它可以让你专注于内部逻辑而不用考虑许多外部因素也能很容易的调用本地静态文件。。 Web框架为应用程序提供了一套程序框架， 这样你可以专注于编写清晰、易维护的代码，而无需从头做起。 简单来说，这就是Django所能做的。django自带后台和登录系统，还有很多模板，降低耦合度，当你能理解django的精髓的时候你就会觉得开发一个网站是如此简单。</p>
+<blockquote>
+<p>学习django，我们首先要有有一些基础知识</p>
+<ul>
+<li>html</li>
+<li>css</li>
+<li>jss</li>
+<li>python</li>
+<li>mysql(或者其他数据库，django自带SQLite)</li>
+</ul>
+</blockquote>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/编程/">编程</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django/">Django</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2017/05/17/django环境搭建/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-django_rest_framework_jwt" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/05/17/django_rest_framework_jwt/" class="article-date">
+      <time datetime="2017-05-17T06:03:09.846Z" itemprop="datePublished">2017-05-17</time>
+</a>
+
+ 
+    <a href="/2017/05/17/django_rest_framework_jwt/#comments" title="查看评论">
+        <i class="fa fa-comments-o" aria-hidden="true"></i>
+        <span class="count-comment"></span>
+        
+            <span class="ds-thread-count"  data-thread-key="2017/05/17/django_rest_framework_jwt/" ></span>
+        
+        
+    </a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/17/django_rest_framework_jwt/">django-rest-framework配置json web token进行接口的认证</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>使用django-rest-framework开发api并使用json web token进行身份验证<br>在这里使用django-rest-framework-jwt这个库来帮助我们简单的使用jwt进行身份验证<br>并解决一些前后端分离而产生的跨域问题</p>
+<h2 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h2>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/编程/">编程</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django/">Django</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2017/05/17/django_rest_framework_jwt/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
@@ -1099,7 +1108,7 @@
             </div>
             <div class="footer-right">
                 <a href="http://www.miitbeian.gov.cn/">皖ICP备17009043号</a>&nbsp;&nbsp;
-                <a href="http://hexo.io/" target="_blank" title="A fast, simple &amp; powerful blog framework">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Another simple and elegant theme for Hexo  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
             </div>
         </div>
 
@@ -1107,7 +1116,7 @@
             <div class="visit">
                 
                     <span id="busuanzi_container_site_pv" style='display:none'>
-                        <span id="site-visit" title="Site Visitors"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
                         </span>
                     </span>
                 
@@ -1116,7 +1125,7 @@
                 
                 
                     <span id="busuanzi_container_page_pv" style='display:none'>
-                        <span id="page-visit"  title="Page Hits"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
                         </span>
                     </span>
                 
@@ -1176,9 +1185,9 @@
 
 
 <div class="scroll" id="scroll">
-    <a href="#" title="Back to Top"><i class="fa fa-arrow-up"></i></a>
-    <a href="#comments" onclick="load$hide();" title="Comments"><i class="fa fa-comments-o"></i></a>
-    <a href="#footer" title="Go to Bottom"><i class="fa fa-arrow-down"></i></a>
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
 </div>
 <script>
     // Open in New Window
