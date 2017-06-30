@@ -162,13 +162,13 @@
                 <div class="tips-box hide">
                     <div class="tips-arrow"></div>
                     <ul class="tips-inner">
-                        <li>菜单</li>
-                        <li>标签</li>
+                        <li>Menu</li>
+                        <li>Tags</li>
                         
-                        <li>友情链接</li>
+                        <li>Friends</li>
                         
                         
-                        <li>关于我</li>
+                        <li>About Me</li>
                         
                     </ul>
                 </div>
@@ -294,23 +294,23 @@
             </nav>
         </header>                
     </div>
-    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+    <link class="menu-list" tags="Tags" friends="Friends" about="About Me"/>
 </nav>
       <div class="body-wrap">
   
-    <article id="post-ubuntu_do_something_use" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-ubuntu_supervisor" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/06/14/ubuntu_do_something_use/" class="article-date">
-      <time datetime="2017-06-14T14:38:34.251Z" itemprop="datePublished">2017-06-14</time>
+      <a href="/2017/06/30/ubuntu_supervisor/" class="article-date">
+      <time datetime="2017-06-30T06:42:31.960Z" itemprop="datePublished">2017-06-30</time>
 </a>
 
  
-    <a href="/2017/06/14/ubuntu_do_something_use/#comments" title="查看评论">
+    <a href="/2017/06/30/ubuntu_supervisor/#comments" title="Comments">
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
-            <span class="ds-thread-count"  data-thread-key="2017/06/14/ubuntu_do_something_use/" ></span>
+            <span class="ds-thread-count"  data-thread-key="2017/06/30/ubuntu_supervisor/" ></span>
         
         
     </a>
@@ -326,7 +326,164 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/14/ubuntu_do_something_use/">ubuntu日常使用的安装配置</a>
+      <a class="article-title" href="/2017/06/30/ubuntu_supervisor/">ubuntu下的进程控制系统————Supervisor</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>我们在部署网站或者在ssh到服务器上去进行一些长时间操作的任务时候，通常不喜欢长时间开启终端在其中等待，尤其是Windows下putty这类软件，长时间不操作就会结束，尴尬的是，我们跑的进程也会直接终端，为了解决这个问题，我们需要把进程扔到后台，让他自己运行</p>
+<p>在这里我们介绍一个名叫<strong>Supervisor</strong>的进程控制系统，<br>它是一个C/S系统(注意: 其提供WEB接口给用户查询和控制), 它允许用户去监控和控制在类UNIX系统的进程. 它的目标与launchd, daemontools和runit有些相似, 但是与它们不一样的是, 它不是作为init(进程号pid是1)运行. 它是被用来控制进程, 并且它在启动的时候和一般程序并无二致<br>supervisor是一个制作守护进程的工具,用户可以在UNIX系统中监控、管理进程。常用于管理与某个用户或项目相关的进程。去帮我们维护各种服务器的进程，即使有软件崩了也能帮我们自动重启</p>
+<h2 id="Supervisor"><a href="#Supervisor" class="headerlink" title="Supervisor"></a>Supervisor</h2>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/运维/">运维</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2017/06/30/ubuntu_supervisor/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-ubuntu_open_port" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/06/30/ubuntu_open_port/" class="article-date">
+      <time datetime="2017-06-30T06:42:27.676Z" itemprop="datePublished">2017-06-30</time>
+</a>
+
+ 
+    <a href="/2017/06/30/ubuntu_open_port/#comments" title="Comments">
+        <i class="fa fa-comments-o" aria-hidden="true"></i>
+        <span class="count-comment"></span>
+        
+            <span class="ds-thread-count"  data-thread-key="2017/06/30/ubuntu_open_port/" ></span>
+        
+        
+    </a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/30/ubuntu_open_port/">ubuntu开放指定端口</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>今天在服务器上开启web服务让别人访问的时候遇到一些问题，在内网中别人使用ip加端口访问的时候一直访问不到，折腾了半天，发现原来使端口没开放<br>了解到一般linux中端口都是默认关闭的，需要开启的时候需要自己开启</p>
+<h2 id="开放端口"><a href="#开放端口" class="headerlink" title="开放端口"></a>开放端口</h2>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/运维/">运维</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2017/06/30/ubuntu_open_port/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-ubuntu_do_something_use" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/06/30/ubuntu_do_something_use/" class="article-date">
+      <time datetime="2017-06-30T06:42:20.880Z" itemprop="datePublished">2017-06-30</time>
+</a>
+
+ 
+    <a href="/2017/06/30/ubuntu_do_something_use/#comments" title="Comments">
+        <i class="fa fa-comments-o" aria-hidden="true"></i>
+        <span class="count-comment"></span>
+        
+            <span class="ds-thread-count"  data-thread-key="2017/06/30/ubuntu_do_something_use/" ></span>
+        
+        
+    </a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/30/ubuntu_do_something_use/">ubuntu日常使用的安装配置</a>
     </h1>
   
 
@@ -346,7 +503,7 @@
       
       
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/编程/">编程</a>
+    <a class="article-category-link" href="/categories/随笔/">随笔</a>
     </div>
 
 
@@ -357,7 +514,7 @@
 
       
         <p class="article-more-link">
-          <a href="/2017/06/14/ubuntu_do_something_use/#more">more >></a>
+          <a href="/2017/06/30/ubuntu_do_something_use/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -376,19 +533,19 @@
 
 
   
-    <article id="post-ubuntu修复不能挂载NTFS硬盘" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-ubuntu_do_something_coding" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/06/12/ubuntu修复不能挂载NTFS硬盘/" class="article-date">
-      <time datetime="2017-06-12T13:49:41.113Z" itemprop="datePublished">2017-06-12</time>
+      <a href="/2017/06/30/ubuntu_do_something_coding/" class="article-date">
+      <time datetime="2017-06-30T06:41:55.120Z" itemprop="datePublished">2017-06-30</time>
 </a>
 
  
-    <a href="/2017/06/12/ubuntu修复不能挂载NTFS硬盘/#comments" title="查看评论">
+    <a href="/2017/06/30/ubuntu_do_something_coding/#comments" title="Comments">
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
-            <span class="ds-thread-count"  data-thread-key="2017/06/12/ubuntu修复不能挂载NTFS硬盘/" ></span>
+            <span class="ds-thread-count"  data-thread-key="2017/06/30/ubuntu_do_something_coding/" ></span>
         
         
     </a>
@@ -404,7 +561,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/12/ubuntu修复不能挂载NTFS硬盘/">ubuntu修复linux和windows双系统下挂载ntfs硬盘出错问题</a>
+      <a class="article-title" href="/2017/06/30/ubuntu_do_something_coding/">ubuntu搭建常见开发环境</a>
     </h1>
   
 
@@ -414,7 +571,10 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <p>在windows和Ubuntu双系统下，在打开Windows后，在进入linux时，在去访问windows的ntfs分区经常会出现不能挂载问题，<br>出现 Error mounting /dev/sda8 at /media/my/XXX: Command-line `mount -t “ntfs” -o错误，以下给出对此的解决方案</p>
+              <p>由于之前使用Ubuntu16.10桌面版系统蹦了好几天，因此我也装了好几次系统了，每次都要百度或google查很多东西，去配置开发环境或使用环境，到处搜觉得很麻烦，所以，本文就总结一下Ubuntu安装好之后需要做的一些事，以及常规配置习惯</p>
+<p>在装了几次系统之后我最后还是决定降一个系统版本。。使用<strong>Ubuntu16.04lts</strong>长期维护版，希望能稳定一些吧。。。。。实在是有点伤了</p>
+<p>文本以Ubuntu16.04桌面版为环境介绍</p>
+<h2 id="常用编程环境搭建"><a href="#常用编程环境搭建" class="headerlink" title="常用编程环境搭建"></a>常用编程环境搭建</h2>
           
       
     </div>
@@ -423,95 +583,18 @@
       
       
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/随笔/">随笔</a>
+    <a class="article-category-link" href="/categories/开发/">开发</a>
     </div>
 
 
       
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/解决方案/">解决方案</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
     </div>
 
       
         <p class="article-more-link">
-          <a href="/2017/06/12/ubuntu修复不能挂载NTFS硬盘/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-资源收集" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/06/03/资源收集/" class="article-date">
-      <time datetime="2017-06-03T03:56:34.004Z" itemprop="datePublished">2017-06-03</time>
-</a>
-
- 
-    <a href="/2017/06/03/资源收集/#comments" title="查看评论">
-        <i class="fa fa-comments-o" aria-hidden="true"></i>
-        <span class="count-comment"></span>
-        
-            <span class="ds-thread-count"  data-thread-key="2017/06/03/资源收集/" ></span>
-        
-        
-    </a>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/03/资源收集/">资源收集共享</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>日常发现好资源，在此记录下，长期更新</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/随笔/">随笔</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/资源/">资源</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2017/06/03/资源收集/#more">more >></a>
+          <a href="/2017/06/30/ubuntu_do_something_coding/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -533,16 +616,16 @@
     <article id="post-spring_SpEL" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/05/29/spring_SpEL/" class="article-date">
-      <time datetime="2017-05-29T12:55:21.739Z" itemprop="datePublished">2017-05-29</time>
+      <a href="/2017/06/30/spring_SpEL/" class="article-date">
+      <time datetime="2017-06-30T06:41:20.620Z" itemprop="datePublished">2017-06-30</time>
 </a>
 
  
-    <a href="/2017/05/29/spring_SpEL/#comments" title="查看评论">
+    <a href="/2017/06/30/spring_SpEL/#comments" title="Comments">
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
-            <span class="ds-thread-count"  data-thread-key="2017/05/29/spring_SpEL/" ></span>
+            <span class="ds-thread-count"  data-thread-key="2017/06/30/spring_SpEL/" ></span>
         
         
     </a>
@@ -558,7 +641,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/05/29/spring_SpEL/">spring中的SpEL表达式</a>
+      <a class="article-title" href="/2017/06/30/spring_SpEL/">spring中的SpEL表达式</a>
     </h1>
   
 
@@ -585,7 +668,7 @@
       
       
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/编程/">编程</a>
+    <a class="article-category-link" href="/categories/学习笔记/">学习笔记</a>
     </div>
 
 
@@ -596,7 +679,7 @@
 
       
         <p class="article-more-link">
-          <a href="/2017/05/29/spring_SpEL/#more">more >></a>
+          <a href="/2017/06/30/spring_SpEL/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -618,16 +701,16 @@
     <article id="post-redis_study_2" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/05/27/redis_study_2/" class="article-date">
-      <time datetime="2017-05-27T15:15:04.584Z" itemprop="datePublished">2017-05-27</time>
+      <a href="/2017/06/30/redis_study_2/" class="article-date">
+      <time datetime="2017-06-30T06:41:12.940Z" itemprop="datePublished">2017-06-30</time>
 </a>
 
  
-    <a href="/2017/05/27/redis_study_2/#comments" title="查看评论">
+    <a href="/2017/06/30/redis_study_2/#comments" title="Comments">
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
-            <span class="ds-thread-count"  data-thread-key="2017/05/27/redis_study_2/" ></span>
+            <span class="ds-thread-count"  data-thread-key="2017/06/30/redis_study_2/" ></span>
         
         
     </a>
@@ -643,7 +726,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/05/27/redis_study_2/">Redis学习笔记 -- 2</a>
+      <a class="article-title" href="/2017/06/30/redis_study_2/">Redis学习笔记 -- 2</a>
     </h1>
   
 
@@ -663,7 +746,7 @@
       
       
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/编程/">编程</a>
+    <a class="article-category-link" href="/categories/学习笔记/">学习笔记</a>
     </div>
 
 
@@ -674,7 +757,7 @@
 
       
         <p class="article-more-link">
-          <a href="/2017/05/27/redis_study_2/#more">more >></a>
+          <a href="/2017/06/30/redis_study_2/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -696,16 +779,16 @@
     <article id="post-redis_study_1" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/05/27/redis_study_1/" class="article-date">
-      <time datetime="2017-05-27T15:14:57.396Z" itemprop="datePublished">2017-05-27</time>
+      <a href="/2017/06/30/redis_study_1/" class="article-date">
+      <time datetime="2017-06-30T06:41:05.468Z" itemprop="datePublished">2017-06-30</time>
 </a>
 
  
-    <a href="/2017/05/27/redis_study_1/#comments" title="查看评论">
+    <a href="/2017/06/30/redis_study_1/#comments" title="Comments">
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
-            <span class="ds-thread-count"  data-thread-key="2017/05/27/redis_study_1/" ></span>
+            <span class="ds-thread-count"  data-thread-key="2017/06/30/redis_study_1/" ></span>
         
         
     </a>
@@ -721,7 +804,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/05/27/redis_study_1/">Redis学习笔记 -- 1</a>
+      <a class="article-title" href="/2017/06/30/redis_study_1/">Redis学习笔记 -- 1</a>
     </h1>
   
 
@@ -741,7 +824,7 @@
       
       
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/编程/">编程</a>
+    <a class="article-category-link" href="/categories/学习笔记/">学习笔记</a>
     </div>
 
 
@@ -752,7 +835,7 @@
 
       
         <p class="article-more-link">
-          <a href="/2017/05/27/redis_study_1/#more">more >></a>
+          <a href="/2017/06/30/redis_study_1/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -771,19 +854,19 @@
 
 
   
-    <article id="post-ubuntu安装在双系统笔记本下开机或关机卡死.1" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-python2和Python3的区别" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/05/26/ubuntu安装在双系统笔记本下开机或关机卡死.1/" class="article-date">
-      <time datetime="2017-05-26T09:32:09.867Z" itemprop="datePublished">2017-05-26</time>
+      <a href="/2017/06/30/python2和Python3的区别/" class="article-date">
+      <time datetime="2017-06-30T06:40:59.080Z" itemprop="datePublished">2017-06-30</time>
 </a>
 
  
-    <a href="/2017/05/26/ubuntu安装在双系统笔记本下开机或关机卡死.1/#comments" title="查看评论">
+    <a href="/2017/06/30/python2和Python3的区别/#comments" title="Comments">
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
-            <span class="ds-thread-count"  data-thread-key="2017/05/26/ubuntu安装在双系统笔记本下开机或关机卡死.1/" ></span>
+            <span class="ds-thread-count"  data-thread-key="2017/06/30/python2和Python3的区别/" ></span>
         
         
     </a>
@@ -799,7 +882,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/05/26/ubuntu安装在双系统笔记本下开机或关机卡死.1/">ubuntu在双系统下开机卡死或关机卡死的解决办法</a>
+      <a class="article-title" href="/2017/06/30/python2和Python3的区别/">Python2和Python3的区别简单总结</a>
     </h1>
   
 
@@ -809,7 +892,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <p>很多双显卡的笔记本在安装linux发行版的时候可能会出现问题，<br>笔者的电脑如果不在bios设置中设置屏蔽核显就会开机卡主，所以装系统时必须得屏蔽核显，全局独显，不然进系统就卡死，关机也关不掉，<br>刚开始也就这么用着，但是慢慢发现一点问题，，就是耗电特别快，</p>
+              <p>Python是一种新的计算机语言，也是最近两年才开始大火的一种语言，它够优雅，写起来可以随心所欲，不用担心没有定义，没有声明这些其他计算机语言都需要考虑的问题,单自从更新Python3.x版本之后，很多人开始头疼，因为Python3很多地方并不兼容Python2，有人夸张的说Python3是一门新的语言，我觉得没有那么夸张，本文就剧一下我遇到的和一些知道的区别吧</p>
           
       
     </div>
@@ -818,96 +901,18 @@
       
       
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/随笔/">随笔</a>
+    <a class="article-category-link" href="/categories/学习笔记/">学习笔记</a>
     </div>
 
 
       
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/解决方案/">解决方案</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
     </div>
 
       
         <p class="article-more-link">
-          <a href="/2017/05/26/ubuntu安装在双系统笔记本下开机或关机卡死.1/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-ubuntu_open_port" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/05/17/ubuntu_open_port/" class="article-date">
-      <time datetime="2017-05-17T07:18:10.917Z" itemprop="datePublished">2017-05-17</time>
-</a>
-
- 
-    <a href="/2017/05/17/ubuntu_open_port/#comments" title="查看评论">
-        <i class="fa fa-comments-o" aria-hidden="true"></i>
-        <span class="count-comment"></span>
-        
-            <span class="ds-thread-count"  data-thread-key="2017/05/17/ubuntu_open_port/" ></span>
-        
-        
-    </a>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/05/17/ubuntu_open_port/">ubuntu开放指定端口</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>今天在服务器上开启web服务让别人访问的时候遇到一些问题，在内网中别人使用ip加端口访问的时候一直访问不到，折腾了半天，发现原来使端口没开放<br>了解到一般linux中端口都是默认关闭的，需要开启的时候需要自己开启</p>
-<h2 id="开放端口"><a href="#开放端口" class="headerlink" title="开放端口"></a>开放端口</h2>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/编程/">编程</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2017/05/17/ubuntu_open_port/#more">more >></a>
+          <a href="/2017/06/30/python2和Python3的区别/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -929,16 +934,16 @@
     <article id="post-python_requirements" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/05/17/python_requirements/" class="article-date">
-      <time datetime="2017-05-17T06:03:09.854Z" itemprop="datePublished">2017-05-17</time>
+      <a href="/2017/06/30/python_requirements/" class="article-date">
+      <time datetime="2017-06-30T06:40:54.572Z" itemprop="datePublished">2017-06-30</time>
 </a>
 
  
-    <a href="/2017/05/17/python_requirements/#comments" title="查看评论">
+    <a href="/2017/06/30/python_requirements/#comments" title="Comments">
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
-            <span class="ds-thread-count"  data-thread-key="2017/05/17/python_requirements/" ></span>
+            <span class="ds-thread-count"  data-thread-key="2017/06/30/python_requirements/" ></span>
         
         
     </a>
@@ -954,7 +959,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/05/17/python_requirements/">python生成项目所需依赖文件</a>
+      <a class="article-title" href="/2017/06/30/python_requirements/">python生成项目所需依赖文件</a>
     </h1>
   
 
@@ -974,7 +979,7 @@
       
       
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/编程/">编程</a>
+    <a class="article-category-link" href="/categories/运维/">运维</a>
     </div>
 
 
@@ -985,7 +990,7 @@
 
       
         <p class="article-more-link">
-          <a href="/2017/05/17/python_requirements/#more">more >></a>
+          <a href="/2017/06/30/python_requirements/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -1004,19 +1009,19 @@
 
 
   
-    <article id="post-C语言队列的基本操作" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-hexo_github_coding_blog" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/05/17/C语言队列的基本操作/" class="article-date">
-      <time datetime="2017-05-17T06:03:09.850Z" itemprop="datePublished">2017-05-17</time>
+      <a href="/2017/06/30/hexo_github_coding_blog/" class="article-date">
+      <time datetime="2017-06-30T06:40:46.512Z" itemprop="datePublished">2017-06-30</time>
 </a>
 
  
-    <a href="/2017/05/17/C语言队列的基本操作/#comments" title="查看评论">
+    <a href="/2017/06/30/hexo_github_coding_blog/#comments" title="Comments">
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
-            <span class="ds-thread-count"  data-thread-key="2017/05/17/C语言队列的基本操作/" ></span>
+            <span class="ds-thread-count"  data-thread-key="2017/06/30/hexo_github_coding_blog/" ></span>
         
         
     </a>
@@ -1032,7 +1037,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/05/17/C语言队列的基本操作/">C语言队列的基本操作</a>
+      <a class="article-title" href="/2017/06/30/hexo_github_coding_blog/">利用hexo和github或coding 搭免费个人博客</a>
     </h1>
   
 
@@ -1042,9 +1047,18 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <p>本篇介绍一下编程中比较重要的一个数据结构队列，队列有个很显著的标志，对其中的数据是先进先出，如果是顺序存储结构可以说就是一个受限的数组，对链式存储结构就只能说是符合先进先出的规则了，这种数据结构在我们真正的编程中还是相当常用的。实际中根据需要去定制自己的队列。</p>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="顺序队列的操作"><a href="#顺序队列的操作" class="headerlink" title="顺序队列的操作"></a>顺序队列的操作</h3><p>首先我们来介绍一下顺序存储结构下的队列的定义和基本操作</p>
-<h4 id="添加适当的头文件，定义一个顺序存储数据结构，"><a href="#添加适当的头文件，定义一个顺序存储数据结构，" class="headerlink" title="添加适当的头文件，定义一个顺序存储数据结构，"></a>添加适当的头文件，定义一个顺序存储数据结构，</h4><p>这里需要添加头文件和定义一个队列的顺序数据结构<br>
+              <p>博客对我来说，就像一个云端笔记,可以记录一下自己在完成各种任务中坑，也可以让别人看到从而避免这些，可以写博客的地方有很多比如csdn、博客园、简书之类的，但是看到许多大神都是用自己搭建的博客，仔细一了解才知道都是用hexo和github搭建的<br>看了许多教程之后，踩了许多坑之后就想总结一下自己的搭建过程</p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><blockquote>
+<p><strong>环境</strong></p>
+<ol>
+<li>Node.js</li>
+<li>Git</li>
+<li>npm</li>
+<li>coding或github</li>
+</ol>
+</blockquote>
+<p><strong>由于我使用的主力系统时Ubuntu所以本文以Ubuntu下的搭建教程</strong></p>
+<h3 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h3>
           
       
     </div>
@@ -1053,18 +1067,18 @@
       
       
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/编程/">编程</a>
+    <a class="article-category-link" href="/categories/开发/">开发</a>
     </div>
 
 
       
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构/">数据结构</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git/">Git</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Node-js/">Node.js</a></li></ul>
     </div>
 
       
         <p class="article-more-link">
-          <a href="/2017/05/17/C语言队列的基本操作/#more">more >></a>
+          <a href="/2017/06/30/hexo_github_coding_blog/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -1098,7 +1112,7 @@
             </div>
             <div class="footer-right">
                 <a href="http://www.miitbeian.gov.cn/">皖ICP备17009043号</a>&nbsp;&nbsp;
-                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+                <a href="http://hexo.io/" target="_blank" title="A fast, simple &amp; powerful blog framework">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Another simple and elegant theme for Hexo  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
             </div>
         </div>
 
@@ -1106,7 +1120,7 @@
             <div class="visit">
                 
                     <span id="busuanzi_container_site_pv" style='display:none'>
-                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        <span id="site-visit" title="Site Visitors"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
                         </span>
                     </span>
                 
@@ -1115,7 +1129,7 @@
                 
                 
                     <span id="busuanzi_container_page_pv" style='display:none'>
-                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        <span id="page-visit"  title="Page Hits"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
                         </span>
                     </span>
                 
@@ -1175,9 +1189,9 @@
 
 
 <div class="scroll" id="scroll">
-    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
-    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
-    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+    <a href="#" title="Back to Top"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="Comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="Go to Bottom"><i class="fa fa-arrow-down"></i></a>
 </div>
 <script>
     // Open in New Window
