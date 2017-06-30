@@ -298,6 +298,162 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-django_nginx_gunicorn" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/06/30/django_nginx_gunicorn/" class="article-date">
+      <time datetime="2017-06-30T06:44:47.164Z" itemprop="datePublished">2017-06-30</time>
+</a>
+
+ 
+    <a href="/2017/06/30/django_nginx_gunicorn/#comments" title="Comments">
+        <i class="fa fa-comments-o" aria-hidden="true"></i>
+        <span class="count-comment"></span>
+        
+            <span class="ds-thread-count"  data-thread-key="2017/06/30/django_nginx_gunicorn/" ></span>
+        
+        
+    </a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/30/django_nginx_gunicorn/">django+nginx+gunicorn部署配置</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>在部署django开发的站点时，通常有两种选择方式，nginx+django+uwsgi或者django+nginx+gunicorn，本文不讨论apache方式，在linux下通常都使用nginx，速度快，还经常做代理服务器，功能强大。。<br>nginx+django+uwsgi个人觉得uwsgi配置较为麻烦，所以选择了gunicorn，一个开源Python WSGI UNIX的HTTP服务器，据说速度快（配置快、运行快）、简单，默认是同步工作，支持Gevent、Eventlet异步，支持Tornado。有兴趣可以自行查阅官方文档</p>
+<h1 id="django-nginx-gunicorn"><a href="#django-nginx-gunicorn" class="headerlink" title="django+nginx+gunicorn"></a>django+nginx+gunicorn</h1>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/运维/">运维</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django/">Django</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nginx/">Nginx</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2017/06/30/django_nginx_gunicorn/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-跨域请求解决方案" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/06/30/跨域请求解决方案/" class="article-date">
+      <time datetime="2017-06-30T06:44:08.208Z" itemprop="datePublished">2017-06-30</time>
+</a>
+
+ 
+    <a href="/2017/06/30/跨域请求解决方案/#comments" title="Comments">
+        <i class="fa fa-comments-o" aria-hidden="true"></i>
+        <span class="count-comment"></span>
+        
+            <span class="ds-thread-count"  data-thread-key="2017/06/30/跨域请求解决方案/" ></span>
+        
+        
+    </a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/30/跨域请求解决方案/">跨域请求的解决方案</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>在请求或提供api的时候，我们经常会遇到跨域问题，这是由于安全问题，但是有时候我们必须去允许跨域请求，不然我们将拿不到后端传过来的数据<br>所以，笔者在这里总结了一下相关解决方案</p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/运维/">运维</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AJAX/">AJAX</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nginx/">Nginx</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/解决方案/">解决方案</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2017/06/30/跨域请求解决方案/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-ubuntu_supervisor" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -913,172 +1069,6 @@
       
         <p class="article-more-link">
           <a href="/2017/06/30/python2和Python3的区别/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-python_requirements" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/06/30/python_requirements/" class="article-date">
-      <time datetime="2017-06-30T06:40:54.572Z" itemprop="datePublished">2017-06-30</time>
-</a>
-
- 
-    <a href="/2017/06/30/python_requirements/#comments" title="Comments">
-        <i class="fa fa-comments-o" aria-hidden="true"></i>
-        <span class="count-comment"></span>
-        
-            <span class="ds-thread-count"  data-thread-key="2017/06/30/python_requirements/" ></span>
-        
-        
-    </a>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/30/python_requirements/">python生成项目所需依赖文件</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>在开发或者在github上clone <strong>python</strong>项目时，我们经常能看到他们工程的根目录下有一个<strong>requirements.txt</strong>文件，并且在<strong>Readme</strong>中介绍使用前需要运行一些命令<br>这个时什么意思呢？<br>开发者希望我们能快速配置项目所需要的环境，所以我们需要这个很重要的文件</p>
-<h2 id="python依赖文件"><a href="#python依赖文件" class="headerlink" title="python依赖文件"></a>python依赖文件</h2>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/运维/">运维</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2017/06/30/python_requirements/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-hexo_github_coding_blog" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/06/30/hexo_github_coding_blog/" class="article-date">
-      <time datetime="2017-06-30T06:40:46.512Z" itemprop="datePublished">2017-06-30</time>
-</a>
-
- 
-    <a href="/2017/06/30/hexo_github_coding_blog/#comments" title="Comments">
-        <i class="fa fa-comments-o" aria-hidden="true"></i>
-        <span class="count-comment"></span>
-        
-            <span class="ds-thread-count"  data-thread-key="2017/06/30/hexo_github_coding_blog/" ></span>
-        
-        
-    </a>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/30/hexo_github_coding_blog/">利用hexo和github或coding 搭免费个人博客</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>博客对我来说，就像一个云端笔记,可以记录一下自己在完成各种任务中坑，也可以让别人看到从而避免这些，可以写博客的地方有很多比如csdn、博客园、简书之类的，但是看到许多大神都是用自己搭建的博客，仔细一了解才知道都是用hexo和github搭建的<br>看了许多教程之后，踩了许多坑之后就想总结一下自己的搭建过程</p>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><blockquote>
-<p><strong>环境</strong></p>
-<ol>
-<li>Node.js</li>
-<li>Git</li>
-<li>npm</li>
-<li>coding或github</li>
-</ol>
-</blockquote>
-<p><strong>由于我使用的主力系统时Ubuntu所以本文以Ubuntu下的搭建教程</strong></p>
-<h3 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h3>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/开发/">开发</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git/">Git</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Node-js/">Node.js</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2017/06/30/hexo_github_coding_blog/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>

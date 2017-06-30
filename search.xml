@@ -3,6 +3,152 @@
   
     
     <entry>
+      <title><![CDATA[django+nginx+gunicorn部署配置]]></title>
+      <url>/2017/06/30/django_nginx_gunicorn/</url>
+      <content type="html"><![CDATA[<p>在部署django开发的站点时，通常有两种选择方式，nginx+django+uwsgi或者django+nginx+gunicorn，本文不讨论apache方式，在linux下通常都使用nginx，速度快，还经常做代理服务器，功能强大。。<br>nginx+django+uwsgi个人觉得uwsgi配置较为麻烦，所以选择了gunicorn，一个开源Python WSGI UNIX的HTTP服务器，据说速度快（配置快、运行快）、简单，默认是同步工作，支持Gevent、Eventlet异步，支持Tornado。有兴趣可以自行查阅官方文档</p>
+<h1 id="django-nginx-gunicorn"><a href="#django-nginx-gunicorn" class="headerlink" title="django+nginx+gunicorn"></a>django+nginx+gunicorn</h1><a id="more"></a>
+<h2 id="环境安装"><a href="#环境安装" class="headerlink" title="环境安装"></a>环境安装</h2><p>需要在服务器端安装我们所需要的环境nginx  Python  nginx gunicorn…<br>django等站点需要的依赖将不进行介绍</p>
+<h3 id="nginx"><a href="#nginx" class="headerlink" title="nginx"></a>nginx</h3><p>在ubuntu上支持apt-get 直接安装，其他系统请自行搜索安装方式<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo apt-get install nginx</div></pre></td></tr></table></figure></p>
+<h3 id="gunicorn"><a href="#gunicorn" class="headerlink" title="gunicorn"></a>gunicorn</h3><p>gunicorn只是一个Python的库 这里建议使用pip安装，简单方便<br>ps:要么网络好，要么建议更改pip源为豆瓣源<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo pip install gunicorn</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>注：</p>
+<ul>
+<li>如果没有pip需要首先安装pip</li>
+<li>如果是Python3 请使用pip3</li>
+<li>由于服务器就跑一个Python应用，就使用了全局安装,如果你的服务器上运行了多个Python应用，并使用了不同的环境(版本号),建议使用不同的虚拟环境</li>
+</ul>
+</blockquote>
+<h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><p>其实也很简单，要想简单的跑起来只需要更改几个配置文件即可<br>首先请把你的django站点放在服务器合适的地方</p>
+<h3 id="nginx配置"><a href="#nginx配置" class="headerlink" title="nginx配置"></a>nginx配置</h3><p>一般网站都配置在80端口上，域名默认解析到80端口，所以nginx配置文件如下，在更改nginx的配置文件之前建议把默认文件进行备份，以备后续出现问题参照使用<br>打开nginx配置文件<strong>/etc/ningx/sites-enable/default</strong><br>进行修改为如下内容:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">    listen 80;</div><div class="line">    server_name 192.168.84.199;</div><div class="line">    server_name_in_redirect off;</div><div class="line">    access_log /home/webserver/web/nginx.access.log;</div><div class="line">    error_log /home/webserver/web/nginx.error.log;</div><div class="line"></div><div class="line">    location / &#123;</div><div class="line">        proxy_pass http://127.0.0.1:8000;</div><div class="line">        proxy_pass_header       Authorization;</div><div class="line">        proxy_pass_header       WWW-Authenticate;</div><div class="line">        proxy_set_header Host <span class="variable">$host</span>;</div><div class="line">        proxy_set_header X-Real-IP <span class="variable">$remote_addr</span>;</div><div class="line">        proxy_set_header X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    location /static/ &#123;</div><div class="line">        root /home/webserver/web/WebServer/;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>核心配置文件就上述那么多，重点使将请求转发到django的服务器上</p>
+<blockquote>
+<p>注：</p>
+<ul>
+<li>listen是所需要监听的端口</li>
+<li>server_name是需要绑定的域名，暂时没有域名时，请使用ip</li>
+<li>access_log是确定正常状态下log文件位置</li>
+<li>error_log使确定发生错误时log文件位置</li>
+<li>location / 是当访问到根下的时候，将所有请求转发到127.0.0.1:8000,本文使转发到gunicorn启动的django应用上，中间配置的是需要转发的内容，基本上述内容可以满足大多需求，如需特殊需求请自行查看nginx官方文档</li>
+<li>location /static/ 配置了静态文件所在的路径，静态文件由nginx处理，动态转发到django，如不配置会出现站点引用的所有js css都找不到</li>
+</ul>
+</blockquote>
+<h3 id="gunicorn配置"><a href="#gunicorn配置" class="headerlink" title="gunicorn配置"></a>gunicorn配置</h3><p>gunicorn启动一般有两种方式，可以在项目目录下建立<strong>gunicorn.conf.py</strong>配置文件，也可以在启动gunicorn时直接加上相关命令</p>
+<h4 id="需要在项目的settings-py中的INSTALLED-APPS添加gunicorn："><a href="#需要在项目的settings-py中的INSTALLED-APPS添加gunicorn：" class="headerlink" title="需要在项目的settings.py中的INSTALLED_APPS添加gunicorn："></a>需要在项目的settings.py中的<strong>INSTALLED_APPS</strong>添加gunicorn：</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">INSTALLED_APPS = [</div><div class="line">    ...</div><div class="line">    ...</div><div class="line">    <span class="string">'gunicorn'</span>,  <span class="comment"># 部署用</span></div><div class="line">]</div></pre></td></tr></table></figure>
+<h4 id="gunicorn-conf-py文件"><a href="#gunicorn-conf-py文件" class="headerlink" title="gunicorn.conf.py文件"></a>gunicorn.conf.py文件</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> multiprocessing</div><div class="line"></div><div class="line">bind = <span class="string">"127.0.0.1:8000"</span>   <span class="comment">#绑定的ip与端口</span></div><div class="line">workers = <span class="number">2</span>                <span class="comment">#核心数</span></div><div class="line">errorlog = <span class="string">'/home/xxx/xxx/gunicorn.error.log'</span> <span class="comment">#发生错误时log的路径</span></div><div class="line">accesslog = <span class="string">'/home/xxx/xxx/gunicorn.access.log'</span> <span class="comment">#正常时的log路径</span></div><div class="line"><span class="comment">#loglevel = 'debug'   #日志等级</span></div><div class="line">proc_name = <span class="string">'gunicorn_project'</span>   <span class="comment">#进程名</span></div></pre></td></tr></table></figure>
+<p>如还需要其他配置，可以自行查看官方文档</p>
+<h4 id="直接使用gunicron启动"><a href="#直接使用gunicron启动" class="headerlink" title="直接使用gunicron启动"></a>直接使用gunicron启动</h4><p>gunicron需要启动后需要长期运行在后台，如果直接启动会在关闭终端后进程就被杀死，这肯定不是我们的需求，所以这里给出两种解决方式  </p>
+<ol>
+<li>使用Linux自带的nohup命令<br>不使用gunicorn配置文件(需进入项目目录)<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo nohup gunicorn 项目名.wsgi:application -b 127.0.0.1:8000&amp;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>使用配置文件方式<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo nohup gunicorn 项目名.wsgi:application -c /home/xxx/xxx/gunicorn.conf.py&amp;</div></pre></td></tr></table></figure></p>
+<ol>
+<li>使用supervistor进程管理器<br>supervistor这个工具的用法这里就不在多讲，需要了解可以看我的另一篇博客<a href="http://earthchen.cn/2017/06/30/ubuntu_supervisor/">ubuntu下的进程控制系统—Supervisor</a>,也可以直接查看官方文档<br>用法可以参照我的配置文件:<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">[program:x508server]</div><div class="line"><span class="built_in">command</span>=gunicorn x508server.wsgi:application -b 0.0.0.0:8000  ; 被监控的进程路径</div><div class="line">directory=/home/webserver/web/WebServer/               ; 执行前要不要先<span class="built_in">cd</span>到目录$</div><div class="line">autostart=<span class="literal">true</span>                ; 随着supervisord的启动而启动</div><div class="line">autorestart=<span class="literal">true</span>              ; 自动重启。。当然要选上了</div><div class="line">startretries=10               ; 启动失败时的最多重试次数</div><div class="line">exitcodes=0                   ; 正常退出代码</div><div class="line">stopsignal=KILL               ; 用来杀死进程的信号</div><div class="line">stopwaitsecs=10               ; 发送SIGKILL前的等待时间</div><div class="line">redirect_stderr=<span class="literal">true</span>          ; 重定向stderr到stdout</div><div class="line">stdout_logfile=/home/webserver/web/logfile.log        ; 指定日志文件</div><div class="line">; 默认为 <span class="literal">false</span>，如果设置为 <span class="literal">true</span>，当进程收到 stop 信号时，会自动将该信号发给该进$</div><div class="line">stopasgroup=<span class="literal">true</span>             ; send stop signal to the UNIX process</div><div class="line">; 默认为 <span class="literal">false</span>，如果设置为 <span class="literal">true</span>，当进程收到 <span class="built_in">kill</span> 信号时，会自动将该信号发给该进$</div><div class="line">killasgroup=<span class="literal">true</span>             ; SIGKILL the UNIX process group (def <span class="literal">false</span>)</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="启动站点"><a href="#启动站点" class="headerlink" title="启动站点"></a>启动站点</h2><ol>
+<li><p>加载nginx配置文件重启nginx</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ sudo service nginx reload</div><div class="line">$ sudo service nginx restart </div><div class="line">//执行一种即可</div></pre></td></tr></table></figure>
+</li>
+<li><p>启动gunicorn</p>
+</li>
+</ol>
+<ul>
+<li><p>如果使用supervistor:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo supervisorctl reload</div></pre></td></tr></table></figure>
+</li>
+<li><p>如果使用nohup</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo nohup gunicorn 项目名.wsgi:application -b 127.0.0.1:8000&amp;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="特殊配置"><a href="#特殊配置" class="headerlink" title="特殊配置"></a>特殊配置</h2><p>在一些前后端分离项目，可能还需要配置前端静态页面，此时就不能将所有url都转发到django了，需要配置一个前缀，但此时，django自带的后台管理也会出现问题，建议配置一个/admin,所以，最后我的配置nginx文件如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">    listen 80;</div><div class="line">    server_name 192.168.84.199;</div><div class="line">    server_name_in_redirect off;</div><div class="line">    access_log /home/webserver/web/nginx.access.log;</div><div class="line">    error_log /home/webserver/web/nginx.error.log;</div><div class="line"></div><div class="line">    index login.html;</div><div class="line">    root /home/webserver/web/html/WebHtml/;</div><div class="line"></div><div class="line">    location / &#123;</div><div class="line">        try_files <span class="variable">$uri</span> <span class="variable">$uri</span>/ =404;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    location /apis &#123;</div><div class="line">        rewrite ^.+apis/?(.*)$ /<span class="variable">$1</span> <span class="built_in">break</span>;</div><div class="line">        proxy_pass http://127.0.0.1:8000;</div><div class="line">        proxy_pass_header       Authorization;</div><div class="line">        proxy_pass_header       WWW-Authenticate;</div><div class="line">        proxy_set_header Host <span class="variable">$host</span>;</div><div class="line">        proxy_set_header X-Real-IP <span class="variable">$remote_addr</span>;</div><div class="line">        proxy_set_header X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    location /admin &#123;</div><div class="line">        proxy_pass http://127.0.0.1:8000;</div><div class="line">        proxy_pass_header       Authorization;</div><div class="line">        proxy_pass_header       WWW-Authenticate;</div><div class="line">        proxy_set_header Host <span class="variable">$host</span>;</div><div class="line">        proxy_set_header X-Real-IP <span class="variable">$remote_addr</span>;</div><div class="line">        proxy_set_header X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    location /static/ &#123;</div><div class="line">        root /home/webserver/web/WebServer/;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>注：</p>
+<ul>
+<li>上述环境在<strong>ubuntu16.04 lts</strong>中搭建测试成功</li>
+<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
+</ul>
+</blockquote>
+]]></content>
+      
+        <categories>
+            
+            <category> 运维 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Django </tag>
+            
+            <tag> Nginx </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[跨域请求的解决方案]]></title>
+      <url>/2017/06/30/%E8%B7%A8%E5%9F%9F%E8%AF%B7%E6%B1%82%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</url>
+      <content type="html"><![CDATA[<p>在请求或提供api的时候，我们经常会遇到跨域问题，这是由于安全问题，但是有时候我们必须去允许跨域请求，不然我们将拿不到后端传过来的数据<br>所以，笔者在这里总结了一下相关解决方案</p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><a id="more"></a>
+<h3 id="使用jsonp解决"><a href="#使用jsonp解决" class="headerlink" title="使用jsonp解决"></a>使用jsonp解决</h3><p>使用jsonp方式去请求数据能以get方式请求，但是不能以post方式发送数据<br>使用这种方式需要前后段都做相应的修改</p>
+<h4 id="前端"><a href="#前端" class="headerlink" title="前端"></a>前端</h4><p>笔者这里使用jQuery来进行ajax请求<br>我们需要在前端请求的url中添加一个callback回调参数<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;script&gt;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        $.getJSON(<span class="string">"http://10.127.48.204:8000/snippets/1/?callback=?"</span>,  <span class="comment">//注意结尾的callback</span></div><div class="line">            <span class="function"><span class="keyword">function</span> (<span class="params">result</span>) </span>&#123;</div><div class="line">                <span class="keyword">if</span> (result) &#123;</div><div class="line">                    <span class="built_in">document</span>.write(result.style);</div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line">    &#125;</div><div class="line">&lt;<span class="regexp">/script&gt;</span></div></pre></td></tr></table></figure></p>
+<h4 id="后端"><a href="#后端" class="headerlink" title="后端"></a>后端</h4><p>笔者这里是用的django的后台，其他语言自行探索一下，都是大同小异的<br>定义好路由之后，我们只需要在view里进行一点简单的修改就好<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">(request)</span>:</span></div><div class="line">   callback = request.GET[<span class="string">'callback'</span>]</div><div class="line">   <span class="keyword">return</span> HttpResponse(<span class="string">'%s(%s)'</span> % (callback,json.dumps(&#123;<span class="string">'name'</span>: <span class="string">'test'</span>&#125;)))</div></pre></td></tr></table></figure></p>
+<p>得到ajax传来的callback然后返回就好</p>
+<p>这样就实现了很简单的跨域请求数据，不过需要前后端都进行支持，比较麻烦。。。。。</p>
+<h3 id="修改请求头解决"><a href="#修改请求头解决" class="headerlink" title="修改请求头解决"></a>修改请求头解决</h3><p>在后端直接修改允许的请求头<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">myview</span><span class="params">(request)</span>:</span> </div><div class="line">    response = HttpResponse(json.dumps(&#123;“key”: “value”, “key2”: “value”&#125;)) </div><div class="line">    response[“Access-Control-Allow-Origin”] = “*” </div><div class="line">    response[“Access-Control-Allow-Methods”] = “POST, GET, OPTIONS” </div><div class="line">    response[“Access-Control-Max-Age”] = “<span class="number">1000</span>” </div><div class="line">    response[“Access-Control-Allow-Headers”] = “*” </div><div class="line">    <span class="keyword">return</span> response</div></pre></td></tr></table></figure></p>
+<h3 id="安装django-cors-headers解决"><a href="#安装django-cors-headers解决" class="headerlink" title="安装django-cors-headers解决"></a>安装django-cors-headers解决</h3><p>笔者用的是django，刚好有人写好了一个库</p>
+<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install django-cors-headers</div></pre></td></tr></table></figure>
+<h4 id="在settings-py中设置"><a href="#在settings-py中设置" class="headerlink" title="在settings.py中设置"></a>在<strong>settings.py</strong>中设置</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">INSTALLED_APPS = [</div><div class="line">    ...</div><div class="line">    <span class="string">'corsheaders'</span>，</div><div class="line">    ...</div><div class="line"> ] </div><div class="line"></div><div class="line">MIDDLEWARE_CLASSES = (</div><div class="line">    ...</div><div class="line">    <span class="string">'corsheaders.middleware.CorsMiddleware'</span>,</div><div class="line">    <span class="string">'django.middleware.common.CommonMiddleware'</span>, <span class="comment"># 注意顺序</span></div><div class="line">    ...</div><div class="line">)</div><div class="line"></div><div class="line">CORS_ORIGIN_WHITELIST = (</div><div class="line">    <span class="comment">#'*'</span></div><div class="line">    <span class="string">'127.0.0.1:8080'</span>,<span class="comment"># 请求的域名</span></div><div class="line">    <span class="string">'localhost:8080'</span>,</div><div class="line">    <span class="string">'localhost'</span>,</div><div class="line">)</div></pre></td></tr></table></figure>
+<p>配置好允许的域就可以跨域了</p>
+<h3 id="在服务器端-nginx-解决"><a href="#在服务器端-nginx-解决" class="headerlink" title="在服务器端(nginx)解决"></a>在服务器端(nginx)解决</h3><p>笔者认为这是最经济划算的一种方法，这样前后端代码就都不需要更改，依然按之前的就可以了<br>但在服务端也有两种方式：</p>
+<ol>
+<li>修改请求头</li>
+<li>进行反向代理</li>
+</ol>
+<h4 id="修改请求头"><a href="#修改请求头" class="headerlink" title="修改请求头"></a>修改请求头</h4><p>在nginx的配置文件里添加如下配置即可<br><strong>nginx.conf</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">http &#123;</div><div class="line">  ......</div><div class="line">  add_header Access-Control-Allow-Origin *;</div><div class="line">  add_header Access-Control-Allow-Headers X-Requested-With;</div><div class="line">  add_header Access-Control-Allow-Methods GET,POST,OPTIONS;</div><div class="line">  ......</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这样就可以实现GET,POST,OPTIONS的跨域请求的支持<br>也可以 add_header Access-Control-Allow-Origin <a href="http://127.0.0.1:8000" target="_blank" rel="external">http://127.0.0.1:8000</a>; –指定允许的url;</p>
+<h4 id="进行反向代理"><a href="#进行反向代理" class="headerlink" title="进行反向代理"></a>进行反向代理</h4><p>同样在万能的nginx配置文件修改即可<br><strong>/etc/nginx/sites-enabled/8001test</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">    listen 8001;</div><div class="line">    server_name _;</div><div class="line">    index index.html;</div><div class="line">    location / &#123;</div><div class="line">        try_files <span class="variable">$uri</span> <span class="variable">$uri</span>/ =404;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    location /apis &#123;</div><div class="line">        rewrite ^.+apis/?(.*)$ /<span class="variable">$1</span> <span class="built_in">break</span>;</div><div class="line">        include uwsgi_params;</div><div class="line">        proxy_pass http://127.0.0.1:8000;  <span class="comment">#需要代理到的地址</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>注：</p>
+<ul>
+<li>/apis是需要在请求中加的前缀，请求到这个参数会通过转换url然后代理到新的地址</li>
+<li>proxy_pass <a href="http://127.0.0.1:8000" target="_blank" rel="external">http://127.0.0.1:8000</a>  需要代理到的地址<br>前端只需要在请求url中加个apis前缀就好<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;script type=<span class="string">"text/javascript"</span>&gt;</div><div class="line"><span class="comment">//利用反向代理解决跨域测试</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">nginx_test</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    $.ajax(&#123;</div><div class="line">        <span class="attr">url</span>: <span class="string">"/apis/test/"</span>,</div><div class="line">        <span class="attr">type</span>:<span class="string">"get"</span>,</div><div class="line">        <span class="attr">success</span>:<span class="function"><span class="keyword">function</span>(<span class="params">result</span>)</span>&#123;</div><div class="line">            alert(result.name);</div><div class="line">        &#125;</div><div class="line">    &#125;)</div><div class="line">&#125;</div><div class="line">&lt;<span class="regexp">/script&gt;</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<p>笔者比较推荐最后一种方法，个人觉得这种方法最经济划算。也可以根据需求来选择是否需要跨域代理</p>
+<blockquote>
+<p>注：</p>
+<ul>
+<li>上述环境在<strong>ubuntu16.04 lts</strong>中搭建测试成功</li>
+<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
+</ul>
+</blockquote>
+]]></content>
+      
+        <categories>
+            
+            <category> 运维 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Nginx </tag>
+            
+            <tag> 解决方案 </tag>
+            
+            <tag> AJAX </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[ubuntu下的进程控制系统————Supervisor]]></title>
       <url>/2017/06/30/ubuntu_supervisor/</url>
       <content type="html"><![CDATA[<p>我们在部署网站或者在ssh到服务器上去进行一些长时间操作的任务时候，通常不喜欢长时间开启终端在其中等待，尤其是Windows下putty这类软件，长时间不操作就会结束，尴尬的是，我们跑的进程也会直接终端，为了解决这个问题，我们需要把进程扔到后台，让他自己运行</p>
@@ -1397,11 +1543,11 @@
         
         <tags>
             
+            <tag> Git </tag>
+            
             <tag> Node.js </tag>
             
             <tag> Hexo </tag>
-            
-            <tag> Git </tag>
             
             <tag> JavaScript </tag>
             
@@ -2583,92 +2729,6 @@
     </entry>
     
     <entry>
-      <title><![CDATA[django+nginx+gunicorn部署配置]]></title>
-      <url>/2017/06/30/django_nginx_gunicorn/</url>
-      <content type="html"><![CDATA[<p>在部署django开发的站点时，通常有两种选择方式，nginx+django+uwsgi或者django+nginx+gunicorn，本文不讨论apache方式，在linux下通常都使用nginx，速度快，还经常做代理服务器，功能强大。。<br>nginx+django+uwsgi个人觉得uwsgi配置较为麻烦，所以选择了gunicorn，一个开源Python WSGI UNIX的HTTP服务器，据说速度快（配置快、运行快）、简单，默认是同步工作，支持Gevent、Eventlet异步，支持Tornado。有兴趣可以自行查阅官方文档</p>
-<h1 id="django-nginx-gunicorn"><a href="#django-nginx-gunicorn" class="headerlink" title="django+nginx+gunicorn"></a>django+nginx+gunicorn</h1><a id="more"></a>
-<h2 id="环境安装"><a href="#环境安装" class="headerlink" title="环境安装"></a>环境安装</h2><p>需要在服务器端安装我们所需要的环境nginx  Python  nginx gunicorn…<br>django等站点需要的依赖将不进行介绍</p>
-<h3 id="nginx"><a href="#nginx" class="headerlink" title="nginx"></a>nginx</h3><p>在ubuntu上支持apt-get 直接安装，其他系统请自行搜索安装方式<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo apt-get install nginx</div></pre></td></tr></table></figure></p>
-<h3 id="gunicorn"><a href="#gunicorn" class="headerlink" title="gunicorn"></a>gunicorn</h3><p>gunicorn只是一个Python的库 这里建议使用pip安装，简单方便<br>ps:要么网络好，要么建议更改pip源为豆瓣源<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo pip install gunicorn</div></pre></td></tr></table></figure></p>
-<blockquote>
-<p>注：</p>
-<ul>
-<li>如果没有pip需要首先安装pip</li>
-<li>如果是Python3 请使用pip3</li>
-<li>由于服务器就跑一个Python应用，就使用了全局安装,如果你的服务器上运行了多个Python应用，并使用了不同的环境(版本号),建议使用不同的虚拟环境</li>
-</ul>
-</blockquote>
-<h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><p>其实也很简单，要想简单的跑起来只需要更改几个配置文件即可<br>首先请把你的django站点放在服务器合适的地方</p>
-<h3 id="nginx配置"><a href="#nginx配置" class="headerlink" title="nginx配置"></a>nginx配置</h3><p>一般网站都配置在80端口上，域名默认解析到80端口，所以nginx配置文件如下，在更改nginx的配置文件之前建议把默认文件进行备份，以备后续出现问题参照使用<br>打开nginx配置文件<strong>/etc/ningx/sites-enable/default</strong><br>进行修改为如下内容:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">    listen 80;</div><div class="line">    server_name 192.168.84.199;</div><div class="line">    server_name_in_redirect off;</div><div class="line">    access_log /home/webserver/web/nginx.access.log;</div><div class="line">    error_log /home/webserver/web/nginx.error.log;</div><div class="line"></div><div class="line">    location / &#123;</div><div class="line">        proxy_pass http://127.0.0.1:8000;</div><div class="line">        proxy_pass_header       Authorization;</div><div class="line">        proxy_pass_header       WWW-Authenticate;</div><div class="line">        proxy_set_header Host <span class="variable">$host</span>;</div><div class="line">        proxy_set_header X-Real-IP <span class="variable">$remote_addr</span>;</div><div class="line">        proxy_set_header X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    location /static/ &#123;</div><div class="line">        root /home/webserver/web/WebServer/;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
-<p>核心配置文件就上述那么多，重点使将请求转发到django的服务器上</p>
-<blockquote>
-<p>注：</p>
-<ul>
-<li>listen是所需要监听的端口</li>
-<li>server_name是需要绑定的域名，暂时没有域名时，请使用ip</li>
-<li>access_log是确定正常状态下log文件位置</li>
-<li>error_log使确定发生错误时log文件位置</li>
-<li>location / 是当访问到根下的时候，将所有请求转发到127.0.0.1:8000,本文使转发到gunicorn启动的django应用上，中间配置的是需要转发的内容，基本上述内容可以满足大多需求，如需特殊需求请自行查看nginx官方文档</li>
-<li>location /static/ 配置了静态文件所在的路径，静态文件由nginx处理，动态转发到django，如不配置会出现站点引用的所有js css都找不到</li>
-</ul>
-</blockquote>
-<h3 id="gunicorn配置"><a href="#gunicorn配置" class="headerlink" title="gunicorn配置"></a>gunicorn配置</h3><p>gunicorn启动一般有两种方式，可以在项目目录下建立<strong>gunicorn.conf.py</strong>配置文件，也可以在启动gunicorn时直接加上相关命令</p>
-<h4 id="需要在项目的settings-py中的INSTALLED-APPS添加gunicorn："><a href="#需要在项目的settings-py中的INSTALLED-APPS添加gunicorn：" class="headerlink" title="需要在项目的settings.py中的INSTALLED_APPS添加gunicorn："></a>需要在项目的settings.py中的<strong>INSTALLED_APPS</strong>添加gunicorn：</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">INSTALLED_APPS = [</div><div class="line">    ...</div><div class="line">    ...</div><div class="line">    <span class="string">'gunicorn'</span>,  <span class="comment"># 部署用</span></div><div class="line">]</div></pre></td></tr></table></figure>
-<h4 id="gunicorn-conf-py文件"><a href="#gunicorn-conf-py文件" class="headerlink" title="gunicorn.conf.py文件"></a>gunicorn.conf.py文件</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> multiprocessing</div><div class="line"></div><div class="line">bind = <span class="string">"127.0.0.1:8000"</span>   <span class="comment">#绑定的ip与端口</span></div><div class="line">workers = <span class="number">2</span>                <span class="comment">#核心数</span></div><div class="line">errorlog = <span class="string">'/home/xxx/xxx/gunicorn.error.log'</span> <span class="comment">#发生错误时log的路径</span></div><div class="line">accesslog = <span class="string">'/home/xxx/xxx/gunicorn.access.log'</span> <span class="comment">#正常时的log路径</span></div><div class="line"><span class="comment">#loglevel = 'debug'   #日志等级</span></div><div class="line">proc_name = <span class="string">'gunicorn_project'</span>   <span class="comment">#进程名</span></div></pre></td></tr></table></figure>
-<p>如还需要其他配置，可以自行查看官方文档</p>
-<h4 id="直接使用gunicron启动"><a href="#直接使用gunicron启动" class="headerlink" title="直接使用gunicron启动"></a>直接使用gunicron启动</h4><p>gunicron需要启动后需要长期运行在后台，如果直接启动会在关闭终端后进程就被杀死，这肯定不是我们的需求，所以这里给出两种解决方式  </p>
-<ol>
-<li>使用Linux自带的nohup命令<br>不使用gunicorn配置文件(需进入项目目录)<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo nohup gunicorn 项目名.wsgi:application -b 127.0.0.1:8000&amp;</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>使用配置文件方式<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo nohup gunicorn 项目名.wsgi:application -c /home/xxx/xxx/gunicorn.conf.py&amp;</div></pre></td></tr></table></figure></p>
-<ol>
-<li>使用supervistor进程管理器<br>supervistor这个工具的用法这里就不在多讲，需要了解可以看我的另一篇博客<a href="http://earthchen.cn/2017/05/17/ubuntu_supervisor/">ubuntu下的进程控制系统—Supervisor</a>,也可以直接查看官方文档<br>用法可以参照我的配置文件:<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">[program:x508server]</div><div class="line"><span class="built_in">command</span>=gunicorn x508server.wsgi:application -b 0.0.0.0:8000  ; 被监控的进程路径</div><div class="line">directory=/home/webserver/web/WebServer/               ; 执行前要不要先<span class="built_in">cd</span>到目录$</div><div class="line">autostart=<span class="literal">true</span>                ; 随着supervisord的启动而启动</div><div class="line">autorestart=<span class="literal">true</span>              ; 自动重启。。当然要选上了</div><div class="line">startretries=10               ; 启动失败时的最多重试次数</div><div class="line">exitcodes=0                   ; 正常退出代码</div><div class="line">stopsignal=KILL               ; 用来杀死进程的信号</div><div class="line">stopwaitsecs=10               ; 发送SIGKILL前的等待时间</div><div class="line">redirect_stderr=<span class="literal">true</span>          ; 重定向stderr到stdout</div><div class="line">stdout_logfile=/home/webserver/web/logfile.log        ; 指定日志文件</div><div class="line">; 默认为 <span class="literal">false</span>，如果设置为 <span class="literal">true</span>，当进程收到 stop 信号时，会自动将该信号发给该进$</div><div class="line">stopasgroup=<span class="literal">true</span>             ; send stop signal to the UNIX process</div><div class="line">; 默认为 <span class="literal">false</span>，如果设置为 <span class="literal">true</span>，当进程收到 <span class="built_in">kill</span> 信号时，会自动将该信号发给该进$</div><div class="line">killasgroup=<span class="literal">true</span>             ; SIGKILL the UNIX process group (def <span class="literal">false</span>)</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<h2 id="启动站点"><a href="#启动站点" class="headerlink" title="启动站点"></a>启动站点</h2><ol>
-<li><p>加载nginx配置文件重启nginx</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ sudo service nginx reload</div><div class="line">$ sudo service nginx restart </div><div class="line">//执行一种即可</div></pre></td></tr></table></figure>
-</li>
-<li><p>启动gunicorn</p>
-</li>
-</ol>
-<ul>
-<li><p>如果使用supervistor:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo supervisorctl reload</div></pre></td></tr></table></figure>
-</li>
-<li><p>如果使用nohup</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo nohup gunicorn 项目名.wsgi:application -b 127.0.0.1:8000&amp;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="特殊配置"><a href="#特殊配置" class="headerlink" title="特殊配置"></a>特殊配置</h2><p>在一些前后端分离项目，可能还需要配置前端静态页面，此时就不能将所有url都转发到django了，需要配置一个前缀，但此时，django自带的后台管理也会出现问题，建议配置一个/admin,所以，最后我的配置nginx文件如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">    listen 80;</div><div class="line">    server_name 192.168.84.199;</div><div class="line">    server_name_in_redirect off;</div><div class="line">    access_log /home/webserver/web/nginx.access.log;</div><div class="line">    error_log /home/webserver/web/nginx.error.log;</div><div class="line"></div><div class="line">    index login.html;</div><div class="line">    root /home/webserver/web/html/WebHtml/;</div><div class="line"></div><div class="line">    location / &#123;</div><div class="line">        try_files <span class="variable">$uri</span> <span class="variable">$uri</span>/ =404;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    location /apis &#123;</div><div class="line">        rewrite ^.+apis/?(.*)$ /<span class="variable">$1</span> <span class="built_in">break</span>;</div><div class="line">        proxy_pass http://127.0.0.1:8000;</div><div class="line">        proxy_pass_header       Authorization;</div><div class="line">        proxy_pass_header       WWW-Authenticate;</div><div class="line">        proxy_set_header Host <span class="variable">$host</span>;</div><div class="line">        proxy_set_header X-Real-IP <span class="variable">$remote_addr</span>;</div><div class="line">        proxy_set_header X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    location /admin &#123;</div><div class="line">        proxy_pass http://127.0.0.1:8000;</div><div class="line">        proxy_pass_header       Authorization;</div><div class="line">        proxy_pass_header       WWW-Authenticate;</div><div class="line">        proxy_set_header Host <span class="variable">$host</span>;</div><div class="line">        proxy_set_header X-Real-IP <span class="variable">$remote_addr</span>;</div><div class="line">        proxy_set_header X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    location /static/ &#123;</div><div class="line">        root /home/webserver/web/WebServer/;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
-<blockquote>
-<p>注：</p>
-<ul>
-<li>上述环境在<strong>ubuntu16.04 lts</strong>中搭建测试成功</li>
-<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
-</ul>
-</blockquote>
-]]></content>
-      
-        <categories>
-            
-            <category> 运维 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> Django </tag>
-            
-            <tag> Nginx </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[ubuntu修复linux和windows双系统下挂载ntfs硬盘出错问题]]></title>
       <url>/2017/06/12/ubuntu%E4%BF%AE%E5%A4%8D%E4%B8%8D%E8%83%BD%E6%8C%82%E8%BD%BDNTFS%E7%A1%AC%E7%9B%98/</url>
       <content type="html"><![CDATA[<p>在windows和Ubuntu双系统下，在打开Windows后，在进入linux时，在去访问windows的ntfs分区经常会出现不能挂载问题，<br>出现 Error mounting /dev/sda8 at /media/my/XXX: Command-line `mount -t “ntfs” -o错误，以下给出对此的解决方案</p>
@@ -2764,66 +2824,6 @@
         <tags>
             
             <tag> 解决方案 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[跨域请求的解决方案]]></title>
-      <url>/2017/05/17/%E8%B7%A8%E5%9F%9F%E8%AF%B7%E6%B1%82%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</url>
-      <content type="html"><![CDATA[<p>在请求或提供api的时候，我们经常会遇到跨域问题，这是由于安全问题，但是有时候我们必须去允许跨域请求，不然我们将拿不到后端传过来的数据<br>所以，笔者在这里总结了一下相关解决方案</p>
-<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><a id="more"></a>
-<h3 id="使用jsonp解决"><a href="#使用jsonp解决" class="headerlink" title="使用jsonp解决"></a>使用jsonp解决</h3><p>使用jsonp方式去请求数据能以get方式请求，但是不能以post方式发送数据<br>使用这种方式需要前后段都做相应的修改</p>
-<h4 id="前端"><a href="#前端" class="headerlink" title="前端"></a>前端</h4><p>笔者这里使用jQuery来进行ajax请求<br>我们需要在前端请求的url中添加一个callback回调参数<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;script&gt;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        $.getJSON(<span class="string">"http://10.127.48.204:8000/snippets/1/?callback=?"</span>,  <span class="comment">//注意结尾的callback</span></div><div class="line">            <span class="function"><span class="keyword">function</span> (<span class="params">result</span>) </span>&#123;</div><div class="line">                <span class="keyword">if</span> (result) &#123;</div><div class="line">                    <span class="built_in">document</span>.write(result.style);</div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line">    &#125;</div><div class="line">&lt;<span class="regexp">/script&gt;</span></div></pre></td></tr></table></figure></p>
-<h4 id="后端"><a href="#后端" class="headerlink" title="后端"></a>后端</h4><p>笔者这里是用的django的后台，其他语言自行探索一下，都是大同小异的<br>定义好路由之后，我们只需要在view里进行一点简单的修改就好<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">(request)</span>:</span></div><div class="line">   callback = request.GET[<span class="string">'callback'</span>]</div><div class="line">   <span class="keyword">return</span> HttpResponse(<span class="string">'%s(%s)'</span> % (callback,json.dumps(&#123;<span class="string">'name'</span>: <span class="string">'test'</span>&#125;)))</div></pre></td></tr></table></figure></p>
-<p>得到ajax传来的callback然后返回就好</p>
-<p>这样就实现了很简单的跨域请求数据，不过需要前后端都进行支持，比较麻烦。。。。。</p>
-<h3 id="修改请求头解决"><a href="#修改请求头解决" class="headerlink" title="修改请求头解决"></a>修改请求头解决</h3><p>在后端直接修改允许的请求头<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">myview</span><span class="params">(request)</span>:</span> </div><div class="line">    response = HttpResponse(json.dumps(&#123;“key”: “value”, “key2”: “value”&#125;)) </div><div class="line">    response[“Access-Control-Allow-Origin”] = “*” </div><div class="line">    response[“Access-Control-Allow-Methods”] = “POST, GET, OPTIONS” </div><div class="line">    response[“Access-Control-Max-Age”] = “<span class="number">1000</span>” </div><div class="line">    response[“Access-Control-Allow-Headers”] = “*” </div><div class="line">    <span class="keyword">return</span> response</div></pre></td></tr></table></figure></p>
-<h3 id="安装django-cors-headers解决"><a href="#安装django-cors-headers解决" class="headerlink" title="安装django-cors-headers解决"></a>安装django-cors-headers解决</h3><p>笔者用的是django，刚好有人写好了一个库</p>
-<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install django-cors-headers</div></pre></td></tr></table></figure>
-<h4 id="在settings-py中设置"><a href="#在settings-py中设置" class="headerlink" title="在settings.py中设置"></a>在<strong>settings.py</strong>中设置</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">INSTALLED_APPS = [</div><div class="line">    ...</div><div class="line">    <span class="string">'corsheaders'</span>，</div><div class="line">    ...</div><div class="line"> ] </div><div class="line"></div><div class="line">MIDDLEWARE_CLASSES = (</div><div class="line">    ...</div><div class="line">    <span class="string">'corsheaders.middleware.CorsMiddleware'</span>,</div><div class="line">    <span class="string">'django.middleware.common.CommonMiddleware'</span>, <span class="comment"># 注意顺序</span></div><div class="line">    ...</div><div class="line">)</div><div class="line"></div><div class="line">CORS_ORIGIN_WHITELIST = (</div><div class="line">    <span class="comment">#'*'</span></div><div class="line">    <span class="string">'127.0.0.1:8080'</span>,<span class="comment"># 请求的域名</span></div><div class="line">    <span class="string">'localhost:8080'</span>,</div><div class="line">    <span class="string">'localhost'</span>,</div><div class="line">)</div></pre></td></tr></table></figure>
-<p>配置好允许的域就可以跨域了</p>
-<h3 id="在服务器端-nginx-解决"><a href="#在服务器端-nginx-解决" class="headerlink" title="在服务器端(nginx)解决"></a>在服务器端(nginx)解决</h3><p>笔者认为这是最经济划算的一种方法，这样前后端代码就都不需要更改，依然按之前的就可以了<br>但在服务端也有两种方式：</p>
-<ol>
-<li>修改请求头</li>
-<li>进行反向代理</li>
-</ol>
-<h4 id="修改请求头"><a href="#修改请求头" class="headerlink" title="修改请求头"></a>修改请求头</h4><p>在nginx的配置文件里添加如下配置即可<br><strong>nginx.conf</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">http &#123;</div><div class="line">  ......</div><div class="line">  add_header Access-Control-Allow-Origin *;</div><div class="line">  add_header Access-Control-Allow-Headers X-Requested-With;</div><div class="line">  add_header Access-Control-Allow-Methods GET,POST,OPTIONS;</div><div class="line">  ......</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>这样就可以实现GET,POST,OPTIONS的跨域请求的支持<br>也可以 add_header Access-Control-Allow-Origin <a href="http://127.0.0.1:8000" target="_blank" rel="external">http://127.0.0.1:8000</a>; –指定允许的url;</p>
-<h4 id="进行反向代理"><a href="#进行反向代理" class="headerlink" title="进行反向代理"></a>进行反向代理</h4><p>同样在万能的nginx配置文件修改即可<br><strong>/etc/nginx/sites-enabled/8001test</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">    listen 8001;</div><div class="line">    server_name _;</div><div class="line">    index index.html;</div><div class="line">    location / &#123;</div><div class="line">        try_files <span class="variable">$uri</span> <span class="variable">$uri</span>/ =404;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    location /apis &#123;</div><div class="line">        rewrite ^.+apis/?(.*)$ /<span class="variable">$1</span> <span class="built_in">break</span>;</div><div class="line">        include uwsgi_params;</div><div class="line">        proxy_pass http://127.0.0.1:8000;  <span class="comment">#需要代理到的地址</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<blockquote>
-<p>注：</p>
-<ul>
-<li>/apis是需要在请求中加的前缀，请求到这个参数会通过转换url然后代理到新的地址</li>
-<li>proxy_pass <a href="http://127.0.0.1:8000" target="_blank" rel="external">http://127.0.0.1:8000</a>  需要代理到的地址<br>前端只需要在请求url中加个apis前缀就好<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;script type=<span class="string">"text/javascript"</span>&gt;</div><div class="line"><span class="comment">//利用反向代理解决跨域测试</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">nginx_test</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    $.ajax(&#123;</div><div class="line">        <span class="attr">url</span>: <span class="string">"/apis/test/"</span>,</div><div class="line">        <span class="attr">type</span>:<span class="string">"get"</span>,</div><div class="line">        <span class="attr">success</span>:<span class="function"><span class="keyword">function</span>(<span class="params">result</span>)</span>&#123;</div><div class="line">            alert(result.name);</div><div class="line">        &#125;</div><div class="line">    &#125;)</div><div class="line">&#125;</div><div class="line">&lt;<span class="regexp">/script&gt;</span></div></pre></td></tr></table></figure>
-</li>
-</ul>
-</blockquote>
-<p>笔者比较推荐最后一种方法，个人觉得这种方法最经济划算。也可以根据需求来选择是否需要跨域代理</p>
-<blockquote>
-<p>注：</p>
-<ul>
-<li>上述环境在<strong>ubuntu16.04 lts</strong>中搭建测试成功</li>
-<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
-</ul>
-</blockquote>
-]]></content>
-      
-        <categories>
-            
-            <category> 编程 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> Nginx </tag>
-            
-            <tag> 解决方案 </tag>
-            
-            <tag> AJAX </tag>
             
         </tags>
         

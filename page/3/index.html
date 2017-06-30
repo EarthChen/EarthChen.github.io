@@ -298,6 +298,163 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-django_rest_framework_jwt" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/06/30/django_rest_framework_jwt/" class="article-date">
+      <time datetime="2017-06-30T06:39:46.324Z" itemprop="datePublished">2017-06-30</time>
+</a>
+
+ 
+    <a href="/2017/06/30/django_rest_framework_jwt/#comments" title="Comments">
+        <i class="fa fa-comments-o" aria-hidden="true"></i>
+        <span class="count-comment"></span>
+        
+            <span class="ds-thread-count"  data-thread-key="2017/06/30/django_rest_framework_jwt/" ></span>
+        
+        
+    </a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/30/django_rest_framework_jwt/">django-rest-framework配置json web token进行接口的认证</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>使用django-rest-framework开发api并使用json web token进行身份验证<br>在这里使用django-rest-framework-jwt这个库来帮助我们简单的使用jwt进行身份验证<br>并解决一些前后端分离而产生的跨域问题</p>
+<h2 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h2>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/开发/">开发</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django/">Django</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2017/06/30/django_rest_framework_jwt/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-C语言中缀表达式计算器" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/06/30/C语言中缀表达式计算器/" class="article-date">
+      <time datetime="2017-06-30T06:39:28.848Z" itemprop="datePublished">2017-06-30</time>
+</a>
+
+ 
+    <a href="/2017/06/30/C语言中缀表达式计算器/#comments" title="Comments">
+        <i class="fa fa-comments-o" aria-hidden="true"></i>
+        <span class="count-comment"></span>
+        
+            <span class="ds-thread-count"  data-thread-key="2017/06/30/C语言中缀表达式计算器/" ></span>
+        
+        
+    </a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/30/C语言中缀表达式计算器/">C语言中缀表达式计算器</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>本文将介绍中缀表达式计算器的详细写法,是<a href="/2016/10/07/c%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8F%98%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F/">C语言把中缀表达式转换为后缀表达式</a>和<a href="/2016/10/07/C%E8%AF%AD%E8%A8%80%E9%80%86%E6%B3%A2%E5%85%B0%E8%AE%A1%E7%AE%97%E5%99%A8/">C语言逆波兰计算器</a>的结合   &nbsp;&nbsp;&nbsp;&nbsp;但本篇用了更精简的写法，但是也相对的提高了代码的理解难度，在阅读时，需自己详细斟酌</p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="添加适当的头文件"><a href="#添加适当的头文件" class="headerlink" title="添加适当的头文件"></a>添加适当的头文件</h3><p>c语言的头文件比不可少，我们这里还是添加适当的头文件和宏定义并声明函数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;  </span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt; </span></span></div><div class="line"> </div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> MAX_LEN 80  </span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">convert2postfix</span><span class="params">(<span class="keyword">char</span> *src, <span class="keyword">char</span> *dst)</span></span>;</div><div class="line"><span class="function"><span class="keyword">float</span> <span class="title">cal</span><span class="params">(<span class="keyword">char</span> *src)</span></span>;</div></pre></td></tr></table></figure>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/开发/">开发</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构/">数据结构</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2017/06/30/C语言中缀表达式计算器/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-c语言中缀表达式变后缀表达式" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -848,84 +1005,6 @@
 
 
   
-    <article id="post-django_nginx_gunicorn" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/06/30/django_nginx_gunicorn/" class="article-date">
-      <time datetime="2017-06-30T06:38:01.980Z" itemprop="datePublished">2017-06-30</time>
-</a>
-
- 
-    <a href="/2017/06/30/django_nginx_gunicorn/#comments" title="Comments">
-        <i class="fa fa-comments-o" aria-hidden="true"></i>
-        <span class="count-comment"></span>
-        
-            <span class="ds-thread-count"  data-thread-key="2017/06/30/django_nginx_gunicorn/" ></span>
-        
-        
-    </a>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/30/django_nginx_gunicorn/">django+nginx+gunicorn部署配置</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>在部署django开发的站点时，通常有两种选择方式，nginx+django+uwsgi或者django+nginx+gunicorn，本文不讨论apache方式，在linux下通常都使用nginx，速度快，还经常做代理服务器，功能强大。。<br>nginx+django+uwsgi个人觉得uwsgi配置较为麻烦，所以选择了gunicorn，一个开源Python WSGI UNIX的HTTP服务器，据说速度快（配置快、运行快）、简单，默认是同步工作，支持Gevent、Eventlet异步，支持Tornado。有兴趣可以自行查阅官方文档</p>
-<h1 id="django-nginx-gunicorn"><a href="#django-nginx-gunicorn" class="headerlink" title="django+nginx+gunicorn"></a>django+nginx+gunicorn</h1>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/运维/">运维</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django/">Django</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nginx/">Nginx</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2017/06/30/django_nginx_gunicorn/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
     <article id="post-ubuntu修复不能挂载NTFS硬盘" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -985,83 +1064,6 @@
       
         <p class="article-more-link">
           <a href="/2017/06/12/ubuntu修复不能挂载NTFS硬盘/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-资源收集" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/06/03/资源收集/" class="article-date">
-      <time datetime="2017-06-03T03:56:34.004Z" itemprop="datePublished">2017-06-03</time>
-</a>
-
- 
-    <a href="/2017/06/03/资源收集/#comments" title="Comments">
-        <i class="fa fa-comments-o" aria-hidden="true"></i>
-        <span class="count-comment"></span>
-        
-            <span class="ds-thread-count"  data-thread-key="2017/06/03/资源收集/" ></span>
-        
-        
-    </a>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/03/资源收集/">资源收集共享</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>日常发现好资源，在此记录下，长期更新</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/随笔/">随笔</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/资源/">资源</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2017/06/03/资源收集/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>

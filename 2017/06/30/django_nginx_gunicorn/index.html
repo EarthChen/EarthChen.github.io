@@ -22,7 +22,7 @@
 <meta property="og:url" content="http://earthchen.cn/2017/06/30/django_nginx_gunicorn/index.html">
 <meta property="og:site_name" content="EarthChen&#39;s Blog">
 <meta property="og:description" content="在部署django开发的站点时，通常有两种选择方式，nginx+django+uwsgi或者django+nginx+gunicorn，本文不讨论apache方式，在linux下通常都使用nginx，速度快，还经常做代理服务器，功能强大。。nginx+django+uwsgi个人觉得uwsgi配置较为麻烦，所以选择了gunicorn，一个开源Python WSGI UNIX的HTTP服务器，据说速">
-<meta property="og:updated_time" content="2017-06-30T06:38:01.980Z">
+<meta property="og:updated_time" content="2017-06-30T06:44:47.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="django+nginx+gunicorn部署配置">
 <meta name="twitter:description" content="在部署django开发的站点时，通常有两种选择方式，nginx+django+uwsgi或者django+nginx+gunicorn，本文不讨论apache方式，在linux下通常都使用nginx，速度快，还经常做代理服务器，功能强大。。nginx+django+uwsgi个人觉得uwsgi配置较为麻烦，所以选择了gunicorn，一个开源Python WSGI UNIX的HTTP服务器，据说速">
@@ -296,7 +296,7 @@
   
     <div class="article-meta">
       <a href="/2017/06/30/django_nginx_gunicorn/" class="article-date">
-      <time datetime="2017-06-30T06:38:01.980Z" itemprop="datePublished">2017-06-30</time>
+      <time datetime="2017-06-30T06:44:47.164Z" itemprop="datePublished">2017-06-30</time>
 </a>
 
 
@@ -374,7 +374,7 @@
 </ol>
 <p>使用配置文件方式<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo nohup gunicorn 项目名.wsgi:application -c /home/xxx/xxx/gunicorn.conf.py&amp;</div></pre></td></tr></table></figure></p>
 <ol>
-<li>使用supervistor进程管理器<br>supervistor这个工具的用法这里就不在多讲，需要了解可以看我的另一篇博客<a href="http://earthchen.cn/2017/05/17/ubuntu_supervisor/">ubuntu下的进程控制系统—Supervisor</a>,也可以直接查看官方文档<br>用法可以参照我的配置文件:<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">[program:x508server]</div><div class="line"><span class="built_in">command</span>=gunicorn x508server.wsgi:application -b 0.0.0.0:8000  ; 被监控的进程路径</div><div class="line">directory=/home/webserver/web/WebServer/               ; 执行前要不要先<span class="built_in">cd</span>到目录$</div><div class="line">autostart=<span class="literal">true</span>                ; 随着supervisord的启动而启动</div><div class="line">autorestart=<span class="literal">true</span>              ; 自动重启。。当然要选上了</div><div class="line">startretries=10               ; 启动失败时的最多重试次数</div><div class="line">exitcodes=0                   ; 正常退出代码</div><div class="line">stopsignal=KILL               ; 用来杀死进程的信号</div><div class="line">stopwaitsecs=10               ; 发送SIGKILL前的等待时间</div><div class="line">redirect_stderr=<span class="literal">true</span>          ; 重定向stderr到stdout</div><div class="line">stdout_logfile=/home/webserver/web/logfile.log        ; 指定日志文件</div><div class="line">; 默认为 <span class="literal">false</span>，如果设置为 <span class="literal">true</span>，当进程收到 stop 信号时，会自动将该信号发给该进$</div><div class="line">stopasgroup=<span class="literal">true</span>             ; send stop signal to the UNIX process</div><div class="line">; 默认为 <span class="literal">false</span>，如果设置为 <span class="literal">true</span>，当进程收到 <span class="built_in">kill</span> 信号时，会自动将该信号发给该进$</div><div class="line">killasgroup=<span class="literal">true</span>             ; SIGKILL the UNIX process group (def <span class="literal">false</span>)</div></pre></td></tr></table></figure>
+<li>使用supervistor进程管理器<br>supervistor这个工具的用法这里就不在多讲，需要了解可以看我的另一篇博客<a href="http://earthchen.cn/2017/06/30/ubuntu_supervisor/">ubuntu下的进程控制系统—Supervisor</a>,也可以直接查看官方文档<br>用法可以参照我的配置文件:<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">[program:x508server]</div><div class="line"><span class="built_in">command</span>=gunicorn x508server.wsgi:application -b 0.0.0.0:8000  ; 被监控的进程路径</div><div class="line">directory=/home/webserver/web/WebServer/               ; 执行前要不要先<span class="built_in">cd</span>到目录$</div><div class="line">autostart=<span class="literal">true</span>                ; 随着supervisord的启动而启动</div><div class="line">autorestart=<span class="literal">true</span>              ; 自动重启。。当然要选上了</div><div class="line">startretries=10               ; 启动失败时的最多重试次数</div><div class="line">exitcodes=0                   ; 正常退出代码</div><div class="line">stopsignal=KILL               ; 用来杀死进程的信号</div><div class="line">stopwaitsecs=10               ; 发送SIGKILL前的等待时间</div><div class="line">redirect_stderr=<span class="literal">true</span>          ; 重定向stderr到stdout</div><div class="line">stdout_logfile=/home/webserver/web/logfile.log        ; 指定日志文件</div><div class="line">; 默认为 <span class="literal">false</span>，如果设置为 <span class="literal">true</span>，当进程收到 stop 信号时，会自动将该信号发给该进$</div><div class="line">stopasgroup=<span class="literal">true</span>             ; send stop signal to the UNIX process</div><div class="line">; 默认为 <span class="literal">false</span>，如果设置为 <span class="literal">true</span>，当进程收到 <span class="built_in">kill</span> 信号时，会自动将该信号发给该进$</div><div class="line">killasgroup=<span class="literal">true</span>             ; SIGKILL the UNIX process group (def <span class="literal">false</span>)</div></pre></td></tr></table></figure>
 </li>
 </ol>
 <h2 id="启动站点"><a href="#启动站点" class="headerlink" title="启动站点"></a>启动站点</h2><ol>
@@ -410,8 +410,8 @@
     <div class="copyright">
         <p><span>Title:</span><a href="/2017/06/30/django_nginx_gunicorn/">django+nginx+gunicorn部署配置</a></p>
         <p><span>Author:</span><a href="/" title="Back to Homepage">EarthChen</a></p>
-        <p><span>Created:</span>2017-06-30, 14:38:01</p>
-        <p><span>Updated:</span>2017-06-30, 14:38:01</p>
+        <p><span>Created:</span>2017-06-30, 14:44:47</p>
+        <p><span>Updated:</span>2017-06-30, 14:44:47</p>
         <p>
             <span>Full URL:</span><a class="post-url" href="/2017/06/30/django_nginx_gunicorn/" title="django+nginx+gunicorn部署配置">http://earthchen.cn/2017/06/30/django_nginx_gunicorn/</a>
             <span class="copy-path" data-clipboard-text="From http://earthchen.cn/2017/06/30/django_nginx_gunicorn/　　By EarthChen" title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
@@ -426,16 +426,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2017/06/30/Android_qq_Menu/">
-                    Android仿qq侧滑菜单
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2017/06/12/ubuntu修复不能挂载NTFS硬盘/">
-                    ubuntu修复linux和windows双系统下挂载ntfs硬盘出错问题
+                <a href="/2017/06/30/跨域请求解决方案/">
+                    跨域请求的解决方案
                 </a>
             </div>
         
@@ -522,21 +516,19 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2017/06/30/Android_qq_Menu/" title="Pre: Android仿qq侧滑菜单">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="Back to Homepage"><i class="fa fa-home"></i></a>
         
 
         <a title="Mini Archives"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2017/06/12/ubuntu修复不能挂载NTFS硬盘/" title="Next: ubuntu修复linux和windows双系统下挂载ntfs硬盘出错问题">
+            <a href="/2017/06/30/跨域请求解决方案/" title="Next: 跨域请求的解决方案">
                 <i class="fa fa-angle-right"></i>
             </a>
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/ubuntu_supervisor/">ubuntu下的进程控制系统————Supervisor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/ubuntu_open_port/">ubuntu开放指定端口</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/ubuntu_do_something_use/">ubuntu日常使用的安装配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/ubuntu_do_something_coding/">ubuntu搭建常见开发环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/spring_SpEL/">spring中的SpEL表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/redis_study_2/">Redis学习笔记 -- 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/redis_study_1/">Redis学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/python2和Python3的区别/">Python2和Python3的区别简单总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/python_requirements/">python生成项目所需依赖文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/hexo_github_coding_blog/">利用hexo和github或coding 搭免费个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/git_study/">Git学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django渲染模板/">Django渲染模板</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django数据库操作/">Django操作数据库</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django环境搭建/">Django环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django连接mysql数据库/">Django连接MySql使用models处理数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django常用语句/">Django常用语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_timing_task/">django使用django-crontab实现定时任务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_rest_framework_study/">django-rest-framework框架学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_rest_framework_jwt/">django-rest-framework配置json web token进行接口的认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/C语言中缀表达式计算器/">C语言中缀表达式计算器</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/c语言中缀表达式变后缀表达式/">C语言中缀表达式转后缀表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/C语言逆波兰计算器/">C语言逆波兰表达式计算(后缀表达式计算器)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/C语言共享栈/">C语言共享栈</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/C语言二叉树基本操作/">C语言二叉树的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/C语言队列的基本操作/">C语言队列的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_address_baiduapi_marker_show/">Django调用百度地图api在地图上批量增加标记点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/Android_qq_Menu/">Android仿qq侧滑菜单</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_nginx_gunicorn/">django+nginx+gunicorn部署配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/ubuntu修复不能挂载NTFS硬盘/">ubuntu修复linux和windows双系统下挂载ntfs硬盘出错问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/03/资源收集/">资源收集共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/26/ubuntu安装在双系统笔记本下开机或关机卡死.1/">ubuntu在双系统下开机卡死或关机卡死的解决办法</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/17/跨域请求解决方案/">跨域请求的解决方案</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_nginx_gunicorn/">django+nginx+gunicorn部署配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/跨域请求解决方案/">跨域请求的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/ubuntu_supervisor/">ubuntu下的进程控制系统————Supervisor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/ubuntu_open_port/">ubuntu开放指定端口</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/ubuntu_do_something_use/">ubuntu日常使用的安装配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/ubuntu_do_something_coding/">ubuntu搭建常见开发环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/spring_SpEL/">spring中的SpEL表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/redis_study_2/">Redis学习笔记 -- 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/redis_study_1/">Redis学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/python2和Python3的区别/">Python2和Python3的区别简单总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/python_requirements/">python生成项目所需依赖文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/hexo_github_coding_blog/">利用hexo和github或coding 搭免费个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/git_study/">Git学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django渲染模板/">Django渲染模板</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django数据库操作/">Django操作数据库</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django环境搭建/">Django环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django连接mysql数据库/">Django连接MySql使用models处理数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django常用语句/">Django常用语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_timing_task/">django使用django-crontab实现定时任务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_rest_framework_study/">django-rest-framework框架学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_rest_framework_jwt/">django-rest-framework配置json web token进行接口的认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/C语言中缀表达式计算器/">C语言中缀表达式计算器</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/c语言中缀表达式变后缀表达式/">C语言中缀表达式转后缀表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/C语言逆波兰计算器/">C语言逆波兰表达式计算(后缀表达式计算器)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/C语言共享栈/">C语言共享栈</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/C语言二叉树基本操作/">C语言二叉树的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/C语言队列的基本操作/">C语言队列的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_address_baiduapi_marker_show/">Django调用百度地图api在地图上批量增加标记点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/Android_qq_Menu/">Android仿qq侧滑菜单</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/ubuntu修复不能挂载NTFS硬盘/">ubuntu修复linux和windows双系统下挂载ntfs硬盘出错问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/03/资源收集/">资源收集共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/26/ubuntu安装在双系统笔记本下开机或关机卡死.1/">ubuntu在双系统下开机卡死或关机卡死的解决办法</a></li></ul>
 
 
 
