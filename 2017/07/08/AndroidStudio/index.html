@@ -15,13 +15,17 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="tags">
-<meta property="og:url" content="http://earthchen.cn/tags/index.html">
+<meta name="description" content="在进行Android开发时，我们通常使用Android Studio,不过最近在使用Android Stduio最新版2.3.3出现了一个问题，虽然已经用了vpn，但是gradle还是下载不动，应该使他没有走系统代理，只能自己下载离线gradle版本，但在以前的方法放到用户的.gradle目录下，依然不能用。。。。">
+<meta name="keywords" content="解决方案">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android Studio 使用本地离线Gradle">
+<meta property="og:url" content="http://earthchen.cn/2017/07/08/AndroidStudio/index.html">
 <meta property="og:site_name" content="EarthChen&#39;s Blog">
-<meta property="og:updated_time" content="2016-10-07T04:49:50.583Z">
+<meta property="og:description" content="在进行Android开发时，我们通常使用Android Studio,不过最近在使用Android Stduio最新版2.3.3出现了一个问题，虽然已经用了vpn，但是gradle还是下载不动，应该使他没有走系统代理，只能自己下载离线gradle版本，但在以前的方法放到用户的.gradle目录下，依然不能用。。。。">
+<meta property="og:updated_time" content="2017-07-08T04:04:16.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="tags">
+<meta name="twitter:title" content="Android Studio 使用本地离线Gradle">
+<meta name="twitter:description" content="在进行Android开发时，我们通常使用Android Studio,不过最近在使用Android Stduio最新版2.3.3出现了一个问题，虽然已经用了vpn，但是gradle还是下载不动，应该使他没有走系统代理，只能自己下载离线gradle版本，但在以前的方法放到用户的.gradle目录下，依然不能用。。。。">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -53,7 +57,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>tags | EarthChen&#39;s Blog</title>
+<title>Android Studio 使用本地离线Gradle | EarthChen&#39;s Blog</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -63,7 +67,7 @@
         fancybox: true,
         animate: true,
         isHome: false,
-        isPost: false,
+        isPost: true,
         isArchive: false,
         isTag: false,
         isCategory: false,
@@ -288,11 +292,11 @@
     </div>
     <link class="menu-list" tags="Tags" friends="Friends" about="About Me"/>
 </nav>
-      <div class="body-wrap"><article id="page-undefined" class="article article-type-page" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-AndroidStudio" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/tags/index.html" class="article-date">
-      <time datetime="2016-10-07T04:49:50.000Z" itemprop="datePublished">2016-10-07</time>
+      <a href="/2017/07/08/AndroidStudio/" class="article-date">
+      <time datetime="2017-07-08T02:55:00.000Z" itemprop="datePublished">2017-07-08</time>
 </a>
 
 
@@ -307,7 +311,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      tags
+      Android Studio 使用本地离线Gradle
     </h1>
   
 
@@ -315,8 +319,16 @@
       
       <div class="article-info article-info-post">
         
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/随笔/">随笔</a>
+    </div>
+
 
         
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/解决方案/">解决方案</a></li></ul>
+    </div>
+
         <div class="clearfix"></div>
       </div>
       
@@ -324,96 +336,77 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <style>
-    .article-meta { display: none; }
-    #container .article .article-title { padding-right: 0; }
-    .article-header {
-        padding: 0;
-        padding-top: 26px;
-        border-left: none;
-        text-align: center;
-    }
-    .article-header:hover { border-left: none; }
-    .article-title { font-size: 1.6em }
-    .article-entry hr { margin: 0;}
-    .article-meta,
-    #container .article-info-post.article-info { display: none;}
-    #container .article .article-title { padding: 0; }
-</style>
+        <p>在进行Android开发时，我们通常使用Android Studio,不过最近在使用Android Stduio最新版2.3.3出现了一个问题，虽然已经用了vpn，但是gradle还是下载不动，应该使他没有走系统代理，只能自己下载离线gradle版本，但在以前的方法放到用户的.gradle目录下，依然不能用。。。。</p>
+<a id="more"></a>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><ol>
+<li><p>新版as没有选择gradle版本的地方，所以我们需要知道他创建工程时使用的gradle版本是多少，先使用as创建一个工程，as会自动在用户的.gradle下创建一个gradle-x.x-all文件夹，其中x.x就是版本号。（此时as会一直卡在building…….）</p>
+</li>
+<li><p>使用任务管理器结束as。从<a href="http://services.gradle.org/distributions/" target="_blank" rel="external">gradle下载地址</a>下载上面显示的版本号。gradle-x.x-all.zip</p>
+</li>
+<li><p>将下载好的gradle-x.x-all.zip放到用户目录下的.gradle/wrapper/dists/gradle-x.x-all/sdfsdhfsdkfsdfsdfd/中<br>sdfsdhfsdkfsdfsdfd是一串字符串每个人的可能不一样，反正看见一大串字符就对了<br>gradle-x.x-all.zip放进去之后不要解压，不要解压,不要解压，重要的问题说三遍，as会自动解压<br>windows下路径 c:\user\你的用户.gradle\wrapper\dist\<br>Linux下路径   /home/用户名/.gradle/wrapper/dist/</p>
+</li>
+</ol>
+<p>4.然后重新打开as,最好在翻墙状态，as就会联网自动下载其他所需要的文件和库了</p>
 
-
-    <!-- Tag Cloud Page -->
-    <hr>
-<br>
-<ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/学习笔记/">学习笔记</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/开发/">开发</a><span class="category-list-count">16</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/运维/">运维</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/">随笔</a><span class="category-list-count">5</span></li></ul>
-
-<p class="count"></p>
-
-<div class="tags">
-    <a href="/tags/AJAX/" style="font-size: 16px; color: #808080">AJAX</a> <a href="/tags/Android/" style="font-size: 16px; color: #808080">Android</a> <a href="/tags/Django/" style="font-size: 31.2px; color: #1a1a1a">Django</a> <a href="/tags/Git/" style="font-size: 19.8px; color: #666">Git</a> <a href="/tags/Hexo/" style="font-size: 16px; color: #808080">Hexo</a> <a href="/tags/JavaScript/" style="font-size: 16px; color: #808080">JavaScript</a> <a href="/tags/Linux/" style="font-size: 23.6px; color: #4d4d4d">Linux</a> <a href="/tags/Nginx/" style="font-size: 19.8px; color: #666">Nginx</a> <a href="/tags/Node-js/" style="font-size: 16px; color: #808080">Node.js</a> <a href="/tags/Python/" style="font-size: 35px; color: #000">Python</a> <a href="/tags/Redis/" style="font-size: 19.8px; color: #666">Redis</a> <a href="/tags/Spring/" style="font-size: 16px; color: #808080">Spring</a> <a href="/tags/c/" style="font-size: 27.4px; color: #333">c</a> <a href="/tags/数据结构/" style="font-size: 27.4px; color: #333">数据结构</a> <a href="/tags/解决方案/" style="font-size: 23.6px; color: #4d4d4d">解决方案</a> <a href="/tags/资源/" style="font-size: 16px; color: #808080">资源</a>
-</div>
-<style>
-    .category-list li{
-        display: inline-block;
-        margin: 0 1em .5em 0;
-        padding: 4px;
-        border: 1px solid lightgray;
-        font-size: 1.2rem;
-    }
-    .category-list a { color: gray; }
-    .category-list-item:hover a {
-        color: gray;
-        text-decoration: none;
-    }
-    .category-list-count {
-        margin-left: 2px;
-        font-size: .9rem;
-    }
-    .article-entry ul li:before{ display: none; }
-    .article-inner { text-align: center; }
-    .tags {
-        max-width: 42em;
-        margin: 2em auto;
-        margin-top: 0em;
-    }
-    .tags a {
-        margin-right: 1em;
-        line-height: 65px;
-        border-bottom: 1px solid gray;
-        white-space: nowrap;
-        transition: border-bottom .5s;
-    }
-    .tags a:hover {
-        border-bottom: 3px dotted gray;
-        text-decoration: none;
-    }
-    #count > span {
-        margin: auto .2em;
-        font-weight: bold;
-    }
-</style>
-
-<!-- Count tags and categories -->
-<p id="count">
-         <span><script>document.write($(".category-list-item").length)</script></span>Categories,
-         <span><script>document.write($(".tags > a").length)</script></span>Tags
-</p>
-<script>
-    $('#count').appendTo('.count');
-</script>
-
-          
-        
       
     </div>
     
   </div>
   
     
+    <div class="copyright">
+        <p><span>Title:</span><a href="/2017/07/08/AndroidStudio/">Android Studio 使用本地离线Gradle</a></p>
+        <p><span>Author:</span><a href="/" title="Back to Homepage">EarthChen</a></p>
+        <p><span>Created:</span>2017-07-08, 10:55:00</p>
+        <p><span>Updated:</span>2017-07-08, 12:04:16</p>
+        <p>
+            <span>Full URL:</span><a class="post-url" href="/2017/07/08/AndroidStudio/" title="Android Studio 使用本地离线Gradle">http://earthchen.cn/2017/07/08/AndroidStudio/</a>
+            <span class="copy-path" data-clipboard-text="From http://earthchen.cn/2017/07/08/AndroidStudio/　　By EarthChen" title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>License:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"CC BY-NC-SA 4.0"</a> Keep Link &amp; Author if Distribute.
+        </p>
+    </div>
 
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2017/06/30/django_nginx_gunicorn/">
+                    django+nginx+gunicorn部署配置
+                </a>
+            </div>
+        
+    </nav>
 
   
 </article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#解决方案"><span class="toc-number">1.</span> <span class="toc-text">解决方案</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-5 i,
+        .toc-level-5 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="Hide"  title="Show or Hide Table of Contents">
+
+    <script>
+        yiliaConfig.toc = ["Hide", "Show", !!"false"];
+    </script>
 
 
 
@@ -431,7 +424,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"tags　| EarthChen's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"Android Studio 使用本地离线Gradle　| EarthChen's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -447,7 +440,7 @@
     
       <div class="duoshuo" id="comments">
     <div id="comment-box" ></div>
-    <div class="ds-thread" id="ds-thread" data-thread-key="tags/index.html" data-title="tags" data-url="http://earthchen.cn/tags/index.html"></div>
+    <div class="ds-thread" id="ds-thread" data-thread-key="2017/07/08/AndroidStudio/" data-title="Android Studio 使用本地离线Gradle" data-url="http://earthchen.cn/2017/07/08/AndroidStudio/"></div>
     <script>
         var duoshuoQuery = {short_name:"earthchen"};
         var loadComment = function(){
@@ -465,6 +458,24 @@
 </div>
     
 
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="Back to Homepage"><i class="fa fa-home"></i></a>
+        
+
+        <a title="Mini Archives"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2017/06/30/django_nginx_gunicorn/" title="Next: django+nginx+gunicorn部署配置">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/07/08/AndroidStudio/">Android Studio 使用本地离线Gradle</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_nginx_gunicorn/">django+nginx+gunicorn部署配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/跨域请求解决方案/">跨域请求的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/ubuntu_supervisor/">ubuntu下的进程控制系统————Supervisor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/ubuntu_open_port/">ubuntu开放指定端口</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/ubuntu_do_something_use/">ubuntu日常使用的安装配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/ubuntu_do_something_coding/">ubuntu搭建常见开发环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/spring_SpEL/">spring中的SpEL表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/redis_study_2/">Redis学习笔记 -- 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/redis_study_1/">Redis学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/python2和Python3的区别/">Python2和Python3的区别简单总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/python_requirements/">python生成项目所需依赖文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/hexo_github_coding_blog/">利用hexo和github或coding 搭免费个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/git_study/">Git学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django渲染模板/">Django渲染模板</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django数据库操作/">Django操作数据库</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django环境搭建/">Django环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django连接mysql数据库/">Django连接MySql使用models处理数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django常用语句/">Django常用语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_timing_task/">django使用django-crontab实现定时任务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_rest_framework_study/">django-rest-framework框架学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_rest_framework_jwt/">django-rest-framework配置json web token进行接口的认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/C语言中缀表达式计算器/">C语言中缀表达式计算器</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/c语言中缀表达式变后缀表达式/">C语言中缀表达式转后缀表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/C语言逆波兰计算器/">C语言逆波兰表达式计算(后缀表达式计算器)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/C语言共享栈/">C语言共享栈</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/C语言二叉树基本操作/">C语言二叉树的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/C语言队列的基本操作/">C语言队列的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_address_baiduapi_marker_show/">Django调用百度地图api在地图上批量增加标记点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/Android_qq_Menu/">Android仿qq侧滑菜单</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/ubuntu修复不能挂载NTFS硬盘/">ubuntu修复linux和windows双系统下挂载ntfs硬盘出错问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/03/资源收集/">资源收集共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/26/ubuntu安装在双系统笔记本下开机或关机卡死.1/">ubuntu在双系统下开机卡死或关机卡死的解决办法</a></li></ul>
 
 
 

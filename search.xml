@@ -3,6 +3,37 @@
   
     
     <entry>
+      <title><![CDATA[Android Studio 使用本地离线Gradle]]></title>
+      <url>/2017/07/08/AndroidStudio/</url>
+      <content type="html"><![CDATA[<p>在进行Android开发时，我们通常使用Android Studio,不过最近在使用Android Stduio最新版2.3.3出现了一个问题，虽然已经用了vpn，但是gradle还是下载不动，应该使他没有走系统代理，只能自己下载离线gradle版本，但在以前的方法放到用户的.gradle目录下，依然不能用。。。。</p>
+<a id="more"></a>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><ol>
+<li><p>新版as没有选择gradle版本的地方，所以我们需要知道他创建工程时使用的gradle版本是多少，先使用as创建一个工程，as会自动在用户的.gradle下创建一个gradle-x.x-all文件夹，其中x.x就是版本号。（此时as会一直卡在building…….）</p>
+</li>
+<li><p>使用任务管理器结束as。从<a href="http://services.gradle.org/distributions/" target="_blank" rel="external">gradle下载地址</a>下载上面显示的版本号。gradle-x.x-all.zip</p>
+</li>
+<li><p>将下载好的gradle-x.x-all.zip放到用户目录下的.gradle/wrapper/dists/gradle-x.x-all/sdfsdhfsdkfsdfsdfd/中<br>sdfsdhfsdkfsdfsdfd是一串字符串每个人的可能不一样，反正看见一大串字符就对了<br>gradle-x.x-all.zip放进去之后不要解压，不要解压,不要解压，重要的问题说三遍，as会自动解压<br>windows下路径 c:\user\你的用户.gradle\wrapper\dist\<br>Linux下路径   /home/用户名/.gradle/wrapper/dist/</p>
+</li>
+</ol>
+<p>4.然后重新打开as,最好在翻墙状态，as就会联网自动下载其他所需要的文件和库了</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 随笔 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 解决方案 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[django+nginx+gunicorn部署配置]]></title>
       <url>/2017/06/30/django_nginx_gunicorn/</url>
       <content type="html"><![CDATA[<p>在部署django开发的站点时，通常有两种选择方式，nginx+django+uwsgi或者django+nginx+gunicorn，本文不讨论apache方式，在linux下通常都使用nginx，速度快，还经常做代理服务器，功能强大。。<br>nginx+django+uwsgi个人觉得uwsgi配置较为麻烦，所以选择了gunicorn，一个开源Python WSGI UNIX的HTTP服务器，据说速度快（配置快、运行快）、简单，默认是同步工作，支持Gevent、Eventlet异步，支持Tornado。有兴趣可以自行查阅官方文档</p>
@@ -147,9 +178,9 @@
         
         <tags>
             
-            <tag> Nginx </tag>
-            
             <tag> 解决方案 </tag>
+            
+            <tag> Nginx </tag>
             
             <tag> AJAX </tag>
             
