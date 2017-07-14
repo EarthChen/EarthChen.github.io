@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://earthchen.cn/about/index.html</loc>
+    
+    <lastmod>2017-07-14T15:31:01.762Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://earthchen.cn/2017/07/08/AndroidStudio/</loc>
     
     <lastmod>2017-07-08T04:04:16.000Z</lastmod>
@@ -236,13 +243,6 @@
     <loc>http://earthchen.cn/404.html</loc>
     
     <lastmod>2017-03-13T00:51:44.640Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://earthchen.cn/about/index.html</loc>
-    
-    <lastmod>2016-10-07T15:42:58.162Z</lastmod>
     
   </url>
   
