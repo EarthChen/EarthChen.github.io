@@ -310,8 +310,8 @@
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
-            <span class="ds-thread-count"  data-thread-key="2017/06/30/python2和Python3的区别/" ></span>
         
+            <span class="disqus-comment-count" data-disqus-identifier="2017/06/30/python2和Python3的区别/"></span>
         
     </a>
 
@@ -387,8 +387,8 @@
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
-            <span class="ds-thread-count"  data-thread-key="2017/06/30/python_requirements/" ></span>
         
+            <span class="disqus-comment-count" data-disqus-identifier="2017/06/30/python_requirements/"></span>
         
     </a>
 
@@ -465,8 +465,8 @@
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
-            <span class="ds-thread-count"  data-thread-key="2017/06/30/hexo_github_coding_blog/" ></span>
         
+            <span class="disqus-comment-count" data-disqus-identifier="2017/06/30/hexo_github_coding_blog/"></span>
         
     </a>
 
@@ -553,8 +553,8 @@
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
-            <span class="ds-thread-count"  data-thread-key="2017/06/30/git_study/" ></span>
         
+            <span class="disqus-comment-count" data-disqus-identifier="2017/06/30/git_study/"></span>
         
     </a>
 
@@ -631,8 +631,8 @@
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
-            <span class="ds-thread-count"  data-thread-key="2017/06/30/django渲染模板/" ></span>
         
+            <span class="disqus-comment-count" data-disqus-identifier="2017/06/30/django渲染模板/"></span>
         
     </a>
 
@@ -709,8 +709,8 @@
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
-            <span class="ds-thread-count"  data-thread-key="2017/06/30/django数据库操作/" ></span>
         
+            <span class="disqus-comment-count" data-disqus-identifier="2017/06/30/django数据库操作/"></span>
         
     </a>
 
@@ -787,8 +787,8 @@
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
-            <span class="ds-thread-count"  data-thread-key="2017/06/30/django环境搭建/" ></span>
         
+            <span class="disqus-comment-count" data-disqus-identifier="2017/06/30/django环境搭建/"></span>
         
     </a>
 
@@ -874,8 +874,8 @@
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
-            <span class="ds-thread-count"  data-thread-key="2017/06/30/django连接mysql数据库/" ></span>
         
+            <span class="disqus-comment-count" data-disqus-identifier="2017/06/30/django连接mysql数据库/"></span>
         
     </a>
 
@@ -952,8 +952,8 @@
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
-            <span class="ds-thread-count"  data-thread-key="2017/06/30/django常用语句/" ></span>
         
+            <span class="disqus-comment-count" data-disqus-identifier="2017/06/30/django常用语句/"></span>
         
     </a>
 
@@ -1034,8 +1034,8 @@
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
-            <span class="ds-thread-count"  data-thread-key="2017/06/30/django_timing_task/" ></span>
         
+            <span class="disqus-comment-count" data-disqus-identifier="2017/06/30/django_timing_task/"></span>
         
     </a>
 
@@ -1170,28 +1170,23 @@
 
 
     
+
+    
+        <script id="dsq-count-scr" src="//null.disqus.com/count.js" async></script>
         <script>
             if ($(".left-col").is(":visible")) {
-                var duoshuoQuery = {short_name:"earthchen"};
-                (function() {
-                    var d = document, s = d.createElement('script');
-                    s.src = 'http://static.duoshuo.com/embed.js';
-                    s.async = true; s.charset = 'UTF-8';
-                    (d.head || d.body).appendChild(s);
-                })();
-
-                $(document).ready(function(){
-                    var $duoshuoCount = $(".ds-thread-count");
-                    $duoshuoCount.bind("DOMNodeInserted", function(e) {
-                        var num = $(this).text().replace(/[^0-9]/ig,"");
+                var $disqusCount = $(".disqus-comment-count");
+                $disqusCount.bind("DOMNodeInserted", function(e) {
+                    var num = $(this).text().replace(/[^0-9]/ig,"");
+                    if (num > 0) {
                         $(this).siblings(".count-comment").text(num);
-                        $(this).remove();
-                    })
+                    }
+                    $(this).remove();
                 })
+            } else {
+                $(".disqus-comment-count").remove();
             }
         </script>
-    
-
      
 
 

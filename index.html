@@ -310,8 +310,8 @@
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
-            <span class="ds-thread-count"  data-thread-key="2017/07/08/AndroidStudio/" ></span>
         
+            <span class="disqus-comment-count" data-disqus-identifier="2017/07/08/AndroidStudio/"></span>
         
     </a>
 
@@ -387,8 +387,8 @@
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
-            <span class="ds-thread-count"  data-thread-key="2017/06/30/django_nginx_gunicorn/" ></span>
         
+            <span class="disqus-comment-count" data-disqus-identifier="2017/06/30/django_nginx_gunicorn/"></span>
         
     </a>
 
@@ -465,8 +465,8 @@
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
-            <span class="ds-thread-count"  data-thread-key="2017/06/30/跨域请求解决方案/" ></span>
         
+            <span class="disqus-comment-count" data-disqus-identifier="2017/06/30/跨域请求解决方案/"></span>
         
     </a>
 
@@ -543,8 +543,8 @@
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
-            <span class="ds-thread-count"  data-thread-key="2017/06/30/ubuntu_supervisor/" ></span>
         
+            <span class="disqus-comment-count" data-disqus-identifier="2017/06/30/ubuntu_supervisor/"></span>
         
     </a>
 
@@ -622,8 +622,8 @@
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
-            <span class="ds-thread-count"  data-thread-key="2017/06/30/ubuntu_open_port/" ></span>
         
+            <span class="disqus-comment-count" data-disqus-identifier="2017/06/30/ubuntu_open_port/"></span>
         
     </a>
 
@@ -700,8 +700,8 @@
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
-            <span class="ds-thread-count"  data-thread-key="2017/06/30/ubuntu_do_something_use/" ></span>
         
+            <span class="disqus-comment-count" data-disqus-identifier="2017/06/30/ubuntu_do_something_use/"></span>
         
     </a>
 
@@ -778,8 +778,8 @@
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
-            <span class="ds-thread-count"  data-thread-key="2017/06/30/ubuntu_do_something_coding/" ></span>
         
+            <span class="disqus-comment-count" data-disqus-identifier="2017/06/30/ubuntu_do_something_coding/"></span>
         
     </a>
 
@@ -858,8 +858,8 @@
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
-            <span class="ds-thread-count"  data-thread-key="2017/06/30/spring_SpEL/" ></span>
         
+            <span class="disqus-comment-count" data-disqus-identifier="2017/06/30/spring_SpEL/"></span>
         
     </a>
 
@@ -943,8 +943,8 @@
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
-            <span class="ds-thread-count"  data-thread-key="2017/06/30/redis_study_2/" ></span>
         
+            <span class="disqus-comment-count" data-disqus-identifier="2017/06/30/redis_study_2/"></span>
         
     </a>
 
@@ -1021,8 +1021,8 @@
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
-            <span class="ds-thread-count"  data-thread-key="2017/06/30/redis_study_1/" ></span>
         
+            <span class="disqus-comment-count" data-disqus-identifier="2017/06/30/redis_study_1/"></span>
         
     </a>
 
@@ -1151,28 +1151,23 @@
 
 
     
+
+    
+        <script id="dsq-count-scr" src="//null.disqus.com/count.js" async></script>
         <script>
             if ($(".left-col").is(":visible")) {
-                var duoshuoQuery = {short_name:"earthchen"};
-                (function() {
-                    var d = document, s = d.createElement('script');
-                    s.src = 'http://static.duoshuo.com/embed.js';
-                    s.async = true; s.charset = 'UTF-8';
-                    (d.head || d.body).appendChild(s);
-                })();
-
-                $(document).ready(function(){
-                    var $duoshuoCount = $(".ds-thread-count");
-                    $duoshuoCount.bind("DOMNodeInserted", function(e) {
-                        var num = $(this).text().replace(/[^0-9]/ig,"");
+                var $disqusCount = $(".disqus-comment-count");
+                $disqusCount.bind("DOMNodeInserted", function(e) {
+                    var num = $(this).text().replace(/[^0-9]/ig,"");
+                    if (num > 0) {
                         $(this).siblings(".count-comment").text(num);
-                        $(this).remove();
-                    })
+                    }
+                    $(this).remove();
                 })
+            } else {
+                $(".disqus-comment-count").remove();
             }
         </script>
-    
-
      
 
 

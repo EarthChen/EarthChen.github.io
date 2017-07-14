@@ -310,8 +310,8 @@
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
-            <span class="ds-thread-count"  data-thread-key="2017/06/30/django_rest_framework_study/" ></span>
         
+            <span class="disqus-comment-count" data-disqus-identifier="2017/06/30/django_rest_framework_study/"></span>
         
     </a>
 
@@ -389,8 +389,8 @@
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
-            <span class="ds-thread-count"  data-thread-key="2017/06/30/django_rest_framework_jwt/" ></span>
         
+            <span class="disqus-comment-count" data-disqus-identifier="2017/06/30/django_rest_framework_jwt/"></span>
         
     </a>
 
@@ -467,8 +467,8 @@
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
-            <span class="ds-thread-count"  data-thread-key="2017/06/30/C语言中缀表达式计算器/" ></span>
         
+            <span class="disqus-comment-count" data-disqus-identifier="2017/06/30/C语言中缀表达式计算器/"></span>
         
     </a>
 
@@ -546,8 +546,8 @@
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
-            <span class="ds-thread-count"  data-thread-key="2017/06/30/c语言中缀表达式变后缀表达式/" ></span>
         
+            <span class="disqus-comment-count" data-disqus-identifier="2017/06/30/c语言中缀表达式变后缀表达式/"></span>
         
     </a>
 
@@ -624,8 +624,8 @@
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
-            <span class="ds-thread-count"  data-thread-key="2017/06/30/C语言逆波兰计算器/" ></span>
         
+            <span class="disqus-comment-count" data-disqus-identifier="2017/06/30/C语言逆波兰计算器/"></span>
         
     </a>
 
@@ -703,8 +703,8 @@
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
-            <span class="ds-thread-count"  data-thread-key="2017/06/30/C语言共享栈/" ></span>
         
+            <span class="disqus-comment-count" data-disqus-identifier="2017/06/30/C语言共享栈/"></span>
         
     </a>
 
@@ -782,8 +782,8 @@
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
-            <span class="ds-thread-count"  data-thread-key="2017/06/30/C语言二叉树基本操作/" ></span>
         
+            <span class="disqus-comment-count" data-disqus-identifier="2017/06/30/C语言二叉树基本操作/"></span>
         
     </a>
 
@@ -861,8 +861,8 @@
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
-            <span class="ds-thread-count"  data-thread-key="2017/06/30/C语言队列的基本操作/" ></span>
         
+            <span class="disqus-comment-count" data-disqus-identifier="2017/06/30/C语言队列的基本操作/"></span>
         
     </a>
 
@@ -940,8 +940,8 @@
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
-            <span class="ds-thread-count"  data-thread-key="2017/06/30/django_address_baiduapi_marker_show/" ></span>
         
+            <span class="disqus-comment-count" data-disqus-identifier="2017/06/30/django_address_baiduapi_marker_show/"></span>
         
     </a>
 
@@ -1018,8 +1018,8 @@
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
-            <span class="ds-thread-count"  data-thread-key="2017/06/30/Android_qq_Menu/" ></span>
         
+            <span class="disqus-comment-count" data-disqus-identifier="2017/06/30/Android_qq_Menu/"></span>
         
     </a>
 
@@ -1148,28 +1148,23 @@
 
 
     
+
+    
+        <script id="dsq-count-scr" src="//null.disqus.com/count.js" async></script>
         <script>
             if ($(".left-col").is(":visible")) {
-                var duoshuoQuery = {short_name:"earthchen"};
-                (function() {
-                    var d = document, s = d.createElement('script');
-                    s.src = 'http://static.duoshuo.com/embed.js';
-                    s.async = true; s.charset = 'UTF-8';
-                    (d.head || d.body).appendChild(s);
-                })();
-
-                $(document).ready(function(){
-                    var $duoshuoCount = $(".ds-thread-count");
-                    $duoshuoCount.bind("DOMNodeInserted", function(e) {
-                        var num = $(this).text().replace(/[^0-9]/ig,"");
+                var $disqusCount = $(".disqus-comment-count");
+                $disqusCount.bind("DOMNodeInserted", function(e) {
+                    var num = $(this).text().replace(/[^0-9]/ig,"");
+                    if (num > 0) {
                         $(this).siblings(".count-comment").text(num);
-                        $(this).remove();
-                    })
+                    }
+                    $(this).remove();
                 })
+            } else {
+                $(".disqus-comment-count").remove();
             }
         </script>
-    
-
      
 
 
