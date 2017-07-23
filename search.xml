@@ -20,10 +20,98 @@
 <p>结果为:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">限制a后面字符不为数字的结果为[&apos;nam.txt&apos;]</div></pre></td></tr></table></figure></p>
 <h3 id="使用元字符"><a href="#使用元字符" class="headerlink" title="使用元字符"></a>使用元字符</h3><h4 id="对特殊字符进行转义"><a href="#对特殊字符进行转义" class="headerlink" title="对特殊字符进行转义"></a>对特殊字符进行转义</h4><p>使用<strong>\</strong>对元字符进行转义<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">s = <span class="string">'list[0]   list[1]   list[2]'</span></div><div class="line">print(<span class="string">'使用\对中括号进行转义使其匹配&#123;&#125;'</span>.format(re.findall(<span class="string">r'list\[[0-9]\]'</span>, s)))</div><div class="line">path = <span class="string">'\home\\ben\sales'</span></div><div class="line">print(<span class="string">'将\替换成/为&#123;&#125;'</span>.format(re.compile(<span class="string">r'\\'</span>).subn(<span class="string">'/'</span>, path)))</div></pre></td></tr></table></figure></p>
 <p>结果为:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">使用\对中括号进行转义使其匹配[&apos;list[0]&apos;, &apos;list[1]&apos;, &apos;list[2]&apos;]</div><div class="line">将\替换成/为(&apos;/home/ben/sales&apos;, 3)</div></pre></td></tr></table></figure></p>
-<h4 id="匹配特定的字符类别"><a href="#匹配特定的字符类别" class="headerlink" title="匹配特定的字符类别"></a>匹配特定的字符类别</h4><p>空白元字符表<br>|元字符      | 说明   |<br>| ———-| ——-|<br>| <strong>[\b]</strong> | 回退符 |<br>| <strong>\f</strong> | 换页符  |<br>| <strong>\n</strong> | 换行符  |<br>| <strong>\r</strong> | 回车符 |<br>| <strong>\t</strong> | 制表符|<br>| <strong>\v</strong> | 垂直制表符|   </p>
-<p>数字元字符<br>|元字符|说明|<br>| ———-| ——-|<br>|<strong>\d</strong>|任何一个数字 (等价于[0-9])|<br>|<strong>\D</strong>|任何一个非数字(等价于[^0-9])|</p>
-<p>字母数字元字符<br>|元字符|说明|<br>| ———-| ——-|<br>|<strong>\w</strong>|任何一个字母数字字符(大小写均可)或下划线字符 (等价于[a-zA-Z0-9<em>])|<br>|<strong>\W</strong>|任何一个非字母数字字符(等价于[^a-zA-Z0-9</em>])|</p>
-<p>空白字符元字符<br>|元字符|说明|<br>| ———-| ——-|<br>|<strong>\s</strong>|任何一个空白字符 (等价于[\f\n\r\t\v])|<br>|<strong>\S</strong>|任何一个非空白字符(等价于[^\f\n\r\t\v])|</p>
+<h4 id="匹配特定的字符类别"><a href="#匹配特定的字符类别" class="headerlink" title="匹配特定的字符类别"></a>匹配特定的字符类别</h4><p>空白元字符表                     </p>
+<table>
+<thead>
+<tr>
+<th>元字符</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>[\b]</strong></td>
+<td>回退符</td>
+</tr>
+<tr>
+<td><strong>\f</strong></td>
+<td>换页符</td>
+</tr>
+<tr>
+<td><strong>\n</strong></td>
+<td>换行符</td>
+</tr>
+<tr>
+<td><strong>\r</strong></td>
+<td>回车符</td>
+</tr>
+<tr>
+<td><strong>\t</strong></td>
+<td>制表符</td>
+</tr>
+<tr>
+<td><strong>\v</strong></td>
+<td>垂直制表符</td>
+</tr>
+</tbody>
+</table>
+<p>数字元字符</p>
+<table>
+<thead>
+<tr>
+<th>元字符</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>\d</strong></td>
+<td>任何一个数字 (等价于[0-9])</td>
+</tr>
+<tr>
+<td><strong>\D</strong></td>
+<td>任何一个非数字(等价于[^0-9])</td>
+</tr>
+</tbody>
+</table>
+<p>字母数字元字符</p>
+<table>
+<thead>
+<tr>
+<th>元字符</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>\w</strong></td>
+<td>任何一个字母数字字符(大小写均可)或下划线字符 (等价于[a-zA-Z0-9_])</td>
+</tr>
+<tr>
+<td><strong>\W</strong></td>
+<td>任何一个非字母数字字符(等价于[^a-zA-Z0-9_])</td>
+</tr>
+</tbody>
+</table>
+<p>空白字符元字符</p>
+<table>
+<thead>
+<tr>
+<th>元字符</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>\s</strong></td>
+<td>任何一个空白字符 (等价于[\f\n\r\t\v])</td>
+</tr>
+<tr>
+<td><strong>\S</strong></td>
+<td>任何一个非空白字符(等价于[^\f\n\r\t\v])</td>
+</tr>
+</tbody>
+</table>
 <h3 id="重复匹配"><a href="#重复匹配" class="headerlink" title="重复匹配"></a>重复匹配</h3><h4 id="匹配一个或多个字符"><a href="#匹配一个或多个字符" class="headerlink" title="匹配一个或多个字符"></a>匹配一个或多个字符</h4><p>匹配同一个字符或(字符集合)的多次重复，只要在其后面加上一个+即可。<br>+匹配一个或多个字符(至少一个，不包含0个)<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">s = <span class="string">'1234545@qq.com   fdfsd@163.com test.sddf@163.com.cn'</span></div><div class="line">print(<span class="string">'匹配邮箱&#123;&#125;'</span>.format(re.findall(<span class="string">r'[\w.]+@[\w.]+\.\w+'</span>, s)))</div></pre></td></tr></table></figure></p>
 <p>结果为；<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">匹配邮箱[&apos;1234545@qq.com&apos;, &apos;fdfsd@163.com&apos;]</div></pre></td></tr></table></figure></p>
 <h4 id="匹配零个或多个字符"><a href="#匹配零个或多个字符" class="headerlink" title="匹配零个或多个字符"></a>匹配零个或多个字符</h4><p><strong>*</strong> 和+类似，只是可以允许匹配0个或多个的情况</p>
@@ -45,7 +133,29 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;B&gt;TEST&lt;/B&gt;AND &lt;B&gt;TEST1&lt;/B&gt;</div></pre></td></tr></table></figure>
 </li>
 </ol>
-<p>会被正则表达式&lt;[Bb]&gt;.<em>&lt;/[Bb]&gt;匹配为一个整体的结果<br>此时应该使用懒惰型版本<br>常用的贪婪性元字符和它们的懒惰型版本<br>|贪婪型元字符|懒惰型元字符|<br>| ———-| ——-|<br>|</em>|*?|<br>|+|+?|<br>|{n,}|{n,}?|</p>
+<p>会被正则表达式&lt;[Bb]&gt;.*&lt;/[Bb]&gt;匹配为一个整体的结果<br>此时应该使用懒惰型版本<br>常用的贪婪性元字符和它们的懒惰型版本</p>
+<table>
+<thead>
+<tr>
+<th>贪婪型元字符</th>
+<th>懒惰型元字符</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>*</td>
+<td>*?</td>
+</tr>
+<tr>
+<td>+</td>
+<td>+?</td>
+</tr>
+<tr>
+<td>{n,}</td>
+<td>{n,}?</td>
+</tr>
+</tbody>
+</table>
 <p>用懒惰型元字符时的正则表达式应是&lt;[Bb]&gt;.*?&lt;/[Bb]&gt;</p>
 <blockquote>
 <p>注：</p>
@@ -189,9 +299,9 @@
         
         <tags>
             
-            <tag> Nginx </tag>
-            
             <tag> Django </tag>
+            
+            <tag> Nginx </tag>
             
         </tags>
         
@@ -1652,11 +1762,11 @@
         
         <tags>
             
-            <tag> Git </tag>
-            
             <tag> Node.js </tag>
             
             <tag> Hexo </tag>
+            
+            <tag> Git </tag>
             
             <tag> JavaScript </tag>
             
@@ -1863,9 +1973,9 @@
         
         <tags>
             
-            <tag> Django </tag>
-            
             <tag> Python </tag>
+            
+            <tag> Django </tag>
             
         </tags>
         
@@ -1966,9 +2076,9 @@
         
         <tags>
             
-            <tag> Django </tag>
-            
             <tag> Python </tag>
+            
+            <tag> Django </tag>
             
         </tags>
         
@@ -2032,9 +2142,9 @@
         
         <tags>
             
-            <tag> Django </tag>
-            
             <tag> Python </tag>
+            
+            <tag> Django </tag>
             
         </tags>
         
@@ -2113,9 +2223,9 @@
         
         <tags>
             
-            <tag> Django </tag>
-            
             <tag> Python </tag>
+            
+            <tag> Django </tag>
             
         </tags>
         
@@ -2191,9 +2301,9 @@
         
         <tags>
             
-            <tag> Django </tag>
-            
             <tag> Python </tag>
+            
+            <tag> Django </tag>
             
         </tags>
         
@@ -2251,9 +2361,9 @@
         
         <tags>
             
-            <tag> Django </tag>
-            
             <tag> Python </tag>
+            
+            <tag> Django </tag>
             
         </tags>
         
@@ -2312,9 +2422,9 @@
         
         <tags>
             
-            <tag> Django </tag>
-            
             <tag> Python </tag>
+            
+            <tag> Django </tag>
             
         </tags>
         
@@ -2390,9 +2500,9 @@
         
         <tags>
             
-            <tag> Django </tag>
-            
             <tag> Python </tag>
+            
+            <tag> Django </tag>
             
         </tags>
         
@@ -2769,9 +2879,9 @@
         
         <tags>
             
-            <tag> Django </tag>
-            
             <tag> Python </tag>
+            
+            <tag> Django </tag>
             
         </tags>
         
