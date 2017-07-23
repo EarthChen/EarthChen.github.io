@@ -157,7 +157,7 @@
 </tbody>
 </table>
 <p>用懒惰型元字符时的正则表达式应是&lt;[Bb]&gt;.*?&lt;/[Bb]&gt;</p>
-<blockquote>
+<h3 id="位置匹配"><a href="#位置匹配" class="headerlink" title="位置匹配"></a>位置匹配</h3><blockquote>
 <p>注：</p>
 <ul>
 <li>上述环境在<strong>ubuntu16.04 lts Python3.5</strong>中测试成功</li>
@@ -1762,11 +1762,11 @@
         
         <tags>
             
+            <tag> Git </tag>
+            
             <tag> Node.js </tag>
             
             <tag> Hexo </tag>
-            
-            <tag> Git </tag>
             
             <tag> JavaScript </tag>
             
