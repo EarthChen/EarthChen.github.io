@@ -160,7 +160,29 @@
 <h3 id="位置匹配"><a href="#位置匹配" class="headerlink" title="位置匹配"></a>位置匹配</h3><h4 id="单词边界"><a href="#单词边界" class="headerlink" title="单词边界"></a>单词边界</h4><p>使用\b限定单词边界，用来匹配一个单词的开始或结尾<br>使用\B限定一个前后都不是单词边界的单词<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">s = <span class="string">'the cat scattered his food all over the room color - red'</span></div><div class="line">print(<span class="string">'匹配单词边界&#123;&#125;'</span>.format(re.findall(<span class="string">r'\bcat\b'</span>, s)))</div><div class="line">print(<span class="string">'不匹配单词边界&#123;&#125;'</span>.format(re.findall(<span class="string">r'\-\B'</span>, s)))</div></pre></td></tr></table></figure></p>
 <p>结果为:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">匹配单词边界[&apos;cat&apos;]</div><div class="line">不匹配单词边界[&apos;-&apos;]</div></pre></td></tr></table></figure></p>
 <h4 id="字符串边界"><a href="#字符串边界" class="headerlink" title="字符串边界"></a>字符串边界</h4><p>^限定字符串开头，$限定字符串的结尾</p>
-<h3 id="使用子表达式"><a href="#使用子表达式" class="headerlink" title="使用子表达式"></a>使用子表达式</h3><blockquote>
+<h3 id="使用子表达式"><a href="#使用子表达式" class="headerlink" title="使用子表达式"></a>使用子表达式</h3><p>用<strong>()</strong>来将需要的子表达式划分出来，子表达式可以嵌套<br>用<strong>|</strong>表示或，例如19|20表示为(19|20)匹配19或20<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">s = <span class="string">'hello &amp;nbsp;&amp;nbsp; the world'</span></div><div class="line">print(<span class="string">'匹配两个&amp;nbsp;的结果为&#123;&#125;'</span>.format(re.findall(<span class="string">r'(&amp;nbsp;)&#123;2,&#125;'</span>, s)))</div><div class="line"></div><div class="line">s = <span class="string">'ping 12.159.46.200'</span></div><div class="line">p = re.compile(<span class="string">r'(\d&#123;1,3&#125;\.)&#123;3&#125;\d&#123;1,3&#125;'</span>)</div><div class="line">print(<span class="string">'使用子表达式匹配ip地址为&#123;&#125;'</span>.format(p.findall(s)))</div><div class="line"></div><div class="line">s = <span class="string">'1997     2005'</span></div><div class="line">print(<span class="string">'&#123;&#125;'</span>.format(re.findall(<span class="string">r'(19|20)\d&#123;2&#125;'</span>, s)))</div></pre></td></tr></table></figure></p>
+<p>结果为:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">匹配两个&amp;nbsp;的结果为[&apos;&amp;nbsp;&amp;nbsp;&apos;]</div><div class="line">使用子表达式匹配ip地址为[&apos;12.159.46.200&apos;]</div><div class="line">[&apos;19&apos;, &apos;20&apos;]</div></pre></td></tr></table></figure></p>
+<h3 id="回溯引用，前后一致"><a href="#回溯引用，前后一致" class="headerlink" title="回溯引用，前后一致"></a>回溯引用，前后一致</h3><p>使用\n代表模式里的第几个子表达式<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">s = <span class="string">'this is and and or or not not'</span></div><div class="line">print(<span class="string">'&#123;&#125;'</span>.format(re.findall(<span class="string">r'[ ]+(\w+)[ ]+\1'</span>, s)))</div></pre></td></tr></table></figure></p>
+<p>结果为:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[&apos;and&apos;, &apos;or&apos;, &apos;not&apos;]</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>注:</p>
+<ul>
+<li>回溯引用只能用来引用模式里的子表达式(用()括起来的正则表达式片段)</li>
+<li>回溯引用匹配通常用1开始技术(\1 \2等)。在许多实现里，第0个匹配(\0)可以用来代表整个正则表达式</li>
+</ul>
+</blockquote>
+<h3 id="前后查找"><a href="#前后查找" class="headerlink" title="前后查找"></a>前后查找</h3><p>这种模式，包含的匹配本身并不返回，而是用于确定正确的匹配位置，它并不是匹配结果的一部分。<br>前后查找分为向前查找和向后查找，但常见的正则表达式实现都支持向前查找。所以只说明前者</p>
+<h4 id="向前查找"><a href="#向前查找" class="headerlink" title="向前查找"></a>向前查找</h4><p>向前查找指定了一个必须匹配但不在结果中返回的模式。向前查找实际就是一个子表达式。<br>从语法上看，一个向前查找模式就是一个以?=开头的子表达式，需要匹配的文本跟在=的后面。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">s = <span class="string">'http://www.baidu.com \n'</span> \</div><div class="line">    <span class="string">'https://www.baidu.com \n'</span> \</div><div class="line">    <span class="string">'ftp://ftp.baidu.com    \n'</span></div><div class="line"></div><div class="line">print(<span class="string">'向前查找url中的协议名为&#123;&#125;'</span>.format(re.findall(<span class="string">r'.&#123;3,6&#125;(?=:)'</span>, s)))</div></pre></td></tr></table></figure></p>
+<p>结果:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">向前查找url中的协议名为[&apos;http&apos;, &apos;https&apos;, &apos;ftp&apos;]</div></pre></td></tr></table></figure></p>
+<h4 id="向后查找"><a href="#向后查找" class="headerlink" title="向后查找"></a>向后查找</h4><p>与向前查找相类似，查找出现在被匹配文本之前的字符（但不消费它）,向后查找的操作符使?&lt;=</p>
+<h3 id="嵌入条件"><a href="#嵌入条件" class="headerlink" title="嵌入条件"></a>嵌入条件</h3><p>正则表达式里的条件要用?来定义</p>
+<ul>
+<li>?匹配前一个字符或表达式，如果它存在的话</li>
+<li>?= 和?&lt;=匹配前面或后面的文本，如果它存在的话</li>
+<li>根据一个回溯引用来进行条件处理</li>
+<li>根据一个前后查找来进行条件处理</li>
+</ul>
+<blockquote>
 <p>注：</p>
 <ul>
 <li>上述环境在<strong>ubuntu16.04 lts Python3.5</strong>中测试成功</li>
@@ -1765,11 +1787,11 @@
         
         <tags>
             
+            <tag> Git </tag>
+            
             <tag> Node.js </tag>
             
             <tag> Hexo </tag>
-            
-            <tag> Git </tag>
             
             <tag> JavaScript </tag>
             

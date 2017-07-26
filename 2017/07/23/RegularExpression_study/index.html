@@ -22,7 +22,7 @@
 <meta property="og:url" content="http://earthchen.cn/2017/07/23/RegularExpression_study/index.html">
 <meta property="og:site_name" content="EarthChen&#39;s Blog">
 <meta property="og:description" content="正则表达式(regular expression)描述了一种字符串匹配的模式（pattern），可以用来检查一个串是否含有某种子串、将匹配的子串替换或者从某个串中取出符合某个条件的子串等。在各大编程语言中都能发挥出很大的作用。每种语言也都有关于正则表达式模块的实现。本文以Python举例说明。 Regular Expression">
-<meta property="og:updated_time" content="2017-07-23T08:25:13.677Z">
+<meta property="og:updated_time" content="2017-07-26T08:25:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="正则表达式学习笔记">
 <meta name="twitter:description" content="正则表达式(regular expression)描述了一种字符串匹配的模式（pattern），可以用来检查一个串是否含有某种子串、将匹配的子串替换或者从某个串中取出符合某个条件的子串等。在各大编程语言中都能发挥出很大的作用。每种语言也都有关于正则表达式模块的实现。本文以Python举例说明。 Regular Expression">
@@ -158,13 +158,13 @@
                 <div class="tips-box hide">
                     <div class="tips-arrow"></div>
                     <ul class="tips-inner">
-                        <li>菜单</li>
-                        <li>标签</li>
+                        <li>Menu</li>
+                        <li>Tags</li>
                         
-                        <li>友情链接</li>
+                        <li>Friends</li>
                         
                         
-                        <li>关于我</li>
+                        <li>About Me</li>
                         
                     </ul>
                 </div>
@@ -290,7 +290,7 @@
             </nav>
         </header>                
     </div>
-    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+    <link class="menu-list" tags="Tags" friends="Friends" about="About Me"/>
 </nav>
       <div class="body-wrap"><article id="post-RegularExpression_study" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -491,7 +491,29 @@
 <h3 id="位置匹配"><a href="#位置匹配" class="headerlink" title="位置匹配"></a>位置匹配</h3><h4 id="单词边界"><a href="#单词边界" class="headerlink" title="单词边界"></a>单词边界</h4><p>使用\b限定单词边界，用来匹配一个单词的开始或结尾<br>使用\B限定一个前后都不是单词边界的单词<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">s = <span class="string">'the cat scattered his food all over the room color - red'</span></div><div class="line">print(<span class="string">'匹配单词边界&#123;&#125;'</span>.format(re.findall(<span class="string">r'\bcat\b'</span>, s)))</div><div class="line">print(<span class="string">'不匹配单词边界&#123;&#125;'</span>.format(re.findall(<span class="string">r'\-\B'</span>, s)))</div></pre></td></tr></table></figure></p>
 <p>结果为:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">匹配单词边界[&apos;cat&apos;]</div><div class="line">不匹配单词边界[&apos;-&apos;]</div></pre></td></tr></table></figure></p>
 <h4 id="字符串边界"><a href="#字符串边界" class="headerlink" title="字符串边界"></a>字符串边界</h4><p>^限定字符串开头，$限定字符串的结尾</p>
-<h3 id="使用子表达式"><a href="#使用子表达式" class="headerlink" title="使用子表达式"></a>使用子表达式</h3><blockquote>
+<h3 id="使用子表达式"><a href="#使用子表达式" class="headerlink" title="使用子表达式"></a>使用子表达式</h3><p>用<strong>()</strong>来将需要的子表达式划分出来，子表达式可以嵌套<br>用<strong>|</strong>表示或，例如19|20表示为(19|20)匹配19或20<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">s = <span class="string">'hello &amp;nbsp;&amp;nbsp; the world'</span></div><div class="line">print(<span class="string">'匹配两个&amp;nbsp;的结果为&#123;&#125;'</span>.format(re.findall(<span class="string">r'(&amp;nbsp;)&#123;2,&#125;'</span>, s)))</div><div class="line"></div><div class="line">s = <span class="string">'ping 12.159.46.200'</span></div><div class="line">p = re.compile(<span class="string">r'(\d&#123;1,3&#125;\.)&#123;3&#125;\d&#123;1,3&#125;'</span>)</div><div class="line">print(<span class="string">'使用子表达式匹配ip地址为&#123;&#125;'</span>.format(p.findall(s)))</div><div class="line"></div><div class="line">s = <span class="string">'1997     2005'</span></div><div class="line">print(<span class="string">'&#123;&#125;'</span>.format(re.findall(<span class="string">r'(19|20)\d&#123;2&#125;'</span>, s)))</div></pre></td></tr></table></figure></p>
+<p>结果为:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">匹配两个&amp;nbsp;的结果为[&apos;&amp;nbsp;&amp;nbsp;&apos;]</div><div class="line">使用子表达式匹配ip地址为[&apos;12.159.46.200&apos;]</div><div class="line">[&apos;19&apos;, &apos;20&apos;]</div></pre></td></tr></table></figure></p>
+<h3 id="回溯引用，前后一致"><a href="#回溯引用，前后一致" class="headerlink" title="回溯引用，前后一致"></a>回溯引用，前后一致</h3><p>使用\n代表模式里的第几个子表达式<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">s = <span class="string">'this is and and or or not not'</span></div><div class="line">print(<span class="string">'&#123;&#125;'</span>.format(re.findall(<span class="string">r'[ ]+(\w+)[ ]+\1'</span>, s)))</div></pre></td></tr></table></figure></p>
+<p>结果为:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[&apos;and&apos;, &apos;or&apos;, &apos;not&apos;]</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>注:</p>
+<ul>
+<li>回溯引用只能用来引用模式里的子表达式(用()括起来的正则表达式片段)</li>
+<li>回溯引用匹配通常用1开始技术(\1 \2等)。在许多实现里，第0个匹配(\0)可以用来代表整个正则表达式</li>
+</ul>
+</blockquote>
+<h3 id="前后查找"><a href="#前后查找" class="headerlink" title="前后查找"></a>前后查找</h3><p>这种模式，包含的匹配本身并不返回，而是用于确定正确的匹配位置，它并不是匹配结果的一部分。<br>前后查找分为向前查找和向后查找，但常见的正则表达式实现都支持向前查找。所以只说明前者</p>
+<h4 id="向前查找"><a href="#向前查找" class="headerlink" title="向前查找"></a>向前查找</h4><p>向前查找指定了一个必须匹配但不在结果中返回的模式。向前查找实际就是一个子表达式。<br>从语法上看，一个向前查找模式就是一个以?=开头的子表达式，需要匹配的文本跟在=的后面。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">s = <span class="string">'http://www.baidu.com \n'</span> \</div><div class="line">    <span class="string">'https://www.baidu.com \n'</span> \</div><div class="line">    <span class="string">'ftp://ftp.baidu.com    \n'</span></div><div class="line"></div><div class="line">print(<span class="string">'向前查找url中的协议名为&#123;&#125;'</span>.format(re.findall(<span class="string">r'.&#123;3,6&#125;(?=:)'</span>, s)))</div></pre></td></tr></table></figure></p>
+<p>结果:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">向前查找url中的协议名为[&apos;http&apos;, &apos;https&apos;, &apos;ftp&apos;]</div></pre></td></tr></table></figure></p>
+<h4 id="向后查找"><a href="#向后查找" class="headerlink" title="向后查找"></a>向后查找</h4><p>与向前查找相类似，查找出现在被匹配文本之前的字符（但不消费它）,向后查找的操作符使?&lt;=</p>
+<h3 id="嵌入条件"><a href="#嵌入条件" class="headerlink" title="嵌入条件"></a>嵌入条件</h3><p>正则表达式里的条件要用?来定义</p>
+<ul>
+<li>?匹配前一个字符或表达式，如果它存在的话</li>
+<li>?= 和?&lt;=匹配前面或后面的文本，如果它存在的话</li>
+<li>根据一个回溯引用来进行条件处理</li>
+<li>根据一个前后查找来进行条件处理</li>
+</ul>
+<blockquote>
 <p>注：</p>
 <ul>
 <li>上述环境在<strong>ubuntu16.04 lts Python3.5</strong>中测试成功</li>
@@ -506,17 +528,17 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/07/23/RegularExpression_study/">正则表达式学习笔记</a></p>
-        <p><span>文章作者:</span><a href="/" title="回到主页">EarthChen</a></p>
-        <p><span>发布时间:</span>2017-07-23, 14:55:00</p>
-        <p><span>最后更新:</span>2017-07-23, 16:25:13</p>
+        <p><span>Title:</span><a href="/2017/07/23/RegularExpression_study/">正则表达式学习笔记</a></p>
+        <p><span>Author:</span><a href="/" title="Back to Homepage">EarthChen</a></p>
+        <p><span>Created:</span>2017-07-23, 14:55:00</p>
+        <p><span>Updated:</span>2017-07-26, 16:25:00</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/07/23/RegularExpression_study/" title="正则表达式学习笔记">http://earthchen.cn/2017/07/23/RegularExpression_study/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://earthchen.cn/2017/07/23/RegularExpression_study/　　作者: EarthChen" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>Full URL:</span><a class="post-url" href="/2017/07/23/RegularExpression_study/" title="正则表达式学习笔记">http://earthchen.cn/2017/07/23/RegularExpression_study/</a>
+            <span class="copy-path" data-clipboard-text="From http://earthchen.cn/2017/07/23/RegularExpression_study/　　By EarthChen" title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
-            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+            <span>License:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"CC BY-NC-SA 4.0"</a> Keep Link &amp; Author if Distribute.
         </p>
     </div>
 
@@ -537,9 +559,9 @@
 </article>
 
     <div id="toc" class="toc-article">
-        <strong class="toc-title">文章目录</strong>
+        <strong class="toc-title">Contents</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Regular-Expression"><span class="toc-number">1.</span> <span class="toc-text">Regular Expression</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#匹配单个字符"><span class="toc-number">1.1.</span> <span class="toc-text">匹配单个字符</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#匹配纯文本"><span class="toc-number">1.1.1.</span> <span class="toc-text">匹配纯文本</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#匹配任意字符"><span class="toc-number">1.1.2.</span> <span class="toc-text">匹配任意字符</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#匹配一组字符"><span class="toc-number">1.2.</span> <span class="toc-text">匹配一组字符</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#匹配多个字符中的某一个"><span class="toc-number">1.2.1.</span> <span class="toc-text">匹配多个字符中的某一个</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#取非匹配"><span class="toc-number">1.2.2.</span> <span class="toc-text">取非匹配</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用元字符"><span class="toc-number">1.3.</span> <span class="toc-text">使用元字符</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#对特殊字符进行转义"><span class="toc-number">1.3.1.</span> <span class="toc-text">对特殊字符进行转义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#匹配特定的字符类别"><span class="toc-number">1.3.2.</span> <span class="toc-text">匹配特定的字符类别</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#重复匹配"><span class="toc-number">1.4.</span> <span class="toc-text">重复匹配</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#匹配一个或多个字符"><span class="toc-number">1.4.1.</span> <span class="toc-text">匹配一个或多个字符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#匹配零个或多个字符"><span class="toc-number">1.4.2.</span> <span class="toc-text">匹配零个或多个字符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#匹配零个或一个字符"><span class="toc-number">1.4.3.</span> <span class="toc-text">匹配零个或一个字符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#匹配的重复次数"><span class="toc-number">1.4.4.</span> <span class="toc-text">匹配的重复次数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#位置匹配"><span class="toc-number">1.5.</span> <span class="toc-text">位置匹配</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#单词边界"><span class="toc-number">1.5.1.</span> <span class="toc-text">单词边界</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#字符串边界"><span class="toc-number">1.5.2.</span> <span class="toc-text">字符串边界</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用子表达式"><span class="toc-number">1.6.</span> <span class="toc-text">使用子表达式</span></a></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Regular-Expression"><span class="toc-number">1.</span> <span class="toc-text">Regular Expression</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#匹配单个字符"><span class="toc-number">1.1.</span> <span class="toc-text">匹配单个字符</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#匹配纯文本"><span class="toc-number">1.1.1.</span> <span class="toc-text">匹配纯文本</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#匹配任意字符"><span class="toc-number">1.1.2.</span> <span class="toc-text">匹配任意字符</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#匹配一组字符"><span class="toc-number">1.2.</span> <span class="toc-text">匹配一组字符</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#匹配多个字符中的某一个"><span class="toc-number">1.2.1.</span> <span class="toc-text">匹配多个字符中的某一个</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#取非匹配"><span class="toc-number">1.2.2.</span> <span class="toc-text">取非匹配</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用元字符"><span class="toc-number">1.3.</span> <span class="toc-text">使用元字符</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#对特殊字符进行转义"><span class="toc-number">1.3.1.</span> <span class="toc-text">对特殊字符进行转义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#匹配特定的字符类别"><span class="toc-number">1.3.2.</span> <span class="toc-text">匹配特定的字符类别</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#重复匹配"><span class="toc-number">1.4.</span> <span class="toc-text">重复匹配</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#匹配一个或多个字符"><span class="toc-number">1.4.1.</span> <span class="toc-text">匹配一个或多个字符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#匹配零个或多个字符"><span class="toc-number">1.4.2.</span> <span class="toc-text">匹配零个或多个字符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#匹配零个或一个字符"><span class="toc-number">1.4.3.</span> <span class="toc-text">匹配零个或一个字符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#匹配的重复次数"><span class="toc-number">1.4.4.</span> <span class="toc-text">匹配的重复次数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#位置匹配"><span class="toc-number">1.5.</span> <span class="toc-text">位置匹配</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#单词边界"><span class="toc-number">1.5.1.</span> <span class="toc-text">单词边界</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#字符串边界"><span class="toc-number">1.5.2.</span> <span class="toc-text">字符串边界</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用子表达式"><span class="toc-number">1.6.</span> <span class="toc-text">使用子表达式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#回溯引用，前后一致"><span class="toc-number">1.7.</span> <span class="toc-text">回溯引用，前后一致</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#前后查找"><span class="toc-number">1.8.</span> <span class="toc-text">前后查找</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#向前查找"><span class="toc-number">1.8.1.</span> <span class="toc-text">向前查找</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#向后查找"><span class="toc-number">1.8.2.</span> <span class="toc-text">向后查找</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#嵌入条件"><span class="toc-number">1.9.</span> <span class="toc-text">嵌入条件</span></a></li></ol></li></ol>
         
     </div>
     <style>
@@ -553,10 +575,10 @@
         }
     </style>
 
-    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+    <input type="button" id="tocButton" value="Hide"  title="Show or Hide Table of Contents">
 
     <script>
-        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+        yiliaConfig.toc = ["Hide", "Show", !!"false"];
     </script>
 
 
@@ -609,13 +631,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+            <a href="/" title="Back to Homepage"><i class="fa fa-home"></i></a>
         
 
-        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        <a title="Mini Archives"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2017/07/08/AndroidStudio/" title="下一篇: Android Studio 使用本地离线Gradle">
+            <a href="/2017/07/08/AndroidStudio/" title="Next: Android Studio 使用本地离线Gradle">
                 <i class="fa fa-angle-right"></i>
             </a>
         
@@ -639,7 +661,7 @@
             </div>
             <div class="footer-right">
                 <a href="http://www.miitbeian.gov.cn/">皖ICP备17009043号</a>&nbsp;&nbsp;
-                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+                <a href="http://hexo.io/" target="_blank" title="A fast, simple &amp; powerful blog framework">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Another simple and elegant theme for Hexo  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
             </div>
         </div>
 
@@ -647,7 +669,7 @@
             <div class="visit">
                 
                     <span id="busuanzi_container_site_pv" style='display:none'>
-                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        <span id="site-visit" title="Site Visitors"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
                         </span>
                     </span>
                 
@@ -656,7 +678,7 @@
                 
                 
                     <span id="busuanzi_container_page_pv" style='display:none'>
-                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        <span id="page-visit"  title="Page Hits"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
                         </span>
                     </span>
                 
@@ -691,9 +713,9 @@
 
 
 <div class="scroll" id="scroll">
-    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
-    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
-    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+    <a href="#" title="Back to Top"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="Comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="Go to Bottom"><i class="fa fa-arrow-down"></i></a>
 </div>
 <script>
     // Open in New Window

@@ -5,7 +5,7 @@
     
   <url>
     <loc>http://earthchen.cn/2017/07/23/RegularExpression_study/</loc>
-    <lastmod>2017-07-23T08:25:13.677Z</lastmod>
+    <lastmod>2017-07-26T08:25:00.000Z</lastmod>
     <data>
         <display>
         <title>正则表达式学习笔记</title>
@@ -278,11 +278,11 @@
         <title>利用hexo和github或coding 搭免费个人博客</title>
         <pubTime>2017-06-30T06:40:46.512Z</pubTime>
         
+        <tag>Git</tag>
+         
         <tag>Node.js</tag>
          
         <tag>Hexo</tag>
-         
-        <tag>Git</tag>
          
         <tag>JavaScript</tag>
          
