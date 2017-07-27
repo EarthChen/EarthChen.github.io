@@ -3,6 +3,42 @@
   
     
     <entry>
+      <title><![CDATA[资源收集共享]]></title>
+      <url>/2017/07/27/%E8%B5%84%E6%BA%90%E6%94%B6%E9%9B%86/</url>
+      <content type="html"><![CDATA[<p>日常发现好资源，在此记录下，长期更新</p>
+<a id="more"></a>
+<h1 id="资源"><a href="#资源" class="headerlink" title="资源"></a>资源</h1><h2 id="spring"><a href="#spring" class="headerlink" title="spring"></a>spring</h2><p>Spring MVC实战系列教程 - <a href="http://www.mkking.com/spring-mvc-tutorials/?utm_source=qq&amp;utm_medium=social" target="_blank" rel="external">http://www.mkking.com/spring-mvc-tutorials/?utm_source=qq&amp;utm_medium=social</a></p>
+<p>跟我学SpringMVC目录汇总贴、PDF下载、源码下载 - 开涛的博客—公众号：kaitao-1234567，一如既往的干货分享 - ITeye技术网站 - <a href="http://jinnianshilongnian.iteye.com/blog/1752171?utm_source=qq&amp;utm_medium=social" target="_blank" rel="external">http://jinnianshilongnian.iteye.com/blog/1752171?utm_source=qq&amp;utm_medium=social</a></p>
+<p>[手把手教程][JavaWeb]优雅的SpringMvc+Mybatis整合之路（分享自知乎网）<a href="https://zhuanlan.zhihu.com/p/27221566?utm_source=qq&amp;utm_medium=social" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/27221566?utm_source=qq&amp;utm_medium=social</a></p>
+<p>spring 4.x中文文档  <a href="https://waylau.gitbooks.io/spring-framework-4-reference/I.%20Overview%20of%20Spring%20Framework/2.%20Introduction%20to%20the%20Spring%20Framework.html" target="_blank" rel="external">https://waylau.gitbooks.io/spring-framework-4-reference/I.%20Overview%20of%20Spring%20Framework/2.%20Introduction%20to%20the%20Spring%20Framework.html</a></p>
+<p>Spring MVC 4.2.4.RELEASE 中文文档    <a href="https://www.gitbook.com/book/linesh/spring-mvc-documentation-linesh-translation/details" target="_blank" rel="external">https://www.gitbook.com/book/linesh/spring-mvc-documentation-linesh-translation/details</a></p>
+<h2 id="Mybaits"><a href="#Mybaits" class="headerlink" title="Mybaits"></a>Mybaits</h2><p>Mybaits学习笔记  <a href="http://www.cnblogs.com/hellokitty1/p/5216025.html" target="_blank" rel="external">http://www.cnblogs.com/hellokitty1/p/5216025.html</a></p>
+<h2 id="redis"><a href="#redis" class="headerlink" title="redis"></a>redis</h2><p>Redis 教程  <a href="http://www.redis.net.cn/tutorial/3501.html" target="_blank" rel="external">http://www.redis.net.cn/tutorial/3501.html</a></p>
+<h2 id="java"><a href="#java" class="headerlink" title="java"></a>java</h2><p>java相关视频文档 <a href="http://www.java1234.com/a/javabook/" target="_blank" rel="external">http://www.java1234.com/a/javabook/</a></p>
+<h2 id="django"><a href="#django" class="headerlink" title="django"></a>django</h2><p>nginx,uwsgi,部署django，静态文件不生效问题   <a href="https://m.baidu.com/from=1086k/bd_page_type=1/ssid=0/uid=0/pu=usm%401%2Csz%401320_1002%2Cta%40iphone_2_7.1_2_7.5/baiduid=3CEF6030D65FCF6BA8DBB5BD59F44A3B/w=0_10_/t=iphone/l=3/tc?ref=www_iphone&amp;lid=10820820000369633659&amp;order=2&amp;fm=alop&amp;tj=www_normal_2_0_10_title&amp;vit=osres&amp;m=8&amp;srd=1&amp;cltj=cloud_title&amp;asres=1&amp;title=nginx%2Cuwsgi%2C%E9%83%A8%E7%BD%B2django%2C%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6%E4%B8%8D%E7%94%9F%E6%95%88%E9%97%AE%E9%A2%98..._%E5%8D%9A%E5%AE%A2%E5%9B%AD&amp;dict=30&amp;w_qd=IlPT2AEptyoA_yi6Jk_jHCxswQHOL0obxVsWe4vR8wAsPO56TVRby93&amp;sec=21472&amp;di=7147f5f9d3785788&amp;bdenc=1&amp;tch=124.0.77.286.0.0&amp;nsrc=IlPT2AEptyoA_yixCFOxXnANedT62v3IEQGG_ytK1DK6mlrte4viZQRAUTLu0WiCEUDsuSPQpt5Ywk_h_mAn7BF2wvQkfjS&amp;eqid=962b46758c7968001000000359318c79&amp;wd=&amp;clk_info=%7B%22srcid%22%3A%221599%22%2C%22tplname%22%3A%22www_normal%22%2C%22t%22%3A1496419460654%2C%22sig%22%3A%2211262%22%2C%22xpath%22%3A%22div-a-h3%22%7D&amp;sfOpen=1" target="_blank" rel="external">链接</a></p>
+<p>Django 多表查询   <a href="http://transcoder.tradaquan.com/from=1086k/bd_page_type=1/ssid=0/uid=0/pu=usm%401%2Csz%401320_1002%2Cta%40iphone_2_7.1_2_7.5/baiduid=3CEF6030D65FCF6BA8DBB5BD59F44A3B/w=0_10_/t=iphone/l=3/tc?ref=www_iphone&amp;lid=8749590077656350070&amp;order=1&amp;fm=alop&amp;h5ad=1&amp;srd=1&amp;dict=32&amp;tj=www_normal_1_0_10_title&amp;vit=osres&amp;m=8&amp;cltj=cloud_title&amp;asres=1&amp;title=Django%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2--Finley--%E5%8D%9A%E5%AE%A2%E5%9B%AD&amp;w_qd=IlPT2AEptyoA_yi6Jk_jHCux3z6Pc7oaxy1YpQXS8Pw7Ygu&amp;sec=21434&amp;di=b2c6edbf715f91c1&amp;bdenc=1&amp;tch=124.0.35.139.0.0&amp;nsrc=IlPT2AEptyoA_yixCFOxXnANedT62v3IEQGG_ytK1DK6mlrte4viZQRARDb6LHq4ZpPPtCPQpxoIw83g_mMskNYWgK&amp;eqid=796cc9d17cfd3c0010000003592f7f41&amp;wd=&amp;clk_info=%7B%22srcid%22%3A%221599%22%2C%22tplname%22%3A%22www_normal%22%2C%22t%22%3A1496284996398%2C%22sig%22%3A%222559%22%2C%22xpath%22%3A%22div-a-h3-em%22%7D" target="_blank" rel="external">链接</a></p>
+<h2 id="Scrapy"><a href="#Scrapy" class="headerlink" title="Scrapy"></a>Scrapy</h2><p>Scrapy中文文档   <a href="https://scrapy-chs.readthedocs.io/zh_CN/0.24/index.html" target="_blank" rel="external">https://scrapy-chs.readthedocs.io/zh_CN/0.24/index.html</a></p>
+<h2 id="webpack"><a href="#webpack" class="headerlink" title="webpack"></a>webpack</h2><p>webpack介绍入门  <a href="http://www.jianshu.com/p/42e11515c10f" target="_blank" rel="external">http://www.jianshu.com/p/42e11515c10f</a></p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>别人整理的资源    <a href="https://github.com/stanzhai/be-a-professional-programmer" target="_blank" rel="external">https://github.com/stanzhai/be-a-professional-programmer</a></p>
+<p>七牛云自动备份教程   <a href="http://www.pt3e.com/201703111/" target="_blank" rel="external">http://www.pt3e.com/201703111/</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> 随笔 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 资源 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[正则表达式学习笔记]]></title>
       <url>/2017/07/23/RegularExpression_study/</url>
       <content type="html"><![CDATA[<p>正则表达式(regular expression)描述了一种字符串匹配的模式（pattern），可以用来检查一个串是否含有某种子串、将匹配的子串替换或者从某个串中取出符合某个条件的子串等。<br>在各大编程语言中都能发挥出很大的作用。每种语言也都有关于正则表达式模块的实现。<br>本文以Python举例说明。</p>
@@ -2999,41 +3035,6 @@
         <tags>
             
             <tag> 解决方案 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[资源收集共享]]></title>
-      <url>/2017/06/03/%E8%B5%84%E6%BA%90%E6%94%B6%E9%9B%86/</url>
-      <content type="html"><![CDATA[<p>日常发现好资源，在此记录下，长期更新</p>
-<a id="more"></a>
-<h1 id="资源"><a href="#资源" class="headerlink" title="资源"></a>资源</h1><h2 id="spring"><a href="#spring" class="headerlink" title="spring"></a>spring</h2><p>Spring MVC实战系列教程 - <a href="http://www.mkking.com/spring-mvc-tutorials/?utm_source=qq&amp;utm_medium=social" target="_blank" rel="external">http://www.mkking.com/spring-mvc-tutorials/?utm_source=qq&amp;utm_medium=social</a></p>
-<p>跟我学SpringMVC目录汇总贴、PDF下载、源码下载 - 开涛的博客—公众号：kaitao-1234567，一如既往的干货分享 - ITeye技术网站 - <a href="http://jinnianshilongnian.iteye.com/blog/1752171?utm_source=qq&amp;utm_medium=social" target="_blank" rel="external">http://jinnianshilongnian.iteye.com/blog/1752171?utm_source=qq&amp;utm_medium=social</a></p>
-<p>[手把手教程][JavaWeb]优雅的SpringMvc+Mybatis整合之路（分享自知乎网）<a href="https://zhuanlan.zhihu.com/p/27221566?utm_source=qq&amp;utm_medium=social" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/27221566?utm_source=qq&amp;utm_medium=social</a></p>
-<p>spring 4.x中文文档  <a href="https://waylau.gitbooks.io/spring-framework-4-reference/I.%20Overview%20of%20Spring%20Framework/2.%20Introduction%20to%20the%20Spring%20Framework.html" target="_blank" rel="external">https://waylau.gitbooks.io/spring-framework-4-reference/I.%20Overview%20of%20Spring%20Framework/2.%20Introduction%20to%20the%20Spring%20Framework.html</a></p>
-<p>Spring MVC 4.2.4.RELEASE 中文文档    <a href="https://www.gitbook.com/book/linesh/spring-mvc-documentation-linesh-translation/details" target="_blank" rel="external">https://www.gitbook.com/book/linesh/spring-mvc-documentation-linesh-translation/details</a></p>
-<h2 id="Mybaits"><a href="#Mybaits" class="headerlink" title="Mybaits"></a>Mybaits</h2><p>Mybaits学习笔记  <a href="http://www.cnblogs.com/hellokitty1/p/5216025.html" target="_blank" rel="external">http://www.cnblogs.com/hellokitty1/p/5216025.html</a></p>
-<h2 id="redis"><a href="#redis" class="headerlink" title="redis"></a>redis</h2><p>Redis 教程  <a href="http://www.redis.net.cn/tutorial/3501.html" target="_blank" rel="external">http://www.redis.net.cn/tutorial/3501.html</a></p>
-<h2 id="java"><a href="#java" class="headerlink" title="java"></a>java</h2><p>java相关视频文档 <a href="http://www.java1234.com/a/javabook/" target="_blank" rel="external">http://www.java1234.com/a/javabook/</a></p>
-<h2 id="django"><a href="#django" class="headerlink" title="django"></a>django</h2><p>nginx,uwsgi,部署django，静态文件不生效问题   <a href="https://m.baidu.com/from=1086k/bd_page_type=1/ssid=0/uid=0/pu=usm%401%2Csz%401320_1002%2Cta%40iphone_2_7.1_2_7.5/baiduid=3CEF6030D65FCF6BA8DBB5BD59F44A3B/w=0_10_/t=iphone/l=3/tc?ref=www_iphone&amp;lid=10820820000369633659&amp;order=2&amp;fm=alop&amp;tj=www_normal_2_0_10_title&amp;vit=osres&amp;m=8&amp;srd=1&amp;cltj=cloud_title&amp;asres=1&amp;title=nginx%2Cuwsgi%2C%E9%83%A8%E7%BD%B2django%2C%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6%E4%B8%8D%E7%94%9F%E6%95%88%E9%97%AE%E9%A2%98..._%E5%8D%9A%E5%AE%A2%E5%9B%AD&amp;dict=30&amp;w_qd=IlPT2AEptyoA_yi6Jk_jHCxswQHOL0obxVsWe4vR8wAsPO56TVRby93&amp;sec=21472&amp;di=7147f5f9d3785788&amp;bdenc=1&amp;tch=124.0.77.286.0.0&amp;nsrc=IlPT2AEptyoA_yixCFOxXnANedT62v3IEQGG_ytK1DK6mlrte4viZQRAUTLu0WiCEUDsuSPQpt5Ywk_h_mAn7BF2wvQkfjS&amp;eqid=962b46758c7968001000000359318c79&amp;wd=&amp;clk_info=%7B%22srcid%22%3A%221599%22%2C%22tplname%22%3A%22www_normal%22%2C%22t%22%3A1496419460654%2C%22sig%22%3A%2211262%22%2C%22xpath%22%3A%22div-a-h3%22%7D&amp;sfOpen=1" target="_blank" rel="external">链接</a></p>
-<p>Django 多表查询   <a href="http://transcoder.tradaquan.com/from=1086k/bd_page_type=1/ssid=0/uid=0/pu=usm%401%2Csz%401320_1002%2Cta%40iphone_2_7.1_2_7.5/baiduid=3CEF6030D65FCF6BA8DBB5BD59F44A3B/w=0_10_/t=iphone/l=3/tc?ref=www_iphone&amp;lid=8749590077656350070&amp;order=1&amp;fm=alop&amp;h5ad=1&amp;srd=1&amp;dict=32&amp;tj=www_normal_1_0_10_title&amp;vit=osres&amp;m=8&amp;cltj=cloud_title&amp;asres=1&amp;title=Django%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2--Finley--%E5%8D%9A%E5%AE%A2%E5%9B%AD&amp;w_qd=IlPT2AEptyoA_yi6Jk_jHCux3z6Pc7oaxy1YpQXS8Pw7Ygu&amp;sec=21434&amp;di=b2c6edbf715f91c1&amp;bdenc=1&amp;tch=124.0.35.139.0.0&amp;nsrc=IlPT2AEptyoA_yixCFOxXnANedT62v3IEQGG_ytK1DK6mlrte4viZQRARDb6LHq4ZpPPtCPQpxoIw83g_mMskNYWgK&amp;eqid=796cc9d17cfd3c0010000003592f7f41&amp;wd=&amp;clk_info=%7B%22srcid%22%3A%221599%22%2C%22tplname%22%3A%22www_normal%22%2C%22t%22%3A1496284996398%2C%22sig%22%3A%222559%22%2C%22xpath%22%3A%22div-a-h3-em%22%7D" target="_blank" rel="external">链接</a></p>
-<h2 id="Scrapy"><a href="#Scrapy" class="headerlink" title="Scrapy"></a>Scrapy</h2><p>Scrapy中文文档   <a href="https://scrapy-chs.readthedocs.io/zh_CN/0.24/index.html" target="_blank" rel="external">https://scrapy-chs.readthedocs.io/zh_CN/0.24/index.html</a></p>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>别人整理的资源    <a href="https://github.com/stanzhai/be-a-professional-programmer" target="_blank" rel="external">https://github.com/stanzhai/be-a-professional-programmer</a></p>
-<p>七牛云自动备份教程   <a href="http://www.pt3e.com/201703111/" target="_blank" rel="external">http://www.pt3e.com/201703111/</a></p>
-]]></content>
-      
-        <categories>
-            
-            <category> 随笔 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> 资源 </tag>
             
         </tags>
         
