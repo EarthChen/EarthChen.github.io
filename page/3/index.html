@@ -298,88 +298,6 @@
 </nav>
       <div class="body-wrap">
   
-    <article id="post-django常用语句" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/06/30/django常用语句/" class="article-date">
-      <time datetime="2017-06-30T06:40:09.808Z" itemprop="datePublished">2017-06-30</time>
-</a>
-
- 
-    <a href="/2017/06/30/django常用语句/#comments" title="查看评论">
-        <i class="fa fa-comments-o" aria-hidden="true"></i>
-        <span class="count-comment"></span>
-        
-        
-            <span class="disqus-comment-count" data-disqus-identifier="2017/06/30/django常用语句/"></span>
-        
-    </a>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/30/django常用语句/">Django常用语句</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>本篇主要介绍我们在使用django框架开发的时候使用的常用语句，为了增加开发效率，建议将这些语句记住并多多练习，</p>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="新建工程"><a href="#新建工程" class="headerlink" title="新建工程"></a>新建工程</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">django-admin startproject project-name</div></pre></td></tr></table></figure>
-<p>这是一个django开发的开始，当然也可以用pycharm这个ide创建工程，这个东西还是看个人习惯了。但最好还是记住，</p>
-<ul>
-<li>project-name —— 项目名称(需要符合Python 的变量命名规则（以下划线或字母开头))</li>
-<li>有些版本的django可能是django-admin.py(根据个人需求选择)
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/学习笔记/">学习笔记</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django/">Django</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2017/06/30/django常用语句/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
     <article id="post-django_timing_task" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -1076,6 +994,84 @@
       
         <p class="article-more-link">
           <a href="/2017/06/30/C语言队列的基本操作/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-django_address_baiduapi_marker_show" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/06/30/django_address_baiduapi_marker_show/" class="article-date">
+      <time datetime="2017-06-30T06:38:46.516Z" itemprop="datePublished">2017-06-30</time>
+</a>
+
+ 
+    <a href="/2017/06/30/django_address_baiduapi_marker_show/#comments" title="查看评论">
+        <i class="fa fa-comments-o" aria-hidden="true"></i>
+        <span class="count-comment"></span>
+        
+        
+            <span class="disqus-comment-count" data-disqus-identifier="2017/06/30/django_address_baiduapi_marker_show/"></span>
+        
+    </a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/30/django_address_baiduapi_marker_show/">Django调用百度地图api在地图上批量增加标记点</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>在调用百度地图api进行web开发时遇到了一个需求，我们需要在网页中内嵌一个div  然后在div中调用百度地图的js显示我们所需要的地区。根据需求坐标在地图上添加若干个标记点，并批量的为各个标记点设置监听函数，使之显示我们所需要的信息</p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="创建工程"><a href="#创建工程" class="headerlink" title="创建工程"></a>创建工程</h3><p>首先，创建一个测试用的工程来测试我们的需要，可以使用<strong>pycharm</strong>或者<strong>django</strong>自带的命令创建工程<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">django-admin startproject addressdemo</div></pre></td></tr></table></figure></p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/开发/">开发</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django/">Django</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2017/06/30/django_address_baiduapi_marker_show/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
