@@ -298,6 +298,84 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-django连接mysql数据库" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/06/30/django连接mysql数据库/" class="article-date">
+      <time datetime="2017-06-30T06:40:21.792Z" itemprop="datePublished">2017-06-30</time>
+</a>
+
+ 
+    <a href="/2017/06/30/django连接mysql数据库/#comments" title="查看评论">
+        <i class="fa fa-comments-o" aria-hidden="true"></i>
+        <span class="count-comment"></span>
+        
+        
+            <span class="disqus-comment-count" data-disqus-identifier="2017/06/30/django连接mysql数据库/"></span>
+        
+    </a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/30/django连接mysql数据库/">Django连接MySql使用models处理数据</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>在页面上显示内容可以简单的用django.http.HttpResponse来显示我们需要的内容，但是当我们需要一些处理一些复杂的数据或者从数据库读出来的操作要显示在html标签内或者js代码中就需要用渲染模板的方法。</p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="创建工程"><a href="#创建工程" class="headerlink" title="创建工程"></a>创建工程</h3><p>首先，使用一下代码创建一个名为DjangoModels的工程(读者可以根据需要设置自己的工程名)：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">django-admin startproject DjangoModels</div></pre></td></tr></table></figure></p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/开发/">开发</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django/">Django</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2017/06/30/django连接mysql数据库/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-django常用语句" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -997,85 +1075,6 @@
       
         <p class="article-more-link">
           <a href="/2017/06/30/C语言二叉树基本操作/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-C语言队列的基本操作" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/06/30/C语言队列的基本操作/" class="article-date">
-      <time datetime="2017-06-30T06:38:51.956Z" itemprop="datePublished">2017-06-30</time>
-</a>
-
- 
-    <a href="/2017/06/30/C语言队列的基本操作/#comments" title="查看评论">
-        <i class="fa fa-comments-o" aria-hidden="true"></i>
-        <span class="count-comment"></span>
-        
-        
-            <span class="disqus-comment-count" data-disqus-identifier="2017/06/30/C语言队列的基本操作/"></span>
-        
-    </a>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/30/C语言队列的基本操作/">C语言队列的基本操作</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>本篇介绍一下编程中比较重要的一个数据结构队列，队列有个很显著的标志，对其中的数据是先进先出，如果是顺序存储结构可以说就是一个受限的数组，对链式存储结构就只能说是符合先进先出的规则了，这种数据结构在我们真正的编程中还是相当常用的。实际中根据需要去定制自己的队列。</p>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="顺序队列的操作"><a href="#顺序队列的操作" class="headerlink" title="顺序队列的操作"></a>顺序队列的操作</h3><p>首先我们来介绍一下顺序存储结构下的队列的定义和基本操作</p>
-<h4 id="添加适当的头文件，定义一个顺序存储数据结构，"><a href="#添加适当的头文件，定义一个顺序存储数据结构，" class="headerlink" title="添加适当的头文件，定义一个顺序存储数据结构，"></a>添加适当的头文件，定义一个顺序存储数据结构，</h4><p>这里需要添加头文件和定义一个队列的顺序数据结构<br>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/开发/">开发</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构/">数据结构</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2017/06/30/C语言队列的基本操作/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>

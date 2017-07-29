@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>http://earthchen.cn/2017/07/29/es6_study/</loc>
+    <lastmod>2017-07-29T06:38:14.522Z</lastmod>
+    <data>
+        <display>
+        <title>es6学习笔记</title>
+        <pubTime>2017-07-29T04:38:00.000Z</pubTime>
+        
+        <tag>JavaScript</tag>
+         
+         
+           
+             
+              <breadCrumb title="学习笔记" url="http://earthchen.cn/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://earthchen.cn/2017/06/03/%E8%B5%84%E6%BA%90%E6%94%B6%E9%9B%86/</loc>
     <lastmod>2017-07-28T07:50:00.837Z</lastmod>
     <data>
@@ -318,13 +338,13 @@
         <title>利用hexo和github或coding 搭免费个人博客</title>
         <pubTime>2017-06-30T06:40:46.512Z</pubTime>
         
+        <tag>JavaScript</tag>
+         
         <tag>Git</tag>
          
         <tag>Node.js</tag>
          
         <tag>Hexo</tag>
-         
-        <tag>JavaScript</tag>
          
          
            
