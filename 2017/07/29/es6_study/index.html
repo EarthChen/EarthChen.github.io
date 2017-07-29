@@ -25,7 +25,7 @@
 <meta property="og:image" content="http://objects.earthchen.cn/es6_study_let%E7%BB%93%E6%9E%9C.png">
 <meta property="og:image" content="http://objects.earthchen.cn/es6_study_%E6%95%B0%E7%BB%84%E8%A7%A3%E6%9E%90%E8%B5%8B%E5%80%BC.png">
 <meta property="og:image" content="http://objects.earthchen.cn/es6_study_object%E8%A7%A3%E6%9E%90%E8%B5%8B%E5%80%BC.png">
-<meta property="og:updated_time" content="2017-07-29T08:44:42.453Z">
+<meta property="og:updated_time" content="2017-07-29T08:46:46.184Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="es6学习笔记">
 <meta name="twitter:description" content="ECMAScript 6.0（ 以下简称ES6） 是JavaScript语言的下一代标准。 ECMAScript和JavaScript的关系是， 前者是后者的规格， 后者是前者的一种实现（ 另外的ECMAScript方言还有Jscript和ActionScript） 。 日常场合， 这两个词是可以互换的。 在前端工程化的现在，学习es6还是有必要的。本文为个人根据阮老师的es6标准入门学习笔记。">
@@ -407,11 +407,11 @@
 <h3 id="常用的新方法"><a href="#常用的新方法" class="headerlink" title="常用的新方法"></a>常用的新方法</h3><h4 id="includes-startsWith-endsWith"><a href="#includes-startsWith-endsWith" class="headerlink" title="includes(), startsWith(), endsWith()"></a>includes(), startsWith(), endsWith()</h4><ul>
 <li>includes()： 返回布尔值， 表示是否找到了参数字符串</li>
 <li>startsWith()： 返回布尔值， 表示参数字符串是否在源字符串的头部</li>
-<li><p>endsWith()： 返回布尔值， 表示参数字符串是否在源字符串的尾部。</p>
+<li>endsWith()： 返回布尔值， 表示参数字符串是否在源字符串的尾部。</li>
+</ul>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> s = <span class="string">'Hello world!'</span>;</div><div class="line">s.startsWith(<span class="string">'Hello'</span>) <span class="comment">// true</span></div><div class="line">s.endsWith(<span class="string">'!'</span>) <span class="comment">// true</span></div><div class="line">s.includes(<span class="string">'o'</span>) <span class="comment">// true</span></div></pre></td></tr></table></figure>
-</li>
-<li><p>三个方法都支持第二个参数， 表示开始搜索的位置</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> s = <span class="string">'Hello world!'</span>;</div><div class="line">s.startsWith(<span class="string">'world'</span>, <span class="number">6</span>) <span class="comment">// true </span></div><div class="line">s.endsWith(<span class="string">'Hello'</span>, <span class="number">5</span>) <span class="comment">// true</span></div><div class="line">s.includes(<span class="string">'Hello'</span>, <span class="number">6</span>) <span class="comment">// false</span></div></pre></td></tr></table></figure>
+<ul>
+<li>三个方法都支持第二个参数， 表示开始搜索的位置<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> s = <span class="string">'Hello world!'</span>;</div><div class="line">s.startsWith(<span class="string">'world'</span>, <span class="number">6</span>) <span class="comment">// true </span></div><div class="line">s.endsWith(<span class="string">'Hello'</span>, <span class="number">5</span>) <span class="comment">// true</span></div><div class="line">s.includes(<span class="string">'Hello'</span>, <span class="number">6</span>) <span class="comment">// false</span></div></pre></td></tr></table></figure>
 </li>
 </ul>
 <h4 id="repeat"><a href="#repeat" class="headerlink" title="repeat()"></a>repeat()</h4><p>repeat 方法返回一个新字符串， 表示将原字符串重复n 次。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="string">'x'</span>.repeat(<span class="number">3</span>) <span class="comment">// "xxx"</span></div><div class="line"><span class="string">'hello'</span>.repeat(<span class="number">2</span>) <span class="comment">// "hellohello"</span></div><div class="line"><span class="string">'na'</span>.repeat(<span class="number">0</span>) <span class="comment">// ""</span></div></pre></td></tr></table></figure></p>
@@ -437,7 +437,7 @@
         <p><span>本文标题:</span><a href="/2017/07/29/es6_study/">es6学习笔记</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">EarthChen</a></p>
         <p><span>发布时间:</span>2017-07-29, 12:38:00</p>
-        <p><span>最后更新:</span>2017-07-29, 16:44:42</p>
+        <p><span>最后更新:</span>2017-07-29, 16:46:46</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2017/07/29/es6_study/" title="es6学习笔记">http://earthchen.cn/2017/07/29/es6_study/</a>
             <span class="copy-path" data-clipboard-text="原文: http://earthchen.cn/2017/07/29/es6_study/　　作者: EarthChen" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
