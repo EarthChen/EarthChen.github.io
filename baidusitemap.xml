@@ -5,7 +5,7 @@
     
   <url>
     <loc>http://earthchen.cn/2017/07/29/es6_study/</loc>
-    <lastmod>2017-07-29T06:38:14.522Z</lastmod>
+    <lastmod>2017-07-29T07:15:45.287Z</lastmod>
     <data>
         <display>
         <title>es6学习笔记</title>
@@ -338,13 +338,13 @@
         <title>利用hexo和github或coding 搭免费个人博客</title>
         <pubTime>2017-06-30T06:40:46.512Z</pubTime>
         
-        <tag>JavaScript</tag>
-         
         <tag>Git</tag>
          
         <tag>Node.js</tag>
          
         <tag>Hexo</tag>
+         
+        <tag>JavaScript</tag>
          
          
            
