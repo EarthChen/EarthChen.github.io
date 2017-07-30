@@ -190,6 +190,7 @@
 <li>JSON转为Map<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">jsonToStrMap</span>(<span class="params">jsonStr</span>) </span>&#123;</div><div class="line"><span class="keyword">return</span> objToStrMap(<span class="built_in">JSON</span>.parse(jsonStr));</div><div class="line">&#125; </div><div class="line">jsonToStrMap(<span class="string">'&#123;"yes":true,"no":false&#125;'</span>)</div><div class="line"><span class="comment">// Map &#123;'yes' =&gt; true, 'no' =&gt; false&#125;</span></div></pre></td></tr></table></figure>
 </li>
 </ol>
+<h2 id="Generator-函数"><a href="#Generator-函数" class="headerlink" title="Generator 函数"></a>Generator 函数</h2><p>Generator函数是ES6提供的一种异步编程解决方案， 语法行为与传统函数完全不同。<br>执行Generator函数会返回一个遍历器对象， 也就是说， Generator函数除了状态机， 还是一个遍历器对象生成函数。 返回的遍历器对象， 可以依次遍历Generator函数内部的每一个状态。<br>形式上， Generator函数是一个普通函数， 但是有两个特征。 一是， function关键字与函数名之间有一个星号； 二是， 函数体内部使用yield语句， 定义不同的内部状态（ yield语句在英语里的意思就是“产出”） 。</p>
 ]]></content>
       
         <categories>
@@ -792,9 +793,9 @@
         
         <tags>
             
-            <tag> Django </tag>
-            
             <tag> Nginx </tag>
+            
+            <tag> Django </tag>
             
         </tags>
         
@@ -2255,11 +2256,11 @@
         
         <tags>
             
+            <tag> Git </tag>
+            
             <tag> Node.js </tag>
             
             <tag> Hexo </tag>
-            
-            <tag> Git </tag>
             
             <tag> JavaScript </tag>
             
@@ -2466,9 +2467,9 @@
         
         <tags>
             
-            <tag> Python </tag>
-            
             <tag> Django </tag>
+            
+            <tag> Python </tag>
             
         </tags>
         
@@ -2569,9 +2570,9 @@
         
         <tags>
             
-            <tag> Python </tag>
-            
             <tag> Django </tag>
+            
+            <tag> Python </tag>
             
         </tags>
         
@@ -2635,9 +2636,9 @@
         
         <tags>
             
-            <tag> Python </tag>
-            
             <tag> Django </tag>
+            
+            <tag> Python </tag>
             
         </tags>
         
@@ -2716,9 +2717,9 @@
         
         <tags>
             
-            <tag> Python </tag>
-            
             <tag> Django </tag>
+            
+            <tag> Python </tag>
             
         </tags>
         
@@ -2794,9 +2795,9 @@
         
         <tags>
             
-            <tag> Python </tag>
-            
             <tag> Django </tag>
+            
+            <tag> Python </tag>
             
         </tags>
         
@@ -2854,9 +2855,9 @@
         
         <tags>
             
-            <tag> Python </tag>
-            
             <tag> Django </tag>
+            
+            <tag> Python </tag>
             
         </tags>
         
@@ -2915,9 +2916,9 @@
         
         <tags>
             
-            <tag> Python </tag>
-            
             <tag> Django </tag>
+            
+            <tag> Python </tag>
             
         </tags>
         
@@ -2993,9 +2994,9 @@
         
         <tags>
             
-            <tag> Python </tag>
-            
             <tag> Django </tag>
+            
+            <tag> Python </tag>
             
         </tags>
         
@@ -3372,9 +3373,9 @@
         
         <tags>
             
-            <tag> Python </tag>
-            
             <tag> Django </tag>
+            
+            <tag> Python </tag>
             
         </tags>
         
