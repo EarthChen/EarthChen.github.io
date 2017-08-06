@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html >
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="EarthChen" />
+
+
+
+<meta name="description" content="本文将继续上篇ubuntu搭建常见开发环境上篇介绍了一些关于开发环境的配置，这篇我们来总结一下日常使用中所需要安装和配置的一些东西比如一些中文输入法、浏览器、flash、科学上网等等。。。。。 日常使用软件的安装与配置">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ubuntu日常使用的安装配置">
+<meta property="og:url" content="http://earthchen.cn/2017/03/16/ubuntu_do_something_use/index.html">
+<meta property="og:site_name" content="EarthChen&#39;s Blog">
+<meta property="og:description" content="本文将继续上篇ubuntu搭建常见开发环境上篇介绍了一些关于开发环境的配置，这篇我们来总结一下日常使用中所需要安装和配置的一些东西比如一些中文输入法、浏览器、flash、科学上网等等。。。。。 日常使用软件的安装与配置">
+<meta property="og:image" content="http://objects.earthchen.cn/ubuntu_do_something_use_%E6%9B%B4%E6%8D%A2%E5%9B%BD%E5%86%85%E6%BA%90.png">
+<meta property="og:image" content="http://objects.earthchen.cn/ubuntu_do_something_use_%E9%80%89%E6%8B%A9%E4%B8%93%E6%9C%89%E9%A9%B1%E5%8A%A8.png">
+<meta property="og:image" content="http://objects.earthchen.cn/ubuntu_do_something_use_unity-tweak-tool.png">
+<meta property="og:image" content="http://objects.earthchen.cn/ubuntu_do_something_use_%E5%89%AA%E8%B4%B4%E6%9D%BF%E5%BF%AB%E6%8D%B7%E9%94%AE.png">
+<meta property="og:image" content="http://objects.earthchen.cn/ubuntu_do_something_use_%E6%88%AA%E5%9B%BE%E5%BF%AB%E6%8D%B7%E9%94%AE.png">
+<meta property="og:image" content="http://objects.earthchen.cn/ubuntu_do_something_use_%E6%A1%8C%E9%9D%A2.png">
+<meta property="og:updated_time" content="2017-08-06T09:50:35.256Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ubuntu日常使用的安装配置">
+<meta name="twitter:description" content="本文将继续上篇ubuntu搭建常见开发环境上篇介绍了一些关于开发环境的配置，这篇我们来总结一下日常使用中所需要安装和配置的一些东西比如一些中文输入法、浏览器、flash、科学上网等等。。。。。 日常使用软件的安装与配置">
+<meta name="twitter:image" content="http://objects.earthchen.cn/ubuntu_do_something_use_%E6%9B%B4%E6%8D%A2%E5%9B%BD%E5%86%85%E6%BA%90.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="EarthChen&#39;s Blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/black/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>ubuntu日常使用的安装配置 | EarthChen&#39;s Blog</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?838a8860a1d9fc43bc091f40a8ab515d";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="http://objects.earthchen.cn/%E5%A4%B4%E5%83%8F.jpg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">EarthChen</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">多学一点知识，少写一行代码</p>
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="true" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="http://mail.163.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/EarthChen" title="GitHub"></a>
+                            
+                                <a class="fa 知乎" href="https://www.zhihu.com/people/diamand-76/activities" title="知乎"></a>
+                            
+                                <a class="fa 简书" href="http://www.jianshu.com/u/85a919706c15" title="简书"></a>
+                            
+                                <a class="fa QQ" href="http://user.qzone.qq.com/1791538609" title="QQ"></a>
+                            
+                                <a class="fa 微信" href="https://wx.qq.com/" title="微信"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AJAX/">AJAX</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django/">Django</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LeetCode/">LeetCode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/">Nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/">Node.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Regular-Expression/">Regular Expression</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/">Spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webpack/">Webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/解决方案/">解决方案</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/资源/">资源</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.baidu.com/">Baidu</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.google.com/">Google</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://fanyi.youdao.com/">有道翻译</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">专注于技术 学习中的程序猿</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">EarthChen</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="http://objects.earthchen.cn/%E5%A4%B4%E5%83%8F.jpg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">EarthChen</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">多学一点知识，少写一行代码</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="http://mail.163.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/EarthChen" title="GitHub"></a>
+                            
+                                <a class="fa 知乎" target="_blank" href="https://www.zhihu.com/people/diamand-76/activities" title="知乎"></a>
+                            
+                                <a class="fa 简书" target="_blank" href="http://www.jianshu.com/u/85a919706c15" title="简书"></a>
+                            
+                                <a class="fa QQ" target="_blank" href="http://user.qzone.qq.com/1791538609" title="QQ"></a>
+                            
+                                <a class="fa 微信" target="_blank" href="https://wx.qq.com/" title="微信"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-ubuntu_do_something_use" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/03/16/ubuntu_do_something_use/" class="article-date">
+      <time datetime="2017-03-16T06:40:00.000Z" itemprop="datePublished">2017-03-16</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      ubuntu日常使用的安装配置
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/随笔/">随笔</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>本文将继续上篇<a href="http://earthchen.cn/2017/03/10/ubuntu_do_something_coding/">ubuntu搭建常见开发环境</a><br>上篇介绍了一些关于开发环境的配置，这篇我们来总结一下日常使用中所需要安装和配置的一些东西<br>比如一些中文输入法、浏览器、flash、科学上网等等。。。。。</p>
+<h2 id="日常使用软件的安装与配置"><a href="#日常使用软件的安装与配置" class="headerlink" title="日常使用软件的安装与配置"></a>日常使用软件的安装与配置</h2><a id="more"></a>
+<h3 id="更新更新源为国内源"><a href="#更新更新源为国内源" class="headerlink" title="更新更新源为国内源"></a>更新更新源为国内源</h3><p>安装好系统的第一件事，就应该换源！！！！除非你在一个不被墙的地方<br>在<strong>系统设置</strong>里的<strong>软件和更新</strong>中选择合适的国内源<br>个人比较喜欢阿里源，，，更改后如图所示<br><img src="http://objects.earthchen.cn/ubuntu_do_something_use_%E6%9B%B4%E6%8D%A2%E5%9B%BD%E5%86%85%E6%BA%90.png" alt="ubuntu_do_something_use_更换国内源"><br>改完输入密码确定之后，更新下载软件就无压力了</p>
+<h3 id="选择专有驱动"><a href="#选择专有驱动" class="headerlink" title="选择专有驱动"></a>选择专有驱动</h3><p>虽然ubuntu自带很多万能驱动，但是对于显卡之类的来说，还是专门的驱动比较好用<br>所以在<strong>系统设置</strong>里的<strong>软件和更新</strong>中<strong>附加驱动</strong>选择专有驱动并保存<br><img src="http://objects.earthchen.cn/ubuntu_do_something_use_%E9%80%89%E6%8B%A9%E4%B8%93%E6%9C%89%E9%A9%B1%E5%8A%A8.png" alt="ubuntu_do_something_use_选择专有驱动"><br>然后重启就好</p>
+<h3 id="对桌面的美化"><a href="#对桌面的美化" class="headerlink" title="对桌面的美化"></a>对桌面的美化</h3><p>好看的桌面能改善人的心情啊，我觉得一个好看的桌面还是有意义的，但是不建议大家花太多时间去折腾桌面，我这里就说下我的桌面配置</p>
+<h4 id="docky"><a href="#docky" class="headerlink" title="docky"></a>docky</h4><p>这里笔者还是蛮喜欢mac的风格 ，所以安装一下docky，并设置一下智能隐藏，不然桌面就小很多了<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">sudo add-apt-repository ppa:ricotz/docky</div><div class="line"></div><div class="line">sudo apt-get update</div><div class="line"></div><div class="line">sudo apt-get install docky</div></pre></td></tr></table></figure></p>
+<p>然后在dash中选择docky即可打开</p>
+<h4 id="unity-tweak-tool"><a href="#unity-tweak-tool" class="headerlink" title="unity-tweak-tool"></a>unity-tweak-tool</h4><p>这是一个调整 Unity 桌面环境的工具，能够修改一些参数，让你的使用更方便<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">sudo add-apt-repository ppa:freyja-dev/unity-tweak-tool-daily</div><div class="line"></div><div class="line">sudo apt-get update</div><div class="line"></div><div class="line">sudo apt-get install unity-tweak-tool</div></pre></td></tr></table></figure></p>
+<p>软件界面如下：<br><img src="http://objects.earthchen.cn/ubuntu_do_something_use_unity-tweak-tool.png" alt="ubuntu_do_something_use_unity-tweak-tool"></p>
+<h3 id="常用软件"><a href="#常用软件" class="headerlink" title="常用软件"></a>常用软件</h3><h4 id="chrome"><a href="#chrome" class="headerlink" title="chrome"></a>chrome</h4><p>谷歌浏览器，这个就不用说了吧，你也可以选择chrome的开源版<strong>chromium</strong></p>
+<ul>
+<li>在这里建议使用下载好的deb包直接安装</li>
+</ul>
+<h5 id="chrome-1"><a href="#chrome-1" class="headerlink" title="chrome"></a>chrome</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">wget -q -O - https://dl.google.com/linux/linux_signing_key.pub  | sudo apt-key add -</div><div class="line"></div><div class="line">sudo apt-get update</div><div class="line"></div><div class="line">sudo apt-get install google-chrome-stable</div></pre></td></tr></table></figure>
+<p>然后等待即可</p>
+<h5 id="chromium"><a href="#chromium" class="headerlink" title="chromium"></a>chromium</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">sudo add-apt-repository ppa:a-v-shkop/chromium</div><div class="line"></div><div class="line">sudo apt-get update</div><div class="line"></div><div class="line">sudo apt-get install chromium-browser</div></pre></td></tr></table></figure>
+<h5 id="flash插件"><a href="#flash插件" class="headerlink" title="flash插件"></a>flash插件</h5><p>虽然现在已经时html5的天下，但是flash还没有完全淘汰，所以flash还是需要的</p>
+<ul>
+<li>如果你安装的时chrome 那么它内部已经内置了一个flash，但是还是建议安装一个完整版</li>
+<li>如果你安装的时chromium，那一定需要安装flash</li>
+</ul>
+<blockquote>
+<p>chrome用户</p>
+<ul>
+<li>去flash官网下载.tar.gz的安装包</li>
+<li>解压然后放到浏览器插件目录</li>
+</ul>
+<p>chromium用户<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install pepperflashplugin-nonfree</div><div class="line"></div><div class="line">sudo update-pepperflashplugin-nonfree --install</div></pre></td></tr></table></figure></p>
+</blockquote>
+<h4 id="搜狗输入法"><a href="#搜狗输入法" class="headerlink" title="搜狗输入法"></a>搜狗输入法</h4><ol>
+<li>登录<a href="http://pinyin.sogou.com/linux/" target="_blank" rel="external">搜狗拼音官网</a>去下载合适的安装包</li>
+<li>双击下载好的deb文件（有可能失败）<br>笔者建议进入下载包所在的目录，使用如下命令安装<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo dpkg -i sogoupinyin_2.1.0.0082_amd64.deb</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="wps"><a href="#wps" class="headerlink" title="wps"></a>wps</h4><p>自带的libreoffice不怎么好用，而且较慢，这里我们使用国产的wps来代替它</p>
+<ol>
+<li><p>卸载libreoffice<br>在终端执行以下命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get remove --purge libreoffice*</div></pre></td></tr></table></figure>
+</li>
+<li><p>安装wps<br>首先去wps官网去下载安装包<br>使用如下命令安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo dpkg -i wps-office_10.1.0.5672<span class="_">-a</span>21_amd64.deb</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>可能会缺少依赖，然后执行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install <span class="_">-f</span></div></pre></td></tr></table></figure></p>
+<p>修复所缺依赖<br>如果遇到问题就用如下方法：<br>在去论坛找一个<strong>libpng12-0_1.2.27-2+lenny5_amd64.deb</strong>的包<br>然后使用如下命令更新<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo dpkg -i libpng12-0_1.2.27-2+lenny5_amd64.deb</div></pre></td></tr></table></figure></p>
+<p>然后重新安装wps</p>
+<h4 id="福昕阅读器"><a href="#福昕阅读器" class="headerlink" title="福昕阅读器"></a>福昕阅读器</h4><p>自带的pdf阅读器不怎么好用，我们这里使用福昕阅读器来替代<br>安装方法依然时去官网下载对应的deb安装包<br>然后执行sudo dpki -i xxx.deb</p>
+<h4 id="网易云音乐"><a href="#网易云音乐" class="headerlink" title="网易云音乐"></a>网易云音乐</h4><p>良心音乐播放器，网易云也出了Linux版，和深度合作开发的<br>安装方法同上，安装即可</p>
+<h4 id="smplayer"><a href="#smplayer" class="headerlink" title="smplayer"></a>smplayer</h4><p>好用的视频播放器，有很强的解码能力。。。。<br>在终端输入如下命令<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">sudo apt-add-repository ppa:rvm/smplayer</div><div class="line"></div><div class="line">sudo apt-get update</div><div class="line"></div><div class="line">sudo apt-get install smplayer smplayer-skins smplayer-themes</div></pre></td></tr></table></figure></p>
+<h4 id="shadowsocks"><a href="#shadowsocks" class="headerlink" title="shadowsocks"></a>shadowsocks</h4><p>科学上网，不多说 直接上安装教程：<br>在终端输入如下命令<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">sudo add-apt-repository ppa:hzwhuang/ss-qt5 </div><div class="line"></div><div class="line">sudo apt-get update </div><div class="line"></div><div class="line">sudo apt-get install shadowsocks-qt5</div></pre></td></tr></table></figure></p>
+<p>然后设置全局代理，这个见别人的博客<br><a href="http://blog.csdn.net/hanshileiai/article/details/52624303" target="_blank" rel="external">http://blog.csdn.net/hanshileiai/article/details/52624303</a><br><a href="http://blog.csdn.net/strokess/article/details/52015014" target="_blank" rel="external">http://blog.csdn.net/strokess/article/details/52015014</a><br>…<br>每个人情况不一样自己找找并尝试一下吧</p>
+<h4 id="Diodon"><a href="#Diodon" class="headerlink" title="Diodon"></a>Diodon</h4><p>Ubuntu自带一个剪贴板，按<strong>ctrl+；</strong>即可，但是笔者不是很喜欢，并且功能不够多，<br>有很多类似功能的软件，在这里只介绍个人使用的一个<br>在终端输入如下命令：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">sudo add-apt-repository ppa:diodon-team/stable</div><div class="line"></div><div class="line">sudo apt-get update</div><div class="line"></div><div class="line">sudo apt-get install diodon diodon-plugins</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>安装好之后设置一下快捷键</p>
+<ol>
+<li>在<strong>系统设置</strong>中的<strong>键盘</strong> <strong>快捷键</strong>中<strong>添加自定义快捷键</strong></li>
+<li>如图所示设置即可<br><img src="http://objects.earthchen.cn/ubuntu_do_something_use_%E5%89%AA%E8%B4%B4%E6%9D%BF%E5%BF%AB%E6%8D%B7%E9%94%AE.png" alt="ubuntu_do_something_use_剪贴板快捷键"></li>
+</ol>
+</blockquote>
+<h4 id="shutter"><a href="#shutter" class="headerlink" title="shutter"></a>shutter</h4><p>装一个好用的截图软件还是很有用的，在这里推荐shutter<br>在终端输入如下命令<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">sudo add-apt-repository ppa:shutter/ppa</div><div class="line"></div><div class="line">sudo apt-get update</div><div class="line"></div><div class="line">sudo apt-get install shutter</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>安装好之后设置一下快捷键</p>
+<ol>
+<li>在<strong>系统设置</strong>中的<strong>键盘</strong> <strong>快捷键</strong>中<strong>添加自定义快捷键</strong></li>
+<li>如图所示设置即可<br><img src="http://objects.earthchen.cn/ubuntu_do_something_use_%E6%88%AA%E5%9B%BE%E5%BF%AB%E6%8D%B7%E9%94%AE.png" alt="ubuntu_do_something_use_截图快捷键"></li>
+</ol>
+</blockquote>
+<h4 id="坚果云"><a href="#坚果云" class="headerlink" title="坚果云"></a>坚果云</h4><p>一款很好用的多终端同步软件，诶，腾讯爸爸不给力，Linux下的qq实在太难用。。。有一段时间我都是截图同步到手机，然后在发送的。。。。。炒鸡心累<br>去官网下载相关包然后在终端执行sudo dpkg -i xxx.deb即可</p>
+<h4 id="uget"><a href="#uget" class="headerlink" title="uget"></a>uget</h4><p>linux下的一款很好用的下载软件，，，虽然不支持bt吧，，，<br>在终端输入如下命令<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">sudo add-apt-repository ppa:plushuang-tw/uget-stable</div><div class="line"></div><div class="line">sudo apt-get update</div><div class="line"></div><div class="line">sudo apt-get install uget</div></pre></td></tr></table></figure></p>
+<p>在firefox下使用推荐使用<strong>flashgot</strong> 在chrome下使用推荐使用<strong>uGet Integration</strong></p>
+<h4 id="axel"><a href="#axel" class="headerlink" title="axel"></a>axel</h4><p>多线程下载器，不多说<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install axel</div></pre></td></tr></table></figure></p>
+<h4 id="aiar2"><a href="#aiar2" class="headerlink" title="aiar2"></a>aiar2</h4><p>在终端输入如下命令<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">sudo add-apt-repository ppa:t-tujikawa/ppa</div><div class="line"></div><div class="line">sudo apt-get update</div><div class="line"></div><div class="line">sudo apt-get install aria2</div></pre></td></tr></table></figure></p>
+<p>先说这么多吧 以后想起来别的好用的在更新<br>最后附上一张笔者的桌面：嘿嘿嘿<br><img src="http://objects.earthchen.cn/ubuntu_do_something_use_%E6%A1%8C%E9%9D%A2.png" alt="ubuntu_do_something_use_桌面"></p>
+<blockquote>
+<p>注：</p>
+<ul>
+<li>上述环境在<strong>ubuntu16.04 lts</strong>中搭建测试成功</li>
+<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
+</ul>
+</blockquote>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/03/16/ubuntu_do_something_use/">ubuntu日常使用的安装配置</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">EarthChen</a></p>
+        <p><span>发布时间:</span>2017-03-16, 14:40:00</p>
+        <p><span>最后更新:</span>2017-08-06, 17:50:35</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/03/16/ubuntu_do_something_use/" title="ubuntu日常使用的安装配置">http://earthchen.cn/2017/03/16/ubuntu_do_something_use/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://earthchen.cn/2017/03/16/ubuntu_do_something_use/　　作者: EarthChen" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2017/04/15/redis_study_1/">
+                    Redis学习笔记 -- 1
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2017/03/15/ubuntu_do_something_coding/">
+                    ubuntu搭建常见开发环境
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#日常使用软件的安装与配置"><span class="toc-number">1.</span> <span class="toc-text">日常使用软件的安装与配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#更新更新源为国内源"><span class="toc-number">1.1.</span> <span class="toc-text">更新更新源为国内源</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#选择专有驱动"><span class="toc-number">1.2.</span> <span class="toc-text">选择专有驱动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#对桌面的美化"><span class="toc-number">1.3.</span> <span class="toc-text">对桌面的美化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#docky"><span class="toc-number">1.3.1.</span> <span class="toc-text">docky</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#unity-tweak-tool"><span class="toc-number">1.3.2.</span> <span class="toc-text">unity-tweak-tool</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常用软件"><span class="toc-number">1.4.</span> <span class="toc-text">常用软件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#chrome"><span class="toc-number">1.4.1.</span> <span class="toc-text">chrome</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#chrome-1"><span class="toc-number">1.4.1.1.</span> <span class="toc-text">chrome</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#chromium"><span class="toc-number">1.4.1.2.</span> <span class="toc-text">chromium</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#flash插件"><span class="toc-number">1.4.1.3.</span> <span class="toc-text">flash插件</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#搜狗输入法"><span class="toc-number">1.4.2.</span> <span class="toc-text">搜狗输入法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#wps"><span class="toc-number">1.4.3.</span> <span class="toc-text">wps</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#福昕阅读器"><span class="toc-number">1.4.4.</span> <span class="toc-text">福昕阅读器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#网易云音乐"><span class="toc-number">1.4.5.</span> <span class="toc-text">网易云音乐</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#smplayer"><span class="toc-number">1.4.6.</span> <span class="toc-text">smplayer</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#shadowsocks"><span class="toc-number">1.4.7.</span> <span class="toc-text">shadowsocks</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Diodon"><span class="toc-number">1.4.8.</span> <span class="toc-text">Diodon</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#shutter"><span class="toc-number">1.4.9.</span> <span class="toc-text">shutter</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#坚果云"><span class="toc-number">1.4.10.</span> <span class="toc-text">坚果云</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#uget"><span class="toc-number">1.4.11.</span> <span class="toc-text">uget</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#axel"><span class="toc-number">1.4.12.</span> <span class="toc-text">axel</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#aiar2"><span class="toc-number">1.4.13.</span> <span class="toc-text">aiar2</span></a></li></ol></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-5 i,
+        .toc-level-5 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"ubuntu日常使用的安装配置　| EarthChen's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+        <section class="youyan" id="comments">
+    <script>
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = 'http://v2.uyan.cc/code/uyan.js?uid=2115719';
+            (d.head || d.body).appendChild(s);
+        }
+    </script>
+    
+    <script> loadComment(); </script>
+
+    <div id="uyan_frame"></div>
+</section>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2017/04/15/redis_study_1/" title="上一篇: Redis学习笔记 -- 1">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2017/03/15/ubuntu_do_something_coding/" title="下一篇: ubuntu搭建常见开发环境">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_record/">LeetCode刷题记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/29/es6_study/">es6学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/Webpack_study/">Webpack学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/RegularExpression_study/">正则表达式学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/08/AndroidStudio/">Android Studio 使用本地离线Gradle</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/跨域请求解决方案/">跨域请求的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/ubuntu_supervisor/">ubuntu下的进程控制系统————Supervisor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_nginx_gunicorn/">django+nginx+gunicorn部署配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/28/ubuntu修复不能挂载NTFS硬盘/">ubuntu修复linux和windows双系统下挂载ntfs硬盘出错问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/17/django_timing_task/">django使用django-crontab实现定时任务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/15/django_rest_framework_jwt/">django-rest-framework配置json web token进行接口的认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/spring_SpEL/">spring中的SpEL表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/django_rest_framework_study/">django-rest-framework框架学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/08/git_study/">Git学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/03/资源收集/">资源收集共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/06/ubuntu_open_port/">ubuntu开放指定端口</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/16/redis_study_2/">Redis学习笔记 -- 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/15/redis_study_1/">Redis学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/16/ubuntu_do_something_use/">ubuntu日常使用的安装配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/ubuntu_do_something_coding/">ubuntu搭建常见开发环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/django_address_baiduapi_marker_show/">Django调用百度地图api在地图上批量增加标记点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/10/ubuntu安装在双系统笔记本下开机或关机卡死.1/">ubuntu在双系统下开机卡死或关机卡死的解决办法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/11/python_requirements/">python生成项目所需依赖文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/10/hexo_github_coding_blog/">利用hexo和github或coding 搭免费个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django连接mysql数据库/">Django连接MySql使用models处理数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django常用语句/">Django常用语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django渲染模板/">Django渲染模板</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/python2和Python3的区别/">Python2和Python3的区别简单总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django数据库操作/">Django操作数据库</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django环境搭建/">Django环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/03/Android_qq_Menu/">Android仿qq侧滑菜单</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/16/C语言队列的基本操作/">C语言队列的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言逆波兰计算器/">C语言逆波兰表达式计算(后缀表达式计算器)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言中缀表达式计算器/">C语言中缀表达式计算器</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/c语言中缀表达式变后缀表达式/">C语言中缀表达式转后缀表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言二叉树基本操作/">C语言二叉树的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言共享栈/">C语言共享栈</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2017 EarthChen
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+    <script src="/js/GithubRepoWidget.js"></script>
+
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+             github: ".github-widget a", 
+            
+            
+            
+             categories: ".article-category a, a.tag-list-link", 
+             articleNav: "#article-nav a, #post-nav-button a", 
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

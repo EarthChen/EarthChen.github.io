@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html >
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="EarthChen" />
+
+
+
+<meta name="description" content="在部署django开发的站点时，通常有两种选择方式，nginx+django+uwsgi或者django+nginx+gunicorn，本文不讨论apache方式，在linux下通常都使用nginx，速度快，还经常做代理服务器，功能强大。。nginx+django+uwsgi个人觉得uwsgi配置较为麻烦，所以选择了gunicorn，一个开源Python WSGI UNIX的HTTP服务器，据说速">
+<meta name="keywords" content="Nginx,Django">
+<meta property="og:type" content="article">
+<meta property="og:title" content="django+nginx+gunicorn部署配置">
+<meta property="og:url" content="http://earthchen.cn/2017/06/30/django_nginx_gunicorn/index.html">
+<meta property="og:site_name" content="EarthChen&#39;s Blog">
+<meta property="og:description" content="在部署django开发的站点时，通常有两种选择方式，nginx+django+uwsgi或者django+nginx+gunicorn，本文不讨论apache方式，在linux下通常都使用nginx，速度快，还经常做代理服务器，功能强大。。nginx+django+uwsgi个人觉得uwsgi配置较为麻烦，所以选择了gunicorn，一个开源Python WSGI UNIX的HTTP服务器，据说速">
+<meta property="og:updated_time" content="2017-08-06T09:47:40.356Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="django+nginx+gunicorn部署配置">
+<meta name="twitter:description" content="在部署django开发的站点时，通常有两种选择方式，nginx+django+uwsgi或者django+nginx+gunicorn，本文不讨论apache方式，在linux下通常都使用nginx，速度快，还经常做代理服务器，功能强大。。nginx+django+uwsgi个人觉得uwsgi配置较为麻烦，所以选择了gunicorn，一个开源Python WSGI UNIX的HTTP服务器，据说速">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="EarthChen&#39;s Blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/black/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>django+nginx+gunicorn部署配置 | EarthChen&#39;s Blog</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?838a8860a1d9fc43bc091f40a8ab515d";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="http://objects.earthchen.cn/%E5%A4%B4%E5%83%8F.jpg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">EarthChen</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">多学一点知识，少写一行代码</p>
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="true" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="http://mail.163.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/EarthChen" title="GitHub"></a>
+                            
+                                <a class="fa 知乎" href="https://www.zhihu.com/people/diamand-76/activities" title="知乎"></a>
+                            
+                                <a class="fa 简书" href="http://www.jianshu.com/u/85a919706c15" title="简书"></a>
+                            
+                                <a class="fa QQ" href="http://user.qzone.qq.com/1791538609" title="QQ"></a>
+                            
+                                <a class="fa 微信" href="https://wx.qq.com/" title="微信"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AJAX/">AJAX</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django/">Django</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LeetCode/">LeetCode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/">Nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/">Node.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Regular-Expression/">Regular Expression</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/">Spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webpack/">Webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/解决方案/">解决方案</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/资源/">资源</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.baidu.com/">Baidu</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.google.com/">Google</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://fanyi.youdao.com/">有道翻译</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">专注于技术 学习中的程序猿</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">EarthChen</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="http://objects.earthchen.cn/%E5%A4%B4%E5%83%8F.jpg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">EarthChen</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">多学一点知识，少写一行代码</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="http://mail.163.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/EarthChen" title="GitHub"></a>
+                            
+                                <a class="fa 知乎" target="_blank" href="https://www.zhihu.com/people/diamand-76/activities" title="知乎"></a>
+                            
+                                <a class="fa 简书" target="_blank" href="http://www.jianshu.com/u/85a919706c15" title="简书"></a>
+                            
+                                <a class="fa QQ" target="_blank" href="http://user.qzone.qq.com/1791538609" title="QQ"></a>
+                            
+                                <a class="fa 微信" target="_blank" href="https://wx.qq.com/" title="微信"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-django_nginx_gunicorn" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/06/30/django_nginx_gunicorn/" class="article-date">
+      <time datetime="2017-06-30T06:40:00.000Z" itemprop="datePublished">2017-06-30</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      django+nginx+gunicorn部署配置
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/运维/">运维</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django/">Django</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nginx/">Nginx</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>在部署django开发的站点时，通常有两种选择方式，nginx+django+uwsgi或者django+nginx+gunicorn，本文不讨论apache方式，在linux下通常都使用nginx，速度快，还经常做代理服务器，功能强大。。<br>nginx+django+uwsgi个人觉得uwsgi配置较为麻烦，所以选择了gunicorn，一个开源Python WSGI UNIX的HTTP服务器，据说速度快（配置快、运行快）、简单，默认是同步工作，支持Gevent、Eventlet异步，支持Tornado。有兴趣可以自行查阅官方文档</p>
+<h1 id="django-nginx-gunicorn"><a href="#django-nginx-gunicorn" class="headerlink" title="django+nginx+gunicorn"></a>django+nginx+gunicorn</h1><a id="more"></a>
+<h2 id="环境安装"><a href="#环境安装" class="headerlink" title="环境安装"></a>环境安装</h2><p>需要在服务器端安装我们所需要的环境nginx  Python  nginx gunicorn…<br>django等站点需要的依赖将不进行介绍</p>
+<h3 id="nginx"><a href="#nginx" class="headerlink" title="nginx"></a>nginx</h3><p>在ubuntu上支持apt-get 直接安装，其他系统请自行搜索安装方式<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo apt-get install nginx</div></pre></td></tr></table></figure></p>
+<h3 id="gunicorn"><a href="#gunicorn" class="headerlink" title="gunicorn"></a>gunicorn</h3><p>gunicorn只是一个Python的库 这里建议使用pip安装，简单方便<br>ps:要么网络好，要么建议更改pip源为豆瓣源<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo pip install gunicorn</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>注：</p>
+<ul>
+<li>如果没有pip需要首先安装pip</li>
+<li>如果是Python3 请使用pip3</li>
+<li>由于服务器就跑一个Python应用，就使用了全局安装,如果你的服务器上运行了多个Python应用，并使用了不同的环境(版本号),建议使用不同的虚拟环境</li>
+</ul>
+</blockquote>
+<h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><p>其实也很简单，要想简单的跑起来只需要更改几个配置文件即可<br>首先请把你的django站点放在服务器合适的地方</p>
+<h3 id="nginx配置"><a href="#nginx配置" class="headerlink" title="nginx配置"></a>nginx配置</h3><p>一般网站都配置在80端口上，域名默认解析到80端口，所以nginx配置文件如下，在更改nginx的配置文件之前建议把默认文件进行备份，以备后续出现问题参照使用<br>打开nginx配置文件<strong>/etc/ningx/sites-enable/default</strong><br>进行修改为如下内容:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">    listen 80;</div><div class="line">    server_name 192.168.84.199;</div><div class="line">    server_name_in_redirect off;</div><div class="line">    access_log /home/webserver/web/nginx.access.log;</div><div class="line">    error_log /home/webserver/web/nginx.error.log;</div><div class="line"></div><div class="line">    location / &#123;</div><div class="line">        proxy_pass http://127.0.0.1:8000;</div><div class="line">        proxy_pass_header       Authorization;</div><div class="line">        proxy_pass_header       WWW-Authenticate;</div><div class="line">        proxy_set_header Host <span class="variable">$host</span>;</div><div class="line">        proxy_set_header X-Real-IP <span class="variable">$remote_addr</span>;</div><div class="line">        proxy_set_header X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    location /static/ &#123;</div><div class="line">        root /home/webserver/web/WebServer/;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>核心配置文件就上述那么多，重点使将请求转发到django的服务器上</p>
+<blockquote>
+<p>注：</p>
+<ul>
+<li>listen是所需要监听的端口</li>
+<li>server_name是需要绑定的域名，暂时没有域名时，请使用ip</li>
+<li>access_log是确定正常状态下log文件位置</li>
+<li>error_log使确定发生错误时log文件位置</li>
+<li>location / 是当访问到根下的时候，将所有请求转发到127.0.0.1:8000,本文使转发到gunicorn启动的django应用上，中间配置的是需要转发的内容，基本上述内容可以满足大多需求，如需特殊需求请自行查看nginx官方文档</li>
+<li>location /static/ 配置了静态文件所在的路径，静态文件由nginx处理，动态转发到django，如不配置会出现站点引用的所有js css都找不到</li>
+</ul>
+</blockquote>
+<h3 id="gunicorn配置"><a href="#gunicorn配置" class="headerlink" title="gunicorn配置"></a>gunicorn配置</h3><p>gunicorn启动一般有两种方式，可以在项目目录下建立<strong>gunicorn.conf.py</strong>配置文件，也可以在启动gunicorn时直接加上相关命令</p>
+<h4 id="需要在项目的settings-py中的INSTALLED-APPS添加gunicorn："><a href="#需要在项目的settings-py中的INSTALLED-APPS添加gunicorn：" class="headerlink" title="需要在项目的settings.py中的INSTALLED_APPS添加gunicorn："></a>需要在项目的settings.py中的<strong>INSTALLED_APPS</strong>添加gunicorn：</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">INSTALLED_APPS = [</div><div class="line">    ...</div><div class="line">    ...</div><div class="line">    <span class="string">'gunicorn'</span>,  <span class="comment"># 部署用</span></div><div class="line">]</div></pre></td></tr></table></figure>
+<h4 id="gunicorn-conf-py文件"><a href="#gunicorn-conf-py文件" class="headerlink" title="gunicorn.conf.py文件"></a>gunicorn.conf.py文件</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> multiprocessing</div><div class="line"></div><div class="line">bind = <span class="string">"127.0.0.1:8000"</span>   <span class="comment">#绑定的ip与端口</span></div><div class="line">workers = <span class="number">2</span>                <span class="comment">#核心数</span></div><div class="line">errorlog = <span class="string">'/home/xxx/xxx/gunicorn.error.log'</span> <span class="comment">#发生错误时log的路径</span></div><div class="line">accesslog = <span class="string">'/home/xxx/xxx/gunicorn.access.log'</span> <span class="comment">#正常时的log路径</span></div><div class="line"><span class="comment">#loglevel = 'debug'   #日志等级</span></div><div class="line">proc_name = <span class="string">'gunicorn_project'</span>   <span class="comment">#进程名</span></div></pre></td></tr></table></figure>
+<p>如还需要其他配置，可以自行查看官方文档</p>
+<h4 id="直接使用gunicron启动"><a href="#直接使用gunicron启动" class="headerlink" title="直接使用gunicron启动"></a>直接使用gunicron启动</h4><p>gunicron需要启动后需要长期运行在后台，如果直接启动会在关闭终端后进程就被杀死，这肯定不是我们的需求，所以这里给出两种解决方式  </p>
+<ol>
+<li>使用Linux自带的nohup命令<br>不使用gunicorn配置文件(需进入项目目录)<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo nohup gunicorn 项目名.wsgi:application -b 127.0.0.1:8000&amp;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>使用配置文件方式<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo nohup gunicorn 项目名.wsgi:application -c /home/xxx/xxx/gunicorn.conf.py&amp;</div></pre></td></tr></table></figure></p>
+<ol>
+<li>使用supervistor进程管理器<br>supervistor这个工具的用法这里就不在多讲，需要了解可以看我的另一篇博客<a href="http://earthchen.cn/2017/06/30/ubuntu_supervisor/">ubuntu下的进程控制系统—Supervisor</a>,也可以直接查看官方文档<br>用法可以参照我的配置文件:<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">[program:x508server]</div><div class="line"><span class="built_in">command</span>=gunicorn x508server.wsgi:application -b 0.0.0.0:8000  ; 被监控的进程路径</div><div class="line">directory=/home/webserver/web/WebServer/               ; 执行前要不要先<span class="built_in">cd</span>到目录$</div><div class="line">autostart=<span class="literal">true</span>                ; 随着supervisord的启动而启动</div><div class="line">autorestart=<span class="literal">true</span>              ; 自动重启。。当然要选上了</div><div class="line">startretries=10               ; 启动失败时的最多重试次数</div><div class="line">exitcodes=0                   ; 正常退出代码</div><div class="line">stopsignal=KILL               ; 用来杀死进程的信号</div><div class="line">stopwaitsecs=10               ; 发送SIGKILL前的等待时间</div><div class="line">redirect_stderr=<span class="literal">true</span>          ; 重定向stderr到stdout</div><div class="line">stdout_logfile=/home/webserver/web/logfile.log        ; 指定日志文件</div><div class="line">; 默认为 <span class="literal">false</span>，如果设置为 <span class="literal">true</span>，当进程收到 stop 信号时，会自动将该信号发给该进$</div><div class="line">stopasgroup=<span class="literal">true</span>             ; send stop signal to the UNIX process</div><div class="line">; 默认为 <span class="literal">false</span>，如果设置为 <span class="literal">true</span>，当进程收到 <span class="built_in">kill</span> 信号时，会自动将该信号发给该进$</div><div class="line">killasgroup=<span class="literal">true</span>             ; SIGKILL the UNIX process group (def <span class="literal">false</span>)</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="启动站点"><a href="#启动站点" class="headerlink" title="启动站点"></a>启动站点</h2><ol>
+<li><p>加载nginx配置文件重启nginx</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ sudo service nginx reload</div><div class="line">$ sudo service nginx restart </div><div class="line">//执行一种即可</div></pre></td></tr></table></figure>
+</li>
+<li><p>启动gunicorn</p>
+</li>
+</ol>
+<ul>
+<li><p>如果使用supervistor:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo supervisorctl reload</div></pre></td></tr></table></figure>
+</li>
+<li><p>如果使用nohup</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo nohup gunicorn 项目名.wsgi:application -b 127.0.0.1:8000&amp;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="特殊配置"><a href="#特殊配置" class="headerlink" title="特殊配置"></a>特殊配置</h2><ol>
+<li><p>在一些前后端分离项目，可能还需要配置前端静态页面，此时就不能将所有url都转发到django了，需要配置一个前缀，但此时，django自带的后台管理也会出现问题，建议配置一个/admin,所以，最后我的配置nginx文件如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">    listen 80;</div><div class="line">    server_name 192.168.84.199;</div><div class="line">    server_name_in_redirect off;</div><div class="line">    access_log /home/webserver/web/nginx.access.log;</div><div class="line">    error_log /home/webserver/web/nginx.error.log;</div><div class="line"></div><div class="line">    index login.html;</div><div class="line">    root /home/webserver/web/html/WebHtml/;</div><div class="line"></div><div class="line">    location / &#123;</div><div class="line">        try_files <span class="variable">$uri</span> <span class="variable">$uri</span>/ =404;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    location /apis &#123;</div><div class="line">        rewrite ^.+apis/?(.*)$ /<span class="variable">$1</span> <span class="built_in">break</span>;</div><div class="line">        proxy_pass http://127.0.0.1:8000;</div><div class="line">        proxy_pass_header       Authorization;</div><div class="line">        proxy_pass_header       WWW-Authenticate;</div><div class="line">        proxy_set_header Host <span class="variable">$host</span>;</div><div class="line">        proxy_set_header X-Real-IP <span class="variable">$remote_addr</span>;</div><div class="line">        proxy_set_header X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    location /admin &#123;</div><div class="line">        proxy_pass http://127.0.0.1:8000;</div><div class="line">        proxy_pass_header       Authorization;</div><div class="line">        proxy_pass_header       WWW-Authenticate;</div><div class="line">        proxy_set_header Host <span class="variable">$host</span>;</div><div class="line">        proxy_set_header X-Real-IP <span class="variable">$remote_addr</span>;</div><div class="line">        proxy_set_header X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    location /static/ &#123;</div><div class="line">        root /home/webserver/web/WebServer/;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>收集使用的admin或者其他库含有的静态文件<br>在django项目的<strong>settings.py</strong>添加如下代码:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 收集app静态文件到项目目录使nginx能访问到</span></div><div class="line">STATIC_ROOT = os.path.join(BASE_DIR, <span class="string">"static"</span>)</div><div class="line"></div><div class="line"><span class="comment"># 执行python manage.py collectstatic</span></div><div class="line">STATICFILES_FINDERS = (</div><div class="line">    <span class="string">"django.contrib.staticfiles.finders.FileSystemFinder"</span>,</div><div class="line">    <span class="string">"django.contrib.staticfiles.finders.AppDirectoriesFinder"</span></div><div class="line">)</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>然后在终端中进入项目目录在终端执行:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ python manage.py collectstatic</div></pre></td></tr></table></figure></p>
+<p>将会自动将app中所含有的静态文件自动收集到项目的setting目录下，解决了某些app，比如admin在部署后找不到静态文件的现象</p>
+<blockquote>
+<p>注：</p>
+<ul>
+<li>上述环境在<strong>ubuntu16.04 lts</strong>中搭建测试成功</li>
+<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
+</ul>
+</blockquote>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/06/30/django_nginx_gunicorn/">django+nginx+gunicorn部署配置</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">EarthChen</a></p>
+        <p><span>发布时间:</span>2017-06-30, 14:40:00</p>
+        <p><span>最后更新:</span>2017-08-06, 17:47:40</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/06/30/django_nginx_gunicorn/" title="django+nginx+gunicorn部署配置">http://earthchen.cn/2017/06/30/django_nginx_gunicorn/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://earthchen.cn/2017/06/30/django_nginx_gunicorn/　　作者: EarthChen" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2017/06/30/ubuntu_supervisor/">
+                    ubuntu下的进程控制系统————Supervisor
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2017/06/28/ubuntu修复不能挂载NTFS硬盘/">
+                    ubuntu修复linux和windows双系统下挂载ntfs硬盘出错问题
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#django-nginx-gunicorn"><span class="toc-number">1.</span> <span class="toc-text">django+nginx+gunicorn</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#环境安装"><span class="toc-number">1.1.</span> <span class="toc-text">环境安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#nginx"><span class="toc-number">1.1.1.</span> <span class="toc-text">nginx</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#gunicorn"><span class="toc-number">1.1.2.</span> <span class="toc-text">gunicorn</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#环境配置"><span class="toc-number">1.2.</span> <span class="toc-text">环境配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#nginx配置"><span class="toc-number">1.2.1.</span> <span class="toc-text">nginx配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#gunicorn配置"><span class="toc-number">1.2.2.</span> <span class="toc-text">gunicorn配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#需要在项目的settings-py中的INSTALLED-APPS添加gunicorn："><span class="toc-number">1.2.2.1.</span> <span class="toc-text">需要在项目的settings.py中的INSTALLED_APPS添加gunicorn：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#gunicorn-conf-py文件"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">gunicorn.conf.py文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#直接使用gunicron启动"><span class="toc-number">1.2.2.3.</span> <span class="toc-text">直接使用gunicron启动</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#启动站点"><span class="toc-number">1.3.</span> <span class="toc-text">启动站点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#特殊配置"><span class="toc-number">1.4.</span> <span class="toc-text">特殊配置</span></a></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-5 i,
+        .toc-level-5 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"django+nginx+gunicorn部署配置　| EarthChen's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+        <section class="youyan" id="comments">
+    <script>
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = 'http://v2.uyan.cc/code/uyan.js?uid=2115719';
+            (d.head || d.body).appendChild(s);
+        }
+    </script>
+    
+    <script> loadComment(); </script>
+
+    <div id="uyan_frame"></div>
+</section>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2017/06/30/ubuntu_supervisor/" title="上一篇: ubuntu下的进程控制系统————Supervisor">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2017/06/28/ubuntu修复不能挂载NTFS硬盘/" title="下一篇: ubuntu修复linux和windows双系统下挂载ntfs硬盘出错问题">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_record/">LeetCode刷题记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/29/es6_study/">es6学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/Webpack_study/">Webpack学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/RegularExpression_study/">正则表达式学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/08/AndroidStudio/">Android Studio 使用本地离线Gradle</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/跨域请求解决方案/">跨域请求的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/ubuntu_supervisor/">ubuntu下的进程控制系统————Supervisor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_nginx_gunicorn/">django+nginx+gunicorn部署配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/28/ubuntu修复不能挂载NTFS硬盘/">ubuntu修复linux和windows双系统下挂载ntfs硬盘出错问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/17/django_timing_task/">django使用django-crontab实现定时任务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/15/django_rest_framework_jwt/">django-rest-framework配置json web token进行接口的认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/spring_SpEL/">spring中的SpEL表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/django_rest_framework_study/">django-rest-framework框架学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/08/git_study/">Git学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/03/资源收集/">资源收集共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/06/ubuntu_open_port/">ubuntu开放指定端口</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/16/redis_study_2/">Redis学习笔记 -- 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/15/redis_study_1/">Redis学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/16/ubuntu_do_something_use/">ubuntu日常使用的安装配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/ubuntu_do_something_coding/">ubuntu搭建常见开发环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/django_address_baiduapi_marker_show/">Django调用百度地图api在地图上批量增加标记点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/10/ubuntu安装在双系统笔记本下开机或关机卡死.1/">ubuntu在双系统下开机卡死或关机卡死的解决办法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/11/python_requirements/">python生成项目所需依赖文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/10/hexo_github_coding_blog/">利用hexo和github或coding 搭免费个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django连接mysql数据库/">Django连接MySql使用models处理数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django常用语句/">Django常用语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django渲染模板/">Django渲染模板</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/python2和Python3的区别/">Python2和Python3的区别简单总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django数据库操作/">Django操作数据库</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django环境搭建/">Django环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/03/Android_qq_Menu/">Android仿qq侧滑菜单</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/16/C语言队列的基本操作/">C语言队列的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言逆波兰计算器/">C语言逆波兰表达式计算(后缀表达式计算器)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言中缀表达式计算器/">C语言中缀表达式计算器</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/c语言中缀表达式变后缀表达式/">C语言中缀表达式转后缀表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言二叉树基本操作/">C语言二叉树的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言共享栈/">C语言共享栈</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2017 EarthChen
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+    <script src="/js/GithubRepoWidget.js"></script>
+
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+             github: ".github-widget a", 
+            
+            
+            
+             categories: ".article-category a, a.tag-list-link", 
+             articleNav: "#article-nav a, #post-nav-button a", 
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
