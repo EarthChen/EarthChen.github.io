@@ -22,7 +22,7 @@
 <meta property="og:url" content="http://earthchen.cn/2017/08/06/LeetCode_record/index.html">
 <meta property="og:site_name" content="EarthChen&#39;s Blog">
 <meta property="og:description" content="leetcode刷题记录本文记录一下leetcode刷题记录，记录一下自己的解法和心得。">
-<meta property="og:updated_time" content="2017-08-07T08:25:50.000Z">
+<meta property="og:updated_time" content="2017-08-08T08:30:48.500Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="LeetCode刷题记录">
 <meta name="twitter:description" content="leetcode刷题记录本文记录一下leetcode刷题记录，记录一下自己的解法和心得。">
@@ -158,13 +158,13 @@
                 <div class="tips-box hide">
                     <div class="tips-arrow"></div>
                     <ul class="tips-inner">
-                        <li>菜单</li>
-                        <li>标签</li>
+                        <li>Menu</li>
+                        <li>Tags</li>
                         
-                        <li>友情链接</li>
+                        <li>Friends</li>
                         
                         
-                        <li>关于我</li>
+                        <li>About Me</li>
                         
                     </ul>
                 </div>
@@ -294,7 +294,7 @@
             </nav>
         </header>                
     </div>
-    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+    <link class="menu-list" tags="Tags" friends="Friends" about="About Me"/>
 </nav>
       <div class="body-wrap"><article id="post-LeetCode_record" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -402,8 +402,39 @@
 <p>循环字符串时，如果当前字符为左字符串，则向栈(列表/数组)尾部加上这个字符，如果不等于左括号，则判断此时栈是否为空或者当前的右括号字符在字典中所对应的左括号是否等于出栈的元素，如果不相等，则返回false</p>
 <p>循环完毕还需要判断栈是否为空，如果为空，则返回true，反之，返回false</p>
 <p>所以我们可以有以下解法</p>
-<h4 id="方法一-4"><a href="#方法一-4" class="headerlink" title="方法一"></a>方法一</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">lass Solution:</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">isValid</span><span class="params">(self, s)</span>:</span></div><div class="line">        <span class="string">'''</span></div><div class="line">        :param s: str</div><div class="line">        :return: bool</div><div class="line">        '''</div><div class="line">        left_char = <span class="string">'(&#123;['</span></div><div class="line">        mp = &#123;</div><div class="line">            <span class="string">')'</span>: <span class="string">'('</span>,</div><div class="line">            <span class="string">']'</span>: <span class="string">'['</span>,</div><div class="line">            <span class="string">'&#125;'</span>: <span class="string">'&#123;'</span></div><div class="line">        &#125;</div><div class="line">        <span class="comment"># 初始化一个空列表作为栈</span></div><div class="line">        stack = []</div><div class="line">        <span class="comment"># 循环遍历字符串</span></div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> s:</div><div class="line">            <span class="comment"># 如果字符是左括号就入栈</span></div><div class="line">            <span class="keyword">if</span> i <span class="keyword">in</span> left_char:</div><div class="line">                stack.append(i)</div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                <span class="comment"># 如果也想加上对其他字符串匹配</span></div><div class="line">                <span class="comment"># if i in mp.keys():</span></div><div class="line">                    <span class="comment"># 栈为空或者传入的右括号不等于栈尾的左括号，即不符合条件</span></div><div class="line">                <span class="keyword">if</span> <span class="keyword">not</span> stack <span class="keyword">or</span> mp[i] != stack.pop():</div><div class="line">                    <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line">        <span class="comment"># 判断栈是否为空，为空即成立</span></div><div class="line">        <span class="keyword">if</span> <span class="keyword">not</span> stack:</div><div class="line">            <span class="keyword">return</span> <span class="keyword">True</span></div><div class="line">        <span class="keyword">return</span> <span class="keyword">False</span></div></pre></td></tr></table></figure>
+<h4 id="方法一-4"><a href="#方法一-4" class="headerlink" title="方法一"></a>方法一</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">isValid</span><span class="params">(self, s)</span>:</span></div><div class="line">        <span class="string">'''</span></div><div class="line">        :param s: str</div><div class="line">        :return: bool</div><div class="line">        '''</div><div class="line">        left_char = <span class="string">'(&#123;['</span></div><div class="line">        mp = &#123;</div><div class="line">            <span class="string">')'</span>: <span class="string">'('</span>,</div><div class="line">            <span class="string">']'</span>: <span class="string">'['</span>,</div><div class="line">            <span class="string">'&#125;'</span>: <span class="string">'&#123;'</span></div><div class="line">        &#125;</div><div class="line">        <span class="comment"># 初始化一个空列表作为栈</span></div><div class="line">        stack = []</div><div class="line">        <span class="comment"># 循环遍历字符串</span></div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> s:</div><div class="line">            <span class="comment"># 如果字符是左括号就入栈</span></div><div class="line">            <span class="keyword">if</span> i <span class="keyword">in</span> left_char:</div><div class="line">                stack.append(i)</div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                <span class="comment"># 如果也想加上对其他字符串匹配</span></div><div class="line">                <span class="comment"># if i in mp.keys():</span></div><div class="line">                    <span class="comment"># 栈为空或者传入的右括号不等于栈尾的左括号，即不符合条件</span></div><div class="line">                <span class="keyword">if</span> <span class="keyword">not</span> stack <span class="keyword">or</span> mp[i] != stack.pop():</div><div class="line">                    <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line">        <span class="comment"># 判断栈是否为空，为空即成立</span></div><div class="line">        <span class="keyword">if</span> <span class="keyword">not</span> stack:</div><div class="line">            <span class="keyword">return</span> <span class="keyword">True</span></div><div class="line">        <span class="keyword">return</span> <span class="keyword">False</span></div></pre></td></tr></table></figure>
 <p>用列表来替代模拟栈，时间复杂度为O(N)，顺利通过leetcode检测</p>
+<h2 id="Merge-Two-Sorted-Lists"><a href="#Merge-Two-Sorted-Lists" class="headerlink" title="Merge Two Sorted Lists"></a>Merge Two Sorted Lists</h2><p>题目:<a href="https://leetcode.com/problems/merge-two-sorted-lists/description/" target="_blank" rel="external">Merge Two Sorted Lists</a></p>
+<blockquote>
+<p>Merge two sorted linked lists and return it as a new list. The new list should be made by splicing together the nodes of the first two lists.</p>
+</blockquote>
+<p>题意分析:<br>将两个已排序的链表合并，并返回一个新的链表，新链表应该是由两个链表中的结点拼接起来的</p>
+<h3 id="思路分析-5"><a href="#思路分析-5" class="headerlink" title="思路分析"></a>思路分析</h3><p>想要拼接链表，首先需要知道这个结点是什么样的结构，很容易想到，python中的单链表的结点应该如下所示:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ListNode</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, x)</span>:</span></div><div class="line">        self.val = x</div><div class="line">        self.next = <span class="keyword">None</span></div></pre></td></tr></table></figure></p>
+<p>当然题中也给出了这个结构。有了这个结构，就能知道我们需要得到结点的值才能进行比较。</p>
+<p>又由于题目要求我们使用其中的一个结点将两个链表拼接起来，换句话说，就是将一个链表合并到另一个链表上，所以并不能创建一个新链表去进行操作。</p>
+<p>当其中某一个链表为空时，只需要返回另一个链表即可，这种情况需要单独讨论</p>
+<p>当两个链表均不为空时，我们需要去比较结点两个链表中结点的大小，当l1的结点值小于l2的结点时，我们就需要将l2合并到l1上，把l2的结点一个一个拼到l1上，知道l2为为空时，循环就可以结束了。这个过程是重复的，所以我们这里可以使用递归操作，反之，当l2的结点小于l1时，就把l1拼接到l2上</p>
+<p>所以我们可以有以下解法</p>
+<h4 id="方法一-5"><a href="#方法一-5" class="headerlink" title="方法一"></a>方法一</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">mergeTwoLists</span><span class="params">(self, l1, l2)</span>:</span></div><div class="line">        <span class="string">'''</span></div><div class="line">        :param l1: ListNode</div><div class="line">        :param l2: ListNode</div><div class="line">        :return: ListNode</div><div class="line">        '''</div><div class="line">        <span class="comment"># 如果l1或l2有一个为空，则返回另一个</span></div><div class="line">        <span class="keyword">if</span> <span class="keyword">not</span> l1 <span class="keyword">or</span> <span class="keyword">not</span> l2:</div><div class="line">            <span class="keyword">return</span> l1 <span class="keyword">or</span> l2</div><div class="line">        <span class="comment"># 比较l1和l2的值的大小</span></div><div class="line">        <span class="keyword">if</span> l1.val &lt; l2.val:</div><div class="line">            <span class="comment"># 将l2递归到l1上</span></div><div class="line">            l1.next = self.mergeTwoLists(l1.next, l2)</div><div class="line">            <span class="keyword">return</span> l1</div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            <span class="comment"># 将l1递归到l2上</span></div><div class="line">            l2.next = self.mergeTwoLists(l2.next, l1)</div><div class="line">            <span class="keyword">return</span> l2</div></pre></td></tr></table></figure>
+<p>用了递归的方式，减少了我们需要处理的循环等等</p>
+<h2 id="Remove-Duplicates-from-Sorted-Array"><a href="#Remove-Duplicates-from-Sorted-Array" class="headerlink" title="Remove Duplicates from Sorted Array"></a>Remove Duplicates from Sorted Array</h2><p>题目:<a href="https://leetcode.com/problems/remove-duplicates-from-sorted-array/description/" target="_blank" rel="external">Remove Duplicates from Sorted Array</a></p>
+<blockquote>
+<p>Given a sorted array, remove the duplicates in place such that each element appear only once and return the new length.</p>
+<p>Do not allocate extra space for another array, you must do this in place with constant memory.</p>
+</blockquote>
+<p>例子:</p>
+<blockquote>
+<p>Given input array nums = [1,1,2]<br>Your function should return length = 2, with the first two elements of nums being 1 and 2 respectively. It doesn’t matter what you leave beyond the new length</p>
+</blockquote>
+<p>题意分析:<br>去除有序数组中的重复元素，并返回去重之后的数组的长度</p>
+<h3 id="思路分析-6"><a href="#思路分析-6" class="headerlink" title="思路分析"></a>思路分析</h3><p>由于我使用的是python，我首先想到的是用set集合去重，然后用len计算长度，立马兴奋的写下一行代码<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">len(set(nums))</div></pre></td></tr></table></figure></p>
+<p>然而在这里会报错，所以只能考虑其他的办法。</p>
+<p>还很容易想到的是用一个列表，字典之类的将我们遍历过的元素存起来，然后在用之后的元素与之比较，查看是否存在，存在就忽略，最后计算字典或者列表中元素的数量就能得到我们所需要的长度，但是同样与题目要求不符，题目要求不能使用分配额外的空间去解决。所以还得想别的办法</p>
+<p>首先，数组或列表为空时，返回0，这个需要单独讨论，遍历这个列表是必须的。</p>
+<p>我们可以假设新列表的长度为0，然后我们就能同时得到列表中第一个元素的值，在循环中我们可以用下一个与之比较，如果不一样，就将假设的新列表的长度+1，同时，由于有元素不一样，我们需要将新元素赋给之前相同的元素，也就是索引为新列表长度的元素，由于是排序的列表，我们不用担心，在未遍历的元素中还有之前已经遍历过的相同的元素。就这样从第二个开始遍历到最后一个，就能得到新列表的长度，但是由于我们是新列表的长度初始设为0，遍历又是从1开始，所以这个列表的长度最终应该+1</p>
+<p>所以我们可以有以下解法</p>
+<h4 id="方法一-6"><a href="#方法一-6" class="headerlink" title="方法一"></a>方法一</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">removeDuplicates</span><span class="params">(self, nums)</span>:</span></div><div class="line">        <span class="string">'''</span></div><div class="line">        :param nums: list[int]</div><div class="line">        :return:int</div><div class="line">        '''</div><div class="line">        <span class="comment"># 如果数组为空，则返回0</span></div><div class="line">        <span class="keyword">if</span> <span class="keyword">not</span> nums:</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span></div><div class="line">        new_length = <span class="number">0</span></div><div class="line">        length = len(nums)</div><div class="line">        <span class="comment"># 从1到n-1开始循环遍历</span></div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, length):</div><div class="line">            <span class="comment"># 如果i不等于nums[now_length](其实是i-1)</span></div><div class="line">            <span class="keyword">if</span> nums[i] != nums[new_length]:</div><div class="line">                new_length += <span class="number">1</span></div><div class="line">                nums[new_length] = nums[i]</div><div class="line">        <span class="keyword">return</span> new_length + <span class="number">1</span></div></pre></td></tr></table></figure>
+<p>这样我们就可以不用额外的空间，并且时间复杂度只有O(N-1)</p>
 <blockquote>
 <p>注：</p>
 <ul>
@@ -420,17 +451,17 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/08/06/LeetCode_record/">LeetCode刷题记录</a></p>
-        <p><span>文章作者:</span><a href="/" title="回到主页">EarthChen</a></p>
-        <p><span>发布时间:</span>2017-08-06, 17:40:00</p>
-        <p><span>最后更新:</span>2017-08-07, 16:25:50</p>
+        <p><span>Title:</span><a href="/2017/08/06/LeetCode_record/">LeetCode刷题记录</a></p>
+        <p><span>Author:</span><a href="/" title="Back to Homepage">EarthChen</a></p>
+        <p><span>Created:</span>2017-08-06, 17:40:00</p>
+        <p><span>Updated:</span>2017-08-08, 16:30:48</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/08/06/LeetCode_record/" title="LeetCode刷题记录">http://earthchen.cn/2017/08/06/LeetCode_record/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://earthchen.cn/2017/08/06/LeetCode_record/　　作者: EarthChen" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>Full URL:</span><a class="post-url" href="/2017/08/06/LeetCode_record/" title="LeetCode刷题记录">http://earthchen.cn/2017/08/06/LeetCode_record/</a>
+            <span class="copy-path" data-clipboard-text="From http://earthchen.cn/2017/08/06/LeetCode_record/　　By EarthChen" title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
-            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+            <span>License:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"CC BY-NC-SA 4.0"</a> Keep Link &amp; Author if Distribute.
         </p>
     </div>
 
@@ -451,9 +482,9 @@
 </article>
 
     <div id="toc" class="toc-article">
-        <strong class="toc-title">文章目录</strong>
+        <strong class="toc-title">Contents</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#LeetCode"><span class="toc-number">1.</span> <span class="toc-text">LeetCode</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Two-Sum"><span class="toc-number">1.1.</span> <span class="toc-text">Two Sum</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#思路分析"><span class="toc-number">1.1.1.</span> <span class="toc-text">思路分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#方法一"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">方法一</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#方法二"><span class="toc-number">1.1.1.2.</span> <span class="toc-text">方法二</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reverse-Integer"><span class="toc-number">1.2.</span> <span class="toc-text">Reverse Integer</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#思路分析-1"><span class="toc-number">1.2.1.</span> <span class="toc-text">思路分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#方法一-1"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">方法一</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Palindrome-Number"><span class="toc-number">1.3.</span> <span class="toc-text">Palindrome Number</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#思路分析-2"><span class="toc-number">1.3.1.</span> <span class="toc-text">思路分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#方法一-2"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">方法一</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Longest-Common-Prefix"><span class="toc-number">1.4.</span> <span class="toc-text">Longest Common Prefix</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#思路分析-3"><span class="toc-number">1.4.1.</span> <span class="toc-text">思路分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#方法一-3"><span class="toc-number">1.4.1.1.</span> <span class="toc-text">方法一</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Valid-Parentheses"><span class="toc-number">1.5.</span> <span class="toc-text">Valid Parentheses</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#思路分析-4"><span class="toc-number">1.5.1.</span> <span class="toc-text">思路分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#方法一-4"><span class="toc-number">1.5.1.1.</span> <span class="toc-text">方法一</span></a></li></ol></li></ol></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#LeetCode"><span class="toc-number">1.</span> <span class="toc-text">LeetCode</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Two-Sum"><span class="toc-number">1.1.</span> <span class="toc-text">Two Sum</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#思路分析"><span class="toc-number">1.1.1.</span> <span class="toc-text">思路分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#方法一"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">方法一</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#方法二"><span class="toc-number">1.1.1.2.</span> <span class="toc-text">方法二</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reverse-Integer"><span class="toc-number">1.2.</span> <span class="toc-text">Reverse Integer</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#思路分析-1"><span class="toc-number">1.2.1.</span> <span class="toc-text">思路分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#方法一-1"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">方法一</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Palindrome-Number"><span class="toc-number">1.3.</span> <span class="toc-text">Palindrome Number</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#思路分析-2"><span class="toc-number">1.3.1.</span> <span class="toc-text">思路分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#方法一-2"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">方法一</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Longest-Common-Prefix"><span class="toc-number">1.4.</span> <span class="toc-text">Longest Common Prefix</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#思路分析-3"><span class="toc-number">1.4.1.</span> <span class="toc-text">思路分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#方法一-3"><span class="toc-number">1.4.1.1.</span> <span class="toc-text">方法一</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Valid-Parentheses"><span class="toc-number">1.5.</span> <span class="toc-text">Valid Parentheses</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#思路分析-4"><span class="toc-number">1.5.1.</span> <span class="toc-text">思路分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#方法一-4"><span class="toc-number">1.5.1.1.</span> <span class="toc-text">方法一</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Merge-Two-Sorted-Lists"><span class="toc-number">1.6.</span> <span class="toc-text">Merge Two Sorted Lists</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#思路分析-5"><span class="toc-number">1.6.1.</span> <span class="toc-text">思路分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#方法一-5"><span class="toc-number">1.6.1.1.</span> <span class="toc-text">方法一</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Remove-Duplicates-from-Sorted-Array"><span class="toc-number">1.7.</span> <span class="toc-text">Remove Duplicates from Sorted Array</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#思路分析-6"><span class="toc-number">1.7.1.</span> <span class="toc-text">思路分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#方法一-6"><span class="toc-number">1.7.1.1.</span> <span class="toc-text">方法一</span></a></li></ol></li></ol></li></ol></li></ol>
         
     </div>
     <style>
@@ -467,10 +498,10 @@
         }
     </style>
 
-    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+    <input type="button" id="tocButton" value="Hide"  title="Show or Hide Table of Contents">
 
     <script>
-        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+        yiliaConfig.toc = ["Hide", "Show", !!"false"];
     </script>
 
 
@@ -523,19 +554,19 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+            <a href="/" title="Back to Homepage"><i class="fa fa-home"></i></a>
         
 
-        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        <a title="Mini Archives"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2017/07/29/es6_study/" title="下一篇: es6学习笔记">
+            <a href="/2017/07/29/es6_study/" title="Next: es6学习笔记">
                 <i class="fa fa-angle-right"></i>
             </a>
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_record/">LeetCode刷题记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/29/es6_study/">es6学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/Webpack_study/">Webpack学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/RegularExpression_study/">正则表达式学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/08/AndroidStudio/">Android Studio 使用本地离线Gradle</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/跨域请求解决方案/">跨域请求的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/ubuntu_supervisor/">ubuntu下的进程控制系统————Supervisor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_nginx_gunicorn/">django+nginx+gunicorn部署配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/28/ubuntu修复不能挂载NTFS硬盘/">ubuntu修复linux和windows双系统下挂载ntfs硬盘出错问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/17/django_timing_task/">django使用django-crontab实现定时任务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/15/django_rest_framework_jwt/">django-rest-framework配置json web token进行接口的认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/spring_SpEL/">spring中的SpEL表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/django_rest_framework_study/">django-rest-framework框架学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/08/git_study/">Git学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/03/资源收集/">资源收集共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/06/ubuntu_open_port/">ubuntu开放指定端口</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/16/redis_study_2/">Redis学习笔记 -- 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/15/redis_study_1/">Redis学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/16/ubuntu_do_something_use/">ubuntu日常使用的安装配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/ubuntu_do_something_coding/">ubuntu搭建常见开发环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/django_address_baiduapi_marker_show/">Django调用百度地图api在地图上批量增加标记点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/10/ubuntu安装在双系统笔记本下开机或关机卡死.1/">ubuntu在双系统下开机卡死或关机卡死的解决办法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/11/python_requirements/">python生成项目所需依赖文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/10/hexo_github_coding_blog/">利用hexo和github或coding 搭免费个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django常用语句/">Django常用语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django环境搭建/">Django环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django渲染模板/">Django渲染模板</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django数据库操作/">Django操作数据库</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django连接mysql数据库/">Django连接MySql使用models处理数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/python2和Python3的区别/">Python2和Python3的区别简单总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/03/Android_qq_Menu/">Android仿qq侧滑菜单</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/16/C语言队列的基本操作/">C语言队列的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言逆波兰计算器/">C语言逆波兰表达式计算(后缀表达式计算器)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/c语言中缀表达式变后缀表达式/">C语言中缀表达式转后缀表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言二叉树基本操作/">C语言二叉树的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言共享栈/">C语言共享栈</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言中缀表达式计算器/">C语言中缀表达式计算器</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_record/">LeetCode刷题记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/29/es6_study/">es6学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/Webpack_study/">Webpack学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/RegularExpression_study/">正则表达式学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/08/AndroidStudio/">Android Studio 使用本地离线Gradle</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/跨域请求解决方案/">跨域请求的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_nginx_gunicorn/">django+nginx+gunicorn部署配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/ubuntu_supervisor/">ubuntu下的进程控制系统————Supervisor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/28/ubuntu修复不能挂载NTFS硬盘/">ubuntu修复linux和windows双系统下挂载ntfs硬盘出错问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/17/django_timing_task/">django使用django-crontab实现定时任务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/15/django_rest_framework_jwt/">django-rest-framework配置json web token进行接口的认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/django_rest_framework_study/">django-rest-framework框架学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/spring_SpEL/">spring中的SpEL表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/08/git_study/">Git学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/03/资源收集/">资源收集共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/06/ubuntu_open_port/">ubuntu开放指定端口</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/16/redis_study_2/">Redis学习笔记 -- 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/15/redis_study_1/">Redis学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/16/ubuntu_do_something_use/">ubuntu日常使用的安装配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/ubuntu_do_something_coding/">ubuntu搭建常见开发环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/django_address_baiduapi_marker_show/">Django调用百度地图api在地图上批量增加标记点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/10/ubuntu安装在双系统笔记本下开机或关机卡死.1/">ubuntu在双系统下开机卡死或关机卡死的解决办法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/11/python_requirements/">python生成项目所需依赖文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/10/hexo_github_coding_blog/">利用hexo和github或coding 搭免费个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django环境搭建/">Django环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django数据库操作/">Django操作数据库</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django连接mysql数据库/">Django连接MySql使用models处理数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django渲染模板/">Django渲染模板</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django常用语句/">Django常用语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/python2和Python3的区别/">Python2和Python3的区别简单总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/03/Android_qq_Menu/">Android仿qq侧滑菜单</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/16/C语言队列的基本操作/">C语言队列的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言中缀表达式计算器/">C语言中缀表达式计算器</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言二叉树基本操作/">C语言二叉树的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/c语言中缀表达式变后缀表达式/">C语言中缀表达式转后缀表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言逆波兰计算器/">C语言逆波兰表达式计算(后缀表达式计算器)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言共享栈/">C语言共享栈</a></li></ul>
 
 
 
@@ -552,14 +583,14 @@
                 2016-2017 EarthChen
             </div>
             <div class="footer-right">
-                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+                <a href="http://hexo.io/" target="_blank" title="A fast, simple &amp; powerful blog framework">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Another simple and elegant theme for Hexo  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
             </div>
         </div>
         
             <div class="visit">
                 
                     <span id="busuanzi_container_site_pv" style='display:none'>
-                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        <span id="site-visit" title="Site Visitors"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
                         </span>
                     </span>
                 
@@ -568,7 +599,7 @@
                 
                 
                     <span id="busuanzi_container_page_pv" style='display:none'>
-                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        <span id="page-visit"  title="Page Hits"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
                         </span>
                     </span>
                 
@@ -603,9 +634,9 @@
 
 
 <div class="scroll" id="scroll">
-    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
-    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
-    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+    <a href="#" title="Back to Top"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="Comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="Go to Bottom"><i class="fa fa-arrow-down"></i></a>
 </div>
 <script>
     // Open in New Window
