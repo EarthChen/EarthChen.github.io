@@ -15,19 +15,23 @@
 
 
 
-<meta name="description" content="栈的操作我相信大家都应该了解了弄懂了，  如果没弄懂希望可以去再去看看相关的资料，我博客中的C语言中缀表达式转后缀表达式中涉及到了一下栈的基本操作，有兴趣的朋友也可以看看。所谓共享栈，就是两个栈共同使用一块内存空间，其中一个栈的栈底作为另一个栈的栈顶，反之亦然。 开始思路分析 因为两个栈公用一个空间，假设一个栈为0#，规定其为空时top[0]==-1；另一个栈为1#规定其为空时，top[1]==M">
-<meta name="keywords" content="c,数据结构">
+<meta name="description" content="在选择本地git服务时，通常大家都会选择直接安装gitlab，但是其安装复杂，占用资源多等缺点有点让人接受不了，肯定不想一台服务器只用来跑gitlab了，有些太浪费。还可以选择直接在系统上安装没有图形界面的git服务器，但是带来了不易查看等缺点所以笔者在这里使用了Gogs来作为自建git服务。 Gogs">
+<meta name="keywords" content="Docker,Gogs">
 <meta property="og:type" content="article">
-<meta property="og:title" content="C语言共享栈">
-<meta property="og:url" content="http://earthchen.cn/2016/07/15/C语言共享栈/index.html">
+<meta property="og:title" content="使用Docker搭建git服务Gogs">
+<meta property="og:url" content="http://earthchen.cn/2017/08/13/Docker_Gogs/index.html">
 <meta property="og:site_name" content="EarthChen&#39;s Blog">
-<meta property="og:description" content="栈的操作我相信大家都应该了解了弄懂了，  如果没弄懂希望可以去再去看看相关的资料，我博客中的C语言中缀表达式转后缀表达式中涉及到了一下栈的基本操作，有兴趣的朋友也可以看看。所谓共享栈，就是两个栈共同使用一块内存空间，其中一个栈的栈底作为另一个栈的栈顶，反之亦然。 开始思路分析 因为两个栈公用一个空间，假设一个栈为0#，规定其为空时top[0]==-1；另一个栈为1#规定其为空时，top[1]==M">
-<meta property="og:image" content="http://objects.earthchen.cn/C%E8%AF%AD%E8%A8%80%E5%85%B1%E4%BA%AB%E6%A0%88%E7%BB%93%E6%9E%9C.png">
-<meta property="og:updated_time" content="2017-08-06T09:47:43.124Z">
+<meta property="og:description" content="在选择本地git服务时，通常大家都会选择直接安装gitlab，但是其安装复杂，占用资源多等缺点有点让人接受不了，肯定不想一台服务器只用来跑gitlab了，有些太浪费。还可以选择直接在系统上安装没有图形界面的git服务器，但是带来了不易查看等缺点所以笔者在这里使用了Gogs来作为自建git服务。 Gogs">
+<meta property="og:image" content="http://objects.earthchen.cn/Docker_Gogs_docker%E7%89%88%E6%9C%AC%E5%8F%B7.png">
+<meta property="og:image" content="http://objects.earthchen.cn/Docker_Gogs_gogs%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE%E7%95%8C%E9%9D%A2.png">
+<meta property="og:image" content="http://objects.earthchen.cn/Docker_Gogs_%E5%AE%89%E8%A3%85%E5%A5%BD%E7%99%BB%E5%BD%95.png">
+<meta property="og:image" content="http://objects.earthchen.cn/Docker_Gogs_%E5%88%9B%E5%BB%BA%E6%B5%8B%E8%AF%95%E4%BB%93%E5%BA%93.png">
+<meta property="og:image" content="http://objects.earthchen.cn/Docker_Gogs_ssh%E6%96%B9%E5%BC%8F%E6%8E%A8%E9%80%81%E7%A4%BA%E4%BE%8B.png">
+<meta property="og:updated_time" content="2017-08-13T08:47:40.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="C语言共享栈">
-<meta name="twitter:description" content="栈的操作我相信大家都应该了解了弄懂了，  如果没弄懂希望可以去再去看看相关的资料，我博客中的C语言中缀表达式转后缀表达式中涉及到了一下栈的基本操作，有兴趣的朋友也可以看看。所谓共享栈，就是两个栈共同使用一块内存空间，其中一个栈的栈底作为另一个栈的栈顶，反之亦然。 开始思路分析 因为两个栈公用一个空间，假设一个栈为0#，规定其为空时top[0]==-1；另一个栈为1#规定其为空时，top[1]==M">
-<meta name="twitter:image" content="http://objects.earthchen.cn/C%E8%AF%AD%E8%A8%80%E5%85%B1%E4%BA%AB%E6%A0%88%E7%BB%93%E6%9E%9C.png">
+<meta name="twitter:title" content="使用Docker搭建git服务Gogs">
+<meta name="twitter:description" content="在选择本地git服务时，通常大家都会选择直接安装gitlab，但是其安装复杂，占用资源多等缺点有点让人接受不了，肯定不想一台服务器只用来跑gitlab了，有些太浪费。还可以选择直接在系统上安装没有图形界面的git服务器，但是带来了不易查看等缺点所以笔者在这里使用了Gogs来作为自建git服务。 Gogs">
+<meta name="twitter:image" content="http://objects.earthchen.cn/Docker_Gogs_docker%E7%89%88%E6%9C%AC%E5%8F%B7.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -59,7 +63,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>C语言共享栈 | EarthChen&#39;s Blog</title>
+<title>使用Docker搭建git服务Gogs | EarthChen&#39;s Blog</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -298,11 +302,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-C语言共享栈" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-Docker_Gogs" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/07/15/C语言共享栈/" class="article-date">
-      <time datetime="2016-07-15T06:40:00.000Z" itemprop="datePublished">2016-07-15</time>
+      <a href="/2017/08/13/Docker_Gogs/" class="article-date">
+      <time datetime="2017-08-13T07:28:00.000Z" itemprop="datePublished">2017-08-13</time>
 </a>
 
 
@@ -317,7 +321,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      C语言共享栈
+      使用Docker搭建git服务Gogs
     </h1>
   
 
@@ -326,13 +330,13 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/开发/">开发</a>
+    <a class="article-category-link" href="/categories/运维/">运维</a>
     </div>
 
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构/">数据结构</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Gogs/">Gogs</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -342,23 +346,73 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>栈的操作我相信大家都应该了解了弄懂了，  如果没弄懂希望可以去再去看看相关的资料，我博客中的<a href="/2016/10/18/c%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8F%98%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F/">C语言中缀表达式转后缀表达式</a>中涉及到了一下栈的基本操作，有兴趣的朋友也可以看看。<br>所谓共享栈，就是两个栈共同使用一块内存空间，其中一个栈的栈底作为另一个栈的栈顶，反之亦然。</p>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="思路分析"><a href="#思路分析" class="headerlink" title="思路分析"></a>思路分析</h3><blockquote>
-<p>因为两个栈公用一个空间，假设一个栈为0#，规定其为空时top[0]==-1；另一个栈为1#规定其为空时，top[1]==MaxSize；<br>入栈时，先确定栈号是否合法，然后查看是对0#栈还是1#栈进行操作，入栈操作和顺序栈的入栈操作并无太大不同。<br>选定之后进行入栈操作。这里应该注意此共享栈是否已满，如果已满则不能进行入栈操作。如若入栈成功则返回0；入栈失败则返回-1；<br>出栈时，先确定栈号是否合法，然后查看是对0#栈还是1#栈进行操作，出栈操作和顺序栈的出栈操作并无太大不同。<br>选定之后进行出栈操作。如果出栈成功返回0；出栈失败返回-1；<br><a id="more"></a></p>
+        <p>在选择本地git服务时，通常大家都会选择直接安装gitlab，但是其安装复杂，占用资源多等缺点有点让人接受不了，肯定不想一台服务器只用来跑gitlab了，有些太浪费。<br>还可以选择直接在系统上安装没有图形界面的git服务器，但是带来了不易查看等缺点<br>所以笔者在这里使用了<a href="https://gogs.io/" target="_blank" rel="external">Gogs</a>来作为自建git服务。</p>
+<h1 id="Gogs"><a href="#Gogs" class="headerlink" title="Gogs"></a>Gogs</h1><a id="more"></a>
+<h2 id="安装Docker"><a href="#安装Docker" class="headerlink" title="安装Docker"></a>安装Docker</h2><p>使用docker官方文档里面写的安装脚本我一直安装失败，就算添加上了dcoker官方源，安装过程也会非常慢，还有一堆教程里让我们使用apt-get安装，这样的确能安装但是版本太老，这里给出一种安装非常简单的方式。</p>
+<h3 id="使用阿里的镜像安装"><a href="#使用阿里的镜像安装" class="headerlink" title="使用阿里的镜像安装"></a>使用阿里的镜像安装</h3><ol>
+<li><p>可以使用阿里云的镜像仓库下载<a href="http://mirrors.aliyun.com/help/docker-engine?spm=a2c1q.8351553.0.0.468c7ecbpBomxQ" target="_blank" rel="external">docker-engine</a>和<a href="http://mirrors.aliyun.com/help/docker-ce?spm=a2c1q.8351553.0.0.468c7ecbpBomxQ" target="_blank" rel="external">docker-ce</a></p>
+</li>
+<li><p>在终端中执行以下命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl <span class="_">-s</span>SL http://acs-public-mirror.oss-cn-hangzhou.aliyuncs.com/docker-engine/internet | sh -</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>接下来只要等待就好，版本也相对够新。</p>
+<ol>
+<li>查看docker版本，确认安装成功<br>在终端中输入如下命令<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo docker version</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>出现类似如下结果即为成功<img src="http://objects.earthchen.cn/Docker_Gogs_docker%E7%89%88%E6%9C%AC%E5%8F%B7.png" alt="docker版本号"></p>
+<ol>
+<li>使用阿里仓库来加速你的docker<br>可以通过修改daemon配置文件/etc/docker/daemon.json来使用加速器<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">sudo mkdir -p /etc/docker</div><div class="line">sudo tee /etc/docker/daemon.json &lt;&lt;-<span class="string">'EOF'</span></div><div class="line">&#123;</div><div class="line">  <span class="string">"registry-mirrors"</span>: [<span class="string">"https://dmmxhzvq.mirror.aliyuncs.com"</span>]</div><div class="line">&#125;</div><div class="line">EOF</div><div class="line">sudo systemctl daemon-reload</div><div class="line">sudo systemctl restart docker</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="安装Gogs"><a href="#安装Gogs" class="headerlink" title="安装Gogs"></a>安装Gogs</h2><p>安装Gogs有多种方式，可以自行去<a href="https://gogs.io/" target="_blank" rel="external">Gogs官网</a>查看，笔者这里只介绍一下docker方式去安装部署，<a href="https://github.com/gogits/gogs/tree/master/docker" target="_blank" rel="external">github主页</a>也可以自行查看</p>
+<h3 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h3><ol>
+<li><p>首先拉取gogs镜像</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo docker pull gogs/gogs</div></pre></td></tr></table></figure>
+</li>
+<li><p>创建本地目录存放数据</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo mkdir -p /var/gogs</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>这个目录可以自定义</p>
+<ol>
+<li>使用run命令绑定端口和一些配置文件<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo docker run <span class="_">-d</span> --name=mygogs -p 10022:22 -p 10080:3000 -v /var/gogs:/data gogs/gogs</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<blockquote>
+<p>注:</p>
+<ul>
+<li>这里<strong>-d</strong>将容器跑到后台，不在当前终端输出</li>
+<li><strong>-p</strong>用来配置外置端口和内置端口的对应关系，将10022转到22端口，将10080转到3000端口</li>
+<li><strong>–name</strong>用来给这个容器命名，不能重名</li>
+<li><strong>-v</strong>用来配置数据的对应关系</li>
+<li>想要了解更多，需要系统的学习docker相关</li>
+</ul>
 </blockquote>
-<h3 id="添加适当的头文件，定义一个栈数据结构，"><a href="#添加适当的头文件，定义一个栈数据结构，" class="headerlink" title="添加适当的头文件，定义一个栈数据结构，"></a>添加适当的头文件，定义一个栈数据结构，</h3><p>共享栈也是栈，只不过有点特殊，在这里我们还是需要添加适当的头文件和定义恰当的数据结构</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span>  MaxSize 100</span></div><div class="line"></div><div class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> ElemType;</div><div class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></div><div class="line">	ElemType data[MaxSize];</div><div class="line">	<span class="keyword">int</span> top[<span class="number">2</span>];</div><div class="line">&#125;SqStack;</div></pre></td></tr></table></figure>
-<h3 id="初始化共享栈"><a href="#初始化共享栈" class="headerlink" title="初始化共享栈"></a>初始化共享栈</h3><p>由于我这里用的是顺序存储结构的栈结构（也就是数据），top也就是一个标记而已，分别代编栈1和栈2的标记<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">InitStack</span><span class="params">(SqStack *s)</span></span></div><div class="line">&#123;</div><div class="line">	s-&gt;top[<span class="number">0</span>] = <span class="number">-1</span>;</div><div class="line">	s-&gt;top[<span class="number">1</span>] = MaxSize;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h3 id="入栈操作"><a href="#入栈操作" class="headerlink" title="入栈操作"></a>入栈操作</h3><p>在入栈的时候，我们需要选择入的是两个栈中的哪一个栈，我们这里用0和1来区分</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">Push</span><span class="params">(SqStack*s, ElemType x, <span class="keyword">int</span> n)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">if</span> (n &lt; <span class="number">0</span> || n&gt;<span class="number">1</span>) &#123;</div><div class="line">		<span class="built_in">printf</span>(<span class="string">"The stack number is false!\n"</span>);</div><div class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">if</span> (s-&gt;top[<span class="number">1</span>] - s-&gt;top[<span class="number">0</span>] == <span class="number">1</span>) &#123;</div><div class="line">		<span class="built_in">printf</span>(<span class="string">"The stack is full!\n"</span>);</div><div class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">switch</span> (n) &#123;</div><div class="line">	<span class="keyword">case</span> <span class="number">0</span>:s-&gt;data[++s-&gt;top[<span class="number">0</span>]] = x; <span class="keyword">break</span>;</div><div class="line">	<span class="keyword">case</span> <span class="number">1</span>:s-&gt;data[--s-&gt;top[<span class="number">1</span>]] = x; <span class="keyword">break</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="出栈操作"><a href="#出栈操作" class="headerlink" title="出栈操作"></a>出栈操作</h3><p>出栈和入栈一样，也需要选择出栈的具体是哪个栈</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">Pop</span><span class="params">(SqStack *s, ElemType* x, <span class="keyword">int</span> n)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">if</span> (n &lt; <span class="number">0</span> || n&gt;<span class="number">1</span>) &#123;</div><div class="line">		<span class="built_in">printf</span>(<span class="string">"The stack number is false!\n"</span>);</div><div class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">switch</span> (n) &#123;</div><div class="line">	<span class="keyword">case</span> <span class="number">0</span>:</div><div class="line">		<span class="keyword">if</span> (s-&gt;top[<span class="number">0</span>] == <span class="number">-1</span>) &#123;</div><div class="line">			<span class="built_in">printf</span>(<span class="string">"The stack[0] is empty!\n"</span>);</div><div class="line">		&#125;</div><div class="line">		*x = s-&gt;data[s-&gt;top[<span class="number">0</span>]--];</div><div class="line">		<span class="keyword">break</span>;</div><div class="line">	<span class="keyword">case</span> <span class="number">1</span>:</div><div class="line">		<span class="keyword">if</span> (s-&gt;top[<span class="number">1</span>] == MaxSize) &#123;</div><div class="line">			<span class="built_in">printf</span>(<span class="string">"The stack[1] is empty!\n"</span>);</div><div class="line">		&#125;</div><div class="line">		*x = s-&gt;data[s-&gt;top[<span class="number">1</span>]++];</div><div class="line">		<span class="keyword">break</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="主函数"><a href="#主函数" class="headerlink" title="主函数"></a>主函数</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span></span></div><div class="line">&#123;</div><div class="line">	SqStack s;</div><div class="line">	InitStack(&amp;s);</div><div class="line"></div><div class="line">	ElemType x = <span class="number">5</span>;</div><div class="line">	<span class="keyword">int</span> n = <span class="number">0</span>;</div><div class="line">	<span class="keyword">int</span> flagPush;</div><div class="line">	flagPush = Push(&amp;s, x, n);</div><div class="line">	<span class="keyword">if</span> (flagPush) &#123;</div><div class="line">		<span class="built_in">printf</span>(<span class="string">"Push false!\n"</span>);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">else</span> &#123;</div><div class="line">		<span class="built_in">printf</span>(<span class="string">"Push %d success!\n"</span>, x);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">int</span> flagPop;</div><div class="line">	flagPop = Pop(&amp;s, &amp;x, n);</div><div class="line">	<span class="keyword">if</span> (flagPop) &#123;</div><div class="line">		<span class="built_in">printf</span>(<span class="string">"Pop false!\n"</span>);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">else</span> &#123;</div><div class="line">		<span class="built_in">printf</span>(<span class="string">"Pop %d  success!\n"</span>, x);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h3><p><img src="http://objects.earthchen.cn/C%E8%AF%AD%E8%A8%80%E5%85%B1%E4%BA%AB%E6%A0%88%E7%BB%93%E6%9E%9C.png" alt="c语言共享栈运行结果"><br>以上就是共享栈的简单操作，我这里只测试他是否能够成功，如有需要，请研读代码后自行修改，如果一时看不懂，请多看几遍思路分析，把原理弄懂，代码还是想当简单的。</p>
+<h3 id="配置Gogs"><a href="#配置Gogs" class="headerlink" title="配置Gogs"></a>配置Gogs</h3><p>第一次进入gogs会出现如下页面<br><img src="http://objects.earthchen.cn/Docker_Gogs_gogs%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE%E7%95%8C%E9%9D%A2.png" alt="安装Gogs"></p>
+<p>可以选择使用mysql作为数据库，但是稍微麻烦一点，需要在mysql配置一下授权，如果不想麻烦，那可以直接使用sqlite3作为数据库，免去了配置数据库</p>
+<p>几个ip很重要，可以按我给的配置来填写，当然刚开始填错了也可以后来在app.ini中修改。</p>
+<p>邮件服务配置的可以自行选择是否需要</p>
+<p>建议不要使用内置ssh，反正笔者试过使用内置ssh可能出现权限拒绝问题，没看到好的解决办法。</p>
+<p>安装好并登录即能出现如下界面<br><img src="http://objects.earthchen.cn/Docker_Gogs_%E5%AE%89%E8%A3%85%E5%A5%BD%E7%99%BB%E5%BD%95.png" alt="登录主界面"></p>
+<p>然后就可以正常使用了。</p>
+<h3 id="创建仓库测试使用"><a href="#创建仓库测试使用" class="headerlink" title="创建仓库测试使用"></a>创建仓库测试使用</h3><ol>
+<li><p>创建一个测试仓库<br>简单创建一个空仓库如下：<br><img src="http://objects.earthchen.cn/Docker_Gogs_%E5%88%9B%E5%BB%BA%E6%B5%8B%E8%AF%95%E4%BB%93%E5%BA%93.png" alt="创建测试仓库"></p>
+</li>
+<li><p>将本地的git公钥复制到用户设置里面的ssh秘钥中</p>
+</li>
+<li><p>使用ssh方式将本地文件推送上去<br><img src="http://objects.earthchen.cn/Docker_Gogs_ssh%E6%96%B9%E5%BC%8F%E6%8E%A8%E9%80%81%E7%A4%BA%E4%BE%8B.png" alt="ssh推送示例"></p>
+</li>
+</ol>
+<p>以上，就可以正常使用了。</p>
 <blockquote>
 <p>注：</p>
 <ul>
-<li>上述代码在<strong>visual studio 2015</strong>中编译成功运行，其他ide请自行测试</li>
+<li>如果安装时，出现docker进程已运行，但是从web页面缺访问不了，可以将<strong>/var/gogs/</strong>文件夹删除重新运行</li>
+<li>如果删除文件还不行，推荐将创建的容器删除重新创建</li>
+<li>在配置完gogs时，外部无法访问时，请查看防火墙，是否打开了外部端口，本文中的配置只需要打开<strong>10080</strong>和<strong>10022</strong>两个端口</li>
+<li>上述环境在<strong>ubuntu16.04 lts</strong>中搭建测试成功</li>
 <li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
 </ul>
 </blockquote>
@@ -370,13 +424,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2016/07/15/C语言共享栈/">C语言共享栈</a></p>
+        <p><span>本文标题:</span><a href="/2017/08/13/Docker_Gogs/">使用Docker搭建git服务Gogs</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">EarthChen</a></p>
-        <p><span>发布时间:</span>2016-07-15, 14:40:00</p>
-        <p><span>最后更新:</span>2017-08-06, 17:47:43</p>
+        <p><span>发布时间:</span>2017-08-13, 15:28:00</p>
+        <p><span>最后更新:</span>2017-08-13, 16:47:40</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/07/15/C语言共享栈/" title="C语言共享栈">http://earthchen.cn/2016/07/15/C语言共享栈/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://earthchen.cn/2016/07/15/C语言共享栈/　　作者: EarthChen" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2017/08/13/Docker_Gogs/" title="使用Docker搭建git服务Gogs">http://earthchen.cn/2017/08/13/Docker_Gogs/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://earthchen.cn/2017/08/13/Docker_Gogs/　　作者: EarthChen" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -388,16 +442,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2016/07/15/C语言逆波兰计算器/">
-                    C语言逆波兰表达式计算(后缀表达式计算器)
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2016/07/15/C语言中缀表达式计算器/">
-                    C语言中缀表达式计算器
+                <a href="/2017/08/06/LeetCode_record/">
+                    LeetCode刷题记录
                 </a>
             </div>
         
@@ -409,7 +457,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#开始"><span class="toc-number">1.</span> <span class="toc-text">开始</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#思路分析"><span class="toc-number">1.1.</span> <span class="toc-text">思路分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#添加适当的头文件，定义一个栈数据结构，"><span class="toc-number">1.2.</span> <span class="toc-text">添加适当的头文件，定义一个栈数据结构，</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#初始化共享栈"><span class="toc-number">1.3.</span> <span class="toc-text">初始化共享栈</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#入栈操作"><span class="toc-number">1.4.</span> <span class="toc-text">入栈操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#出栈操作"><span class="toc-number">1.5.</span> <span class="toc-text">出栈操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#主函数"><span class="toc-number">1.6.</span> <span class="toc-text">主函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#运行结果"><span class="toc-number">1.7.</span> <span class="toc-text">运行结果</span></a></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Gogs"><span class="toc-number">1.</span> <span class="toc-text">Gogs</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装Docker"><span class="toc-number">1.1.</span> <span class="toc-text">安装Docker</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用阿里的镜像安装"><span class="toc-number">1.1.1.</span> <span class="toc-text">使用阿里的镜像安装</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装Gogs"><span class="toc-number">1.2.</span> <span class="toc-text">安装Gogs</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#步骤"><span class="toc-number">1.2.1.</span> <span class="toc-text">步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置Gogs"><span class="toc-number">1.2.2.</span> <span class="toc-text">配置Gogs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建仓库测试使用"><span class="toc-number">1.2.3.</span> <span class="toc-text">创建仓库测试使用</span></a></li></ol></li></ol></li></ol>
         
     </div>
     <style>
@@ -445,7 +493,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"C语言共享栈　| EarthChen's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"使用Docker搭建git服务Gogs　| EarthChen's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -479,15 +527,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2016/07/15/C语言逆波兰计算器/" title="上一篇: C语言逆波兰表达式计算(后缀表达式计算器)">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2016/07/15/C语言中缀表达式计算器/" title="下一篇: C语言中缀表达式计算器">
+            <a href="/2017/08/06/LeetCode_record/" title="下一篇: LeetCode刷题记录">
                 <i class="fa fa-angle-right"></i>
             </a>
         
