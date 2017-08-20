@@ -213,7 +213,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AJAX/">AJAX</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django/">Django</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gogs/">Gogs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LeetCode/">LeetCode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/">Nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/">Node.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Regular-Expression/">Regular Expression</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/">Spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webpack/">Webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/解决方案/">解决方案</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/资源/">资源</a></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AJAX/">AJAX</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Celery/">Celery</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django/">Django</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gogs/">Gogs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LeetCode/">LeetCode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/">Nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/">Node.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Regular-Expression/">Regular Expression</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/">Spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webpack/">Webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习笔记/">学习笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/解决方案/">解决方案</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/资源/">资源</a></li></ul>
                     </div>
                 </section>
                 
@@ -302,6 +302,83 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-django_channels_websocket" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/08/18/django_channels_websocket/" class="article-date">
+      <time datetime="2017-08-18T09:34:00.000Z" itemprop="datePublished">2017-08-18</time>
+</a>
+
+ 
+    <a href="/2017/08/18/django_channels_websocket/#comments" title="查看评论">
+        <i class="fa fa-comments-o" aria-hidden="true"></i>
+        <span class="count-comment"></span>
+        
+        
+            <span class="disqus-comment-count" data-disqus-identifier="2017/08/18/django_channels_websocket/"></span>
+        
+    </a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/18/django_channels_websocket/">Django使用Channels实现websocket</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>由于项目有个需要实时显示状态的需求，搜索了各种实现方法，看来只有websocket最靠谱，但django原生是不支持websocket的，最终发现了chango-channels这个项目。可以帮我们实现我们的需求。</p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/开发/">开发</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django/">Django</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/">Redis</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2017/08/18/django_channels_websocket/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-django_redis_cache" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -361,7 +438,7 @@
 
       
         <p class="article-more-link">
-          <a href="/2017/08/18/django_redis_cache/#more">more >></a>
+          <a href="/2017/08/18/django_redis_cache/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -380,20 +457,20 @@
 
 
   
-    <article id="post-django_channels_websocket" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-celery_study" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/08/18/django_channels_websocket/" class="article-date">
+      <a href="/2017/08/18/celery_study/" class="article-date">
       <time datetime="2017-08-18T09:34:00.000Z" itemprop="datePublished">2017-08-18</time>
 </a>
 
  
-    <a href="/2017/08/18/django_channels_websocket/#comments" title="查看评论">
+    <a href="/2017/08/18/celery_study/#comments" title="查看评论">
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
         
-            <span class="disqus-comment-count" data-disqus-identifier="2017/08/18/django_channels_websocket/"></span>
+            <span class="disqus-comment-count" data-disqus-identifier="2017/08/18/celery_study/"></span>
         
     </a>
 
@@ -408,7 +485,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/18/django_channels_websocket/">Django使用Channels实现websocket</a>
+      <a class="article-title" href="/2017/08/18/celery_study/">Celery-分布式任务队列学习笔记</a>
     </h1>
   
 
@@ -418,7 +495,17 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <p>由于项目有个需要实时显示状态的需求，搜索了各种实现方法，看来只有websocket最靠谱，但django原生是不支持websocket的，最终发现了chango-channels这个项目。可以帮我们实现我们的需求。</p>
+              <blockquote>
+<p>Celery 是一个简单、灵活且可靠的，处理大量消息的分布式系统，并且提供维护这样一个系统的必需工具。<br>它是一个专注于实时处理的任务队列，同时也支持任务调度。<br>以上是celery自己官网的介绍</p>
+</blockquote>
+<p>celery的应用场景很广泛</p>
+<ul>
+<li>处理异步任务</li>
+<li>任务调度</li>
+<li>处理定时任务</li>
+<li>分布式调度</li>
+</ul>
+<p>好处也很多，尤其在使用python构建的应用系统中，无缝衔接，使用相当方便。</p>
           
       
     </div>
@@ -433,12 +520,12 @@
 
       
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django/">Django</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/">Redis</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Celery/">Celery</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django/">Django</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/">Redis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/学习笔记/">学习笔记</a></li></ul>
     </div>
 
       
         <p class="article-more-link">
-          <a href="/2017/08/18/django_channels_websocket/#more">more >></a>
+          <a href="/2017/08/18/celery_study/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -516,7 +603,7 @@
 
       
         <p class="article-more-link">
-          <a href="/2017/08/13/Docker_Gogs/#more">more >></a>
+          <a href="/2017/08/13/Docker_Gogs/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -593,7 +680,7 @@
 
       
         <p class="article-more-link">
-          <a href="/2017/08/06/LeetCode_Record_Easy_1to20/#more">more >></a>
+          <a href="/2017/08/06/LeetCode_Record_Easy_1to20/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -670,7 +757,7 @@
 
       
         <p class="article-more-link">
-          <a href="/2017/08/06/LeetCode_Record_Easy_21to_40/#more">more >></a>
+          <a href="/2017/08/06/LeetCode_Record_Easy_21to_40/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -749,7 +836,7 @@
 
       
         <p class="article-more-link">
-          <a href="/2017/07/29/es6_study/#more">more >></a>
+          <a href="/2017/07/29/es6_study/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -827,7 +914,7 @@
 
       
         <p class="article-more-link">
-          <a href="/2017/07/27/Webpack_study/#more">more >></a>
+          <a href="/2017/07/27/Webpack_study/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -905,7 +992,7 @@
 
       
         <p class="article-more-link">
-          <a href="/2017/07/23/RegularExpression_study/#more">more >></a>
+          <a href="/2017/07/23/RegularExpression_study/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -982,85 +1069,7 @@
 
       
         <p class="article-more-link">
-          <a href="/2017/07/08/AndroidStudio/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-跨域请求解决方案" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/06/30/跨域请求解决方案/" class="article-date">
-      <time datetime="2017-06-30T11:40:00.000Z" itemprop="datePublished">2017-06-30</time>
-</a>
-
- 
-    <a href="/2017/06/30/跨域请求解决方案/#comments" title="查看评论">
-        <i class="fa fa-comments-o" aria-hidden="true"></i>
-        <span class="count-comment"></span>
-        
-        
-            <span class="disqus-comment-count" data-disqus-identifier="2017/06/30/跨域请求解决方案/"></span>
-        
-    </a>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/30/跨域请求解决方案/">跨域请求的解决方案</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>在请求或提供api的时候，我们经常会遇到跨域问题，这是由于安全问题，但是有时候我们必须去允许跨域请求，不然我们将拿不到后端传过来的数据<br>所以，笔者在这里总结了一下相关解决方案</p>
-<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/运维/">运维</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AJAX/">AJAX</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nginx/">Nginx</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/解决方案/">解决方案</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2017/06/30/跨域请求解决方案/#more">more >></a>
+          <a href="/2017/07/08/AndroidStudio/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
