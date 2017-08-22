@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://earthchen.cn/2017/08/22/Docker_study/</loc>
+    
+    <lastmod>2017-08-22T12:36:45.942Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://earthchen.cn/2017/08/20/celery_study/</loc>
     
     <lastmod>2017-08-20T15:57:12.006Z</lastmod>
@@ -198,6 +205,13 @@
   </url>
   
   <url>
+    <loc>http://earthchen.cn/2016/07/15/C%E8%AF%AD%E8%A8%80%E5%85%B1%E4%BA%AB%E6%A0%88/</loc>
+    
+    <lastmod>2017-08-06T09:47:43.124Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://earthchen.cn/2016/07/15/C%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%AE%A1%E7%AE%97%E5%99%A8/</loc>
     
     <lastmod>2017-08-06T09:47:43.124Z</lastmod>
@@ -205,21 +219,7 @@
   </url>
   
   <url>
-    <loc>http://earthchen.cn/2017/03/15/django_address_baiduapi_marker_show/</loc>
-    
-    <lastmod>2017-08-06T09:47:43.124Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://earthchen.cn/2016/07/15/C%E8%AF%AD%E8%A8%80%E4%BA%8C%E5%8F%89%E6%A0%91%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/</loc>
-    
-    <lastmod>2017-08-06T09:47:43.124Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://earthchen.cn/2016/07/15/C%E8%AF%AD%E8%A8%80%E5%85%B1%E4%BA%AB%E6%A0%88/</loc>
     
     <lastmod>2017-08-06T09:47:43.124Z</lastmod>
     
@@ -234,6 +234,13 @@
   
   <url>
     <loc>http://earthchen.cn/2016/07/15/c%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8F%98%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F/</loc>
+    
+    <lastmod>2017-08-06T09:47:43.124Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://earthchen.cn/2017/03/15/django_address_baiduapi_marker_show/</loc>
     
     <lastmod>2017-08-06T09:47:43.124Z</lastmod>
     
@@ -275,6 +282,13 @@
   </url>
   
   <url>
+    <loc>http://earthchen.cn/2017/07/29/es6_study/</loc>
+    
+    <lastmod>2017-08-01T04:42:32.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://earthchen.cn/2017/07/08/AndroidStudio/</loc>
     
     <lastmod>2017-08-01T04:42:32.000Z</lastmod>
@@ -283,13 +297,6 @@
   
   <url>
     <loc>http://earthchen.cn/2017/07/23/RegularExpression_study/</loc>
-    
-    <lastmod>2017-08-01T04:42:32.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://earthchen.cn/2017/07/29/es6_study/</loc>
     
     <lastmod>2017-08-01T04:42:32.000Z</lastmod>
     

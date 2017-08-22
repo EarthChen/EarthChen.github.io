@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html >
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="EarthChen" />
+
+
+
+<meta name="description" content="Docker 是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。容器是完全使用沙箱机制，相互之间不会有任何接口  随着Docker近些年越来越流行，在生产环境中也开始有较多人开始使用，Docker技术可以说成为了不得不学习的一门技术。 本文谨记录一下学习笔记，以备以后查阅。">
+<meta name="keywords" content="Docker,Gogs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker学习笔记">
+<meta property="og:url" content="http://earthchen.cn/2017/08/22/Docker_study/index.html">
+<meta property="og:site_name" content="EarthChen&#39;s Blog">
+<meta property="og:description" content="Docker 是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。容器是完全使用沙箱机制，相互之间不会有任何接口  随着Docker近些年越来越流行，在生产环境中也开始有较多人开始使用，Docker技术可以说成为了不得不学习的一门技术。 本文谨记录一下学习笔记，以备以后查阅。">
+<meta property="og:image" content="http://objects.earthchen.cn/Docker_Gogs_docker%E7%89%88%E6%9C%AC%E5%8F%B7.png">
+<meta property="og:image" content="http://objects.earthchen.cn/docker_study_part1%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84.png">
+<meta property="og:image" content="http://objects.earthchen.cn/docker_study_part1%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C.png">
+<meta property="og:image" content="http://objects.earthchen.cn/docker_study_part4_docker_machine_virtualbox.png">
+<meta property="og:updated_time" content="2017-08-22T12:36:45.942Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Docker学习笔记">
+<meta name="twitter:description" content="Docker 是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。容器是完全使用沙箱机制，相互之间不会有任何接口  随着Docker近些年越来越流行，在生产环境中也开始有较多人开始使用，Docker技术可以说成为了不得不学习的一门技术。 本文谨记录一下学习笔记，以备以后查阅。">
+<meta name="twitter:image" content="http://objects.earthchen.cn/Docker_Gogs_docker%E7%89%88%E6%9C%AC%E5%8F%B7.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="EarthChen&#39;s Blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/black/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Docker学习笔记 | EarthChen&#39;s Blog</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?838a8860a1d9fc43bc091f40a8ab515d";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="http://objects.earthchen.cn/%E5%A4%B4%E5%83%8F.jpg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">EarthChen</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">多学一点知识，少写一行代码</p>
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="true" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜單</li>
+                        <li>標籤</li>
+                        
+                        <li>友情鏈接</li>
+                        
+                        
+                        <li>關於我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="http://mail.163.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/EarthChen" title="GitHub"></a>
+                            
+                                <a class="fa 知乎" href="https://www.zhihu.com/people/diamand-76/activities" title="知乎"></a>
+                            
+                                <a class="fa 简书" href="http://www.jianshu.com/u/85a919706c15" title="简书"></a>
+                            
+                                <a class="fa QQ" href="http://user.qzone.qq.com/1791538609" title="QQ"></a>
+                            
+                                <a class="fa 微信" href="https://wx.qq.com/" title="微信"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AJAX/">AJAX</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Celery/">Celery</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django/">Django</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gogs/">Gogs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LeetCode/">LeetCode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/">Nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/">Node.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Regular-Expression/">Regular Expression</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/">Spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webpack/">Webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习笔记/">学习笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/解决方案/">解决方案</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/资源/">资源</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.baidu.com/">Baidu</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.google.com/">Google</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://fanyi.youdao.com/">有道翻译</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">专注于技术 学习中的程序猿</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">EarthChen</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="http://objects.earthchen.cn/%E5%A4%B4%E5%83%8F.jpg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">EarthChen</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">多学一点知识，少写一行代码</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="http://mail.163.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/EarthChen" title="GitHub"></a>
+                            
+                                <a class="fa 知乎" target="_blank" href="https://www.zhihu.com/people/diamand-76/activities" title="知乎"></a>
+                            
+                                <a class="fa 简书" target="_blank" href="http://www.jianshu.com/u/85a919706c15" title="简书"></a>
+                            
+                                <a class="fa QQ" target="_blank" href="http://user.qzone.qq.com/1791538609" title="QQ"></a>
+                            
+                                <a class="fa 微信" target="_blank" href="https://wx.qq.com/" title="微信"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="標籤" friends="友情鏈接" about="關於我"/>
+</nav>
+      <div class="body-wrap"><article id="post-Docker_study" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/08/22/Docker_study/" class="article-date">
+      <time datetime="2017-08-22T04:54:00.000Z" itemprop="datePublished">2017-08-22</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Docker学习笔记
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/运维/">运维</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Gogs/">Gogs</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <blockquote>
+<p>Docker 是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。容器是完全使用沙箱机制，相互之间不会有任何接口</p>
+</blockquote>
+<p>随着Docker近些年越来越流行，在生产环境中也开始有较多人开始使用，Docker技术可以说成为了不得不学习的一门技术。</p>
+<p>本文谨记录一下学习笔记，以备以后查阅。</p>
+<a id="more"></a>
+<h1 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h1><h2 id="安装Docker"><a href="#安装Docker" class="headerlink" title="安装Docker"></a>安装Docker</h2><p>使用docker官方文档里面写的安装脚本我一直安装失败，就算添加上了dcoker官方源，安装过程也会非常慢，还有一堆教程里让我们使用apt-get安装，这样的确能安装但是版本太老，这里给出一种安装非常简单的方式。</p>
+<h3 id="使用阿里的镜像安装"><a href="#使用阿里的镜像安装" class="headerlink" title="使用阿里的镜像安装"></a>使用阿里的镜像安装</h3><ol>
+<li><p>可以使用阿里云的镜像仓库下载<a href="http://mirrors.aliyun.com/help/docker-engine?spm=a2c1q.8351553.0.0.468c7ecbpBomxQ" target="_blank" rel="external">docker-engine</a>和<a href="http://mirrors.aliyun.com/help/docker-ce?spm=a2c1q.8351553.0.0.468c7ecbpBomxQ" target="_blank" rel="external">docker-ce</a></p>
+</li>
+<li><p>在终端中执行以下命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl <span class="_">-s</span>SL http://acs-public-mirror.oss-cn-hangzhou.aliyuncs.com/docker-engine/internet | sh -</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>接下来只要等待就好，版本也相对够新。</p>
+<ol>
+<li>查看docker版本，确认安装成功<br>在终端中输入如下命令<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo docker version</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>出现类似如下结果即为成功<img src="http://objects.earthchen.cn/Docker_Gogs_docker%E7%89%88%E6%9C%AC%E5%8F%B7.png" alt="docker版本号"></p>
+<ol>
+<li>使用阿里仓库来加速你的docker<br>可以通过修改daemon配置文件/etc/docker/daemon.json来使用加速器<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">sudo mkdir -p /etc/docker</div><div class="line">sudo tee /etc/docker/daemon.json &lt;&lt;-<span class="string">'EOF'</span></div><div class="line">&#123;</div><div class="line">  <span class="string">"registry-mirrors"</span>: [<span class="string">"https://dmmxhzvq.mirror.aliyuncs.com"</span>]</div><div class="line">&#125;</div><div class="line">EOF</div><div class="line">sudo systemctl daemon-reload</div><div class="line">sudo systemctl restart docker</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="Dockerfile"><a href="#Dockerfile" class="headerlink" title="Dockerfile"></a>Dockerfile</h2><p>Dockerfile定义了容器中内部的环境，访问容器的网络资源和磁盘在容器是完全与外部隔离的，所以必须将你需要使用的端口映射到外部世界，并指出需要复制到该环境中的文件。</p>
+<p>说白了Dockerfile就是一个定义容器中环境的配置文件。。</p>
+<p>我们在这里创建一个简单的<strong>flask</strong>项目作为例子。</p>
+<h3 id="编写第一个Docker-APP"><a href="#编写第一个Docker-APP" class="headerlink" title="编写第一个Docker APP"></a>编写第一个Docker APP</h3><ol>
+<li><p>创建一个空的文件夹，在里面创建一个文件为<strong>Dockerfile</strong>，其中的内容为<br><strong>Dockerfile</strong>为:</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Use an official Python runtime as a parent image</span></div><div class="line"><span class="comment"># 使用python3.5的官方镜像作为基础镜像(可以按需要更改)</span></div><div class="line"><span class="keyword">FROM</span> python:<span class="number">3.5</span>-slim</div><div class="line"></div><div class="line"><span class="comment"># Set the working directory to /app</span></div><div class="line"><span class="comment"># 设置工作目录</span></div><div class="line"><span class="keyword">WORKDIR</span><span class="bash"> /app</span></div><div class="line"></div><div class="line"><span class="comment"># Copy the current directory contents into the container at /app</span></div><div class="line"><span class="comment"># 复制当前目录下的内容到容器的/app目录下(Dockerfile同级所有目录)</span></div><div class="line"><span class="keyword">ADD</span><span class="bash"> . /app</span></div><div class="line"></div><div class="line"><span class="comment"># Install any needed packages specified in requirements.txt</span></div><div class="line"><span class="comment"># 安装项目所需要的依赖文件requirements.txt</span></div><div class="line"><span class="keyword">RUN</span><span class="bash"> pip install -r requirements.txt</span></div><div class="line"></div><div class="line"><span class="comment"># Make port 80 available to the world outside this container</span></div><div class="line"><span class="comment"># 让80端口能在容器外部访问</span></div><div class="line"><span class="keyword">EXPOSE</span> <span class="number">80</span></div><div class="line"></div><div class="line"><span class="comment"># Define environment variable</span></div><div class="line"><span class="comment"># 定义环境便令</span></div><div class="line"><span class="keyword">ENV</span> NAME World</div><div class="line"></div><div class="line"><span class="comment"># Run app.py when the container launches</span></div><div class="line"><span class="comment"># 在容器启动时，运行python app.py</span></div><div class="line"><span class="keyword">CMD</span><span class="bash"> [<span class="string">"python"</span>, <span class="string">"app.py"</span>]</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>flask项目的<strong>app.py</strong>为：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</div><div class="line"><span class="keyword">from</span> redis <span class="keyword">import</span> Redis, RedisError</div><div class="line"><span class="keyword">import</span> os</div><div class="line"><span class="keyword">import</span> socket</div><div class="line"></div><div class="line"><span class="comment"># Connect to Redis</span></div><div class="line">redis = Redis(host=<span class="string">"redis"</span>, db=<span class="number">0</span>, socket_connect_timeout=<span class="number">2</span>, socket_timeout=<span class="number">2</span>)</div><div class="line"></div><div class="line">app = Flask(__name__)</div><div class="line"></div><div class="line"><span class="meta">@app.route("/")</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">hello</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        visits = redis.incr(<span class="string">"counter"</span>)</div><div class="line">    <span class="keyword">except</span> RedisError:</div><div class="line">        visits = <span class="string">"&lt;i&gt;cannot connect to Redis, counter disabled&lt;/i&gt;"</span></div><div class="line"></div><div class="line">    html = <span class="string">"&lt;h3&gt;Hello &#123;name&#125;!&lt;/h3&gt;"</span> \</div><div class="line">           <span class="string">"&lt;b&gt;Hostname:&lt;/b&gt; &#123;hostname&#125;&lt;br/&gt;"</span> \</div><div class="line">           <span class="string">"&lt;b&gt;Visits:&lt;/b&gt; &#123;visits&#125;"</span></div><div class="line">    <span class="keyword">return</span> html.format(name=os.getenv(<span class="string">"NAME"</span>, <span class="string">"world"</span>), hostname=socket.gethostname(), visits=visits)</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    app.run(host=<span class="string">'0.0.0.0'</span>, port=<span class="number">80</span>)</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>这里作为例子，只给出最简单的代码。</p>
+<blockquote>
+<p>注：host一定要填0.0.0.0 因为这是在容器内，本机访问的127.0.0.1 和容器内不是一回事。</p>
+</blockquote>
+<ol>
+<li>收集项目依赖的库，在终端输入<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ pip freeze &gt; requirements.txt</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>以上执行完目录结构应该如下所示：<br><img src="http://objects.earthchen.cn/docker_study_part1%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84.png" alt="part1目录结构"></p>
+<h3 id="构建APP"><a href="#构建APP" class="headerlink" title="构建APP"></a>构建APP</h3><p>在编写好了你的app和Dockerfile之后，我们就可以使用Docker构建app</p>
+<p>在终端输入<strong>docker build</strong>命令，<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ docker bulid -t docker-flask-demo .</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>注：</p>
+<ul>
+<li>如果你的系统没有将当前用户放入docker组中，请在命令前加上sudo</li>
+<li>-t 命令是给你的镜像起一个友好的名字</li>
+<li>在这句命令的末尾还有一个”<strong>.</strong>“，代表当前目录的意思</li>
+</ul>
+</blockquote>
+<p>等待上述命令完成就可以在终端执行<strong>docker images</strong>命令查看构建好的镜像<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ docker images</div><div class="line"></div><div class="line">REPOSITORY                                                      TAG                 IMAGE ID            CREATED             SIZE</div><div class="line">earthchen/docker-flask-demo                                     part1               3964297abb1f        About an hour ago   212MB</div></pre></td></tr></table></figure></p>
+<h3 id="运行app"><a href="#运行app" class="headerlink" title="运行app"></a>运行app</h3><p>由于Dockerfile中的<strong>EXPOSE 80</strong>命令，容器向外只开发80端口，我们需要将外部空闲端口映射到容器的80端口</p>
+<p>使用<strong>-p</strong>帮我们绑定端口，在终端中输入一下命令<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ docker run -p 4000:80 docker-flask-demo</div></pre></td></tr></table></figure></p>
+<p>在浏览器访问<strong>127.0.0.1:4000</strong>后如图<br><img src="http://objects.earthchen.cn/docker_study_part1%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C.png" alt="part1结果图"></p>
+<blockquote>
+<p>注: 如果需要使当前容器运行在后台，需要使用<strong>-d</strong>选项，即：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ docker run <span class="_">-d</span> -p 4000:80 docker-flask-demo</div></pre></td></tr></table></figure></p>
+</blockquote>
+<p>加上<strong>-d</strong>命令之后，当前只会有容器id输出，需要查看容器情况，需要使用<strong>docker ps</strong>命令<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">$ docker ps</div><div class="line">或者</div><div class="line">$ docker container ps</div><div class="line"></div><div class="line">CONTAINER ID        IMAGE                               COMMAND             CREATED             STATUS              PORTS                  NAMES</div><div class="line">5762ccf1dd1c        earthchen/docker-flask-demo:part1   <span class="string">"python app.py"</span>     27 seconds ago      Up 26 seconds       0.0.0.0:4000-&gt;80/tcp   infallible_neumann</div></pre></td></tr></table></figure></p>
+<p>如果想停止运行的容器，使用<strong>docker stop</strong>命令，后面接容器id<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ docker stop 5762ccf1dd1c</div><div class="line">或者</div><div class="line">$ docker container stop 5762ccf1dd1c</div><div class="line"></div><div class="line">5762ccf1dd1c</div></pre></td></tr></table></figure></p>
+<p>如果想删除镜像或者容器，需要先停止运行的容器，<br>删除容器的命令为<strong>docker rm</strong>或者是<strong>docker container rm</strong><br>删除镜像的命令为<strong>docker rmi</strong>或者是<strong>docker image rm</strong></p>
+<h3 id="分享你的镜像"><a href="#分享你的镜像" class="headerlink" title="分享你的镜像"></a>分享你的镜像</h3><p>我这里使用的是阿里云的docker Hub,如果你选择的是其他的镜像库，请自行查阅相关介绍</p>
+<h4 id="登录到阿里云docker-registry"><a href="#登录到阿里云docker-registry" class="headerlink" title="登录到阿里云docker registry"></a>登录到阿里云docker registry</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo docker login --username=15555000826 registry.cn-hangzhou.aliyuncs.com</div></pre></td></tr></table></figure>
+<h4 id="给需要分享的镜像打上标签"><a href="#给需要分享的镜像打上标签" class="headerlink" title="给需要分享的镜像打上标签"></a>给需要分享的镜像打上标签</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo docker tag 5762ccf1dd1c registry.cn-hangzhou.aliyuncs.com/earthchen/docker-flask-demo:part1</div></pre></td></tr></table></figure>
+<h4 id="将本地镜像推到仓库"><a href="#将本地镜像推到仓库" class="headerlink" title="将本地镜像推到仓库"></a>将本地镜像推到仓库</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo docker push registry.cn-hangzhou.aliyuncs.com/earthchen/docker-flask-demo:part1</div></pre></td></tr></table></figure>
+<h4 id="拉取镜像"><a href="#拉取镜像" class="headerlink" title="拉取镜像"></a>拉取镜像</h4><p>在需要部署的机器上拉取镜像，<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">$ docker pull registry.cn-hangzhou.aliyuncs.com/earthchen/docker-flask-demo:part1</div><div class="line"></div><div class="line">part1: Pulling from earthchen/docker-flask-demo</div><div class="line">ad74af05f5a2: Already exists </div><div class="line">0a004373a9cb: Already exists </div><div class="line">92b2e8511724: Already exists </div><div class="line">bc1149958e59: Already exists </div><div class="line">2e7ebaf17b77: Already exists </div><div class="line">71c4b9e65b72: Pull complete </div><div class="line">b668a32a73d0: Pull complete </div><div class="line">1e87b99f6998: Pull complete </div><div class="line">Digest: sha256:3b4b74a0e273a26fff42eddc077bccfb9963fd552aad766b93dc524a66c5f455</div><div class="line">Status: Downloaded newer image <span class="keyword">for</span> registry.cn-hangzhou.aliyuncs.com/earthchen/docker-flask-demo:part1</div></pre></td></tr></table></figure></p>
+<p>拉取完成之后就可以运行容器<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ docker run -p 4000:80 registry.cn-hangzhou.aliyuncs.com/earthchen/docker-flask-demo:part1</div></pre></td></tr></table></figure></p>
+<h2 id="docker-compose-yml"><a href="#docker-compose-yml" class="headerlink" title="docker-compose.yml"></a>docker-compose.yml</h2><h3 id="编写第一个docker-compose-yml"><a href="#编写第一个docker-compose-yml" class="headerlink" title="编写第一个docker-compose.yml"></a>编写第一个docker-compose.yml</h3><p><strong>docker-compose.yml</strong>的位置可以随意放置，一般放在项目根目录，<br>本例的<strong>docker-compose.yml</strong>的为:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">version: &quot;3&quot;</div><div class="line">services:</div><div class="line">  web:</div><div class="line">    # replace username/repo:tag with your name and image details</div><div class="line">    image: registry.cn-hangzhou.aliyuncs.com/earthchen/docker-flask-demo:part1</div><div class="line">    deploy:</div><div class="line">      # 运行5个镜像实体</div><div class="line">      replicas: 5</div><div class="line">      resources:</div><div class="line">        limits:</div><div class="line">          # 每个实体分配10%的cpu</div><div class="line">          cpus: &quot;0.1&quot;</div><div class="line">          # 每个实体分配50m内存</div><div class="line">          memory: 50M</div><div class="line">      restart_policy:</div><div class="line">        # 如果容器失败，立即重启</div><div class="line">        condition: on-failure</div><div class="line">    ports:</div><div class="line">      # 将外部4000端口映射到容易内80端口</div><div class="line">      - &quot;4000:80&quot;</div><div class="line">    networks:</div><div class="line">      # Web容器共享端口80通过负载均衡的网络控制</div><div class="line">      # 用默认的设置定义控制网络（这是一个负载均衡的覆盖网络）。</div><div class="line">      - webnet</div><div class="line">networks:</div><div class="line">  webnet:</div></pre></td></tr></table></figure></p>
+<h3 id="运行你的负载均衡app"><a href="#运行你的负载均衡app" class="headerlink" title="运行你的负载均衡app"></a>运行你的负载均衡app</h3><p>在我们运行<strong>docker stack deploy</strong>之前时，我们需要运行以下命令<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker swarm init</div></pre></td></tr></table></figure></p>
+<p>不过不先执行上述命令，会产生错误</p>
+<p>运行过后，我们就可以执行<strong>deploy</strong>命令了，我们需要给app起一个新的名字，在哪这里我们使用<strong>getstartedlab</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ docker stack deploy -c docker-compose.yml getstartedlab</div><div class="line"></div><div class="line">Creating network getstartedlab_webnet</div><div class="line">Creating service getstartedlab_web</div></pre></td></tr></table></figure></p>
+<p>运行完上述命令，就会有5个容器启动，我们可以查看一下<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">$ docker stack ps getstartedlab</div><div class="line"></div><div class="line"></div><div class="line">ID                  NAME                  IMAGE                      NODE                DESIRED STATE       CURRENT STATE            ERROR               PORTS</div><div class="line">qg7mox0vrwu1        getstartedlab_web.1   docker-flask-demo:latest   earthchen-CP65S     Running             Running 25 seconds ago                       </div><div class="line">n7kb3qedrryx        getstartedlab_web.2   docker-flask-demo:latest   earthchen-CP65S     Running             Running 27 seconds ago                       </div><div class="line">04tr7rp7euet        getstartedlab_web.3   docker-flask-demo:latest   earthchen-CP65S     Running             Running 27 seconds ago                       </div><div class="line">z7yh0tvvrpwj        getstartedlab_web.4   docker-flask-demo:latest   earthchen-CP65S     Running             Running 26 seconds ago                       </div><div class="line">z01zvjtneg3r        getstartedlab_web.5   docker-flask-demo:latest   earthchen-CP65S     Running             Running 24 seconds ago</div></pre></td></tr></table></figure></p>
+<p>如果使用的是<em>*docker ps</em>同样能看到5个容器正在运行，只是显示的没有上述命令详细<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">$ docker ps</div><div class="line"></div><div class="line">CONTAINER ID        IMAGE                      COMMAND             CREATED             STATUS              PORTS               NAMES</div><div class="line">bccc38eb8429        docker-flask-demo:latest   <span class="string">"python app.py"</span>     18 seconds ago      Up 16 seconds       80/tcp              getstartedlab_web.1.qg7mox0vrwu1ucnh6g79pnkuc</div><div class="line">368fabab2f5b        docker-flask-demo:latest   <span class="string">"python app.py"</span>     18 seconds ago      Up 15 seconds       80/tcp              getstartedlab_web.5.z01zvjtneg3rj8f5lsi9kzkwn</div><div class="line">b34a7b9f73e6        docker-flask-demo:latest   <span class="string">"python app.py"</span>     19 seconds ago      Up 17 seconds       80/tcp              getstartedlab_web.2.n7kb3qedrryxx3odog4t47hzq</div><div class="line">746425e5bc36        docker-flask-demo:latest   <span class="string">"python app.py"</span>     19 seconds ago      Up 17 seconds       80/tcp              getstartedlab_web.3.04tr7rp7euetg182oe43p6j4k</div><div class="line">887874b4edab        docker-flask-demo:latest   <span class="string">"python app.py"</span>     19 seconds ago      Up 16 seconds       80/tcp              getstartedlab_web.4.z7yh0tvvrpwju15zqwbgic1gx</div></pre></td></tr></table></figure></p>
+<h3 id="集群操作app"><a href="#集群操作app" class="headerlink" title="集群操作app"></a>集群操作app</h3><p>你可以批量的更改这些容器的参数，更改<strong>docker-compose.yml</strong>中的参数后，执行<strong>docker stack deploy</strong>命令<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$ docker stack deploy -c docker-compose.yml getstartedlab</div><div class="line"></div><div class="line">Updating service getstartedlab_web (id: n94rdcq09p07hro5sqh1tjhou)</div><div class="line">image docker-flask-demo:latest could not be accessed on a registry to record</div><div class="line">its digest. Each node will access docker-flask-demo:latest independently,</div><div class="line">possibly leading to different nodes running different</div><div class="line">versions of the image.</div></pre></td></tr></table></figure></p>
+<p>docker将会自动帮我们更新配置，我们不需要杀死容器，</p>
+<p>如果我们不需要这个app了，我们可以使用<strong>docker stack rm</strong>删除<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ docker stack rm getstartedlab</div><div class="line"></div><div class="line">Removing service getstartedlab_web</div><div class="line">Removing network getstartedlab_webnet</div></pre></td></tr></table></figure></p>
+<p>这将删除<strong>getstartedlab</strong>app，但是节点群仍然存在，并且仍然在运行</p>
+<p>相关常用命令<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">docker stack ls              <span class="comment"># List all running applications on this Docker host</span></div><div class="line">docker stack deploy -c &lt;composefile&gt; &lt;appname&gt;  <span class="comment"># Run the specified Compose file</span></div><div class="line">docker stack services &lt;appname&gt;       <span class="comment"># List the services associated with an app</span></div><div class="line">docker stack ps &lt;appname&gt;   <span class="comment"># List the running containers associated with an app</span></div><div class="line">docker stack rm &lt;appname&gt;                             <span class="comment"># Tear down an application</span></div></pre></td></tr></table></figure></p>
+<h2 id="集群"><a href="#集群" class="headerlink" title="集群"></a>集群</h2><h3 id="设置你的集群"><a href="#设置你的集群" class="headerlink" title="设置你的集群"></a>设置你的集群</h3><p>首先我们需要安装一下<strong>virtualbox</strong>和<strong>docker-machine</strong></p>
+<ul>
+<li><p>安装<strong>docker-machine</strong>到linux</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ curl -L https://github.com/docker/machine/releases/download/v0.12.2/docker-machine-`uname <span class="_">-s</span>`-`uname -m` &gt;/tmp/docker-machine &amp;&amp;</div><div class="line">chmod +x /tmp/docker-machine &amp;&amp;</div><div class="line">sudo cp /tmp/docker-machine /usr/<span class="built_in">local</span>/bin/docker-machine</div></pre></td></tr></table></figure>
+</li>
+<li><p>安装<strong>docker-machine</strong>，不然会没有virtualbox驱动<br>自行浏览<a href="https://www.virtualbox.org/wiki/Linux_Downloads" target="_blank" rel="external">virtualbox网站</a>下载</p>
+</li>
+</ul>
+<p>创建一组虚拟机使用<strong>docker-machine</strong>，使用VirtualBox驱动<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ docker-machine create --driver virtualbox myvm1</div><div class="line">$ docker-machine create --driver virtualbox myvm2</div></pre></td></tr></table></figure></p>
+<p>创建好了使用<strong>docker-machine ls</strong>命令查看一下虚拟机<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ docker-machine ls</div><div class="line"></div><div class="line">NAME    ACTIVE   DRIVER       STATE     URL                         SWARM   DOCKER        ERRORS</div><div class="line">myvm1   -        virtualbox   Running   tcp://192.168.99.101:2376           v17.06.1-ce   </div><div class="line">myvm2   -        virtualbox   Running   tcp://192.168.99.100:2376           v17.06.1-ce</div></pre></td></tr></table></figure></p>
+<p>打开系统中的virtualbox也能看到正在运行两个虚拟机，分别名为<strong>myvm1</strong>和<strong>myvm2</strong><br><img src="http://objects.earthchen.cn/docker_study_part4_docker_machine_virtualbox.png" alt="virtualbox中查看虚拟机"></p>
+<p>接下来，我们应该发送命令到您的虚拟机<strong>myvm1</strong>，使其作为成为一个群组管理，发送命令使用<strong>docker-machine ssh</strong>，设置群组管理的命令为<strong>docker swarm init</strong>，所以最后的命令应该为：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ docker-machine ssh myvm1 <span class="string">"docker swarm init"</span></div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>注：一般都会遇到以下问题,如果遇到了请使用以下方法解决</p>
+<p>Error response from daemon: could not choose an IP address to advertise since this system has multiple addresses on different interfaces (10.0.2.15 on eth0 and 192.168.99.101 on eth1) - specify one with –advertise-addr    exit status 1</p>
+<ul>
+<li>使用<strong>docker-machine ls</strong>查看虚拟主机信息，记住<strong>myvm1</strong>的ip地址</li>
+<li>重新使用<strong>docker-machine ssh</strong>运行<strong>docker swarm init</strong>命令，并使用该ip地址和端口连接<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">$ docker-machine ssh myvm1 <span class="string">"docker swarm init --advertise-addr 192.168.99.101:2376"</span></div><div class="line"></div><div class="line">Swarm initialized: current node (rgo0wk88oxw0sx2iynnfrq7ni) is now a manager.</div><div class="line"></div><div class="line">To add a worker to this swarm, run the following <span class="built_in">command</span>:</div><div class="line"></div><div class="line">docker swarm join --token SWMTKN-1-0kkgpn8xkux6fr6e3fyqg3414vrkh9x73ho1tjiljtw201d6dj-2p65t277az7rj8yg5idss1i1q 192.168.99.101:2377</div><div class="line"></div><div class="line">To add a manager to this swarm, run <span class="string">'docker swarm join-token manager'</span> and follow the instructions.</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>注:末尾端口一定是<strong>2377</strong>，刚开始我想当然以为是不是我的环境不一样，查看了虚拟机的ip是2376，创建集群管理是可以成功的，但是其他结点加入集群就会失败。注意:</p>
+<ul>
+<li>端口<strong>2377</strong></li>
+<li>端口<strong>2377</strong></li>
+<li>端口<strong>2377</strong>，重要的事情说三遍</li>
+</ul>
+</blockquote>
+<p>看到输出如上，就是成功了。表示我们已经在虚拟机<strong>myvm1</strong>创建了一个集群，并设置为管理</p>
+<p>可以看到，响应<strong>docker swarm init</strong>包含一个预先配置的 <strong>docker swarm join</strong>命令，您可以在要添加的任何节点上运行。复制此命令，并将其发送到<strong>myvm2</strong>  <strong>docker-machine ssh</strong>把<strong>myvm2</strong> 加入您的新群组作为工作人员：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ docker-machine ssh myvm2 <span class="string">"docker swarm join --token SWMTKN-1-0kkgpn8xkux6fr6e3fyqg3414vrkh9x73ho1tjiljtw201d6dj-2p65t277az7rj8yg5idss1i1q 192.168.99.101:2377"</span></div><div class="line"></div><div class="line"></div><div class="line">This node joined a swarm as a worker.</div></pre></td></tr></table></figure></p>
+<p>这样就创建好了一个集群</p>
+<p>接下来，我们可以在<strong>myvm1</strong>上使用<strong>docker node ls</strong>命令查看结点，首先我们需要使用<strong>docker-macheine ssh</strong>命令登录<strong>myvm1</strong>虚拟机<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">$ docker-macheine ssh</div><div class="line"></div><div class="line">                        <span class="comment">##         .</span></div><div class="line">                  <span class="comment">## ## ##        ==</span></div><div class="line">               <span class="comment">## ## ## ## ##    ===</span></div><div class="line">           /<span class="string">""</span><span class="string">""</span><span class="string">""</span><span class="string">""</span><span class="string">""</span><span class="string">""</span><span class="string">""</span><span class="string">""</span><span class="string">"\___/ ===</span></div><div class="line">      ~~~ &#123;~~ ~~~~ ~~~ ~~~~ ~~~ ~ /  ===- ~~~</div><div class="line">           \______ o           __/</div><div class="line">             \    \         __/</div><div class="line">              \____\_______/</div><div class="line"> _                 _   ____     _            _</div><div class="line">| |__   ___   ___ | |_|___ \ __| | ___   ___| | _____ _ __</div><div class="line">| '_ \ / _ \ / _ \| __| __) / _` |/ _ \ / __| |/ / _ \ '__|</div><div class="line">| |_) | (_) | (_) | |_ / __/ (_| | (_) | (__|   &lt;  __/ |</div><div class="line">|_.__/ \___/ \___/ \__|_____\__,_|\___/ \___|_|\_\___|_|</div><div class="line">Boot2Docker version 17.06.1-ce, build HEAD : 80114bc - Fri Aug 18 17:58:04 UTC 2017</div><div class="line">Docker version 17.06.1-ce, build 874a737</div><div class="line">docker@myvm1:~$</div></pre></td></tr></table></figure></p>
+<p>然后在虚拟机<strong>myvm1</strong>中执行<strong>docker node ls</strong>命令查看结点<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">docker@myvm1:~$ docker node ls</div><div class="line"></div><div class="line">ID                            HOSTNAME            STATUS              AVAILABILITY        MANAGER STATUS</div><div class="line">0b7ae42ny8506cwe2rvt3sxqy     myvm2               Ready               Active              </div><div class="line">26kzc37prtj7vlgk7tmc4lq5y *   myvm1               Ready               Active              Leader</div></pre></td></tr></table></figure></p>
+<p>退出虚拟机的终端只需要执行<strong>exit</strong>即可<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker@myvm1:~$ <span class="built_in">exit</span></div></pre></td></tr></table></figure></p>
+<p>如果不想直接进入虚拟机输入指定在退出呢，可以直接使用<strong>docker-machine ssh “你的命令”</strong>,这样也是可以的</p>
+<h3 id="在集群上部署app"><a href="#在集群上部署app" class="headerlink" title="在集群上部署app"></a>在集群上部署app</h3><p>使用<strong>scp</strong>命令将<strong>docker-compose.yml</strong>复制到集群管理虚拟机<strong>myvm1</strong>的主目录中<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ docker-machine scp docker-compose.yml myvm1:~</div></pre></td></tr></table></figure></p>
+<p>在集群管理虚拟机<strong>myvm1</strong>中在集群中部署你的app，使用<strong>docker stack deploy -c docker-compose.yml getstartedlab</strong>命令<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ docker-machine ssh myvm1 <span class="string">"docker stack deploy -c docker-compose.yml getstartedlab"</span></div></pre></td></tr></table></figure></p>
+<p>然后就会自动部署你的应用在<strong>myvm1</strong>和<strong>myvm2</strong>上了。</p>
+<p>我们可以在<strong>myvm1</strong>上查看容器运行的情况<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$docker</span>@myvm1:~$ docker stack ps getstartedlab</div><div class="line"></div><div class="line"></div><div class="line">ID                  NAME                  IMAGE                                                                 NODE                DESIRED STATE       CURRENT STATE              ERROR               PORTS</div><div class="line">2d0nk6cdzk9s        getstartedlab_web.1   registry.cn-hangzhou.aliyuncs.com/earthchen/docker-flask-demo:part1   myvm2               Running             Preparing 59 seconds ago                       </div><div class="line">0k5x3z8kzy3c        getstartedlab_web.2   registry.cn-hangzhou.aliyuncs.com/earthchen/docker-flask-demo:part1   myvm1               Running             Running 58 seconds ago                         </div><div class="line">741qhp1gjrd0        getstartedlab_web.3   registry.cn-hangzhou.aliyuncs.com/earthchen/docker-flask-demo:part1   myvm2               Running             Preparing 59 seconds ago                       </div><div class="line">xar5o0a86xqd        getstartedlab_web.4   registry.cn-hangzhou.aliyuncs.com/earthchen/docker-flask-demo:part1   myvm1               Running             Running 58 seconds ago                         </div><div class="line">uondlmb3agae        getstartedlab_web.5   registry.cn-hangzhou.aliyuncs.com/earthchen/docker-flask-demo:part1   myvm2               Running             Preparing 59 seconds ago</div></pre></td></tr></table></figure></p>
+<p>可以看到容器分布在两个虚拟机上。</p>
+<blockquote>
+<p>注：如果你要使用集群，那各集群主机必须开放以下指定端口</p>
+<ul>
+<li>端口7946用于容器网络发现的TCP / UDP。</li>
+<li>端口4789 UDP用于容器入口网络</li>
+</ul>
+</blockquote>
+<p>如果你要更改你的应用，你可以更改集群管理虚拟机<strong>myvm1</strong>中的<strong>docker-compose.yml</strong>，或者更改代码。<br>在这些情况下，只需要在<strong>myvm1</strong>中执行<strong>docker stack deploy</strong>再次部署即可<br>如果有新机器需要加入集群，只需要使用<strong>docker swarm join</strong>加入该集群即可</p>
+<blockquote>
+<p>如何离开集群</p>
+<ul>
+<li>如果非管理机要离开集群，只需要执行<strong>docker-machine ssh myvm2 “docker swarm leave”</strong></li>
+<li>如果是管理机，那需要强制执行，离开集群后也会同时删除该集群<strong>docker-machine ssh myvm1 “docker swarm leave –force”</strong></li>
+</ul>
+<p>注：</p>
+<ul>
+<li>ddocker Version:      17.05.0-ce</li>
+<li>docker-machine version 0.12.2, build 9371605</li>
+<li>上述环境在<strong>ubuntu16.04 lts</strong>中搭建测试成功</li>
+<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
+</ul>
+</blockquote>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文標題:</span><a href="/2017/08/22/Docker_study/">Docker学习笔记</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主頁">EarthChen</a></p>
+        <p><span>發布時間:</span>2017-08-22, 12:54:00</p>
+        <p><span>最後更新:</span>2017-08-22, 20:36:45</p>
+        <p>
+            <span>原始鏈接:</span><a class="post-url" href="/2017/08/22/Docker_study/" title="Docker学习笔记">http://earthchen.cn/2017/08/22/Docker_study/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://earthchen.cn/2017/08/22/Docker_study/　　作者: EarthChen" title="點擊複製文章鏈接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>許可協議:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"姓名標示-非商業性-相同方式分享 4.0 國際"</a> 轉載請保留原文鏈接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2017/08/20/celery_study/">
+                    Celery-分布式任务队列学习笔记
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目錄</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Docker"><span class="toc-number">1.</span> <span class="toc-text">Docker</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装Docker"><span class="toc-number">1.1.</span> <span class="toc-text">安装Docker</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用阿里的镜像安装"><span class="toc-number">1.1.1.</span> <span class="toc-text">使用阿里的镜像安装</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Dockerfile"><span class="toc-number">1.2.</span> <span class="toc-text">Dockerfile</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#编写第一个Docker-APP"><span class="toc-number">1.2.1.</span> <span class="toc-text">编写第一个Docker APP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#构建APP"><span class="toc-number">1.2.2.</span> <span class="toc-text">构建APP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#运行app"><span class="toc-number">1.2.3.</span> <span class="toc-text">运行app</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分享你的镜像"><span class="toc-number">1.2.4.</span> <span class="toc-text">分享你的镜像</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#登录到阿里云docker-registry"><span class="toc-number">1.2.4.1.</span> <span class="toc-text">登录到阿里云docker registry</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#给需要分享的镜像打上标签"><span class="toc-number">1.2.4.2.</span> <span class="toc-text">给需要分享的镜像打上标签</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#将本地镜像推到仓库"><span class="toc-number">1.2.4.3.</span> <span class="toc-text">将本地镜像推到仓库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#拉取镜像"><span class="toc-number">1.2.4.4.</span> <span class="toc-text">拉取镜像</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#docker-compose-yml"><span class="toc-number">1.3.</span> <span class="toc-text">docker-compose.yml</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#编写第一个docker-compose-yml"><span class="toc-number">1.3.1.</span> <span class="toc-text">编写第一个docker-compose.yml</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#运行你的负载均衡app"><span class="toc-number">1.3.2.</span> <span class="toc-text">运行你的负载均衡app</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#集群操作app"><span class="toc-number">1.3.3.</span> <span class="toc-text">集群操作app</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#集群"><span class="toc-number">1.4.</span> <span class="toc-text">集群</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#设置你的集群"><span class="toc-number">1.4.1.</span> <span class="toc-text">设置你的集群</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在集群上部署app"><span class="toc-number">1.4.2.</span> <span class="toc-text">在集群上部署app</span></a></li></ol></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-5 i,
+        .toc-level-5 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隱藏目錄"  title="點擊按鈕隱藏或者顯示文章目錄">
+
+    <script>
+        yiliaConfig.toc = ["隱藏目錄", "顯示目錄", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"Docker学习笔记　| EarthChen's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+        <section class="youyan" id="comments">
+    <script>
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = 'http://v2.uyan.cc/code/uyan.js?uid=2115719';
+            (d.head || d.body).appendChild(s);
+        }
+    </script>
+    
+    <script> loadComment(); </script>
+
+    <div id="uyan_frame"></div>
+</section>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主頁"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2017/08/20/celery_study/" title="下一篇: Celery-分布式任务队列学习笔记">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/08/22/Docker_study/">Docker学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/20/celery_study/">Celery-分布式任务队列学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_redis_cache/">Django使用redis作为缓存系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_channels_websocket/">Django使用Channels实现websocket</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/13/Docker_Gogs/">使用Docker搭建git服务Gogs</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_21to_40/">LeetCode刷题记录(easy难度21-40题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_1to20/">LeetCode刷题记录(easy难度1-20题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/29/es6_study/">es6学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/Webpack_study/">Webpack学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/RegularExpression_study/">正则表达式学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/08/AndroidStudio/">Android Studio 使用本地离线Gradle</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/跨域请求解决方案/">跨域请求的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/ubuntu_supervisor/">ubuntu下的进程控制系统————Supervisor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_nginx_gunicorn/">django+nginx+gunicorn部署配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/28/ubuntu修复不能挂载NTFS硬盘/">ubuntu修复linux和windows双系统下挂载ntfs硬盘出错问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/17/django_timing_task/">django使用django-crontab实现定时任务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/15/django_rest_framework_jwt/">django-rest-framework配置json web token进行接口的认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/spring_SpEL/">spring中的SpEL表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/django_rest_framework_study/">django-rest-framework框架学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/08/git_study/">Git学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/03/资源收集/">资源收集共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/06/ubuntu_open_port/">ubuntu开放指定端口</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/16/redis_study_2/">Redis学习笔记 -- 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/15/redis_study_1/">Redis学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/16/ubuntu_do_something_use/">ubuntu日常使用的安装配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/django_address_baiduapi_marker_show/">Django调用百度地图api在地图上批量增加标记点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/ubuntu_do_something_coding/">ubuntu搭建常见开发环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/10/ubuntu安装在双系统笔记本下开机或关机卡死.1/">ubuntu在双系统下开机卡死或关机卡死的解决办法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/11/python_requirements/">python生成项目所需依赖文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/10/hexo_github_coding_blog/">利用hexo和github或coding 搭免费个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django环境搭建/">Django环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django连接mysql数据库/">Django连接MySql使用models处理数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django数据库操作/">Django操作数据库</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django常用语句/">Django常用语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django渲染模板/">Django渲染模板</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/python2和Python3的区别/">Python2和Python3的区别简单总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/03/Android_qq_Menu/">Android仿qq侧滑菜单</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/16/C语言队列的基本操作/">C语言队列的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言逆波兰计算器/">C语言逆波兰表达式计算(后缀表达式计算器)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言共享栈/">C语言共享栈</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言二叉树基本操作/">C语言二叉树的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言中缀表达式计算器/">C语言中缀表达式计算器</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/c语言中缀表达式变后缀表达式/">C语言中缀表达式转后缀表达式</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2017 EarthChen
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、簡單且強大的網誌框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="簡而不減 Hexo 雙欄網誌主題  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到訪數"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本頁閱讀量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+    <script src="/js/GithubRepoWidget.js"></script>
+
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回頂部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看評論"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="轉到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+             github: ".github-widget a", 
+            
+            
+            
+             categories: ".article-category a, a.tag-list-link", 
+             articleNav: "#article-nav a, #post-nav-button a", 
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
