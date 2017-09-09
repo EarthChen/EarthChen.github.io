@@ -302,20 +302,20 @@
 </nav>
       <div class="body-wrap">
   
-    <article id="post-C语言共享栈" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-C语言逆波兰计算器" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/07/15/C语言共享栈/" class="article-date">
+      <a href="/2016/07/15/C语言逆波兰计算器/" class="article-date">
       <time datetime="2016-07-15T06:40:00.000Z" itemprop="datePublished">2016-07-15</time>
 </a>
 
  
-    <a href="/2016/07/15/C语言共享栈/#comments" title="Comments">
+    <a href="/2016/07/15/C语言逆波兰计算器/#comments" title="Comments">
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
         
-            <span class="disqus-comment-count" data-disqus-identifier="2016/07/15/C语言共享栈/"></span>
+            <span class="disqus-comment-count" data-disqus-identifier="2016/07/15/C语言逆波兰计算器/"></span>
         
     </a>
 
@@ -330,7 +330,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/15/C语言共享栈/">C语言共享栈</a>
+      <a class="article-title" href="/2016/07/15/C语言逆波兰计算器/">C语言逆波兰表达式计算(后缀表达式计算器)</a>
     </h1>
   
 
@@ -340,9 +340,9 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <p>栈的操作我相信大家都应该了解了弄懂了，  如果没弄懂希望可以去再去看看相关的资料，我博客中的<a href="/2016/10/18/c%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8F%98%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F/">C语言中缀表达式转后缀表达式</a>中涉及到了一下栈的基本操作，有兴趣的朋友也可以看看。<br>所谓共享栈，就是两个栈共同使用一块内存空间，其中一个栈的栈底作为另一个栈的栈顶，反之亦然。</p>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="思路分析"><a href="#思路分析" class="headerlink" title="思路分析"></a>思路分析</h3><blockquote>
-<p>因为两个栈公用一个空间，假设一个栈为0#，规定其为空时top[0]==-1；另一个栈为1#规定其为空时，top[1]==MaxSize；<br>入栈时，先确定栈号是否合法，然后查看是对0#栈还是1#栈进行操作，入栈操作和顺序栈的入栈操作并无太大不同。<br>选定之后进行入栈操作。这里应该注意此共享栈是否已满，如果已满则不能进行入栈操作。如若入栈成功则返回0；入栈失败则返回-1；<br>出栈时，先确定栈号是否合法，然后查看是对0#栈还是1#栈进行操作，出栈操作和顺序栈的出栈操作并无太大不同。<br>选定之后进行出栈操作。如果出栈成功返回0；出栈失败返回-1；<br>
+              <p>刚开始学习c语言时，我们都学过输入一个数在输入一个操作数在输入要进行的计算方式，在输入另一个操作数，然后通过内置的+ - / <em>以及内置头文件 <em>*math.h</em></em>等操作进行计算<br>但是我们可不可以直接输入我们熟悉的算式才得出结果呢，答案是肯定的，我博客上一篇介绍了<a href="/2016/10/07/c%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8F%98%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F/">C语言把中缀表达式转换为后缀表达式</a>有兴趣的读者可以去看看，有了上篇的知识，在加上本篇的内容就可以很容易做出一个中缀表达式计算器了有兴趣的读者可以看完本文去尝试一下，对自己的能力也是一种提升</p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="添加适当的头文件，定义一个栈数据结构，"><a href="#添加适当的头文件，定义一个栈数据结构，" class="headerlink" title="添加适当的头文件，定义一个栈数据结构，"></a>添加适当的头文件，定义一个栈数据结构，</h3><p>和之前一样，这里还是需要添加头文件和定义栈的数据结构，所有的操作都是基于栈的操作</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;math.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ctype.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span>  STACK_INIT_SIZE 100</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> STACKINCREMENT 10</span></div><div class="line"><span class="keyword">typedef</span> <span class="keyword">double</span> ElemType;</div><div class="line"></div><div class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></div><div class="line">&#123;</div><div class="line">	ElemType *base;</div><div class="line">	ElemType *top;</div><div class="line">	<span class="keyword">int</span> stackSize;</div><div class="line">&#125;SqStack;</div></pre></td></tr></table></figure>
           
       
     </div>
@@ -362,7 +362,7 @@
 
       
         <p class="article-more-link">
-          <a href="/2016/07/15/C语言共享栈/#more">more >></a>
+          <a href="/2016/07/15/C语言逆波兰计算器/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -539,6 +539,85 @@
 
 
   
+    <article id="post-C语言共享栈" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/07/15/C语言共享栈/" class="article-date">
+      <time datetime="2016-07-15T06:40:00.000Z" itemprop="datePublished">2016-07-15</time>
+</a>
+
+ 
+    <a href="/2016/07/15/C语言共享栈/#comments" title="Comments">
+        <i class="fa fa-comments-o" aria-hidden="true"></i>
+        <span class="count-comment"></span>
+        
+        
+            <span class="disqus-comment-count" data-disqus-identifier="2016/07/15/C语言共享栈/"></span>
+        
+    </a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/07/15/C语言共享栈/">C语言共享栈</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>栈的操作我相信大家都应该了解了弄懂了，  如果没弄懂希望可以去再去看看相关的资料，我博客中的<a href="/2016/10/18/c%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8F%98%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F/">C语言中缀表达式转后缀表达式</a>中涉及到了一下栈的基本操作，有兴趣的朋友也可以看看。<br>所谓共享栈，就是两个栈共同使用一块内存空间，其中一个栈的栈底作为另一个栈的栈顶，反之亦然。</p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="思路分析"><a href="#思路分析" class="headerlink" title="思路分析"></a>思路分析</h3><blockquote>
+<p>因为两个栈公用一个空间，假设一个栈为0#，规定其为空时top[0]==-1；另一个栈为1#规定其为空时，top[1]==MaxSize；<br>入栈时，先确定栈号是否合法，然后查看是对0#栈还是1#栈进行操作，入栈操作和顺序栈的入栈操作并无太大不同。<br>选定之后进行入栈操作。这里应该注意此共享栈是否已满，如果已满则不能进行入栈操作。如若入栈成功则返回0；入栈失败则返回-1；<br>出栈时，先确定栈号是否合法，然后查看是对0#栈还是1#栈进行操作，出栈操作和顺序栈的出栈操作并无太大不同。<br>选定之后进行出栈操作。如果出栈成功返回0；出栈失败返回-1；<br>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/开发/">开发</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构/">数据结构</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2016/07/15/C语言共享栈/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-c语言中缀表达式变后缀表达式" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -599,85 +678,6 @@
       
         <p class="article-more-link">
           <a href="/2016/07/15/c语言中缀表达式变后缀表达式/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-C语言逆波兰计算器" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/07/15/C语言逆波兰计算器/" class="article-date">
-      <time datetime="2016-07-15T06:40:00.000Z" itemprop="datePublished">2016-07-15</time>
-</a>
-
- 
-    <a href="/2016/07/15/C语言逆波兰计算器/#comments" title="Comments">
-        <i class="fa fa-comments-o" aria-hidden="true"></i>
-        <span class="count-comment"></span>
-        
-        
-            <span class="disqus-comment-count" data-disqus-identifier="2016/07/15/C语言逆波兰计算器/"></span>
-        
-    </a>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/15/C语言逆波兰计算器/">C语言逆波兰表达式计算(后缀表达式计算器)</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>刚开始学习c语言时，我们都学过输入一个数在输入一个操作数在输入要进行的计算方式，在输入另一个操作数，然后通过内置的+ - / <em>以及内置头文件 <em>*math.h</em></em>等操作进行计算<br>但是我们可不可以直接输入我们熟悉的算式才得出结果呢，答案是肯定的，我博客上一篇介绍了<a href="/2016/10/07/c%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8F%98%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F/">C语言把中缀表达式转换为后缀表达式</a>有兴趣的读者可以去看看，有了上篇的知识，在加上本篇的内容就可以很容易做出一个中缀表达式计算器了有兴趣的读者可以看完本文去尝试一下，对自己的能力也是一种提升</p>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="添加适当的头文件，定义一个栈数据结构，"><a href="#添加适当的头文件，定义一个栈数据结构，" class="headerlink" title="添加适当的头文件，定义一个栈数据结构，"></a>添加适当的头文件，定义一个栈数据结构，</h3><p>和之前一样，这里还是需要添加头文件和定义栈的数据结构，所有的操作都是基于栈的操作</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;math.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ctype.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span>  STACK_INIT_SIZE 100</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> STACKINCREMENT 10</span></div><div class="line"><span class="keyword">typedef</span> <span class="keyword">double</span> ElemType;</div><div class="line"></div><div class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></div><div class="line">&#123;</div><div class="line">	ElemType *base;</div><div class="line">	ElemType *top;</div><div class="line">	<span class="keyword">int</span> stackSize;</div><div class="line">&#125;SqStack;</div></pre></td></tr></table></figure>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/开发/">开发</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构/">数据结构</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2016/07/15/C语言逆波兰计算器/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
