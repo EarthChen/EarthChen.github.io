@@ -15,19 +15,17 @@
 
 
 
-<meta name="description" content="众所周知,计算机中不能直接用中缀表达式计算,形如(1+2)*(4-5)之类的，但是我们可以计算机可以很容易的通过后缀表达式来计算我们所输入的算式。所以我们就需要把中缀表达式转换为后缀表达式。下面是个人写的一点代码，大家可以参考。 开始添加适当的头文件，定义一个栈数据结构，1234567891011121314#include &amp;lt;stdio.h&amp;gt;#include &amp;lt;stdlib.h">
-<meta name="keywords" content="c,数据结构">
+<meta name="description" content="redis作为内存非关系型数据库，是一种key - value 缓存产品,但它同时还支持数据持久化，常常和一些老牌关系型数据库配合使用下文将作为学习笔记介绍一下 Java内存区域与内存溢出异常">
+<meta name="keywords" content="Redis">
 <meta property="og:type" content="article">
-<meta property="og:title" content="C语言中缀表达式转后缀表达式">
-<meta property="og:url" content="http://earthchen.cn/2016/07/15/c语言中缀表达式变后缀表达式/index.html">
+<meta property="og:title" content="深入理解java虚拟机学习笔记 -- 1">
+<meta property="og:url" content="http://earthchen.cn/2017/04/15/深入理解java虚拟机学习笔记_1/index.html">
 <meta property="og:site_name" content="EarthChen&#39;s Blog">
-<meta property="og:description" content="众所周知,计算机中不能直接用中缀表达式计算,形如(1+2)*(4-5)之类的，但是我们可以计算机可以很容易的通过后缀表达式来计算我们所输入的算式。所以我们就需要把中缀表达式转换为后缀表达式。下面是个人写的一点代码，大家可以参考。 开始添加适当的头文件，定义一个栈数据结构，1234567891011121314#include &amp;lt;stdio.h&amp;gt;#include &amp;lt;stdlib.h">
-<meta property="og:image" content="http://objects.earthchen.cn/c%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%BD%AC%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F.png">
-<meta property="og:updated_time" content="2017-08-06T09:47:43.124Z">
+<meta property="og:description" content="redis作为内存非关系型数据库，是一种key - value 缓存产品,但它同时还支持数据持久化，常常和一些老牌关系型数据库配合使用下文将作为学习笔记介绍一下 Java内存区域与内存溢出异常">
+<meta property="og:updated_time" content="2017-09-09T08:30:38.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="C语言中缀表达式转后缀表达式">
-<meta name="twitter:description" content="众所周知,计算机中不能直接用中缀表达式计算,形如(1+2)*(4-5)之类的，但是我们可以计算机可以很容易的通过后缀表达式来计算我们所输入的算式。所以我们就需要把中缀表达式转换为后缀表达式。下面是个人写的一点代码，大家可以参考。 开始添加适当的头文件，定义一个栈数据结构，1234567891011121314#include &amp;lt;stdio.h&amp;gt;#include &amp;lt;stdlib.h">
-<meta name="twitter:image" content="http://objects.earthchen.cn/c%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%BD%AC%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F.png">
+<meta name="twitter:title" content="深入理解java虚拟机学习笔记 -- 1">
+<meta name="twitter:description" content="redis作为内存非关系型数据库，是一种key - value 缓存产品,但它同时还支持数据持久化，常常和一些老牌关系型数据库配合使用下文将作为学习笔记介绍一下 Java内存区域与内存溢出异常">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -59,7 +57,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>C语言中缀表达式转后缀表达式 | EarthChen&#39;s Blog</title>
+<title>深入理解java虚拟机学习笔记 -- 1 | EarthChen&#39;s Blog</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -298,11 +296,11 @@
     </div>
     <link class="menu-list" tags="Tags" friends="Friends" about="About Me"/>
 </nav>
-      <div class="body-wrap"><article id="post-c语言中缀表达式变后缀表达式" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-深入理解java虚拟机学习笔记_1" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/07/15/c语言中缀表达式变后缀表达式/" class="article-date">
-      <time datetime="2016-07-15T06:40:00.000Z" itemprop="datePublished">2016-07-15</time>
+      <a href="/2017/04/15/深入理解java虚拟机学习笔记_1/" class="article-date">
+      <time datetime="2017-04-15T06:40:00.000Z" itemprop="datePublished">2017-04-15</time>
 </a>
 
 
@@ -317,7 +315,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      C语言中缀表达式转后缀表达式
+      深入理解java虚拟机学习笔记 -- 1
     </h1>
   
 
@@ -326,13 +324,13 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/开发/">开发</a>
+    <a class="article-category-link" href="/categories/学习笔记/">学习笔记</a>
     </div>
 
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构/">数据结构</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/">Redis</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -342,19 +340,69 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>众所周知,计算机中不能直接用中缀表达式计算,形如(1+2)*(4-5)之类的，但是我们可以计算机可以很容易的通过后缀表达式来计算我们所输入的算式。所以我们就需要把中缀表达式转换为后缀表达式。下面是个人写的一点代码，大家可以参考。</p>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="添加适当的头文件，定义一个栈数据结构，"><a href="#添加适当的头文件，定义一个栈数据结构，" class="headerlink" title="添加适当的头文件，定义一个栈数据结构，"></a>添加适当的头文件，定义一个栈数据结构，</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;math.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ctype.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span>  STACK_INIT_SIZE 100</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> STACKINCREMENT 10</span></div><div class="line"><span class="keyword">typedef</span> <span class="keyword">char</span> ElemType;</div><div class="line"></div><div class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></div><div class="line">&#123;</div><div class="line">	ElemType *base;</div><div class="line">	ElemType *top;</div><div class="line">	<span class="keyword">int</span> stackSize;</div><div class="line">&#125;SqStack;</div></pre></td></tr></table></figure>
-<a id="more"></a>
-<h3 id="创建一个栈"><a href="#创建一个栈" class="headerlink" title="创建一个栈"></a>创建一个栈</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//创建一个栈</span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">initStack</span><span class="params">(SqStack *s)</span> </span>&#123;</div><div class="line">	s-&gt;base = (ElemType *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(ElemType));</div><div class="line">	<span class="keyword">if</span> (!s-&gt;base)</div><div class="line">	&#123;</div><div class="line">		<span class="built_in">exit</span>(<span class="number">0</span>);</div><div class="line">	&#125;</div><div class="line">	s-&gt;top = s-&gt;base;   <span class="comment">//最开始 栈底就是栈顶</span></div><div class="line">	s-&gt;stackSize = STACK_INIT_SIZE;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="入栈操作"><a href="#入栈操作" class="headerlink" title="入栈操作"></a>入栈操作</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">Push</span><span class="params">(SqStack *s, ElemType e)</span> </span>&#123;</div><div class="line">	<span class="comment">//如果栈满  追加空间</span></div><div class="line">	<span class="keyword">if</span> (s-&gt;top - s-&gt;base &gt;= s-&gt;stackSize)</div><div class="line">	&#123;</div><div class="line">		s-&gt;base = (ElemType *)<span class="built_in">realloc</span>(s-&gt;base, (s-&gt;stackSize + STACKINCREMENT) * <span class="keyword">sizeof</span>(ElemType));</div><div class="line">		<span class="keyword">if</span> (!s-&gt;base)</div><div class="line">		&#123;</div><div class="line">			<span class="built_in">exit</span>(<span class="number">0</span>);</div><div class="line">		&#125;</div><div class="line">		s-&gt;top = s-&gt;base + s-&gt;stackSize;  <span class="comment">//设置栈顶</span></div><div class="line">		s-&gt;stackSize = s-&gt;stackSize + STACKINCREMENT;</div><div class="line">	&#125;</div><div class="line">	*(s-&gt;top) = e;</div><div class="line">	s-&gt;top++;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="出栈操作"><a href="#出栈操作" class="headerlink" title="出栈操作"></a>出栈操作</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">Pop</span><span class="params">(SqStack *s, ElemType *e)</span> </span>&#123;</div><div class="line">	<span class="keyword">if</span> (s-&gt;top == s-&gt;base)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">return</span>;</div><div class="line">	&#125;</div><div class="line">	*e = *--(s-&gt;top);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="计算栈的当前容量-最大容量是s-stackSize"><a href="#计算栈的当前容量-最大容量是s-stackSize" class="headerlink" title="计算栈的当前容量(最大容量是s.stackSize)"></a>计算栈的当前容量(最大容量是s.stackSize)</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">StackLen</span><span class="params">(SqStack s)</span> </span>&#123;</div><div class="line">	<span class="keyword">return</span> (s.top - s.base);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="主函数"><a href="#主函数" class="headerlink" title="主函数"></a>主函数</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">	<span class="keyword">char</span> cal[<span class="number">50</span>];</div><div class="line">	<span class="keyword">char</span> c, e;</div><div class="line">	SqStack s;</div><div class="line">	initStack(&amp;s);</div><div class="line">	<span class="built_in">printf</span>(<span class="string">"请输入中缀表达式 输入#表示结束\n"</span>);</div><div class="line">	scanf_s(<span class="string">"%c"</span>, &amp;c);</div><div class="line">	<span class="keyword">while</span> (c != <span class="string">'#'</span>)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">while</span> (c&gt;=<span class="string">'0'</span> &amp;&amp; c&lt;=<span class="string">'9'</span>)</div><div class="line">		&#123;</div><div class="line">			<span class="built_in">printf</span>(<span class="string">"%c "</span>, c);</div><div class="line">			scanf_s(<span class="string">"%c"</span>, &amp;c);</div><div class="line">			<span class="keyword">if</span> (c&lt;<span class="string">'0'</span> || c&gt;<span class="string">'9'</span>)</div><div class="line">			&#123;</div><div class="line">				<span class="built_in">printf</span>(<span class="string">" "</span>);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (c == <span class="string">')'</span>)</div><div class="line">		&#123;</div><div class="line">			Pop(&amp;s, &amp;e);</div><div class="line">			<span class="keyword">while</span> (e != <span class="string">'('</span>)</div><div class="line">			&#123;</div><div class="line">				<span class="built_in">printf</span>(<span class="string">"%c "</span>, e);</div><div class="line">				Pop(&amp;s, &amp;e);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (c == <span class="string">'+'</span> || c == <span class="string">'-'</span>)</div><div class="line">		&#123;</div><div class="line">			<span class="keyword">if</span> (!StackLen(s))</div><div class="line">			&#123;</div><div class="line">				Push(&amp;s, c);</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">else</span> &#123;</div><div class="line">				<span class="keyword">do</span></div><div class="line">				&#123;</div><div class="line">					Pop(&amp;s, &amp;e);</div><div class="line">					<span class="keyword">if</span> (e == <span class="string">'('</span>)</div><div class="line">					&#123;</div><div class="line">						Push(&amp;s, e);</div><div class="line">					&#125;</div><div class="line">					<span class="keyword">else</span> &#123;</div><div class="line">						<span class="built_in">printf</span>(<span class="string">"%c "</span>, e);</div><div class="line">					&#125;</div><div class="line">				&#125; <span class="keyword">while</span> (StackLen(s) &amp;&amp; e!=<span class="string">'('</span>);</div><div class="line">				Push(&amp;s, c);</div><div class="line">			&#125;</div><div class="line">		&#125;<span class="keyword">else</span> <span class="keyword">if</span> (c==<span class="string">'*'</span> || c==<span class="string">'/'</span> || c==<span class="string">'('</span>)</div><div class="line">		&#123;</div><div class="line">			Push(&amp;s, c);</div><div class="line">		&#125;<span class="keyword">else</span> <span class="keyword">if</span> (c==<span class="string">'#'</span>)</div><div class="line">		&#123;</div><div class="line">			<span class="keyword">break</span>;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">else</span> &#123;</div><div class="line">			<span class="built_in">printf</span>(<span class="string">"出错，输入格式错误"</span>);</div><div class="line">			<span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">		&#125;</div><div class="line">		scanf_s(<span class="string">"%c"</span>, &amp;c);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">while</span> (StackLen(s))</div><div class="line">	&#123;</div><div class="line">		Pop(&amp;s, &amp;e);</div><div class="line">		<span class="built_in">printf</span>(<span class="string">"%c "</span>, e);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;cd</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="以下是运行结果-本人用的是vs2015编译器，所以文中的scanf用了更安全的scanf-s，-如有引用-请自觉替换成和自己的编译器想匹配的函数"><a href="#以下是运行结果-本人用的是vs2015编译器，所以文中的scanf用了更安全的scanf-s，-如有引用-请自觉替换成和自己的编译器想匹配的函数" class="headerlink" title="以下是运行结果 本人用的是vs2015编译器，所以文中的scanf用了更安全的scanf_s，  如有引用 请自觉替换成和自己的编译器想匹配的函数"></a>以下是运行结果 本人用的是vs2015编译器，所以文中的scanf用了更安全的scanf_s，  如有引用 请自觉替换成和自己的编译器想匹配的函数</h3><p><img src="http://objects.earthchen.cn/c%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%BD%AC%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F.png" alt="cmd 运行结果"><br>代码很简单 ，仔细看看研究一下指针就很容易看懂，</p>
+        <p>redis作为内存非关系型数据库，是一种key - value 缓存产品,但它同时还支持数据持久化，常常和一些老牌关系型数据库配合使用<br>下文将作为学习笔记介绍一下</p>
+<h1 id="Java内存区域与内存溢出异常"><a href="#Java内存区域与内存溢出异常" class="headerlink" title="Java内存区域与内存溢出异常"></a>Java内存区域与内存溢出异常</h1><a id="more"></a>
+<h2 id="运行时数据区域"><a href="#运行时数据区域" class="headerlink" title="运行时数据区域"></a>运行时数据区域</h2><p>Java虚拟机在执行Java程序的过程中会把它所管理的内存划分为若干个不同的数据区域。 这些区域都有各自的用途，以及创建和销毁的时间，有的区域随着虚拟机进程的启动而存在，有些区域则依赖用户线程的启动和结束而建立和销毁</p>
+<h3 id="程序计数器"><a href="#程序计数器" class="headerlink" title="程序计数器"></a>程序计数器</h3><p>程序计数器（Program Counter Register）是一块较小的内存空间，它可以看作是当前线程所执行的字节码的行号指示器。字节码解释器工作时就是通过改变这个计数器的值来选取下一条需要执行的字节码指令，分支、 循环、 跳转、 异常处理、 线程恢复等基础功能都需要依赖这个计数器来完成</p>
+<p>由于Java虚拟机的多线程是通过<strong>线程轮流切换并分配处理器执行时间的方式</strong>来实现的，在任何一个确定的时刻，一个处理器（对于多核处理器来说是一个内核）都只会执行<strong>一条线程</strong>中的指令。 因此，为了线程切换后能恢复到正确的执行位置，每条线程都需要有一个<strong>独立</strong>的程序计数器，各条线程之间计数器<strong>互不影响</strong>，<strong>独立存储</strong>，我们称这类内存区域为<strong>“线程私有”</strong>的内存。</p>
+<p>如果线程正在执行的是一个<strong>Java方法</strong>，这个计数器记录的是<strong>正在执行的虚拟机字节码指令的地址</strong>；如果正在执行的是<strong>Native方法</strong>，这个计数器值则为<strong>空（Undefined）</strong>。 此内存区域是唯一一个在Java虚拟机规范中没有规定任何OutOfMemoryError情况的区域。</p>
+<h3 id="Java虚拟机栈"><a href="#Java虚拟机栈" class="headerlink" title="Java虚拟机栈"></a>Java虚拟机栈</h3><p>与程序计数器一样，Java虚拟机栈（Java Virtual Machine Stacks）也是线程私有的，它的生命周期与线程相同。</p>
+<p>局部变量表存放了编译期可知的各种<strong>基本数据类型</strong>（boolean、 byte、 char、 short、 int、float、 long、 double）、 <strong>对象引用</strong>（reference类型，它不等同于对象本身，可能是一个指向对象起始地址的引用指针，也可能是指向一个代表对象的句柄或其他与此对象相关的位置）和returnAddress类型（指向了一条字节码指令的地址）。</p>
+<p>局部变量表所需的内存空间在编译期间完成分配，当进入一个方法时，这个方法需要在帧中分配多大的局部变量空间是完全确定的，在方法运行期间不会改变局部变量表的大小。</p>
+<p>在Java虚拟机规范中，对这个区域规定了两种异常状况：如果线程请求的栈深度大于虚拟机所允许的深度，将抛出<strong>StackOverflowError异常</strong>；如果虚拟机栈可以动态扩展（当前大部分的Java虚拟机都可动态扩展，只不过Java虚拟机规范中也允许固定长度的虚拟机栈），如果扩展时无法申请到足够的内存，就会抛出<strong>OutOfMemoryError异常</strong>。</p>
+<h3 id="本地方法栈"><a href="#本地方法栈" class="headerlink" title="本地方法栈"></a>本地方法栈</h3><p>本地方法栈（Native Method Stack）与虚拟机栈所发挥的作用是非常相似的，它们之间的区别不过是虚拟机栈为虚拟机执行<strong>Java方法（也就是字节码）服务</strong>，而本地方法栈则为虚拟机使用到的<strong>Native方法服务</strong>。与虚拟机栈一样，本地方法栈区域也会抛出StackOverflowError和OutOfMemoryError异常。</p>
+<h3 id="Java堆"><a href="#Java堆" class="headerlink" title="Java堆"></a>Java堆</h3><p>Java堆是被<strong>所有线程共享的一块内存区域</strong>，在虚拟机启动时创建。 此内存区域的唯一目的就是存放对象实例，几乎所有的对象实例都在这里分配内存。</p>
+<p>Java堆是垃圾收集器管理的主要区域，因此很多时候也被称做“GC堆”（GarbageCollected Heap)</p>
+<p>根据Java虚拟机规范的规定，Java堆可以处于物理上不连续的内存空间中，只要逻辑上是连续的即可，就像我们的磁盘空间一样。 </p>
+<h3 id="方法区"><a href="#方法区" class="headerlink" title="方法区"></a>方法区</h3><p>方法区（Method Area）与Java堆一样，是各个线程共享的内存区域，它用于存储已被虚拟机加载的类信息、 常量、静态变量、 即时编译器编译后的代码等数据。</p>
+<h3 id="运行时常量池"><a href="#运行时常量池" class="headerlink" title="运行时常量池"></a>运行时常量池</h3><p>运行时常量池（Runtime Constant Pool）是方法区的一部分。 Class文件中除了有类的版本、 字段、 方法、 接口等描述信息外，还有一项信息是常量池（Constant Pool Table），用于存放编译期生成的各种字面量和符号引用，这部分内容将在类加载后进入方法区的运行时常量池中存放。</p>
+<p>运行时常量池相对于Class文件常量池的另外一个重要特征是具备动态性，Java语言并不要求常量一定只有编译期才能产生</p>
+<h3 id="直接内存"><a href="#直接内存" class="headerlink" title="直接内存"></a>直接内存</h3><p>直接内存（Direct Memory）并不是虚拟机运行时数据区的一部分，也不是Java虚拟机规范中定义的内存区域。 但是这部分内存也被频繁地使用，而且也可能导致OutOfMemoryError异常出现</p>
+<h2 id="HotSpot虚拟机对象"><a href="#HotSpot虚拟机对象" class="headerlink" title="HotSpot虚拟机对象"></a>HotSpot虚拟机对象</h2><p>otSpot虚拟机在Java堆中对象分配、 布局和访问的全过程。</p>
+<h3 id="对象的创建"><a href="#对象的创建" class="headerlink" title="对象的创建"></a>对象的创建</h3><p>虚拟机遇到一条new指令时，首先将去检查这个指令的参数是否能在常量池中定位到一个类的符号引用，并且检查这个符号引用代表的类是否已被加载、 解析和初始化过。 如果没有，那必须先执行相应的类加载过程</p>
+<p>在类加载检查通过后，接下来虚拟机将为新生对象分配内存。 对象所需内存的大小在类加载完成后便可完全确定，为对象分配空间的任务等同于把一块确定大小的内存从Java堆中划分出来。</p>
+<p>还有另外一个需要考虑的问题是对象创建在虚拟机中是非常频繁的行为，即使是仅仅修改一个指针所指向的位置，在并发情况下也并不是线程安全的，可能出现正在给对象A分配内存，指针还没来得及修改，对象B又同时使用了原来的指针来分配内存的情况。解决这个问题有两种方案:</p>
+<ul>
+<li>对分配内存空间的动作进行<strong>同步处理</strong>——实际上虚拟机采用<strong>CAS配上失败重试</strong>的方式保证更新操作的原子性</li>
+<li>另一种是把内存分配的动作按照线程划分在<strong>不同的空间</strong>之中进行，即每个线程在Java堆中预先分配一小块内存，称为<strong>本地线程分配缓冲（Thread Local Allocation Buffer,TLAB</strong>。 哪个线程要分配内存，就在哪个线程的TLAB上分配，只有TLAB用完并分配新的TLAB时，才需要同步锁定</li>
+</ul>
+<p>内存分配完成后，虚拟机需要将分配到的内存空间都初始化为零值（不包括对象头）</p>
+<p>接下来，虚拟机要对对象进行必要的设置,例如这个对象是哪个类的实例、 如何才能找到类的元数据信息、 对象的哈希码、 对象的GC分代年龄等信息</p>
+<p>从虚拟机的视角来看，一个新的对象已经产生了，但从Java程序的视角来看，对象创建才刚刚开始——＜init＞方法还没有执行，所有的字段都还为零。</p>
+<h3 id="对象的内存布局"><a href="#对象的内存布局" class="headerlink" title="对象的内存布局"></a>对象的内存布局</h3><p>在HotSpot虚拟机中，对象在内存中存储的布局可以分为3块区域：<strong>对象头（Header）</strong>、<strong>实例数据（Instance Data</strong>）和<strong>对齐填充（Padding</strong>）。</p>
+<p>HotSpot虚拟机的对象头包括两部分信息:</p>
+<ul>
+<li>第一部分用于存储对象自身的运行时数据，如哈希码（HashCode）、 GC分代年龄、 锁状态标志、 线程持有的锁、 偏向线程ID、 偏向时间戳等</li>
+<li>对象头的另外一部分是类型指针，即对象指向它的类元数据的指针，虚拟机通过这个指针来确定这个对象是哪个类的实例。</li>
+</ul>
+<p>接下来的实例数据部分是对象真正存储的有效信息，也是在程序代码中所定义的各种类型的字段内容。 无论是从父类继承下来的，还是在子类中定义的，都需要记录起来。</p>
+<p>第三部分对齐填充并不是必然存在的，也没有特别的含义，它仅仅起着占位符的作用。</p>
+<h3 id="对象的访问定位"><a href="#对象的访问定位" class="headerlink" title="对象的访问定位"></a>对象的访问定位</h3><p>建立对象是为了使用对象，我们的Java程序需要通过栈上的<strong>reference数据</strong>来操作堆上的具体对象。对象访问方式也是取决于虚拟机实现而定的。</p>
+<p>目前主流的访问方式有使用句柄和直接指针两种：</p>
+<ul>
+<li>使用句柄访问:<ul>
+<li>那么Java堆中将会划分出一块内存来作为句柄池，reference中存储的就是对象的句柄地址，而句柄中包含了对象实例数据与类型数据各自的具体地址信息</li>
+</ul>
+</li>
+<li>使用直接指针访问:<ul>
+<li>Java堆对象的布局中就必须考虑如何放置访问类型数据的相关信息，而reference中存储的直接就是对象地址</li>
+</ul>
+</li>
+</ul>
 <blockquote>
+<p>注：对虚拟机Sun HotSpot而言，使用的是直接指针访问。</p>
+</blockquote>
+<h3 id="OutOfMemoryError异常"><a href="#OutOfMemoryError异常" class="headerlink" title="OutOfMemoryError异常"></a>OutOfMemoryError异常</h3><p>由于书中所实例均为jdk1.6或jdk1.7，在jdk1.8中很多vm参数都被移除，这里就不赘述，发生上述异常，基本上都是创建了太多的对象，导致内存不足，然后溢出。</p>
+<h2 id="垃圾收集器与内存分配策略"><a href="#垃圾收集器与内存分配策略" class="headerlink" title="垃圾收集器与内存分配策略"></a>垃圾收集器与内存分配策略</h2><p>在堆里面存放着Java世界中几乎所有的对象实例，垃圾收集器在对堆进行回收前，第一件事情就是要确定这些对象之中哪些还<strong>“存活”</strong>着，哪些已经<strong>死去”</strong>（即不可能再被任何途径使用的对象）。</p>
+<h3 id="引用计数算法"><a href="#引用计数算法" class="headerlink" title="引用计数算法"></a>引用计数算法</h3><p>一些教科书给出的说法为:</p>
+<ul>
+<li>给对象中添加一个引用计数器，每当有一个地方引用它时，计数器值就加1；当引用失效时，计数器值就减1；任何时刻计数器为0的对象就是不可能再被使用的。</li>
+</ul>
+<p>该算法在大部分情况下它都是一个不错的算法,但至少主流的Java虚拟机里面没有选用引用计数算法来管理内存，其中最主要的原因是它很难解决对象之间<strong>相互循环引用</strong>的问题。</p>
+<h3 id="可达性分析算法"><a href="#可达性分析算法" class="headerlink" title="可达性分析算法"></a>可达性分析算法</h3><blockquote>
 <p>注：</p>
 <ul>
-<li>上述代码在<strong>visual studio 2015</strong>中编译成功运行，其他ide请自行测试</li>
+<li>上述环境在<strong>ubuntu16.04 lts</strong>中测试成功</li>
 <li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
 </ul>
 </blockquote>
@@ -366,13 +414,13 @@
   
     
     <div class="copyright">
-        <p><span>Title:</span><a href="/2016/07/15/c语言中缀表达式变后缀表达式/">C语言中缀表达式转后缀表达式</a></p>
+        <p><span>Title:</span><a href="/2017/04/15/深入理解java虚拟机学习笔记_1/">深入理解java虚拟机学习笔记 -- 1</a></p>
         <p><span>Author:</span><a href="/" title="Back to Homepage">EarthChen</a></p>
-        <p><span>Created:</span>2016-07-15, 14:40:00</p>
-        <p><span>Updated:</span>2017-08-06, 17:47:43</p>
+        <p><span>Created:</span>2017-04-15, 14:40:00</p>
+        <p><span>Updated:</span>2017-09-09, 16:30:38</p>
         <p>
-            <span>Full URL:</span><a class="post-url" href="/2016/07/15/c语言中缀表达式变后缀表达式/" title="C语言中缀表达式转后缀表达式">http://earthchen.cn/2016/07/15/c语言中缀表达式变后缀表达式/</a>
-            <span class="copy-path" data-clipboard-text="From http://earthchen.cn/2016/07/15/c语言中缀表达式变后缀表达式/　　By EarthChen" title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
+            <span>Full URL:</span><a class="post-url" href="/2017/04/15/深入理解java虚拟机学习笔记_1/" title="深入理解java虚拟机学习笔记 -- 1">http://earthchen.cn/2017/04/15/深入理解java虚拟机学习笔记_1/</a>
+            <span class="copy-path" data-clipboard-text="From http://earthchen.cn/2017/04/15/深入理解java虚拟机学习笔记_1/　　By EarthChen" title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -385,15 +433,15 @@
     <nav id="article-nav">
         
             <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2016/07/15/C语言二叉树基本操作/">
-                    C语言二叉树的基本操作
+                <a href="/2017/04/16/redis_study_2/">
+                    Redis学习笔记 -- 2
                 </a>
             </div>
         
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2016/07/15/C语言逆波兰计算器/">
-                    C语言逆波兰表达式计算(后缀表达式计算器)
+                <a href="/2017/04/15/redis_study_1/">
+                    Redis学习笔记 -- 1
                 </a>
             </div>
         
@@ -405,7 +453,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#开始"><span class="toc-number">1.</span> <span class="toc-text">开始</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#添加适当的头文件，定义一个栈数据结构，"><span class="toc-number">1.1.</span> <span class="toc-text">添加适当的头文件，定义一个栈数据结构，</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建一个栈"><span class="toc-number">1.2.</span> <span class="toc-text">创建一个栈</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#入栈操作"><span class="toc-number">1.3.</span> <span class="toc-text">入栈操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#出栈操作"><span class="toc-number">1.4.</span> <span class="toc-text">出栈操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#计算栈的当前容量-最大容量是s-stackSize"><span class="toc-number">1.5.</span> <span class="toc-text">计算栈的当前容量(最大容量是s.stackSize)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#主函数"><span class="toc-number">1.6.</span> <span class="toc-text">主函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#以下是运行结果-本人用的是vs2015编译器，所以文中的scanf用了更安全的scanf-s，-如有引用-请自觉替换成和自己的编译器想匹配的函数"><span class="toc-number">1.7.</span> <span class="toc-text">以下是运行结果 本人用的是vs2015编译器，所以文中的scanf用了更安全的scanf_s，  如有引用 请自觉替换成和自己的编译器想匹配的函数</span></a></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java内存区域与内存溢出异常"><span class="toc-number">1.</span> <span class="toc-text">Java内存区域与内存溢出异常</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#运行时数据区域"><span class="toc-number">1.1.</span> <span class="toc-text">运行时数据区域</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#程序计数器"><span class="toc-number">1.1.1.</span> <span class="toc-text">程序计数器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java虚拟机栈"><span class="toc-number">1.1.2.</span> <span class="toc-text">Java虚拟机栈</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#本地方法栈"><span class="toc-number">1.1.3.</span> <span class="toc-text">本地方法栈</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java堆"><span class="toc-number">1.1.4.</span> <span class="toc-text">Java堆</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方法区"><span class="toc-number">1.1.5.</span> <span class="toc-text">方法区</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#运行时常量池"><span class="toc-number">1.1.6.</span> <span class="toc-text">运行时常量池</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#直接内存"><span class="toc-number">1.1.7.</span> <span class="toc-text">直接内存</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HotSpot虚拟机对象"><span class="toc-number">1.2.</span> <span class="toc-text">HotSpot虚拟机对象</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#对象的创建"><span class="toc-number">1.2.1.</span> <span class="toc-text">对象的创建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#对象的内存布局"><span class="toc-number">1.2.2.</span> <span class="toc-text">对象的内存布局</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#对象的访问定位"><span class="toc-number">1.2.3.</span> <span class="toc-text">对象的访问定位</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#OutOfMemoryError异常"><span class="toc-number">1.2.4.</span> <span class="toc-text">OutOfMemoryError异常</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#垃圾收集器与内存分配策略"><span class="toc-number">1.3.</span> <span class="toc-text">垃圾收集器与内存分配策略</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#引用计数算法"><span class="toc-number">1.3.1.</span> <span class="toc-text">引用计数算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#可达性分析算法"><span class="toc-number">1.3.2.</span> <span class="toc-text">可达性分析算法</span></a></li></ol></li></ol></li></ol>
         
     </div>
     <style>
@@ -441,7 +489,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"C语言中缀表达式转后缀表达式　| EarthChen's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"深入理解java虚拟机学习笔记 -- 1　| EarthChen's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -475,7 +523,7 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2016/07/15/C语言二叉树基本操作/" title="Pre: C语言二叉树的基本操作">
+            <a href="/2017/04/16/redis_study_2/" title="Pre: Redis学习笔记 -- 2">
                 <i class="fa fa-angle-left"></i>
             </a>
         
@@ -483,7 +531,7 @@
         <a title="Mini Archives"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2016/07/15/C语言逆波兰计算器/" title="Next: C语言逆波兰表达式计算(后缀表达式计算器)">
+            <a href="/2017/04/15/redis_study_1/" title="Next: Redis学习笔记 -- 1">
                 <i class="fa fa-angle-right"></i>
             </a>
         
