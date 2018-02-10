@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html >
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="EarthChen" />
+
+
+
+<meta name="description" content="ElasticSearch是一个基于Lucene的搜索服务器。它提供了一个分布式多用户能力的全文搜索引擎，基于RESTful web接口。Elasticsearch是用Java开发的，并作为Apache许可条款下的开放源码发布，是当前流行的企业级搜索引擎。设计用于云计算中，能够达到实时搜索，稳定，可靠，快速，安装使用方便。 具体的大家可以再去网上看看介绍。这里就不阐述了 Elasticsearch">
+<meta name="keywords" content="Elasticsearch">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Elasticsearch学习笔记 -- 1">
+<meta property="og:url" content="http://earthchen.cn/2017/04/15/Elasticsearch_study_1/index.html">
+<meta property="og:site_name" content="EarthChen&#39;s Blog">
+<meta property="og:description" content="ElasticSearch是一个基于Lucene的搜索服务器。它提供了一个分布式多用户能力的全文搜索引擎，基于RESTful web接口。Elasticsearch是用Java开发的，并作为Apache许可条款下的开放源码发布，是当前流行的企业级搜索引擎。设计用于云计算中，能够达到实时搜索，稳定，可靠，快速，安装使用方便。 具体的大家可以再去网上看看介绍。这里就不阐述了 Elasticsearch">
+<meta property="og:updated_time" content="2018-02-10T06:54:39.066Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Elasticsearch学习笔记 -- 1">
+<meta name="twitter:description" content="ElasticSearch是一个基于Lucene的搜索服务器。它提供了一个分布式多用户能力的全文搜索引擎，基于RESTful web接口。Elasticsearch是用Java开发的，并作为Apache许可条款下的开放源码发布，是当前流行的企业级搜索引擎。设计用于云计算中，能够达到实时搜索，稳定，可靠，快速，安装使用方便。 具体的大家可以再去网上看看介绍。这里就不阐述了 Elasticsearch">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="EarthChen&#39;s Blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/black/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Elasticsearch学习笔记 -- 1 | EarthChen&#39;s Blog</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?838a8860a1d9fc43bc091f40a8ab515d";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="http://objects.earthchen.cn/%E5%A4%B4%E5%83%8F.jpg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">EarthChen</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">多学一点知识，少写一行代码</p>
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="true" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>Menu</li>
+                        <li>Tags</li>
+                        
+                        <li>Friends</li>
+                        
+                        
+                        <li>About Me</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="http://mail.163.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/EarthChen" title="GitHub"></a>
+                            
+                                <a class="fa 知乎" href="https://www.zhihu.com/people/diamand-76/activities" title="知乎"></a>
+                            
+                                <a class="fa 简书" href="http://www.jianshu.com/u/85a919706c15" title="简书"></a>
+                            
+                                <a class="fa QQ" href="http://user.qzone.qq.com/1791538609" title="QQ"></a>
+                            
+                                <a class="fa 微信" href="https://wx.qq.com/" title="微信"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AJAX/">AJAX</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Celery/">Celery</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django/">Django</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gogs/">Gogs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LeetCode/">LeetCode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/">Nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/">Node.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Regular-Expression/">Regular Expression</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/">Spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webpack/">Webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习笔记/">学习笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/解决方案/">解决方案</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/资源/">资源</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.baidu.com/">Baidu</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.google.com/">Google</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://fanyi.youdao.com/">有道翻译</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">专注于技术 学习中的程序猿</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">EarthChen</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="http://objects.earthchen.cn/%E5%A4%B4%E5%83%8F.jpg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">EarthChen</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">多学一点知识，少写一行代码</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="http://mail.163.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/EarthChen" title="GitHub"></a>
+                            
+                                <a class="fa 知乎" target="_blank" href="https://www.zhihu.com/people/diamand-76/activities" title="知乎"></a>
+                            
+                                <a class="fa 简书" target="_blank" href="http://www.jianshu.com/u/85a919706c15" title="简书"></a>
+                            
+                                <a class="fa QQ" target="_blank" href="http://user.qzone.qq.com/1791538609" title="QQ"></a>
+                            
+                                <a class="fa 微信" target="_blank" href="https://wx.qq.com/" title="微信"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="Tags" friends="Friends" about="About Me"/>
+</nav>
+      <div class="body-wrap"><article id="post-Elasticsearch_study_1" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/04/15/Elasticsearch_study_1/" class="article-date">
+      <time datetime="2017-04-15T06:40:00.000Z" itemprop="datePublished">2017-04-15</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Elasticsearch学习笔记 -- 1
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/学习笔记/">学习笔记</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>ElasticSearch是一个基于Lucene的搜索服务器。它提供了一个分布式多用户能力的全文搜索引擎，基于RESTful web接口。Elasticsearch是用Java开发的，并作为Apache许可条款下的开放源码发布，是当前流行的企业级搜索引擎。设计用于云计算中，能够达到实时搜索，稳定，可靠，快速，安装使用方便。</p>
+<p>具体的大家可以再去网上看看介绍。这里就不阐述了</p>
+<h2 id="Elasticsearch"><a href="#Elasticsearch" class="headerlink" title="Elasticsearch"></a>Elasticsearch</h2><a id="more"></a>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>笔者这里是使用docker安装的，比较方便。笔者使用docker-compose搭建了一个集群，并且安装了head插件。</p>
+<ol>
+<li>docker-compose.yml内容为<figure class="highlight docker"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">version: <span class="string">'3'</span></div><div class="line">services:</div><div class="line">  elasticsearch-master:</div><div class="line">    restart: always</div><div class="line">    image: elasticsearch:latest</div><div class="line">    ports:</div><div class="line">      - <span class="string">"9200:9200"</span></div><div class="line">      - <span class="string">"9300:9300"</span></div><div class="line">    environment:</div><div class="line">      - ES_JAVA_OPTS=-Xms512m -Xmx512m</div><div class="line">    volumes:</div><div class="line">      - ./master-config:/usr/share/elasticsearch/config</div><div class="line">    </div><div class="line"></div><div class="line">  elasticsearch-slave1:</div><div class="line">    restart: always</div><div class="line">    image: elasticsearch:latest</div><div class="line">    ports:</div><div class="line">      - <span class="string">"8200:9200"</span></div><div class="line">      - <span class="string">"8300:9300"</span></div><div class="line">    depends_on:</div><div class="line">      - elasticsearch-master</div><div class="line">    links:</div><div class="line">      - elasticsearch-master</div><div class="line">    environment:</div><div class="line">      - ES_JAVA_OPTS=-Xms512m -Xmx512m</div><div class="line">      - discovery.zen.ping.unicast.hosts=lasticsearch-master</div><div class="line">    volumes:</div><div class="line">      - ./slave1-config:/usr/share/elasticsearch/config</div><div class="line"></div><div class="line">  elasticsearch-head:</div><div class="line">    restart: always</div><div class="line">    image: mobz/elasticsearch-head:<span class="number">5</span></div><div class="line">    ports:</div><div class="line">      - <span class="string">"9100:9100"</span></div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>具体的我会放到<a href="https://github.com/EarthChen/elasticsearch.git" target="_blank" rel="external">github</a>上，如果想使用只要clone下来进入<strong>docker-start</strong>目录执行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ docker-compose up <span class="_">-d</span></div></pre></td></tr></table></figure></p>
+<p>即可，如果没安装<strong>docker</strong>和<strong>docker-compose</strong>，请自行搜索安装。</p>
+<blockquote>
+<p>注：</p>
+<ul>
+<li>如果不搭建集群可以直接docker run，但是测试发现如果单结点运行在插入索引的时候，健康状态会变成yellow，</li>
+<li>随从结点可以不开启http，可以根据自己需要编写<strong>elasticsearch.yml</strong></li>
+<li>第一次创建完容器之后，下次启动需要进入<strong>docker-compose.yml</strong>所在的文件路径执行<strong>docker-compose start</strong>即可。</li>
+</ul>
+</blockquote>
+<h3 id="测试是否成功"><a href="#测试是否成功" class="headerlink" title="测试是否成功"></a>测试是否成功</h3><ol>
+<li>在浏览器输入<strong>127.0.0.1:9100</strong>，进入head插件的web端查看</li>
+</ol>
+<ol>
+<li>还可以直接输入<strong>127.0.0.1:9200</strong>，查看相应结点的状态</li>
+</ol>
+<p>根据提示，判断是否成功，如果你使用我的docker配置文件，除非端口冲突，一般是不会出错的。</p>
+<h3 id="elasticsearch基本操作"><a href="#elasticsearch基本操作" class="headerlink" title="elasticsearch基本操作"></a>elasticsearch基本操作</h3><p>es的api基本格式为:http://<ip>:<port>/&lt;索引&gt;/&lt;类型&gt;/&lt;文档id&gt;</port></ip></p>
+<p>使用http动词来操作数据</p>
+<h4 id="创建索引"><a href="#创建索引" class="headerlink" title="创建索引"></a>创建索引</h4><ol>
+<li>非结构化创建索引<br>PUT /people</li>
+</ol>
+<blockquote>
+<p>people为索引名</p>
+</blockquote>
+<ol>
+<li>结构化创建索引<br>POST /book/novel/_mappings</li>
+</ol>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"novel"</span>: &#123;</div><div class="line">    <span class="attr">"properties"</span>: &#123;</div><div class="line">      <span class="attr">"title"</span>: &#123;</div><div class="line">        <span class="attr">"type"</span>: <span class="string">"text"</span></div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>执行创建结构化时，索引必须存在，即执行上述命令时，<strong>book</strong>索引必须存在</p>
+</blockquote>
+<p>如果索引不存在，使用下面的方式</p>
+<p>PUT /people</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	<span class="attr">"settings"</span>:&#123;</div><div class="line">		<span class="attr">"number_of_shards"</span>:<span class="number">3</span>,   </div><div class="line">		<span class="attr">"number_of_replicas"</span>: <span class="number">1</span></div><div class="line">	&#125;,</div><div class="line">	<span class="attr">"mappings"</span>:&#123;</div><div class="line">		<span class="attr">"man"</span>:&#123;</div><div class="line">			<span class="attr">"properties"</span>:&#123;</div><div class="line">				<span class="attr">"name"</span>:&#123;</div><div class="line">					<span class="attr">"type"</span>: <span class="string">"text"</span></div><div class="line">				&#125;,</div><div class="line">				<span class="attr">"country"</span>:&#123;</div><div class="line">					<span class="attr">"type"</span>: <span class="string">"keyword"</span></div><div class="line">				&#125;,</div><div class="line">				<span class="attr">"age"</span>:&#123;</div><div class="line">					<span class="attr">"type"</span>: <span class="string">"integer"</span></div><div class="line">				&#125;,</div><div class="line">				<span class="attr">"date"</span>:&#123;</div><div class="line">					<span class="attr">"type"</span>:<span class="string">"date"</span>,</div><div class="line">					<span class="attr">"format"</span>: <span class="string">"yyyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis"</span></div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;,</div><div class="line">		<span class="attr">"woman"</span>:&#123;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li>settings为当前索引的配置，比如切片数备份数</li>
+<li>es支持<strong>||</strong>代表当前属性支持多种格式</li>
+</ul>
+</blockquote>
+<h4 id="数据插入"><a href="#数据插入" class="headerlink" title="数据插入"></a>数据插入</h4><ol>
+<li>指定文档id插入</li>
+</ol>
+<p>PUT /people/man/1</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	<span class="attr">"name"</span>:<span class="string">"earthchen"</span>,</div><div class="line">	<span class="attr">"country"</span>: <span class="string">"China"</span>,</div><div class="line">	<span class="attr">"age"</span>: <span class="number">18</span>,</div><div class="line">	<span class="attr">"date"</span>:<span class="string">"1996-11-25"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ol>
+<li>自动生成id插入</li>
+</ol>
+<p>POST /people/man</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	<span class="attr">"name"</span>:<span class="string">"earthchen2"</span>,</div><div class="line">	<span class="attr">"country"</span>: <span class="string">"China"</span>,</div><div class="line">	<span class="attr">"age"</span>: <span class="number">20</span>,</div><div class="line">	<span class="attr">"date"</span>:<span class="string">"1997-11-25"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="数据修改"><a href="#数据修改" class="headerlink" title="数据修改"></a>数据修改</h4><ol>
+<li>直接修改</li>
+</ol>
+<p>POST /people/man/1/_update</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	<span class="attr">"doc"</span>:&#123;</div><div class="line">		<span class="attr">"name"</span>:<span class="string">"修改后的name"</span></div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ol>
+<li>使用脚本</li>
+</ol>
+<p>POST /people/man/1/_update</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	"script":&#123;</div><div class="line">		"lang":"painless",</div><div class="line">		"inline":"ctx._source.age=params.age",</div><div class="line">		"params":&#123;</div><div class="line">			"age":100</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">或</div><div class="line">&#123;</div><div class="line">	"script":&#123;</div><div class="line">		"lang":"painless",</div><div class="line">		"inline":"ctx._source.age+=10",</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="数据删除"><a href="#数据删除" class="headerlink" title="数据删除"></a>数据删除</h4><ol>
+<li>删除指定的文档</li>
+</ol>
+<p>DELETE /people/man/1</p>
+<ol>
+<li>删除指定索引</li>
+</ol>
+<p>DELETE /people</p>
+<h4 id="基本查询"><a href="#基本查询" class="headerlink" title="基本查询"></a>基本查询</h4><p>查询结构为<br><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"mappings"</span>: &#123;</div><div class="line">        <span class="attr">"novel"</span>: &#123;</div><div class="line">        <span class="attr">"properties"</span>: &#123;</div><div class="line">            <span class="attr">"word_count"</span>: &#123;</div><div class="line">                <span class="attr">"type"</span>: <span class="string">"integer"</span></div><div class="line">                &#125;,</div><div class="line">            <span class="attr">"author"</span>: &#123;</div><div class="line">                <span class="attr">"type"</span>: <span class="string">"keyword"</span></div><div class="line">                &#125;,</div><div class="line">            <span class="attr">"title"</span>: &#123;</div><div class="line">                <span class="attr">"type"</span>: <span class="string">"text"</span></div><div class="line">                &#125;,</div><div class="line">            <span class="attr">"publish_date"</span>: &#123;</div><div class="line">                <span class="attr">"format"</span>: <span class="string">"yyyy-MM-dd HH:mm:ss || yyyy-MM-dd || epoch_millis"</span>,</div><div class="line">                <span class="attr">"type"</span>: <span class="string">"date"</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h5 id="简单查询"><a href="#简单查询" class="headerlink" title="简单查询"></a>简单查询</h5><ol>
+<li>根据id查询数据</li>
+</ol>
+<p>GET /book/novel/2</p>
+<h5 id="条件查询"><a href="#条件查询" class="headerlink" title="条件查询"></a>条件查询</h5><ol>
+<li>查询所有数据</li>
+</ol>
+<p>POST /book/_search</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	<span class="attr">"query"</span>:&#123;</div><div class="line">		<span class="attr">"match_all"</span>:&#123;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>默认10条数据</p>
+</blockquote>
+<ol>
+<li>指定从第几条返回，返回多少条数据</li>
+</ol>
+<p>POST /book/_search<br><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	<span class="attr">"query"</span>:&#123;</div><div class="line">		<span class="attr">"match_all"</span>:&#123;&#125;</div><div class="line">	&#125;,</div><div class="line">	<span class="attr">"from"</span>:<span class="number">1</span>,</div><div class="line">	<span class="attr">"size"</span>:<span class="number">2</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<ol>
+<li>查询关键词</li>
+</ol>
+<ul>
+<li>查询title中含有title的数据</li>
+</ul>
+<p>POST /book/_search</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	<span class="attr">"query"</span>:&#123;</div><div class="line">		<span class="attr">"match"</span>:&#123;</div><div class="line">			<span class="attr">"title"</span>:<span class="string">"title"</span></div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>增加排序规则（按照publish_date的降序排列）</li>
+</ul>
+<p>POST /book/_search</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	<span class="attr">"query"</span>:&#123;</div><div class="line">		<span class="attr">"match"</span>:&#123;</div><div class="line">			<span class="attr">"title"</span>:<span class="string">"title4"</span></div><div class="line">		&#125;</div><div class="line">	&#125;,</div><div class="line">	<span class="attr">"sort"</span>:[</div><div class="line">			&#123;</div><div class="line">				<span class="attr">"publish_date"</span>:&#123;</div><div class="line">					<span class="attr">"order"</span>:<span class="string">"desc"</span></div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h5 id="聚合查询"><a href="#聚合查询" class="headerlink" title="聚合查询"></a>聚合查询</h5><ol>
+<li>按照指定字段聚合查询</li>
+</ol>
+<p>POST /book/_search</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	<span class="attr">"aggs"</span>:&#123;</div><div class="line">		<span class="attr">"group_by_word_count"</span>:&#123;</div><div class="line">			<span class="attr">"terms"</span>:&#123;</div><div class="line">				<span class="attr">"field"</span>:<span class="string">"word_count"</span></div><div class="line">			&#125;</div><div class="line">		&#125;,</div><div class="line">		<span class="attr">"group_by_publish_date"</span>:&#123;</div><div class="line">			<span class="attr">"terms"</span>:&#123;</div><div class="line">				<span class="attr">"field"</span>:<span class="string">"publish_date"</span></div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ol>
+<li>按照指定字段聚合计算</li>
+</ol>
+<p>POST /book/_search</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	<span class="attr">"aggs"</span>:&#123;</div><div class="line">		<span class="attr">"grades_word_count"</span>:&#123;</div><div class="line">			<span class="attr">"stats"</span>:&#123;</div><div class="line">				<span class="attr">"field"</span>:<span class="string">"word_count"</span></div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="高级查询"><a href="#高级查询" class="headerlink" title="高级查询"></a>高级查询</h4><h5 id="子条件查询-特定字段查询所指特定值"><a href="#子条件查询-特定字段查询所指特定值" class="headerlink" title="子条件查询(特定字段查询所指特定值)"></a>子条件查询(特定字段查询所指特定值)</h5><ol>
+<li>Query context</li>
+</ol>
+<p>(在查询过程中,除了判断文档是否满足查询条件,es还会计算一个<strong>_score</strong>,来标示匹配的程度，为了判断目标文档和查询条件<strong>有多好</strong>)</p>
+<ul>
+<li><p>全文本查询(针对文本类型数据)</p>
+<ol>
+<li><p>模糊匹配(分词匹配)<strong>match</strong></p>
+<p> 查询title中含有<strong>elasticsearch</strong>或者<strong>入门</strong>的数据</p>
+<p> POST /book/_search</p>
+ <figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"query"</span>:&#123;</div><div class="line">        <span class="attr">"match"</span>:&#123;</div><div class="line">            <span class="attr">"title"</span>:<span class="string">"elasticsearch入门"</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>不分词匹配(将查询内容作为一个整体)<strong>match_phrase</strong></p>
+<p> 查询title中含有<strong>elasticsearch学习</strong>的数据</p>
+<p> POST /book/_search</p>
+ <figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"query"</span>:&#123;</div><div class="line">        <span class="attr">"match_phrase"</span>:&#123;</div><div class="line">            <span class="attr">"title"</span>:<span class="string">"elasticsearch学习"</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>对多个字段的匹配查询<strong>multi_match</strong></p>
+</li>
+</ol>
+</li>
+</ul>
+<pre><code>    查询**title**或者**author**字段中含有**elasticsearch**的数据
+
+    POST {{host}}/book/_search
+
+
+    <figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"query"</span>:&#123;</div><div class="line">        <span class="attr">"multi_match"</span>:&#123;</div><div class="line">            <span class="attr">"query"</span>:<span class="string">"elasticsearch"</span>,</div><div class="line">            <span class="attr">"fields"</span>:[<span class="string">"title"</span>,<span class="string">"author"</span>]</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+4. 语法查询**query_string**
+
+    查询含有**elasticsearch**和**学习**或者**java**的数据
+
+    POST {{host}}/book/_search
+
+    <figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"query"</span>:&#123;</div><div class="line">        <span class="attr">"query_string"</span>:&#123;</div><div class="line">            <span class="attr">"query"</span>: <span class="string">"(elasticsearch AND 学习) OR java"</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+
+5. 指定字段语法查询**query_string**
+
+    查询字段**title**或者**author**中含有**elasticsearch**和**学习**或者**java**或者**aaa**的数据
+
+    POST {{host}}/book/_search
+
+    <figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"query"</span>:&#123;</div><div class="line">        <span class="attr">"query_string"</span>:&#123;</div><div class="line">            <span class="attr">"query"</span>: <span class="string">"(elasticsearch AND 学习) OR java OR 4444"</span>,</div><div class="line">            <span class="attr">"fields"</span>:[<span class="string">"author"</span>,<span class="string">"title"</span>]</div><div class="line">            </div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</code></pre><p>}</p>
+<ul>
+<li><p>字段级别查询(针对结构化数据,数字，日期等)<strong>term</strong></p>
+<ol>
+<li><p>对指定字段的精确查询</p>
+<ol>
+<li><p>查询<strong>word_count</strong>等于1000的的数据</p>
+<p>POST /book/_search</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"query"</span>:&#123;</div><div class="line">        <span class="attr">"term"</span>:&#123;</div><div class="line">            <span class="attr">"word_count"</span>: <span class="number">1000</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>查询<strong>word_count</strong>在范围1000到3000内的数据</p>
+<p>POST /book/_search</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line"> <span class="attr">"query"</span>:&#123;</div><div class="line">        <span class="attr">"range"</span>:&#123;</div><div class="line">            <span class="attr">"word_count"</span>:&#123;</div><div class="line">                <span class="attr">"lte"</span>: <span class="number">3000</span>,</div><div class="line">                <span class="attr">"gte"</span>:<span class="number">1000</span></div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ul>
+<ol>
+<li>Filter context</li>
+</ol>
+<h5 id="复合条件查询-以一定的逻辑组合子条件查询"><a href="#复合条件查询-以一定的逻辑组合子条件查询" class="headerlink" title="复合条件查询(以一定的逻辑组合子条件查询)"></a>复合条件查询(以一定的逻辑组合子条件查询)</h5><blockquote>
+<p>注：</p>
+<ul>
+<li>上述环境在<strong>ubuntu16.04 lts</strong> <strong>es5.6.7</strong>中测试成功</li>
+<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
+</ul>
+</blockquote>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>Title:</span><a href="/2017/04/15/Elasticsearch_study_1/">Elasticsearch学习笔记 -- 1</a></p>
+        <p><span>Author:</span><a href="/" title="Back to Homepage">EarthChen</a></p>
+        <p><span>Created:</span>2017-04-15, 14:40:00</p>
+        <p><span>Updated:</span>2018-02-10, 14:54:39</p>
+        <p>
+            <span>Full URL:</span><a class="post-url" href="/2017/04/15/Elasticsearch_study_1/" title="Elasticsearch学习笔记 -- 1">http://earthchen.cn/2017/04/15/Elasticsearch_study_1/</a>
+            <span class="copy-path" data-clipboard-text="From http://earthchen.cn/2017/04/15/Elasticsearch_study_1/　　By EarthChen" title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>License:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"CC BY-NC-SA 4.0"</a> Keep Link &amp; Author if Distribute.
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2017/04/16/redis_study_2/">
+                    Redis学习笔记 -- 2
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2017/04/15/redis_study_1/">
+                    Redis学习笔记 -- 1
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Elasticsearch"><span class="toc-number">1.</span> <span class="toc-text">Elasticsearch</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装"><span class="toc-number">1.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#测试是否成功"><span class="toc-number">1.2.</span> <span class="toc-text">测试是否成功</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#elasticsearch基本操作"><span class="toc-number">1.3.</span> <span class="toc-text">elasticsearch基本操作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#创建索引"><span class="toc-number">1.3.1.</span> <span class="toc-text">创建索引</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数据插入"><span class="toc-number">1.3.2.</span> <span class="toc-text">数据插入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数据修改"><span class="toc-number">1.3.3.</span> <span class="toc-text">数据修改</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数据删除"><span class="toc-number">1.3.4.</span> <span class="toc-text">数据删除</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#基本查询"><span class="toc-number">1.3.5.</span> <span class="toc-text">基本查询</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#简单查询"><span class="toc-number">1.3.5.1.</span> <span class="toc-text">简单查询</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#条件查询"><span class="toc-number">1.3.5.2.</span> <span class="toc-text">条件查询</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#聚合查询"><span class="toc-number">1.3.5.3.</span> <span class="toc-text">聚合查询</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#高级查询"><span class="toc-number">1.3.6.</span> <span class="toc-text">高级查询</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#子条件查询-特定字段查询所指特定值"><span class="toc-number">1.3.6.1.</span> <span class="toc-text">子条件查询(特定字段查询所指特定值)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#复合条件查询-以一定的逻辑组合子条件查询"><span class="toc-number">1.3.6.2.</span> <span class="toc-text">复合条件查询(以一定的逻辑组合子条件查询)</span></a></li></ol></li></ol></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-5 i,
+        .toc-level-5 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="Hide"  title="Show or Hide Table of Contents">
+
+    <script>
+        yiliaConfig.toc = ["Hide", "Show", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"Elasticsearch学习笔记 -- 1　| EarthChen's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+        <section class="youyan" id="comments">
+    <script>
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = 'http://v2.uyan.cc/code/uyan.js?uid=2115719';
+            (d.head || d.body).appendChild(s);
+        }
+    </script>
+    
+    <script> loadComment(); </script>
+
+    <div id="uyan_frame"></div>
+</section>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2017/04/16/redis_study_2/" title="Pre: Redis学习笔记 -- 2">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="Mini Archives"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2017/04/15/redis_study_1/" title="Next: Redis学习笔记 -- 1">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/09/09/深入理解java虚拟机学习笔记_1/">深入理解java虚拟机学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/23/Docker_study_Dockerfile_instructions/">Docker学习笔记---Dockerfile</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/22/Docker_study/">Docker学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/20/celery_study/">Celery-分布式任务队列学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_channels_websocket/">Django使用Channels实现websocket</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_redis_cache/">Django使用redis作为缓存系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/13/Docker_Gogs/">使用Docker搭建git服务Gogs</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_21to_40/">LeetCode刷题记录(easy难度21-40题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_1to20/">LeetCode刷题记录(easy难度1-20题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/29/es6_study/">es6学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/Webpack_study/">Webpack学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/RegularExpression_study/">正则表达式学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/08/AndroidStudio/">Android Studio 使用本地离线Gradle</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/跨域请求解决方案/">跨域请求的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/ubuntu_supervisor/">ubuntu下的进程控制系统————Supervisor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_nginx_gunicorn/">django+nginx+gunicorn部署配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/28/ubuntu修复不能挂载NTFS硬盘/">ubuntu修复linux和windows双系统下挂载ntfs硬盘出错问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/17/django_timing_task/">django使用django-crontab实现定时任务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/15/django_rest_framework_jwt/">django-rest-framework配置json web token进行接口的认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/django_rest_framework_study/">django-rest-framework框架学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/spring_SpEL/">spring中的SpEL表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/08/git_study/">Git学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/03/资源收集/">资源收集共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/06/ubuntu_open_port/">ubuntu开放指定端口</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/16/redis_study_2/">Redis学习笔记 -- 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/15/Elasticsearch_study_1/">Elasticsearch学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/15/redis_study_1/">Redis学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/16/ubuntu_do_something_use/">ubuntu日常使用的安装配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/django_address_baiduapi_marker_show/">Django调用百度地图api在地图上批量增加标记点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/ubuntu_do_something_coding/">ubuntu搭建常见开发环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/10/ubuntu安装在双系统笔记本下开机或关机卡死.1/">ubuntu在双系统下开机卡死或关机卡死的解决办法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/11/python_requirements/">python生成项目所需依赖文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/10/hexo_github_coding_blog/">利用hexo和github或coding 搭免费个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/python2和Python3的区别/">Python2和Python3的区别简单总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django常用语句/">Django常用语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django连接mysql数据库/">Django连接MySql使用models处理数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django数据库操作/">Django操作数据库</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django环境搭建/">Django环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django渲染模板/">Django渲染模板</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/03/Android_qq_Menu/">Android仿qq侧滑菜单</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/16/C语言队列的基本操作/">C语言队列的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言共享栈/">C语言共享栈</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言二叉树基本操作/">C语言二叉树的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言逆波兰计算器/">C语言逆波兰表达式计算(后缀表达式计算器)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言中缀表达式计算器/">C语言中缀表达式计算器</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/c语言中缀表达式变后缀表达式/">C语言中缀表达式转后缀表达式</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2018 EarthChen
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="A fast, simple &amp; powerful blog framework">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Another simple and elegant theme for Hexo  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="Site Visitors"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="Page Hits"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+    <script src="/js/GithubRepoWidget.js"></script>
+
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="Back to Top"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="Comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="Go to Bottom"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+             github: ".github-widget a", 
+            
+            
+            
+             categories: ".article-category a, a.tag-list-link", 
+             articleNav: "#article-nav a, #post-nav-button a", 
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
