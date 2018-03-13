@@ -15,20 +15,17 @@
 
 
 
-<meta name="description" content="使用django-rest-framework开发api并使用json web token进行身份验证在这里使用django-rest-framework-jwt这个库来帮助我们简单的使用jwt进行身份验证并解决一些前后端分离而产生的跨域问题 流程">
-<meta name="keywords" content="Django,Python">
+<meta name="description" content="在我们做项目的时候，经常能遇到不被spring管理的类中要使用相关spring bean，比如自定义过滤器，静态工具类等，相应的也有几种办法，一种是想办法使不被spring容器管理的类让他被spring管理。第二种就是通过应用上下文获取通过clazz或者相关bean的name获取。第一种一般是添加相关注解即可，所以本文着重介绍一下第二种办法，并提供一个工具类。">
+<meta name="keywords" content="Spring boot">
 <meta property="og:type" content="article">
-<meta property="og:title" content="django-rest-framework配置json web token进行接口的认证">
-<meta property="og:url" content="http://earthchen.cn/2017/06/15/django_rest_framework_jwt/index.html">
+<meta property="og:title" content="在不被spring容器管理的类中使用ApplicationContext应用上下文bean">
+<meta property="og:url" content="http://earthchen.cn/2018/03/13/applicationContextHelper/index.html">
 <meta property="og:site_name" content="EarthChen&#39;s Blog">
-<meta property="og:description" content="使用django-rest-framework开发api并使用json web token进行身份验证在这里使用django-rest-framework-jwt这个库来帮助我们简单的使用jwt进行身份验证并解决一些前后端分离而产生的跨域问题 流程">
-<meta property="og:image" content="http://objects.earthchen.cn/django-rest-framework-jwt-token.png">
-<meta property="og:image" content="http://objects.earthchen.cn/django-rest-framework-jwt-no-token.png">
-<meta property="og:updated_time" content="2017-08-06T09:47:37.568Z">
+<meta property="og:description" content="在我们做项目的时候，经常能遇到不被spring管理的类中要使用相关spring bean，比如自定义过滤器，静态工具类等，相应的也有几种办法，一种是想办法使不被spring容器管理的类让他被spring管理。第二种就是通过应用上下文获取通过clazz或者相关bean的name获取。第一种一般是添加相关注解即可，所以本文着重介绍一下第二种办法，并提供一个工具类。">
+<meta property="og:updated_time" content="2018-03-13T05:10:03.864Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="django-rest-framework配置json web token进行接口的认证">
-<meta name="twitter:description" content="使用django-rest-framework开发api并使用json web token进行身份验证在这里使用django-rest-framework-jwt这个库来帮助我们简单的使用jwt进行身份验证并解决一些前后端分离而产生的跨域问题 流程">
-<meta name="twitter:image" content="http://objects.earthchen.cn/django-rest-framework-jwt-token.png">
+<meta name="twitter:title" content="在不被spring容器管理的类中使用ApplicationContext应用上下文bean">
+<meta name="twitter:description" content="在我们做项目的时候，经常能遇到不被spring管理的类中要使用相关spring bean，比如自定义过滤器，静态工具类等，相应的也有几种办法，一种是想办法使不被spring容器管理的类让他被spring管理。第二种就是通过应用上下文获取通过clazz或者相关bean的name获取。第一种一般是添加相关注解即可，所以本文着重介绍一下第二种办法，并提供一个工具类。">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -60,7 +57,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>django-rest-framework配置json web token进行接口的认证 | EarthChen&#39;s Blog</title>
+<title>在不被spring容器管理的类中使用ApplicationContext应用上下文bean | EarthChen&#39;s Blog</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -299,11 +296,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-django_rest_framework_jwt" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-applicationContextHelper" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/06/15/django_rest_framework_jwt/" class="article-date">
-      <time datetime="2017-06-15T06:40:00.000Z" itemprop="datePublished">2017-06-15</time>
+      <a href="/2018/03/13/applicationContextHelper/" class="article-date">
+      <time datetime="2018-03-13T05:00:00.000Z" itemprop="datePublished">2018-03-13</time>
 </a>
 
 
@@ -318,7 +315,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      django-rest-framework配置json web token进行接口的认证
+      在不被spring容器管理的类中使用ApplicationContext应用上下文bean
     </h1>
   
 
@@ -333,7 +330,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django/">Django</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring-boot/">Spring boot</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -343,59 +340,22 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>使用django-rest-framework开发api并使用json web token进行身份验证<br>在这里使用django-rest-framework-jwt这个库来帮助我们简单的使用jwt进行身份验证<br>并解决一些前后端分离而产生的跨域问题</p>
-<h2 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h2><a id="more"></a>
-<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><h4 id="安装django-rest-framework"><a href="#安装django-rest-framework" class="headerlink" title="安装django-rest-framework"></a>安装django-rest-framework</h4><p>现在接口一般都是restful风格,所以我们直接使用这个框架</p>
-<ol>
-<li><p>在终端输入以下命令安装</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install djangorestframe</div></pre></td></tr></table></figure>
+        <p>在我们做项目的时候，经常能遇到不被spring管理的类中要使用相关spring bean，比如自定义过滤器，静态工具类等，相应的也有几种办法，一种是想办法使不被spring容器管理的类让他被spring管理。第二种就是通过应用上下文获取通过<strong>clazz</strong>或者相关bean的<strong>name</strong>获取。第一种一般是添加相关注解即可，所以本文着重介绍一下第二种办法，并提供一个工具类。</p>
+<a id="more"></a>
+<h2 id="方案"><a href="#方案" class="headerlink" title="方案"></a>方案</h2><ol>
+<li><p>编写一个ApplicationContextHelper类并实现ApplicationContextAware接口</p>
 </li>
-<li><p>在settings.py的INSTALLED_APPS中加入：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">INSTALLED_APPS = [</div><div class="line">    ...</div><div class="line">    <span class="string">'rest_framework'</span>,</div><div class="line">    <span class="string">'rest_framework.authtoken'</span>,  <span class="comment"># 设置token</span></div><div class="line">    ...</div><div class="line">]</div></pre></td></tr></table></figure>
+<li><p>将应用上下文赋值给声明的静态ApplicationContext对象上，此时就可以拿到应用上下文，也就可以取出你需要的bean</p>
 </li>
-</ol>
-<h4 id="安装django-rest-framework-jwt"><a href="#安装django-rest-framework-jwt" class="headerlink" title="安装django-rest-framework-jwt"></a>安装django-rest-framework-jwt</h4><p>安装jwt库，简单快速的生成我们所需要的token</p>
-<ol>
-<li><p>在终端输入以下命令安装：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install djangorestframework-jwt</div></pre></td></tr></table></figure>
-</li>
-<li><p>在你的settings.py，添加JSONWebTokenAuthentication到Django REST框架DEFAULT_AUTHENTICATION_CLASSES</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># django-rest-framework设置</span></div><div class="line">REST_FRAMEWORK = &#123;</div><div class="line">    <span class="string">'PAGE_SIZE'</span>: <span class="number">10</span>,</div><div class="line"></div><div class="line">    <span class="comment"># 设置所有接口都需要被验证</span></div><div class="line">    <span class="string">'DEFAULT_PERMISSION_CLASSES'</span>: (</div><div class="line">        <span class="string">'rest_framework.permissions.IsAuthenticated'</span>,</div><div class="line">    ),</div><div class="line">    <span class="string">'DEFAULT_AUTHENTICATION_CLASSES'</span>: (</div><div class="line">        <span class="string">'rest_framework_jwt.authentication.JSONWebTokenAuthentication'</span>,</div><div class="line">        <span class="string">'rest_framework.authentication.SessionAuthentication'</span>,</div><div class="line">        <span class="string">'rest_framework.authentication.BasicAuthentication'</span>,</div><div class="line">    ),</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<li><p>编写静态方法，按照你的需求获取相应的bean</p>
 </li>
 </ol>
-<h3 id="安装django-cors-headers"><a href="#安装django-cors-headers" class="headerlink" title="安装django-cors-headers"></a>安装django-cors-headers</h3><p>解决api跨域请求有好几种方法，比如（jsonp,在apache或nginx中设置，在请求头里设置），我们这里使用这个包来方便的跨域</p>
-<ol>
-<li>在终端输入如下命令：<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install django-cors-headers</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>2.配置settings.py文件<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">INSTALLED_APPS = [</div><div class="line">    ...</div><div class="line">    <span class="string">'corsheaders'</span>，</div><div class="line">    ...</div><div class="line"> ] </div><div class="line"></div><div class="line">MIDDLEWARE_CLASSES = (</div><div class="line">    ...</div><div class="line">    <span class="string">'corsheaders.middleware.CorsMiddleware'</span>,</div><div class="line">    <span class="string">'django.middleware.common.CommonMiddleware'</span>, <span class="comment"># 注意顺序</span></div><div class="line">    ...</div><div class="line">)</div><div class="line"></div><div class="line">CORS_ORIGIN_WHITELIST = (</div><div class="line">    <span class="comment">#'*'</span></div><div class="line">    <span class="string">'127.0.0.1:8080'</span>,<span class="comment"># 请求的域名</span></div><div class="line">    <span class="string">'localhost:8080'</span>,</div><div class="line">    <span class="string">'localhost'</span>,</div><div class="line">)</div></pre></td></tr></table></figure></p>
-<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><h4 id="后端配置"><a href="#后端配置" class="headerlink" title="后端配置"></a>后端配置</h4><ol>
-<li>在setting里设置token的过期时间<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> datetime</div><div class="line">JWT_AUTH = &#123;</div><div class="line">    <span class="string">'JWT_EXPIRATION_DELTA'</span>: datetime.timedelta(seconds=<span class="number">300</span>),</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>当然还有很多其他相关设置，可以自己翻阅文档</p>
-<ol>
-<li><p>修改使用jwt验证的URL</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> rest_framework_jwt.views <span class="keyword">import</span> obtain_jwt_token</div><div class="line"></div><div class="line">url(<span class="string">r'^api-token-auth/'</span>, obtain_jwt_token),</div></pre></td></tr></table></figure>
-</li>
-<li><p>配置页面访问权限<br>按需设置访问权限，加上token之后基本上是不经过认证是不能查看或修改数据的</p>
-</li>
-</ol>
-<h5 id="前端配置"><a href="#前端配置" class="headerlink" title="前端配置"></a>前端配置</h5><p>（在前端我们使用jQuery封装的ajax来操作get和post）</p>
-<ol>
-<li><p>使用post方法获取token并存入html的localStorage中</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">&lt;script type=<span class="string">"text/javascript"</span>&gt;</div><div class="line"> <span class="function"><span class="keyword">function</span> <span class="title">post_test</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        $.post(<span class="string">"http://10.127.48.204:8000/api-token-auth/"</span>,&#123;</div><div class="line">            <span class="string">'username'</span>:<span class="string">'earthchen'</span>,</div><div class="line">            <span class="string">'password'</span>:<span class="string">'xxxxxxxx'</span></div><div class="line">        &#125;,</div><div class="line">        <span class="function"><span class="keyword">function</span>(<span class="params">result</span>)</span>&#123;</div><div class="line">            <span class="keyword">if</span>(result)&#123;</div><div class="line">                localStorage.token=result.token;  存入数据</div><div class="line">            &#125;</div><div class="line">        &#125;)</div><div class="line">    &#125;</div><div class="line">&lt;<span class="regexp">/script&gt;</span></div></pre></td></tr></table></figure>
-</li>
-<li><p>在请求数据时需要在头部添加token</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">&lt;script type=<span class="string">"text/javascript"</span>&gt;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    $.ajax(&#123;</div><div class="line">        <span class="attr">headers</span>:&#123;</div><div class="line">            <span class="string">'Authorization'</span>:<span class="string">'JWT '</span>+localStorage.token  <span class="comment">//注意：jwt后面有个空格</span></div><div class="line">        &#125;,</div><div class="line">        <span class="attr">type</span>:<span class="string">"get"</span>,</div><div class="line">        <span class="attr">url</span>:<span class="string">"http://10.127.48.204:8000/snippets/1/"</span>,</div><div class="line">        <span class="attr">success</span>:<span class="function"><span class="keyword">function</span>(<span class="params">result</span>)</span>&#123;</div><div class="line">           <span class="built_in">document</span>.write(result.style);</div><div class="line">        &#125;</div><div class="line">    &#125;)</div><div class="line">&#125;</div><div class="line">&lt;script&gt;</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>存入的token如图所示<br><img src="http://objects.earthchen.cn/django-rest-framework-jwt-token.png" alt="django-rest-framework-jwt-token"></p>
-<p>这时如果如果ajax请求不在head中带上token那将被禁止请求，会产生如图所示效果<br><img src="http://objects.earthchen.cn/django-rest-framework-jwt-no-token.png" alt="django-rest-framework-jwt-no-token"><br>所以在开发阶段，我们先应不让jwt拦截所有请求，这样对我们测试产生诸多不变</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Component</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ApplicationContextHelper</span> <span class="keyword">implements</span> <span class="title">ApplicationContextAware</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> ApplicationContext applicationContext;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setApplicationContext</span><span class="params">(ApplicationContext context)</span> <span class="keyword">throws</span> BeansException </span>&#123;</div><div class="line">        applicationContext = context;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 根据类获取bean</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> clazz</div><div class="line">     * <span class="doctag">@param</span> &lt;T&gt;</div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     */</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">T <span class="title">popBean</span><span class="params">(Class&lt;T&gt; clazz)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (applicationContext == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> applicationContext.getBean(clazz);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 根据类和bean的名字获取bean</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> name</div><div class="line">     * <span class="doctag">@param</span> clazz</div><div class="line">     * <span class="doctag">@param</span> &lt;T&gt;</div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     */</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">T <span class="title">popBean</span><span class="params">(String name, Class&lt;T&gt; clazz)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (applicationContext == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> applicationContext.getBean(name, clazz);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在需要的地方使用<strong>ApplicationContextHelper.popBean(clazz.class)</strong>即可</p>
 <blockquote>
 <p>注：</p>
 <ul>
-<li>上述环境在<strong>ubuntu16.04 lts</strong> <strong>django1.9</strong>中搭建测试成功</li>
+<li>上述测试在<strong>ubuntu16.04 lts</strong> <strong>jdk1.8</strong> <strong>spring boot 1.5.6.RELEASE</strong>中成功</li>
 <li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
 </ul>
 </blockquote>
@@ -407,13 +367,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/06/15/django_rest_framework_jwt/">django-rest-framework配置json web token进行接口的认证</a></p>
+        <p><span>本文标题:</span><a href="/2018/03/13/applicationContextHelper/">在不被spring容器管理的类中使用ApplicationContext应用上下文bean</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">EarthChen</a></p>
-        <p><span>发布时间:</span>2017-06-15, 14:40:00</p>
-        <p><span>最后更新:</span>2017-08-06, 17:47:37</p>
+        <p><span>发布时间:</span>2018-03-13, 13:00:00</p>
+        <p><span>最后更新:</span>2018-03-13, 13:10:03</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/06/15/django_rest_framework_jwt/" title="django-rest-framework配置json web token进行接口的认证">http://earthchen.cn/2017/06/15/django_rest_framework_jwt/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://earthchen.cn/2017/06/15/django_rest_framework_jwt/　　作者: EarthChen" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2018/03/13/applicationContextHelper/" title="在不被spring容器管理的类中使用ApplicationContext应用上下文bean">http://earthchen.cn/2018/03/13/applicationContextHelper/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://earthchen.cn/2018/03/13/applicationContextHelper/　　作者: EarthChen" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -425,16 +385,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2017/06/17/django_timing_task/">
-                    django使用django-crontab实现定时任务
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2017/06/12/django_rest_framework_study/">
-                    django-rest-framework框架学习
+                <a href="/2018/02/22/springboot_static_class_autowrite/">
+                    Spring boot 在静态类中注入spring组件
                 </a>
             </div>
         
@@ -446,7 +400,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#流程"><span class="toc-number">1.</span> <span class="toc-text">流程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装"><span class="toc-number">1.1.</span> <span class="toc-text">安装</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#安装django-rest-framework"><span class="toc-number">1.1.1.</span> <span class="toc-text">安装django-rest-framework</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安装django-rest-framework-jwt"><span class="toc-number">1.1.2.</span> <span class="toc-text">安装django-rest-framework-jwt</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装django-cors-headers"><span class="toc-number">1.2.</span> <span class="toc-text">安装django-cors-headers</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置"><span class="toc-number">1.3.</span> <span class="toc-text">配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#后端配置"><span class="toc-number">1.3.1.</span> <span class="toc-text">后端配置</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#前端配置"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">前端配置</span></a></li></ol></li></ol></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#方案"><span class="toc-number">1.</span> <span class="toc-text">方案</span></a></li></ol>
         
     </div>
     <style>
@@ -482,7 +436,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"django-rest-framework配置json web token进行接口的认证　| EarthChen's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"在不被spring容器管理的类中使用ApplicationContext应用上下文bean　| EarthChen's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -516,15 +470,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2017/06/17/django_timing_task/" title="上一篇: django使用django-crontab实现定时任务">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2017/06/12/django_rest_framework_study/" title="下一篇: django-rest-framework框架学习">
+            <a href="/2018/02/22/springboot_static_class_autowrite/" title="下一篇: Spring boot 在静态类中注入spring组件">
                 <i class="fa fa-angle-right"></i>
             </a>
         
