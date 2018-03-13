@@ -15,20 +15,17 @@
 
 
 
-<meta name="description" content="本篇介绍一下编程中比较重要的一个数据结构队列，队列有个很显著的标志，对其中的数据是先进先出，如果是顺序存储结构可以说就是一个受限的数组，对链式存储结构就只能说是符合先进先出的规则了，这种数据结构在我们真正的编程中还是相当常用的。实际中根据需要去定制自己的队列。 开始顺序队列的操作首先我们来介绍一下顺序存储结构下的队列的定义和基本操作 添加适当的头文件，定义一个顺序存储数据结构，这里需要添加头文件和">
-<meta name="keywords" content="c,数据结构">
+<meta name="description" content="在web项目中我们通常都要根据当前用户进行一些操作，如果使用了一些权限框架，比如spring security或者shiro等，他们都提供了一个获取当前登录的用户的方法，直接调用即可，但是如果不使用相关框架，获取用户就略微显得有些复杂，为了简单，这时候ThreadLocal就能帮到我们了。">
+<meta name="keywords" content="Spring boot">
 <meta property="og:type" content="article">
-<meta property="og:title" content="C语言队列的基本操作">
-<meta property="og:url" content="http://earthchen.cn/2016/07/16/C语言队列的基本操作/index.html">
+<meta property="og:title" content="使用ThreadLocal和ArgumentResolver方便开发">
+<meta property="og:url" content="http://earthchen.cn/2018/03/13/requestHolder_and_argumentResolver/index.html">
 <meta property="og:site_name" content="EarthChen&#39;s Blog">
-<meta property="og:description" content="本篇介绍一下编程中比较重要的一个数据结构队列，队列有个很显著的标志，对其中的数据是先进先出，如果是顺序存储结构可以说就是一个受限的数组，对链式存储结构就只能说是符合先进先出的规则了，这种数据结构在我们真正的编程中还是相当常用的。实际中根据需要去定制自己的队列。 开始顺序队列的操作首先我们来介绍一下顺序存储结构下的队列的定义和基本操作 添加适当的头文件，定义一个顺序存储数据结构，这里需要添加头文件和">
-<meta property="og:image" content="http://objects.earthchen.cn/c%E8%AF%AD%E8%A8%80%E9%A1%BA%E5%BA%8F%E9%98%9F%E5%88%97%E7%BB%93%E6%9E%9C.png">
-<meta property="og:image" content="http://objects.earthchen.cn/c%E8%AF%AD%E8%A8%80%E9%93%BE%E9%98%9F%E5%88%97%E7%BB%93%E6%9E%9C.png">
-<meta property="og:updated_time" content="2017-08-06T09:45:35.080Z">
+<meta property="og:description" content="在web项目中我们通常都要根据当前用户进行一些操作，如果使用了一些权限框架，比如spring security或者shiro等，他们都提供了一个获取当前登录的用户的方法，直接调用即可，但是如果不使用相关框架，获取用户就略微显得有些复杂，为了简单，这时候ThreadLocal就能帮到我们了。">
+<meta property="og:updated_time" content="2018-03-13T06:29:51.804Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="C语言队列的基本操作">
-<meta name="twitter:description" content="本篇介绍一下编程中比较重要的一个数据结构队列，队列有个很显著的标志，对其中的数据是先进先出，如果是顺序存储结构可以说就是一个受限的数组，对链式存储结构就只能说是符合先进先出的规则了，这种数据结构在我们真正的编程中还是相当常用的。实际中根据需要去定制自己的队列。 开始顺序队列的操作首先我们来介绍一下顺序存储结构下的队列的定义和基本操作 添加适当的头文件，定义一个顺序存储数据结构，这里需要添加头文件和">
-<meta name="twitter:image" content="http://objects.earthchen.cn/c%E8%AF%AD%E8%A8%80%E9%A1%BA%E5%BA%8F%E9%98%9F%E5%88%97%E7%BB%93%E6%9E%9C.png">
+<meta name="twitter:title" content="使用ThreadLocal和ArgumentResolver方便开发">
+<meta name="twitter:description" content="在web项目中我们通常都要根据当前用户进行一些操作，如果使用了一些权限框架，比如spring security或者shiro等，他们都提供了一个获取当前登录的用户的方法，直接调用即可，但是如果不使用相关框架，获取用户就略微显得有些复杂，为了简单，这时候ThreadLocal就能帮到我们了。">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -60,7 +57,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>C语言队列的基本操作 | EarthChen&#39;s Blog</title>
+<title>使用ThreadLocal和ArgumentResolver方便开发 | EarthChen&#39;s Blog</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -299,11 +296,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-C语言队列的基本操作" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-requestHolder_and_argumentResolver" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/07/16/C语言队列的基本操作/" class="article-date">
-      <time datetime="2016-07-16T06:40:00.000Z" itemprop="datePublished">2016-07-16</time>
+      <a href="/2018/03/13/requestHolder_and_argumentResolver/" class="article-date">
+      <time datetime="2018-03-13T05:35:00.000Z" itemprop="datePublished">2018-03-13</time>
 </a>
 
 
@@ -318,7 +315,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      C语言队列的基本操作
+      使用ThreadLocal和ArgumentResolver方便开发
     </h1>
   
 
@@ -333,7 +330,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构/">数据结构</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring-boot/">Spring boot</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -343,26 +340,44 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>本篇介绍一下编程中比较重要的一个数据结构队列，队列有个很显著的标志，对其中的数据是先进先出，如果是顺序存储结构可以说就是一个受限的数组，对链式存储结构就只能说是符合先进先出的规则了，这种数据结构在我们真正的编程中还是相当常用的。实际中根据需要去定制自己的队列。</p>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="顺序队列的操作"><a href="#顺序队列的操作" class="headerlink" title="顺序队列的操作"></a>顺序队列的操作</h3><p>首先我们来介绍一下顺序存储结构下的队列的定义和基本操作</p>
-<h4 id="添加适当的头文件，定义一个顺序存储数据结构，"><a href="#添加适当的头文件，定义一个顺序存储数据结构，" class="headerlink" title="添加适当的头文件，定义一个顺序存储数据结构，"></a>添加适当的头文件，定义一个顺序存储数据结构，</h4><p>这里需要添加头文件和定义一个队列的顺序数据结构<br><a id="more"></a><br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXSIZE 100</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> OK 1</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> ERROR 0</span></div><div class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> Status;</div><div class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> ElemType;</div><div class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></div><div class="line">&#123;</div><div class="line">	ElemType *base;</div><div class="line">	<span class="keyword">int</span> front;</div><div class="line">	<span class="keyword">int</span> rear;</div><div class="line">&#125;SqQueue;</div></pre></td></tr></table></figure></p>
-<h4 id="初始化一个队列（创建一个队列）"><a href="#初始化一个队列（创建一个队列）" class="headerlink" title="初始化一个队列（创建一个队列）"></a>初始化一个队列（创建一个队列）</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="function">Status <span class="title">InitQueue</span><span class="params">(SqQueue *q)</span> </span>&#123;</div><div class="line">	q-&gt;base = (ElemType *)<span class="built_in">malloc</span>(MAXSIZE * <span class="keyword">sizeof</span>(ElemType));</div><div class="line">	<span class="keyword">if</span> (!q-&gt;base)</div><div class="line">	&#123;</div><div class="line">		<span class="built_in">exit</span>(<span class="number">0</span>);</div><div class="line">	&#125;</div><div class="line">	q-&gt;front = q-&gt;rear = <span class="number">0</span>;</div><div class="line">	<span class="keyword">return</span> OK;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="入队操作"><a href="#入队操作" class="headerlink" title="入队操作"></a>入队操作</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function">Status <span class="title">InsertQueue</span><span class="params">(SqQueue *q, ElemType e)</span> </span>&#123;</div><div class="line">	<span class="keyword">if</span> ((q-&gt;rear + <span class="number">1</span>) % MAXSIZE == q-&gt;front)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">return</span> ERROR;</div><div class="line">	&#125;</div><div class="line">	q-&gt;base[q-&gt;rear] = e;</div><div class="line">	q-&gt;rear = (q-&gt;rear + <span class="number">1</span>) % MAXSIZE;</div><div class="line">	<span class="keyword">return</span> OK;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="出队操作"><a href="#出队操作" class="headerlink" title="出队操作"></a>出队操作</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function">Status <span class="title">DeleteQueue</span><span class="params">(SqQueue *q, ElemType *e)</span> </span>&#123;</div><div class="line">	<span class="keyword">if</span> (q-&gt;front == q-&gt;rear)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">return</span> ERROR;</div><div class="line">	&#125;</div><div class="line">	*e = q-&gt;base[q-&gt;front];</div><div class="line">	q-&gt;front = (q-&gt;front + <span class="number">1</span>) % MAXSIZE;</div><div class="line">	<span class="keyword">return</span> OK;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="主函数"><a href="#主函数" class="headerlink" title="主函数"></a>主函数</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">	SqQueue q;</div><div class="line">	<span class="keyword">int</span> a[<span class="number">10</span>];</div><div class="line">	<span class="keyword">int</span> i;</div><div class="line">	InitQueue(&amp;q);</div><div class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++)</div><div class="line">	&#123;</div><div class="line">		InsertQueue(&amp;q, i + <span class="number">1</span>);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++)</div><div class="line">	&#123;</div><div class="line">		DeleteQueue(&amp;q, &amp;a[i]);</div><div class="line">		<span class="built_in">printf</span>(<span class="string">"%d\n"</span>, a[i]);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h4><p><img src="http://objects.earthchen.cn/c%E8%AF%AD%E8%A8%80%E9%A1%BA%E5%BA%8F%E9%98%9F%E5%88%97%E7%BB%93%E6%9E%9C.png" alt="cmd顺序队列运行结果"><br>都是很基本的操作，在顺序队列中，可以从数组的方式去理解，这样将会让你理解起来更简单</p>
-<h3 id="链式队列的操作"><a href="#链式队列的操作" class="headerlink" title="链式队列的操作"></a>链式队列的操作</h3><p>首先我们来介绍一下顺序存储结构下的队列的定义和基本操作</p>
-<h4 id="添加适当的头文件，定义一个队列链式存储数据结构，"><a href="#添加适当的头文件，定义一个队列链式存储数据结构，" class="headerlink" title="添加适当的头文件，定义一个队列链式存储数据结构，"></a>添加适当的头文件，定义一个队列链式存储数据结构，</h4><p>这里需要添加头文件和定义一个队列的链式存储数据结构</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> OK 1;</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> ERROR 0;</span></div><div class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> ElemType;</div><div class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> Status;</div><div class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">QNode</span></span></div><div class="line">&#123;</div><div class="line">	ElemType data;</div><div class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">QNode</span> *<span class="title">next</span>;</span></div><div class="line">&#125;QNode, *QueuePrt;</div><div class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></div><div class="line">&#123;</div><div class="line">	<span class="comment">//对头，尾指针</span></div><div class="line">	QueuePrt front, rear;</div><div class="line">&#125;LinkQueue;</div></pre></td></tr></table></figure>
-<h4 id="初始化一个队列（创建一个队列）-1"><a href="#初始化一个队列（创建一个队列）-1" class="headerlink" title="初始化一个队列（创建一个队列）"></a>初始化一个队列（创建一个队列）</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function">Status <span class="title">InitQueue</span><span class="params">(LinkQueue *q)</span> </span>&#123;</div><div class="line">	q-&gt;front = q-&gt;rear = (QueuePrt)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(QNode));</div><div class="line">	<span class="keyword">if</span> (!q-&gt;front)</div><div class="line">	&#123;</div><div class="line">		<span class="built_in">exit</span>(<span class="number">0</span>);</div><div class="line">	&#125;</div><div class="line">	q-&gt;front-&gt;next = <span class="literal">NULL</span>;</div><div class="line">	<span class="keyword">return</span> OK;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="入队操作-1"><a href="#入队操作-1" class="headerlink" title="入队操作"></a>入队操作</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function">Status <span class="title">InsertQueue</span><span class="params">(LinkQueue *q, ElemType e)</span> </span>&#123;</div><div class="line">	QueuePrt p = (QueuePrt)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(QNode));</div><div class="line">	<span class="keyword">if</span> (!p)</div><div class="line">	&#123;</div><div class="line">		<span class="built_in">exit</span>(<span class="number">0</span>);</div><div class="line">	&#125;</div><div class="line">	p-&gt;data = e;</div><div class="line">	p-&gt;next = <span class="literal">NULL</span>;</div><div class="line">	q-&gt;rear-&gt;next = p;</div><div class="line">	q-&gt;rear = p;</div><div class="line">	<span class="keyword">return</span> OK;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="出队操作-1"><a href="#出队操作-1" class="headerlink" title="出队操作"></a>出队操作</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function">Status <span class="title">DeleteQueue</span><span class="params">(LinkQueue *q, ElemType *e)</span> </span>&#123;</div><div class="line">	QueuePrt p;</div><div class="line">	<span class="keyword">if</span> (q-&gt;front == q-&gt;rear)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">return</span> ERROR;</div><div class="line">	&#125;</div><div class="line">	p = q-&gt;front-&gt;next;</div><div class="line">	*e = p-&gt;data;</div><div class="line">	q-&gt;front-&gt;next = p-&gt;next;</div><div class="line">	<span class="keyword">if</span> (q-&gt;rear == p)</div><div class="line">	&#123;</div><div class="line">		q-&gt;rear = q-&gt;front;</div><div class="line">	&#125;</div><div class="line">	<span class="built_in">free</span>(p);</div><div class="line">	<span class="keyword">return</span> OK;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="主函数-1"><a href="#主函数-1" class="headerlink" title="主函数"></a>主函数</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">	LinkQueue q;</div><div class="line">	<span class="keyword">int</span> a[<span class="number">10</span>];</div><div class="line">	<span class="keyword">int</span> i;</div><div class="line">	InitQueue(&amp;q);</div><div class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++)</div><div class="line">	&#123;</div><div class="line">		InsertQueue(&amp;q, i + <span class="number">1</span>);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++)</div><div class="line">	&#123;</div><div class="line">		DeleteQueue(&amp;q, &amp;a[i]);</div><div class="line">		<span class="built_in">printf</span>(<span class="string">"%d\n"</span>, a[i]);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="运行结果-1"><a href="#运行结果-1" class="headerlink" title="运行结果"></a>运行结果</h4><p><img src="http://objects.earthchen.cn/c%E8%AF%AD%E8%A8%80%E9%93%BE%E9%98%9F%E5%88%97%E7%BB%93%E6%9E%9C.png" alt="cmd顺序队列运行结果"><br>在链式存储结构中的队列同样还是相对很简单的，只要理解了先进先出的逻辑，和了解一下指针操作就可以很容易的写出队列的节本操作。</p>
+        <p>在web项目中我们通常都要根据当前用户进行一些操作，如果使用了一些权限框架，比如<strong>spring security</strong>或者<strong>shiro</strong>等，他们都提供了一个获取当前登录的用户的方法，直接调用即可，但是如果不使用相关框架，获取用户就略微显得有些复杂，为了简单，这时候ThreadLocal就能帮到我们了。</p>
+<a id="more"></a>
+<blockquote>
+<p>ThreadLocal提供本地线程变量。这个变量里面的值（通过get方法获取）是和其他线程分割开来的，变量的值只有当前线程能访问到，不像一般的类型比如Person,Student类型的变量，只要访问到声明该变量的对象，即可访问其全部内容，而且各个线程的访问的数据是无差别的</p>
+</blockquote>
+<p>我们都知道，在web环境中，一个用户的请求是一直在一个线程中的，ThreadLocal刚好能帮助我们做到在第一次登录请求中的时候放入相关参数，比如用户信息，在后续请求中在线程中就可以拿到参数。</p>
+<h2 id="ThreadLocal"><a href="#ThreadLocal" class="headerlink" title="ThreadLocal"></a>ThreadLocal</h2><p>这里举一个简单的例子，写一个工具类，把当前用户和当前请求放入ThreadLocal中，并支持存取</p>
+<h3 id="工具类"><a href="#工具类" class="headerlink" title="工具类"></a>工具类</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RequestHolder</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> ThreadLocal&lt;User&gt; userHolder = <span class="keyword">new</span> ThreadLocal&lt;&gt;();</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> ThreadLocal&lt;HttpServletRequest&gt; requestHolder = <span class="keyword">new</span> ThreadLocal&lt;&gt;();</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(User user)</span> </span>&#123;</div><div class="line">        userHolder.set(user);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(HttpServletRequest request)</span> </span>&#123;</div><div class="line">        requestHolder.set(request);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> User <span class="title">getCurrentUser</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> userHolder.get();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> HttpServletRequest <span class="title">getCurrentRequest</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> requestHolder.get();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">remove</span><span class="params">()</span> </span>&#123;</div><div class="line">        userHolder.remove();</div><div class="line">        requestHolder.remove();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果你还需要更多常用参数，可以继续扩展上述方法。以上工具类，就可以很容易让我们拿到<strong>user</strong>和<strong>request</strong>了。</p>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>由于我们主要目的就是在请求中拿到用户信息和请求的信息，我们可以这样做</p>
+<ol>
+<li><p>首先在登录成功后，将登录信息放入session或者redis中</p>
+</li>
+<li><p>编写过滤器，拦截器或者切面等，判断当前用户是否登录(session或redis中是否有用户登录信息)，如果已经登录了，调用以下方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">RequestHolder.add(user);</div><div class="line">RequestHolder.add(reqest);</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>将我们需要的参数放入ThreadLocal中，以供后续使用。</p>
+<ol>
+<li><p>在该请求未关闭之前，我们在其中任意地方可以调用以下方法获取用户信息或当前请求。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 获取当前用户</span></div><div class="line">RequestHolder.getCurrentUser();</div><div class="line"></div><div class="line"><span class="comment">// 获取当前请求</span></div><div class="line">RequestHolder.getCurrentRequest();</div></pre></td></tr></table></figure>
+</li>
+<li><p>在请求的最后，一般是拦截器或aop的方法后去调用<strong>remove()</strong>去释放资源。这部其实不做也可以，因为请求结束了线程一般会被销毁。本地变量自然也就不存在了。</p>
+</li>
+</ol>
+<h2 id="ArgumentResolver"><a href="#ArgumentResolver" class="headerlink" title="ArgumentResolver"></a>ArgumentResolver</h2><p>使用了ThreadLocal获取当前登录用户的信息已经很方便了，但是如果我们不想每次都调用静态方法<strong>RequestHolder.getCurrentUser()</strong>获取用户信息，在controller层中的方法中拿到用户信息可不可以呢，答案当然是可以。</p>
+<p>我们可以编写一个参数解析器，在需要使用的controller方法参数中写上相关参数，就可以更方便的获取参数了。</p>
+<h3 id="编写参数解析器"><a href="#编写参数解析器" class="headerlink" title="编写参数解析器"></a>编写参数解析器</h3><p>举个简单的例子，我们这里编写一个<strong>UserArgumentResolver</strong>类并实现<strong>HandlerMethodArgumentResolver</strong>接口的方法。</p>
+<p>在<strong>supportsParameter()</strong>方法中配置需要解析的参数(一般是类)</p>
+<p>最后在<strong>resolveArgument()</strong>中调用上面编写的<strong>RequestHolder.getCurrentUser()</strong>即可。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Service</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserArgumentResolver</span> <span class="keyword">implements</span> <span class="title">HandlerMethodArgumentResolver</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">supportsParameter</span><span class="params">(MethodParameter parameter)</span> </span>&#123;</div><div class="line">        Class&lt;?&gt; clazz = parameter.getParameterType();</div><div class="line">        <span class="keyword">return</span> clazz == User.class;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">resolveArgument</span><span class="params">(MethodParameter parameter, ModelAndViewContainer mavContainer,</span></span></div><div class="line">                                  NativeWebRequest webRequest, WebDataBinderFactory binderFactory) <span class="keyword">throws</span> Exception &#123;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> RequestHolder.getCurrentUser();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="在WebConfig中注册参数解析器"><a href="#在WebConfig中注册参数解析器" class="headerlink" title="在WebConfig中注册参数解析器"></a>在WebConfig中注册参数解析器</h3><p>以spring boot的java conf为例<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Configuration</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WebConfig</span> <span class="keyword">extends</span> <span class="title">WebMvcConfigurerAdapter</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    <span class="keyword">private</span> UserArgumentResolver userArgumentResolver;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> argumentResolvers</div><div class="line">     */</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addArgumentResolvers</span><span class="params">(List&lt;HandlerMethodArgumentResolver&gt; argumentResolvers)</span> </span>&#123;</div><div class="line">        argumentResolvers.add(userArgumentResolver);</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">    ***</div><div class="line">    ***</div><div class="line">    */</div><div class="line"></div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="使用-1"><a href="#使用-1" class="headerlink" title="使用"></a>使用</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@GetMapping</span>(value = <span class="string">"/xxx"</span>)</div><div class="line"><span class="meta">@ResponseBody</span></div><div class="line"><span class="function"><span class="keyword">public</span> Result <span class="title">miaoshaResult</span><span class="params">(User user)</span> </span>&#123;</div><div class="line">    <span class="comment">//user.getName();</span></div><div class="line">    <span class="comment">// xxx</span></div><div class="line">    <span class="keyword">return</span> Result.success();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>使用上述方式就完成了ThreadLocal和ArgumentResolver的配合，尤其对当前用户这种参数很实用，如果你还有其他需求，可以自行扩展。。。</p>
 <blockquote>
 <p>注：</p>
 <ul>
-<li>上述代码在<strong>visual studio 2015</strong>中编译成功运行，其他ide请自行测试</li>
+<li>上述测试在<strong>ubuntu16.04 lts</strong> <strong>jdk1.8</strong> <strong>spring boot 1.5.6.RELEASE</strong>中成功</li>
 <li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
 </ul>
 </blockquote>
@@ -374,13 +389,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2016/07/16/C语言队列的基本操作/">C语言队列的基本操作</a></p>
+        <p><span>本文标题:</span><a href="/2018/03/13/requestHolder_and_argumentResolver/">使用ThreadLocal和ArgumentResolver方便开发</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">EarthChen</a></p>
-        <p><span>发布时间:</span>2016-07-16, 14:40:00</p>
-        <p><span>最后更新:</span>2017-08-06, 17:45:35</p>
+        <p><span>发布时间:</span>2018-03-13, 13:35:00</p>
+        <p><span>最后更新:</span>2018-03-13, 14:29:51</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/07/16/C语言队列的基本操作/" title="C语言队列的基本操作">http://earthchen.cn/2016/07/16/C语言队列的基本操作/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://earthchen.cn/2016/07/16/C语言队列的基本操作/　　作者: EarthChen" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2018/03/13/requestHolder_and_argumentResolver/" title="使用ThreadLocal和ArgumentResolver方便开发">http://earthchen.cn/2018/03/13/requestHolder_and_argumentResolver/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://earthchen.cn/2018/03/13/requestHolder_and_argumentResolver/　　作者: EarthChen" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -392,16 +407,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2016/08/03/Android_qq_Menu/">
-                    Android仿qq侧滑菜单
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2016/07/15/C语言共享栈/">
-                    C语言共享栈
+                <a href="/2018/03/13/applicationContextHelper/">
+                    在不被spring容器管理的类中使用ApplicationContext应用上下文bean
                 </a>
             </div>
         
@@ -413,7 +422,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#开始"><span class="toc-number">1.</span> <span class="toc-text">开始</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#顺序队列的操作"><span class="toc-number">1.1.</span> <span class="toc-text">顺序队列的操作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#添加适当的头文件，定义一个顺序存储数据结构，"><span class="toc-number">1.1.1.</span> <span class="toc-text">添加适当的头文件，定义一个顺序存储数据结构，</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#初始化一个队列（创建一个队列）"><span class="toc-number">1.1.2.</span> <span class="toc-text">初始化一个队列（创建一个队列）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#入队操作"><span class="toc-number">1.1.3.</span> <span class="toc-text">入队操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#出队操作"><span class="toc-number">1.1.4.</span> <span class="toc-text">出队操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#主函数"><span class="toc-number">1.1.5.</span> <span class="toc-text">主函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#运行结果"><span class="toc-number">1.1.6.</span> <span class="toc-text">运行结果</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#链式队列的操作"><span class="toc-number">1.2.</span> <span class="toc-text">链式队列的操作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#添加适当的头文件，定义一个队列链式存储数据结构，"><span class="toc-number">1.2.1.</span> <span class="toc-text">添加适当的头文件，定义一个队列链式存储数据结构，</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#初始化一个队列（创建一个队列）-1"><span class="toc-number">1.2.2.</span> <span class="toc-text">初始化一个队列（创建一个队列）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#入队操作-1"><span class="toc-number">1.2.3.</span> <span class="toc-text">入队操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#出队操作-1"><span class="toc-number">1.2.4.</span> <span class="toc-text">出队操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#主函数-1"><span class="toc-number">1.2.5.</span> <span class="toc-text">主函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#运行结果-1"><span class="toc-number">1.2.6.</span> <span class="toc-text">运行结果</span></a></li></ol></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ThreadLocal"><span class="toc-number">1.</span> <span class="toc-text">ThreadLocal</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#工具类"><span class="toc-number">1.1.</span> <span class="toc-text">工具类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用"><span class="toc-number">1.2.</span> <span class="toc-text">使用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ArgumentResolver"><span class="toc-number">2.</span> <span class="toc-text">ArgumentResolver</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#编写参数解析器"><span class="toc-number">2.1.</span> <span class="toc-text">编写参数解析器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在WebConfig中注册参数解析器"><span class="toc-number">2.2.</span> <span class="toc-text">在WebConfig中注册参数解析器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用-1"><span class="toc-number">2.3.</span> <span class="toc-text">使用</span></a></li></ol></li></ol>
         
     </div>
     <style>
@@ -449,7 +458,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"C语言队列的基本操作　| EarthChen's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"使用ThreadLocal和ArgumentResolver方便开发　| EarthChen's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -483,15 +492,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2016/08/03/Android_qq_Menu/" title="上一篇: Android仿qq侧滑菜单">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2016/07/15/C语言共享栈/" title="下一篇: C语言共享栈">
+            <a href="/2018/03/13/applicationContextHelper/" title="下一篇: 在不被spring容器管理的类中使用ApplicationContext应用上下文bean">
                 <i class="fa fa-angle-right"></i>
             </a>
         

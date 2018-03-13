@@ -302,6 +302,85 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-ubuntu_supervisor" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/06/30/ubuntu_supervisor/" class="article-date">
+      <time datetime="2017-06-30T06:40:00.000Z" itemprop="datePublished">2017-06-30</time>
+</a>
+
+ 
+    <a href="/2017/06/30/ubuntu_supervisor/#comments" title="查看评论">
+        <i class="fa fa-comments-o" aria-hidden="true"></i>
+        <span class="count-comment"></span>
+        
+        
+            <span class="disqus-comment-count" data-disqus-identifier="2017/06/30/ubuntu_supervisor/"></span>
+        
+    </a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/30/ubuntu_supervisor/">ubuntu下的进程控制系统————Supervisor</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>我们在部署网站或者在ssh到服务器上去进行一些长时间操作的任务时候，通常不喜欢长时间开启终端在其中等待，尤其是Windows下putty这类软件，长时间不操作就会结束，尴尬的是，我们跑的进程也会直接终端，为了解决这个问题，我们需要把进程扔到后台，让他自己运行</p>
+<p>在这里我们介绍一个名叫<strong>Supervisor</strong>的进程控制系统，<br>它是一个C/S系统(注意: 其提供WEB接口给用户查询和控制), 它允许用户去监控和控制在类UNIX系统的进程. 它的目标与launchd, daemontools和runit有些相似, 但是与它们不一样的是, 它不是作为init(进程号pid是1)运行. 它是被用来控制进程, 并且它在启动的时候和一般程序并无二致<br>supervisor是一个制作守护进程的工具,用户可以在UNIX系统中监控、管理进程。常用于管理与某个用户或项目相关的进程。去帮我们维护各种服务器的进程，即使有软件崩了也能帮我们自动重启</p>
+<h2 id="Supervisor"><a href="#Supervisor" class="headerlink" title="Supervisor"></a>Supervisor</h2>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/运维/">运维</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2017/06/30/ubuntu_supervisor/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-ubuntu修复不能挂载NTFS硬盘" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -541,85 +620,6 @@
 
 
   
-    <article id="post-django_rest_framework_study" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/06/12/django_rest_framework_study/" class="article-date">
-      <time datetime="2017-06-12T06:40:00.000Z" itemprop="datePublished">2017-06-12</time>
-</a>
-
- 
-    <a href="/2017/06/12/django_rest_framework_study/#comments" title="查看评论">
-        <i class="fa fa-comments-o" aria-hidden="true"></i>
-        <span class="count-comment"></span>
-        
-        
-            <span class="disqus-comment-count" data-disqus-identifier="2017/06/12/django_rest_framework_study/"></span>
-        
-    </a>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/12/django_rest_framework_study/">django-rest-framework框架学习</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>现在新一代web应用都开始采用前后端分离的方式来进行，淘汰了以前的服务器端渲染的方式。前后端分离方式有许多好处，比如<br>1、可以前后端并行开发，提高开发效率<br>2、页面都在客户端进行渲染，提高了渲染速度，减小了服务器的压力<br>3、一套api提供给多个客户端使用，而且不限制客户端的类型（web，app均可）</p>
-<p>提到前后端分离必然会提到restful，目标这是最流行的接口规范，想要了解的可以去<a href="http://www.ruanyifeng.com/blog/2011/09/restful" target="_blank" rel="external">阮老师的博客</a>看一下<br>越来越多的大型应用开始使用restful规范，restful强调一种无状态，资源的方式<br>在django中很著名的一个框架是django-rest-framework，帮我们减少了很多工作量，尤其在序列化与反序列化成我们需要的格式帮了我们省了很多事<br>在这里就记录一下个人的学习过程</p>
-<h2 id="django-rest-framework"><a href="#django-rest-framework" class="headerlink" title="django-rest-framework"></a>django-rest-framework</h2>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/学习笔记/">学习笔记</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django/">Django</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2017/06/12/django_rest_framework_study/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
     <article id="post-spring_SpEL" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -687,6 +687,85 @@
       
         <p class="article-more-link">
           <a href="/2017/06/12/spring_SpEL/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-django_rest_framework_study" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/06/12/django_rest_framework_study/" class="article-date">
+      <time datetime="2017-06-12T06:40:00.000Z" itemprop="datePublished">2017-06-12</time>
+</a>
+
+ 
+    <a href="/2017/06/12/django_rest_framework_study/#comments" title="查看评论">
+        <i class="fa fa-comments-o" aria-hidden="true"></i>
+        <span class="count-comment"></span>
+        
+        
+            <span class="disqus-comment-count" data-disqus-identifier="2017/06/12/django_rest_framework_study/"></span>
+        
+    </a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/12/django_rest_framework_study/">django-rest-framework框架学习</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>现在新一代web应用都开始采用前后端分离的方式来进行，淘汰了以前的服务器端渲染的方式。前后端分离方式有许多好处，比如<br>1、可以前后端并行开发，提高开发效率<br>2、页面都在客户端进行渲染，提高了渲染速度，减小了服务器的压力<br>3、一套api提供给多个客户端使用，而且不限制客户端的类型（web，app均可）</p>
+<p>提到前后端分离必然会提到restful，目标这是最流行的接口规范，想要了解的可以去<a href="http://www.ruanyifeng.com/blog/2011/09/restful" target="_blank" rel="external">阮老师的博客</a>看一下<br>越来越多的大型应用开始使用restful规范，restful强调一种无状态，资源的方式<br>在django中很著名的一个框架是django-rest-framework，帮我们减少了很多工作量，尤其在序列化与反序列化成我们需要的格式帮了我们省了很多事<br>在这里就记录一下个人的学习过程</p>
+<h2 id="django-rest-framework"><a href="#django-rest-framework" class="headerlink" title="django-rest-framework"></a>django-rest-framework</h2>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/学习笔记/">学习笔记</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django/">Django</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2017/06/12/django_rest_framework_study/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -998,84 +1077,6 @@
       
         <p class="article-more-link">
           <a href="/2017/04/16/redis_study_2/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-redis_study_1" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/04/15/redis_study_1/" class="article-date">
-      <time datetime="2017-04-15T06:40:00.000Z" itemprop="datePublished">2017-04-15</time>
-</a>
-
- 
-    <a href="/2017/04/15/redis_study_1/#comments" title="查看评论">
-        <i class="fa fa-comments-o" aria-hidden="true"></i>
-        <span class="count-comment"></span>
-        
-        
-            <span class="disqus-comment-count" data-disqus-identifier="2017/04/15/redis_study_1/"></span>
-        
-    </a>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/15/redis_study_1/">Redis学习笔记 -- 1</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>redis作为内存非关系型数据库，是一种key - value 缓存产品,但它同时还支持数据持久化，常常和一些老牌关系型数据库配合使用<br>下文将作为学习笔记介绍一下</p>
-<h2 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h2>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/学习笔记/">学习笔记</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/">Redis</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2017/04/15/redis_study_1/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
