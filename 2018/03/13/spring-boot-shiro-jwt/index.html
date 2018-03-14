@@ -15,23 +15,17 @@
 
 
 
-<meta name="description" content="在选择本地git服务时，通常大家都会选择直接安装gitlab，但是其安装复杂，占用资源多等缺点有点让人接受不了，肯定不想一台服务器只用来跑gitlab了，有些太浪费。还可以选择直接在系统上安装没有图形界面的git服务器，但是带来了不易查看等缺点所以笔者在这里使用了Gogs来作为自建git服务。 Gogs">
-<meta name="keywords" content="Docker,Gogs">
+<meta name="description" content="方案 注：  上述测试在ubuntu16.04 lts jdk1.8 spring boot 1.5.6.RELEASE中成功 上述文字皆为个人看法，如有错误或建议请及时联系我">
+<meta name="keywords" content="Spring boot">
 <meta property="og:type" content="article">
-<meta property="og:title" content="使用Docker搭建git服务Gogs">
-<meta property="og:url" content="http://earthchen.cn/2017/08/13/Docker_Gogs/index.html">
+<meta property="og:title" content="spring boot集成shiro使用jwt进行权限控制">
+<meta property="og:url" content="http://earthchen.cn/2018/03/13/spring-boot-shiro-jwt/index.html">
 <meta property="og:site_name" content="EarthChen&#39;s Blog">
-<meta property="og:description" content="在选择本地git服务时，通常大家都会选择直接安装gitlab，但是其安装复杂，占用资源多等缺点有点让人接受不了，肯定不想一台服务器只用来跑gitlab了，有些太浪费。还可以选择直接在系统上安装没有图形界面的git服务器，但是带来了不易查看等缺点所以笔者在这里使用了Gogs来作为自建git服务。 Gogs">
-<meta property="og:image" content="http://objects.earthchen.cn/Docker_Gogs_docker%E7%89%88%E6%9C%AC%E5%8F%B7.png">
-<meta property="og:image" content="http://objects.earthchen.cn/Docker_Gogs_gogs%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE%E7%95%8C%E9%9D%A2.png">
-<meta property="og:image" content="http://objects.earthchen.cn/Docker_Gogs_%E5%AE%89%E8%A3%85%E5%A5%BD%E7%99%BB%E5%BD%95.png">
-<meta property="og:image" content="http://objects.earthchen.cn/Docker_Gogs_%E5%88%9B%E5%BB%BA%E6%B5%8B%E8%AF%95%E4%BB%93%E5%BA%93.png">
-<meta property="og:image" content="http://objects.earthchen.cn/Docker_Gogs_ssh%E6%96%B9%E5%BC%8F%E6%8E%A8%E9%80%81%E7%A4%BA%E4%BE%8B.png">
-<meta property="og:updated_time" content="2017-08-13T08:47:40.000Z">
+<meta property="og:description" content="方案 注：  上述测试在ubuntu16.04 lts jdk1.8 spring boot 1.5.6.RELEASE中成功 上述文字皆为个人看法，如有错误或建议请及时联系我">
+<meta property="og:updated_time" content="2018-03-13T11:03:22.252Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="使用Docker搭建git服务Gogs">
-<meta name="twitter:description" content="在选择本地git服务时，通常大家都会选择直接安装gitlab，但是其安装复杂，占用资源多等缺点有点让人接受不了，肯定不想一台服务器只用来跑gitlab了，有些太浪费。还可以选择直接在系统上安装没有图形界面的git服务器，但是带来了不易查看等缺点所以笔者在这里使用了Gogs来作为自建git服务。 Gogs">
-<meta name="twitter:image" content="http://objects.earthchen.cn/Docker_Gogs_docker%E7%89%88%E6%9C%AC%E5%8F%B7.png">
+<meta name="twitter:title" content="spring boot集成shiro使用jwt进行权限控制">
+<meta name="twitter:description" content="方案 注：  上述测试在ubuntu16.04 lts jdk1.8 spring boot 1.5.6.RELEASE中成功 上述文字皆为个人看法，如有错误或建议请及时联系我">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -63,7 +57,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>使用Docker搭建git服务Gogs | EarthChen&#39;s Blog</title>
+<title>spring boot集成shiro使用jwt进行权限控制 | EarthChen&#39;s Blog</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -302,11 +296,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-Docker_Gogs" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-spring-boot-shiro-jwt" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/08/13/Docker_Gogs/" class="article-date">
-      <time datetime="2017-08-13T07:28:00.000Z" itemprop="datePublished">2017-08-13</time>
+      <a href="/2018/03/13/spring-boot-shiro-jwt/" class="article-date">
+      <time datetime="2018-03-13T12:00:00.000Z" itemprop="datePublished">2018-03-13</time>
 </a>
 
 
@@ -321,7 +315,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      使用Docker搭建git服务Gogs
+      spring boot集成shiro使用jwt进行权限控制
     </h1>
   
 
@@ -330,13 +324,13 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/运维/">运维</a>
+    <a class="article-category-link" href="/categories/开发/">开发</a>
     </div>
 
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Gogs/">Gogs</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring-boot/">Spring boot</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -346,73 +340,11 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>在选择本地git服务时，通常大家都会选择直接安装gitlab，但是其安装复杂，占用资源多等缺点有点让人接受不了，肯定不想一台服务器只用来跑gitlab了，有些太浪费。<br>还可以选择直接在系统上安装没有图形界面的git服务器，但是带来了不易查看等缺点<br>所以笔者在这里使用了<a href="https://gogs.io/" target="_blank" rel="external">Gogs</a>来作为自建git服务。</p>
-<h1 id="Gogs"><a href="#Gogs" class="headerlink" title="Gogs"></a>Gogs</h1><a id="more"></a>
-<h2 id="安装Docker"><a href="#安装Docker" class="headerlink" title="安装Docker"></a>安装Docker</h2><p>使用docker官方文档里面写的安装脚本我一直安装失败，就算添加上了dcoker官方源，安装过程也会非常慢，还有一堆教程里让我们使用apt-get安装，这样的确能安装但是版本太老，这里给出一种安装非常简单的方式。</p>
-<h3 id="使用阿里的镜像安装"><a href="#使用阿里的镜像安装" class="headerlink" title="使用阿里的镜像安装"></a>使用阿里的镜像安装</h3><ol>
-<li><p>可以使用阿里云的镜像仓库下载<a href="http://mirrors.aliyun.com/help/docker-engine?spm=a2c1q.8351553.0.0.468c7ecbpBomxQ" target="_blank" rel="external">docker-engine</a>和<a href="http://mirrors.aliyun.com/help/docker-ce?spm=a2c1q.8351553.0.0.468c7ecbpBomxQ" target="_blank" rel="external">docker-ce</a></p>
-</li>
-<li><p>在终端中执行以下命令</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl <span class="_">-s</span>SL http://acs-public-mirror.oss-cn-hangzhou.aliyuncs.com/docker-engine/internet | sh -</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>接下来只要等待就好，版本也相对够新。</p>
-<ol>
-<li>查看docker版本，确认安装成功<br>在终端中输入如下命令<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo docker version</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>出现类似如下结果即为成功<img src="http://objects.earthchen.cn/Docker_Gogs_docker%E7%89%88%E6%9C%AC%E5%8F%B7.png" alt="docker版本号"></p>
-<ol>
-<li>使用阿里仓库来加速你的docker<br>可以通过修改daemon配置文件/etc/docker/daemon.json来使用加速器<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">sudo mkdir -p /etc/docker</div><div class="line">sudo tee /etc/docker/daemon.json &lt;&lt;-<span class="string">'EOF'</span></div><div class="line">&#123;</div><div class="line">  <span class="string">"registry-mirrors"</span>: [<span class="string">"https://dmmxhzvq.mirror.aliyuncs.com"</span>]</div><div class="line">&#125;</div><div class="line">EOF</div><div class="line">sudo systemctl daemon-reload</div><div class="line">sudo systemctl restart docker</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<h2 id="安装Gogs"><a href="#安装Gogs" class="headerlink" title="安装Gogs"></a>安装Gogs</h2><p>安装Gogs有多种方式，可以自行去<a href="https://gogs.io/" target="_blank" rel="external">Gogs官网</a>查看，笔者这里只介绍一下docker方式去安装部署，<a href="https://github.com/gogits/gogs/tree/master/docker" target="_blank" rel="external">github主页</a>也可以自行查看</p>
-<h3 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h3><ol>
-<li><p>首先拉取gogs镜像</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo docker pull gogs/gogs</div></pre></td></tr></table></figure>
-</li>
-<li><p>创建本地目录存放数据</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo mkdir -p /var/gogs</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>这个目录可以自定义</p>
-<ol>
-<li>使用run命令绑定端口和一些配置文件<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo docker run <span class="_">-d</span> --name=mygogs -p 10022:22 -p 10080:3000 -v /var/gogs:/data gogs/gogs</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<blockquote>
-<p>注:</p>
-<ul>
-<li>这里<strong>-d</strong>将容器跑到后台，不在当前终端输出</li>
-<li><strong>-p</strong>用来配置外置端口和内置端口的对应关系，将10022转到22端口，将10080转到3000端口</li>
-<li><strong>–name</strong>用来给这个容器命名，不能重名</li>
-<li><strong>-v</strong>用来配置数据的对应关系</li>
-<li>想要了解更多，需要系统的学习docker相关</li>
-</ul>
-</blockquote>
-<h3 id="配置Gogs"><a href="#配置Gogs" class="headerlink" title="配置Gogs"></a>配置Gogs</h3><p>第一次进入gogs会出现如下页面<br><img src="http://objects.earthchen.cn/Docker_Gogs_gogs%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE%E7%95%8C%E9%9D%A2.png" alt="安装Gogs"></p>
-<p>可以选择使用mysql作为数据库，但是稍微麻烦一点，需要在mysql配置一下授权，如果不想麻烦，那可以直接使用sqlite3作为数据库，免去了配置数据库</p>
-<p>几个ip很重要，可以按我给的配置来填写，当然刚开始填错了也可以后来在app.ini中修改。</p>
-<p>邮件服务配置的可以自行选择是否需要</p>
-<p>建议不要使用内置ssh，反正笔者试过使用内置ssh可能出现权限拒绝问题，没看到好的解决办法。</p>
-<p>安装好并登录即能出现如下界面<br><img src="http://objects.earthchen.cn/Docker_Gogs_%E5%AE%89%E8%A3%85%E5%A5%BD%E7%99%BB%E5%BD%95.png" alt="登录主界面"></p>
-<p>然后就可以正常使用了。</p>
-<h3 id="创建仓库测试使用"><a href="#创建仓库测试使用" class="headerlink" title="创建仓库测试使用"></a>创建仓库测试使用</h3><ol>
-<li><p>创建一个测试仓库<br>简单创建一个空仓库如下：<br><img src="http://objects.earthchen.cn/Docker_Gogs_%E5%88%9B%E5%BB%BA%E6%B5%8B%E8%AF%95%E4%BB%93%E5%BA%93.png" alt="创建测试仓库"></p>
-</li>
-<li><p>将本地的git公钥复制到用户设置里面的ssh秘钥中</p>
-</li>
-<li><p>使用ssh方式将本地文件推送上去<br><img src="http://objects.earthchen.cn/Docker_Gogs_ssh%E6%96%B9%E5%BC%8F%E6%8E%A8%E9%80%81%E7%A4%BA%E4%BE%8B.png" alt="ssh推送示例"></p>
-</li>
-</ol>
-<p>以上，就可以正常使用了。</p>
-<blockquote>
+        <a id="more"></a>
+<h2 id="方案"><a href="#方案" class="headerlink" title="方案"></a>方案</h2><blockquote>
 <p>注：</p>
 <ul>
-<li>如果安装时，出现docker进程已运行，但是从web页面缺访问不了，可以将<strong>/var/gogs/</strong>文件夹删除重新运行</li>
-<li>如果删除文件还不行，推荐将创建的容器删除重新创建</li>
-<li>在配置完gogs时，外部无法访问时，请查看防火墙，是否打开了外部端口，本文中的配置只需要打开<strong>10080</strong>和<strong>10022</strong>两个端口</li>
-<li>上述环境在<strong>ubuntu16.04 lts</strong>中搭建测试成功</li>
+<li>上述测试在<strong>ubuntu16.04 lts</strong> <strong>jdk1.8</strong> <strong>spring boot 1.5.6.RELEASE</strong>中成功</li>
 <li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
 </ul>
 </blockquote>
@@ -424,13 +356,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/08/13/Docker_Gogs/">使用Docker搭建git服务Gogs</a></p>
+        <p><span>本文标题:</span><a href="/2018/03/13/spring-boot-shiro-jwt/">spring boot集成shiro使用jwt进行权限控制</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">EarthChen</a></p>
-        <p><span>发布时间:</span>2017-08-13, 15:28:00</p>
-        <p><span>最后更新:</span>2017-08-13, 16:47:40</p>
+        <p><span>发布时间:</span>2018-03-13, 20:00:00</p>
+        <p><span>最后更新:</span>2018-03-13, 19:03:22</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/08/13/Docker_Gogs/" title="使用Docker搭建git服务Gogs">http://earthchen.cn/2017/08/13/Docker_Gogs/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://earthchen.cn/2017/08/13/Docker_Gogs/　　作者: EarthChen" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2018/03/13/spring-boot-shiro-jwt/" title="spring boot集成shiro使用jwt进行权限控制">http://earthchen.cn/2018/03/13/spring-boot-shiro-jwt/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://earthchen.cn/2018/03/13/spring-boot-shiro-jwt/　　作者: EarthChen" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -443,15 +375,15 @@
     <nav id="article-nav">
         
             <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2017/08/18/django_channels_websocket/">
-                    Django使用Channels实现websocket
+                <a href="/2018/03/14/qiniu-oss/">
+                    spring boot使用七牛云的oss(对象存储)文件上传
                 </a>
             </div>
         
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2017/08/06/LeetCode_Record_Easy_1to20/">
-                    LeetCode刷题记录(easy难度1-20题)
+                <a href="/2018/03/13/requestHolder_and_argumentResolver/">
+                    使用ThreadLocal和ArgumentResolver方便开发
                 </a>
             </div>
         
@@ -463,7 +395,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Gogs"><span class="toc-number">1.</span> <span class="toc-text">Gogs</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装Docker"><span class="toc-number">1.1.</span> <span class="toc-text">安装Docker</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用阿里的镜像安装"><span class="toc-number">1.1.1.</span> <span class="toc-text">使用阿里的镜像安装</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装Gogs"><span class="toc-number">1.2.</span> <span class="toc-text">安装Gogs</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#步骤"><span class="toc-number">1.2.1.</span> <span class="toc-text">步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置Gogs"><span class="toc-number">1.2.2.</span> <span class="toc-text">配置Gogs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建仓库测试使用"><span class="toc-number">1.2.3.</span> <span class="toc-text">创建仓库测试使用</span></a></li></ol></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#方案"><span class="toc-number">1.</span> <span class="toc-text">方案</span></a></li></ol>
         
     </div>
     <style>
@@ -499,7 +431,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"使用Docker搭建git服务Gogs　| EarthChen's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"spring boot集成shiro使用jwt进行权限控制　| EarthChen's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -533,7 +465,7 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2017/08/18/django_channels_websocket/" title="上一篇: Django使用Channels实现websocket">
+            <a href="/2018/03/14/qiniu-oss/" title="上一篇: spring boot使用七牛云的oss(对象存储)文件上传">
                 <i class="fa fa-angle-left"></i>
             </a>
         
@@ -541,7 +473,7 @@
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2017/08/06/LeetCode_Record_Easy_1to20/" title="下一篇: LeetCode刷题记录(easy难度1-20题)">
+            <a href="/2018/03/13/requestHolder_and_argumentResolver/" title="下一篇: 使用ThreadLocal和ArgumentResolver方便开发">
                 <i class="fa fa-angle-right"></i>
             </a>
         
