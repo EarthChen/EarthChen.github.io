@@ -169,13 +169,13 @@
                 <div class="tips-box hide">
                     <div class="tips-arrow"></div>
                     <ul class="tips-inner">
-                        <li>菜单</li>
-                        <li>标签</li>
+                        <li>Menu</li>
+                        <li>Tags</li>
                         
-                        <li>友情链接</li>
+                        <li>Friends</li>
                         
                         
-                        <li>关于我</li>
+                        <li>About Me</li>
                         
                     </ul>
                 </div>
@@ -305,7 +305,7 @@
             </nav>
         </header>                
     </div>
-    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+    <link class="menu-list" tags="Tags" friends="Friends" about="About Me"/>
 </nav>
       <div class="body-wrap"><article id="post-git_study" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -356,118 +356,188 @@
 <h3 id="创建版本库"><a href="#创建版本库" class="headerlink" title="创建版本库"></a>创建版本库</h3><p>也就是我们需要被git管理起来的项目或文件</p>
 <ol>
 <li><p>在终端使用cd进入需要被管理的目录</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ <span class="built_in">cd</span> study/git_learn</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> study/git_learn</span>
+</pre></td></tr></table></figure>
 </li>
 <li><p>创建版本仓库 </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git init</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ git init</span>
+</pre></td></tr></table></figure>
 </li>
 </ol>
 <p>成功之后执行<strong>ls -al</strong>将能看到目录下多了一个.git隐藏文件夹<br><img src="http://objects.earthchen.cn/git_study_%E5%88%9B%E5%BB%BA%E7%89%88%E6%9C%AC%E5%BA%93.png" alt="git_study_创建版本库"></p>
 <ol>
 <li><p>创建文件添加到仓库<br>创建一个<strong>readme.txt</strong>随便写入一些内容并添加到仓库中</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ vim readme.txt</div><div class="line">$ git add readme.txt</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">$ vim readme.txt</span>
+<span class="line">$ git add readme.txt</span>
+</pre></td></tr></table></figure>
 </li>
 <li><p>把文件提交到仓库</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git commit -m <span class="string">"添加一个readme文件"</span></div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ git commit -m <span class="string">"添加一个readme文件"</span></span>
+</pre></td></tr></table></figure>
 </li>
 </ol>
 <p>完成上面两部就完成了文件添加到仓库<br><img src="http://objects.earthchen.cn/git_study_%E6%B7%BB%E5%8A%A0%E6%96%87%E4%BB%B6%E5%88%B0%E7%89%88%E6%9C%AC%E5%BA%93.png" alt="git_study_添加文件到版本库"></p>
 <h3 id="版本更新与回退"><a href="#版本更新与回退" class="headerlink" title="版本更新与回退"></a>版本更新与回退</h3><h4 id="查看状态和差异"><a href="#查看状态和差异" class="headerlink" title="查看状态和差异"></a>查看状态和差异</h4><ol>
 <li><p>使用<strong>git status</strong>创建当前仓库的状态<br>先对创建的readme.txt进行一些修改，在在终端执行以下命令</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git status</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ git status</span>
+</pre></td></tr></table></figure>
 </li>
 <li><p>使用<strong>git diff</strong>查看差异</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git diff</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ git diff</span>
+</pre></td></tr></table></figure>
 </li>
 </ol>
 <p><img src="http://objects.earthchen.cn/git_study_%E6%9F%A5%E7%9C%8B%E7%8A%B6%E6%80%81%E4%B8%8E%E5%B7%AE%E5%BC%82.png" alt="git_study_查看状态和差异"></p>
 <h4 id="版本回退"><a href="#版本回退" class="headerlink" title="版本回退"></a>版本回退</h4><ol>
 <li><p>对之前的修改进行提交</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ git add readme.txt</div><div class="line">$ git commit -m <span class="string">"对readme进行修改"</span></div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">$ git add readme.txt</span>
+<span class="line">$ git commit -m <span class="string">"对readme进行修改"</span></span>
+</pre></td></tr></table></figure>
 </li>
 <li><p>使用<strong>git log</strong>查看操作的历史记录</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git <span class="built_in">log</span></div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">log</span></span>
+</pre></td></tr></table></figure>
 </li>
 </ol>
 <p><img src="http://objects.earthchen.cn/git_study_%E6%9F%A5%E7%9C%8B%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95.png" alt="git_study_查看历史记录"></p>
 <ol>
-<li>使用<strong>git reset</strong>回到上一个版本<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git reset --hard HEAD^</div></pre></td></tr></table></figure>
+<li>使用<strong>git reset</strong>回到上一个版本<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ git reset --hard HEAD^</span>
+</pre></td></tr></table></figure>
 </li>
 </ol>
 <p>回到上上个版本就是<strong>HEAD^^</strong><br>回到n个版本就是<strong>HEAD~n</strong></p>
 <ol>
 <li><p>根据<strong>commit id</strong>到达指定版本</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git reset --hard 576e22b9</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ git reset --hard 576e22b9</span>
+</pre></td></tr></table></figure>
 </li>
 <li><p>使用<strong>git reflog</strong>查看每一次记录</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git reflog</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ git reflog</span>
+</pre></td></tr></table></figure>
 </li>
 </ol>
 <p><img src="http://objects.earthchen.cn/git_study_%E5%8F%98%E6%9B%B4%E7%89%88%E6%9C%AC.png" alt="git_study_变更版本"></p>
-<h4 id="删除文件"><a href="#删除文件" class="headerlink" title="删除文件"></a>删除文件</h4><p>使用<strong>git rm</strong>删除文件和工作区中的文件<br>如果真的要删除文件和工作区里的文件需执行<strong>git rm</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ rm test.txt</div><div class="line">$ git rm test.txt</div></pre></td></tr></table></figure></p>
+<h4 id="删除文件"><a href="#删除文件" class="headerlink" title="删除文件"></a>删除文件</h4><p>使用<strong>git rm</strong>删除文件和工作区中的文件<br>如果真的要删除文件和工作区里的文件需执行<strong>git rm</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">$ rm test.txt</span>
+<span class="line">$ git rm test.txt</span>
+</pre></td></tr></table></figure></p>
 <p><img src="http://objects.earthchen.cn/git_study_%E5%88%A0%E9%99%A4%E6%96%87%E4%BB%B6.png" alt="git_study_删除文件"></p>
 <h3 id="远程仓库"><a href="#远程仓库" class="headerlink" title="远程仓库"></a>远程仓库</h3><p>创建秘钥和远程仓库的过程在这里就不多说了</p>
 <h4 id="添加远程库"><a href="#添加远程库" class="headerlink" title="添加远程库"></a>添加远程库</h4><ol>
-<li>使用<strong>git remote</strong>关联远程仓库<br>在本地的仓库目录下输入以下命令<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git remote add git_leran git@github.com:EarthChen/git_learn.git</div></pre></td></tr></table></figure>
+<li>使用<strong>git remote</strong>关联远程仓库<br>在本地的仓库目录下输入以下命令<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ git remote add git_leran git@github.com:EarthChen/git_learn.git</span>
+</pre></td></tr></table></figure>
 </li>
 </ol>
 <p>很多教程里面写的是<strong>add origin</strong>又没解释一下，容易让人误解，以为所有远程仓库都是这一个名字，当你管理不止一个远程仓库时，就会产生冲突了<br>还是说清楚比较好，这里的名字只是远程仓库的一个别名，需注意</p>
 <ol>
-<li>使用<strong>git push</strong>命令推送到远程库<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push -u git_learn master</div></pre></td></tr></table></figure>
+<li>使用<strong>git push</strong>命令推送到远程库<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ git push -u git_learn master</span>
+</pre></td></tr></table></figure>
 </li>
 </ol>
 <p>在github上创建仓库时，一般都会选择创建一个readme.md文件，此时远程仓库和本地就不同步，需先执行一下<strong>git pull</strong>命令<br>可以看到在推送的时候加上了<strong>git push -u</strong>参数，此时Git不但会把本地的master分支内容推送的远程新的master分支，还会把本地的master分支和远程的master分支关联起来，在以后的推送或者拉取时就可以简化命令</p>
 <p>在以后的提交中，就只需要使用<strong>git push git_learn master</strong>就可以进行推送了<br><img src="http://objects.earthchen.cn/git_study_%E6%B7%BB%E5%8A%A0%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93.png" alt="git_study_添加远程仓库"></p>
-<h4 id="克隆仓库"><a href="#克隆仓库" class="headerlink" title="克隆仓库"></a>克隆仓库</h4><p>使用<strong>git clone</strong>命令进行克隆<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git <span class="built_in">clone</span> git@github.com:EarthChen/git_learn.git</div></pre></td></tr></table></figure></p>
+<h4 id="克隆仓库"><a href="#克隆仓库" class="headerlink" title="克隆仓库"></a>克隆仓库</h4><p>使用<strong>git clone</strong>命令进行克隆<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> git@github.com:EarthChen/git_learn.git</span>
+</pre></td></tr></table></figure></p>
 <h3 id="分支管理"><a href="#分支管理" class="headerlink" title="分支管理"></a>分支管理</h3><h4 id="分支操作"><a href="#分支操作" class="headerlink" title="分支操作"></a>分支操作</h4><ol>
-<li>使用<strong>git checkout</strong>命令创建并切换到分支<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git checkout -b dev</div></pre></td></tr></table></figure>
+<li>使用<strong>git checkout</strong>命令创建并切换到分支<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ git checkout -b dev</span>
+</pre></td></tr></table></figure>
 </li>
 </ol>
 <p>加上参数-b表示创建一个名为dev的分支，病切换到这个分支<br>在dev上进行一些操作并提交</p>
 <ol>
-<li>使用<strong>git branch</strong>命令查看分支<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git branch</div></pre></td></tr></table></figure>
+<li>使用<strong>git branch</strong>命令查看分支<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ git branch</span>
+</pre></td></tr></table></figure>
 </li>
 </ol>
 <ul>
 <li>前面有*的为当前分支</li>
 </ul>
 <ol>
-<li>使用<strong>git merge</strong>命令合并分支<br>先切换回master分支，然后合并分支<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git merge dev</div></pre></td></tr></table></figure>
+<li>使用<strong>git merge</strong>命令合并分支<br>先切换回master分支，然后合并分支<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ git merge dev</span>
+</pre></td></tr></table></figure>
 </li>
 </ol>
 <p>将dev分支和master分支合并</p>
 <ol>
-<li>使用<strong>git branch -d</strong>删除分支<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git merge dev</div></pre></td></tr></table></figure>
+<li>使用<strong>git branch -d</strong>删除分支<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ git merge dev</span>
+</pre></td></tr></table></figure>
 </li>
 </ol>
 <p>删除dev分支<br><img src="http://objects.earthchen.cn/git_study_%E5%88%86%E6%94%AF%E6%93%8D%E4%BD%9C.png" alt="git_study_分支操作"></p>
 <ol>
 <li>强制禁用Fast forward模式合并分支<br>Git会在merge时生成一个新的commit，这样，从分支历史上就可以看出分支信息<br>首先需要创建一个新的分支，子啊这个新的分支里面进行一些操作，病提交，然后切换回master分支</li>
 </ol>
-<p>使用禁用Fast forward模式合并分支<br>准备合并dev分支，请注意–no-ff参数，表示禁用Fast forward：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git merge --no-ff -m <span class="string">"merge with no-ff"</span> dev</div></pre></td></tr></table></figure></p>
+<p>使用禁用Fast forward模式合并分支<br>准备合并dev分支，请注意–no-ff参数，表示禁用Fast forward：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ git merge --no-ff -m <span class="string">"merge with no-ff"</span> dev</span>
+</pre></td></tr></table></figure></p>
 <p>因为本次合并要创建一个新的commit，所以加上-m参数，把commit描述写进去<br>然后使用<strong>git log</strong>查看分支历史<br><img src="http://objects.earthchen.cn/git_study_%E7%A6%81%E7%94%A8Fast_forward.png" alt="git_study_禁用Fast_forward"></p>
 <h4 id="Feature分支"><a href="#Feature分支" class="headerlink" title="Feature分支"></a>Feature分支</h4><p>这个分支的意义就是添加一些新功能时，创建一个新分支，在新分支上实现功能，最后在合并到master分支</p>
 <ol>
-<li>创建新分支<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git checkout -b feature-vulcan</div></pre></td></tr></table></figure>
+<li>创建新分支<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ git checkout -b feature-vulcan</span>
+</pre></td></tr></table></figure>
 </li>
 </ol>
 <p>切换回dev分支</p>
 <ol>
-<li>在未合并分支前就要删除分支<br>使用<strong>git branch -D <name></name></strong>强行删除分支<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git branch -D feature-vulcan</div></pre></td></tr></table></figure>
+<li>在未合并分支前就要删除分支<br>使用<strong>git branch -D <name></name></strong>强行删除分支<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ git branch -D feature-vulcan</span>
+</pre></td></tr></table></figure>
 </li>
 </ol>
 <p><img src="http://objects.earthchen.cn/git_study_Feature%E5%88%86%E6%94%AF.png" alt="git_study_Feature分支"></p>
 <h3 id="标签管理"><a href="#标签管理" class="headerlink" title="标签管理"></a>标签管理</h3><ol>
-<li>使用<strong>git tag tag_name</strong>命令创建标签<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag v1.0</div></pre></td></tr></table></figure>
+<li>使用<strong>git tag tag_name</strong>命令创建标签<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ git tag v1.0</span>
+</pre></td></tr></table></figure>
 </li>
 </ol>
-<p>git tag后面不加参数就可以查看标签<br>默认标签是打在最新提交的commit上的<br>也可以指定标签打在的位置（commit）<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag v0.9</div></pre></td></tr></table></figure></p>
+<p>git tag后面不加参数就可以查看标签<br>默认标签是打在最新提交的commit上的<br>也可以指定标签打在的位置（commit）<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ git tag v0.9</span>
+</pre></td></tr></table></figure></p>
 <ol>
-<li>使用<strong>git tag -d</strong>删除标签<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git tag v1.0</div></pre></td></tr></table></figure>
+<li>使用<strong>git tag -d</strong>删除标签<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ git tag v1.0</span>
+</pre></td></tr></table></figure>
 </li>
 </ol>
 <h3 id="git配置"><a href="#git配置" class="headerlink" title="git配置"></a>git配置</h3><ol>
-<li>创建.gitignore文件，填写忽略文件<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Python:</span></div><div class="line">*.py[cod]</div><div class="line">*.so</div><div class="line">*.egg</div><div class="line">*.egg-info</div><div class="line">dist</div><div class="line">build</div></pre></td></tr></table></figure>
+<li>创建.gitignore文件，填写忽略文件<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment"># Python:</span></span>
+<span class="line">*.py[cod]</span>
+<span class="line">*.so</span>
+<span class="line">*.egg</span>
+<span class="line">*.egg-info</span>
+<span class="line">dist</span>
+<span class="line">build</span>
+</pre></td></tr></table></figure>
 </li>
 </ol>
 <p>然后提交就git就会把所配置忽略的文件进行忽略</p>
@@ -486,17 +556,17 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/06/08/git_study/">Git学习笔记</a></p>
-        <p><span>文章作者:</span><a href="/" title="回到主页">EarthChen</a></p>
-        <p><span>发布时间:</span>2017-06-08, 14:40:00</p>
-        <p><span>最后更新:</span>2017-08-06, 17:49:03</p>
+        <p><span>Title:</span><a href="/2017/06/08/git_study/">Git学习笔记</a></p>
+        <p><span>Author:</span><a href="/" title="Back to Homepage">EarthChen</a></p>
+        <p><span>Created:</span>2017-06-08, 14:40:00</p>
+        <p><span>Updated:</span>2017-08-06, 17:49:03</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/06/08/git_study/" title="Git学习笔记">http://earthchen.cn/2017/06/08/git_study/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://earthchen.cn/2017/06/08/git_study/　　作者: EarthChen" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>Full URL:</span><a class="post-url" href="/2017/06/08/git_study/" title="Git学习笔记">http://earthchen.cn/2017/06/08/git_study/</a>
+            <span class="copy-path" data-clipboard-text="From http://earthchen.cn/2017/06/08/git_study/　　By EarthChen" title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
-            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+            <span>License:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"CC BY-NC-SA 4.0"</a> Keep Link &amp; Author if Distribute.
         </p>
     </div>
 
@@ -523,7 +593,7 @@
 </article>
 
     <div id="toc" class="toc-article">
-        <strong class="toc-title">文章目录</strong>
+        <strong class="toc-title">Contents</strong>
         
             <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Git"><span class="toc-number">1.</span> <span class="toc-text">Git</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建版本库"><span class="toc-number">1.1.</span> <span class="toc-text">创建版本库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#版本更新与回退"><span class="toc-number">1.2.</span> <span class="toc-text">版本更新与回退</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#查看状态和差异"><span class="toc-number">1.2.1.</span> <span class="toc-text">查看状态和差异</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#版本回退"><span class="toc-number">1.2.2.</span> <span class="toc-text">版本回退</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#删除文件"><span class="toc-number">1.2.3.</span> <span class="toc-text">删除文件</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#远程仓库"><span class="toc-number">1.3.</span> <span class="toc-text">远程仓库</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#添加远程库"><span class="toc-number">1.3.1.</span> <span class="toc-text">添加远程库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#克隆仓库"><span class="toc-number">1.3.2.</span> <span class="toc-text">克隆仓库</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分支管理"><span class="toc-number">1.4.</span> <span class="toc-text">分支管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#分支操作"><span class="toc-number">1.4.1.</span> <span class="toc-text">分支操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Feature分支"><span class="toc-number">1.4.2.</span> <span class="toc-text">Feature分支</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#标签管理"><span class="toc-number">1.5.</span> <span class="toc-text">标签管理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#git配置"><span class="toc-number">1.6.</span> <span class="toc-text">git配置</span></a></li></ol></li></ol>
         
@@ -539,10 +609,10 @@
         }
     </style>
 
-    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+    <input type="button" id="tocButton" value="Hide"  title="Show or Hide Table of Contents">
 
     <script>
-        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+        yiliaConfig.toc = ["Hide", "Show", !!"false"];
     </script>
 
 
@@ -595,21 +665,21 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2017/06/12/spring_SpEL/" title="上一篇: spring中的SpEL表达式">
+            <a href="/2017/06/12/spring_SpEL/" title="Pre: spring中的SpEL表达式">
                 <i class="fa fa-angle-left"></i>
             </a>
         
 
-        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        <a title="Mini Archives"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2017/06/03/资源收集/" title="下一篇: 资源收集共享">
+            <a href="/2017/06/03/资源收集/" title="Next: 资源收集共享">
                 <i class="fa fa-angle-right"></i>
             </a>
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/04/01/httpclientutil/">HttpClient工具类</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/14/qiniu-oss/">spring boot使用七牛云的oss(对象存储)文件上传</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/spring-boot-shiro-jwt/">spring boot集成shiro使用jwt进行权限控制</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/requestHolder_and_argumentResolver/">使用ThreadLocal和ArgumentResolver方便开发</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/applicationContextHelper/">在不被spring容器管理的类中使用ApplicationContext应用上下文bean</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_static_class_autowrite/">Spring boot 在静态类中注入spring组件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_diy_properties/">Spring boot 自定义配置文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/12/Elasticsearch_study_1/">Elasticsearch学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/09/深入理解java虚拟机学习笔记_1/">深入理解java虚拟机学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/23/Docker_study_Dockerfile_instructions/">Docker学习笔记---Dockerfile</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/22/Docker_study/">Docker学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/20/celery_study/">Celery-分布式任务队列学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_redis_cache/">Django使用redis作为缓存系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_channels_websocket/">Django使用Channels实现websocket</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/13/Docker_Gogs/">使用Docker搭建git服务Gogs</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_1to20/">LeetCode刷题记录(easy难度1-20题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_21to_40/">LeetCode刷题记录(easy难度21-40题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/29/es6_study/">es6学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/Webpack_study/">Webpack学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/RegularExpression_study/">正则表达式学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/08/AndroidStudio/">Android Studio 使用本地离线Gradle</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/跨域请求解决方案/">跨域请求的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_nginx_gunicorn/">django+nginx+gunicorn部署配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/ubuntu_supervisor/">ubuntu下的进程控制系统————Supervisor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/28/ubuntu修复不能挂载NTFS硬盘/">ubuntu修复linux和windows双系统下挂载ntfs硬盘出错问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/17/django_timing_task/">django使用django-crontab实现定时任务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/15/django_rest_framework_jwt/">django-rest-framework配置json web token进行接口的认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/django_rest_framework_study/">django-rest-framework框架学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/spring_SpEL/">spring中的SpEL表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/08/git_study/">Git学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/03/资源收集/">资源收集共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/06/ubuntu_open_port/">ubuntu开放指定端口</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/16/redis_study_2/">Redis学习笔记 -- 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/15/redis_study_1/">Redis学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/16/ubuntu_do_something_use/">ubuntu日常使用的安装配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/ubuntu_do_something_coding/">ubuntu搭建常见开发环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/django_address_baiduapi_marker_show/">Django调用百度地图api在地图上批量增加标记点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/10/ubuntu安装在双系统笔记本下开机或关机卡死.1/">ubuntu在双系统下开机卡死或关机卡死的解决办法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/11/python_requirements/">python生成项目所需依赖文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/10/hexo_github_coding_blog/">利用hexo和github或coding 搭免费个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django常用语句/">Django常用语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/python2和Python3的区别/">Python2和Python3的区别简单总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django连接mysql数据库/">Django连接MySql使用models处理数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django数据库操作/">Django操作数据库</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django环境搭建/">Django环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django渲染模板/">Django渲染模板</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/03/Android_qq_Menu/">Android仿qq侧滑菜单</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/16/C语言队列的基本操作/">C语言队列的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/c语言中缀表达式变后缀表达式/">C语言中缀表达式转后缀表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言逆波兰计算器/">C语言逆波兰表达式计算(后缀表达式计算器)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言共享栈/">C语言共享栈</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言二叉树基本操作/">C语言二叉树的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言中缀表达式计算器/">C语言中缀表达式计算器</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/04/01/httpclientutil/">HttpClient工具类</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/14/qiniu-oss/">spring boot使用七牛云的oss(对象存储)文件上传</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/spring-boot-shiro-jwt/">spring boot集成shiro使用jwt进行权限控制</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/requestHolder_and_argumentResolver/">使用ThreadLocal和ArgumentResolver方便开发</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/applicationContextHelper/">在不被spring容器管理的类中使用ApplicationContext应用上下文bean</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_static_class_autowrite/">Spring boot 在静态类中注入spring组件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_diy_properties/">Spring boot 自定义配置文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/12/Elasticsearch_study_1/">Elasticsearch学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/09/深入理解java虚拟机学习笔记_1/">深入理解java虚拟机学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/23/Docker_study_Dockerfile_instructions/">Docker学习笔记---Dockerfile</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/22/Docker_study/">Docker学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/20/celery_study/">Celery-分布式任务队列学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_redis_cache/">Django使用redis作为缓存系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_channels_websocket/">Django使用Channels实现websocket</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/13/Docker_Gogs/">使用Docker搭建git服务Gogs</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_1to20/">LeetCode刷题记录(easy难度1-20题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_21to_40/">LeetCode刷题记录(easy难度21-40题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/29/es6_study/">es6学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/Webpack_study/">Webpack学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/RegularExpression_study/">正则表达式学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/08/AndroidStudio/">Android Studio 使用本地离线Gradle</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/跨域请求解决方案/">跨域请求的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/ubuntu_supervisor/">ubuntu下的进程控制系统————Supervisor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_nginx_gunicorn/">django+nginx+gunicorn部署配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/28/ubuntu修复不能挂载NTFS硬盘/">ubuntu修复linux和windows双系统下挂载ntfs硬盘出错问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/17/django_timing_task/">django使用django-crontab实现定时任务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/15/django_rest_framework_jwt/">django-rest-framework配置json web token进行接口的认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/django_rest_framework_study/">django-rest-framework框架学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/spring_SpEL/">spring中的SpEL表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/08/git_study/">Git学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/03/资源收集/">资源收集共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/06/ubuntu_open_port/">ubuntu开放指定端口</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/16/redis_study_2/">Redis学习笔记 -- 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/15/redis_study_1/">Redis学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/16/ubuntu_do_something_use/">ubuntu日常使用的安装配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/django_address_baiduapi_marker_show/">Django调用百度地图api在地图上批量增加标记点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/ubuntu_do_something_coding/">ubuntu搭建常见开发环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/10/ubuntu安装在双系统笔记本下开机或关机卡死.1/">ubuntu在双系统下开机卡死或关机卡死的解决办法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/11/python_requirements/">python生成项目所需依赖文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/10/hexo_github_coding_blog/">利用hexo和github或coding 搭免费个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django环境搭建/">Django环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django连接mysql数据库/">Django连接MySql使用models处理数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django渲染模板/">Django渲染模板</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django常用语句/">Django常用语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django数据库操作/">Django操作数据库</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/python2和Python3的区别/">Python2和Python3的区别简单总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/03/Android_qq_Menu/">Android仿qq侧滑菜单</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/16/C语言队列的基本操作/">C语言队列的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言共享栈/">C语言共享栈</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言二叉树基本操作/">C语言二叉树的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言逆波兰计算器/">C语言逆波兰表达式计算(后缀表达式计算器)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言中缀表达式计算器/">C语言中缀表达式计算器</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/c语言中缀表达式变后缀表达式/">C语言中缀表达式转后缀表达式</a></li></ul>
 
 
 
@@ -626,14 +696,14 @@
                 2016-2018 EarthChen
             </div>
             <div class="footer-right">
-                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+                <a href="http://hexo.io/" target="_blank" title="A fast, simple &amp; powerful blog framework">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Another simple and elegant theme for Hexo  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
             </div>
         </div>
         
             <div class="visit">
                 
                     <span id="busuanzi_container_site_pv" style='display:none'>
-                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        <span id="site-visit" title="Site Visitors"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
                         </span>
                     </span>
                 
@@ -642,7 +712,7 @@
                 
                 
                     <span id="busuanzi_container_page_pv" style='display:none'>
-                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        <span id="page-visit"  title="Page Hits"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
                         </span>
                     </span>
                 
@@ -677,9 +747,9 @@
 
 
 <div class="scroll" id="scroll">
-    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
-    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
-    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+    <a href="#" title="Back to Top"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="Comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="Go to Bottom"><i class="fa fa-arrow-down"></i></a>
 </div>
 <script>
     // Open in New Window

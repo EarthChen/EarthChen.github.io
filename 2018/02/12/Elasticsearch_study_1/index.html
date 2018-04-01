@@ -158,13 +158,13 @@
                 <div class="tips-box hide">
                     <div class="tips-arrow"></div>
                     <ul class="tips-inner">
-                        <li>菜单</li>
-                        <li>标签</li>
+                        <li>Menu</li>
+                        <li>Tags</li>
                         
-                        <li>友情链接</li>
+                        <li>Friends</li>
                         
                         
-                        <li>关于我</li>
+                        <li>About Me</li>
                         
                     </ul>
                 </div>
@@ -294,7 +294,7 @@
             </nav>
         </header>                
     </div>
-    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+    <link class="menu-list" tags="Tags" friends="Friends" about="About Me"/>
 </nav>
       <div class="body-wrap"><article id="post-Elasticsearch_study_1" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -345,10 +345,82 @@
 <h2 id="Elasticsearch"><a href="#Elasticsearch" class="headerlink" title="Elasticsearch"></a>Elasticsearch</h2><a id="more"></a>
 <h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>笔者这里是使用docker安装的，比较方便。笔者使用docker-compose搭建了一个集群，并且安装了head插件。</p>
 <ol>
-<li>docker-compose.yml内容为<figure class="highlight docker"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">version: <span class="string">'3'</span></div><div class="line">services:</div><div class="line">  elasticsearch-master:</div><div class="line">    restart: always</div><div class="line">    image: elasticsearch:latest</div><div class="line">    ports:</div><div class="line">      - <span class="string">"9200:9200"</span></div><div class="line">      - <span class="string">"9300:9300"</span></div><div class="line">    environment:</div><div class="line">      - ES_JAVA_OPTS=-Xms512m -Xmx512m</div><div class="line">    volumes:</div><div class="line">      - ./master-config:/usr/share/elasticsearch/config</div><div class="line">    </div><div class="line"></div><div class="line">  elasticsearch-slave1:</div><div class="line">    restart: always</div><div class="line">    image: elasticsearch:latest</div><div class="line">    ports:</div><div class="line">      - <span class="string">"8200:9200"</span></div><div class="line">      - <span class="string">"8300:9300"</span></div><div class="line">    depends_on:</div><div class="line">      - elasticsearch-master</div><div class="line">    links:</div><div class="line">      - elasticsearch-master</div><div class="line">    environment:</div><div class="line">      - ES_JAVA_OPTS=-Xms512m -Xmx512m</div><div class="line">      - discovery.zen.ping.unicast.hosts=lasticsearch-master</div><div class="line">    volumes:</div><div class="line">      - ./slave1-config:/usr/share/elasticsearch/config</div><div class="line"></div><div class="line">  elasticsearch-head:</div><div class="line">    restart: always</div><div class="line">    image: mobz/elasticsearch-head:<span class="number">5</span></div><div class="line">    ports:</div><div class="line">      - <span class="string">"9100:9100"</span></div></pre></td></tr></table></figure>
+<li>docker-compose.yml内容为<figure class="highlight docker"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+<span class="line">27</span>
+<span class="line">28</span>
+<span class="line">29</span>
+<span class="line">30</span>
+<span class="line">31</span>
+<span class="line">32</span>
+<span class="line">33</span>
+<span class="line">34</span>
+<span class="line">35</span>
+</pre></td><td class="code"><pre><span class="line">version: <span class="string">'3'</span></span>
+<span class="line">services:</span>
+<span class="line">  elasticsearch-master:</span>
+<span class="line">    restart: always</span>
+<span class="line">    image: elasticsearch:latest</span>
+<span class="line">    ports:</span>
+<span class="line">      - <span class="string">"9200:9200"</span></span>
+<span class="line">      - <span class="string">"9300:9300"</span></span>
+<span class="line">    environment:</span>
+<span class="line">      - ES_JAVA_OPTS=-Xms512m -Xmx512m</span>
+<span class="line">    volumes:</span>
+<span class="line">      - ./master-config:/usr/share/elasticsearch/config</span>
+<span class="line">    </span>
+<span class="line"></span>
+<span class="line">  elasticsearch-slave1:</span>
+<span class="line">    restart: always</span>
+<span class="line">    image: elasticsearch:latest</span>
+<span class="line">    ports:</span>
+<span class="line">      - <span class="string">"8200:9200"</span></span>
+<span class="line">      - <span class="string">"8300:9300"</span></span>
+<span class="line">    depends_on:</span>
+<span class="line">      - elasticsearch-master</span>
+<span class="line">    links:</span>
+<span class="line">      - elasticsearch-master</span>
+<span class="line">    environment:</span>
+<span class="line">      - ES_JAVA_OPTS=-Xms512m -Xmx512m</span>
+<span class="line">      - discovery.zen.ping.unicast.hosts=lasticsearch-master</span>
+<span class="line">    volumes:</span>
+<span class="line">      - ./slave1-config:/usr/share/elasticsearch/config</span>
+<span class="line"></span>
+<span class="line">  elasticsearch-head:</span>
+<span class="line">    restart: always</span>
+<span class="line">    image: mobz/elasticsearch-head:<span class="number">5</span></span>
+<span class="line">    ports:</span>
+<span class="line">      - <span class="string">"9100:9100"</span></span>
+</pre></td></tr></table></figure>
 </li>
 </ol>
-<p>具体的我会放到<a href="https://github.com/EarthChen/elasticsearch.git" target="_blank" rel="external">github</a>上，如果想使用只要clone下来进入<strong>docker-start</strong>目录执行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ docker-compose up <span class="_">-d</span></div></pre></td></tr></table></figure></p>
+<p>具体的我会放到<a href="https://github.com/EarthChen/elasticsearch.git" target="_blank" rel="external">github</a>上，如果想使用只要clone下来进入<strong>docker-start</strong>目录执行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ docker-compose up <span class="_">-d</span></span>
+</pre></td></tr></table></figure></p>
 <p>即可，如果没安装<strong>docker</strong>和<strong>docker-compose</strong>，请自行搜索安装。</p>
 <blockquote>
 <p>注：</p>
@@ -376,13 +448,85 @@
 <ol>
 <li>结构化创建索引<br>POST /book/novel/_mappings</li>
 </ol>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"novel"</span>: &#123;</div><div class="line">    <span class="attr">"properties"</span>: &#123;</div><div class="line">      <span class="attr">"title"</span>: &#123;</div><div class="line">        <span class="attr">"type"</span>: <span class="string">"text"</span></div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+</pre></td><td class="code"><pre><span class="line">&#123;</span>
+<span class="line">  <span class="attr">"novel"</span>: &#123;</span>
+<span class="line">    <span class="attr">"properties"</span>: &#123;</span>
+<span class="line">      <span class="attr">"title"</span>: &#123;</span>
+<span class="line">        <span class="attr">"type"</span>: <span class="string">"text"</span></span>
+<span class="line">      &#125;</span>
+<span class="line">    &#125;</span>
+<span class="line">  &#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
 <blockquote>
 <p>执行创建结构化时，索引必须存在，即执行上述命令时，<strong>book</strong>索引必须存在</p>
 </blockquote>
 <p>如果索引不存在，使用下面的方式</p>
 <p>PUT /people</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	<span class="attr">"settings"</span>:&#123;</div><div class="line">		<span class="attr">"number_of_shards"</span>:<span class="number">3</span>,   </div><div class="line">		<span class="attr">"number_of_replicas"</span>: <span class="number">1</span></div><div class="line">	&#125;,</div><div class="line">	<span class="attr">"mappings"</span>:&#123;</div><div class="line">		<span class="attr">"man"</span>:&#123;</div><div class="line">			<span class="attr">"properties"</span>:&#123;</div><div class="line">				<span class="attr">"name"</span>:&#123;</div><div class="line">					<span class="attr">"type"</span>: <span class="string">"text"</span></div><div class="line">				&#125;,</div><div class="line">				<span class="attr">"country"</span>:&#123;</div><div class="line">					<span class="attr">"type"</span>: <span class="string">"keyword"</span></div><div class="line">				&#125;,</div><div class="line">				<span class="attr">"age"</span>:&#123;</div><div class="line">					<span class="attr">"type"</span>: <span class="string">"integer"</span></div><div class="line">				&#125;,</div><div class="line">				<span class="attr">"date"</span>:&#123;</div><div class="line">					<span class="attr">"type"</span>:<span class="string">"date"</span>,</div><div class="line">					<span class="attr">"format"</span>: <span class="string">"yyyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis"</span></div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;,</div><div class="line">		<span class="attr">"woman"</span>:&#123;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+<span class="line">27</span>
+</pre></td><td class="code"><pre><span class="line">&#123;</span>
+<span class="line">	<span class="attr">"settings"</span>:&#123;</span>
+<span class="line">		<span class="attr">"number_of_shards"</span>:<span class="number">3</span>,   </span>
+<span class="line">		<span class="attr">"number_of_replicas"</span>: <span class="number">1</span></span>
+<span class="line">	&#125;,</span>
+<span class="line">	<span class="attr">"mappings"</span>:&#123;</span>
+<span class="line">		<span class="attr">"man"</span>:&#123;</span>
+<span class="line">			<span class="attr">"properties"</span>:&#123;</span>
+<span class="line">				<span class="attr">"name"</span>:&#123;</span>
+<span class="line">					<span class="attr">"type"</span>: <span class="string">"text"</span></span>
+<span class="line">				&#125;,</span>
+<span class="line">				<span class="attr">"country"</span>:&#123;</span>
+<span class="line">					<span class="attr">"type"</span>: <span class="string">"keyword"</span></span>
+<span class="line">				&#125;,</span>
+<span class="line">				<span class="attr">"age"</span>:&#123;</span>
+<span class="line">					<span class="attr">"type"</span>: <span class="string">"integer"</span></span>
+<span class="line">				&#125;,</span>
+<span class="line">				<span class="attr">"date"</span>:&#123;</span>
+<span class="line">					<span class="attr">"type"</span>:<span class="string">"date"</span>,</span>
+<span class="line">					<span class="attr">"format"</span>: <span class="string">"yyyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis"</span></span>
+<span class="line">				&#125;</span>
+<span class="line">			&#125;</span>
+<span class="line">		&#125;,</span>
+<span class="line">		<span class="attr">"woman"</span>:&#123;</span>
+<span class="line">		&#125;</span>
+<span class="line">	&#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
 <blockquote>
 <ul>
 <li>settings为当前索引的配置，比如切片数备份数</li>
@@ -393,22 +537,90 @@
 <li>指定文档id插入</li>
 </ol>
 <p>PUT /people/man/1</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	<span class="attr">"name"</span>:<span class="string">"earthchen"</span>,</div><div class="line">	<span class="attr">"country"</span>: <span class="string">"China"</span>,</div><div class="line">	<span class="attr">"age"</span>: <span class="number">18</span>,</div><div class="line">	<span class="attr">"date"</span>:<span class="string">"1996-11-25"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+</pre></td><td class="code"><pre><span class="line">&#123;</span>
+<span class="line">	<span class="attr">"name"</span>:<span class="string">"earthchen"</span>,</span>
+<span class="line">	<span class="attr">"country"</span>: <span class="string">"China"</span>,</span>
+<span class="line">	<span class="attr">"age"</span>: <span class="number">18</span>,</span>
+<span class="line">	<span class="attr">"date"</span>:<span class="string">"1996-11-25"</span></span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
 <ol>
 <li>自动生成id插入</li>
 </ol>
 <p>POST /people/man</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	<span class="attr">"name"</span>:<span class="string">"earthchen2"</span>,</div><div class="line">	<span class="attr">"country"</span>: <span class="string">"China"</span>,</div><div class="line">	<span class="attr">"age"</span>: <span class="number">20</span>,</div><div class="line">	<span class="attr">"date"</span>:<span class="string">"1997-11-25"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+</pre></td><td class="code"><pre><span class="line">&#123;</span>
+<span class="line">	<span class="attr">"name"</span>:<span class="string">"earthchen2"</span>,</span>
+<span class="line">	<span class="attr">"country"</span>: <span class="string">"China"</span>,</span>
+<span class="line">	<span class="attr">"age"</span>: <span class="number">20</span>,</span>
+<span class="line">	<span class="attr">"date"</span>:<span class="string">"1997-11-25"</span></span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
 <h4 id="数据修改"><a href="#数据修改" class="headerlink" title="数据修改"></a>数据修改</h4><ol>
 <li>直接修改</li>
 </ol>
 <p>POST /people/man/1/_update</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	<span class="attr">"doc"</span>:&#123;</div><div class="line">		<span class="attr">"name"</span>:<span class="string">"修改后的name"</span></div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line">&#123;</span>
+<span class="line">	<span class="attr">"doc"</span>:&#123;</span>
+<span class="line">		<span class="attr">"name"</span>:<span class="string">"修改后的name"</span></span>
+<span class="line">	&#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
 <ol>
 <li>使用脚本</li>
 </ol>
 <p>POST /people/man/1/_update</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	"script":&#123;</div><div class="line">		"lang":"painless",</div><div class="line">		"inline":"ctx._source.age=params.age",</div><div class="line">		"params":&#123;</div><div class="line">			"age":100</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">或</div><div class="line">&#123;</div><div class="line">	"script":&#123;</div><div class="line">		"lang":"painless",</div><div class="line">		"inline":"ctx._source.age+=10",</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+</pre></td><td class="code"><pre><span class="line">&#123;</span>
+<span class="line">	"script":&#123;</span>
+<span class="line">		"lang":"painless",</span>
+<span class="line">		"inline":"ctx._source.age=params.age",</span>
+<span class="line">		"params":&#123;</span>
+<span class="line">			"age":100</span>
+<span class="line">		&#125;</span>
+<span class="line">	&#125;</span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line">或</span>
+<span class="line">&#123;</span>
+<span class="line">	"script":&#123;</span>
+<span class="line">		"lang":"painless",</span>
+<span class="line">		"inline":"ctx._source.age+=10",</span>
+<span class="line">	&#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
 <h4 id="数据删除"><a href="#数据删除" class="headerlink" title="数据删除"></a>数据删除</h4><ol>
 <li>删除指定的文档</li>
 </ol>
@@ -417,7 +629,45 @@
 <li>删除指定索引</li>
 </ol>
 <p>DELETE /people</p>
-<h4 id="基本查询"><a href="#基本查询" class="headerlink" title="基本查询"></a>基本查询</h4><p>查询结构为<br><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"mappings"</span>: &#123;</div><div class="line">        <span class="attr">"novel"</span>: &#123;</div><div class="line">        <span class="attr">"properties"</span>: &#123;</div><div class="line">            <span class="attr">"word_count"</span>: &#123;</div><div class="line">                <span class="attr">"type"</span>: <span class="string">"integer"</span></div><div class="line">                &#125;,</div><div class="line">            <span class="attr">"author"</span>: &#123;</div><div class="line">                <span class="attr">"type"</span>: <span class="string">"keyword"</span></div><div class="line">                &#125;,</div><div class="line">            <span class="attr">"title"</span>: &#123;</div><div class="line">                <span class="attr">"type"</span>: <span class="string">"text"</span></div><div class="line">                &#125;,</div><div class="line">            <span class="attr">"publish_date"</span>: &#123;</div><div class="line">                <span class="attr">"format"</span>: <span class="string">"yyyy-MM-dd HH:mm:ss || yyyy-MM-dd || epoch_millis"</span>,</div><div class="line">                <span class="attr">"type"</span>: <span class="string">"date"</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="基本查询"><a href="#基本查询" class="headerlink" title="基本查询"></a>基本查询</h4><p>查询结构为<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+</pre></td><td class="code"><pre><span class="line">&#123;</span>
+<span class="line">    <span class="attr">"mappings"</span>: &#123;</span>
+<span class="line">        <span class="attr">"novel"</span>: &#123;</span>
+<span class="line">        <span class="attr">"properties"</span>: &#123;</span>
+<span class="line">            <span class="attr">"word_count"</span>: &#123;</span>
+<span class="line">                <span class="attr">"type"</span>: <span class="string">"integer"</span></span>
+<span class="line">                &#125;,</span>
+<span class="line">            <span class="attr">"author"</span>: &#123;</span>
+<span class="line">                <span class="attr">"type"</span>: <span class="string">"keyword"</span></span>
+<span class="line">                &#125;,</span>
+<span class="line">            <span class="attr">"title"</span>: &#123;</span>
+<span class="line">                <span class="attr">"type"</span>: <span class="string">"text"</span></span>
+<span class="line">                &#125;,</span>
+<span class="line">            <span class="attr">"publish_date"</span>: &#123;</span>
+<span class="line">                <span class="attr">"format"</span>: <span class="string">"yyyy-MM-dd HH:mm:ss || yyyy-MM-dd || epoch_millis"</span>,</span>
+<span class="line">                <span class="attr">"type"</span>: <span class="string">"date"</span></span>
+<span class="line">        &#125;</span>
+<span class="line">    &#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure></p>
 <h5 id="简单查询"><a href="#简单查询" class="headerlink" title="简单查询"></a>简单查询</h5><ol>
 <li>根据id查询数据</li>
 </ol>
@@ -426,7 +676,19 @@
 <li>查询所有数据</li>
 </ol>
 <p>POST /book/_search</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	<span class="attr">"query"</span>:&#123;</div><div class="line">		<span class="attr">"match_all"</span>:&#123;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+</pre></td><td class="code"><pre><span class="line">&#123;</span>
+<span class="line">	<span class="attr">"query"</span>:&#123;</span>
+<span class="line">		<span class="attr">"match_all"</span>:&#123;</span>
+<span class="line">		&#125;</span>
+<span class="line">	&#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
 <blockquote>
 <p>默认10条数据</p>
 </blockquote>
@@ -434,17 +696,73 @@
 <li>指定从第几条返回，返回多少条数据</li>
 </ol>
 <p>POST /book/_search</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	<span class="attr">"query"</span>:&#123;</div><div class="line">		<span class="attr">"match_all"</span>:&#123;&#125;</div><div class="line">	&#125;,</div><div class="line">	<span class="attr">"from"</span>:<span class="number">1</span>,</div><div class="line">	<span class="attr">"size"</span>:<span class="number">2</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+</pre></td><td class="code"><pre><span class="line">&#123;</span>
+<span class="line">	<span class="attr">"query"</span>:&#123;</span>
+<span class="line">		<span class="attr">"match_all"</span>:&#123;&#125;</span>
+<span class="line">	&#125;,</span>
+<span class="line">	<span class="attr">"from"</span>:<span class="number">1</span>,</span>
+<span class="line">	<span class="attr">"size"</span>:<span class="number">2</span></span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
 <ol>
 <li><p>查询关键词</p>
 <ul>
 <li><p>查询title中含有title的数据</p>
 <p>POST /book/_search</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"query"</span>:&#123;</div><div class="line">        <span class="attr">"match"</span>:&#123;</div><div class="line">            <span class="attr">"title"</span>:<span class="string">"title"</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+</pre></td><td class="code"><pre><span class="line">&#123;</span>
+<span class="line">    <span class="attr">"query"</span>:&#123;</span>
+<span class="line">        <span class="attr">"match"</span>:&#123;</span>
+<span class="line">            <span class="attr">"title"</span>:<span class="string">"title"</span></span>
+<span class="line">        &#125;</span>
+<span class="line">    &#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
 </li>
 <li><p>增加排序规则（按照publish_date的降序排列）</p>
 <p>POST /book/_search</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"query"</span>:&#123;</div><div class="line">        <span class="attr">"match"</span>:&#123;</div><div class="line">            <span class="attr">"title"</span>:<span class="string">"title4"</span></div><div class="line">        &#125;</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">"sort"</span>:[</div><div class="line">            &#123;</div><div class="line">                <span class="attr">"publish_date"</span>:&#123;</div><div class="line">                    <span class="attr">"order"</span>:<span class="string">"desc"</span></div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        ]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+</pre></td><td class="code"><pre><span class="line">&#123;</span>
+<span class="line">    <span class="attr">"query"</span>:&#123;</span>
+<span class="line">        <span class="attr">"match"</span>:&#123;</span>
+<span class="line">            <span class="attr">"title"</span>:<span class="string">"title4"</span></span>
+<span class="line">        &#125;</span>
+<span class="line">    &#125;,</span>
+<span class="line">    <span class="attr">"sort"</span>:[</span>
+<span class="line">            &#123;</span>
+<span class="line">                <span class="attr">"publish_date"</span>:&#123;</span>
+<span class="line">                    <span class="attr">"order"</span>:<span class="string">"desc"</span></span>
+<span class="line">                &#125;</span>
+<span class="line">            &#125;</span>
+<span class="line">        ]</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
@@ -453,12 +771,58 @@
 <li>按照指定字段聚合查询</li>
 </ol>
 <p>POST /book/_search</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	<span class="attr">"aggs"</span>:&#123;</div><div class="line">		<span class="attr">"group_by_word_count"</span>:&#123;</div><div class="line">			<span class="attr">"terms"</span>:&#123;</div><div class="line">				<span class="attr">"field"</span>:<span class="string">"word_count"</span></div><div class="line">			&#125;</div><div class="line">		&#125;,</div><div class="line">		<span class="attr">"group_by_publish_date"</span>:&#123;</div><div class="line">			<span class="attr">"terms"</span>:&#123;</div><div class="line">				<span class="attr">"field"</span>:<span class="string">"publish_date"</span></div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+</pre></td><td class="code"><pre><span class="line">&#123;</span>
+<span class="line">	<span class="attr">"aggs"</span>:&#123;</span>
+<span class="line">		<span class="attr">"group_by_word_count"</span>:&#123;</span>
+<span class="line">			<span class="attr">"terms"</span>:&#123;</span>
+<span class="line">				<span class="attr">"field"</span>:<span class="string">"word_count"</span></span>
+<span class="line">			&#125;</span>
+<span class="line">		&#125;,</span>
+<span class="line">		<span class="attr">"group_by_publish_date"</span>:&#123;</span>
+<span class="line">			<span class="attr">"terms"</span>:&#123;</span>
+<span class="line">				<span class="attr">"field"</span>:<span class="string">"publish_date"</span></span>
+<span class="line">			&#125;</span>
+<span class="line">		&#125;</span>
+<span class="line">	&#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
 <ol>
 <li>按照指定字段聚合计算</li>
 </ol>
 <p>POST /book/_search</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	<span class="attr">"aggs"</span>:&#123;</div><div class="line">		<span class="attr">"grades_word_count"</span>:&#123;</div><div class="line">			<span class="attr">"stats"</span>:&#123;</div><div class="line">				<span class="attr">"field"</span>:<span class="string">"word_count"</span></div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+</pre></td><td class="code"><pre><span class="line">&#123;</span>
+<span class="line">	<span class="attr">"aggs"</span>:&#123;</span>
+<span class="line">		<span class="attr">"grades_word_count"</span>:&#123;</span>
+<span class="line">			<span class="attr">"stats"</span>:&#123;</span>
+<span class="line">				<span class="attr">"field"</span>:<span class="string">"word_count"</span></span>
+<span class="line">			&#125;</span>
+<span class="line">		&#125;</span>
+<span class="line">	&#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
 <h4 id="高级查询"><a href="#高级查询" class="headerlink" title="高级查询"></a>高级查询</h4><h5 id="子条件查询-特定字段查询所指特定值"><a href="#子条件查询-特定字段查询所指特定值" class="headerlink" title="子条件查询(特定字段查询所指特定值)"></a>子条件查询(特定字段查询所指特定值)</h5><ol>
 <li>Query context</li>
 </ol>
@@ -469,27 +833,103 @@
 <li><p>模糊匹配(分词匹配)<strong>match</strong></p>
 <p> 查询title中含有<strong>elasticsearch</strong>或者<strong>入门</strong>的数据</p>
 <p> POST /book/_search</p>
- <figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"query"</span>:&#123;</div><div class="line">        <span class="attr">"match"</span>:&#123;</div><div class="line">            <span class="attr">"title"</span>:<span class="string">"elasticsearch入门"</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+ <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+</pre></td><td class="code"><pre><span class="line">&#123;</span>
+<span class="line">    <span class="attr">"query"</span>:&#123;</span>
+<span class="line">        <span class="attr">"match"</span>:&#123;</span>
+<span class="line">            <span class="attr">"title"</span>:<span class="string">"elasticsearch入门"</span></span>
+<span class="line">        &#125;</span>
+<span class="line">    &#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
 </li>
 <li><p>不分词匹配(将查询内容作为一个整体)<strong>match_phrase</strong></p>
 <p> 查询title中含有<strong>elasticsearch学习</strong>的数据</p>
 <p> POST /book/_search</p>
- <figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"query"</span>:&#123;</div><div class="line">        <span class="attr">"match_phrase"</span>:&#123;</div><div class="line">            <span class="attr">"title"</span>:<span class="string">"elasticsearch学习"</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+ <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+</pre></td><td class="code"><pre><span class="line">&#123;</span>
+<span class="line">    <span class="attr">"query"</span>:&#123;</span>
+<span class="line">        <span class="attr">"match_phrase"</span>:&#123;</span>
+<span class="line">            <span class="attr">"title"</span>:<span class="string">"elasticsearch学习"</span></span>
+<span class="line">        &#125;</span>
+<span class="line">    &#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
 </li>
 <li><p>对多个字段的匹配查询<strong>multi_match</strong></p>
 <p> 查询<strong>title</strong>或者<strong>author</strong>字段中含有<strong>elasticsearch</strong>的数据</p>
 <p> POST /book/_search</p>
- <figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"query"</span>:&#123;</div><div class="line">        <span class="attr">"multi_match"</span>:&#123;</div><div class="line">            <span class="attr">"query"</span>:<span class="string">"elasticsearch"</span>,</div><div class="line">            <span class="attr">"fields"</span>:[<span class="string">"title"</span>,<span class="string">"author"</span>]</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+ <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+</pre></td><td class="code"><pre><span class="line">&#123;</span>
+<span class="line">    <span class="attr">"query"</span>:&#123;</span>
+<span class="line">        <span class="attr">"multi_match"</span>:&#123;</span>
+<span class="line">            <span class="attr">"query"</span>:<span class="string">"elasticsearch"</span>,</span>
+<span class="line">            <span class="attr">"fields"</span>:[<span class="string">"title"</span>,<span class="string">"author"</span>]</span>
+<span class="line">        &#125;</span>
+<span class="line">    &#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
 </li>
 <li><p>语法查询<strong>query_string</strong></p>
 <p> 查询含有<strong>elasticsearch</strong>和<strong>学习</strong>或者<strong>java</strong>的数据</p>
 <p> POST /book/_search</p>
- <figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"query"</span>:&#123;</div><div class="line">        <span class="attr">"query_string"</span>:&#123;</div><div class="line">            <span class="attr">"query"</span>: <span class="string">"(elasticsearch AND 学习) OR java"</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+ <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+</pre></td><td class="code"><pre><span class="line">&#123;</span>
+<span class="line">    <span class="attr">"query"</span>:&#123;</span>
+<span class="line">        <span class="attr">"query_string"</span>:&#123;</span>
+<span class="line">            <span class="attr">"query"</span>: <span class="string">"(elasticsearch AND 学习) OR java"</span></span>
+<span class="line">        &#125;</span>
+<span class="line">    &#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
 </li>
 <li><p>指定字段语法查询<strong>query_string</strong></p>
 <p> 查询字段<strong>title</strong>或者<strong>author</strong>中含有<strong>elasticsearch</strong>和<strong>学习</strong>或者<strong>java</strong>或者<strong>aaa</strong>的数据</p>
 <p> POST /book/_search</p>
- <figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"query"</span>:&#123;</div><div class="line">        <span class="attr">"query_string"</span>:&#123;</div><div class="line">            <span class="attr">"query"</span>: <span class="string">"(elasticsearch AND 学习) OR java OR 4444"</span>,</div><div class="line">            <span class="attr">"fields"</span>:[<span class="string">"author"</span>,<span class="string">"title"</span>]</div><div class="line">            </div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+ <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+</pre></td><td class="code"><pre><span class="line">&#123;</span>
+<span class="line">    <span class="attr">"query"</span>:&#123;</span>
+<span class="line">        <span class="attr">"query_string"</span>:&#123;</span>
+<span class="line">            <span class="attr">"query"</span>: <span class="string">"(elasticsearch AND 学习) OR java OR 4444"</span>,</span>
+<span class="line">            <span class="attr">"fields"</span>:[<span class="string">"author"</span>,<span class="string">"title"</span>]</span>
+<span class="line">            </span>
+<span class="line">        &#125;</span>
+<span class="line">    &#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
 </li>
 </ol>
 </li>
@@ -502,11 +942,45 @@
 <ol>
 <li><p>查询<strong>word_count</strong>等于1000的的数据</p>
 <p>POST /book/_search</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"query"</span>:&#123;</div><div class="line">        <span class="attr">"term"</span>:&#123;</div><div class="line">            <span class="attr">"word_count"</span>: <span class="number">1000</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+</pre></td><td class="code"><pre><span class="line">&#123;</span>
+<span class="line">    <span class="attr">"query"</span>:&#123;</span>
+<span class="line">        <span class="attr">"term"</span>:&#123;</span>
+<span class="line">            <span class="attr">"word_count"</span>: <span class="number">1000</span></span>
+<span class="line">        &#125;</span>
+<span class="line">    &#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
 </li>
 <li><p>查询<strong>word_count</strong>在范围1000到3000内的数据</p>
 <p>POST /book/_search</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line"> <span class="attr">"query"</span>:&#123;</div><div class="line">        <span class="attr">"range"</span>:&#123;</div><div class="line">            <span class="attr">"word_count"</span>:&#123;</div><div class="line">                <span class="attr">"lte"</span>: <span class="number">3000</span>,</div><div class="line">                <span class="attr">"gte"</span>:<span class="number">1000</span></div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+</pre></td><td class="code"><pre><span class="line">&#123;</span>
+<span class="line"> <span class="attr">"query"</span>:&#123;</span>
+<span class="line">        <span class="attr">"range"</span>:&#123;</span>
+<span class="line">            <span class="attr">"word_count"</span>:&#123;</span>
+<span class="line">                <span class="attr">"lte"</span>: <span class="number">3000</span>,</span>
+<span class="line">                <span class="attr">"gte"</span>:<span class="number">1000</span></span>
+<span class="line">            &#125;</span>
+<span class="line">        &#125;</span>
+<span class="line">    &#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
 </li>
 </ol>
 </li>
@@ -517,42 +991,338 @@
 <li><p>Filter context</p>
 <p> (在查询过程中，只判断该文档是否满足条件，只有yes或者no，并且会缓存结果)</p>
 <p> 查询出<strong>word_count</strong>等于1000的数据</p>
- <figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"query"</span>:&#123;</div><div class="line">        <span class="attr">"bool"</span>:&#123;</div><div class="line">            <span class="attr">"filter"</span>:&#123;</div><div class="line">                <span class="attr">"term"</span>:&#123;</div><div class="line">                    <span class="attr">"word_count"</span>:<span class="number">1000</span></div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+ <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+</pre></td><td class="code"><pre><span class="line">&#123;</span>
+<span class="line">    <span class="attr">"query"</span>:&#123;</span>
+<span class="line">        <span class="attr">"bool"</span>:&#123;</span>
+<span class="line">            <span class="attr">"filter"</span>:&#123;</span>
+<span class="line">                <span class="attr">"term"</span>:&#123;</span>
+<span class="line">                    <span class="attr">"word_count"</span>:<span class="number">1000</span></span>
+<span class="line">                &#125;</span>
+<span class="line">            &#125;</span>
+<span class="line">        &#125;</span>
+<span class="line">    &#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
 </li>
 </ol>
 <h5 id="复合条件查询-以一定的逻辑组合子条件查询"><a href="#复合条件查询-以一定的逻辑组合子条件查询" class="headerlink" title="复合条件查询(以一定的逻辑组合子条件查询)"></a>复合条件查询(以一定的逻辑组合子条件查询)</h5><ol>
 <li><p>固定分数查询</p>
 <p> 查询所有索引中title为java</p>
 <p> POST /_search</p>
- <figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"query"</span>:&#123;</div><div class="line">        <span class="attr">"constant_score"</span>:&#123;</div><div class="line">            <span class="attr">"filter"</span>:&#123;</div><div class="line">                <span class="attr">"match"</span>:&#123;</div><div class="line">                    <span class="attr">"title"</span>: <span class="string">"java"</span></div><div class="line">                &#125;</div><div class="line">            &#125;,</div><div class="line">            <span class="attr">"boost"</span>:<span class="number">2</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+ <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+</pre></td><td class="code"><pre><span class="line">&#123;</span>
+<span class="line">    <span class="attr">"query"</span>:&#123;</span>
+<span class="line">        <span class="attr">"constant_score"</span>:&#123;</span>
+<span class="line">            <span class="attr">"filter"</span>:&#123;</span>
+<span class="line">                <span class="attr">"match"</span>:&#123;</span>
+<span class="line">                    <span class="attr">"title"</span>: <span class="string">"java"</span></span>
+<span class="line">                &#125;</span>
+<span class="line">            &#125;,</span>
+<span class="line">            <span class="attr">"boost"</span>:<span class="number">2</span></span>
+<span class="line">        &#125;</span>
+<span class="line">    &#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
 </li>
 <li><p>布尔查询</p>
 <ol>
 <li><p>查询所有索引中<strong>author</strong>为<strong>aaa</strong>或<strong>title</strong>为<strong>elasticsearch</strong> （<strong>should</strong>）</p>
 <p>POST /_search</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"query"</span>:&#123;</div><div class="line">        <span class="attr">"bool"</span>:&#123;</div><div class="line">            <span class="attr">"should"</span>:[</div><div class="line">                &#123;</div><div class="line">                    <span class="attr">"match"</span>:&#123;</div><div class="line">                        <span class="attr">"auther"</span>:<span class="string">"aaa"</span></div><div class="line">                    &#125;</div><div class="line">                &#125;,</div><div class="line">                &#123;</div><div class="line">                    <span class="attr">"match"</span>:&#123;</div><div class="line">                        <span class="attr">"title"</span>: <span class="string">"elasticsearch"</span></div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            ]</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+</pre></td><td class="code"><pre><span class="line">&#123;</span>
+<span class="line">    <span class="attr">"query"</span>:&#123;</span>
+<span class="line">        <span class="attr">"bool"</span>:&#123;</span>
+<span class="line">            <span class="attr">"should"</span>:[</span>
+<span class="line">                &#123;</span>
+<span class="line">                    <span class="attr">"match"</span>:&#123;</span>
+<span class="line">                        <span class="attr">"auther"</span>:<span class="string">"aaa"</span></span>
+<span class="line">                    &#125;</span>
+<span class="line">                &#125;,</span>
+<span class="line">                &#123;</span>
+<span class="line">                    <span class="attr">"match"</span>:&#123;</span>
+<span class="line">                        <span class="attr">"title"</span>: <span class="string">"elasticsearch"</span></span>
+<span class="line">                    &#125;</span>
+<span class="line">                &#125;</span>
+<span class="line">            ]</span>
+<span class="line">        &#125;</span>
+<span class="line">    &#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
 </li>
 <li><p>查询所有索引中<strong>author</strong>含有<strong>aaa</strong>,<strong>title</strong>含有<strong>java</strong>的数据 (<strong>must</strong>)</p>
 <p>POST /_search</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"query"</span>:&#123;</div><div class="line">        <span class="attr">"bool"</span>:&#123;</div><div class="line">            <span class="attr">"must"</span>:[</div><div class="line">                &#123;</div><div class="line">                    <span class="attr">"match"</span>:&#123;</div><div class="line">                        <span class="attr">"author"</span>:<span class="string">"aaa"</span></div><div class="line">                    &#125;</div><div class="line">                &#125;,</div><div class="line">                &#123;</div><div class="line">                    <span class="attr">"match"</span>:&#123;</div><div class="line">                        <span class="attr">"title"</span>: <span class="string">"java"</span></div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            ]</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+</pre></td><td class="code"><pre><span class="line">&#123;</span>
+<span class="line">    <span class="attr">"query"</span>:&#123;</span>
+<span class="line">        <span class="attr">"bool"</span>:&#123;</span>
+<span class="line">            <span class="attr">"must"</span>:[</span>
+<span class="line">                &#123;</span>
+<span class="line">                    <span class="attr">"match"</span>:&#123;</span>
+<span class="line">                        <span class="attr">"author"</span>:<span class="string">"aaa"</span></span>
+<span class="line">                    &#125;</span>
+<span class="line">                &#125;,</span>
+<span class="line">                &#123;</span>
+<span class="line">                    <span class="attr">"match"</span>:&#123;</span>
+<span class="line">                        <span class="attr">"title"</span>: <span class="string">"java"</span></span>
+<span class="line">                    &#125;</span>
+<span class="line">                &#125;</span>
+<span class="line">            ]</span>
+<span class="line">        &#125;</span>
+<span class="line">    &#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
 </li>
 <li><p>查询所有索引中<strong>author</strong>含有<strong>aaa</strong>,<strong>title</strong>含有<strong>java</strong>，并且过滤<strong>word_count</strong>为<strong>1000</strong>的数据 (<strong>must</strong>)</p>
 <p>POST /_search</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"query"</span>:&#123;</div><div class="line">        <span class="attr">"bool"</span>:&#123;</div><div class="line">            <span class="attr">"must"</span>:[</div><div class="line">                &#123;</div><div class="line">                    <span class="attr">"match"</span>:&#123;</div><div class="line">                        <span class="attr">"author"</span>:<span class="string">"aaa"</span></div><div class="line">                    &#125;</div><div class="line">                &#125;,</div><div class="line">                &#123;</div><div class="line">                    <span class="attr">"match"</span>:&#123;</div><div class="line">                        <span class="attr">"title"</span>: <span class="string">"java"</span></div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            ],</div><div class="line">            <span class="attr">"filter"</span>:&#123;</div><div class="line">                <span class="attr">"term"</span>:&#123;</div><div class="line">                    <span class="attr">"word_count"</span>: <span class="number">1000</span></div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+</pre></td><td class="code"><pre><span class="line">&#123;</span>
+<span class="line">    <span class="attr">"query"</span>:&#123;</span>
+<span class="line">        <span class="attr">"bool"</span>:&#123;</span>
+<span class="line">            <span class="attr">"must"</span>:[</span>
+<span class="line">                &#123;</span>
+<span class="line">                    <span class="attr">"match"</span>:&#123;</span>
+<span class="line">                        <span class="attr">"author"</span>:<span class="string">"aaa"</span></span>
+<span class="line">                    &#125;</span>
+<span class="line">                &#125;,</span>
+<span class="line">                &#123;</span>
+<span class="line">                    <span class="attr">"match"</span>:&#123;</span>
+<span class="line">                        <span class="attr">"title"</span>: <span class="string">"java"</span></span>
+<span class="line">                    &#125;</span>
+<span class="line">                &#125;</span>
+<span class="line">            ],</span>
+<span class="line">            <span class="attr">"filter"</span>:&#123;</span>
+<span class="line">                <span class="attr">"term"</span>:&#123;</span>
+<span class="line">                    <span class="attr">"word_count"</span>: <span class="number">1000</span></span>
+<span class="line">                &#125;</span>
+<span class="line">            &#125;</span>
+<span class="line">        &#125;</span>
+<span class="line">    &#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
 </li>
 <li><p>查询所有索引中<strong>author</strong>不含有<strong>aaa</strong>,并且<strong>title</strong>不含有<strong>java</strong>的数据 (<strong>must_not</strong>)</p>
 <p>POST /_search</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"query"</span>:&#123;</div><div class="line">        <span class="attr">"bool"</span>:&#123;</div><div class="line">            <span class="attr">"must_not"</span>:[</div><div class="line">                &#123;</div><div class="line">                    <span class="attr">"match"</span>:&#123;</div><div class="line">                        <span class="attr">"author"</span>:<span class="string">"aaa"</span></div><div class="line">                    &#125;</div><div class="line">                &#125;,</div><div class="line">                &#123;</div><div class="line">                    <span class="attr">"match"</span>:&#123;</div><div class="line">                        <span class="attr">"title"</span>: <span class="string">"java"</span></div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            ]</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+</pre></td><td class="code"><pre><span class="line">&#123;</span>
+<span class="line">    <span class="attr">"query"</span>:&#123;</span>
+<span class="line">        <span class="attr">"bool"</span>:&#123;</span>
+<span class="line">            <span class="attr">"must_not"</span>:[</span>
+<span class="line">                &#123;</span>
+<span class="line">                    <span class="attr">"match"</span>:&#123;</span>
+<span class="line">                        <span class="attr">"author"</span>:<span class="string">"aaa"</span></span>
+<span class="line">                    &#125;</span>
+<span class="line">                &#125;,</span>
+<span class="line">                &#123;</span>
+<span class="line">                    <span class="attr">"match"</span>:&#123;</span>
+<span class="line">                        <span class="attr">"title"</span>: <span class="string">"java"</span></span>
+<span class="line">                    &#125;</span>
+<span class="line">                &#125;</span>
+<span class="line">            ]</span>
+<span class="line">        &#125;</span>
+<span class="line">    &#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
 </li>
 </ol>
 </li>
 </ol>
 <h3 id="spring-boot-使用es"><a href="#spring-boot-使用es" class="headerlink" title="spring boot 使用es"></a>spring boot 使用es</h3><h4 id="集成es"><a href="#集成es" class="headerlink" title="集成es"></a>集成es</h4><p>1.在pom.xml中添加依赖。（es的依赖必须与你的es版本相对应，自行查看es版本  es内部使用log4j2作为日志，所以还需要添加log4j依赖）</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">properties</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">project.build.sourceEncoding</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">project.build.sourceEncoding</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">project.reporting.outputEncoding</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">project.reporting.outputEncoding</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">java.version</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">java.version</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">elasticsearch.version</span>&gt;</span>5.6.7<span class="tag">&lt;/<span class="name">elasticsearch.version</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">log4j-api.version</span>&gt;</span>2.8.2<span class="tag">&lt;/<span class="name">log4j-api.version</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">log4j-core.version</span>&gt;</span>2.7<span class="tag">&lt;/<span class="name">log4j-core.version</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">properties</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></div><div class="line"></div><div class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"></div><div class="line">        <span class="comment">&lt;!--elasticsearch 客户端--&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.elasticsearch.client<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>transport<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;elasticsearch.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">        <span class="comment">&lt;!--ElasticSearch 5.x 根据官网配置maven 依赖, 由于 5.0x的 jar 内部使用的 apache log4日志。--&gt;</span></div><div class="line">        <span class="comment">&lt;!--所以要配置额外的依赖支持 org.apache.logging.log4j。--&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.logging.log4j<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>log4j-core<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;log4j-core.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"></div><div class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.projectlombok<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>lombok<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">optional</span>&gt;</span>true<span class="tag">&lt;/<span class="name">optional</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"></div><div class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+<span class="line">27</span>
+<span class="line">28</span>
+<span class="line">29</span>
+<span class="line">30</span>
+<span class="line">31</span>
+<span class="line">32</span>
+<span class="line">33</span>
+<span class="line">34</span>
+<span class="line">35</span>
+<span class="line">36</span>
+<span class="line">37</span>
+<span class="line">38</span>
+<span class="line">39</span>
+<span class="line">40</span>
+<span class="line">41</span>
+<span class="line">42</span>
+</pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">properties</span>&gt;</span></span>
+<span class="line">        <span class="tag">&lt;<span class="name">project.build.sourceEncoding</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">project.build.sourceEncoding</span>&gt;</span></span>
+<span class="line">        <span class="tag">&lt;<span class="name">project.reporting.outputEncoding</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">project.reporting.outputEncoding</span>&gt;</span></span>
+<span class="line">        <span class="tag">&lt;<span class="name">java.version</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">java.version</span>&gt;</span></span>
+<span class="line">        <span class="tag">&lt;<span class="name">elasticsearch.version</span>&gt;</span>5.6.7<span class="tag">&lt;/<span class="name">elasticsearch.version</span>&gt;</span></span>
+<span class="line">        <span class="tag">&lt;<span class="name">log4j-api.version</span>&gt;</span>2.8.2<span class="tag">&lt;/<span class="name">log4j-api.version</span>&gt;</span></span>
+<span class="line">        <span class="tag">&lt;<span class="name">log4j-core.version</span>&gt;</span>2.7<span class="tag">&lt;/<span class="name">log4j-core.version</span>&gt;</span></span>
+<span class="line">    <span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span>
+<span class="line"></span>
+<span class="line">    <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span>
+<span class="line"></span>
+<span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span>
+<span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span>
+<span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span>
+<span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span>
+<span class="line"></span>
+<span class="line">        <span class="comment">&lt;!--elasticsearch 客户端--&gt;</span></span>
+<span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span>
+<span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.elasticsearch.client<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span>
+<span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>transport<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span>
+<span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;elasticsearch.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span>
+<span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span>
+<span class="line">        <span class="comment">&lt;!--ElasticSearch 5.x 根据官网配置maven 依赖, 由于 5.0x的 jar 内部使用的 apache log4日志。--&gt;</span></span>
+<span class="line">        <span class="comment">&lt;!--所以要配置额外的依赖支持 org.apache.logging.log4j。--&gt;</span></span>
+<span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span>
+<span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.logging.log4j<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span>
+<span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>log4j-core<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span>
+<span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;log4j-core.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span>
+<span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span>
+<span class="line"></span>
+<span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span>
+<span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.projectlombok<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span>
+<span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>lombok<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span>
+<span class="line">            <span class="tag">&lt;<span class="name">optional</span>&gt;</span>true<span class="tag">&lt;/<span class="name">optional</span>&gt;</span></span>
+<span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span>
+<span class="line"></span>
+<span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span>
+<span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span>
+<span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span>
+<span class="line">            <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span>
+<span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span>
+<span class="line">    <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span>
+</pre></td></tr></table></figure>
 <ol>
 <li>添加log4j2的配置文件<br>在<strong>resources</strong>中创建文件<strong>log4j2.properties</strong></li>
 </ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">appender.console.type=Console</div><div class="line">appender.console.name=Console</div><div class="line">appender.console.layout.type=PatternLayout</div><div class="line">appender.console.layout.pattern=[%t] %-5p $c -%m%n</div><div class="line">rootLogger.level=info</div><div class="line">rootLogger.appenderRef.console.ref=console</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+</pre></td><td class="code"><pre><span class="line">appender.console.type=Console</span>
+<span class="line">appender.console.name=Console</span>
+<span class="line">appender.console.layout.type=PatternLayout</span>
+<span class="line">appender.console.layout.pattern=[%t] %-5p $c -%m%n</span>
+<span class="line">rootLogger.level=info</span>
+<span class="line">rootLogger.appenderRef.console.ref=console</span>
+</pre></td></tr></table></figure>
 <p>笔者这里只配置了控制台的，如果还需要其他的自行配置一下。</p>
 <h4 id="对es进行操作"><a href="#对es进行操作" class="headerlink" title="对es进行操作"></a>对es进行操作</h4><p>在需要的地方注入<strong>TransportClient</strong>，进行操作即可。具体内容这里就不贴出来了，<a href="https://github.com/EarthChen/elasticsearch-study.git" target="_blank" rel="external">github</a>上有源码可以自己看看。</p>
 <blockquote>
@@ -571,17 +1341,17 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2018/02/12/Elasticsearch_study_1/">Elasticsearch学习笔记 -- 1</a></p>
-        <p><span>文章作者:</span><a href="/" title="回到主页">EarthChen</a></p>
-        <p><span>发布时间:</span>2018-02-12, 14:40:00</p>
-        <p><span>最后更新:</span>2018-02-22, 17:59:10</p>
+        <p><span>Title:</span><a href="/2018/02/12/Elasticsearch_study_1/">Elasticsearch学习笔记 -- 1</a></p>
+        <p><span>Author:</span><a href="/" title="Back to Homepage">EarthChen</a></p>
+        <p><span>Created:</span>2018-02-12, 14:40:00</p>
+        <p><span>Updated:</span>2018-02-22, 17:59:10</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2018/02/12/Elasticsearch_study_1/" title="Elasticsearch学习笔记 -- 1">http://earthchen.cn/2018/02/12/Elasticsearch_study_1/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://earthchen.cn/2018/02/12/Elasticsearch_study_1/　　作者: EarthChen" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>Full URL:</span><a class="post-url" href="/2018/02/12/Elasticsearch_study_1/" title="Elasticsearch学习笔记 -- 1">http://earthchen.cn/2018/02/12/Elasticsearch_study_1/</a>
+            <span class="copy-path" data-clipboard-text="From http://earthchen.cn/2018/02/12/Elasticsearch_study_1/　　By EarthChen" title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
-            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+            <span>License:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"CC BY-NC-SA 4.0"</a> Keep Link &amp; Author if Distribute.
         </p>
     </div>
 
@@ -608,7 +1378,7 @@
 </article>
 
     <div id="toc" class="toc-article">
-        <strong class="toc-title">文章目录</strong>
+        <strong class="toc-title">Contents</strong>
         
             <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Elasticsearch"><span class="toc-number">1.</span> <span class="toc-text">Elasticsearch</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装"><span class="toc-number">1.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#测试是否成功"><span class="toc-number">1.2.</span> <span class="toc-text">测试是否成功</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#elasticsearch基本操作"><span class="toc-number">1.3.</span> <span class="toc-text">elasticsearch基本操作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#创建索引"><span class="toc-number">1.3.1.</span> <span class="toc-text">创建索引</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数据插入"><span class="toc-number">1.3.2.</span> <span class="toc-text">数据插入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数据修改"><span class="toc-number">1.3.3.</span> <span class="toc-text">数据修改</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数据删除"><span class="toc-number">1.3.4.</span> <span class="toc-text">数据删除</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#基本查询"><span class="toc-number">1.3.5.</span> <span class="toc-text">基本查询</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#简单查询"><span class="toc-number">1.3.5.1.</span> <span class="toc-text">简单查询</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#条件查询"><span class="toc-number">1.3.5.2.</span> <span class="toc-text">条件查询</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#聚合查询"><span class="toc-number">1.3.5.3.</span> <span class="toc-text">聚合查询</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#高级查询"><span class="toc-number">1.3.6.</span> <span class="toc-text">高级查询</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#子条件查询-特定字段查询所指特定值"><span class="toc-number">1.3.6.1.</span> <span class="toc-text">子条件查询(特定字段查询所指特定值)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#复合条件查询-以一定的逻辑组合子条件查询"><span class="toc-number">1.3.6.2.</span> <span class="toc-text">复合条件查询(以一定的逻辑组合子条件查询)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#spring-boot-使用es"><span class="toc-number">1.4.</span> <span class="toc-text">spring boot 使用es</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#集成es"><span class="toc-number">1.4.1.</span> <span class="toc-text">集成es</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#对es进行操作"><span class="toc-number">1.4.2.</span> <span class="toc-text">对es进行操作</span></a></li></ol></li></ol></li></ol>
         
@@ -624,10 +1394,10 @@
         }
     </style>
 
-    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+    <input type="button" id="tocButton" value="Hide"  title="Show or Hide Table of Contents">
 
     <script>
-        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+        yiliaConfig.toc = ["Hide", "Show", !!"false"];
     </script>
 
 
@@ -680,21 +1450,21 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2018/02/22/springboot_diy_properties/" title="上一篇: Spring boot 自定义配置文件">
+            <a href="/2018/02/22/springboot_diy_properties/" title="Pre: Spring boot 自定义配置文件">
                 <i class="fa fa-angle-left"></i>
             </a>
         
 
-        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        <a title="Mini Archives"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2017/09/09/深入理解java虚拟机学习笔记_1/" title="下一篇: 深入理解java虚拟机学习笔记 -- 1">
+            <a href="/2017/09/09/深入理解java虚拟机学习笔记_1/" title="Next: 深入理解java虚拟机学习笔记 -- 1">
                 <i class="fa fa-angle-right"></i>
             </a>
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/04/01/httpclientutil/">HttpClient工具类</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/14/qiniu-oss/">spring boot使用七牛云的oss(对象存储)文件上传</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/spring-boot-shiro-jwt/">spring boot集成shiro使用jwt进行权限控制</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/requestHolder_and_argumentResolver/">使用ThreadLocal和ArgumentResolver方便开发</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/applicationContextHelper/">在不被spring容器管理的类中使用ApplicationContext应用上下文bean</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_static_class_autowrite/">Spring boot 在静态类中注入spring组件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_diy_properties/">Spring boot 自定义配置文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/12/Elasticsearch_study_1/">Elasticsearch学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/09/深入理解java虚拟机学习笔记_1/">深入理解java虚拟机学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/23/Docker_study_Dockerfile_instructions/">Docker学习笔记---Dockerfile</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/22/Docker_study/">Docker学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/20/celery_study/">Celery-分布式任务队列学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_redis_cache/">Django使用redis作为缓存系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_channels_websocket/">Django使用Channels实现websocket</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/13/Docker_Gogs/">使用Docker搭建git服务Gogs</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_1to20/">LeetCode刷题记录(easy难度1-20题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_21to_40/">LeetCode刷题记录(easy难度21-40题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/29/es6_study/">es6学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/Webpack_study/">Webpack学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/RegularExpression_study/">正则表达式学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/08/AndroidStudio/">Android Studio 使用本地离线Gradle</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/跨域请求解决方案/">跨域请求的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_nginx_gunicorn/">django+nginx+gunicorn部署配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/ubuntu_supervisor/">ubuntu下的进程控制系统————Supervisor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/28/ubuntu修复不能挂载NTFS硬盘/">ubuntu修复linux和windows双系统下挂载ntfs硬盘出错问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/17/django_timing_task/">django使用django-crontab实现定时任务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/15/django_rest_framework_jwt/">django-rest-framework配置json web token进行接口的认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/django_rest_framework_study/">django-rest-framework框架学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/spring_SpEL/">spring中的SpEL表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/08/git_study/">Git学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/03/资源收集/">资源收集共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/06/ubuntu_open_port/">ubuntu开放指定端口</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/16/redis_study_2/">Redis学习笔记 -- 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/15/redis_study_1/">Redis学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/16/ubuntu_do_something_use/">ubuntu日常使用的安装配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/ubuntu_do_something_coding/">ubuntu搭建常见开发环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/django_address_baiduapi_marker_show/">Django调用百度地图api在地图上批量增加标记点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/10/ubuntu安装在双系统笔记本下开机或关机卡死.1/">ubuntu在双系统下开机卡死或关机卡死的解决办法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/11/python_requirements/">python生成项目所需依赖文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/10/hexo_github_coding_blog/">利用hexo和github或coding 搭免费个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django常用语句/">Django常用语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/python2和Python3的区别/">Python2和Python3的区别简单总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django连接mysql数据库/">Django连接MySql使用models处理数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django数据库操作/">Django操作数据库</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django环境搭建/">Django环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django渲染模板/">Django渲染模板</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/03/Android_qq_Menu/">Android仿qq侧滑菜单</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/16/C语言队列的基本操作/">C语言队列的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/c语言中缀表达式变后缀表达式/">C语言中缀表达式转后缀表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言逆波兰计算器/">C语言逆波兰表达式计算(后缀表达式计算器)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言共享栈/">C语言共享栈</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言二叉树基本操作/">C语言二叉树的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言中缀表达式计算器/">C语言中缀表达式计算器</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/04/01/httpclientutil/">HttpClient工具类</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/14/qiniu-oss/">spring boot使用七牛云的oss(对象存储)文件上传</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/spring-boot-shiro-jwt/">spring boot集成shiro使用jwt进行权限控制</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/requestHolder_and_argumentResolver/">使用ThreadLocal和ArgumentResolver方便开发</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/applicationContextHelper/">在不被spring容器管理的类中使用ApplicationContext应用上下文bean</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_static_class_autowrite/">Spring boot 在静态类中注入spring组件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_diy_properties/">Spring boot 自定义配置文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/12/Elasticsearch_study_1/">Elasticsearch学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/09/深入理解java虚拟机学习笔记_1/">深入理解java虚拟机学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/23/Docker_study_Dockerfile_instructions/">Docker学习笔记---Dockerfile</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/22/Docker_study/">Docker学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/20/celery_study/">Celery-分布式任务队列学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_redis_cache/">Django使用redis作为缓存系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_channels_websocket/">Django使用Channels实现websocket</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/13/Docker_Gogs/">使用Docker搭建git服务Gogs</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_1to20/">LeetCode刷题记录(easy难度1-20题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_21to_40/">LeetCode刷题记录(easy难度21-40题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/29/es6_study/">es6学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/Webpack_study/">Webpack学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/RegularExpression_study/">正则表达式学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/08/AndroidStudio/">Android Studio 使用本地离线Gradle</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/跨域请求解决方案/">跨域请求的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/ubuntu_supervisor/">ubuntu下的进程控制系统————Supervisor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_nginx_gunicorn/">django+nginx+gunicorn部署配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/28/ubuntu修复不能挂载NTFS硬盘/">ubuntu修复linux和windows双系统下挂载ntfs硬盘出错问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/17/django_timing_task/">django使用django-crontab实现定时任务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/15/django_rest_framework_jwt/">django-rest-framework配置json web token进行接口的认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/django_rest_framework_study/">django-rest-framework框架学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/spring_SpEL/">spring中的SpEL表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/08/git_study/">Git学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/03/资源收集/">资源收集共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/06/ubuntu_open_port/">ubuntu开放指定端口</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/16/redis_study_2/">Redis学习笔记 -- 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/15/redis_study_1/">Redis学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/16/ubuntu_do_something_use/">ubuntu日常使用的安装配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/django_address_baiduapi_marker_show/">Django调用百度地图api在地图上批量增加标记点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/ubuntu_do_something_coding/">ubuntu搭建常见开发环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/10/ubuntu安装在双系统笔记本下开机或关机卡死.1/">ubuntu在双系统下开机卡死或关机卡死的解决办法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/11/python_requirements/">python生成项目所需依赖文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/10/hexo_github_coding_blog/">利用hexo和github或coding 搭免费个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django环境搭建/">Django环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django连接mysql数据库/">Django连接MySql使用models处理数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django渲染模板/">Django渲染模板</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django常用语句/">Django常用语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django数据库操作/">Django操作数据库</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/python2和Python3的区别/">Python2和Python3的区别简单总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/03/Android_qq_Menu/">Android仿qq侧滑菜单</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/16/C语言队列的基本操作/">C语言队列的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言共享栈/">C语言共享栈</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言二叉树基本操作/">C语言二叉树的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言逆波兰计算器/">C语言逆波兰表达式计算(后缀表达式计算器)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言中缀表达式计算器/">C语言中缀表达式计算器</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/c语言中缀表达式变后缀表达式/">C语言中缀表达式转后缀表达式</a></li></ul>
 
 
 
@@ -711,14 +1481,14 @@
                 2016-2018 EarthChen
             </div>
             <div class="footer-right">
-                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+                <a href="http://hexo.io/" target="_blank" title="A fast, simple &amp; powerful blog framework">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Another simple and elegant theme for Hexo  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
             </div>
         </div>
         
             <div class="visit">
                 
                     <span id="busuanzi_container_site_pv" style='display:none'>
-                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        <span id="site-visit" title="Site Visitors"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
                         </span>
                     </span>
                 
@@ -727,7 +1497,7 @@
                 
                 
                     <span id="busuanzi_container_page_pv" style='display:none'>
-                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        <span id="page-visit"  title="Page Hits"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
                         </span>
                     </span>
                 
@@ -762,9 +1532,9 @@
 
 
 <div class="scroll" id="scroll">
-    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
-    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
-    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+    <a href="#" title="Back to Top"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="Comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="Go to Bottom"><i class="fa fa-arrow-down"></i></a>
 </div>
 <script>
     // Open in New Window

@@ -15,20 +15,20 @@
 
 
 
-<meta name="description" content="在调用百度地图api进行web开发时遇到了一个需求，我们需要在网页中内嵌一个div  然后在div中调用百度地图的js显示我们所需要的地区。根据需求坐标在地图上添加若干个标记点，并批量的为各个标记点设置监听函数，使之显示我们所需要的信息 开始创建工程首先，创建一个测试用的工程来测试我们的需要，可以使用pycharm或者django自带的命令创建工程1django-admin startprojec">
+<meta name="description" content="在调用百度地图api进行web开发时遇到了一个需求，我们需要在网页中内嵌一个div  然后在div中调用百度地图的js显示我们所需要的地区。根据需求坐标在地图上添加若干个标记点，并批量的为各个标记点设置监听函数，使之显示我们所需要的信息 开始创建工程首先，创建一个测试用的工程来测试我们的需要，可以使用pycharm或者django自带的命令创建工程1 django-admin startproje">
 <meta name="keywords" content="Django,Python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Django调用百度地图api在地图上批量增加标记点">
 <meta property="og:url" content="http://earthchen.cn/2017/03/15/django_address_baiduapi_marker_show/index.html">
 <meta property="og:site_name" content="EarthChen&#39;s Blog">
-<meta property="og:description" content="在调用百度地图api进行web开发时遇到了一个需求，我们需要在网页中内嵌一个div  然后在div中调用百度地图的js显示我们所需要的地区。根据需求坐标在地图上添加若干个标记点，并批量的为各个标记点设置监听函数，使之显示我们所需要的信息 开始创建工程首先，创建一个测试用的工程来测试我们的需要，可以使用pycharm或者django自带的命令创建工程1django-admin startprojec">
+<meta property="og:description" content="在调用百度地图api进行web开发时遇到了一个需求，我们需要在网页中内嵌一个div  然后在div中调用百度地图的js显示我们所需要的地区。根据需求坐标在地图上添加若干个标记点，并批量的为各个标记点设置监听函数，使之显示我们所需要的信息 开始创建工程首先，创建一个测试用的工程来测试我们的需要，可以使用pycharm或者django自带的命令创建工程1 django-admin startproje">
 <meta property="og:image" content="http://objects.earthchen.cn/django%E6%89%B9%E9%87%8F%E5%9C%B0%E5%9D%80%E6%A0%87%E8%AE%B0%E6%B3%A8%E5%86%8C%E7%99%BE%E5%BA%A6%E5%BC%80%E5%8F%91%E8%80%85%E8%B4%A6%E5%8F%B7.png">
 <meta property="og:image" content="http://objects.earthchen.cn/django%E6%89%B9%E9%87%8F%E5%9C%B0%E5%9D%80%E5%9C%B0%E5%9B%BE%E6%A0%87%E8%AE%B0%E6%95%B0%E6%8D%AE%E5%BA%93%E6%8F%92%E5%85%A5%E6%B5%8B%E8%AF%95%E6%95%B0%E6%8D%AE.png">
 <meta property="og:image" content="http://objects.earthchen.cn/django%E6%89%B9%E9%87%8F%E5%9C%B0%E5%9D%80%E6%A0%87%E8%AE%B0%E6%98%BE%E7%A4%BA%E7%BB%93%E6%9E%9C.png">
 <meta property="og:updated_time" content="2017-08-06T09:47:43.124Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Django调用百度地图api在地图上批量增加标记点">
-<meta name="twitter:description" content="在调用百度地图api进行web开发时遇到了一个需求，我们需要在网页中内嵌一个div  然后在div中调用百度地图的js显示我们所需要的地区。根据需求坐标在地图上添加若干个标记点，并批量的为各个标记点设置监听函数，使之显示我们所需要的信息 开始创建工程首先，创建一个测试用的工程来测试我们的需要，可以使用pycharm或者django自带的命令创建工程1django-admin startprojec">
+<meta name="twitter:description" content="在调用百度地图api进行web开发时遇到了一个需求，我们需要在网页中内嵌一个div  然后在div中调用百度地图的js显示我们所需要的地区。根据需求坐标在地图上添加若干个标记点，并批量的为各个标记点设置监听函数，使之显示我们所需要的信息 开始创建工程首先，创建一个测试用的工程来测试我们的需要，可以使用pycharm或者django自带的命令创建工程1 django-admin startproje">
 <meta name="twitter:image" content="http://objects.earthchen.cn/django%E6%89%B9%E9%87%8F%E5%9C%B0%E5%9D%80%E6%A0%87%E8%AE%B0%E6%B3%A8%E5%86%8C%E7%99%BE%E5%BA%A6%E5%BC%80%E5%8F%91%E8%80%85%E8%B4%A6%E5%8F%B7.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
@@ -162,13 +162,13 @@
                 <div class="tips-box hide">
                     <div class="tips-arrow"></div>
                     <ul class="tips-inner">
-                        <li>菜单</li>
-                        <li>标签</li>
+                        <li>Menu</li>
+                        <li>Tags</li>
                         
-                        <li>友情链接</li>
+                        <li>Friends</li>
                         
                         
-                        <li>关于我</li>
+                        <li>About Me</li>
                         
                     </ul>
                 </div>
@@ -298,7 +298,7 @@
             </nav>
         </header>                
     </div>
-    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+    <link class="menu-list" tags="Tags" friends="Friends" about="About Me"/>
 </nav>
       <div class="body-wrap"><article id="post-django_address_baiduapi_marker_show" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -345,29 +345,131 @@
       
           
         <p>在调用百度地图api进行web开发时遇到了一个需求，我们需要在网页中内嵌一个div  然后在div中调用百度地图的js显示我们所需要的地区。根据需求坐标在地图上添加若干个标记点，并批量的为各个标记点设置监听函数，使之显示我们所需要的信息</p>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="创建工程"><a href="#创建工程" class="headerlink" title="创建工程"></a>创建工程</h3><p>首先，创建一个测试用的工程来测试我们的需要，可以使用<strong>pycharm</strong>或者<strong>django</strong>自带的命令创建工程<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">django-admin startproject addressdemo</div></pre></td></tr></table></figure></p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="创建工程"><a href="#创建工程" class="headerlink" title="创建工程"></a>创建工程</h3><p>首先，创建一个测试用的工程来测试我们的需要，可以使用<strong>pycharm</strong>或者<strong>django</strong>自带的命令创建工程<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">django-admin startproject addressdemo</span>
+</pre></td></tr></table></figure></p>
 <a id="more"></a>
 <h3 id="创建app"><a href="#创建app" class="headerlink" title="创建app"></a>创建app</h3><ul>
-<li>创建工程之后，cd到工程目录，创建一个名为addresstest的应用<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">python manage.py startapp addresstest</div></pre></td></tr></table></figure>
+<li>创建工程之后，cd到工程目录，创建一个名为addresstest的应用<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">python manage.py startapp addresstest</span>
+</pre></td></tr></table></figure>
 </li>
 </ul>
 <h3 id="创建一个名为templates文件，在其中创建一个address-html的测试用页面"><a href="#创建一个名为templates文件，在其中创建一个address-html的测试用页面" class="headerlink" title="创建一个名为templates文件，在其中创建一个address.html的测试用页面"></a>创建一个名为templates文件，在其中创建一个address.html的测试用页面</h3><ul>
 <li>在address.html中我们需要先为地图创建一个容器 在这里我们使用一个确定好的div病设置id为allmap</li>
 </ul>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Type"</span> <span class="attr">content</span>=<span class="string">"text/html; charset=utf-8"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"initial-scale=1.0, user-scalable=no"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">"text/css"</span>&gt;</span><span class="undefined"></span></div><div class="line">        body, html &#123;</div><div class="line">            width: 100%;</div><div class="line">            height: 100%;</div><div class="line">            margin: 0;</div><div class="line">            font-family: "微软雅黑";</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        #allmap &#123;</div><div class="line">            height: 700px;</div><div class="line">            width: 100%;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        #r-result &#123;</div><div class="line">            width: 100%;</div><div class="line">            font-size: 14px;</div><div class="line">        &#125;</div><div class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></div><div class="line">    </div><div class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>经纬度定位<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"allmap"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"r-result"</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+<span class="line">27</span>
+<span class="line">28</span>
+<span class="line">29</span>
+<span class="line">30</span>
+<span class="line">31</span>
+<span class="line">32</span>
+<span class="line">33</span>
+</pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span>
+<span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span>
+<span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Type"</span> <span class="attr">content</span>=<span class="string">"text/html; charset=utf-8"</span>/&gt;</span></span>
+<span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"initial-scale=1.0, user-scalable=no"</span>/&gt;</span></span>
+<span class="line">    <span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">"text/css"</span>&gt;</span><span class="css"></span>
+<span class="line">        <span class="selector-tag">body</span>, <span class="selector-tag">html</span> &#123;</span>
+<span class="line">            <span class="attribute">width</span>: <span class="number">100%</span>;</span>
+<span class="line">            <span class="attribute">height</span>: <span class="number">100%</span>;</span>
+<span class="line">            <span class="attribute">margin</span>: <span class="number">0</span>;</span>
+<span class="line">            <span class="attribute">font-family</span>: <span class="string">"微软雅黑"</span>;</span>
+<span class="line">        &#125;</span>
+<span class="line"></span>
+<span class="line">        <span class="selector-id">#allmap</span> &#123;</span>
+<span class="line">            <span class="attribute">height</span>: <span class="number">700px</span>;</span>
+<span class="line">            <span class="attribute">width</span>: <span class="number">100%</span>;</span>
+<span class="line">        &#125;</span>
+<span class="line"></span>
+<span class="line">        <span class="selector-id">#r-result</span> &#123;</span>
+<span class="line">            <span class="attribute">width</span>: <span class="number">100%</span>;</span>
+<span class="line">            <span class="attribute">font-size</span>: <span class="number">14px</span>;</span>
+<span class="line">        &#125;</span>
+<span class="line">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span>
+<span class="line">    </span>
+<span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>经纬度定位<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span>
+<span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span>
+<span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span>
+<span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"allmap"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>
+<span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"r-result"</span>&gt;</span></span>
+<span class="line"></span>
+<span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> /&gt;</span></span>
+<span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>
+<span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span>
+<span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span>
+</pre></td></tr></table></figure>
 <ul>
 <li>同时我们也设置了一个button为了更好的测试我们写的引用的函数</li>
 </ul>
 <h4 id="注册百度开发者账号获取秘钥"><a href="#注册百度开发者账号获取秘钥" class="headerlink" title="注册百度开发者账号获取秘钥"></a>注册百度开发者账号获取秘钥</h4><ul>
 <li>访问<a href="http://lbsyun.baidu.com/index.php?title=jspopular" target="_blank" rel="external">百度地图开放平台</a>注册账号并获取秘钥<br>获得秘钥的页面应该如下：<br><img src="http://objects.earthchen.cn/django%E6%89%B9%E9%87%8F%E5%9C%B0%E5%9D%80%E6%A0%87%E8%AE%B0%E6%B3%A8%E5%86%8C%E7%99%BE%E5%BA%A6%E5%BC%80%E5%8F%91%E8%80%85%E8%B4%A6%E5%8F%B7.png" alt="注册获取百度地图开发者账号"></li>
 </ul>
-<h4 id="在address-html添加上引入百度api的js代码"><a href="#在address-html添加上引入百度api的js代码" class="headerlink" title="在address.html添加上引入百度api的js代码"></a>在address.html添加上引入百度api的js代码</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span></span></div><div class="line">        <span class="attr">src</span>=<span class="string">"http://api.map.baidu.com/api?v=2.0&amp;ak=你的秘钥"</span>&gt;<span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
+<h4 id="在address-html添加上引入百度api的js代码"><a href="#在address-html添加上引入百度api的js代码" class="headerlink" title="在address.html添加上引入百度api的js代码"></a>在address.html添加上引入百度api的js代码</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span></span>
+<span class="line">        <span class="attr">src</span>=<span class="string">"http://api.map.baidu.com/api?v=2.0&amp;ak=你的秘钥"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span>
+</pre></td></tr></table></figure>
 <h3 id="连接mysql数据库"><a href="#连接mysql数据库" class="headerlink" title="连接mysql数据库"></a>连接mysql数据库</h3><ul>
-<li>在<strong>settings.py</strong>中修改数据库连接语句<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">DATABASES = &#123;</div><div class="line">    <span class="string">'default'</span>: &#123;</div><div class="line">        <span class="string">'ENGINE'</span>: <span class="string">'django.db.backends.mysql'</span>,</div><div class="line">        <span class="string">'NAME'</span>: <span class="string">'addressdemo'</span>,</div><div class="line">        <span class="string">'USER'</span>: <span class="string">'root'</span>,</div><div class="line">        <span class="string">'PASSWORD'</span>: <span class="string">'000000'</span>,</div><div class="line">        <span class="string">'HOST'</span>: <span class="string">'localhost'</span>,</div><div class="line">        <span class="string">'PORT'</span>: <span class="string">'3306'</span>,</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<li>在<strong>settings.py</strong>中修改数据库连接语句<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+</pre></td><td class="code"><pre><span class="line">DATABASES = &#123;</span>
+<span class="line">    <span class="string">'default'</span>: &#123;</span>
+<span class="line">        <span class="string">'ENGINE'</span>: <span class="string">'django.db.backends.mysql'</span>,</span>
+<span class="line">        <span class="string">'NAME'</span>: <span class="string">'addressdemo'</span>,</span>
+<span class="line">        <span class="string">'USER'</span>: <span class="string">'root'</span>,</span>
+<span class="line">        <span class="string">'PASSWORD'</span>: <span class="string">'000000'</span>,</span>
+<span class="line">        <span class="string">'HOST'</span>: <span class="string">'localhost'</span>,</span>
+<span class="line">        <span class="string">'PORT'</span>: <span class="string">'3306'</span>,</span>
+<span class="line">    &#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
 </li>
 </ul>
 <h4 id="设置模型类"><a href="#设置模型类" class="headerlink" title="设置模型类"></a>设置模型类</h4><ul>
-<li>在创建的app下的<strong>models.py</strong>中添加如下语句<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">address_info</span><span class="params">(models.Model)</span>:</span></div><div class="line">    longitude = models.FloatField()</div><div class="line">    latitude = models.FloatField()</div><div class="line">    data = models.CharField(max_length=<span class="number">200</span>)</div></pre></td></tr></table></figure>
+<li>在创建的app下的<strong>models.py</strong>中添加如下语句<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">address_info</span><span class="params">(models.Model)</span>:</span></span>
+<span class="line">    longitude = models.FloatField()</span>
+<span class="line">    latitude = models.FloatField()</span>
+<span class="line">    data = models.CharField(max_length=<span class="number">200</span>)</span>
+</pre></td></tr></table></figure>
 </li>
 </ul>
 <blockquote>
@@ -378,7 +480,11 @@
 <li>data为标记被点击所触发的显示的内容</li>
 </ul>
 </blockquote>
-<h4 id="执行同步数据库操作"><a href="#执行同步数据库操作" class="headerlink" title="执行同步数据库操作"></a>执行同步数据库操作</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">python manage.py makemigrations</div><div class="line">python manage.py migrate</div></pre></td></tr></table></figure>
+<h4 id="执行同步数据库操作"><a href="#执行同步数据库操作" class="headerlink" title="执行同步数据库操作"></a>执行同步数据库操作</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">python manage.py makemigrations</span>
+<span class="line">python manage.py migrate</span>
+</pre></td></tr></table></figure>
 <ul>
 <li>django 1.7之后版本适用</li>
 </ul>
@@ -387,7 +493,43 @@
 </ul>
 <h3 id="在view和urls中配置视图函数和URL"><a href="#在view和urls中配置视图函数和URL" class="headerlink" title="在view和urls中配置视图函数和URL"></a>在view和urls中配置视图函数和URL</h3><h4 id="修改views"><a href="#修改views" class="headerlink" title="修改views"></a>修改views</h4><ul>
 <li><p>修改完成后的<strong>address/views.py</strong>为</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</div><div class="line"><span class="keyword">import</span> json</div><div class="line"><span class="keyword">from</span> addresstest.models <span class="keyword">import</span> address_info</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">(request)</span>:</span></div><div class="line">    address_point = address_info.objects.all()</div><div class="line">    address_longitude = []</div><div class="line">    address_latitude = []</div><div class="line">    address_data = []</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(address_point)):</div><div class="line">        address_longitude.append(address_point[i].longitude)</div><div class="line">        address_latitude.append(address_point[i].latitude)</div><div class="line">        address_data.append(address_point[i].data)</div><div class="line"></div><div class="line">    <span class="keyword">return</span> render(request, <span class="string">'address.html'</span>,</div><div class="line">                  &#123;<span class="string">'address_longitude'</span>: json.dumps(address_longitude),</div><div class="line">                   <span class="string">'address_latitude'</span>: json.dumps(address_latitude), <span class="string">'address_data'</span>: json.dumps(address_data)&#125;)</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</span>
+<span class="line"><span class="keyword">import</span> json</span>
+<span class="line"><span class="keyword">from</span> addresstest.models <span class="keyword">import</span> address_info</span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">(request)</span>:</span></span>
+<span class="line">    address_point = address_info.objects.all()</span>
+<span class="line">    address_longitude = []</span>
+<span class="line">    address_latitude = []</span>
+<span class="line">    address_data = []</span>
+<span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(address_point)):</span>
+<span class="line">        address_longitude.append(address_point[i].longitude)</span>
+<span class="line">        address_latitude.append(address_point[i].latitude)</span>
+<span class="line">        address_data.append(address_point[i].data)</span>
+<span class="line"></span>
+<span class="line">    <span class="keyword">return</span> render(request, <span class="string">'address.html'</span>,</span>
+<span class="line">                  &#123;<span class="string">'address_longitude'</span>: json.dumps(address_longitude),</span>
+<span class="line">                   <span class="string">'address_latitude'</span>: json.dumps(address_latitude), <span class="string">'address_data'</span>: json.dumps(address_data)&#125;)</span>
+</pre></td></tr></table></figure>
 </li>
 <li><p>由于需要在前段页面中的js代码区域中使用，我们需要将列表json序列化然后通过页面渲染 或者  前段请求后端返回response携带接送数据</p>
 </li>
@@ -402,21 +544,271 @@
 </li>
 </ul>
 <h5 id="修改urls"><a href="#修改urls" class="headerlink" title="修改urls"></a>修改urls</h5><ul>
-<li>由于只用来测试，所以我们只需要在工程名下的urls写设置一下即可<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> django.conf.urls <span class="keyword">import</span> url</div><div class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> admin</div><div class="line"><span class="keyword">from</span> addresstest <span class="keyword">import</span> views</div><div class="line"></div><div class="line">urlpatterns = [</div><div class="line">    url(<span class="string">r'^admin/'</span>, admin.site.urls),</div><div class="line">    url(<span class="string">r'^address/'</span>,views.test),</div><div class="line">]</div></pre></td></tr></table></figure>
+<li>由于只用来测试，所以我们只需要在工程名下的urls写设置一下即可<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.conf.urls <span class="keyword">import</span> url</span>
+<span class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> admin</span>
+<span class="line"><span class="keyword">from</span> addresstest <span class="keyword">import</span> views</span>
+<span class="line"></span>
+<span class="line">urlpatterns = [</span>
+<span class="line">    url(<span class="string">r'^admin/'</span>, admin.site.urls),</span>
+<span class="line">    url(<span class="string">r'^address/'</span>,views.test),</span>
+<span class="line">]</span>
+</pre></td></tr></table></figure>
 </li>
 </ul>
 <h3 id="在address-html添加设置地图的js"><a href="#在address-html添加设置地图的js" class="headerlink" title="在address.html添加设置地图的js"></a>在address.html添加设置地图的js</h3><ul>
 <li><p>因为js语句块放在页面哪里都可以被执行，所以大家可以按照自己的喜好放置，在这里我选择放在页面的最后</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></div><div class="line">    var map = new BMap.Map("allmap");</div><div class="line">    map.centerAndZoom(new BMap.Point(118.3088230000, 32.3002390000), 18);</div><div class="line">    map.enableScrollWheelZoom(true);</div><div class="line">    var navigationControl = new BMap.NavigationControl(&#123;</div><div class="line">        // 靠左上角位置</div><div class="line">        anchor: BMAP_ANCHOR_TOP_LEFT,</div><div class="line">        // LARGE类型</div><div class="line">        type: BMAP_NAVIGATION_CONTROL_LARGE,</div><div class="line">        // 启用显示定位</div><div class="line">        enableGeolocation: true</div><div class="line">    &#125;);</div><div class="line">    map.addControl(navigationControl);</div><div class="line"></div><div class="line">    function get_location() &#123;</div><div class="line"></div><div class="line">        var address_latitude =&#123;&#123; address_latitude |safe&#125;&#125;;</div><div class="line">        var address_longitude =&#123;&#123; address_longitude|safe &#125;&#125;;</div><div class="line">        var address_data =&#123;&#123; address_data |safe&#125;&#125;;</div><div class="line"></div><div class="line"></div><div class="line">        var point = []; //存放标注点经纬信息的数组</div><div class="line">        var marker = []; //存放标注点对象的数组</div><div class="line">        for (var i = 0; i &lt; address_longitude.length; i++) &#123;</div><div class="line">            point[i] = new BMap.Point(address_longitude[i], address_latitude[i]); //循环生成新的地图点</div><div class="line">            marker[i] = new BMap.Marker(point[i]); //按照地图点坐标生成标记</div><div class="line">            map.addOverlay(marker[i]);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        for (i = 0; i &lt; marker.length; i++) &#123;</div><div class="line">            (function () &#123;</div><div class="line">                var index = i;</div><div class="line">                marker[index].addEventListener('click', function () &#123;</div><div class="line">                    this.openInfoWindow(new BMap.InfoWindow(address_data[index]));</div><div class="line">                &#125;);</div><div class="line">            &#125;)();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+<span class="line">27</span>
+<span class="line">28</span>
+<span class="line">29</span>
+<span class="line">30</span>
+<span class="line">31</span>
+<span class="line">32</span>
+<span class="line">33</span>
+<span class="line">34</span>
+<span class="line">35</span>
+<span class="line">36</span>
+<span class="line">37</span>
+<span class="line">38</span>
+<span class="line">39</span>
+<span class="line">40</span>
+</pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="javascript"></span>
+<span class="line">    <span class="keyword">var</span> map = <span class="keyword">new</span> BMap.Map(<span class="string">"allmap"</span>);</span>
+<span class="line">    map.centerAndZoom(<span class="keyword">new</span> BMap.Point(<span class="number">118.3088230000</span>, <span class="number">32.3002390000</span>), <span class="number">18</span>);</span>
+<span class="line">    map.enableScrollWheelZoom(<span class="literal">true</span>);</span>
+<span class="line">    <span class="keyword">var</span> navigationControl = <span class="keyword">new</span> BMap.NavigationControl(&#123;</span>
+<span class="line">        <span class="comment">// 靠左上角位置</span></span>
+<span class="line">        anchor: BMAP_ANCHOR_TOP_LEFT,</span>
+<span class="line">        <span class="comment">// LARGE类型</span></span>
+<span class="line">        type: BMAP_NAVIGATION_CONTROL_LARGE,</span>
+<span class="line">        <span class="comment">// 启用显示定位</span></span>
+<span class="line">        enableGeolocation: <span class="literal">true</span></span>
+<span class="line">    &#125;);</span>
+<span class="line">    map.addControl(navigationControl);</span>
+<span class="line"></span>
+<span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">get_location</span>(<span class="params"></span>) </span>&#123;</span>
+<span class="line"></span>
+<span class="line">        <span class="keyword">var</span> address_latitude =&#123;&#123; address_latitude |safe&#125;&#125;;</span>
+<span class="line">        <span class="keyword">var</span> address_longitude =&#123;&#123; address_longitude|safe &#125;&#125;;</span>
+<span class="line">        <span class="keyword">var</span> address_data =&#123;&#123; address_data |safe&#125;&#125;;</span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line">        <span class="keyword">var</span> point = []; <span class="comment">//存放标注点经纬信息的数组</span></span>
+<span class="line">        <span class="keyword">var</span> marker = []; <span class="comment">//存放标注点对象的数组</span></span>
+<span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; address_longitude.length; i++) &#123;</span>
+<span class="line">            point[i] = <span class="keyword">new</span> BMap.Point(address_longitude[i], address_latitude[i]); <span class="comment">//循环生成新的地图点</span></span>
+<span class="line">            marker[i] = <span class="keyword">new</span> BMap.Marker(point[i]); <span class="comment">//按照地图点坐标生成标记</span></span>
+<span class="line">            map.addOverlay(marker[i]);</span>
+<span class="line">        &#125;</span>
+<span class="line"></span>
+<span class="line">        <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; marker.length; i++) &#123;</span>
+<span class="line">            (<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span>
+<span class="line">                <span class="keyword">var</span> index = i;</span>
+<span class="line">                marker[index].addEventListener(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span>
+<span class="line">                    <span class="keyword">this</span>.openInfoWindow(<span class="keyword">new</span> BMap.InfoWindow(address_data[index]));</span>
+<span class="line">                &#125;);</span>
+<span class="line">            &#125;)();</span>
+<span class="line">        &#125;</span>
+<span class="line"></span>
+<span class="line">    &#125;</span>
+<span class="line"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span>
+</pre></td></tr></table></figure>
 </li>
 <li><p>由于marker在添加监听事件时调用外部函数添加参数无效但是我们这里又需要传递从数据库读出来的需要显示的信息，所以我们这里使用了js的闭包的概念，还使用了匿名函数，直接写在监听事件函数内</p>
 </li>
 </ul>
 <ul>
-<li>完整的<strong>address.html</strong>代码如下<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Type"</span> <span class="attr">content</span>=<span class="string">"text/html; charset=utf-8"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"initial-scale=1.0, user-scalable=no"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">"text/css"</span>&gt;</span><span class="undefined"></span></div><div class="line">        body, html &#123;</div><div class="line">            width: 100%;</div><div class="line">            height: 100%;</div><div class="line">            margin: 0;</div><div class="line">            font-family: "微软雅黑";</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        #allmap &#123;</div><div class="line">            height: 700px;</div><div class="line">            width: 100%;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        #r-result &#123;</div><div class="line">            width: 100%;</div><div class="line">            font-size: 14px;</div><div class="line">        &#125;</div><div class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span></span></div><div class="line">            <span class="attr">src</span>=<span class="string">"http://api.map.baidu.com/api?v=2.0&amp;ak=你的秘钥"</span>&gt;<span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>经纬度定位<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"allmap"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"r-result"</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">value</span>=<span class="string">"获取我的位置"</span> <span class="attr">onclick</span>=<span class="string">"get_location()"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></div><div class="line">    // 百度地图API功能</div><div class="line">  </div><div class="line">    var map = new BMap.Map("allmap");</div><div class="line">    map.centerAndZoom(new BMap.Point(118.3088230000, 32.3002390000), 18);</div><div class="line">    map.enableScrollWheelZoom(true);</div><div class="line">    var navigationControl = new BMap.NavigationControl(&#123;</div><div class="line">        // 靠左上角位置</div><div class="line">        anchor: BMAP_ANCHOR_TOP_LEFT,</div><div class="line">        // LARGE类型</div><div class="line">        type: BMAP_NAVIGATION_CONTROL_LARGE,</div><div class="line">        // 启用显示定位</div><div class="line">        enableGeolocation: true</div><div class="line">    &#125;);</div><div class="line">    map.addControl(navigationControl);</div><div class="line"></div><div class="line">    function get_location() &#123;</div><div class="line"></div><div class="line">        var address_latitude =&#123;&#123; address_latitude |safe&#125;&#125;;</div><div class="line">        var address_longitude =&#123;&#123; address_longitude|safe &#125;&#125;;</div><div class="line">        var address_data =&#123;&#123; address_data |safe&#125;&#125;;</div><div class="line"></div><div class="line"></div><div class="line">        var point = []; //存放标注点经纬信息的数组</div><div class="line">        var marker = []; //存放标注点对象的数组</div><div class="line">        for (var i = 0; i &lt; address_longitude.length; i++) &#123;</div><div class="line">            point[i] = new BMap.Point(address_longitude[i], address_latitude[i]); //循环生成新的地图点</div><div class="line">            marker[i] = new BMap.Marker(point[i]); //按照地图点坐标生成标记</div><div class="line">            map.addOverlay(marker[i]);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        for (i = 0; i &lt; marker.length; i++) &#123;</div><div class="line">            (function () &#123;</div><div class="line">                var index = i;</div><div class="line">                marker[index].addEventListener('click', function () &#123;</div><div class="line">                    this.openInfoWindow(new BMap.InfoWindow(address_data[index]));</div><div class="line">                &#125;);</div><div class="line">            &#125;)();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
+<li>完整的<strong>address.html</strong>代码如下<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+<span class="line">27</span>
+<span class="line">28</span>
+<span class="line">29</span>
+<span class="line">30</span>
+<span class="line">31</span>
+<span class="line">32</span>
+<span class="line">33</span>
+<span class="line">34</span>
+<span class="line">35</span>
+<span class="line">36</span>
+<span class="line">37</span>
+<span class="line">38</span>
+<span class="line">39</span>
+<span class="line">40</span>
+<span class="line">41</span>
+<span class="line">42</span>
+<span class="line">43</span>
+<span class="line">44</span>
+<span class="line">45</span>
+<span class="line">46</span>
+<span class="line">47</span>
+<span class="line">48</span>
+<span class="line">49</span>
+<span class="line">50</span>
+<span class="line">51</span>
+<span class="line">52</span>
+<span class="line">53</span>
+<span class="line">54</span>
+<span class="line">55</span>
+<span class="line">56</span>
+<span class="line">57</span>
+<span class="line">58</span>
+<span class="line">59</span>
+<span class="line">60</span>
+<span class="line">61</span>
+<span class="line">62</span>
+<span class="line">63</span>
+<span class="line">64</span>
+<span class="line">65</span>
+<span class="line">66</span>
+<span class="line">67</span>
+<span class="line">68</span>
+<span class="line">69</span>
+<span class="line">70</span>
+<span class="line">71</span>
+<span class="line">72</span>
+<span class="line">73</span>
+<span class="line">74</span>
+<span class="line">75</span>
+<span class="line">76</span>
+</pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span>
+<span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span>
+<span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Type"</span> <span class="attr">content</span>=<span class="string">"text/html; charset=utf-8"</span>/&gt;</span></span>
+<span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"initial-scale=1.0, user-scalable=no"</span>/&gt;</span></span>
+<span class="line">    <span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">"text/css"</span>&gt;</span><span class="css"></span>
+<span class="line">        <span class="selector-tag">body</span>, <span class="selector-tag">html</span> &#123;</span>
+<span class="line">            <span class="attribute">width</span>: <span class="number">100%</span>;</span>
+<span class="line">            <span class="attribute">height</span>: <span class="number">100%</span>;</span>
+<span class="line">            <span class="attribute">margin</span>: <span class="number">0</span>;</span>
+<span class="line">            <span class="attribute">font-family</span>: <span class="string">"微软雅黑"</span>;</span>
+<span class="line">        &#125;</span>
+<span class="line"></span>
+<span class="line">        <span class="selector-id">#allmap</span> &#123;</span>
+<span class="line">            <span class="attribute">height</span>: <span class="number">700px</span>;</span>
+<span class="line">            <span class="attribute">width</span>: <span class="number">100%</span>;</span>
+<span class="line">        &#125;</span>
+<span class="line"></span>
+<span class="line">        <span class="selector-id">#r-result</span> &#123;</span>
+<span class="line">            <span class="attribute">width</span>: <span class="number">100%</span>;</span>
+<span class="line">            <span class="attribute">font-size</span>: <span class="number">14px</span>;</span>
+<span class="line">        &#125;</span>
+<span class="line">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span>
+<span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span></span>
+<span class="line">            <span class="attr">src</span>=<span class="string">"http://api.map.baidu.com/api?v=2.0&amp;ak=你的秘钥"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span>
+<span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>经纬度定位<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span>
+<span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span>
+<span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span>
+<span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"allmap"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>
+<span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"r-result"</span>&gt;</span></span>
+<span class="line"></span>
+<span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">value</span>=<span class="string">"获取我的位置"</span> <span class="attr">onclick</span>=<span class="string">"get_location()"</span>/&gt;</span></span>
+<span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>
+<span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span>
+<span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span>
+<span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="javascript"></span>
+<span class="line">    <span class="comment">// 百度地图API功能</span></span>
+<span class="line">  </span>
+<span class="line">    <span class="keyword">var</span> map = <span class="keyword">new</span> BMap.Map(<span class="string">"allmap"</span>);</span>
+<span class="line">    map.centerAndZoom(<span class="keyword">new</span> BMap.Point(<span class="number">118.3088230000</span>, <span class="number">32.3002390000</span>), <span class="number">18</span>);</span>
+<span class="line">    map.enableScrollWheelZoom(<span class="literal">true</span>);</span>
+<span class="line">    <span class="keyword">var</span> navigationControl = <span class="keyword">new</span> BMap.NavigationControl(&#123;</span>
+<span class="line">        <span class="comment">// 靠左上角位置</span></span>
+<span class="line">        anchor: BMAP_ANCHOR_TOP_LEFT,</span>
+<span class="line">        <span class="comment">// LARGE类型</span></span>
+<span class="line">        type: BMAP_NAVIGATION_CONTROL_LARGE,</span>
+<span class="line">        <span class="comment">// 启用显示定位</span></span>
+<span class="line">        enableGeolocation: <span class="literal">true</span></span>
+<span class="line">    &#125;);</span>
+<span class="line">    map.addControl(navigationControl);</span>
+<span class="line"></span>
+<span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">get_location</span>(<span class="params"></span>) </span>&#123;</span>
+<span class="line"></span>
+<span class="line">        <span class="keyword">var</span> address_latitude =&#123;&#123; address_latitude |safe&#125;&#125;;</span>
+<span class="line">        <span class="keyword">var</span> address_longitude =&#123;&#123; address_longitude|safe &#125;&#125;;</span>
+<span class="line">        <span class="keyword">var</span> address_data =&#123;&#123; address_data |safe&#125;&#125;;</span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line">        <span class="keyword">var</span> point = []; <span class="comment">//存放标注点经纬信息的数组</span></span>
+<span class="line">        <span class="keyword">var</span> marker = []; <span class="comment">//存放标注点对象的数组</span></span>
+<span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; address_longitude.length; i++) &#123;</span>
+<span class="line">            point[i] = <span class="keyword">new</span> BMap.Point(address_longitude[i], address_latitude[i]); <span class="comment">//循环生成新的地图点</span></span>
+<span class="line">            marker[i] = <span class="keyword">new</span> BMap.Marker(point[i]); <span class="comment">//按照地图点坐标生成标记</span></span>
+<span class="line">            map.addOverlay(marker[i]);</span>
+<span class="line">        &#125;</span>
+<span class="line"></span>
+<span class="line">        <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; marker.length; i++) &#123;</span>
+<span class="line">            (<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span>
+<span class="line">                <span class="keyword">var</span> index = i;</span>
+<span class="line">                marker[index].addEventListener(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span>
+<span class="line">                    <span class="keyword">this</span>.openInfoWindow(<span class="keyword">new</span> BMap.InfoWindow(address_data[index]));</span>
+<span class="line">                &#125;);</span>
+<span class="line">            &#125;)();</span>
+<span class="line">        &#125;</span>
+<span class="line">    &#125;</span>
+<span class="line"></span>
+<span class="line"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span>
+</pre></td></tr></table></figure>
 </li>
 </ul>
-<h3 id="运行测试服务器查看效果"><a href="#运行测试服务器查看效果" class="headerlink" title="运行测试服务器查看效果"></a>运行测试服务器查看效果</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">python manage.py runserver</div></pre></td></tr></table></figure>
+<h3 id="运行测试服务器查看效果"><a href="#运行测试服务器查看效果" class="headerlink" title="运行测试服务器查看效果"></a>运行测试服务器查看效果</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">python manage.py runserver</span>
+</pre></td></tr></table></figure>
 <ul>
 <li>在浏览器地址栏输入<a href="http://127.0.0.1:8000/address" target="_blank" rel="external">http://127.0.0.1:8000/address</a></li>
 <li>点击按钮获取我的位置<br><img src="http://objects.earthchen.cn/django%E6%89%B9%E9%87%8F%E5%9C%B0%E5%9D%80%E6%A0%87%E8%AE%B0%E6%98%BE%E7%A4%BA%E7%BB%93%E6%9E%9C.png" alt="批量地址标记显示结果"><br>如上图显示即为成功。</li>
@@ -436,17 +828,17 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/03/15/django_address_baiduapi_marker_show/">Django调用百度地图api在地图上批量增加标记点</a></p>
-        <p><span>文章作者:</span><a href="/" title="回到主页">EarthChen</a></p>
-        <p><span>发布时间:</span>2017-03-15, 14:40:00</p>
-        <p><span>最后更新:</span>2017-08-06, 17:47:43</p>
+        <p><span>Title:</span><a href="/2017/03/15/django_address_baiduapi_marker_show/">Django调用百度地图api在地图上批量增加标记点</a></p>
+        <p><span>Author:</span><a href="/" title="Back to Homepage">EarthChen</a></p>
+        <p><span>Created:</span>2017-03-15, 14:40:00</p>
+        <p><span>Updated:</span>2017-08-06, 17:47:43</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/03/15/django_address_baiduapi_marker_show/" title="Django调用百度地图api在地图上批量增加标记点">http://earthchen.cn/2017/03/15/django_address_baiduapi_marker_show/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://earthchen.cn/2017/03/15/django_address_baiduapi_marker_show/　　作者: EarthChen" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>Full URL:</span><a class="post-url" href="/2017/03/15/django_address_baiduapi_marker_show/" title="Django调用百度地图api在地图上批量增加标记点">http://earthchen.cn/2017/03/15/django_address_baiduapi_marker_show/</a>
+            <span class="copy-path" data-clipboard-text="From http://earthchen.cn/2017/03/15/django_address_baiduapi_marker_show/　　By EarthChen" title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
-            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+            <span>License:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"CC BY-NC-SA 4.0"</a> Keep Link &amp; Author if Distribute.
         </p>
     </div>
 
@@ -455,15 +847,15 @@
     <nav id="article-nav">
         
             <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2017/03/15/ubuntu_do_something_coding/">
-                    ubuntu搭建常见开发环境
+                <a href="/2017/03/16/ubuntu_do_something_use/">
+                    ubuntu日常使用的安装配置
                 </a>
             </div>
         
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2017/03/10/ubuntu安装在双系统笔记本下开机或关机卡死.1/">
-                    ubuntu在双系统下开机卡死或关机卡死的解决办法
+                <a href="/2017/03/15/ubuntu_do_something_coding/">
+                    ubuntu搭建常见开发环境
                 </a>
             </div>
         
@@ -473,7 +865,7 @@
 </article>
 
     <div id="toc" class="toc-article">
-        <strong class="toc-title">文章目录</strong>
+        <strong class="toc-title">Contents</strong>
         
             <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#开始"><span class="toc-number">1.</span> <span class="toc-text">开始</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建工程"><span class="toc-number">1.1.</span> <span class="toc-text">创建工程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建app"><span class="toc-number">1.2.</span> <span class="toc-text">创建app</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建一个名为templates文件，在其中创建一个address-html的测试用页面"><span class="toc-number">1.3.</span> <span class="toc-text">创建一个名为templates文件，在其中创建一个address.html的测试用页面</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#注册百度开发者账号获取秘钥"><span class="toc-number">1.3.1.</span> <span class="toc-text">注册百度开发者账号获取秘钥</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#在address-html添加上引入百度api的js代码"><span class="toc-number">1.3.2.</span> <span class="toc-text">在address.html添加上引入百度api的js代码</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#连接mysql数据库"><span class="toc-number">1.4.</span> <span class="toc-text">连接mysql数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#设置模型类"><span class="toc-number">1.4.1.</span> <span class="toc-text">设置模型类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#执行同步数据库操作"><span class="toc-number">1.4.2.</span> <span class="toc-text">执行同步数据库操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#查看数据库并在其中addresstest-address-info表中插入测试数据"><span class="toc-number">1.4.3.</span> <span class="toc-text">查看数据库并在其中addresstest_address_info表中插入测试数据</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在view和urls中配置视图函数和URL"><span class="toc-number">1.5.</span> <span class="toc-text">在view和urls中配置视图函数和URL</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#修改views"><span class="toc-number">1.5.1.</span> <span class="toc-text">修改views</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#修改urls"><span class="toc-number">1.5.1.1.</span> <span class="toc-text">修改urls</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在address-html添加设置地图的js"><span class="toc-number">1.6.</span> <span class="toc-text">在address.html添加设置地图的js</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#运行测试服务器查看效果"><span class="toc-number">1.7.</span> <span class="toc-text">运行测试服务器查看效果</span></a></li></ol></li></ol>
         
@@ -489,10 +881,10 @@
         }
     </style>
 
-    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+    <input type="button" id="tocButton" value="Hide"  title="Show or Hide Table of Contents">
 
     <script>
-        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+        yiliaConfig.toc = ["Hide", "Show", !!"false"];
     </script>
 
 
@@ -545,21 +937,21 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2017/03/15/ubuntu_do_something_coding/" title="上一篇: ubuntu搭建常见开发环境">
+            <a href="/2017/03/16/ubuntu_do_something_use/" title="Pre: ubuntu日常使用的安装配置">
                 <i class="fa fa-angle-left"></i>
             </a>
         
 
-        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        <a title="Mini Archives"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2017/03/10/ubuntu安装在双系统笔记本下开机或关机卡死.1/" title="下一篇: ubuntu在双系统下开机卡死或关机卡死的解决办法">
+            <a href="/2017/03/15/ubuntu_do_something_coding/" title="Next: ubuntu搭建常见开发环境">
                 <i class="fa fa-angle-right"></i>
             </a>
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/04/01/httpclientutil/">HttpClient工具类</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/14/qiniu-oss/">spring boot使用七牛云的oss(对象存储)文件上传</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/spring-boot-shiro-jwt/">spring boot集成shiro使用jwt进行权限控制</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/requestHolder_and_argumentResolver/">使用ThreadLocal和ArgumentResolver方便开发</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/applicationContextHelper/">在不被spring容器管理的类中使用ApplicationContext应用上下文bean</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_static_class_autowrite/">Spring boot 在静态类中注入spring组件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_diy_properties/">Spring boot 自定义配置文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/12/Elasticsearch_study_1/">Elasticsearch学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/09/深入理解java虚拟机学习笔记_1/">深入理解java虚拟机学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/23/Docker_study_Dockerfile_instructions/">Docker学习笔记---Dockerfile</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/22/Docker_study/">Docker学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/20/celery_study/">Celery-分布式任务队列学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_redis_cache/">Django使用redis作为缓存系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_channels_websocket/">Django使用Channels实现websocket</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/13/Docker_Gogs/">使用Docker搭建git服务Gogs</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_1to20/">LeetCode刷题记录(easy难度1-20题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_21to_40/">LeetCode刷题记录(easy难度21-40题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/29/es6_study/">es6学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/Webpack_study/">Webpack学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/RegularExpression_study/">正则表达式学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/08/AndroidStudio/">Android Studio 使用本地离线Gradle</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/跨域请求解决方案/">跨域请求的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_nginx_gunicorn/">django+nginx+gunicorn部署配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/ubuntu_supervisor/">ubuntu下的进程控制系统————Supervisor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/28/ubuntu修复不能挂载NTFS硬盘/">ubuntu修复linux和windows双系统下挂载ntfs硬盘出错问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/17/django_timing_task/">django使用django-crontab实现定时任务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/15/django_rest_framework_jwt/">django-rest-framework配置json web token进行接口的认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/django_rest_framework_study/">django-rest-framework框架学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/spring_SpEL/">spring中的SpEL表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/08/git_study/">Git学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/03/资源收集/">资源收集共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/06/ubuntu_open_port/">ubuntu开放指定端口</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/16/redis_study_2/">Redis学习笔记 -- 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/15/redis_study_1/">Redis学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/16/ubuntu_do_something_use/">ubuntu日常使用的安装配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/ubuntu_do_something_coding/">ubuntu搭建常见开发环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/django_address_baiduapi_marker_show/">Django调用百度地图api在地图上批量增加标记点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/10/ubuntu安装在双系统笔记本下开机或关机卡死.1/">ubuntu在双系统下开机卡死或关机卡死的解决办法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/11/python_requirements/">python生成项目所需依赖文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/10/hexo_github_coding_blog/">利用hexo和github或coding 搭免费个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django常用语句/">Django常用语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/python2和Python3的区别/">Python2和Python3的区别简单总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django连接mysql数据库/">Django连接MySql使用models处理数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django数据库操作/">Django操作数据库</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django环境搭建/">Django环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django渲染模板/">Django渲染模板</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/03/Android_qq_Menu/">Android仿qq侧滑菜单</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/16/C语言队列的基本操作/">C语言队列的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/c语言中缀表达式变后缀表达式/">C语言中缀表达式转后缀表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言逆波兰计算器/">C语言逆波兰表达式计算(后缀表达式计算器)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言共享栈/">C语言共享栈</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言二叉树基本操作/">C语言二叉树的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言中缀表达式计算器/">C语言中缀表达式计算器</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/04/01/httpclientutil/">HttpClient工具类</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/14/qiniu-oss/">spring boot使用七牛云的oss(对象存储)文件上传</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/spring-boot-shiro-jwt/">spring boot集成shiro使用jwt进行权限控制</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/requestHolder_and_argumentResolver/">使用ThreadLocal和ArgumentResolver方便开发</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/applicationContextHelper/">在不被spring容器管理的类中使用ApplicationContext应用上下文bean</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_static_class_autowrite/">Spring boot 在静态类中注入spring组件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_diy_properties/">Spring boot 自定义配置文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/12/Elasticsearch_study_1/">Elasticsearch学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/09/深入理解java虚拟机学习笔记_1/">深入理解java虚拟机学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/23/Docker_study_Dockerfile_instructions/">Docker学习笔记---Dockerfile</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/22/Docker_study/">Docker学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/20/celery_study/">Celery-分布式任务队列学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_redis_cache/">Django使用redis作为缓存系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_channels_websocket/">Django使用Channels实现websocket</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/13/Docker_Gogs/">使用Docker搭建git服务Gogs</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_1to20/">LeetCode刷题记录(easy难度1-20题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_21to_40/">LeetCode刷题记录(easy难度21-40题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/29/es6_study/">es6学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/Webpack_study/">Webpack学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/RegularExpression_study/">正则表达式学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/08/AndroidStudio/">Android Studio 使用本地离线Gradle</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/跨域请求解决方案/">跨域请求的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/ubuntu_supervisor/">ubuntu下的进程控制系统————Supervisor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_nginx_gunicorn/">django+nginx+gunicorn部署配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/28/ubuntu修复不能挂载NTFS硬盘/">ubuntu修复linux和windows双系统下挂载ntfs硬盘出错问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/17/django_timing_task/">django使用django-crontab实现定时任务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/15/django_rest_framework_jwt/">django-rest-framework配置json web token进行接口的认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/django_rest_framework_study/">django-rest-framework框架学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/spring_SpEL/">spring中的SpEL表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/08/git_study/">Git学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/03/资源收集/">资源收集共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/06/ubuntu_open_port/">ubuntu开放指定端口</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/16/redis_study_2/">Redis学习笔记 -- 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/15/redis_study_1/">Redis学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/16/ubuntu_do_something_use/">ubuntu日常使用的安装配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/django_address_baiduapi_marker_show/">Django调用百度地图api在地图上批量增加标记点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/ubuntu_do_something_coding/">ubuntu搭建常见开发环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/10/ubuntu安装在双系统笔记本下开机或关机卡死.1/">ubuntu在双系统下开机卡死或关机卡死的解决办法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/11/python_requirements/">python生成项目所需依赖文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/10/hexo_github_coding_blog/">利用hexo和github或coding 搭免费个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django环境搭建/">Django环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django连接mysql数据库/">Django连接MySql使用models处理数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django渲染模板/">Django渲染模板</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django常用语句/">Django常用语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django数据库操作/">Django操作数据库</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/python2和Python3的区别/">Python2和Python3的区别简单总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/03/Android_qq_Menu/">Android仿qq侧滑菜单</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/16/C语言队列的基本操作/">C语言队列的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言共享栈/">C语言共享栈</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言二叉树基本操作/">C语言二叉树的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言逆波兰计算器/">C语言逆波兰表达式计算(后缀表达式计算器)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言中缀表达式计算器/">C语言中缀表达式计算器</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/c语言中缀表达式变后缀表达式/">C语言中缀表达式转后缀表达式</a></li></ul>
 
 
 
@@ -576,14 +968,14 @@
                 2016-2018 EarthChen
             </div>
             <div class="footer-right">
-                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+                <a href="http://hexo.io/" target="_blank" title="A fast, simple &amp; powerful blog framework">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Another simple and elegant theme for Hexo  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
             </div>
         </div>
         
             <div class="visit">
                 
                     <span id="busuanzi_container_site_pv" style='display:none'>
-                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        <span id="site-visit" title="Site Visitors"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
                         </span>
                     </span>
                 
@@ -592,7 +984,7 @@
                 
                 
                     <span id="busuanzi_container_page_pv" style='display:none'>
-                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        <span id="page-visit"  title="Page Hits"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
                         </span>
                     </span>
                 
@@ -627,9 +1019,9 @@
 
 
 <div class="scroll" id="scroll">
-    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
-    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
-    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+    <a href="#" title="Back to Top"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="Comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="Go to Bottom"><i class="fa fa-arrow-down"></i></a>
 </div>
 <script>
     // Open in New Window

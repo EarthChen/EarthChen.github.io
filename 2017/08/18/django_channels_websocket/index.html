@@ -158,13 +158,13 @@
                 <div class="tips-box hide">
                     <div class="tips-arrow"></div>
                     <ul class="tips-inner">
-                        <li>菜单</li>
-                        <li>标签</li>
+                        <li>Menu</li>
+                        <li>Tags</li>
                         
-                        <li>友情链接</li>
+                        <li>Friends</li>
                         
                         
-                        <li>关于我</li>
+                        <li>About Me</li>
                         
                     </ul>
                 </div>
@@ -294,7 +294,7 @@
             </nav>
         </header>                
     </div>
-    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+    <link class="menu-list" tags="Tags" friends="Friends" about="About Me"/>
 </nav>
       <div class="body-wrap"><article id="post-django_channels_websocket" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -343,46 +343,220 @@
         <p>由于项目有个需要实时显示状态的需求，搜索了各种实现方法，看来只有websocket最靠谱，但django原生是不支持websocket的，最终发现了chango-channels这个项目。可以帮我们实现我们的需求。</p>
 <a id="more"></a>
 <h1 id="Channels"><a href="#Channels" class="headerlink" title="Channels"></a>Channels</h1><p>首先放上<a href="http://channels.readthedocs.io/en/stable/index.html" target="_blank" rel="external">官方文档</a></p>
-<h2 id="安装配置"><a href="#安装配置" class="headerlink" title="安装配置"></a>安装配置</h2><h3 id="安装channels"><a href="#安装channels" class="headerlink" title="安装channels"></a>安装channels</h3><p>如果使用的django是1.9包括以上的话，可以不用输入文档中<strong>-U</strong>参数，直接使用pip在终端中输入如下命令即可<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ pip install channels</div></pre></td></tr></table></figure></p>
+<h2 id="安装配置"><a href="#安装配置" class="headerlink" title="安装配置"></a>安装配置</h2><h3 id="安装channels"><a href="#安装channels" class="headerlink" title="安装channels"></a>安装channels</h3><p>如果使用的django是1.9包括以上的话，可以不用输入文档中<strong>-U</strong>参数，直接使用pip在终端中输入如下命令即可<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ pip install channels</span>
+</pre></td></tr></table></figure></p>
 <h3 id="配置channels"><a href="#配置channels" class="headerlink" title="配置channels"></a>配置channels</h3><p>想要使用channels，我们首先需要在setting里配置一下channels。</p>
-<h4 id="在INSTALLED-APPS中添加channels"><a href="#在INSTALLED-APPS中添加channels" class="headerlink" title="在INSTALLED_APPS中添加channels"></a>在INSTALLED_APPS中添加channels</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">INSTALLED_APPS = (</div><div class="line">    <span class="string">'django.contrib.auth'</span>,</div><div class="line">    <span class="string">'django.contrib.contenttypes'</span>,</div><div class="line">    <span class="string">'django.contrib.sessions'</span>,</div><div class="line">    <span class="string">'django.contrib.sites'</span>,</div><div class="line">    ...</div><div class="line">    <span class="string">'channels'</span>,</div><div class="line">)</div></pre></td></tr></table></figure>
-<h4 id="配置channels路由和通道后端"><a href="#配置channels路由和通道后端" class="headerlink" title="配置channels路由和通道后端"></a>配置channels路由和通道后端</h4><p>简单的话我们可以使用内存作为后端，路由配置放在合适的地方<br>配置如下:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">CHANNEL_LAYERS  =  &#123; </div><div class="line">    “default” ： &#123; </div><div class="line">        “BACKEND” ： “asgiref.inmemory.ChannelLayer” ，</div><div class="line">        <span class="comment"># 这里是路由的路径，怎么填写都可以，只要能找到</span></div><div class="line">        “ROUTING” ： “你的工程名.routing.channel_routing” ，</div><div class="line">    &#125;，</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="在INSTALLED-APPS中添加channels"><a href="#在INSTALLED-APPS中添加channels" class="headerlink" title="在INSTALLED_APPS中添加channels"></a>在INSTALLED_APPS中添加channels</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+</pre></td><td class="code"><pre><span class="line">INSTALLED_APPS = (</span>
+<span class="line">    <span class="string">'django.contrib.auth'</span>,</span>
+<span class="line">    <span class="string">'django.contrib.contenttypes'</span>,</span>
+<span class="line">    <span class="string">'django.contrib.sessions'</span>,</span>
+<span class="line">    <span class="string">'django.contrib.sites'</span>,</span>
+<span class="line">    ...</span>
+<span class="line">    <span class="string">'channels'</span>,</span>
+<span class="line">)</span>
+</pre></td></tr></table></figure>
+<h4 id="配置channels路由和通道后端"><a href="#配置channels路由和通道后端" class="headerlink" title="配置channels路由和通道后端"></a>配置channels路由和通道后端</h4><p>简单的话我们可以使用内存作为后端，路由配置放在合适的地方<br>配置如下:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+</pre></td><td class="code"><pre><span class="line">CHANNEL_LAYERS  =  &#123; </span>
+<span class="line">    “default” ： &#123; </span>
+<span class="line">        “BACKEND” ： “asgiref.inmemory.ChannelLayer” ，</span>
+<span class="line">        <span class="comment"># 这里是路由的路径，怎么填写都可以，只要能找到</span></span>
+<span class="line">        “ROUTING” ： “你的工程名.routing.channel_routing” ，</span>
+<span class="line">    &#125;，</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure></p>
 <p>由于我们已经使用了redis作为缓存系统，在这里我们也就正好使用redis在作为我们的通道后端。<br>为了使用redis作为channels的后端，我们还需要安装一个库asgi_redis。</p>
 <ol>
-<li>使用pip安装asgi_redis，在终端中输入<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ pip install asgi_redis</div></pre></td></tr></table></figure>
+<li>使用pip安装asgi_redis，在终端中输入<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ pip install asgi_redis</span>
+</pre></td></tr></table></figure>
 </li>
 </ol>
 <p>安装之后我们就可以使用redis作为channels的后端了</p>
 <ol>
-<li>修改channels的BACKEND<br>在<strong>settings.py</strong>修改<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">CHANNEL_LAYERS = &#123;</div><div class="line">    <span class="string">"default"</span>: &#123;</div><div class="line">        <span class="string">"BACKEND"</span>: <span class="string">"asgi_redis.RedisChannelLayer"</span>,</div><div class="line">        <span class="string">"CONFIG"</span>: &#123;</div><div class="line">            <span class="string">"hosts"</span>: [os.environ.get(<span class="string">'REDIS_URL'</span>, <span class="string">'redis://127.0.0.1:6379/2'</span>)],</div><div class="line">        &#125;,</div><div class="line">        <span class="comment"># 配置路由的路径</span></div><div class="line">        <span class="string">"ROUTING"</span>: <span class="string">"你的工程名.routing.channel_routing"</span>,</div><div class="line">    &#125;,</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<li>修改channels的BACKEND<br>在<strong>settings.py</strong>修改<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+</pre></td><td class="code"><pre><span class="line">CHANNEL_LAYERS = &#123;</span>
+<span class="line">    <span class="string">"default"</span>: &#123;</span>
+<span class="line">        <span class="string">"BACKEND"</span>: <span class="string">"asgi_redis.RedisChannelLayer"</span>,</span>
+<span class="line">        <span class="string">"CONFIG"</span>: &#123;</span>
+<span class="line">            <span class="string">"hosts"</span>: [os.environ.get(<span class="string">'REDIS_URL'</span>, <span class="string">'redis://127.0.0.1:6379/2'</span>)],</span>
+<span class="line">        &#125;,</span>
+<span class="line">        <span class="comment"># 配置路由的路径</span></span>
+<span class="line">        <span class="string">"ROUTING"</span>: <span class="string">"你的工程名.routing.channel_routing"</span>,</span>
+<span class="line">    &#125;,</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
 </li>
 </ol>
 <h2 id="使用channels"><a href="#使用channels" class="headerlink" title="使用channels"></a>使用channels</h2><p>使用channels，笔者主要是用来解决websocket连接和传输，这里不讨论http部分。</p>
 <h3 id="最简单的例子"><a href="#最简单的例子" class="headerlink" title="最简单的例子"></a>最简单的例子</h3><ol>
 <li><p>在合适的app下创建一个<strong>customers.py</strong>,在其中编写代码如下</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">ws_message</span><span class="params">(message)</span>:</span></div><div class="line">    <span class="comment"># ASGI WebSocket packet-received and send-packet message types</span></div><div class="line">    <span class="comment"># both have a "text" key for their textual data.</span></div><div class="line">    message.reply_channel.send(&#123;</div><div class="line">        <span class="string">"text"</span>: message.content[<span class="string">'text'</span>],</div><div class="line">    &#125;)</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">ws_message</span><span class="params">(message)</span>:</span></span>
+<span class="line">    <span class="comment"># ASGI WebSocket packet-received and send-packet message types</span></span>
+<span class="line">    <span class="comment"># both have a "text" key for their textual data.</span></span>
+<span class="line">    message.reply_channel.send(&#123;</span>
+<span class="line">        <span class="string">"text"</span>: message.content[<span class="string">'text'</span>],</span>
+<span class="line">    &#125;)</span>
+</pre></td></tr></table></figure>
 </li>
 <li><p>在同一个app下创建一个<strong>router.py</strong>,在其中编写代码如下</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> channels.routing <span class="keyword">import</span> route</div><div class="line"><span class="keyword">from</span> .consumers <span class="keyword">import</span> ws_message</div><div class="line"></div><div class="line">channel_routing = [</div><div class="line">    route(<span class="string">"websocket.receive"</span>, ws_message),</div><div class="line">]</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> channels.routing <span class="keyword">import</span> route</span>
+<span class="line"><span class="keyword">from</span> .consumers <span class="keyword">import</span> ws_message</span>
+<span class="line"></span>
+<span class="line">channel_routing = [</span>
+<span class="line">    route(<span class="string">"websocket.receive"</span>, ws_message),</span>
+<span class="line">]</span>
+</pre></td></tr></table></figure>
 </li>
 </ol>
 <p>这里的意思就是当接收到前端发来的消息时，后端会触发<strong>ws_message</strong>函数，这里写的是一个回音壁程序，就是把原数据在发送回去。</p>
 <ol>
-<li>前端代码如下，在浏览器的控制台或者一个html的js代码区域编写如下代码<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Note that the path doesn't matter for routing; any WebSocket</span></div><div class="line"><span class="comment">// connection gets bumped over to WebSocket consumers</span></div><div class="line">socket = <span class="keyword">new</span> WebSocket(<span class="string">"ws://127.0.0.1:8000/chat/"</span>);</div><div class="line">socket.onmessage = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</div><div class="line">    consoe.log(e.data);</div><div class="line">&#125;</div><div class="line">socket.onopen = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    socket.send(<span class="string">"hello world"</span>);</div><div class="line">&#125;</div><div class="line"><span class="comment">// Call onopen directly if socket is already open</span></div><div class="line"><span class="keyword">if</span> (socket.readyState == WebSocket.OPEN) socket.onopen();</div></pre></td></tr></table></figure>
+<li>前端代码如下，在浏览器的控制台或者一个html的js代码区域编写如下代码<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">// Note that the path doesn't matter for routing; any WebSocket</span></span>
+<span class="line"><span class="comment">// connection gets bumped over to WebSocket consumers</span></span>
+<span class="line">socket = <span class="keyword">new</span> WebSocket(<span class="string">"ws://127.0.0.1:8000/chat/"</span>);</span>
+<span class="line">socket.onmessage = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span>
+<span class="line">    consoe.log(e.data);</span>
+<span class="line">&#125;</span>
+<span class="line">socket.onopen = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span>
+<span class="line">    socket.send(<span class="string">"hello world"</span>);</span>
+<span class="line">&#125;</span>
+<span class="line"><span class="comment">// Call onopen directly if socket is already open</span></span>
+<span class="line"><span class="keyword">if</span> (socket.readyState == WebSocket.OPEN) socket.onopen();</span>
+</pre></td></tr></table></figure>
 </li>
 </ol>
 <p>然后就可以执行<strong>python manage.py runserver</strong>查看运行效果，如果不出意外的话应该可以看到效果。</p>
 <h3 id="利用组的概念实现多个浏览器-用户-之间的交互"><a href="#利用组的概念实现多个浏览器-用户-之间的交互" class="headerlink" title="利用组的概念实现多个浏览器(用户)之间的交互"></a>利用组的概念实现多个浏览器(用户)之间的交互</h3><ol>
-<li>在<strong>customers.py</strong>中编写代码如下<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> channels <span class="keyword">import</span> Group</div><div class="line"></div><div class="line"><span class="comment"># Connected to websocket.connect</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">ws_add</span><span class="params">(message)</span>:</span></div><div class="line">    <span class="comment"># Accept the connection</span></div><div class="line">    message.reply_channel.send(&#123;<span class="string">"accept"</span>: <span class="keyword">True</span>&#125;)</div><div class="line">    <span class="comment"># Add to the chat group</span></div><div class="line">    Group(<span class="string">"chat"</span>).add(message.reply_channel)</div><div class="line"></div><div class="line"><span class="comment"># Connected to websocket.receive</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">ws_message</span><span class="params">(message)</span>:</span></div><div class="line">    Group(<span class="string">"chat"</span>).send(&#123;</div><div class="line">        <span class="string">"text"</span>: <span class="string">"[user] %s"</span> % message.content[<span class="string">'text'</span>],</div><div class="line">    &#125;)</div><div class="line"></div><div class="line"><span class="comment"># Connected to websocket.disconnect</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">ws_disconnect</span><span class="params">(message)</span>:</span></div><div class="line">    Group(<span class="string">"chat"</span>).discard(message.reply_channel)</div></pre></td></tr></table></figure>
+<li>在<strong>customers.py</strong>中编写代码如下<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> channels <span class="keyword">import</span> Group</span>
+<span class="line"></span>
+<span class="line"><span class="comment"># Connected to websocket.connect</span></span>
+<span class="line"><span class="function"><span class="keyword">def</span> <span class="title">ws_add</span><span class="params">(message)</span>:</span></span>
+<span class="line">    <span class="comment"># Accept the connection</span></span>
+<span class="line">    message.reply_channel.send(&#123;<span class="string">"accept"</span>: <span class="keyword">True</span>&#125;)</span>
+<span class="line">    <span class="comment"># Add to the chat group</span></span>
+<span class="line">    Group(<span class="string">"chat"</span>).add(message.reply_channel)</span>
+<span class="line"></span>
+<span class="line"><span class="comment"># Connected to websocket.receive</span></span>
+<span class="line"><span class="function"><span class="keyword">def</span> <span class="title">ws_message</span><span class="params">(message)</span>:</span></span>
+<span class="line">    Group(<span class="string">"chat"</span>).send(&#123;</span>
+<span class="line">        <span class="string">"text"</span>: <span class="string">"[user] %s"</span> % message.content[<span class="string">'text'</span>],</span>
+<span class="line">    &#125;)</span>
+<span class="line"></span>
+<span class="line"><span class="comment"># Connected to websocket.disconnect</span></span>
+<span class="line"><span class="function"><span class="keyword">def</span> <span class="title">ws_disconnect</span><span class="params">(message)</span>:</span></span>
+<span class="line">    Group(<span class="string">"chat"</span>).discard(message.reply_channel)</span>
+</pre></td></tr></table></figure>
 </li>
 </ol>
 <p>分为三个部分，分别是websocket连接的时候进行的操作，收到消息的时候进行的操作，和关闭链接的时候进行的操作，这里利用了组的概念，在触发连接的时候，把其加入chat组，当收到消息时候，在组内所有用户发送信息，最后关闭连接的时候退出组。</p>
 <ol>
 <li><p>由于将一次连接分为了三个部分，其路由也得配置三遍，所以在<strong>router.py</strong>中编写代码如下</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> channels.routing <span class="keyword">import</span> route</div><div class="line"><span class="keyword">from</span> .consumers <span class="keyword">import</span> ws_add, ws_message, ws_disconnect</div><div class="line"></div><div class="line">channel_routing = [</div><div class="line">    route(<span class="string">"websocket.connect"</span>, ws_add),</div><div class="line">    route(<span class="string">"websocket.receive"</span>, ws_message),</div><div class="line">    route(<span class="string">"websocket.disconnect"</span>, ws_disconnect),</div><div class="line">]</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> channels.routing <span class="keyword">import</span> route</span>
+<span class="line"><span class="keyword">from</span> .consumers <span class="keyword">import</span> ws_add, ws_message, ws_disconnect</span>
+<span class="line"></span>
+<span class="line">channel_routing = [</span>
+<span class="line">    route(<span class="string">"websocket.connect"</span>, ws_add),</span>
+<span class="line">    route(<span class="string">"websocket.receive"</span>, ws_message),</span>
+<span class="line">    route(<span class="string">"websocket.disconnect"</span>, ws_disconnect),</span>
+<span class="line">]</span>
+</pre></td></tr></table></figure>
 </li>
 <li><p>测试用前端代码如下:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Note that the path doesn't matter right now; any WebSocket</span></div><div class="line"><span class="comment">// connection gets bumped over to WebSocket consumers</span></div><div class="line">socket = <span class="keyword">new</span> WebSocket(<span class="string">"ws://127.0.0.1:8000/chat/"</span>);</div><div class="line">socket.onmessage = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</div><div class="line">     consoe.log(e.data);</div><div class="line">&#125;</div><div class="line">socket.onopen = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    socket.send(<span class="string">"hello world"</span>);</div><div class="line">&#125;</div><div class="line"><span class="comment">// Call onopen directly if socket is already open</span></div><div class="line"><span class="keyword">if</span> (socket.readyState == WebSocket.OPEN) socket.onopen();</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">// Note that the path doesn't matter right now; any WebSocket</span></span>
+<span class="line"><span class="comment">// connection gets bumped over to WebSocket consumers</span></span>
+<span class="line">socket = <span class="keyword">new</span> WebSocket(<span class="string">"ws://127.0.0.1:8000/chat/"</span>);</span>
+<span class="line">socket.onmessage = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span>
+<span class="line">     consoe.log(e.data);</span>
+<span class="line">&#125;</span>
+<span class="line">socket.onopen = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span>
+<span class="line">    socket.send(<span class="string">"hello world"</span>);</span>
+<span class="line">&#125;</span>
+<span class="line"><span class="comment">// Call onopen directly if socket is already open</span></span>
+<span class="line"><span class="keyword">if</span> (socket.readyState == WebSocket.OPEN) socket.onopen();</span>
+</pre></td></tr></table></figure>
 </li>
 </ol>
 <p>然后就可以执行<strong>python manage.py runserver</strong>查看运行效果,<br>建议同时打开两个浏览器选项卡同时运行上述JavaScript代码，就能看到对方发来的消息啦。</p>
@@ -394,40 +568,612 @@
 <li>使用<strong>channel_session_user</strong>修饰器，就可以在通道中直接拿到<strong>message.user</strong></li>
 <li><strong>channel_session_user_from_http</strong>修饰器可以将以上修饰器的功能集合起来，直接获取到所需的用户</li>
 </ul>
-<p>以下是一个用户只能和用户名第一个字符相同的人聊天的程序代码<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> channels <span class="keyword">import</span> Channel, Group</div><div class="line"><span class="keyword">from</span> channels.sessions <span class="keyword">import</span> channel_session</div><div class="line"><span class="keyword">from</span> channels.auth <span class="keyword">import</span> channel_session_user, channel_session_user_from_http</div><div class="line"></div><div class="line"><span class="comment"># Connected to websocket.connect</span></div><div class="line"><span class="meta">@channel_session_user_from_http</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">ws_add</span><span class="params">(message)</span>:</span></div><div class="line">    <span class="comment"># Accept connection</span></div><div class="line">    message.reply_channel.send(&#123;<span class="string">"accept"</span>: <span class="keyword">True</span>&#125;)</div><div class="line">    <span class="comment"># Add them to the right group</span></div><div class="line">    Group(<span class="string">"chat-%s"</span> % message.user.username[<span class="number">0</span>]).add(message.reply_channel)</div><div class="line"></div><div class="line"><span class="comment"># Connected to websocket.receive</span></div><div class="line"><span class="meta">@channel_session_user</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">ws_message</span><span class="params">(message)</span>:</span></div><div class="line">    Group(<span class="string">"chat-%s"</span> % message.user.username[<span class="number">0</span>]).send(&#123;</div><div class="line">        <span class="string">"text"</span>: message[<span class="string">'text'</span>],</div><div class="line">    &#125;)</div><div class="line"></div><div class="line"><span class="comment"># Connected to websocket.disconnect</span></div><div class="line"><span class="meta">@channel_session_user</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">ws_disconnect</span><span class="params">(message)</span>:</span></div><div class="line">    Group(<span class="string">"chat-%s"</span> % message.user.username[<span class="number">0</span>]).discard(message.reply_channel)</div></pre></td></tr></table></figure></p>
+<p>以下是一个用户只能和用户名第一个字符相同的人聊天的程序代码<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> channels <span class="keyword">import</span> Channel, Group</span>
+<span class="line"><span class="keyword">from</span> channels.sessions <span class="keyword">import</span> channel_session</span>
+<span class="line"><span class="keyword">from</span> channels.auth <span class="keyword">import</span> channel_session_user, channel_session_user_from_http</span>
+<span class="line"></span>
+<span class="line"><span class="comment"># Connected to websocket.connect</span></span>
+<span class="line"><span class="meta">@channel_session_user_from_http</span></span>
+<span class="line"><span class="function"><span class="keyword">def</span> <span class="title">ws_add</span><span class="params">(message)</span>:</span></span>
+<span class="line">    <span class="comment"># Accept connection</span></span>
+<span class="line">    message.reply_channel.send(&#123;<span class="string">"accept"</span>: <span class="keyword">True</span>&#125;)</span>
+<span class="line">    <span class="comment"># Add them to the right group</span></span>
+<span class="line">    Group(<span class="string">"chat-%s"</span> % message.user.username[<span class="number">0</span>]).add(message.reply_channel)</span>
+<span class="line"></span>
+<span class="line"><span class="comment"># Connected to websocket.receive</span></span>
+<span class="line"><span class="meta">@channel_session_user</span></span>
+<span class="line"><span class="function"><span class="keyword">def</span> <span class="title">ws_message</span><span class="params">(message)</span>:</span></span>
+<span class="line">    Group(<span class="string">"chat-%s"</span> % message.user.username[<span class="number">0</span>]).send(&#123;</span>
+<span class="line">        <span class="string">"text"</span>: message[<span class="string">'text'</span>],</span>
+<span class="line">    &#125;)</span>
+<span class="line"></span>
+<span class="line"><span class="comment"># Connected to websocket.disconnect</span></span>
+<span class="line"><span class="meta">@channel_session_user</span></span>
+<span class="line"><span class="function"><span class="keyword">def</span> <span class="title">ws_disconnect</span><span class="params">(message)</span>:</span></span>
+<span class="line">    Group(<span class="string">"chat-%s"</span> % message.user.username[<span class="number">0</span>]).discard(message.reply_channel)</span>
+</pre></td></tr></table></figure></p>
 <p>由于笔者的项目使用的是Json Web Token作为身份认证，对于服务器来说没有session，所以需要自己实现一个认证。</p>
 <h3 id="Json-Web-Token认证"><a href="#Json-Web-Token认证" class="headerlink" title="Json Web Token认证"></a>Json Web Token认证</h3><p>本来在http中使用ajax是将token放在请求头中的，但是在websocket中这样的方式并不可以，所以退而求其次，我们只能将其放在url中或者发送的数据中了。<br>又因为笔者不想每次发消息都携带token，所以选择了在url中携带的方式，</p>
 <p>最后发到服务器的url形式是这样的”ws://127.0.0.1:8000/chat/?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QxMjMiLCJvcmlnX2lhdCI6MTUwMzA0MzUyOCwidXNlcl9pZCI6MSwiZW1haWwiOiIxNzkxNTM4NjA5QHFxLmNvbSIsImV4cCI6MTUwMzEyOTkyOH0.jNYjNxUqXb1Ig6e3tdB9Xq2jH5LrqQe8zFLH40J9694”</p>
 <p>我们需要实现一个修饰器去解决对token验证的问题，以备其他的使用</p>
 <ol>
-<li>在合适的地方创建一个<strong>ws_authentication.py</strong><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># coding=utf-8</span></div><div class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> wraps</div><div class="line"></div><div class="line"><span class="keyword">from</span> django.utils.translation <span class="keyword">import</span> ugettext_lazy <span class="keyword">as</span> _</div><div class="line"></div><div class="line"><span class="keyword">from</span> rest_framework <span class="keyword">import</span> exceptions</div><div class="line"><span class="keyword">from</span> channels.handler <span class="keyword">import</span> AsgiRequest</div><div class="line"></div><div class="line"><span class="keyword">import</span> jwt</div><div class="line"><span class="keyword">from</span> django.contrib.auth <span class="keyword">import</span> get_user_model</div><div class="line"><span class="keyword">from</span> rest_framework_jwt.settings <span class="keyword">import</span> api_settings</div><div class="line"></div><div class="line"><span class="keyword">import</span> logging</div><div class="line"></div><div class="line">logger = logging.getLogger(__name__)  <span class="comment"># 为loggers中定义的名称</span></div><div class="line"></div><div class="line">User = get_user_model()</div><div class="line">jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER</div><div class="line">jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER</div><div class="line">jwt_decode_handler = api_settings.JWT_DECODE_HANDLER</div><div class="line">jwt_get_username_from_payload = api_settings.JWT_PAYLOAD_GET_USERNAME_HANDLER</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">token_authenticate</span><span class="params">(token, message)</span>:</span></div><div class="line">    <span class="string">"""</span></div><div class="line">    Tries to authenticate user based on the supplied token. It also checks</div><div class="line">    the token structure and validity.</div><div class="line">    """</div><div class="line"></div><div class="line">    payload = check_payload(token=token, message=message)</div><div class="line">    user = check_user(payload=payload, message=message)</div><div class="line"></div><div class="line">    <span class="string">"""Other authenticate operation"""</span></div><div class="line">    <span class="keyword">return</span> user, token</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># 检查负载</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">check_payload</span><span class="params">(token, message)</span>:</span></div><div class="line">    payload = <span class="keyword">None</span></div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        payload = jwt_decode_handler(token)</div><div class="line">    <span class="keyword">except</span> jwt.ExpiredSignature:</div><div class="line">        msg = _(<span class="string">'Signature has expired.'</span>)</div><div class="line">        logger.warn(msg)</div><div class="line">        <span class="comment"># raise ValueError(msg)</span></div><div class="line">        _close_reply_channel(message)</div><div class="line">    <span class="keyword">except</span> jwt.DecodeError:</div><div class="line">        msg = _(<span class="string">'Error decoding signature.'</span>)</div><div class="line">        logger.warn(msg)</div><div class="line">        _close_reply_channel(message)</div><div class="line">    <span class="keyword">return</span> payload</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># 检查用户</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">check_user</span><span class="params">(payload, message)</span>:</span></div><div class="line">    username = <span class="keyword">None</span></div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        username = payload.get(<span class="string">'username'</span>)</div><div class="line">    <span class="keyword">except</span> Exception:</div><div class="line">        msg = _(<span class="string">'Invalid payload.'</span>)</div><div class="line">        logger.warn(msg)</div><div class="line">        _close_reply_channel(message)</div><div class="line">    <span class="keyword">if</span> <span class="keyword">not</span> username:</div><div class="line">        msg = _(<span class="string">'Invalid payload.'</span>)</div><div class="line">        logger.warn(msg)</div><div class="line">        _close_reply_channel(message)</div><div class="line">        <span class="keyword">return</span></div><div class="line">        <span class="comment"># Make sure user exists</span></div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        user = User.objects.get_by_natural_key(username)</div><div class="line">    <span class="keyword">except</span> User.DoesNotExist:</div><div class="line">        msg = _(<span class="string">"User doesn't exist."</span>)</div><div class="line">        logger.warn(msg)</div><div class="line">        <span class="keyword">raise</span> exceptions.AuthenticationFailed(msg)</div><div class="line"></div><div class="line">    <span class="keyword">if</span> <span class="keyword">not</span> user.is_active:</div><div class="line">        msg = _(<span class="string">'User account is disabled.'</span>)</div><div class="line">        logger.warn(msg)</div><div class="line">        <span class="keyword">raise</span> exceptions.AuthenticationFailed(msg)</div><div class="line">    <span class="keyword">return</span> user</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># 关闭websocket</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">_close_reply_channel</span><span class="params">(message)</span>:</span></div><div class="line">    message.reply_channel.send(&#123;<span class="string">"close"</span>: <span class="keyword">True</span>&#125;)</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># 验证request中的token</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">ws_auth_request_token</span><span class="params">(func)</span>:</span></div><div class="line">    <span class="string">"""</span></div><div class="line">    Checks the presence of a "token" request parameter and tries to</div><div class="line">    authenticate the user based on its content.</div><div class="line">    The request url must include token.</div><div class="line">    eg: /v1/channel/1/?token=abcdefghijklmn</div><div class="line">    """</div><div class="line"></div><div class="line"><span class="meta">    @wraps(func)</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">inner</span><span class="params">(message, *args, **kwargs)</span>:</span></div><div class="line">        <span class="keyword">try</span>:</div><div class="line">            <span class="keyword">if</span> <span class="string">"method"</span> <span class="keyword">not</span> <span class="keyword">in</span> message.content:</div><div class="line">                message.content[<span class="string">'method'</span>] = <span class="string">"FAKE"</span></div><div class="line">            request = AsgiRequest(message)</div><div class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</div><div class="line">            <span class="keyword">raise</span> ValueError(<span class="string">"Cannot parse HTTP message - are you sure this is a HTTP consumer? %s"</span> % e)</div><div class="line"></div><div class="line">        token = request.GET.get(<span class="string">"token"</span>, <span class="keyword">None</span>)</div><div class="line"></div><div class="line">        <span class="keyword">print</span> request.path, request.GET</div><div class="line"></div><div class="line">        <span class="keyword">if</span> token <span class="keyword">is</span> <span class="keyword">None</span>:</div><div class="line">            _close_reply_channel(message)</div><div class="line">            <span class="keyword">raise</span> ValueError(<span class="string">"Missing token request parameter. Closing channel."</span>)</div><div class="line"></div><div class="line">        <span class="comment"># user, token = token_authenticate(token)</span></div><div class="line">        user, token = token_authenticate(token, message)</div><div class="line"></div><div class="line">        message.token = token</div><div class="line">        message.user = user</div><div class="line"></div><div class="line">        <span class="keyword">return</span> func(message, *args, **kwargs)</div><div class="line"></div><div class="line">    <span class="keyword">return</span> inner</div></pre></td></tr></table></figure>
+<li>在合适的地方创建一个<strong>ws_authentication.py</strong><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+<span class="line">27</span>
+<span class="line">28</span>
+<span class="line">29</span>
+<span class="line">30</span>
+<span class="line">31</span>
+<span class="line">32</span>
+<span class="line">33</span>
+<span class="line">34</span>
+<span class="line">35</span>
+<span class="line">36</span>
+<span class="line">37</span>
+<span class="line">38</span>
+<span class="line">39</span>
+<span class="line">40</span>
+<span class="line">41</span>
+<span class="line">42</span>
+<span class="line">43</span>
+<span class="line">44</span>
+<span class="line">45</span>
+<span class="line">46</span>
+<span class="line">47</span>
+<span class="line">48</span>
+<span class="line">49</span>
+<span class="line">50</span>
+<span class="line">51</span>
+<span class="line">52</span>
+<span class="line">53</span>
+<span class="line">54</span>
+<span class="line">55</span>
+<span class="line">56</span>
+<span class="line">57</span>
+<span class="line">58</span>
+<span class="line">59</span>
+<span class="line">60</span>
+<span class="line">61</span>
+<span class="line">62</span>
+<span class="line">63</span>
+<span class="line">64</span>
+<span class="line">65</span>
+<span class="line">66</span>
+<span class="line">67</span>
+<span class="line">68</span>
+<span class="line">69</span>
+<span class="line">70</span>
+<span class="line">71</span>
+<span class="line">72</span>
+<span class="line">73</span>
+<span class="line">74</span>
+<span class="line">75</span>
+<span class="line">76</span>
+<span class="line">77</span>
+<span class="line">78</span>
+<span class="line">79</span>
+<span class="line">80</span>
+<span class="line">81</span>
+<span class="line">82</span>
+<span class="line">83</span>
+<span class="line">84</span>
+<span class="line">85</span>
+<span class="line">86</span>
+<span class="line">87</span>
+<span class="line">88</span>
+<span class="line">89</span>
+<span class="line">90</span>
+<span class="line">91</span>
+<span class="line">92</span>
+<span class="line">93</span>
+<span class="line">94</span>
+<span class="line">95</span>
+<span class="line">96</span>
+<span class="line">97</span>
+<span class="line">98</span>
+<span class="line">99</span>
+<span class="line">100</span>
+<span class="line">101</span>
+<span class="line">102</span>
+<span class="line">103</span>
+<span class="line">104</span>
+<span class="line">105</span>
+<span class="line">106</span>
+<span class="line">107</span>
+<span class="line">108</span>
+<span class="line">109</span>
+<span class="line">110</span>
+<span class="line">111</span>
+<span class="line">112</span>
+<span class="line">113</span>
+<span class="line">114</span>
+<span class="line">115</span>
+<span class="line">116</span>
+<span class="line">117</span>
+<span class="line">118</span>
+<span class="line">119</span>
+<span class="line">120</span>
+<span class="line">121</span>
+<span class="line">122</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment"># coding=utf-8</span></span>
+<span class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> wraps</span>
+<span class="line"></span>
+<span class="line"><span class="keyword">from</span> django.utils.translation <span class="keyword">import</span> ugettext_lazy <span class="keyword">as</span> _</span>
+<span class="line"></span>
+<span class="line"><span class="keyword">from</span> rest_framework <span class="keyword">import</span> exceptions</span>
+<span class="line"><span class="keyword">from</span> channels.handler <span class="keyword">import</span> AsgiRequest</span>
+<span class="line"></span>
+<span class="line"><span class="keyword">import</span> jwt</span>
+<span class="line"><span class="keyword">from</span> django.contrib.auth <span class="keyword">import</span> get_user_model</span>
+<span class="line"><span class="keyword">from</span> rest_framework_jwt.settings <span class="keyword">import</span> api_settings</span>
+<span class="line"></span>
+<span class="line"><span class="keyword">import</span> logging</span>
+<span class="line"></span>
+<span class="line">logger = logging.getLogger(__name__)  <span class="comment"># 为loggers中定义的名称</span></span>
+<span class="line"></span>
+<span class="line">User = get_user_model()</span>
+<span class="line">jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER</span>
+<span class="line">jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER</span>
+<span class="line">jwt_decode_handler = api_settings.JWT_DECODE_HANDLER</span>
+<span class="line">jwt_get_username_from_payload = api_settings.JWT_PAYLOAD_GET_USERNAME_HANDLER</span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"><span class="function"><span class="keyword">def</span> <span class="title">token_authenticate</span><span class="params">(token, message)</span>:</span></span>
+<span class="line">    <span class="string">"""</span>
+<span class="line">    Tries to authenticate user based on the supplied token. It also checks</span>
+<span class="line">    the token structure and validity.</span>
+<span class="line">    """</span></span>
+<span class="line"></span>
+<span class="line">    payload = check_payload(token=token, message=message)</span>
+<span class="line">    user = check_user(payload=payload, message=message)</span>
+<span class="line"></span>
+<span class="line">    <span class="string">"""Other authenticate operation"""</span></span>
+<span class="line">    <span class="keyword">return</span> user, token</span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"><span class="comment"># 检查负载</span></span>
+<span class="line"><span class="function"><span class="keyword">def</span> <span class="title">check_payload</span><span class="params">(token, message)</span>:</span></span>
+<span class="line">    payload = <span class="keyword">None</span></span>
+<span class="line">    <span class="keyword">try</span>:</span>
+<span class="line">        payload = jwt_decode_handler(token)</span>
+<span class="line">    <span class="keyword">except</span> jwt.ExpiredSignature:</span>
+<span class="line">        msg = _(<span class="string">'Signature has expired.'</span>)</span>
+<span class="line">        logger.warn(msg)</span>
+<span class="line">        <span class="comment"># raise ValueError(msg)</span></span>
+<span class="line">        _close_reply_channel(message)</span>
+<span class="line">    <span class="keyword">except</span> jwt.DecodeError:</span>
+<span class="line">        msg = _(<span class="string">'Error decoding signature.'</span>)</span>
+<span class="line">        logger.warn(msg)</span>
+<span class="line">        _close_reply_channel(message)</span>
+<span class="line">    <span class="keyword">return</span> payload</span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"><span class="comment"># 检查用户</span></span>
+<span class="line"><span class="function"><span class="keyword">def</span> <span class="title">check_user</span><span class="params">(payload, message)</span>:</span></span>
+<span class="line">    username = <span class="keyword">None</span></span>
+<span class="line">    <span class="keyword">try</span>:</span>
+<span class="line">        username = payload.get(<span class="string">'username'</span>)</span>
+<span class="line">    <span class="keyword">except</span> Exception:</span>
+<span class="line">        msg = _(<span class="string">'Invalid payload.'</span>)</span>
+<span class="line">        logger.warn(msg)</span>
+<span class="line">        _close_reply_channel(message)</span>
+<span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> username:</span>
+<span class="line">        msg = _(<span class="string">'Invalid payload.'</span>)</span>
+<span class="line">        logger.warn(msg)</span>
+<span class="line">        _close_reply_channel(message)</span>
+<span class="line">        <span class="keyword">return</span></span>
+<span class="line">        <span class="comment"># Make sure user exists</span></span>
+<span class="line">    <span class="keyword">try</span>:</span>
+<span class="line">        user = User.objects.get_by_natural_key(username)</span>
+<span class="line">    <span class="keyword">except</span> User.DoesNotExist:</span>
+<span class="line">        msg = _(<span class="string">"User doesn't exist."</span>)</span>
+<span class="line">        logger.warn(msg)</span>
+<span class="line">        <span class="keyword">raise</span> exceptions.AuthenticationFailed(msg)</span>
+<span class="line"></span>
+<span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> user.is_active:</span>
+<span class="line">        msg = _(<span class="string">'User account is disabled.'</span>)</span>
+<span class="line">        logger.warn(msg)</span>
+<span class="line">        <span class="keyword">raise</span> exceptions.AuthenticationFailed(msg)</span>
+<span class="line">    <span class="keyword">return</span> user</span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"><span class="comment"># 关闭websocket</span></span>
+<span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_close_reply_channel</span><span class="params">(message)</span>:</span></span>
+<span class="line">    message.reply_channel.send(&#123;<span class="string">"close"</span>: <span class="keyword">True</span>&#125;)</span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"><span class="comment"># 验证request中的token</span></span>
+<span class="line"><span class="function"><span class="keyword">def</span> <span class="title">ws_auth_request_token</span><span class="params">(func)</span>:</span></span>
+<span class="line">    <span class="string">"""</span>
+<span class="line">    Checks the presence of a "token" request parameter and tries to</span>
+<span class="line">    authenticate the user based on its content.</span>
+<span class="line">    The request url must include token.</span>
+<span class="line">    eg: /v1/channel/1/?token=abcdefghijklmn</span>
+<span class="line">    """</span></span>
+<span class="line"></span>
+<span class="line"><span class="meta">    @wraps(func)</span></span>
+<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">inner</span><span class="params">(message, *args, **kwargs)</span>:</span></span>
+<span class="line">        <span class="keyword">try</span>:</span>
+<span class="line">            <span class="keyword">if</span> <span class="string">"method"</span> <span class="keyword">not</span> <span class="keyword">in</span> message.content:</span>
+<span class="line">                message.content[<span class="string">'method'</span>] = <span class="string">"FAKE"</span></span>
+<span class="line">            request = AsgiRequest(message)</span>
+<span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span>
+<span class="line">            <span class="keyword">raise</span> ValueError(<span class="string">"Cannot parse HTTP message - are you sure this is a HTTP consumer? %s"</span> % e)</span>
+<span class="line"></span>
+<span class="line">        token = request.GET.get(<span class="string">"token"</span>, <span class="keyword">None</span>)</span>
+<span class="line"></span>
+<span class="line">        <span class="keyword">print</span> request.path, request.GET</span>
+<span class="line"></span>
+<span class="line">        <span class="keyword">if</span> token <span class="keyword">is</span> <span class="keyword">None</span>:</span>
+<span class="line">            _close_reply_channel(message)</span>
+<span class="line">            <span class="keyword">raise</span> ValueError(<span class="string">"Missing token request parameter. Closing channel."</span>)</span>
+<span class="line"></span>
+<span class="line">        <span class="comment"># user, token = token_authenticate(token)</span></span>
+<span class="line">        user, token = token_authenticate(token, message)</span>
+<span class="line"></span>
+<span class="line">        message.token = token</span>
+<span class="line">        message.user = user</span>
+<span class="line"></span>
+<span class="line">        <span class="keyword">return</span> func(message, *args, **kwargs)</span>
+<span class="line"></span>
+<span class="line">    <span class="keyword">return</span> inner</span>
+</pre></td></tr></table></figure>
 </li>
 </ol>
 <p>由于笔者使用了django-restframework-jwt,其中的token验证方法是和其一样的，如果你的验证方式不一样，可以自行替换。</p>
 <p>有了上述代码，我们就可以在连接的时候判断token是否有效，以及是否还建立连接。</p>
 <p>不过其中代码在错误处理的时候有些问题，我这里简单的处理为用日志打印和关闭连接。有知道怎么反馈异常信息的可以在评论区告知我。</p>
 <ol>
-<li>在<strong>consumers.py</strong>中使用修饰器去认证token<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> channels <span class="keyword">import</span> Group</div><div class="line"><span class="keyword">from</span> .ws_authentication <span class="keyword">import</span> ws_auth_request_token</div><div class="line"></div><div class="line"><span class="comment"># Connected to websocket.connect</span></div><div class="line"><span class="meta">@ws_auth_request_token</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">ws_add</span><span class="params">(message)</span>:</span></div><div class="line">    <span class="comment"># Accept the connection</span></div><div class="line">    message.reply_channel.send(&#123;<span class="string">"accept"</span>: <span class="keyword">True</span>&#125;)</div><div class="line">    <span class="comment"># Add to the chat group</span></div><div class="line">    Group(<span class="string">"chat"</span>).add(message.reply_channel)</div><div class="line"></div><div class="line"><span class="comment"># Connected to websocket.receive</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">ws_message</span><span class="params">(message)</span>:</span></div><div class="line">    Group(<span class="string">"chat"</span>).send(&#123;</div><div class="line">        <span class="string">"text"</span>: <span class="string">"[user] %s"</span> % message.content[<span class="string">'text'</span>],</div><div class="line">    &#125;)</div><div class="line"></div><div class="line"><span class="comment"># Connected to websocket.disconnect</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">ws_disconnect</span><span class="params">(message)</span>:</span></div><div class="line">    Group(<span class="string">"chat"</span>).discard(message.reply_channel)</div></pre></td></tr></table></figure>
+<li>在<strong>consumers.py</strong>中使用修饰器去认证token<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> channels <span class="keyword">import</span> Group</span>
+<span class="line"><span class="keyword">from</span> .ws_authentication <span class="keyword">import</span> ws_auth_request_token</span>
+<span class="line"></span>
+<span class="line"><span class="comment"># Connected to websocket.connect</span></span>
+<span class="line"><span class="meta">@ws_auth_request_token</span></span>
+<span class="line"><span class="function"><span class="keyword">def</span> <span class="title">ws_add</span><span class="params">(message)</span>:</span></span>
+<span class="line">    <span class="comment"># Accept the connection</span></span>
+<span class="line">    message.reply_channel.send(&#123;<span class="string">"accept"</span>: <span class="keyword">True</span>&#125;)</span>
+<span class="line">    <span class="comment"># Add to the chat group</span></span>
+<span class="line">    Group(<span class="string">"chat"</span>).add(message.reply_channel)</span>
+<span class="line"></span>
+<span class="line"><span class="comment"># Connected to websocket.receive</span></span>
+<span class="line"><span class="function"><span class="keyword">def</span> <span class="title">ws_message</span><span class="params">(message)</span>:</span></span>
+<span class="line">    Group(<span class="string">"chat"</span>).send(&#123;</span>
+<span class="line">        <span class="string">"text"</span>: <span class="string">"[user] %s"</span> % message.content[<span class="string">'text'</span>],</span>
+<span class="line">    &#125;)</span>
+<span class="line"></span>
+<span class="line"><span class="comment"># Connected to websocket.disconnect</span></span>
+<span class="line"><span class="function"><span class="keyword">def</span> <span class="title">ws_disconnect</span><span class="params">(message)</span>:</span></span>
+<span class="line">    Group(<span class="string">"chat"</span>).discard(message.reply_channel)</span>
+</pre></td></tr></table></figure>
 </li>
 </ol>
 <p>这样就能轻易的验证了。</p>
 <h3 id="使用类视图"><a href="#使用类视图" class="headerlink" title="使用类视图"></a>使用类视图</h3><p>django有一种类视图，在channels这里也可以，使用类视图可以让代码看着更简洁明了</p>
 <ol>
-<li>类视图可以将三种状态，连接，收到消息，关闭的时候写到一个类中，原来的<strong>consumers.py</strong>代码就可以改为如下代码<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> channels.generic.websockets <span class="keyword">import</span> WebsocketConsumer</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyConsumer</span><span class="params">(WebsocketConsumer)</span>:</span></div><div class="line"></div><div class="line">    <span class="comment"># Set to True to automatically port users from HTTP cookies</span></div><div class="line">    <span class="comment"># (you don't need channel_session_user, this implies it)</span></div><div class="line">    http_user = <span class="keyword">True</span></div><div class="line"></div><div class="line">    <span class="comment"># Set to True if you want it, else leave it out</span></div><div class="line">    strict_ordering = <span class="keyword">False</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">connection_groups</span><span class="params">(self, **kwargs)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        Called to return the list of groups to automatically add/remove</div><div class="line">        this connection to/from.</div><div class="line">        """</div><div class="line">        <span class="keyword">return</span> [<span class="string">"test"</span>]</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">connect</span><span class="params">(self, message, **kwargs)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        Perform things on connection start</div><div class="line">        """</div><div class="line">        <span class="comment"># Accept the connection; this is done by default if you don't override</span></div><div class="line">        <span class="comment"># the connect function.</span></div><div class="line">        self.message.reply_channel.send(&#123;<span class="string">"accept"</span>: <span class="keyword">True</span>&#125;)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">receive</span><span class="params">(self, text=None, bytes=None, **kwargs)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        Called when a message is received with either text or bytes</div><div class="line">        filled out.</div><div class="line">        """</div><div class="line">        <span class="comment"># Simple echo</span></div><div class="line">        self.send(text=text, bytes=bytes)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">disconnect</span><span class="params">(self, message, **kwargs)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        Perform things on connection close</div><div class="line">        """</div><div class="line">        <span class="keyword">pass</span></div></pre></td></tr></table></figure>
+<li>类视图可以将三种状态，连接，收到消息，关闭的时候写到一个类中，原来的<strong>consumers.py</strong>代码就可以改为如下代码<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+<span class="line">27</span>
+<span class="line">28</span>
+<span class="line">29</span>
+<span class="line">30</span>
+<span class="line">31</span>
+<span class="line">32</span>
+<span class="line">33</span>
+<span class="line">34</span>
+<span class="line">35</span>
+<span class="line">36</span>
+<span class="line">37</span>
+<span class="line">38</span>
+<span class="line">39</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> channels.generic.websockets <span class="keyword">import</span> WebsocketConsumer</span>
+<span class="line"></span>
+<span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyConsumer</span><span class="params">(WebsocketConsumer)</span>:</span></span>
+<span class="line"></span>
+<span class="line">    <span class="comment"># Set to True to automatically port users from HTTP cookies</span></span>
+<span class="line">    <span class="comment"># (you don't need channel_session_user, this implies it)</span></span>
+<span class="line">    http_user = <span class="keyword">True</span></span>
+<span class="line"></span>
+<span class="line">    <span class="comment"># Set to True if you want it, else leave it out</span></span>
+<span class="line">    strict_ordering = <span class="keyword">False</span></span>
+<span class="line"></span>
+<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">connection_groups</span><span class="params">(self, **kwargs)</span>:</span></span>
+<span class="line">        <span class="string">"""</span>
+<span class="line">        Called to return the list of groups to automatically add/remove</span>
+<span class="line">        this connection to/from.</span>
+<span class="line">        """</span></span>
+<span class="line">        <span class="keyword">return</span> [<span class="string">"test"</span>]</span>
+<span class="line"></span>
+<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">connect</span><span class="params">(self, message, **kwargs)</span>:</span></span>
+<span class="line">        <span class="string">"""</span>
+<span class="line">        Perform things on connection start</span>
+<span class="line">        """</span></span>
+<span class="line">        <span class="comment"># Accept the connection; this is done by default if you don't override</span></span>
+<span class="line">        <span class="comment"># the connect function.</span></span>
+<span class="line">        self.message.reply_channel.send(&#123;<span class="string">"accept"</span>: <span class="keyword">True</span>&#125;)</span>
+<span class="line"></span>
+<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">receive</span><span class="params">(self, text=None, bytes=None, **kwargs)</span>:</span></span>
+<span class="line">        <span class="string">"""</span>
+<span class="line">        Called when a message is received with either text or bytes</span>
+<span class="line">        filled out.</span>
+<span class="line">        """</span></span>
+<span class="line">        <span class="comment"># Simple echo</span></span>
+<span class="line">        self.send(text=text, bytes=bytes)</span>
+<span class="line"></span>
+<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">disconnect</span><span class="params">(self, message, **kwargs)</span>:</span></span>
+<span class="line">        <span class="string">"""</span>
+<span class="line">        Perform things on connection close</span>
+<span class="line">        """</span></span>
+<span class="line">        <span class="keyword">pass</span></span>
+</pre></td></tr></table></figure>
 </li>
 </ol>
 <p>然后在不同状态出发的函数中填入自己需要的逻辑即可</p>
-<p>如果你想使用<strong>channel_session</strong>或者<strong>channel_session_user</strong>，那么只要在类中设置<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">channel_session_user = <span class="keyword">True</span></div></pre></td></tr></table></figure></p>
-<p>如果你想使用session里的用户，那么也需要在类中添加一个参数<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http_user = <span class="keyword">True</span></div></pre></td></tr></table></figure></p>
+<p>如果你想使用<strong>channel_session</strong>或者<strong>channel_session_user</strong>，那么只要在类中设置<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">channel_session_user = <span class="keyword">True</span></span>
+</pre></td></tr></table></figure></p>
+<p>如果你想使用session里的用户，那么也需要在类中添加一个参数<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">http_user = <span class="keyword">True</span></span>
+</pre></td></tr></table></figure></p>
 <ol>
-<li>配置路由也需要做出一些变化<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> channels <span class="keyword">import</span> route, route_class</div><div class="line"></div><div class="line">channel_routing = [</div><div class="line">    route_class(consumers.ChatServer, path=<span class="string">r"^/chat/"</span>),</div><div class="line">]</div></pre></td></tr></table></figure>
+<li>配置路由也需要做出一些变化<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> channels <span class="keyword">import</span> route, route_class</span>
+<span class="line"></span>
+<span class="line">channel_routing = [</span>
+<span class="line">    route_class(consumers.ChatServer, path=<span class="string">r"^/chat/"</span>),</span>
+<span class="line">]</span>
+</pre></td></tr></table></figure>
 </li>
 </ol>
-<p>或者更简单一点<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> . <span class="keyword">import</span> consumers</div><div class="line"></div><div class="line">channel_routing = [</div><div class="line">    consumers.ChatServer.as_route(path=<span class="string">r"^/chat/"</span>),</div><div class="line">]</div></pre></td></tr></table></figure></p>
+<p>或者更简单一点<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> . <span class="keyword">import</span> consumers</span>
+<span class="line"></span>
+<span class="line">channel_routing = [</span>
+<span class="line">    consumers.ChatServer.as_route(path=<span class="string">r"^/chat/"</span>),</span>
+<span class="line">]</span>
+</pre></td></tr></table></figure></p>
 <h3 id="在channels类视图中使用token认证"><a href="#在channels类视图中使用token认证" class="headerlink" title="在channels类视图中使用token认证"></a>在channels类视图中使用token认证</h3><p>在类视图中添加修饰器较为麻烦，笔者认为将认证方法写在<strong>connect(self, message, </strong>kwargs)**中即可。</p>
-<p>所以<strong>consumers.py</strong>代码如下<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyConsumer</span><span class="params">(WebsocketConsumer)</span>:</span></div><div class="line">    <span class="comment"># Set to True if you want it, else leave it out</span></div><div class="line">    strict_ordering = <span class="keyword">False</span></div><div class="line"></div><div class="line">    http_user = <span class="keyword">True</span></div><div class="line">    <span class="comment"># 由于使用的是token方式，需要使用session将user传递到receive中</span></div><div class="line">    channel_session_user = <span class="keyword">True</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">connection_groups</span><span class="params">(self, **kwargs)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        Called to return the list of groups to automatically add/remove</div><div class="line">        this connection to/from.</div><div class="line">        """</div><div class="line">        <span class="keyword">return</span> [<span class="string">'test'</span>]</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">def</span> <span class="title">connect</span><span class="params">(self, message, **kwargs)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        Perform things on connection start</div><div class="line">        """</div><div class="line">        <span class="keyword">try</span>:</div><div class="line">            request = AsgiRequest(message)</div><div class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</div><div class="line">            self.close()</div><div class="line">            <span class="keyword">return</span></div><div class="line">        token = request.GET.get(<span class="string">"token"</span>, <span class="keyword">None</span>)</div><div class="line">        <span class="keyword">if</span> token <span class="keyword">is</span> <span class="keyword">None</span>:</div><div class="line">            self.close()</div><div class="line">            <span class="keyword">return</span></div><div class="line">        user, token = token_authenticate(token, message)</div><div class="line">        message.token = token</div><div class="line">        message.user = user</div><div class="line">        message.channel_session[<span class="string">'user'</span>]=user</div><div class="line">        self.message.reply_channel.send(&#123;<span class="string">"accept"</span>: <span class="keyword">True</span>&#125;)</div><div class="line">        <span class="keyword">print</span> <span class="string">'连接状态'</span>, message.user</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">receive</span><span class="params">(self, text=None, bytes=None, **kwargs)</span>:</span></div><div class="line">        <span class="keyword">print</span> <span class="string">'接收到消息'</span>, text, self.message.channel_session[<span class="string">'user'</span>]</div><div class="line">        <span class="string">"""</span></div><div class="line">        Called when a message is received with decoded JSON content</div><div class="line">        """</div><div class="line">        <span class="comment"># Simple echo</span></div><div class="line">        value = cache.get(<span class="string">'test'</span>)</div><div class="line">        <span class="keyword">print</span> value</div><div class="line">        <span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">            <span class="keyword">if</span> cache.get(<span class="string">'test'</span>) <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span> <span class="keyword">and</span> cache.get(<span class="string">'test'</span>) != value:</div><div class="line">                value = cache.get(<span class="string">'test'</span>)</div><div class="line">                <span class="keyword">break</span></div><div class="line">            time.sleep(<span class="number">1</span>)</div><div class="line">        self.send(json.dumps(&#123;</div><div class="line">            <span class="string">"text"</span>: cache.get(<span class="string">'test'</span>)</div><div class="line">        &#125;))</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">disconnect</span><span class="params">(self, message, **kwargs)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        Perform things on connection close</div><div class="line">        """</div><div class="line">        <span class="keyword">pass</span></div></pre></td></tr></table></figure></p>
+<p>所以<strong>consumers.py</strong>代码如下<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+<span class="line">27</span>
+<span class="line">28</span>
+<span class="line">29</span>
+<span class="line">30</span>
+<span class="line">31</span>
+<span class="line">32</span>
+<span class="line">33</span>
+<span class="line">34</span>
+<span class="line">35</span>
+<span class="line">36</span>
+<span class="line">37</span>
+<span class="line">38</span>
+<span class="line">39</span>
+<span class="line">40</span>
+<span class="line">41</span>
+<span class="line">42</span>
+<span class="line">43</span>
+<span class="line">44</span>
+<span class="line">45</span>
+<span class="line">46</span>
+<span class="line">47</span>
+<span class="line">48</span>
+<span class="line">49</span>
+<span class="line">50</span>
+<span class="line">51</span>
+<span class="line">52</span>
+<span class="line">53</span>
+<span class="line">54</span>
+<span class="line">55</span>
+<span class="line">56</span>
+<span class="line">57</span>
+</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyConsumer</span><span class="params">(WebsocketConsumer)</span>:</span></span>
+<span class="line">    <span class="comment"># Set to True if you want it, else leave it out</span></span>
+<span class="line">    strict_ordering = <span class="keyword">False</span></span>
+<span class="line"></span>
+<span class="line">    http_user = <span class="keyword">True</span></span>
+<span class="line">    <span class="comment"># 由于使用的是token方式，需要使用session将user传递到receive中</span></span>
+<span class="line">    channel_session_user = <span class="keyword">True</span></span>
+<span class="line"></span>
+<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">connection_groups</span><span class="params">(self, **kwargs)</span>:</span></span>
+<span class="line">        <span class="string">"""</span>
+<span class="line">        Called to return the list of groups to automatically add/remove</span>
+<span class="line">        this connection to/from.</span>
+<span class="line">        """</span></span>
+<span class="line">        <span class="keyword">return</span> [<span class="string">'test'</span>]</span>
+<span class="line"></span>
+<span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">connect</span><span class="params">(self, message, **kwargs)</span>:</span></span>
+<span class="line">        <span class="string">"""</span>
+<span class="line">        Perform things on connection start</span>
+<span class="line">        """</span></span>
+<span class="line">        <span class="keyword">try</span>:</span>
+<span class="line">            request = AsgiRequest(message)</span>
+<span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span>
+<span class="line">            self.close()</span>
+<span class="line">            <span class="keyword">return</span></span>
+<span class="line">        token = request.GET.get(<span class="string">"token"</span>, <span class="keyword">None</span>)</span>
+<span class="line">        <span class="keyword">if</span> token <span class="keyword">is</span> <span class="keyword">None</span>:</span>
+<span class="line">            self.close()</span>
+<span class="line">            <span class="keyword">return</span></span>
+<span class="line">        user, token = token_authenticate(token, message)</span>
+<span class="line">        message.token = token</span>
+<span class="line">        message.user = user</span>
+<span class="line">        message.channel_session[<span class="string">'user'</span>]=user</span>
+<span class="line">        self.message.reply_channel.send(&#123;<span class="string">"accept"</span>: <span class="keyword">True</span>&#125;)</span>
+<span class="line">        <span class="keyword">print</span> <span class="string">'连接状态'</span>, message.user</span>
+<span class="line"></span>
+<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">receive</span><span class="params">(self, text=None, bytes=None, **kwargs)</span>:</span></span>
+<span class="line">        <span class="keyword">print</span> <span class="string">'接收到消息'</span>, text, self.message.channel_session[<span class="string">'user'</span>]</span>
+<span class="line">        <span class="string">"""</span>
+<span class="line">        Called when a message is received with decoded JSON content</span>
+<span class="line">        """</span></span>
+<span class="line">        <span class="comment"># Simple echo</span></span>
+<span class="line">        value = cache.get(<span class="string">'test'</span>)</span>
+<span class="line">        <span class="keyword">print</span> value</span>
+<span class="line">        <span class="keyword">while</span> <span class="keyword">True</span>:</span>
+<span class="line">            <span class="keyword">if</span> cache.get(<span class="string">'test'</span>) <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span> <span class="keyword">and</span> cache.get(<span class="string">'test'</span>) != value:</span>
+<span class="line">                value = cache.get(<span class="string">'test'</span>)</span>
+<span class="line">                <span class="keyword">break</span></span>
+<span class="line">            time.sleep(<span class="number">1</span>)</span>
+<span class="line">        self.send(json.dumps(&#123;</span>
+<span class="line">            <span class="string">"text"</span>: cache.get(<span class="string">'test'</span>)</span>
+<span class="line">        &#125;))</span>
+<span class="line"></span>
+<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">disconnect</span><span class="params">(self, message, **kwargs)</span>:</span></span>
+<span class="line">        <span class="string">"""</span>
+<span class="line">        Perform things on connection close</span>
+<span class="line">        """</span></span>
+<span class="line">        <span class="keyword">pass</span></span>
+</pre></td></tr></table></figure></p>
 <p>只需要看<strong>connect(self, message, </strong>kwargs)<strong>函数中代码即可，</strong>(self, text=None, bytes=None, <strong>kwargs)</strong>中为我要实现的一个简单逻辑。</p>
-<p>笔者发现，channels中的三个状态,其中每个自身只能发一次信息，无论我在一次方法中send几次，所以我没办法，只能在前端的<strong>onmessage</strong>处理完数据，在发一次信息，后台将线程休眠等到参数变化在发送到前端。前端代码改为如下<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">socket = <span class="keyword">new</span> WebSocket(<span class="string">"ws://127.0.0.1:8000"</span>+</div><div class="line">            <span class="string">"/chat/?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QxMjMiLCJvcmlnX2lhdCI6MTUwMzA3Mzg0NiwidXNlcl9pZCI6MSwiZW1haWwiOiIxNzkxNTM4NjA5QHFxLmNvbSIsImV4cCI6MTUwMzE2MDI0Nn0.Za0BlGKn2JMpFoU0GYVZXIC-rwi8uWN420bIwy0bUFc"</span></div><div class="line">        );</div><div class="line">        socket.onmessage = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</div><div class="line">            <span class="built_in">console</span>.log(e.data);</div><div class="line">            <span class="comment">// socket.send("test")</span></div><div class="line">        &#125;</div><div class="line">        socket.onopen = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">            socket.send(&#123;<span class="string">'test'</span>:<span class="string">'hello world'</span>&#125;);</div><div class="line">            </div><div class="line">        &#125;</div><div class="line">        <span class="comment">// Call onopen directly if socket is already open</span></div><div class="line">        <span class="keyword">if</span> (socket.readyState == WebSocket.OPEN) socket.onopen();</div></pre></td></tr></table></figure></p>
+<p>笔者发现，channels中的三个状态,其中每个自身只能发一次信息，无论我在一次方法中send几次，所以我没办法，只能在前端的<strong>onmessage</strong>处理完数据，在发一次信息，后台将线程休眠等到参数变化在发送到前端。前端代码改为如下<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+</pre></td><td class="code"><pre><span class="line">socket = <span class="keyword">new</span> WebSocket(<span class="string">"ws://127.0.0.1:8000"</span>+</span>
+<span class="line">            <span class="string">"/chat/?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QxMjMiLCJvcmlnX2lhdCI6MTUwMzA3Mzg0NiwidXNlcl9pZCI6MSwiZW1haWwiOiIxNzkxNTM4NjA5QHFxLmNvbSIsImV4cCI6MTUwMzE2MDI0Nn0.Za0BlGKn2JMpFoU0GYVZXIC-rwi8uWN420bIwy0bUFc"</span></span>
+<span class="line">        );</span>
+<span class="line">        socket.onmessage = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span>
+<span class="line">            <span class="built_in">console</span>.log(e.data);</span>
+<span class="line">            <span class="comment">// socket.send("test")</span></span>
+<span class="line">        &#125;</span>
+<span class="line">        socket.onopen = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span>
+<span class="line">            socket.send(&#123;<span class="string">'test'</span>:<span class="string">'hello world'</span>&#125;);</span>
+<span class="line">            </span>
+<span class="line">        &#125;</span>
+<span class="line">        <span class="comment">// Call onopen directly if socket is already open</span></span>
+<span class="line">        <span class="keyword">if</span> (socket.readyState == WebSocket.OPEN) socket.onopen();</span>
+</pre></td></tr></table></figure></p>
 <p>配合redis就可以实现django的websocket了，也可以满足我的需求，实时更新。</p>
 <blockquote>
 <p>注：</p>
@@ -444,17 +1190,17 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/08/18/django_channels_websocket/">Django使用Channels实现websocket</a></p>
-        <p><span>文章作者:</span><a href="/" title="回到主页">EarthChen</a></p>
-        <p><span>发布时间:</span>2017-08-18, 17:34:00</p>
-        <p><span>最后更新:</span>2017-08-19, 13:34:20</p>
+        <p><span>Title:</span><a href="/2017/08/18/django_channels_websocket/">Django使用Channels实现websocket</a></p>
+        <p><span>Author:</span><a href="/" title="Back to Homepage">EarthChen</a></p>
+        <p><span>Created:</span>2017-08-18, 17:34:00</p>
+        <p><span>Updated:</span>2017-08-19, 13:34:20</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/08/18/django_channels_websocket/" title="Django使用Channels实现websocket">http://earthchen.cn/2017/08/18/django_channels_websocket/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://earthchen.cn/2017/08/18/django_channels_websocket/　　作者: EarthChen" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>Full URL:</span><a class="post-url" href="/2017/08/18/django_channels_websocket/" title="Django使用Channels实现websocket">http://earthchen.cn/2017/08/18/django_channels_websocket/</a>
+            <span class="copy-path" data-clipboard-text="From http://earthchen.cn/2017/08/18/django_channels_websocket/　　By EarthChen" title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
-            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+            <span>License:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"CC BY-NC-SA 4.0"</a> Keep Link &amp; Author if Distribute.
         </p>
     </div>
 
@@ -481,7 +1227,7 @@
 </article>
 
     <div id="toc" class="toc-article">
-        <strong class="toc-title">文章目录</strong>
+        <strong class="toc-title">Contents</strong>
         
             <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Channels"><span class="toc-number">1.</span> <span class="toc-text">Channels</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装配置"><span class="toc-number">1.1.</span> <span class="toc-text">安装配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装channels"><span class="toc-number">1.1.1.</span> <span class="toc-text">安装channels</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置channels"><span class="toc-number">1.1.2.</span> <span class="toc-text">配置channels</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#在INSTALLED-APPS中添加channels"><span class="toc-number">1.1.2.1.</span> <span class="toc-text">在INSTALLED_APPS中添加channels</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#配置channels路由和通道后端"><span class="toc-number">1.1.2.2.</span> <span class="toc-text">配置channels路由和通道后端</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用channels"><span class="toc-number">1.2.</span> <span class="toc-text">使用channels</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#最简单的例子"><span class="toc-number">1.2.1.</span> <span class="toc-text">最简单的例子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#利用组的概念实现多个浏览器-用户-之间的交互"><span class="toc-number">1.2.2.</span> <span class="toc-text">利用组的概念实现多个浏览器(用户)之间的交互</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#channels的认证"><span class="toc-number">1.2.3.</span> <span class="toc-text">channels的认证</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Json-Web-Token认证"><span class="toc-number">1.2.4.</span> <span class="toc-text">Json Web Token认证</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用类视图"><span class="toc-number">1.2.5.</span> <span class="toc-text">使用类视图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在channels类视图中使用token认证"><span class="toc-number">1.2.6.</span> <span class="toc-text">在channels类视图中使用token认证</span></a></li></ol></li></ol></li></ol>
         
@@ -497,10 +1243,10 @@
         }
     </style>
 
-    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+    <input type="button" id="tocButton" value="Hide"  title="Show or Hide Table of Contents">
 
     <script>
-        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+        yiliaConfig.toc = ["Hide", "Show", !!"false"];
     </script>
 
 
@@ -553,21 +1299,21 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2017/08/18/django_redis_cache/" title="上一篇: Django使用redis作为缓存系统">
+            <a href="/2017/08/18/django_redis_cache/" title="Pre: Django使用redis作为缓存系统">
                 <i class="fa fa-angle-left"></i>
             </a>
         
 
-        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        <a title="Mini Archives"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2017/08/13/Docker_Gogs/" title="下一篇: 使用Docker搭建git服务Gogs">
+            <a href="/2017/08/13/Docker_Gogs/" title="Next: 使用Docker搭建git服务Gogs">
                 <i class="fa fa-angle-right"></i>
             </a>
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/04/01/httpclientutil/">HttpClient工具类</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/14/qiniu-oss/">spring boot使用七牛云的oss(对象存储)文件上传</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/spring-boot-shiro-jwt/">spring boot集成shiro使用jwt进行权限控制</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/requestHolder_and_argumentResolver/">使用ThreadLocal和ArgumentResolver方便开发</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/applicationContextHelper/">在不被spring容器管理的类中使用ApplicationContext应用上下文bean</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_static_class_autowrite/">Spring boot 在静态类中注入spring组件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_diy_properties/">Spring boot 自定义配置文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/12/Elasticsearch_study_1/">Elasticsearch学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/09/深入理解java虚拟机学习笔记_1/">深入理解java虚拟机学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/23/Docker_study_Dockerfile_instructions/">Docker学习笔记---Dockerfile</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/22/Docker_study/">Docker学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/20/celery_study/">Celery-分布式任务队列学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_redis_cache/">Django使用redis作为缓存系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_channels_websocket/">Django使用Channels实现websocket</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/13/Docker_Gogs/">使用Docker搭建git服务Gogs</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_1to20/">LeetCode刷题记录(easy难度1-20题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_21to_40/">LeetCode刷题记录(easy难度21-40题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/29/es6_study/">es6学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/Webpack_study/">Webpack学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/RegularExpression_study/">正则表达式学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/08/AndroidStudio/">Android Studio 使用本地离线Gradle</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/跨域请求解决方案/">跨域请求的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_nginx_gunicorn/">django+nginx+gunicorn部署配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/ubuntu_supervisor/">ubuntu下的进程控制系统————Supervisor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/28/ubuntu修复不能挂载NTFS硬盘/">ubuntu修复linux和windows双系统下挂载ntfs硬盘出错问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/17/django_timing_task/">django使用django-crontab实现定时任务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/15/django_rest_framework_jwt/">django-rest-framework配置json web token进行接口的认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/django_rest_framework_study/">django-rest-framework框架学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/spring_SpEL/">spring中的SpEL表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/08/git_study/">Git学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/03/资源收集/">资源收集共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/06/ubuntu_open_port/">ubuntu开放指定端口</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/16/redis_study_2/">Redis学习笔记 -- 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/15/redis_study_1/">Redis学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/16/ubuntu_do_something_use/">ubuntu日常使用的安装配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/ubuntu_do_something_coding/">ubuntu搭建常见开发环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/django_address_baiduapi_marker_show/">Django调用百度地图api在地图上批量增加标记点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/10/ubuntu安装在双系统笔记本下开机或关机卡死.1/">ubuntu在双系统下开机卡死或关机卡死的解决办法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/11/python_requirements/">python生成项目所需依赖文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/10/hexo_github_coding_blog/">利用hexo和github或coding 搭免费个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django常用语句/">Django常用语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/python2和Python3的区别/">Python2和Python3的区别简单总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django连接mysql数据库/">Django连接MySql使用models处理数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django数据库操作/">Django操作数据库</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django环境搭建/">Django环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django渲染模板/">Django渲染模板</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/03/Android_qq_Menu/">Android仿qq侧滑菜单</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/16/C语言队列的基本操作/">C语言队列的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/c语言中缀表达式变后缀表达式/">C语言中缀表达式转后缀表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言逆波兰计算器/">C语言逆波兰表达式计算(后缀表达式计算器)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言共享栈/">C语言共享栈</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言二叉树基本操作/">C语言二叉树的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言中缀表达式计算器/">C语言中缀表达式计算器</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/04/01/httpclientutil/">HttpClient工具类</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/14/qiniu-oss/">spring boot使用七牛云的oss(对象存储)文件上传</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/spring-boot-shiro-jwt/">spring boot集成shiro使用jwt进行权限控制</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/requestHolder_and_argumentResolver/">使用ThreadLocal和ArgumentResolver方便开发</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/applicationContextHelper/">在不被spring容器管理的类中使用ApplicationContext应用上下文bean</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_static_class_autowrite/">Spring boot 在静态类中注入spring组件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_diy_properties/">Spring boot 自定义配置文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/12/Elasticsearch_study_1/">Elasticsearch学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/09/深入理解java虚拟机学习笔记_1/">深入理解java虚拟机学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/23/Docker_study_Dockerfile_instructions/">Docker学习笔记---Dockerfile</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/22/Docker_study/">Docker学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/20/celery_study/">Celery-分布式任务队列学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_redis_cache/">Django使用redis作为缓存系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_channels_websocket/">Django使用Channels实现websocket</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/13/Docker_Gogs/">使用Docker搭建git服务Gogs</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_1to20/">LeetCode刷题记录(easy难度1-20题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_21to_40/">LeetCode刷题记录(easy难度21-40题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/29/es6_study/">es6学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/Webpack_study/">Webpack学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/RegularExpression_study/">正则表达式学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/08/AndroidStudio/">Android Studio 使用本地离线Gradle</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/跨域请求解决方案/">跨域请求的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/ubuntu_supervisor/">ubuntu下的进程控制系统————Supervisor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_nginx_gunicorn/">django+nginx+gunicorn部署配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/28/ubuntu修复不能挂载NTFS硬盘/">ubuntu修复linux和windows双系统下挂载ntfs硬盘出错问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/17/django_timing_task/">django使用django-crontab实现定时任务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/15/django_rest_framework_jwt/">django-rest-framework配置json web token进行接口的认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/django_rest_framework_study/">django-rest-framework框架学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/spring_SpEL/">spring中的SpEL表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/08/git_study/">Git学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/03/资源收集/">资源收集共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/06/ubuntu_open_port/">ubuntu开放指定端口</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/16/redis_study_2/">Redis学习笔记 -- 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/15/redis_study_1/">Redis学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/16/ubuntu_do_something_use/">ubuntu日常使用的安装配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/django_address_baiduapi_marker_show/">Django调用百度地图api在地图上批量增加标记点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/ubuntu_do_something_coding/">ubuntu搭建常见开发环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/10/ubuntu安装在双系统笔记本下开机或关机卡死.1/">ubuntu在双系统下开机卡死或关机卡死的解决办法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/11/python_requirements/">python生成项目所需依赖文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/10/hexo_github_coding_blog/">利用hexo和github或coding 搭免费个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django环境搭建/">Django环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django连接mysql数据库/">Django连接MySql使用models处理数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django渲染模板/">Django渲染模板</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django常用语句/">Django常用语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django数据库操作/">Django操作数据库</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/python2和Python3的区别/">Python2和Python3的区别简单总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/03/Android_qq_Menu/">Android仿qq侧滑菜单</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/16/C语言队列的基本操作/">C语言队列的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言共享栈/">C语言共享栈</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言二叉树基本操作/">C语言二叉树的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言逆波兰计算器/">C语言逆波兰表达式计算(后缀表达式计算器)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言中缀表达式计算器/">C语言中缀表达式计算器</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/c语言中缀表达式变后缀表达式/">C语言中缀表达式转后缀表达式</a></li></ul>
 
 
 
@@ -584,14 +1330,14 @@
                 2016-2018 EarthChen
             </div>
             <div class="footer-right">
-                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+                <a href="http://hexo.io/" target="_blank" title="A fast, simple &amp; powerful blog framework">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Another simple and elegant theme for Hexo  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
             </div>
         </div>
         
             <div class="visit">
                 
                     <span id="busuanzi_container_site_pv" style='display:none'>
-                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        <span id="site-visit" title="Site Visitors"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
                         </span>
                     </span>
                 
@@ -600,7 +1346,7 @@
                 
                 
                     <span id="busuanzi_container_page_pv" style='display:none'>
-                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        <span id="page-visit"  title="Page Hits"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
                         </span>
                     </span>
                 
@@ -635,9 +1381,9 @@
 
 
 <div class="scroll" id="scroll">
-    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
-    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
-    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+    <a href="#" title="Back to Top"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="Comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="Go to Bottom"><i class="fa fa-arrow-down"></i></a>
 </div>
 <script>
     // Open in New Window

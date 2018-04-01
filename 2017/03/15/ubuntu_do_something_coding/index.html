@@ -162,13 +162,13 @@
                 <div class="tips-box hide">
                     <div class="tips-arrow"></div>
                     <ul class="tips-inner">
-                        <li>菜单</li>
-                        <li>标签</li>
+                        <li>Menu</li>
+                        <li>Tags</li>
                         
-                        <li>友情链接</li>
+                        <li>Friends</li>
                         
                         
-                        <li>关于我</li>
+                        <li>About Me</li>
                         
                     </ul>
                 </div>
@@ -298,7 +298,7 @@
             </nav>
         </header>                
     </div>
-    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+    <link class="menu-list" tags="Tags" friends="Friends" about="About Me"/>
 </nav>
       <div class="body-wrap"><article id="post-ubuntu_do_something_coding" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -348,7 +348,15 @@
 <p>在装了几次系统之后我最后还是决定降一个系统版本。。使用<strong>Ubuntu16.04lts</strong>长期维护版，希望能稳定一些吧。。。。。实在是有点伤了</p>
 <p>文本以Ubuntu16.04桌面版为环境介绍</p>
 <h2 id="常用编程环境搭建"><a href="#常用编程环境搭建" class="headerlink" title="常用编程环境搭建"></a>常用编程环境搭建</h2><a id="more"></a>
-<h3 id="jdk安装"><a href="#jdk安装" class="headerlink" title="jdk安装"></a>jdk安装</h3><p>java的环境基本处处都能用的到，所以去安装jdk<br>使用下面的命令安装，只需一些时间，它就会下载许多的文件（但是要确定你的网络环境良好，访问oracle的地址速度快）：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">sudo add-apt-repository ppa:webupd8team/java</div><div class="line">sudo apt-get update</div><div class="line">sudo apt-get install oracle-java8-installer</div><div class="line">sudo apt-get install oracle-java8-set-default</div></pre></td></tr></table></figure></p>
+<h3 id="jdk安装"><a href="#jdk安装" class="headerlink" title="jdk安装"></a>jdk安装</h3><p>java的环境基本处处都能用的到，所以去安装jdk<br>使用下面的命令安装，只需一些时间，它就会下载许多的文件（但是要确定你的网络环境良好，访问oracle的地址速度快）：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line">sudo add-apt-repository ppa:webupd8team/java</span>
+<span class="line">sudo apt-get update</span>
+<span class="line">sudo apt-get install oracle-java8-installer</span>
+<span class="line">sudo apt-get install oracle-java8-set-default</span>
+</pre></td></tr></table></figure></p>
 <p>一般我不会这么干的，因为，，实在太慢了 而且一不小心就卡主了apt</p>
 <blockquote>
 <p>所以流程如下：</p>
@@ -359,12 +367,34 @@
 <li>使配置的变量立即生效</li>
 </ol>
 </blockquote>
-<p>先在合适的地方创建一个放置环境的文件夹笔者这里使/usr/java/<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> /usr/</div><div class="line">mkdir java</div></pre></td></tr></table></figure></p>
-<p>然后将下好的jdk复制到创建好的文件夹下并解压：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo cp jdk-8u45-linux-x64.gz /usr/java/</div><div class="line"><span class="built_in">cd</span> /usr/java/</div><div class="line">sudo tar -zvxf jdk-8u45-linux-x64.gz</div></pre></td></tr></table></figure></p>
-<p>配置环境变量：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gedit ~/.bashrc</div></pre></td></tr></table></figure></p>
-<p>在编辑页面的最后添加如下语句<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">export JAVA_HOME=/usr/java/jdk1.8.0_45</div><div class="line">export JRE_HOME=$&#123;JAVA_HOME&#125;/jre</div><div class="line">export CLASSPATH=.:$&#123;JAVA_HOME&#125;/lib:$&#123;JRE_HOME&#125;/lib</div><div class="line">export PATH=$&#123;JAVA_HOME&#125;/bin:$PATH</div></pre></td></tr></table></figure></p>
+<p>先在合适的地方创建一个放置环境的文件夹笔者这里使/usr/java/<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/</span>
+<span class="line">mkdir java</span>
+</pre></td></tr></table></figure></p>
+<p>然后将下好的jdk复制到创建好的文件夹下并解压：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line">sudo cp jdk-8u45-linux-x64.gz /usr/java/</span>
+<span class="line"><span class="built_in">cd</span> /usr/java/</span>
+<span class="line">sudo tar -zvxf jdk-8u45-linux-x64.gz</span>
+</pre></td></tr></table></figure></p>
+<p>配置环境变量：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">gedit ~/.bashrc</span>
+</pre></td></tr></table></figure></p>
+<p>在编辑页面的最后添加如下语句<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/usr/java/jdk1.8.0_45</span>
+<span class="line">export JRE_HOME=$&#123;JAVA_HOME&#125;/jre</span>
+<span class="line">export CLASSPATH=.:$&#123;JAVA_HOME&#125;/lib:$&#123;JRE_HOME&#125;/lib</span>
+<span class="line">export PATH=$&#123;JAVA_HOME&#125;/bin:$PATH</span>
+</pre></td></tr></table></figure></p>
 <p>添加之后如图所示<br><img src="http://objects.earthchen.cn/ubuntu_java%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F.png" alt="java环境变量"></p>
-<p>保存环境变量，退出编辑器，输入命令使之生效：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">source</span> ~/.bashrc</div></pre></td></tr></table></figure></p>
+<p>保存环境变量，退出编辑器，输入命令使之生效：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.bashrc</span>
+</pre></td></tr></table></figure></p>
 <ul>
 <li>输入java -version查看是否成功<br><img src="http://objects.earthchen.cn/ubuntu_java%E5%AE%89%E8%A3%85%E6%88%90%E5%8A%9F.png" alt="java安装成功"><br>如上图所示即为成功。。</li>
 </ul>
@@ -372,80 +402,170 @@
 <li>从tomcat官网上下载需要的压缩包</li>
 <li>将压缩包解压并移动到<strong>/opt/tomcat/</strong>下，如果没有这个目录需要提前创建好目录</li>
 <li><p>打开<strong>/tomcat/bin/startup.sh/</strong>在文件的最后添加jdk和jre配置信息</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#Java</span></div><div class="line"><span class="built_in">export</span>JAVA_HOME=/opt/java/jdk1.8.0_121  <span class="comment">#java目录</span></div><div class="line"><span class="built_in">export</span>JRE_HOME=<span class="variable">$&#123;JAVA_HOME&#125;</span>/jre</div><div class="line"><span class="built_in">export</span>CLASSPATH=.:<span class="variable">$&#123;JAVA_HOME&#125;</span>/lib:<span class="variable">$&#123;JRE_HOME&#125;</span>/lib</div><div class="line"><span class="built_in">export</span>PATH=<span class="variable">$&#123;JAVA_HOME&#125;</span>/bin:<span class="variable">$PATH</span></div><div class="line"><span class="comment">#tomcat</span></div><div class="line"><span class="built_in">export</span>TOMCAT_HOME=/opt/tomcat/apache-tomcat-9.0.0.M11</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">#Java</span></span>
+<span class="line"><span class="built_in">export</span>JAVA_HOME=/opt/java/jdk1.8.0_121  <span class="comment">#java目录</span></span>
+<span class="line"><span class="built_in">export</span>JRE_HOME=<span class="variable">$&#123;JAVA_HOME&#125;</span>/jre</span>
+<span class="line"><span class="built_in">export</span>CLASSPATH=.:<span class="variable">$&#123;JAVA_HOME&#125;</span>/lib:<span class="variable">$&#123;JRE_HOME&#125;</span>/lib</span>
+<span class="line"><span class="built_in">export</span>PATH=<span class="variable">$&#123;JAVA_HOME&#125;</span>/bin:<span class="variable">$PATH</span></span>
+<span class="line"><span class="comment">#tomcat</span></span>
+<span class="line"><span class="built_in">export</span>TOMCAT_HOME=/opt/tomcat/apache-tomcat-9.0.0.M11</span>
+</pre></td></tr></table></figure>
 </li>
 <li><p>启动tomcat</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./bin/startup.sh</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">./bin/startup.sh</span>
+</pre></td></tr></table></figure>
 </li>
 <li><p>验证tomcat配置和安装是否成功<br>在浏览器地址栏输入127.0.0.1:8080（ip：端口号）</p>
 </li>
 <li><p>关闭tomcat</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./bin/shuntdown.sh</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">./bin/shuntdown.sh</span>
+</pre></td></tr></table></figure>
 </li>
 <li><p>给tomcat文件夹及所有文件赋予权限777</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chmod 777 /opt/tomcat -R</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">chmod 777 /opt/tomcat -R</span>
+</pre></td></tr></table></figure>
 </li>
 </ol>
-<h3 id="安装Git"><a href="#安装Git" class="headerlink" title="安装Git"></a>安装Git</h3><p>程序员必备工具啊  一般安装好系统就会安装<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt install git</div></pre></td></tr></table></figure></p>
-<h3 id="安装mysql"><a href="#安装mysql" class="headerlink" title="安装mysql"></a>安装mysql</h3><p>常用的关系型数据库，开发必备<br>在Ubuntu下安装mysql很简单，只需要简单的输入几条命令就好：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install mysql-server</div><div class="line"></div><div class="line">sudo apt-get install mysql-client</div><div class="line"></div><div class="line">sudo apt-get install libmysqlclient-dev</div></pre></td></tr></table></figure></p>
+<h3 id="安装Git"><a href="#安装Git" class="headerlink" title="安装Git"></a>安装Git</h3><p>程序员必备工具啊  一般安装好系统就会安装<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">sudo apt install git</span>
+</pre></td></tr></table></figure></p>
+<h3 id="安装mysql"><a href="#安装mysql" class="headerlink" title="安装mysql"></a>安装mysql</h3><p>常用的关系型数据库，开发必备<br>在Ubuntu下安装mysql很简单，只需要简单的输入几条命令就好：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line">sudo apt-get install mysql-server</span>
+<span class="line"></span>
+<span class="line">sudo apt-get install mysql-client</span>
+<span class="line"></span>
+<span class="line">sudo apt-get install libmysqlclient-dev</span>
+</pre></td></tr></table></figure></p>
 <p>安装过程中会提示输入用户名和密码，按照自己的需要去设置</p>
 <h3 id="安装mysql数据库可视化工具"><a href="#安装mysql数据库可视化工具" class="headerlink" title="安装mysql数据库可视化工具"></a>安装mysql数据库可视化工具</h3><p>可以选择MySQL-workbench或者phpmyadmin</p>
-<h4 id="MySQL-workbench"><a href="#MySQL-workbench" class="headerlink" title="MySQL-workbench"></a>MySQL-workbench</h4><p>使用如下命令安装<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install mysql-workbench</div></pre></td></tr></table></figure></p>
+<h4 id="MySQL-workbench"><a href="#MySQL-workbench" class="headerlink" title="MySQL-workbench"></a>MySQL-workbench</h4><p>使用如下命令安装<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">sudo apt-get install mysql-workbench</span>
+</pre></td></tr></table></figure></p>
 <h4 id="phpmyadmin"><a href="#phpmyadmin" class="headerlink" title="phpmyadmin"></a>phpmyadmin</h4><p>使用如下命令安装</p>
 <ol>
 <li><p>安装php</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt install php</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">sudo apt install php</span>
+</pre></td></tr></table></figure>
 </li>
 <li><p>安装apache2</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt install apache2</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">sudo apt install apache2</span>
+</pre></td></tr></table></figure>
 </li>
 <li><p>安装phpmyadmin</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install phpmyadmin</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">sudo apt-get install phpmyadmin</span>
+</pre></td></tr></table></figure>
 </li>
 <li><p>建立/var/www/html 下的软连接</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo ln <span class="_">-s</span> /usr/share/phpmyadmin /var/www/html/phpmyadmin</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">sudo ln <span class="_">-s</span> /usr/share/phpmyadmin /var/www/html/phpmyadmin</span>
+</pre></td></tr></table></figure>
 </li>
 <li><p>然后重启apache</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo /etc/init.d/apache2 restart</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">sudo /etc/init.d/apache2 restart</span>
+</pre></td></tr></table></figure>
 </li>
 </ol>
-<h3 id="安装Vim"><a href="#安装Vim" class="headerlink" title="安装Vim"></a>安装Vim</h3><p>程序员必备工具啊  一般安装好系统就会安装<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt install vim</div></pre></td></tr></table></figure></p>
-<p>vim的配置我就直接用大神的vim配置<strong>spf13-vim</strong><br>安装方法如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl https://j.mp/spf13-vim3 -L &gt; spf13-vim.sh &amp;&amp; sh spf13-vim.sh</div></pre></td></tr></table></figure></p>
+<h3 id="安装Vim"><a href="#安装Vim" class="headerlink" title="安装Vim"></a>安装Vim</h3><p>程序员必备工具啊  一般安装好系统就会安装<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">sudo apt install vim</span>
+</pre></td></tr></table></figure></p>
+<p>vim的配置我就直接用大神的vim配置<strong>spf13-vim</strong><br>安装方法如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">curl https://j.mp/spf13-vim3 -L &gt; spf13-vim.sh &amp;&amp; sh spf13-vim.sh</span>
+</pre></td></tr></table></figure></p>
 <p>剩下的只要等待即可，由于过程需要git等环境，需要提前安装好</p>
-<h3 id="安装pip"><a href="#安装pip" class="headerlink" title="安装pip"></a>安装pip</h3><p>Ubuntu虽然内置了Python2和python3两个版本但是没有默认安装好pip这个好用的包管理工具，所以要用于python开发的话最好安装上<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt install python-pip   <span class="comment">#python2的pip</span></div><div class="line">sudo apt install python3-pip   <span class="comment">#python3的pip</span></div></pre></td></tr></table></figure></p>
+<h3 id="安装pip"><a href="#安装pip" class="headerlink" title="安装pip"></a>安装pip</h3><p>Ubuntu虽然内置了Python2和python3两个版本但是没有默认安装好pip这个好用的包管理工具，所以要用于python开发的话最好安装上<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">sudo apt install python-pip   <span class="comment">#python2的pip</span></span>
+<span class="line">sudo apt install python3-pip   <span class="comment">#python3的pip</span></span>
+</pre></td></tr></table></figure></p>
 <p>由于pip默认的时国外的源，在国内访问极慢，为了方便我们这里将更新源修改成国内比较好用的豆瓣源</p>
 <ol>
 <li><p>首先在用户目录下新建.pip文件夹</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mkdir .pip</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">mkdir .pip</span>
+</pre></td></tr></table></figure>
 </li>
 <li><p>进入.pip目录创建pip.conf文件，在文件中添加如下内容</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[global]</div><div class="line">timeout = <span class="number">60</span></div><div class="line">index-url = http:<span class="comment">//pypi.douban.com/simple</span></div><div class="line">trusted-host = pypi.douban.com</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line">[global]</span>
+<span class="line">timeout = <span class="number">60</span></span>
+<span class="line">index-url = http:<span class="comment">//pypi.douban.com/simple</span></span>
+<span class="line">trusted-host = pypi.douban.com</span>
+</pre></td></tr></table></figure>
 </li>
 </ol>
 <p>添加完保存即可享受飞一般的速度</p>
 <h3 id="安装几个好用的ide"><a href="#安装几个好用的ide" class="headerlink" title="安装几个好用的ide"></a>安装几个好用的ide</h3><p>有些人觉得vim强无敌，但是我懒得配那些环境，还是用ide吧 懒人嘛  嘿嘿</p>
-<h4 id="Pycharm"><a href="#Pycharm" class="headerlink" title="Pycharm"></a>Pycharm</h4><p>很著名的python ide，比起在vim中配置一个开发环境，我还是觉得pycharm更好用，也更方便<br>进入<a href="http://www.jetbrains.com/pycharm/download/#section=linux" target="_blank" rel="external">pycharm下载地址</a>下载适合自己系统的安装包<br>解压到合适的地方<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> /home/earthchen/code/pycharm-2016.3.2/bin</div><div class="line">sh pycharm.sh</div></pre></td></tr></table></figure></p>
+<h4 id="Pycharm"><a href="#Pycharm" class="headerlink" title="Pycharm"></a>Pycharm</h4><p>很著名的python ide，比起在vim中配置一个开发环境，我还是觉得pycharm更好用，也更方便<br>进入<a href="http://www.jetbrains.com/pycharm/download/#section=linux" target="_blank" rel="external">pycharm下载地址</a>下载适合自己系统的安装包<br>解压到合适的地方<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /home/earthchen/code/pycharm-2016.3.2/bin</span>
+<span class="line">sh pycharm.sh</span>
+</pre></td></tr></table></figure></p>
 <p>剩下就全是图形化界面，自己按需求操作</p>
-<h4 id="idea"><a href="#idea" class="headerlink" title="idea"></a>idea</h4><p>很著名的java ide  好用程度  谁用谁知道<br>进入<a href="http://www.jetbrains.com/idea/download/#section=linux" target="_blank" rel="external">idea下载地址</a>下载适合自己系统的安装包<br>解压到合适的地方<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> code/idea-IU-163.12024.16/bin/</div><div class="line">sh idea.sh</div></pre></td></tr></table></figure></p>
+<h4 id="idea"><a href="#idea" class="headerlink" title="idea"></a>idea</h4><p>很著名的java ide  好用程度  谁用谁知道<br>进入<a href="http://www.jetbrains.com/idea/download/#section=linux" target="_blank" rel="external">idea下载地址</a>下载适合自己系统的安装包<br>解压到合适的地方<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> code/idea-IU-163.12024.16/bin/</span>
+<span class="line">sh idea.sh</span>
+</pre></td></tr></table></figure></p>
 <p>剩下就全是图形化界面，自己按需求操作</p>
-<h4 id="clion"><a href="#clion" class="headerlink" title="clion"></a>clion</h4><p>Ubuntu下开发c并不多 放着偶尔用下，肯定比不上win下的vs又不想每次都make或者gcc 所以选择了同一个公司的ide<br>进入<a href="http://www.jetbrains.com/clion/download/" target="_blank" rel="external">clon下载地址</a>下载适合自己系统的安装包<br>解压到合适的地方<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> /home/earthchen/code/clion-2016.3.3/bin</div><div class="line">sh clion.sh</div></pre></td></tr></table></figure></p>
+<h4 id="clion"><a href="#clion" class="headerlink" title="clion"></a>clion</h4><p>Ubuntu下开发c并不多 放着偶尔用下，肯定比不上win下的vs又不想每次都make或者gcc 所以选择了同一个公司的ide<br>进入<a href="http://www.jetbrains.com/clion/download/" target="_blank" rel="external">clon下载地址</a>下载适合自己系统的安装包<br>解压到合适的地方<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /home/earthchen/code/clion-2016.3.3/bin</span>
+<span class="line">sh clion.sh</span>
+</pre></td></tr></table></figure></p>
 <p>剩下就全是图形化界面，自己按需求操作</p>
-<h4 id="激活码"><a href="#激活码" class="headerlink" title="激活码"></a>激活码</h4><p>如果你下载安装的时专业版，那么还需要使用激活码才能使用，但是一般来说社区版已经够用<br>下面提供一下从网上搜集来的激活码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">CNEKJPQZEX-eyJsaWNlbnNlSWQiOiJDTkVLSlBRWkVYIiwibGljZW5zZWVOYW1lIjoibGFuIHl1IiwiYXNzaWduZWVOYW1lIjoiIiwiYXNzaWduZWVFbWFpbCI6IiIsImxpY2Vuc2VSZXN0cmljdGlvbiI6IkZvciBlZHVjYXRpb25hbCB1c2Ugb25seSIsImNoZWNrQ29uY3VycmVudFVzZSI6ZmFsc2UsInByb2R1Y3RzIjpbeyJjb2RlIjoiQUMiLCJwYWlkVXBUbyI6IjIwMTgtMDEtMzAifSx7ImNvZGUiOiJETSIsInBhaWRVcFRvIjoiMjAxOC0wMS0zMCJ9LHsiY29kZSI6IklJIiwicGFpZFVwVG8iOiIyMDE4LTAxLTMwIn0seyJjb2RlIjoiUlMwIiwicGFpZFVwVG8iOiIyMDE4LTAxLTMwIn0seyJjb2RlIjoiV1MiLCJwYWlkVXBUbyI6IjIwMTgtMDEtMzAifSx7ImNvZGUiOiJEUE4iLCJwYWlkVXBUbyI6IjIwMTgtMDEtMzAifSx7ImNvZGUiOiJSQyIsInBhaWRVcFRvIjoiMjAxOC0wMS0zMCJ9LHsiY29kZSI6IlBTIiwicGFpZFVwVG8iOiIyMDE4LTAxLTMwIn0seyJjb2RlIjoiREMiLCJwYWlkVXBUbyI6IjIwMTgtMDEtMzAifSx7ImNvZGUiOiJEQiIsInBhaWRVcFRvIjoiMjAxOC0wMS0zMCJ9LHsiY29kZSI6IlJNIiwicGFpZFVwVG8iOiIyMDE4LTAxLTMwIn0seyJjb2RlIjoiUEMiLCJwYWlkVXBUbyI6IjIwMTgtMDEtMzAifSx7ImNvZGUiOiJDTCIsInBhaWRVcFRvIjoiMjAxOC0wMS0zMCJ9XSwiaGFzaCI6IjUxOTU1OTMvMCIsImdyYWNlUGVyaW9kRGF5cyI6MCwiYXV0b1Byb2xvbmdhdGVkIjpmYWxzZSwiaXNBdXRvUHJvbG9uZ2F0ZWQiOmZhbHNlfQ==-QOxwjWvRwJz6vo6J6adC3CJ4ukQHosbPYZ94URUVFna/Rbew8xK/M5gP3kAaPh6ZDveFdtMR1UBoumq3eCwXtXM3U3ls5noB4LIr+QplVlCj2pK5uNq7g/feyNyQcHpSXtvhIOnXDBLOecB05DOsxzm0p7ulGGJoAInmHeb9mc0eYjqc4RPpUQfh6HSYBnvEnKMlLF5bz4KEtzmsvvgA55CwzwQ3gRitm5Q/wUT7AQCBdjmBfNUjKVQL6TSjSDPp56FUdEs4Aab8LqstA2DIMbxocO64rvytmcUeIwu8Mi5uq87KQP5AQMSMYb59Inbd+dmVfx5cJo3fRS4/<span class="number">5</span>s3/Hg==-MIIEPjCCAiagAwIBAgIBBTANBgkqhkiG9w0BAQsFADAYMRYwFAYDVQQDDA1KZXRQcm9maWxlIENBMB4XDTE1MTEwMjA4MjE0OFoXDTE4MTEwMTA4MjE0OFowETEPMA0GA1UEAwwGcHJvZDN5MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxcQkq+zdxlR2mmRYBPzGbUNdMN6OaXiXzxIWtMEkrJMO/<span class="number">5</span>oUfQJbLLuMSMK0QHFmaI37WShyxZcfRCidwXjot4zmNBKnlyHodDij/<span class="number">78</span>TmVqFl8nOeD5+<span class="number">07</span>B8VEaIu7c3E1N+e1doC6wht4I4+IEmtsPAdoaj5WCQVQbrI8KeT8M9VcBIWX7fD0fhexfg3ZRt0xqwMcXGNp3DdJHiO0rCdU+Itv7EmtnSVq9jBG1usMSFvMowR25mju2JcPFp1+I4ZI+FqgR8gyG8oiNDyNEoAbsR3lOpI7grUYSvkB/xVy/VoklPCK2h0f0GJxFjnye8NT1PAywoyl7RmiAVRE/EKwIDAQABo4GZMIGWMAkGA1UdEwQCMAAwHQYDVR0OBBYEFGEpG9oZGcfLMGNBkY7SgHiMGgTcMEgGA1UdIwRBMD+AFKOetkhnQhI2Qb1t4Lm0oFKLl/GzoRykGjAYMRYwFAYDVQQDDA1KZXRQcm9maWxlIENBggkA0myxg7KDeeEwEwYDVR0lBAwwCgYIKwYBBQUHAwEwCwYDVR0PBAQDAgWgMA0GCSqGSIb3DQEBCwUAA4ICAQC9WZuYgQedSuOc5TOUSrRigMw4/+wuC5EtZBfvdl4HT/<span class="number">8</span>vzMW/oUlIP4YCvA0XKyBaCJ2iX+ZCDKoPfiYXiaSiH+HxAPV6J79vvouxKrWg2XV6ShFtPLP+<span class="number">0</span>gPdGq3x9R3+kJbmAm8w+FOdlWqAfJrLvpzMGNeDU14YGXiZ9bVzmIQbwrBA+c/F4tlK/DV07dsNExihqFoibnqDiVNTGombaU2dDup2gwKdL81ua8EIcGNExHe82kjF4zwfadHk3bQVvbfdAwxcDy4xBjs3L4raPLU3yenSzr/OEur1+jfOxnQSmEcMXKXgrAQ9U55gwjcOFKrgOxEdek/Sk1VfOjvS+nuM4eyEruFMfaZHzoQiuw4IqgGc45ohFH0UUyjYcuFxxDSU9lMCv8qdHKm+wnPRb0l9l5vXsCBDuhAGYD6ss+Ga+aDY6f/qXZuUCEUOH3QUNbbCUlviSz6+GiRnt1kA9N2Qachl+<span class="number">2</span>yBfaqUqr8h7Z2gsx5LcIf5kYNsqJ0GavXTVyWh7PYiKX4bs354ZQLUwwa/cG++<span class="number">2</span>+wNWP+HtBhVxMRNTdVhSm38AknZlD+PTAsWGu9GyLmhti2EnVwGybSD2Dxmhxk3IPCkhKAK+pl0eWYGZWG3tJ9mZ7SowcXLWDFAk0lRJnKGFMTggrWjV8GYpw5bq23VmIqqDLgkNzuoog==</div></pre></td></tr></table></figure></p>
+<h4 id="激活码"><a href="#激活码" class="headerlink" title="激活码"></a>激活码</h4><p>如果你下载安装的时专业版，那么还需要使用激活码才能使用，但是一般来说社区版已经够用<br>下面提供一下从网上搜集来的激活码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">CNEKJPQZEX-eyJsaWNlbnNlSWQiOiJDTkVLSlBRWkVYIiwibGljZW5zZWVOYW1lIjoibGFuIHl1IiwiYXNzaWduZWVOYW1lIjoiIiwiYXNzaWduZWVFbWFpbCI6IiIsImxpY2Vuc2VSZXN0cmljdGlvbiI6IkZvciBlZHVjYXRpb25hbCB1c2Ugb25seSIsImNoZWNrQ29uY3VycmVudFVzZSI6ZmFsc2UsInByb2R1Y3RzIjpbeyJjb2RlIjoiQUMiLCJwYWlkVXBUbyI6IjIwMTgtMDEtMzAifSx7ImNvZGUiOiJETSIsInBhaWRVcFRvIjoiMjAxOC0wMS0zMCJ9LHsiY29kZSI6IklJIiwicGFpZFVwVG8iOiIyMDE4LTAxLTMwIn0seyJjb2RlIjoiUlMwIiwicGFpZFVwVG8iOiIyMDE4LTAxLTMwIn0seyJjb2RlIjoiV1MiLCJwYWlkVXBUbyI6IjIwMTgtMDEtMzAifSx7ImNvZGUiOiJEUE4iLCJwYWlkVXBUbyI6IjIwMTgtMDEtMzAifSx7ImNvZGUiOiJSQyIsInBhaWRVcFRvIjoiMjAxOC0wMS0zMCJ9LHsiY29kZSI6IlBTIiwicGFpZFVwVG8iOiIyMDE4LTAxLTMwIn0seyJjb2RlIjoiREMiLCJwYWlkVXBUbyI6IjIwMTgtMDEtMzAifSx7ImNvZGUiOiJEQiIsInBhaWRVcFRvIjoiMjAxOC0wMS0zMCJ9LHsiY29kZSI6IlJNIiwicGFpZFVwVG8iOiIyMDE4LTAxLTMwIn0seyJjb2RlIjoiUEMiLCJwYWlkVXBUbyI6IjIwMTgtMDEtMzAifSx7ImNvZGUiOiJDTCIsInBhaWRVcFRvIjoiMjAxOC0wMS0zMCJ9XSwiaGFzaCI6IjUxOTU1OTMvMCIsImdyYWNlUGVyaW9kRGF5cyI6MCwiYXV0b1Byb2xvbmdhdGVkIjpmYWxzZSwiaXNBdXRvUHJvbG9uZ2F0ZWQiOmZhbHNlfQ==-QOxwjWvRwJz6vo6J6adC3CJ4ukQHosbPYZ94URUVFna/Rbew8xK/M5gP3kAaPh6ZDveFdtMR1UBoumq3eCwXtXM3U3ls5noB4LIr+QplVlCj2pK5uNq7g/feyNyQcHpSXtvhIOnXDBLOecB05DOsxzm0p7ulGGJoAInmHeb9mc0eYjqc4RPpUQfh6HSYBnvEnKMlLF5bz4KEtzmsvvgA55CwzwQ3gRitm5Q/wUT7AQCBdjmBfNUjKVQL6TSjSDPp56FUdEs4Aab8LqstA2DIMbxocO64rvytmcUeIwu8Mi5uq87KQP5AQMSMYb59Inbd+dmVfx5cJo3fRS4/<span class="number">5</span>s3/Hg==-MIIEPjCCAiagAwIBAgIBBTANBgkqhkiG9w0BAQsFADAYMRYwFAYDVQQDDA1KZXRQcm9maWxlIENBMB4XDTE1MTEwMjA4MjE0OFoXDTE4MTEwMTA4MjE0OFowETEPMA0GA1UEAwwGcHJvZDN5MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxcQkq+zdxlR2mmRYBPzGbUNdMN6OaXiXzxIWtMEkrJMO/<span class="number">5</span>oUfQJbLLuMSMK0QHFmaI37WShyxZcfRCidwXjot4zmNBKnlyHodDij/<span class="number">78</span>TmVqFl8nOeD5+<span class="number">07</span>B8VEaIu7c3E1N+e1doC6wht4I4+IEmtsPAdoaj5WCQVQbrI8KeT8M9VcBIWX7fD0fhexfg3ZRt0xqwMcXGNp3DdJHiO0rCdU+Itv7EmtnSVq9jBG1usMSFvMowR25mju2JcPFp1+I4ZI+FqgR8gyG8oiNDyNEoAbsR3lOpI7grUYSvkB/xVy/VoklPCK2h0f0GJxFjnye8NT1PAywoyl7RmiAVRE/EKwIDAQABo4GZMIGWMAkGA1UdEwQCMAAwHQYDVR0OBBYEFGEpG9oZGcfLMGNBkY7SgHiMGgTcMEgGA1UdIwRBMD+AFKOetkhnQhI2Qb1t4Lm0oFKLl/GzoRykGjAYMRYwFAYDVQQDDA1KZXRQcm9maWxlIENBggkA0myxg7KDeeEwEwYDVR0lBAwwCgYIKwYBBQUHAwEwCwYDVR0PBAQDAgWgMA0GCSqGSIb3DQEBCwUAA4ICAQC9WZuYgQedSuOc5TOUSrRigMw4/+wuC5EtZBfvdl4HT/<span class="number">8</span>vzMW/oUlIP4YCvA0XKyBaCJ2iX+ZCDKoPfiYXiaSiH+HxAPV6J79vvouxKrWg2XV6ShFtPLP+<span class="number">0</span>gPdGq3x9R3+kJbmAm8w+FOdlWqAfJrLvpzMGNeDU14YGXiZ9bVzmIQbwrBA+c/F4tlK/DV07dsNExihqFoibnqDiVNTGombaU2dDup2gwKdL81ua8EIcGNExHe82kjF4zwfadHk3bQVvbfdAwxcDy4xBjs3L4raPLU3yenSzr/OEur1+jfOxnQSmEcMXKXgrAQ9U55gwjcOFKrgOxEdek/Sk1VfOjvS+nuM4eyEruFMfaZHzoQiuw4IqgGc45ohFH0UUyjYcuFxxDSU9lMCv8qdHKm+wnPRb0l9l5vXsCBDuhAGYD6ss+Ga+aDY6f/qXZuUCEUOH3QUNbbCUlviSz6+GiRnt1kA9N2Qachl+<span class="number">2</span>yBfaqUqr8h7Z2gsx5LcIf5kYNsqJ0GavXTVyWh7PYiKX4bs354ZQLUwwa/cG++<span class="number">2</span>+wNWP+HtBhVxMRNTdVhSm38AknZlD+PTAsWGu9GyLmhti2EnVwGybSD2Dxmhxk3IPCkhKAK+pl0eWYGZWG3tJ9mZ7SowcXLWDFAk0lRJnKGFMTggrWjV8GYpw5bq23VmIqqDLgkNzuoog==</span>
+</pre></td></tr></table></figure></p>
 <p>以上激活码全系列ide通用</p>
-<h3 id="sublime-text-3"><a href="#sublime-text-3" class="headerlink" title="sublime text 3"></a>sublime text 3</h3><p>如果你需要前端开发，那么我推荐这个文本编辑器，我一般的做法时将这个替代自带的文本编辑器，毕竟它还支持markdown<br>一般安装需要先下载好deb的安装包然后执行以下命令安装<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo dpkg -i xxxx.deb</div></pre></td></tr></table></figure></p>
+<h3 id="sublime-text-3"><a href="#sublime-text-3" class="headerlink" title="sublime text 3"></a>sublime text 3</h3><p>如果你需要前端开发，那么我推荐这个文本编辑器，我一般的做法时将这个替代自带的文本编辑器，毕竟它还支持markdown<br>一般安装需要先下载好deb的安装包然后执行以下命令安装<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">sudo dpkg -i xxxx.deb</span>
+</pre></td></tr></table></figure></p>
 <p>然后程序就会自动安装完毕<br>不知是因为bug还是什么，在Ubuntu下的sublime text 3时不支持中文输入的</p>
 <h4 id="解决方法："><a href="#解决方法：" class="headerlink" title="解决方法："></a>解决方法：</h4><ol>
 <li><p>在终端里输入如下指令，下载我们所需要的文件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git <span class="built_in">clone</span> https://github.com/lyfeyaj/sublime-text-imfix.git</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/lyfeyaj/sublime-text-imfix.git</span>
+</pre></td></tr></table></figure>
 </li>
 <li><p>将subl移动到/usr/bin/，并且将sublime-imfix.so移动到/opt/sublime_text/</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> ~/sublime-text-imfix</div><div class="line">sudo cp ./lib/libsublime-imfix.so /opt/sublime_text/</div><div class="line">sudo cp ./src/subl /usr/bin/</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/sublime-text-imfix</span>
+<span class="line">sudo cp ./lib/libsublime-imfix.so /opt/sublime_text/</span>
+<span class="line">sudo cp ./src/subl /usr/bin/</span>
+</pre></td></tr></table></figure>
 </li>
 <li><p>终端启动sublime text</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">LD_PRELOAD=./libsublime-imfix.so subl</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">LD_PRELOAD=./libsublime-imfix.so subl</span>
+</pre></td></tr></table></figure>
 </li>
 <li><p>此时应该已经可以能输中文了，但这样略麻烦了点，我们希望点图标就可以支持输入中文，所以我们还需要下面几部</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo vim /usr/share/applications/sublime_text.desktop</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">sudo vim /usr/share/applications/sublime_text.desktop</span>
+</pre></td></tr></table></figure>
 </li>
 </ol>
 <blockquote>
@@ -455,10 +575,14 @@
 <h3 id="fish"><a href="#fish" class="headerlink" title="fish"></a>fish</h3><p>自带的终端bash不是很好用，所以我这里使用fish来代替自带shell</p>
 <ol>
 <li><p>首先安装fish</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt install fish</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">sudo apt install fish</span>
+</pre></td></tr></table></figure>
 </li>
 <li><p>替代自带shell</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chsh</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">chsh</span>
+</pre></td></tr></table></figure>
 </li>
 </ol>
 <p>修改完如图所示<br><img src="http://objects.earthchen.cn/ubuntu_fish%E5%AE%89%E8%A3%85%E6%88%90%E5%8A%9F.png" alt="Ubuntu_fish安装成功"></p>
@@ -478,17 +602,17 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/03/15/ubuntu_do_something_coding/">ubuntu搭建常见开发环境</a></p>
-        <p><span>文章作者:</span><a href="/" title="回到主页">EarthChen</a></p>
-        <p><span>发布时间:</span>2017-03-15, 14:40:00</p>
-        <p><span>最后更新:</span>2017-08-06, 17:50:27</p>
+        <p><span>Title:</span><a href="/2017/03/15/ubuntu_do_something_coding/">ubuntu搭建常见开发环境</a></p>
+        <p><span>Author:</span><a href="/" title="Back to Homepage">EarthChen</a></p>
+        <p><span>Created:</span>2017-03-15, 14:40:00</p>
+        <p><span>Updated:</span>2017-08-06, 17:50:27</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/03/15/ubuntu_do_something_coding/" title="ubuntu搭建常见开发环境">http://earthchen.cn/2017/03/15/ubuntu_do_something_coding/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://earthchen.cn/2017/03/15/ubuntu_do_something_coding/　　作者: EarthChen" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>Full URL:</span><a class="post-url" href="/2017/03/15/ubuntu_do_something_coding/" title="ubuntu搭建常见开发环境">http://earthchen.cn/2017/03/15/ubuntu_do_something_coding/</a>
+            <span class="copy-path" data-clipboard-text="From http://earthchen.cn/2017/03/15/ubuntu_do_something_coding/　　By EarthChen" title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
-            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+            <span>License:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"CC BY-NC-SA 4.0"</a> Keep Link &amp; Author if Distribute.
         </p>
     </div>
 
@@ -497,15 +621,15 @@
     <nav id="article-nav">
         
             <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2017/03/16/ubuntu_do_something_use/">
-                    ubuntu日常使用的安装配置
+                <a href="/2017/03/15/django_address_baiduapi_marker_show/">
+                    Django调用百度地图api在地图上批量增加标记点
                 </a>
             </div>
         
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2017/03/15/django_address_baiduapi_marker_show/">
-                    Django调用百度地图api在地图上批量增加标记点
+                <a href="/2017/03/10/ubuntu安装在双系统笔记本下开机或关机卡死.1/">
+                    ubuntu在双系统下开机卡死或关机卡死的解决办法
                 </a>
             </div>
         
@@ -515,7 +639,7 @@
 </article>
 
     <div id="toc" class="toc-article">
-        <strong class="toc-title">文章目录</strong>
+        <strong class="toc-title">Contents</strong>
         
             <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#常用编程环境搭建"><span class="toc-number">1.</span> <span class="toc-text">常用编程环境搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#jdk安装"><span class="toc-number">1.1.</span> <span class="toc-text">jdk安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装javaee服务器tomcat"><span class="toc-number">1.2.</span> <span class="toc-text">安装javaee服务器tomcat</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装Git"><span class="toc-number">1.3.</span> <span class="toc-text">安装Git</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装mysql"><span class="toc-number">1.4.</span> <span class="toc-text">安装mysql</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装mysql数据库可视化工具"><span class="toc-number">1.5.</span> <span class="toc-text">安装mysql数据库可视化工具</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#MySQL-workbench"><span class="toc-number">1.5.1.</span> <span class="toc-text">MySQL-workbench</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#phpmyadmin"><span class="toc-number">1.5.2.</span> <span class="toc-text">phpmyadmin</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装Vim"><span class="toc-number">1.6.</span> <span class="toc-text">安装Vim</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装pip"><span class="toc-number">1.7.</span> <span class="toc-text">安装pip</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装几个好用的ide"><span class="toc-number">1.8.</span> <span class="toc-text">安装几个好用的ide</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Pycharm"><span class="toc-number">1.8.1.</span> <span class="toc-text">Pycharm</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#idea"><span class="toc-number">1.8.2.</span> <span class="toc-text">idea</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#clion"><span class="toc-number">1.8.3.</span> <span class="toc-text">clion</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#激活码"><span class="toc-number">1.8.4.</span> <span class="toc-text">激活码</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sublime-text-3"><span class="toc-number">1.9.</span> <span class="toc-text">sublime text 3</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#解决方法："><span class="toc-number">1.9.1.</span> <span class="toc-text">解决方法：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#fish"><span class="toc-number">1.10.</span> <span class="toc-text">fish</span></a></li></ol></li></ol>
         
@@ -531,10 +655,10 @@
         }
     </style>
 
-    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+    <input type="button" id="tocButton" value="Hide"  title="Show or Hide Table of Contents">
 
     <script>
-        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+        yiliaConfig.toc = ["Hide", "Show", !!"false"];
     </script>
 
 
@@ -587,21 +711,21 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2017/03/16/ubuntu_do_something_use/" title="上一篇: ubuntu日常使用的安装配置">
+            <a href="/2017/03/15/django_address_baiduapi_marker_show/" title="Pre: Django调用百度地图api在地图上批量增加标记点">
                 <i class="fa fa-angle-left"></i>
             </a>
         
 
-        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        <a title="Mini Archives"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2017/03/15/django_address_baiduapi_marker_show/" title="下一篇: Django调用百度地图api在地图上批量增加标记点">
+            <a href="/2017/03/10/ubuntu安装在双系统笔记本下开机或关机卡死.1/" title="Next: ubuntu在双系统下开机卡死或关机卡死的解决办法">
                 <i class="fa fa-angle-right"></i>
             </a>
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/04/01/httpclientutil/">HttpClient工具类</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/14/qiniu-oss/">spring boot使用七牛云的oss(对象存储)文件上传</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/spring-boot-shiro-jwt/">spring boot集成shiro使用jwt进行权限控制</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/requestHolder_and_argumentResolver/">使用ThreadLocal和ArgumentResolver方便开发</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/applicationContextHelper/">在不被spring容器管理的类中使用ApplicationContext应用上下文bean</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_static_class_autowrite/">Spring boot 在静态类中注入spring组件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_diy_properties/">Spring boot 自定义配置文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/12/Elasticsearch_study_1/">Elasticsearch学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/09/深入理解java虚拟机学习笔记_1/">深入理解java虚拟机学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/23/Docker_study_Dockerfile_instructions/">Docker学习笔记---Dockerfile</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/22/Docker_study/">Docker学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/20/celery_study/">Celery-分布式任务队列学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_redis_cache/">Django使用redis作为缓存系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_channels_websocket/">Django使用Channels实现websocket</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/13/Docker_Gogs/">使用Docker搭建git服务Gogs</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_1to20/">LeetCode刷题记录(easy难度1-20题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_21to_40/">LeetCode刷题记录(easy难度21-40题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/29/es6_study/">es6学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/Webpack_study/">Webpack学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/RegularExpression_study/">正则表达式学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/08/AndroidStudio/">Android Studio 使用本地离线Gradle</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/跨域请求解决方案/">跨域请求的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_nginx_gunicorn/">django+nginx+gunicorn部署配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/ubuntu_supervisor/">ubuntu下的进程控制系统————Supervisor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/28/ubuntu修复不能挂载NTFS硬盘/">ubuntu修复linux和windows双系统下挂载ntfs硬盘出错问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/17/django_timing_task/">django使用django-crontab实现定时任务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/15/django_rest_framework_jwt/">django-rest-framework配置json web token进行接口的认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/django_rest_framework_study/">django-rest-framework框架学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/spring_SpEL/">spring中的SpEL表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/08/git_study/">Git学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/03/资源收集/">资源收集共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/06/ubuntu_open_port/">ubuntu开放指定端口</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/16/redis_study_2/">Redis学习笔记 -- 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/15/redis_study_1/">Redis学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/16/ubuntu_do_something_use/">ubuntu日常使用的安装配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/ubuntu_do_something_coding/">ubuntu搭建常见开发环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/django_address_baiduapi_marker_show/">Django调用百度地图api在地图上批量增加标记点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/10/ubuntu安装在双系统笔记本下开机或关机卡死.1/">ubuntu在双系统下开机卡死或关机卡死的解决办法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/11/python_requirements/">python生成项目所需依赖文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/10/hexo_github_coding_blog/">利用hexo和github或coding 搭免费个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django常用语句/">Django常用语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/python2和Python3的区别/">Python2和Python3的区别简单总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django连接mysql数据库/">Django连接MySql使用models处理数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django数据库操作/">Django操作数据库</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django环境搭建/">Django环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django渲染模板/">Django渲染模板</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/03/Android_qq_Menu/">Android仿qq侧滑菜单</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/16/C语言队列的基本操作/">C语言队列的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/c语言中缀表达式变后缀表达式/">C语言中缀表达式转后缀表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言逆波兰计算器/">C语言逆波兰表达式计算(后缀表达式计算器)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言共享栈/">C语言共享栈</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言二叉树基本操作/">C语言二叉树的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言中缀表达式计算器/">C语言中缀表达式计算器</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/04/01/httpclientutil/">HttpClient工具类</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/14/qiniu-oss/">spring boot使用七牛云的oss(对象存储)文件上传</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/spring-boot-shiro-jwt/">spring boot集成shiro使用jwt进行权限控制</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/requestHolder_and_argumentResolver/">使用ThreadLocal和ArgumentResolver方便开发</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/applicationContextHelper/">在不被spring容器管理的类中使用ApplicationContext应用上下文bean</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_static_class_autowrite/">Spring boot 在静态类中注入spring组件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_diy_properties/">Spring boot 自定义配置文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/12/Elasticsearch_study_1/">Elasticsearch学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/09/深入理解java虚拟机学习笔记_1/">深入理解java虚拟机学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/23/Docker_study_Dockerfile_instructions/">Docker学习笔记---Dockerfile</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/22/Docker_study/">Docker学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/20/celery_study/">Celery-分布式任务队列学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_redis_cache/">Django使用redis作为缓存系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_channels_websocket/">Django使用Channels实现websocket</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/13/Docker_Gogs/">使用Docker搭建git服务Gogs</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_1to20/">LeetCode刷题记录(easy难度1-20题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_21to_40/">LeetCode刷题记录(easy难度21-40题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/29/es6_study/">es6学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/Webpack_study/">Webpack学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/RegularExpression_study/">正则表达式学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/08/AndroidStudio/">Android Studio 使用本地离线Gradle</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/跨域请求解决方案/">跨域请求的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/ubuntu_supervisor/">ubuntu下的进程控制系统————Supervisor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_nginx_gunicorn/">django+nginx+gunicorn部署配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/28/ubuntu修复不能挂载NTFS硬盘/">ubuntu修复linux和windows双系统下挂载ntfs硬盘出错问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/17/django_timing_task/">django使用django-crontab实现定时任务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/15/django_rest_framework_jwt/">django-rest-framework配置json web token进行接口的认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/django_rest_framework_study/">django-rest-framework框架学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/spring_SpEL/">spring中的SpEL表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/08/git_study/">Git学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/03/资源收集/">资源收集共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/06/ubuntu_open_port/">ubuntu开放指定端口</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/16/redis_study_2/">Redis学习笔记 -- 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/15/redis_study_1/">Redis学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/16/ubuntu_do_something_use/">ubuntu日常使用的安装配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/django_address_baiduapi_marker_show/">Django调用百度地图api在地图上批量增加标记点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/ubuntu_do_something_coding/">ubuntu搭建常见开发环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/10/ubuntu安装在双系统笔记本下开机或关机卡死.1/">ubuntu在双系统下开机卡死或关机卡死的解决办法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/11/python_requirements/">python生成项目所需依赖文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/10/hexo_github_coding_blog/">利用hexo和github或coding 搭免费个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django环境搭建/">Django环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django连接mysql数据库/">Django连接MySql使用models处理数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django渲染模板/">Django渲染模板</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django常用语句/">Django常用语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django数据库操作/">Django操作数据库</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/python2和Python3的区别/">Python2和Python3的区别简单总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/03/Android_qq_Menu/">Android仿qq侧滑菜单</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/16/C语言队列的基本操作/">C语言队列的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言共享栈/">C语言共享栈</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言二叉树基本操作/">C语言二叉树的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言逆波兰计算器/">C语言逆波兰表达式计算(后缀表达式计算器)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言中缀表达式计算器/">C语言中缀表达式计算器</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/c语言中缀表达式变后缀表达式/">C语言中缀表达式转后缀表达式</a></li></ul>
 
 
 
@@ -618,14 +742,14 @@
                 2016-2018 EarthChen
             </div>
             <div class="footer-right">
-                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+                <a href="http://hexo.io/" target="_blank" title="A fast, simple &amp; powerful blog framework">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Another simple and elegant theme for Hexo  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
             </div>
         </div>
         
             <div class="visit">
                 
                     <span id="busuanzi_container_site_pv" style='display:none'>
-                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        <span id="site-visit" title="Site Visitors"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
                         </span>
                     </span>
                 
@@ -634,7 +758,7 @@
                 
                 
                     <span id="busuanzi_container_page_pv" style='display:none'>
-                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        <span id="page-visit"  title="Page Hits"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
                         </span>
                     </span>
                 
@@ -669,9 +793,9 @@
 
 
 <div class="scroll" id="scroll">
-    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
-    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
-    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+    <a href="#" title="Back to Top"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="Comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="Go to Bottom"><i class="fa fa-arrow-down"></i></a>
 </div>
 <script>
     // Open in New Window

@@ -158,13 +158,13 @@
                 <div class="tips-box hide">
                     <div class="tips-arrow"></div>
                     <ul class="tips-inner">
-                        <li>菜单</li>
-                        <li>标签</li>
+                        <li>Menu</li>
+                        <li>Tags</li>
                         
-                        <li>友情链接</li>
+                        <li>Friends</li>
                         
                         
-                        <li>关于我</li>
+                        <li>About Me</li>
                         
                     </ul>
                 </div>
@@ -294,7 +294,7 @@
             </nav>
         </header>                
     </div>
-    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+    <link class="menu-list" tags="Tags" friends="Friends" about="About Me"/>
 </nav>
       <div class="body-wrap"><article id="post-redis_study_2" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -345,10 +345,20 @@
 <h3 id="Redis-键-key"><a href="#Redis-键-key" class="headerlink" title="Redis 键(key)"></a>Redis 键(key)</h3><p>Redis 键命令用于管理 redis 的键。</p>
 <ol>
 <li><p>语法</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; COMMAND KEY_NAME</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; COMMAND KEY_NAME</span>
+</pre></td></tr></table></figure>
 </li>
 <li><p>实例</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; SET w3ckey redis</div><div class="line">OK</div><div class="line">127.0.0.1:6379&gt; DEL w3ckey</div><div class="line">(<span class="built_in">integer</span>) 1</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; SET w3ckey redis</span>
+<span class="line">OK</span>
+<span class="line">127.0.0.1:6379&gt; DEL w3ckey</span>
+<span class="line">(<span class="built_in">integer</span>) 1</span>
+</pre></td></tr></table></figure>
 <p>DEL 是一个命令， w3ckey 是一个键。 如果键被删除成功，命令执行后输出 (integer) 1，否则将输出 (integer) 0</p>
 <h4 id="Redis-keys-相关命令"><a href="#Redis-keys-相关命令" class="headerlink" title="Redis keys 相关命令"></a>Redis keys 相关命令</h4></li>
 </ol>
@@ -413,10 +423,20 @@
 <h3 id="Redis-字符串-String"><a href="#Redis-字符串-String" class="headerlink" title="Redis 字符串(String)"></a>Redis 字符串(String)</h3><p>Redis 字符串数据类型的相关命令用于管理 redis 字符串值，基本语法如下：</p>
 <ol>
 <li><p>语法</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; COMMAND KEY_NAME</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; COMMAND KEY_NAME</span>
+</pre></td></tr></table></figure>
 </li>
 <li><p>实例</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; SET w3ckey redis</div><div class="line">OK</div><div class="line">127.0.0.1:6379&gt; GET w3ckey</div><div class="line"> <span class="string">"redis"</span></div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; SET w3ckey redis</span>
+<span class="line">OK</span>
+<span class="line">127.0.0.1:6379&gt; GET w3ckey</span>
+<span class="line"> <span class="string">"redis"</span></span>
+</pre></td></tr></table></figure>
 <p>SET 和 GET 命令，键为 w3ckey。<br>DEL 是一个命令， w3ckey 是一个键。 如果键被删除成功，命令执行后输出 (integer) 1，否则将输出 (integer) 0</p>
 <h4 id="Redis-keys-相关命令-1"><a href="#Redis-keys-相关命令-1" class="headerlink" title="Redis keys 相关命令"></a>Redis keys 相关命令</h4></li>
 </ol>
@@ -496,7 +516,29 @@
 </table>
 <h3 id="Redis-哈希-Hash"><a href="#Redis-哈希-Hash" class="headerlink" title="Redis 哈希(Hash)"></a>Redis 哈希(Hash)</h3><p>Redis hash 是一个string类型的field和value的映射表，hash特别适合用于存储对象。。</p>
 <ol>
-<li>实例<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt;HMSET w3ckey name <span class="string">"redis tutorial"</span> description <span class="string">"redis basic commands for caching"</span> likes 20 visitors 2300</div><div class="line">OK</div><div class="line">127.0.0.1:6379&gt; HGETALL w3ckey</div><div class="line">1) <span class="string">"name"</span></div><div class="line">2) <span class="string">"redis tutorial"</span></div><div class="line">3) <span class="string">"description"</span></div><div class="line">4) <span class="string">"redis basic commands for caching"</span></div><div class="line">5) <span class="string">"likes"</span></div><div class="line">6) <span class="string">"20"</span></div><div class="line">7) <span class="string">"visitors"</span></div><div class="line">8) <span class="string">"23000"</span></div></pre></td></tr></table></figure>
+<li>实例<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+</pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt;HMSET w3ckey name <span class="string">"redis tutorial"</span> description <span class="string">"redis basic commands for caching"</span> likes 20 visitors 2300</span>
+<span class="line">OK</span>
+<span class="line">127.0.0.1:6379&gt; HGETALL w3ckey</span>
+<span class="line">1) <span class="string">"name"</span></span>
+<span class="line">2) <span class="string">"redis tutorial"</span></span>
+<span class="line">3) <span class="string">"description"</span></span>
+<span class="line">4) <span class="string">"redis basic commands for caching"</span></span>
+<span class="line">5) <span class="string">"likes"</span></span>
+<span class="line">6) <span class="string">"20"</span></span>
+<span class="line">7) <span class="string">"visitors"</span></span>
+<span class="line">8) <span class="string">"23000"</span></span>
+</pre></td></tr></table></figure>
 </li>
 </ol>
 <p>设置了 redis 的一些描述信息(name, description, likes, visitors) 到哈希表的 w3ckey 中。</p>
@@ -564,7 +606,27 @@
 </table>
 <h3 id="Redis-列表-List"><a href="#Redis-列表-List" class="headerlink" title="Redis 列表(List)"></a>Redis 列表(List)</h3><p>Redis列表是简单的字符串列表，按照插入顺序排序。你可以添加一个元素导列表的头部（左边）或者尾部（右边</p>
 <ol>
-<li>实例<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt;LPUSH w3ckey redis</div><div class="line">(<span class="built_in">integer</span>) 1</div><div class="line">127.0.0.1:6379&gt; LPUSH w3ckey mongodb</div><div class="line">(<span class="built_in">integer</span>) 2</div><div class="line">127.0.0.1:6379&gt; LPUSH w3ckey mysql</div><div class="line">(<span class="built_in">integer</span>) 3</div><div class="line">127.0.0.1:6379&gt; LRANGE w3ckey 0 10</div><div class="line">1) <span class="string">"mysql"</span></div><div class="line">2) <span class="string">"mongodb"</span></div><div class="line">3) <span class="string">"redis"</span></div></pre></td></tr></table></figure>
+<li>实例<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+</pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt;LPUSH w3ckey redis</span>
+<span class="line">(<span class="built_in">integer</span>) 1</span>
+<span class="line">127.0.0.1:6379&gt; LPUSH w3ckey mongodb</span>
+<span class="line">(<span class="built_in">integer</span>) 2</span>
+<span class="line">127.0.0.1:6379&gt; LPUSH w3ckey mysql</span>
+<span class="line">(<span class="built_in">integer</span>) 3</span>
+<span class="line">127.0.0.1:6379&gt; LRANGE w3ckey 0 10</span>
+<span class="line">1) <span class="string">"mysql"</span></span>
+<span class="line">2) <span class="string">"mongodb"</span></span>
+<span class="line">3) <span class="string">"redis"</span></span>
+</pre></td></tr></table></figure>
 </li>
 </ol>
 <h4 id="Redis-列表命令"><a href="#Redis-列表命令" class="headerlink" title="Redis 列表命令"></a>Redis 列表命令</h4><table>
@@ -648,7 +710,31 @@
 </table>
 <h3 id="Redis-集合-Set"><a href="#Redis-集合-Set" class="headerlink" title="Redis 集合(Set)"></a>Redis 集合(Set)</h3><p>Redis的Set是string类型的无序集合。集合成员是唯一的，这就意味着集合中不能出现重复的数据</p>
 <ol>
-<li>实例<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; SADD redis redis</div><div class="line">(<span class="built_in">integer</span>) 1</div><div class="line">127.0.0.1:6379&gt; SADD redis mongo</div><div class="line">(<span class="built_in">integer</span>) 1</div><div class="line">127.0.0.1:6379&gt; SADD redis rebitmq</div><div class="line">(<span class="built_in">integer</span>) 1</div><div class="line">127.0.0.1:6379&gt; SADD redis rebitmq</div><div class="line">(<span class="built_in">integer</span>) 0</div><div class="line">127.0.0.1:6379&gt; ZRANGEBYSCORE redis 0 1000</div><div class="line">1) <span class="string">"mongo"</span></div><div class="line">2) <span class="string">"rabitmq"</span></div><div class="line">3) <span class="string">"redis"</span></div></pre></td></tr></table></figure>
+<li>实例<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+</pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; SADD redis redis</span>
+<span class="line">(<span class="built_in">integer</span>) 1</span>
+<span class="line">127.0.0.1:6379&gt; SADD redis mongo</span>
+<span class="line">(<span class="built_in">integer</span>) 1</span>
+<span class="line">127.0.0.1:6379&gt; SADD redis rebitmq</span>
+<span class="line">(<span class="built_in">integer</span>) 1</span>
+<span class="line">127.0.0.1:6379&gt; SADD redis rebitmq</span>
+<span class="line">(<span class="built_in">integer</span>) 0</span>
+<span class="line">127.0.0.1:6379&gt; ZRANGEBYSCORE redis 0 1000</span>
+<span class="line">1) <span class="string">"mongo"</span></span>
+<span class="line">2) <span class="string">"rabitmq"</span></span>
+<span class="line">3) <span class="string">"redis"</span></span>
+</pre></td></tr></table></figure>
 </li>
 </ol>
 <h4 id="Redis-集合命令"><a href="#Redis-集合命令" class="headerlink" title="Redis 集合命令"></a>Redis 集合命令</h4><table>
@@ -703,7 +789,43 @@
 </table>
 <h3 id="Redis-有序集合-sorted-set"><a href="#Redis-有序集合-sorted-set" class="headerlink" title="Redis 有序集合(sorted set)"></a>Redis 有序集合(sorted set)</h3><p>Redis 有序集合和集合一样也是string类型元素的集合,且不允许重复的成员。<br>不同的是每个元素都会关联一个double类型的分数。redis正是通过分数来为集合中的成员进行从小到大的排序。<br>有序集合的成员是唯一的,但分数(score)却可以重复。</p>
 <ol>
-<li>实例<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; ZADD w3ckey 1 redis</div><div class="line">(<span class="built_in">integer</span>) 1</div><div class="line">127.0.0.1:6379&gt; ZADD w3ckey 2 mongodb</div><div class="line">(<span class="built_in">integer</span>) 1</div><div class="line">127.0.0.1:6379&gt; ZADD w3ckey 3 mysql</div><div class="line">(<span class="built_in">integer</span>) 1</div><div class="line">127.0.0.1:6379&gt; ZADD w3ckey 3 mysql</div><div class="line">(<span class="built_in">integer</span>) 0</div><div class="line">127.0.0.1:6379&gt; ZADD w3ckey 4 mysql</div><div class="line">(<span class="built_in">integer</span>) 0</div><div class="line">127.0.0.1:6379&gt; ZRANGE w3ckey 0 10 WITHSCORES</div><div class="line"> </div><div class="line">1) <span class="string">"redis"</span></div><div class="line">2) <span class="string">"1"</span></div><div class="line">3) <span class="string">"mongodb"</span></div><div class="line">4) <span class="string">"2"</span></div><div class="line">5) <span class="string">"mysql"</span></div><div class="line">6) <span class="string">"4"</span></div></pre></td></tr></table></figure>
+<li>实例<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+</pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; ZADD w3ckey 1 redis</span>
+<span class="line">(<span class="built_in">integer</span>) 1</span>
+<span class="line">127.0.0.1:6379&gt; ZADD w3ckey 2 mongodb</span>
+<span class="line">(<span class="built_in">integer</span>) 1</span>
+<span class="line">127.0.0.1:6379&gt; ZADD w3ckey 3 mysql</span>
+<span class="line">(<span class="built_in">integer</span>) 1</span>
+<span class="line">127.0.0.1:6379&gt; ZADD w3ckey 3 mysql</span>
+<span class="line">(<span class="built_in">integer</span>) 0</span>
+<span class="line">127.0.0.1:6379&gt; ZADD w3ckey 4 mysql</span>
+<span class="line">(<span class="built_in">integer</span>) 0</span>
+<span class="line">127.0.0.1:6379&gt; ZRANGE w3ckey 0 10 WITHSCORES</span>
+<span class="line"> </span>
+<span class="line">1) <span class="string">"redis"</span></span>
+<span class="line">2) <span class="string">"1"</span></span>
+<span class="line">3) <span class="string">"mongodb"</span></span>
+<span class="line">4) <span class="string">"2"</span></span>
+<span class="line">5) <span class="string">"mysql"</span></span>
+<span class="line">6) <span class="string">"4"</span></span>
+</pre></td></tr></table></figure>
 </li>
 </ol>
 <h4 id="Redis-有序集合命令"><a href="#Redis-有序集合命令" class="headerlink" title="Redis 有序集合命令"></a>Redis 有序集合命令</h4><table>
@@ -791,17 +913,17 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/04/16/redis_study_2/">Redis学习笔记 -- 2</a></p>
-        <p><span>文章作者:</span><a href="/" title="回到主页">EarthChen</a></p>
-        <p><span>发布时间:</span>2017-04-16, 14:40:00</p>
-        <p><span>最后更新:</span>2017-08-06, 17:49:59</p>
+        <p><span>Title:</span><a href="/2017/04/16/redis_study_2/">Redis学习笔记 -- 2</a></p>
+        <p><span>Author:</span><a href="/" title="Back to Homepage">EarthChen</a></p>
+        <p><span>Created:</span>2017-04-16, 14:40:00</p>
+        <p><span>Updated:</span>2017-08-06, 17:49:59</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/04/16/redis_study_2/" title="Redis学习笔记 -- 2">http://earthchen.cn/2017/04/16/redis_study_2/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://earthchen.cn/2017/04/16/redis_study_2/　　作者: EarthChen" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>Full URL:</span><a class="post-url" href="/2017/04/16/redis_study_2/" title="Redis学习笔记 -- 2">http://earthchen.cn/2017/04/16/redis_study_2/</a>
+            <span class="copy-path" data-clipboard-text="From http://earthchen.cn/2017/04/16/redis_study_2/　　By EarthChen" title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
-            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+            <span>License:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"CC BY-NC-SA 4.0"</a> Keep Link &amp; Author if Distribute.
         </p>
     </div>
 
@@ -828,7 +950,7 @@
 </article>
 
     <div id="toc" class="toc-article">
-        <strong class="toc-title">文章目录</strong>
+        <strong class="toc-title">Contents</strong>
         
             <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis"><span class="toc-number">1.</span> <span class="toc-text">Redis</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis-键-key"><span class="toc-number">1.1.</span> <span class="toc-text">Redis 键(key)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Redis-keys-相关命令"><span class="toc-number">1.1.1.</span> <span class="toc-text">Redis keys 相关命令</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis-字符串-String"><span class="toc-number">1.2.</span> <span class="toc-text">Redis 字符串(String)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Redis-keys-相关命令-1"><span class="toc-number">1.2.1.</span> <span class="toc-text">Redis keys 相关命令</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis-哈希-Hash"><span class="toc-number">1.3.</span> <span class="toc-text">Redis 哈希(Hash)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Redis-hash-命令"><span class="toc-number">1.3.1.</span> <span class="toc-text">Redis hash 命令</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis-列表-List"><span class="toc-number">1.4.</span> <span class="toc-text">Redis 列表(List)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Redis-列表命令"><span class="toc-number">1.4.1.</span> <span class="toc-text">Redis 列表命令</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis-集合-Set"><span class="toc-number">1.5.</span> <span class="toc-text">Redis 集合(Set)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Redis-集合命令"><span class="toc-number">1.5.1.</span> <span class="toc-text">Redis 集合命令</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis-有序集合-sorted-set"><span class="toc-number">1.6.</span> <span class="toc-text">Redis 有序集合(sorted set)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Redis-有序集合命令"><span class="toc-number">1.6.1.</span> <span class="toc-text">Redis 有序集合命令</span></a></li></ol></li></ol></li></ol>
         
@@ -844,10 +966,10 @@
         }
     </style>
 
-    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+    <input type="button" id="tocButton" value="Hide"  title="Show or Hide Table of Contents">
 
     <script>
-        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+        yiliaConfig.toc = ["Hide", "Show", !!"false"];
     </script>
 
 
@@ -900,21 +1022,21 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2017/05/06/ubuntu_open_port/" title="上一篇: ubuntu开放指定端口">
+            <a href="/2017/05/06/ubuntu_open_port/" title="Pre: ubuntu开放指定端口">
                 <i class="fa fa-angle-left"></i>
             </a>
         
 
-        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        <a title="Mini Archives"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2017/04/15/redis_study_1/" title="下一篇: Redis学习笔记 -- 1">
+            <a href="/2017/04/15/redis_study_1/" title="Next: Redis学习笔记 -- 1">
                 <i class="fa fa-angle-right"></i>
             </a>
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/04/01/httpclientutil/">HttpClient工具类</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/14/qiniu-oss/">spring boot使用七牛云的oss(对象存储)文件上传</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/spring-boot-shiro-jwt/">spring boot集成shiro使用jwt进行权限控制</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/requestHolder_and_argumentResolver/">使用ThreadLocal和ArgumentResolver方便开发</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/applicationContextHelper/">在不被spring容器管理的类中使用ApplicationContext应用上下文bean</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_static_class_autowrite/">Spring boot 在静态类中注入spring组件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_diy_properties/">Spring boot 自定义配置文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/12/Elasticsearch_study_1/">Elasticsearch学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/09/深入理解java虚拟机学习笔记_1/">深入理解java虚拟机学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/23/Docker_study_Dockerfile_instructions/">Docker学习笔记---Dockerfile</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/22/Docker_study/">Docker学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/20/celery_study/">Celery-分布式任务队列学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_redis_cache/">Django使用redis作为缓存系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_channels_websocket/">Django使用Channels实现websocket</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/13/Docker_Gogs/">使用Docker搭建git服务Gogs</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_1to20/">LeetCode刷题记录(easy难度1-20题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_21to_40/">LeetCode刷题记录(easy难度21-40题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/29/es6_study/">es6学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/Webpack_study/">Webpack学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/RegularExpression_study/">正则表达式学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/08/AndroidStudio/">Android Studio 使用本地离线Gradle</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/跨域请求解决方案/">跨域请求的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_nginx_gunicorn/">django+nginx+gunicorn部署配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/ubuntu_supervisor/">ubuntu下的进程控制系统————Supervisor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/28/ubuntu修复不能挂载NTFS硬盘/">ubuntu修复linux和windows双系统下挂载ntfs硬盘出错问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/17/django_timing_task/">django使用django-crontab实现定时任务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/15/django_rest_framework_jwt/">django-rest-framework配置json web token进行接口的认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/django_rest_framework_study/">django-rest-framework框架学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/spring_SpEL/">spring中的SpEL表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/08/git_study/">Git学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/03/资源收集/">资源收集共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/06/ubuntu_open_port/">ubuntu开放指定端口</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/16/redis_study_2/">Redis学习笔记 -- 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/15/redis_study_1/">Redis学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/16/ubuntu_do_something_use/">ubuntu日常使用的安装配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/ubuntu_do_something_coding/">ubuntu搭建常见开发环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/django_address_baiduapi_marker_show/">Django调用百度地图api在地图上批量增加标记点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/10/ubuntu安装在双系统笔记本下开机或关机卡死.1/">ubuntu在双系统下开机卡死或关机卡死的解决办法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/11/python_requirements/">python生成项目所需依赖文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/10/hexo_github_coding_blog/">利用hexo和github或coding 搭免费个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django常用语句/">Django常用语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/python2和Python3的区别/">Python2和Python3的区别简单总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django连接mysql数据库/">Django连接MySql使用models处理数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django数据库操作/">Django操作数据库</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django环境搭建/">Django环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django渲染模板/">Django渲染模板</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/03/Android_qq_Menu/">Android仿qq侧滑菜单</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/16/C语言队列的基本操作/">C语言队列的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/c语言中缀表达式变后缀表达式/">C语言中缀表达式转后缀表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言逆波兰计算器/">C语言逆波兰表达式计算(后缀表达式计算器)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言共享栈/">C语言共享栈</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言二叉树基本操作/">C语言二叉树的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言中缀表达式计算器/">C语言中缀表达式计算器</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/04/01/httpclientutil/">HttpClient工具类</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/14/qiniu-oss/">spring boot使用七牛云的oss(对象存储)文件上传</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/spring-boot-shiro-jwt/">spring boot集成shiro使用jwt进行权限控制</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/requestHolder_and_argumentResolver/">使用ThreadLocal和ArgumentResolver方便开发</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/applicationContextHelper/">在不被spring容器管理的类中使用ApplicationContext应用上下文bean</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_static_class_autowrite/">Spring boot 在静态类中注入spring组件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_diy_properties/">Spring boot 自定义配置文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/12/Elasticsearch_study_1/">Elasticsearch学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/09/深入理解java虚拟机学习笔记_1/">深入理解java虚拟机学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/23/Docker_study_Dockerfile_instructions/">Docker学习笔记---Dockerfile</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/22/Docker_study/">Docker学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/20/celery_study/">Celery-分布式任务队列学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_redis_cache/">Django使用redis作为缓存系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_channels_websocket/">Django使用Channels实现websocket</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/13/Docker_Gogs/">使用Docker搭建git服务Gogs</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_1to20/">LeetCode刷题记录(easy难度1-20题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_21to_40/">LeetCode刷题记录(easy难度21-40题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/29/es6_study/">es6学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/Webpack_study/">Webpack学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/RegularExpression_study/">正则表达式学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/08/AndroidStudio/">Android Studio 使用本地离线Gradle</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/跨域请求解决方案/">跨域请求的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/ubuntu_supervisor/">ubuntu下的进程控制系统————Supervisor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_nginx_gunicorn/">django+nginx+gunicorn部署配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/28/ubuntu修复不能挂载NTFS硬盘/">ubuntu修复linux和windows双系统下挂载ntfs硬盘出错问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/17/django_timing_task/">django使用django-crontab实现定时任务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/15/django_rest_framework_jwt/">django-rest-framework配置json web token进行接口的认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/django_rest_framework_study/">django-rest-framework框架学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/spring_SpEL/">spring中的SpEL表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/08/git_study/">Git学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/03/资源收集/">资源收集共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/06/ubuntu_open_port/">ubuntu开放指定端口</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/16/redis_study_2/">Redis学习笔记 -- 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/15/redis_study_1/">Redis学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/16/ubuntu_do_something_use/">ubuntu日常使用的安装配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/django_address_baiduapi_marker_show/">Django调用百度地图api在地图上批量增加标记点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/ubuntu_do_something_coding/">ubuntu搭建常见开发环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/10/ubuntu安装在双系统笔记本下开机或关机卡死.1/">ubuntu在双系统下开机卡死或关机卡死的解决办法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/11/python_requirements/">python生成项目所需依赖文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/10/hexo_github_coding_blog/">利用hexo和github或coding 搭免费个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django环境搭建/">Django环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django连接mysql数据库/">Django连接MySql使用models处理数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django渲染模板/">Django渲染模板</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django常用语句/">Django常用语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django数据库操作/">Django操作数据库</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/python2和Python3的区别/">Python2和Python3的区别简单总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/03/Android_qq_Menu/">Android仿qq侧滑菜单</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/16/C语言队列的基本操作/">C语言队列的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言共享栈/">C语言共享栈</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言二叉树基本操作/">C语言二叉树的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言逆波兰计算器/">C语言逆波兰表达式计算(后缀表达式计算器)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言中缀表达式计算器/">C语言中缀表达式计算器</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/c语言中缀表达式变后缀表达式/">C语言中缀表达式转后缀表达式</a></li></ul>
 
 
 
@@ -931,14 +1053,14 @@
                 2016-2018 EarthChen
             </div>
             <div class="footer-right">
-                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+                <a href="http://hexo.io/" target="_blank" title="A fast, simple &amp; powerful blog framework">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Another simple and elegant theme for Hexo  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
             </div>
         </div>
         
             <div class="visit">
                 
                     <span id="busuanzi_container_site_pv" style='display:none'>
-                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        <span id="site-visit" title="Site Visitors"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
                         </span>
                     </span>
                 
@@ -947,7 +1069,7 @@
                 
                 
                     <span id="busuanzi_container_page_pv" style='display:none'>
-                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        <span id="page-visit"  title="Page Hits"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
                         </span>
                     </span>
                 
@@ -982,9 +1104,9 @@
 
 
 <div class="scroll" id="scroll">
-    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
-    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
-    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+    <a href="#" title="Back to Top"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="Comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="Go to Bottom"><i class="fa fa-arrow-down"></i></a>
 </div>
 <script>
     // Open in New Window

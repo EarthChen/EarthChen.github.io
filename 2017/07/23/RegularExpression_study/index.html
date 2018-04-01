@@ -158,13 +158,13 @@
                 <div class="tips-box hide">
                     <div class="tips-arrow"></div>
                     <ul class="tips-inner">
-                        <li>菜单</li>
-                        <li>标签</li>
+                        <li>Menu</li>
+                        <li>Tags</li>
                         
-                        <li>友情链接</li>
+                        <li>Friends</li>
                         
                         
-                        <li>关于我</li>
+                        <li>About Me</li>
                         
                     </ul>
                 </div>
@@ -294,7 +294,7 @@
             </nav>
         </header>                
     </div>
-    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+    <link class="menu-list" tags="Tags" friends="Friends" about="About Me"/>
 </nav>
       <div class="body-wrap"><article id="post-RegularExpression_study" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -342,19 +342,115 @@
           
         <p>正则表达式(regular expression)描述了一种字符串匹配的模式（pattern），可以用来检查一个串是否含有某种子串、将匹配的子串替换或者从某个串中取出符合某个条件的子串等。<br>在各大编程语言中都能发挥出很大的作用。每种语言也都有关于正则表达式模块的实现。<br>本文以Python举例说明。</p>
 <h2 id="Regular-Expression"><a href="#Regular-Expression" class="headerlink" title="Regular Expression"></a>Regular Expression</h2><a id="more"></a>
-<h3 id="匹配单个字符"><a href="#匹配单个字符" class="headerlink" title="匹配单个字符"></a>匹配单个字符</h3><h4 id="匹配纯文本"><a href="#匹配纯文本" class="headerlink" title="匹配纯文本"></a>匹配纯文本</h4><p>匹配纯文本其实我们一般不用正则表达式就可以，使用正则表达式只是能说明这个问题<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#待匹配的文本</span></div><div class="line">s = <span class="string">'hello my name is ben'</span></div><div class="line">print(re.findall(<span class="string">'ben'</span>, s))</div><div class="line"><span class="comment">#待匹配的文本</span></div><div class="line">s = <span class="string">'hello my name is ben and my friend name is ben'</span></div><div class="line">print(<span class="string">'只返回第一个匹配结果为&#123;&#125;'</span>.format(re.search(<span class="string">'ben'</span>, s).span()))</div><div class="line">print(<span class="string">'返回所有匹配结果&#123;&#125;'</span>.format(re.findall(<span class="string">'ben'</span>, s)))</div></pre></td></tr></table></figure></p>
-<p>结果为:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[&apos;ben&apos;]</div><div class="line">只返回第一个匹配结果为(17, 20)</div><div class="line">返回所有匹配结果[&apos;ben&apos;, &apos;ben&apos;]</div></pre></td></tr></table></figure></p>
-<h4 id="匹配任意字符"><a href="#匹配任意字符" class="headerlink" title="匹配任意字符"></a>匹配任意字符</h4><p>使用<strong>.</strong>匹配任意一个字符<br><strong>.</strong>字符可以匹配任何单个的字符、字母、数字或者<strong>.</strong>本身<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#待匹配的文本</span></div><div class="line">s = <span class="string">'sales1.txt'</span> \</div><div class="line">    <span class="string">'sales2.txt'</span> \</div><div class="line">    <span class="string">'salese.txt'</span> \</div><div class="line">    <span class="string">'nae.txt'</span> \</div><div class="line">    <span class="string">'sns.txt'</span> \</div><div class="line">    <span class="string">'sn.txt'</span></div><div class="line"></div><div class="line">print(<span class="string">'使用sale.匹配的所有结果为&#123;&#125;'</span>.format(re.findall(<span class="string">r'sales.'</span>, s)))</div><div class="line">print(<span class="string">'使用.a.匹配的所有结果为&#123;&#125;'</span>.format(re.findall(<span class="string">r'.a.'</span>, s)))</div><div class="line">print(<span class="string">'使用\转义匹配含有.的结果&#123;&#125;'</span>.format(re.findall(<span class="string">r'.a.\.'</span>, s)))</div></pre></td></tr></table></figure></p>
-<p>结果为:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">使用sale.匹配的所有结果为[&apos;sales1&apos;, &apos;sales2&apos;, &apos;salese&apos;]</div><div class="line">使用.a.匹配的所有结果为[&apos;sal&apos;, &apos;sal&apos;, &apos;sal&apos;, &apos;nae&apos;]</div><div class="line">使用\转义匹配含有.的结果[&apos;nae.&apos;]</div></pre></td></tr></table></figure></p>
-<h3 id="匹配一组字符"><a href="#匹配一组字符" class="headerlink" title="匹配一组字符"></a>匹配一组字符</h3><h4 id="匹配多个字符中的某一个"><a href="#匹配多个字符中的某一个" class="headerlink" title="匹配多个字符中的某一个"></a>匹配多个字符中的某一个</h4><p>使用<strong>[ab]</strong>确定可选的字符<br>使用<strong>[0-9]</strong>确定可选的字符范围<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">s = <span class="string">'na.txt'</span> \</div><div class="line">    <span class="string">'na2.txt'</span> \</div><div class="line">    <span class="string">'sa1.txt'</span> \</div><div class="line">    <span class="string">'ca1.txt'</span> \</div><div class="line">    <span class="string">'nam.txt'</span></div><div class="line"></div><div class="line">print(<span class="string">'匹配na或sa.txt的结果为&#123;&#125;'</span>.format(re.findall(<span class="string">r'[ns]a.\.txt'</span>, s)))</div><div class="line">print(<span class="string">'限制a后面字符仅为数字的结果为&#123;&#125;'</span>.format(re.findall(<span class="string">r'[ns]a[0-9]\.txt'</span>,s)))</div></pre></td></tr></table></figure></p>
-<p>结果为:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">匹配na或sa.txt的结果为[&apos;na2.txt&apos;, &apos;sa1.txt&apos;, &apos;nam.txt&apos;]</div><div class="line">限制a后面字符仅为数字的结果为[&apos;na2.txt&apos;, &apos;sa1.txt&apos;]</div></pre></td></tr></table></figure></p>
+<h3 id="匹配单个字符"><a href="#匹配单个字符" class="headerlink" title="匹配单个字符"></a>匹配单个字符</h3><h4 id="匹配纯文本"><a href="#匹配纯文本" class="headerlink" title="匹配纯文本"></a>匹配纯文本</h4><p>匹配纯文本其实我们一般不用正则表达式就可以，使用正则表达式只是能说明这个问题<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">#待匹配的文本</span></span>
+<span class="line">s = <span class="string">'hello my name is ben'</span></span>
+<span class="line">print(re.findall(<span class="string">'ben'</span>, s))</span>
+<span class="line"><span class="comment">#待匹配的文本</span></span>
+<span class="line">s = <span class="string">'hello my name is ben and my friend name is ben'</span></span>
+<span class="line">print(<span class="string">'只返回第一个匹配结果为&#123;&#125;'</span>.format(re.search(<span class="string">'ben'</span>, s).span()))</span>
+<span class="line">print(<span class="string">'返回所有匹配结果&#123;&#125;'</span>.format(re.findall(<span class="string">'ben'</span>, s)))</span>
+</pre></td></tr></table></figure></p>
+<p>结果为:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line">[&apos;ben&apos;]</span>
+<span class="line">只返回第一个匹配结果为(17, 20)</span>
+<span class="line">返回所有匹配结果[&apos;ben&apos;, &apos;ben&apos;]</span>
+</pre></td></tr></table></figure></p>
+<h4 id="匹配任意字符"><a href="#匹配任意字符" class="headerlink" title="匹配任意字符"></a>匹配任意字符</h4><p>使用<strong>.</strong>匹配任意一个字符<br><strong>.</strong>字符可以匹配任何单个的字符、字母、数字或者<strong>.</strong>本身<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">#待匹配的文本</span></span>
+<span class="line">s = <span class="string">'sales1.txt'</span> \</span>
+<span class="line">    <span class="string">'sales2.txt'</span> \</span>
+<span class="line">    <span class="string">'salese.txt'</span> \</span>
+<span class="line">    <span class="string">'nae.txt'</span> \</span>
+<span class="line">    <span class="string">'sns.txt'</span> \</span>
+<span class="line">    <span class="string">'sn.txt'</span></span>
+<span class="line"></span>
+<span class="line">print(<span class="string">'使用sale.匹配的所有结果为&#123;&#125;'</span>.format(re.findall(<span class="string">r'sales.'</span>, s)))</span>
+<span class="line">print(<span class="string">'使用.a.匹配的所有结果为&#123;&#125;'</span>.format(re.findall(<span class="string">r'.a.'</span>, s)))</span>
+<span class="line">print(<span class="string">'使用\转义匹配含有.的结果&#123;&#125;'</span>.format(re.findall(<span class="string">r'.a.\.'</span>, s)))</span>
+</pre></td></tr></table></figure></p>
+<p>结果为:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line">使用sale.匹配的所有结果为[&apos;sales1&apos;, &apos;sales2&apos;, &apos;salese&apos;]</span>
+<span class="line">使用.a.匹配的所有结果为[&apos;sal&apos;, &apos;sal&apos;, &apos;sal&apos;, &apos;nae&apos;]</span>
+<span class="line">使用\转义匹配含有.的结果[&apos;nae.&apos;]</span>
+</pre></td></tr></table></figure></p>
+<h3 id="匹配一组字符"><a href="#匹配一组字符" class="headerlink" title="匹配一组字符"></a>匹配一组字符</h3><h4 id="匹配多个字符中的某一个"><a href="#匹配多个字符中的某一个" class="headerlink" title="匹配多个字符中的某一个"></a>匹配多个字符中的某一个</h4><p>使用<strong>[ab]</strong>确定可选的字符<br>使用<strong>[0-9]</strong>确定可选的字符范围<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+</pre></td><td class="code"><pre><span class="line">s = <span class="string">'na.txt'</span> \</span>
+<span class="line">    <span class="string">'na2.txt'</span> \</span>
+<span class="line">    <span class="string">'sa1.txt'</span> \</span>
+<span class="line">    <span class="string">'ca1.txt'</span> \</span>
+<span class="line">    <span class="string">'nam.txt'</span></span>
+<span class="line"></span>
+<span class="line">print(<span class="string">'匹配na或sa.txt的结果为&#123;&#125;'</span>.format(re.findall(<span class="string">r'[ns]a.\.txt'</span>, s)))</span>
+<span class="line">print(<span class="string">'限制a后面字符仅为数字的结果为&#123;&#125;'</span>.format(re.findall(<span class="string">r'[ns]a[0-9]\.txt'</span>,s)))</span>
+</pre></td></tr></table></figure></p>
+<p>结果为:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">匹配na或sa.txt的结果为[&apos;na2.txt&apos;, &apos;sa1.txt&apos;, &apos;nam.txt&apos;]</span>
+<span class="line">限制a后面字符仅为数字的结果为[&apos;na2.txt&apos;, &apos;sa1.txt&apos;]</span>
+</pre></td></tr></table></figure></p>
 <ul>
 <li>注: 在同一个字符集合里页可以给出多个字符区间，会匹配到多个区间中的任何一个字符</li>
 </ul>
-<h4 id="取非匹配"><a href="#取非匹配" class="headerlink" title="取非匹配"></a>取非匹配</h4><p>我们使用正则表达式也不是都需要匹配集合其中的字符，有时也需要匹配非集合中的字符，在正则表达式中，我们可以使用<strong>^</strong>字符对集合进行取非操作<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">s = <span class="string">'na.txt'</span> \</div><div class="line">    <span class="string">'na2.txt'</span> \</div><div class="line">    <span class="string">'sa1.txt'</span> \</div><div class="line">    <span class="string">'ca1.txt'</span> \</div><div class="line">    <span class="string">'nam.txt'</span></div><div class="line"></div><div class="line">print(<span class="string">'限制a后面字符不为数字的结果为&#123;&#125;'</span>.format(re.findall(<span class="string">r'[ns]a[^0-9]\.txt'</span>, s)))</div></pre></td></tr></table></figure></p>
-<p>结果为:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">限制a后面字符不为数字的结果为[&apos;nam.txt&apos;]</div></pre></td></tr></table></figure></p>
-<h3 id="使用元字符"><a href="#使用元字符" class="headerlink" title="使用元字符"></a>使用元字符</h3><h4 id="对特殊字符进行转义"><a href="#对特殊字符进行转义" class="headerlink" title="对特殊字符进行转义"></a>对特殊字符进行转义</h4><p>使用<strong>\</strong>对元字符进行转义<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">s = <span class="string">'list[0]   list[1]   list[2]'</span></div><div class="line">print(<span class="string">'使用\对中括号进行转义使其匹配&#123;&#125;'</span>.format(re.findall(<span class="string">r'list\[[0-9]\]'</span>, s)))</div><div class="line">path = <span class="string">'\home\\ben\sales'</span></div><div class="line">print(<span class="string">'将\替换成/为&#123;&#125;'</span>.format(re.compile(<span class="string">r'\\'</span>).subn(<span class="string">'/'</span>, path)))</div></pre></td></tr></table></figure></p>
-<p>结果为:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">使用\对中括号进行转义使其匹配[&apos;list[0]&apos;, &apos;list[1]&apos;, &apos;list[2]&apos;]</div><div class="line">将\替换成/为(&apos;/home/ben/sales&apos;, 3)</div></pre></td></tr></table></figure></p>
+<h4 id="取非匹配"><a href="#取非匹配" class="headerlink" title="取非匹配"></a>取非匹配</h4><p>我们使用正则表达式也不是都需要匹配集合其中的字符，有时也需要匹配非集合中的字符，在正则表达式中，我们可以使用<strong>^</strong>字符对集合进行取非操作<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+</pre></td><td class="code"><pre><span class="line">s = <span class="string">'na.txt'</span> \</span>
+<span class="line">    <span class="string">'na2.txt'</span> \</span>
+<span class="line">    <span class="string">'sa1.txt'</span> \</span>
+<span class="line">    <span class="string">'ca1.txt'</span> \</span>
+<span class="line">    <span class="string">'nam.txt'</span></span>
+<span class="line"></span>
+<span class="line">print(<span class="string">'限制a后面字符不为数字的结果为&#123;&#125;'</span>.format(re.findall(<span class="string">r'[ns]a[^0-9]\.txt'</span>, s)))</span>
+</pre></td></tr></table></figure></p>
+<p>结果为:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">限制a后面字符不为数字的结果为[&apos;nam.txt&apos;]</span>
+</pre></td></tr></table></figure></p>
+<h3 id="使用元字符"><a href="#使用元字符" class="headerlink" title="使用元字符"></a>使用元字符</h3><h4 id="对特殊字符进行转义"><a href="#对特殊字符进行转义" class="headerlink" title="对特殊字符进行转义"></a>对特殊字符进行转义</h4><p>使用<strong>\</strong>对元字符进行转义<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line">s = <span class="string">'list[0]   list[1]   list[2]'</span></span>
+<span class="line">print(<span class="string">'使用\对中括号进行转义使其匹配&#123;&#125;'</span>.format(re.findall(<span class="string">r'list\[[0-9]\]'</span>, s)))</span>
+<span class="line">path = <span class="string">'\home\\ben\sales'</span></span>
+<span class="line">print(<span class="string">'将\替换成/为&#123;&#125;'</span>.format(re.compile(<span class="string">r'\\'</span>).subn(<span class="string">'/'</span>, path)))</span>
+</pre></td></tr></table></figure></p>
+<p>结果为:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">使用\对中括号进行转义使其匹配[&apos;list[0]&apos;, &apos;list[1]&apos;, &apos;list[2]&apos;]</span>
+<span class="line">将\替换成/为(&apos;/home/ben/sales&apos;, 3)</span>
+</pre></td></tr></table></figure></p>
 <h4 id="匹配特定的字符类别"><a href="#匹配特定的字符类别" class="headerlink" title="匹配特定的字符类别"></a>匹配特定的字符类别</h4><p>空白元字符表                     </p>
 <table>
 <thead>
@@ -447,25 +543,53 @@
 </tr>
 </tbody>
 </table>
-<h3 id="重复匹配"><a href="#重复匹配" class="headerlink" title="重复匹配"></a>重复匹配</h3><h4 id="匹配一个或多个字符"><a href="#匹配一个或多个字符" class="headerlink" title="匹配一个或多个字符"></a>匹配一个或多个字符</h4><p>匹配同一个字符或(字符集合)的多次重复，只要在其后面加上一个+即可。<br>+匹配一个或多个字符(至少一个，不包含0个)<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">s = <span class="string">'1234545@qq.com   fdfsd@163.com test.sddf@163.com.cn'</span></div><div class="line">print(<span class="string">'匹配邮箱&#123;&#125;'</span>.format(re.findall(<span class="string">r'[\w.]+@[\w.]+\.\w+'</span>, s)))</div></pre></td></tr></table></figure></p>
-<p>结果为；<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">匹配邮箱[&apos;1234545@qq.com&apos;, &apos;fdfsd@163.com&apos;]</div></pre></td></tr></table></figure></p>
+<h3 id="重复匹配"><a href="#重复匹配" class="headerlink" title="重复匹配"></a>重复匹配</h3><h4 id="匹配一个或多个字符"><a href="#匹配一个或多个字符" class="headerlink" title="匹配一个或多个字符"></a>匹配一个或多个字符</h4><p>匹配同一个字符或(字符集合)的多次重复，只要在其后面加上一个+即可。<br>+匹配一个或多个字符(至少一个，不包含0个)<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">s = <span class="string">'1234545@qq.com   fdfsd@163.com test.sddf@163.com.cn'</span></span>
+<span class="line">print(<span class="string">'匹配邮箱&#123;&#125;'</span>.format(re.findall(<span class="string">r'[\w.]+@[\w.]+\.\w+'</span>, s)))</span>
+</pre></td></tr></table></figure></p>
+<p>结果为；<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">匹配邮箱[&apos;1234545@qq.com&apos;, &apos;fdfsd@163.com&apos;]</span>
+</pre></td></tr></table></figure></p>
 <h4 id="匹配零个或多个字符"><a href="#匹配零个或多个字符" class="headerlink" title="匹配零个或多个字符"></a>匹配零个或多个字符</h4><p><strong>*</strong> 和+类似，只是可以允许匹配0个或多个的情况</p>
 <h4 id="匹配零个或一个字符"><a href="#匹配零个或一个字符" class="headerlink" title="匹配零个或一个字符"></a>匹配零个或一个字符</h4><p><strong>？</strong>只能匹配一个字符(或字符集合)的零次或一次出现，最多不能超过一次。</p>
 <h4 id="匹配的重复次数"><a href="#匹配的重复次数" class="headerlink" title="匹配的重复次数"></a>匹配的重复次数</h4><ol>
-<li>使用<strong>{}</strong>将数值写在其中来表示重复次数 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">s = <span class="string">'123abc   45abc'</span></div><div class="line">print(<span class="string">'匹配三个数字&#123;&#125;'</span>.format(re.findall(<span class="string">r'\d&#123;3&#125;\w&#123;3&#125;'</span>, s)))</div></pre></td></tr></table></figure>
+<li>使用<strong>{}</strong>将数值写在其中来表示重复次数 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">s = <span class="string">'123abc   45abc'</span></span>
+<span class="line">print(<span class="string">'匹配三个数字&#123;&#125;'</span>.format(re.findall(<span class="string">r'\d&#123;3&#125;\w&#123;3&#125;'</span>, s)))</span>
+</pre></td></tr></table></figure>
 </li>
 </ol>
-<p>结果为:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">匹配三个数字[&apos;123abc&apos;]</div></pre></td></tr></table></figure></p>
+<p>结果为:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">匹配三个数字[&apos;123abc&apos;]</span>
+</pre></td></tr></table></figure></p>
 <ol>
-<li>为重复匹配次数设定一个区间<br>使用<strong>{a,b}</strong>的形式来确定区间，a为最少重复次数，b为最多重复次数<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">s = <span class="string">'4/8/03   '</span> \</div><div class="line">    <span class="string">'10-6-2004   '</span> \</div><div class="line">    <span class="string">'2/2/2   '</span> \</div><div class="line">    <span class="string">'01-01-01   '</span></div><div class="line"></div><div class="line">print(<span class="string">'匹配所有格式的日期&#123;&#125;'</span>.format(re.findall(<span class="string">r'\d&#123;1,2&#125;[-\/]\d&#123;1,2&#125;[-\/]\d&#123;2,4&#125;'</span>, s)))</div></pre></td></tr></table></figure>
+<li>为重复匹配次数设定一个区间<br>使用<strong>{a,b}</strong>的形式来确定区间，a为最少重复次数，b为最多重复次数<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+</pre></td><td class="code"><pre><span class="line">s = <span class="string">'4/8/03   '</span> \</span>
+<span class="line">    <span class="string">'10-6-2004   '</span> \</span>
+<span class="line">    <span class="string">'2/2/2   '</span> \</span>
+<span class="line">    <span class="string">'01-01-01   '</span></span>
+<span class="line"></span>
+<span class="line">print(<span class="string">'匹配所有格式的日期&#123;&#125;'</span>.format(re.findall(<span class="string">r'\d&#123;1,2&#125;[-\/]\d&#123;1,2&#125;[-\/]\d&#123;2,4&#125;'</span>, s)))</span>
+</pre></td></tr></table></figure>
 </li>
 </ol>
-<p>结果为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">匹配所有格式的日期[&apos;4/8/03&apos;, &apos;10-6-2004&apos;, &apos;01-01-01&apos;]</div></pre></td></tr></table></figure></p>
+<p>结果为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">匹配所有格式的日期[&apos;4/8/03&apos;, &apos;10-6-2004&apos;, &apos;01-01-01&apos;]</span>
+</pre></td></tr></table></figure></p>
 <ol>
 <li><p>匹配至少重复多少次<br>使用<strong>{a,}</strong>的形式的形式来确定最少重复的次数</p>
 </li>
 <li><p>防止过度匹配<br>*和+都是贪婪形元字符，使用他们在进行匹配时，会进可能的匹配而不是适可而止。他们会从一段文本的开头一直匹配到文本的末尾。在这种情况可能导致原本我们需要匹配多个结果，最后变成了一个结果,例如:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;B&gt;TEST&lt;/B&gt;AND &lt;B&gt;TEST1&lt;/B&gt;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">&lt;B&gt;TEST&lt;/B&gt;AND &lt;B&gt;TEST1&lt;/B&gt;</span>
+</pre></td></tr></table></figure>
 </li>
 </ol>
 <p>会被正则表达式&lt;[Bb]&gt;.*&lt;/[Bb]&gt;匹配为一个整体的结果<br>此时应该使用懒惰型版本<br>常用的贪婪性元字符和它们的懒惰型版本</p>
@@ -492,13 +616,53 @@
 </tbody>
 </table>
 <p>用懒惰型元字符时的正则表达式应是&lt;[Bb]&gt;.*?&lt;/[Bb]&gt;</p>
-<h3 id="位置匹配"><a href="#位置匹配" class="headerlink" title="位置匹配"></a>位置匹配</h3><h4 id="单词边界"><a href="#单词边界" class="headerlink" title="单词边界"></a>单词边界</h4><p>使用\b限定单词边界，用来匹配一个单词的开始或结尾<br>使用\B限定一个前后都不是单词边界的单词<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">s = <span class="string">'the cat scattered his food all over the room color - red'</span></div><div class="line">print(<span class="string">'匹配单词边界&#123;&#125;'</span>.format(re.findall(<span class="string">r'\bcat\b'</span>, s)))</div><div class="line">print(<span class="string">'不匹配单词边界&#123;&#125;'</span>.format(re.findall(<span class="string">r'\-\B'</span>, s)))</div></pre></td></tr></table></figure></p>
-<p>结果为:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">匹配单词边界[&apos;cat&apos;]</div><div class="line">不匹配单词边界[&apos;-&apos;]</div></pre></td></tr></table></figure></p>
+<h3 id="位置匹配"><a href="#位置匹配" class="headerlink" title="位置匹配"></a>位置匹配</h3><h4 id="单词边界"><a href="#单词边界" class="headerlink" title="单词边界"></a>单词边界</h4><p>使用\b限定单词边界，用来匹配一个单词的开始或结尾<br>使用\B限定一个前后都不是单词边界的单词<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line">s = <span class="string">'the cat scattered his food all over the room color - red'</span></span>
+<span class="line">print(<span class="string">'匹配单词边界&#123;&#125;'</span>.format(re.findall(<span class="string">r'\bcat\b'</span>, s)))</span>
+<span class="line">print(<span class="string">'不匹配单词边界&#123;&#125;'</span>.format(re.findall(<span class="string">r'\-\B'</span>, s)))</span>
+</pre></td></tr></table></figure></p>
+<p>结果为:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">匹配单词边界[&apos;cat&apos;]</span>
+<span class="line">不匹配单词边界[&apos;-&apos;]</span>
+</pre></td></tr></table></figure></p>
 <h4 id="字符串边界"><a href="#字符串边界" class="headerlink" title="字符串边界"></a>字符串边界</h4><p>^限定字符串开头，$限定字符串的结尾</p>
-<h3 id="使用子表达式"><a href="#使用子表达式" class="headerlink" title="使用子表达式"></a>使用子表达式</h3><p>用<strong>()</strong>来将需要的子表达式划分出来，子表达式可以嵌套<br>用<strong>|</strong>表示或，例如19|20表示为(19|20)匹配19或20<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">s = <span class="string">'hello &amp;nbsp;&amp;nbsp; the world'</span></div><div class="line">print(<span class="string">'匹配两个&amp;nbsp;的结果为&#123;&#125;'</span>.format(re.findall(<span class="string">r'(&amp;nbsp;)&#123;2,&#125;'</span>, s)))</div><div class="line"></div><div class="line">s = <span class="string">'ping 12.159.46.200'</span></div><div class="line">p = re.compile(<span class="string">r'(\d&#123;1,3&#125;\.)&#123;3&#125;\d&#123;1,3&#125;'</span>)</div><div class="line">print(<span class="string">'使用子表达式匹配ip地址为&#123;&#125;'</span>.format(p.findall(s)))</div><div class="line"></div><div class="line">s = <span class="string">'1997     2005'</span></div><div class="line">print(<span class="string">'&#123;&#125;'</span>.format(re.findall(<span class="string">r'(19|20)\d&#123;2&#125;'</span>, s)))</div></pre></td></tr></table></figure></p>
-<p>结果为:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">匹配两个&amp;nbsp;的结果为[&apos;&amp;nbsp;&amp;nbsp;&apos;]</div><div class="line">使用子表达式匹配ip地址为[&apos;12.159.46.200&apos;]</div><div class="line">[&apos;19&apos;, &apos;20&apos;]</div></pre></td></tr></table></figure></p>
-<h3 id="回溯引用，前后一致"><a href="#回溯引用，前后一致" class="headerlink" title="回溯引用，前后一致"></a>回溯引用，前后一致</h3><p>使用\n代表模式里的第几个子表达式<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">s = <span class="string">'this is and and or or not not'</span></div><div class="line">print(<span class="string">'&#123;&#125;'</span>.format(re.findall(<span class="string">r'[ ]+(\w+)[ ]+\1'</span>, s)))</div></pre></td></tr></table></figure></p>
-<p>结果为:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[&apos;and&apos;, &apos;or&apos;, &apos;not&apos;]</div></pre></td></tr></table></figure></p>
+<h3 id="使用子表达式"><a href="#使用子表达式" class="headerlink" title="使用子表达式"></a>使用子表达式</h3><p>用<strong>()</strong>来将需要的子表达式划分出来，子表达式可以嵌套<br>用<strong>|</strong>表示或，例如19|20表示为(19|20)匹配19或20<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+</pre></td><td class="code"><pre><span class="line">s = <span class="string">'hello &amp;nbsp;&amp;nbsp; the world'</span></span>
+<span class="line">print(<span class="string">'匹配两个&amp;nbsp;的结果为&#123;&#125;'</span>.format(re.findall(<span class="string">r'(&amp;nbsp;)&#123;2,&#125;'</span>, s)))</span>
+<span class="line"></span>
+<span class="line">s = <span class="string">'ping 12.159.46.200'</span></span>
+<span class="line">p = re.compile(<span class="string">r'(\d&#123;1,3&#125;\.)&#123;3&#125;\d&#123;1,3&#125;'</span>)</span>
+<span class="line">print(<span class="string">'使用子表达式匹配ip地址为&#123;&#125;'</span>.format(p.findall(s)))</span>
+<span class="line"></span>
+<span class="line">s = <span class="string">'1997     2005'</span></span>
+<span class="line">print(<span class="string">'&#123;&#125;'</span>.format(re.findall(<span class="string">r'(19|20)\d&#123;2&#125;'</span>, s)))</span>
+</pre></td></tr></table></figure></p>
+<p>结果为:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line">匹配两个&amp;nbsp;的结果为[&apos;&amp;nbsp;&amp;nbsp;&apos;]</span>
+<span class="line">使用子表达式匹配ip地址为[&apos;12.159.46.200&apos;]</span>
+<span class="line">[&apos;19&apos;, &apos;20&apos;]</span>
+</pre></td></tr></table></figure></p>
+<h3 id="回溯引用，前后一致"><a href="#回溯引用，前后一致" class="headerlink" title="回溯引用，前后一致"></a>回溯引用，前后一致</h3><p>使用\n代表模式里的第几个子表达式<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">s = <span class="string">'this is and and or or not not'</span></span>
+<span class="line">print(<span class="string">'&#123;&#125;'</span>.format(re.findall(<span class="string">r'[ ]+(\w+)[ ]+\1'</span>, s)))</span>
+</pre></td></tr></table></figure></p>
+<p>结果为:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">[&apos;and&apos;, &apos;or&apos;, &apos;not&apos;]</span>
+</pre></td></tr></table></figure></p>
 <blockquote>
 <p>注:</p>
 <ul>
@@ -507,8 +671,20 @@
 </ul>
 </blockquote>
 <h3 id="前后查找"><a href="#前后查找" class="headerlink" title="前后查找"></a>前后查找</h3><p>这种模式，包含的匹配本身并不返回，而是用于确定正确的匹配位置，它并不是匹配结果的一部分。<br>前后查找分为向前查找和向后查找，但常见的正则表达式实现都支持向前查找。所以只说明前者</p>
-<h4 id="向前查找"><a href="#向前查找" class="headerlink" title="向前查找"></a>向前查找</h4><p>向前查找指定了一个必须匹配但不在结果中返回的模式。向前查找实际就是一个子表达式。<br>从语法上看，一个向前查找模式就是一个以?=开头的子表达式，需要匹配的文本跟在=的后面。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">s = <span class="string">'http://www.baidu.com \n'</span> \</div><div class="line">    <span class="string">'https://www.baidu.com \n'</span> \</div><div class="line">    <span class="string">'ftp://ftp.baidu.com    \n'</span></div><div class="line"></div><div class="line">print(<span class="string">'向前查找url中的协议名为&#123;&#125;'</span>.format(re.findall(<span class="string">r'.&#123;3,6&#125;(?=:)'</span>, s)))</div></pre></td></tr></table></figure></p>
-<p>结果:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">向前查找url中的协议名为[&apos;http&apos;, &apos;https&apos;, &apos;ftp&apos;]</div></pre></td></tr></table></figure></p>
+<h4 id="向前查找"><a href="#向前查找" class="headerlink" title="向前查找"></a>向前查找</h4><p>向前查找指定了一个必须匹配但不在结果中返回的模式。向前查找实际就是一个子表达式。<br>从语法上看，一个向前查找模式就是一个以?=开头的子表达式，需要匹配的文本跟在=的后面。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line">s = <span class="string">'http://www.baidu.com \n'</span> \</span>
+<span class="line">    <span class="string">'https://www.baidu.com \n'</span> \</span>
+<span class="line">    <span class="string">'ftp://ftp.baidu.com    \n'</span></span>
+<span class="line"></span>
+<span class="line">print(<span class="string">'向前查找url中的协议名为&#123;&#125;'</span>.format(re.findall(<span class="string">r'.&#123;3,6&#125;(?=:)'</span>, s)))</span>
+</pre></td></tr></table></figure></p>
+<p>结果:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">向前查找url中的协议名为[&apos;http&apos;, &apos;https&apos;, &apos;ftp&apos;]</span>
+</pre></td></tr></table></figure></p>
 <h4 id="向后查找"><a href="#向后查找" class="headerlink" title="向后查找"></a>向后查找</h4><p>与向前查找相类似，查找出现在被匹配文本之前的字符（但不消费它）,向后查找的操作符使?&lt;=</p>
 <h3 id="嵌入条件"><a href="#嵌入条件" class="headerlink" title="嵌入条件"></a>嵌入条件</h3><p>正则表达式里的条件要用?来定义</p>
 <ul>
@@ -532,17 +708,17 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/07/23/RegularExpression_study/">正则表达式学习笔记</a></p>
-        <p><span>文章作者:</span><a href="/" title="回到主页">EarthChen</a></p>
-        <p><span>发布时间:</span>2017-07-23, 14:55:00</p>
-        <p><span>最后更新:</span>2017-08-01, 12:42:32</p>
+        <p><span>Title:</span><a href="/2017/07/23/RegularExpression_study/">正则表达式学习笔记</a></p>
+        <p><span>Author:</span><a href="/" title="Back to Homepage">EarthChen</a></p>
+        <p><span>Created:</span>2017-07-23, 14:55:00</p>
+        <p><span>Updated:</span>2017-08-01, 12:42:32</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/07/23/RegularExpression_study/" title="正则表达式学习笔记">http://earthchen.cn/2017/07/23/RegularExpression_study/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://earthchen.cn/2017/07/23/RegularExpression_study/　　作者: EarthChen" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>Full URL:</span><a class="post-url" href="/2017/07/23/RegularExpression_study/" title="正则表达式学习笔记">http://earthchen.cn/2017/07/23/RegularExpression_study/</a>
+            <span class="copy-path" data-clipboard-text="From http://earthchen.cn/2017/07/23/RegularExpression_study/　　By EarthChen" title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
-            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+            <span>License:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"CC BY-NC-SA 4.0"</a> Keep Link &amp; Author if Distribute.
         </p>
     </div>
 
@@ -569,7 +745,7 @@
 </article>
 
     <div id="toc" class="toc-article">
-        <strong class="toc-title">文章目录</strong>
+        <strong class="toc-title">Contents</strong>
         
             <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Regular-Expression"><span class="toc-number">1.</span> <span class="toc-text">Regular Expression</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#匹配单个字符"><span class="toc-number">1.1.</span> <span class="toc-text">匹配单个字符</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#匹配纯文本"><span class="toc-number">1.1.1.</span> <span class="toc-text">匹配纯文本</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#匹配任意字符"><span class="toc-number">1.1.2.</span> <span class="toc-text">匹配任意字符</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#匹配一组字符"><span class="toc-number">1.2.</span> <span class="toc-text">匹配一组字符</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#匹配多个字符中的某一个"><span class="toc-number">1.2.1.</span> <span class="toc-text">匹配多个字符中的某一个</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#取非匹配"><span class="toc-number">1.2.2.</span> <span class="toc-text">取非匹配</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用元字符"><span class="toc-number">1.3.</span> <span class="toc-text">使用元字符</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#对特殊字符进行转义"><span class="toc-number">1.3.1.</span> <span class="toc-text">对特殊字符进行转义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#匹配特定的字符类别"><span class="toc-number">1.3.2.</span> <span class="toc-text">匹配特定的字符类别</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#重复匹配"><span class="toc-number">1.4.</span> <span class="toc-text">重复匹配</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#匹配一个或多个字符"><span class="toc-number">1.4.1.</span> <span class="toc-text">匹配一个或多个字符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#匹配零个或多个字符"><span class="toc-number">1.4.2.</span> <span class="toc-text">匹配零个或多个字符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#匹配零个或一个字符"><span class="toc-number">1.4.3.</span> <span class="toc-text">匹配零个或一个字符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#匹配的重复次数"><span class="toc-number">1.4.4.</span> <span class="toc-text">匹配的重复次数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#位置匹配"><span class="toc-number">1.5.</span> <span class="toc-text">位置匹配</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#单词边界"><span class="toc-number">1.5.1.</span> <span class="toc-text">单词边界</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#字符串边界"><span class="toc-number">1.5.2.</span> <span class="toc-text">字符串边界</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用子表达式"><span class="toc-number">1.6.</span> <span class="toc-text">使用子表达式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#回溯引用，前后一致"><span class="toc-number">1.7.</span> <span class="toc-text">回溯引用，前后一致</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#前后查找"><span class="toc-number">1.8.</span> <span class="toc-text">前后查找</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#向前查找"><span class="toc-number">1.8.1.</span> <span class="toc-text">向前查找</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#向后查找"><span class="toc-number">1.8.2.</span> <span class="toc-text">向后查找</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#嵌入条件"><span class="toc-number">1.9.</span> <span class="toc-text">嵌入条件</span></a></li></ol></li></ol>
         
@@ -585,10 +761,10 @@
         }
     </style>
 
-    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+    <input type="button" id="tocButton" value="Hide"  title="Show or Hide Table of Contents">
 
     <script>
-        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+        yiliaConfig.toc = ["Hide", "Show", !!"false"];
     </script>
 
 
@@ -641,21 +817,21 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2017/07/27/Webpack_study/" title="上一篇: Webpack学习笔记">
+            <a href="/2017/07/27/Webpack_study/" title="Pre: Webpack学习笔记">
                 <i class="fa fa-angle-left"></i>
             </a>
         
 
-        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        <a title="Mini Archives"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2017/07/08/AndroidStudio/" title="下一篇: Android Studio 使用本地离线Gradle">
+            <a href="/2017/07/08/AndroidStudio/" title="Next: Android Studio 使用本地离线Gradle">
                 <i class="fa fa-angle-right"></i>
             </a>
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/04/01/httpclientutil/">HttpClient工具类</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/14/qiniu-oss/">spring boot使用七牛云的oss(对象存储)文件上传</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/spring-boot-shiro-jwt/">spring boot集成shiro使用jwt进行权限控制</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/requestHolder_and_argumentResolver/">使用ThreadLocal和ArgumentResolver方便开发</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/applicationContextHelper/">在不被spring容器管理的类中使用ApplicationContext应用上下文bean</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_static_class_autowrite/">Spring boot 在静态类中注入spring组件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_diy_properties/">Spring boot 自定义配置文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/12/Elasticsearch_study_1/">Elasticsearch学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/09/深入理解java虚拟机学习笔记_1/">深入理解java虚拟机学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/23/Docker_study_Dockerfile_instructions/">Docker学习笔记---Dockerfile</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/22/Docker_study/">Docker学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/20/celery_study/">Celery-分布式任务队列学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_redis_cache/">Django使用redis作为缓存系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_channels_websocket/">Django使用Channels实现websocket</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/13/Docker_Gogs/">使用Docker搭建git服务Gogs</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_1to20/">LeetCode刷题记录(easy难度1-20题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_21to_40/">LeetCode刷题记录(easy难度21-40题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/29/es6_study/">es6学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/Webpack_study/">Webpack学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/RegularExpression_study/">正则表达式学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/08/AndroidStudio/">Android Studio 使用本地离线Gradle</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/跨域请求解决方案/">跨域请求的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_nginx_gunicorn/">django+nginx+gunicorn部署配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/ubuntu_supervisor/">ubuntu下的进程控制系统————Supervisor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/28/ubuntu修复不能挂载NTFS硬盘/">ubuntu修复linux和windows双系统下挂载ntfs硬盘出错问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/17/django_timing_task/">django使用django-crontab实现定时任务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/15/django_rest_framework_jwt/">django-rest-framework配置json web token进行接口的认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/django_rest_framework_study/">django-rest-framework框架学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/spring_SpEL/">spring中的SpEL表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/08/git_study/">Git学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/03/资源收集/">资源收集共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/06/ubuntu_open_port/">ubuntu开放指定端口</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/16/redis_study_2/">Redis学习笔记 -- 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/15/redis_study_1/">Redis学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/16/ubuntu_do_something_use/">ubuntu日常使用的安装配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/ubuntu_do_something_coding/">ubuntu搭建常见开发环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/django_address_baiduapi_marker_show/">Django调用百度地图api在地图上批量增加标记点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/10/ubuntu安装在双系统笔记本下开机或关机卡死.1/">ubuntu在双系统下开机卡死或关机卡死的解决办法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/11/python_requirements/">python生成项目所需依赖文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/10/hexo_github_coding_blog/">利用hexo和github或coding 搭免费个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django常用语句/">Django常用语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/python2和Python3的区别/">Python2和Python3的区别简单总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django连接mysql数据库/">Django连接MySql使用models处理数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django数据库操作/">Django操作数据库</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django环境搭建/">Django环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django渲染模板/">Django渲染模板</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/03/Android_qq_Menu/">Android仿qq侧滑菜单</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/16/C语言队列的基本操作/">C语言队列的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/c语言中缀表达式变后缀表达式/">C语言中缀表达式转后缀表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言逆波兰计算器/">C语言逆波兰表达式计算(后缀表达式计算器)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言共享栈/">C语言共享栈</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言二叉树基本操作/">C语言二叉树的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言中缀表达式计算器/">C语言中缀表达式计算器</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/04/01/httpclientutil/">HttpClient工具类</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/14/qiniu-oss/">spring boot使用七牛云的oss(对象存储)文件上传</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/spring-boot-shiro-jwt/">spring boot集成shiro使用jwt进行权限控制</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/requestHolder_and_argumentResolver/">使用ThreadLocal和ArgumentResolver方便开发</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/applicationContextHelper/">在不被spring容器管理的类中使用ApplicationContext应用上下文bean</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_static_class_autowrite/">Spring boot 在静态类中注入spring组件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_diy_properties/">Spring boot 自定义配置文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/12/Elasticsearch_study_1/">Elasticsearch学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/09/深入理解java虚拟机学习笔记_1/">深入理解java虚拟机学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/23/Docker_study_Dockerfile_instructions/">Docker学习笔记---Dockerfile</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/22/Docker_study/">Docker学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/20/celery_study/">Celery-分布式任务队列学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_redis_cache/">Django使用redis作为缓存系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_channels_websocket/">Django使用Channels实现websocket</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/13/Docker_Gogs/">使用Docker搭建git服务Gogs</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_1to20/">LeetCode刷题记录(easy难度1-20题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_21to_40/">LeetCode刷题记录(easy难度21-40题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/29/es6_study/">es6学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/Webpack_study/">Webpack学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/RegularExpression_study/">正则表达式学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/08/AndroidStudio/">Android Studio 使用本地离线Gradle</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/跨域请求解决方案/">跨域请求的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/ubuntu_supervisor/">ubuntu下的进程控制系统————Supervisor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_nginx_gunicorn/">django+nginx+gunicorn部署配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/28/ubuntu修复不能挂载NTFS硬盘/">ubuntu修复linux和windows双系统下挂载ntfs硬盘出错问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/17/django_timing_task/">django使用django-crontab实现定时任务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/15/django_rest_framework_jwt/">django-rest-framework配置json web token进行接口的认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/django_rest_framework_study/">django-rest-framework框架学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/spring_SpEL/">spring中的SpEL表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/08/git_study/">Git学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/03/资源收集/">资源收集共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/06/ubuntu_open_port/">ubuntu开放指定端口</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/16/redis_study_2/">Redis学习笔记 -- 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/15/redis_study_1/">Redis学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/16/ubuntu_do_something_use/">ubuntu日常使用的安装配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/django_address_baiduapi_marker_show/">Django调用百度地图api在地图上批量增加标记点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/ubuntu_do_something_coding/">ubuntu搭建常见开发环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/10/ubuntu安装在双系统笔记本下开机或关机卡死.1/">ubuntu在双系统下开机卡死或关机卡死的解决办法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/11/python_requirements/">python生成项目所需依赖文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/10/hexo_github_coding_blog/">利用hexo和github或coding 搭免费个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django环境搭建/">Django环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django连接mysql数据库/">Django连接MySql使用models处理数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django渲染模板/">Django渲染模板</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django常用语句/">Django常用语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django数据库操作/">Django操作数据库</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/python2和Python3的区别/">Python2和Python3的区别简单总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/03/Android_qq_Menu/">Android仿qq侧滑菜单</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/16/C语言队列的基本操作/">C语言队列的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言共享栈/">C语言共享栈</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言二叉树基本操作/">C语言二叉树的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言逆波兰计算器/">C语言逆波兰表达式计算(后缀表达式计算器)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言中缀表达式计算器/">C语言中缀表达式计算器</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/c语言中缀表达式变后缀表达式/">C语言中缀表达式转后缀表达式</a></li></ul>
 
 
 
@@ -672,14 +848,14 @@
                 2016-2018 EarthChen
             </div>
             <div class="footer-right">
-                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+                <a href="http://hexo.io/" target="_blank" title="A fast, simple &amp; powerful blog framework">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Another simple and elegant theme for Hexo  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
             </div>
         </div>
         
             <div class="visit">
                 
                     <span id="busuanzi_container_site_pv" style='display:none'>
-                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        <span id="site-visit" title="Site Visitors"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
                         </span>
                     </span>
                 
@@ -688,7 +864,7 @@
                 
                 
                     <span id="busuanzi_container_page_pv" style='display:none'>
-                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        <span id="page-visit"  title="Page Hits"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
                         </span>
                     </span>
                 
@@ -723,9 +899,9 @@
 
 
 <div class="scroll" id="scroll">
-    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
-    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
-    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+    <a href="#" title="Back to Top"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="Comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="Go to Bottom"><i class="fa fa-arrow-down"></i></a>
 </div>
 <script>
     // Open in New Window

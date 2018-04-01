@@ -158,13 +158,13 @@
                 <div class="tips-box hide">
                     <div class="tips-arrow"></div>
                     <ul class="tips-inner">
-                        <li>菜单</li>
-                        <li>标签</li>
+                        <li>Menu</li>
+                        <li>Tags</li>
                         
-                        <li>友情链接</li>
+                        <li>Friends</li>
                         
                         
-                        <li>关于我</li>
+                        <li>About Me</li>
                         
                     </ul>
                 </div>
@@ -294,7 +294,7 @@
             </nav>
         </header>                
     </div>
-    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+    <link class="menu-list" tags="Tags" friends="Friends" about="About Me"/>
 </nav>
       <div class="body-wrap"><article id="post-跨域请求解决方案" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -343,28 +343,174 @@
         <p>在请求或提供api的时候，我们经常会遇到跨域问题，这是由于安全问题，但是有时候我们必须去允许跨域请求，不然我们将拿不到后端传过来的数据<br>所以，笔者在这里总结了一下相关解决方案</p>
 <h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><a id="more"></a>
 <h3 id="使用jsonp解决"><a href="#使用jsonp解决" class="headerlink" title="使用jsonp解决"></a>使用jsonp解决</h3><p>使用jsonp方式去请求数据能以get方式请求，但是不能以post方式发送数据<br>使用这种方式需要前后段都做相应的修改</p>
-<h4 id="前端"><a href="#前端" class="headerlink" title="前端"></a>前端</h4><p>笔者这里使用jQuery来进行ajax请求<br>我们需要在前端请求的url中添加一个callback回调参数<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;script&gt;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        $.getJSON(<span class="string">"http://10.127.48.204:8000/snippets/1/?callback=?"</span>,  <span class="comment">//注意结尾的callback</span></div><div class="line">            <span class="function"><span class="keyword">function</span> (<span class="params">result</span>) </span>&#123;</div><div class="line">                <span class="keyword">if</span> (result) &#123;</div><div class="line">                    <span class="built_in">document</span>.write(result.style);</div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line">    &#125;</div><div class="line">&lt;<span class="regexp">/script&gt;</span></div></pre></td></tr></table></figure></p>
-<h4 id="后端"><a href="#后端" class="headerlink" title="后端"></a>后端</h4><p>笔者这里是用的django的后台，其他语言自行探索一下，都是大同小异的<br>定义好路由之后，我们只需要在view里进行一点简单的修改就好<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">(request)</span>:</span></div><div class="line">   callback = request.GET[<span class="string">'callback'</span>]</div><div class="line">   <span class="keyword">return</span> HttpResponse(<span class="string">'%s(%s)'</span> % (callback,json.dumps(&#123;<span class="string">'name'</span>: <span class="string">'test'</span>&#125;)))</div></pre></td></tr></table></figure></p>
+<h4 id="前端"><a href="#前端" class="headerlink" title="前端"></a>前端</h4><p>笔者这里使用jQuery来进行ajax请求<br>我们需要在前端请求的url中添加一个callback回调参数<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+</pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span>
+<span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>) </span>&#123;</span>
+<span class="line">        $.getJSON(<span class="string">"http://10.127.48.204:8000/snippets/1/?callback=?"</span>,  <span class="comment">//注意结尾的callback</span></span>
+<span class="line">            <span class="function"><span class="keyword">function</span> (<span class="params">result</span>) </span>&#123;</span>
+<span class="line">                <span class="keyword">if</span> (result) &#123;</span>
+<span class="line">                    <span class="built_in">document</span>.write(result.style);</span>
+<span class="line">                &#125;</span>
+<span class="line">            &#125;);</span>
+<span class="line">    &#125;</span>
+<span class="line">&lt;<span class="regexp">/script&gt;</span></span>
+</pre></td></tr></table></figure></p>
+<h4 id="后端"><a href="#后端" class="headerlink" title="后端"></a>后端</h4><p>笔者这里是用的django的后台，其他语言自行探索一下，都是大同小异的<br>定义好路由之后，我们只需要在view里进行一点简单的修改就好<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">(request)</span>:</span></span>
+<span class="line">   callback = request.GET[<span class="string">'callback'</span>]</span>
+<span class="line">   <span class="keyword">return</span> HttpResponse(<span class="string">'%s(%s)'</span> % (callback,json.dumps(&#123;<span class="string">'name'</span>: <span class="string">'test'</span>&#125;)))</span>
+</pre></td></tr></table></figure></p>
 <p>得到ajax传来的callback然后返回就好</p>
 <p>这样就实现了很简单的跨域请求数据，不过需要前后端都进行支持，比较麻烦。。。。。</p>
-<h3 id="修改请求头解决"><a href="#修改请求头解决" class="headerlink" title="修改请求头解决"></a>修改请求头解决</h3><p>在后端直接修改允许的请求头<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">myview</span><span class="params">(request)</span>:</span> </div><div class="line">    response = HttpResponse(json.dumps(&#123;“key”: “value”, “key2”: “value”&#125;)) </div><div class="line">    response[“Access-Control-Allow-Origin”] = “*” </div><div class="line">    response[“Access-Control-Allow-Methods”] = “POST, GET, OPTIONS” </div><div class="line">    response[“Access-Control-Max-Age”] = “<span class="number">1000</span>” </div><div class="line">    response[“Access-Control-Allow-Headers”] = “*” </div><div class="line">    <span class="keyword">return</span> response</div></pre></td></tr></table></figure></p>
+<h3 id="修改请求头解决"><a href="#修改请求头解决" class="headerlink" title="修改请求头解决"></a>修改请求头解决</h3><p>在后端直接修改允许的请求头<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">myview</span><span class="params">(request)</span>:</span> </span>
+<span class="line">    response = HttpResponse(json.dumps(&#123;“key”: “value”, “key2”: “value”&#125;)) </span>
+<span class="line">    response[“Access-Control-Allow-Origin”] = “*” </span>
+<span class="line">    response[“Access-Control-Allow-Methods”] = “POST, GET, OPTIONS” </span>
+<span class="line">    response[“Access-Control-Max-Age”] = “<span class="number">1000</span>” </span>
+<span class="line">    response[“Access-Control-Allow-Headers”] = “*” </span>
+<span class="line">    <span class="keyword">return</span> response</span>
+</pre></td></tr></table></figure></p>
 <h3 id="安装django-cors-headers解决"><a href="#安装django-cors-headers解决" class="headerlink" title="安装django-cors-headers解决"></a>安装django-cors-headers解决</h3><p>笔者用的是django，刚好有人写好了一个库</p>
-<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install django-cors-headers</div></pre></td></tr></table></figure>
-<h4 id="在settings-py中设置"><a href="#在settings-py中设置" class="headerlink" title="在settings.py中设置"></a>在<strong>settings.py</strong>中设置</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">INSTALLED_APPS = [</div><div class="line">    ...</div><div class="line">    <span class="string">'corsheaders'</span>，</div><div class="line">    ...</div><div class="line"> ] </div><div class="line"></div><div class="line">MIDDLEWARE_CLASSES = (</div><div class="line">    ...</div><div class="line">    <span class="string">'corsheaders.middleware.CorsMiddleware'</span>,</div><div class="line">    <span class="string">'django.middleware.common.CommonMiddleware'</span>, <span class="comment"># 注意顺序</span></div><div class="line">    ...</div><div class="line">)</div><div class="line"></div><div class="line">CORS_ORIGIN_WHITELIST = (</div><div class="line">    <span class="comment">#'*'</span></div><div class="line">    <span class="string">'127.0.0.1:8080'</span>,<span class="comment"># 请求的域名</span></div><div class="line">    <span class="string">'localhost:8080'</span>,</div><div class="line">    <span class="string">'localhost'</span>,</div><div class="line">)</div></pre></td></tr></table></figure>
+<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">pip install django-cors-headers</span>
+</pre></td></tr></table></figure>
+<h4 id="在settings-py中设置"><a href="#在settings-py中设置" class="headerlink" title="在settings.py中设置"></a>在<strong>settings.py</strong>中设置</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+</pre></td><td class="code"><pre><span class="line">INSTALLED_APPS = [</span>
+<span class="line">    ...</span>
+<span class="line">    <span class="string">'corsheaders'</span>，</span>
+<span class="line">    ...</span>
+<span class="line"> ] </span>
+<span class="line"></span>
+<span class="line">MIDDLEWARE_CLASSES = (</span>
+<span class="line">    ...</span>
+<span class="line">    <span class="string">'corsheaders.middleware.CorsMiddleware'</span>,</span>
+<span class="line">    <span class="string">'django.middleware.common.CommonMiddleware'</span>, <span class="comment"># 注意顺序</span></span>
+<span class="line">    ...</span>
+<span class="line">)</span>
+<span class="line"></span>
+<span class="line">CORS_ORIGIN_WHITELIST = (</span>
+<span class="line">    <span class="comment">#'*'</span></span>
+<span class="line">    <span class="string">'127.0.0.1:8080'</span>,<span class="comment"># 请求的域名</span></span>
+<span class="line">    <span class="string">'localhost:8080'</span>,</span>
+<span class="line">    <span class="string">'localhost'</span>,</span>
+<span class="line">)</span>
+</pre></td></tr></table></figure>
 <p>配置好允许的域就可以跨域了</p>
 <h3 id="在服务器端-nginx-解决"><a href="#在服务器端-nginx-解决" class="headerlink" title="在服务器端(nginx)解决"></a>在服务器端(nginx)解决</h3><p>笔者认为这是最经济划算的一种方法，这样前后端代码就都不需要更改，依然按之前的就可以了<br>但在服务端也有两种方式：</p>
 <ol>
 <li>修改请求头</li>
 <li>进行反向代理</li>
 </ol>
-<h4 id="修改请求头"><a href="#修改请求头" class="headerlink" title="修改请求头"></a>修改请求头</h4><p>在nginx的配置文件里添加如下配置即可<br><strong>nginx.conf</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">http &#123;</div><div class="line">  ......</div><div class="line">  add_header Access-Control-Allow-Origin *;</div><div class="line">  add_header Access-Control-Allow-Headers X-Requested-With;</div><div class="line">  add_header Access-Control-Allow-Methods GET,POST,OPTIONS;</div><div class="line">  ......</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="修改请求头"><a href="#修改请求头" class="headerlink" title="修改请求头"></a>修改请求头</h4><p>在nginx的配置文件里添加如下配置即可<br><strong>nginx.conf</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+</pre></td><td class="code"><pre><span class="line">http &#123;</span>
+<span class="line">  ......</span>
+<span class="line">  add_header Access-Control-Allow-Origin *;</span>
+<span class="line">  add_header Access-Control-Allow-Headers X-Requested-With;</span>
+<span class="line">  add_header Access-Control-Allow-Methods GET,POST,OPTIONS;</span>
+<span class="line">  ......</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure></p>
 <p>这样就可以实现GET,POST,OPTIONS的跨域请求的支持<br>也可以 add_header Access-Control-Allow-Origin <a href="http://127.0.0.1:8000" target="_blank" rel="external">http://127.0.0.1:8000</a>; –指定允许的url;</p>
-<h4 id="进行反向代理"><a href="#进行反向代理" class="headerlink" title="进行反向代理"></a>进行反向代理</h4><p>同样在万能的nginx配置文件修改即可<br><strong>/etc/nginx/sites-enabled/8001test</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">    listen 8001;</div><div class="line">    server_name _;</div><div class="line">    index index.html;</div><div class="line">    location / &#123;</div><div class="line">        try_files <span class="variable">$uri</span> <span class="variable">$uri</span>/ =404;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    location /apis &#123;</div><div class="line">        rewrite ^.+apis/?(.*)$ /<span class="variable">$1</span> <span class="built_in">break</span>;</div><div class="line">        include uwsgi_params;</div><div class="line">        proxy_pass http://127.0.0.1:8000;  <span class="comment">#需要代理到的地址</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="进行反向代理"><a href="#进行反向代理" class="headerlink" title="进行反向代理"></a>进行反向代理</h4><p>同样在万能的nginx配置文件修改即可<br><strong>/etc/nginx/sites-enabled/8001test</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+</pre></td><td class="code"><pre><span class="line">server &#123;</span>
+<span class="line">    listen 8001;</span>
+<span class="line">    server_name _;</span>
+<span class="line">    index index.html;</span>
+<span class="line">    location / &#123;</span>
+<span class="line">        try_files <span class="variable">$uri</span> <span class="variable">$uri</span>/ =404;</span>
+<span class="line">    &#125;</span>
+<span class="line">    </span>
+<span class="line">    location /apis &#123;</span>
+<span class="line">        rewrite ^.+apis/?(.*)$ /<span class="variable">$1</span> <span class="built_in">break</span>;</span>
+<span class="line">        include uwsgi_params;</span>
+<span class="line">        proxy_pass http://127.0.0.1:8000;  <span class="comment">#需要代理到的地址</span></span>
+<span class="line">    &#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure></p>
 <blockquote>
 <p>注：</p>
 <ul>
 <li>/apis是需要在请求中加的前缀，请求到这个参数会通过转换url然后代理到新的地址</li>
-<li>proxy_pass <a href="http://127.0.0.1:8000" target="_blank" rel="external">http://127.0.0.1:8000</a>  需要代理到的地址<br>前端只需要在请求url中加个apis前缀就好<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;script type=<span class="string">"text/javascript"</span>&gt;</div><div class="line"><span class="comment">//利用反向代理解决跨域测试</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">nginx_test</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    $.ajax(&#123;</div><div class="line">        <span class="attr">url</span>: <span class="string">"/apis/test/"</span>,</div><div class="line">        <span class="attr">type</span>:<span class="string">"get"</span>,</div><div class="line">        <span class="attr">success</span>:<span class="function"><span class="keyword">function</span>(<span class="params">result</span>)</span>&#123;</div><div class="line">            alert(result.name);</div><div class="line">        &#125;</div><div class="line">    &#125;)</div><div class="line">&#125;</div><div class="line">&lt;<span class="regexp">/script&gt;</span></div></pre></td></tr></table></figure>
+<li>proxy_pass <a href="http://127.0.0.1:8000" target="_blank" rel="external">http://127.0.0.1:8000</a>  需要代理到的地址<br>前端只需要在请求url中加个apis前缀就好<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+</pre></td><td class="code"><pre><span class="line">&lt;script type=<span class="string">"text/javascript"</span>&gt;</span>
+<span class="line"><span class="comment">//利用反向代理解决跨域测试</span></span>
+<span class="line"><span class="function"><span class="keyword">function</span> <span class="title">nginx_test</span>(<span class="params"></span>)</span>&#123;</span>
+<span class="line">    $.ajax(&#123;</span>
+<span class="line">        <span class="attr">url</span>: <span class="string">"/apis/test/"</span>,</span>
+<span class="line">        <span class="attr">type</span>:<span class="string">"get"</span>,</span>
+<span class="line">        <span class="attr">success</span>:<span class="function"><span class="keyword">function</span>(<span class="params">result</span>)</span>&#123;</span>
+<span class="line">            alert(result.name);</span>
+<span class="line">        &#125;</span>
+<span class="line">    &#125;)</span>
+<span class="line">&#125;</span>
+<span class="line">&lt;<span class="regexp">/script&gt;</span></span>
+</pre></td></tr></table></figure>
 </li>
 </ul>
 </blockquote>
@@ -384,17 +530,17 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/06/30/跨域请求解决方案/">跨域请求的解决方案</a></p>
-        <p><span>文章作者:</span><a href="/" title="回到主页">EarthChen</a></p>
-        <p><span>发布时间:</span>2017-06-30, 19:40:00</p>
-        <p><span>最后更新:</span>2017-08-06, 17:44:15</p>
+        <p><span>Title:</span><a href="/2017/06/30/跨域请求解决方案/">跨域请求的解决方案</a></p>
+        <p><span>Author:</span><a href="/" title="Back to Homepage">EarthChen</a></p>
+        <p><span>Created:</span>2017-06-30, 19:40:00</p>
+        <p><span>Updated:</span>2017-08-06, 17:44:15</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/06/30/跨域请求解决方案/" title="跨域请求的解决方案">http://earthchen.cn/2017/06/30/跨域请求解决方案/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://earthchen.cn/2017/06/30/跨域请求解决方案/　　作者: EarthChen" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>Full URL:</span><a class="post-url" href="/2017/06/30/跨域请求解决方案/" title="跨域请求的解决方案">http://earthchen.cn/2017/06/30/跨域请求解决方案/</a>
+            <span class="copy-path" data-clipboard-text="From http://earthchen.cn/2017/06/30/跨域请求解决方案/　　By EarthChen" title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
-            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+            <span>License:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"CC BY-NC-SA 4.0"</a> Keep Link &amp; Author if Distribute.
         </p>
     </div>
 
@@ -410,8 +556,8 @@
         
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2017/06/30/django_nginx_gunicorn/">
-                    django+nginx+gunicorn部署配置
+                <a href="/2017/06/30/ubuntu_supervisor/">
+                    ubuntu下的进程控制系统————Supervisor
                 </a>
             </div>
         
@@ -421,7 +567,7 @@
 </article>
 
     <div id="toc" class="toc-article">
-        <strong class="toc-title">文章目录</strong>
+        <strong class="toc-title">Contents</strong>
         
             <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#解决方案"><span class="toc-number">1.</span> <span class="toc-text">解决方案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用jsonp解决"><span class="toc-number">1.1.</span> <span class="toc-text">使用jsonp解决</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#前端"><span class="toc-number">1.1.1.</span> <span class="toc-text">前端</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#后端"><span class="toc-number">1.1.2.</span> <span class="toc-text">后端</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修改请求头解决"><span class="toc-number">1.2.</span> <span class="toc-text">修改请求头解决</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装django-cors-headers解决"><span class="toc-number">1.3.</span> <span class="toc-text">安装django-cors-headers解决</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#安装"><span class="toc-number">1.3.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#在settings-py中设置"><span class="toc-number">1.3.2.</span> <span class="toc-text">在settings.py中设置</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在服务器端-nginx-解决"><span class="toc-number">1.4.</span> <span class="toc-text">在服务器端(nginx)解决</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#修改请求头"><span class="toc-number">1.4.1.</span> <span class="toc-text">修改请求头</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#进行反向代理"><span class="toc-number">1.4.2.</span> <span class="toc-text">进行反向代理</span></a></li></ol></li></ol></li></ol>
         
@@ -437,10 +583,10 @@
         }
     </style>
 
-    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+    <input type="button" id="tocButton" value="Hide"  title="Show or Hide Table of Contents">
 
     <script>
-        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+        yiliaConfig.toc = ["Hide", "Show", !!"false"];
     </script>
 
 
@@ -493,21 +639,21 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2017/07/08/AndroidStudio/" title="上一篇: Android Studio 使用本地离线Gradle">
+            <a href="/2017/07/08/AndroidStudio/" title="Pre: Android Studio 使用本地离线Gradle">
                 <i class="fa fa-angle-left"></i>
             </a>
         
 
-        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        <a title="Mini Archives"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2017/06/30/django_nginx_gunicorn/" title="下一篇: django+nginx+gunicorn部署配置">
+            <a href="/2017/06/30/ubuntu_supervisor/" title="Next: ubuntu下的进程控制系统————Supervisor">
                 <i class="fa fa-angle-right"></i>
             </a>
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/04/01/httpclientutil/">HttpClient工具类</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/14/qiniu-oss/">spring boot使用七牛云的oss(对象存储)文件上传</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/spring-boot-shiro-jwt/">spring boot集成shiro使用jwt进行权限控制</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/requestHolder_and_argumentResolver/">使用ThreadLocal和ArgumentResolver方便开发</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/applicationContextHelper/">在不被spring容器管理的类中使用ApplicationContext应用上下文bean</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_static_class_autowrite/">Spring boot 在静态类中注入spring组件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_diy_properties/">Spring boot 自定义配置文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/12/Elasticsearch_study_1/">Elasticsearch学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/09/深入理解java虚拟机学习笔记_1/">深入理解java虚拟机学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/23/Docker_study_Dockerfile_instructions/">Docker学习笔记---Dockerfile</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/22/Docker_study/">Docker学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/20/celery_study/">Celery-分布式任务队列学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_redis_cache/">Django使用redis作为缓存系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_channels_websocket/">Django使用Channels实现websocket</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/13/Docker_Gogs/">使用Docker搭建git服务Gogs</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_1to20/">LeetCode刷题记录(easy难度1-20题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_21to_40/">LeetCode刷题记录(easy难度21-40题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/29/es6_study/">es6学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/Webpack_study/">Webpack学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/RegularExpression_study/">正则表达式学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/08/AndroidStudio/">Android Studio 使用本地离线Gradle</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/跨域请求解决方案/">跨域请求的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_nginx_gunicorn/">django+nginx+gunicorn部署配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/ubuntu_supervisor/">ubuntu下的进程控制系统————Supervisor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/28/ubuntu修复不能挂载NTFS硬盘/">ubuntu修复linux和windows双系统下挂载ntfs硬盘出错问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/17/django_timing_task/">django使用django-crontab实现定时任务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/15/django_rest_framework_jwt/">django-rest-framework配置json web token进行接口的认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/django_rest_framework_study/">django-rest-framework框架学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/spring_SpEL/">spring中的SpEL表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/08/git_study/">Git学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/03/资源收集/">资源收集共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/06/ubuntu_open_port/">ubuntu开放指定端口</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/16/redis_study_2/">Redis学习笔记 -- 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/15/redis_study_1/">Redis学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/16/ubuntu_do_something_use/">ubuntu日常使用的安装配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/ubuntu_do_something_coding/">ubuntu搭建常见开发环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/django_address_baiduapi_marker_show/">Django调用百度地图api在地图上批量增加标记点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/10/ubuntu安装在双系统笔记本下开机或关机卡死.1/">ubuntu在双系统下开机卡死或关机卡死的解决办法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/11/python_requirements/">python生成项目所需依赖文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/10/hexo_github_coding_blog/">利用hexo和github或coding 搭免费个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django常用语句/">Django常用语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/python2和Python3的区别/">Python2和Python3的区别简单总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django连接mysql数据库/">Django连接MySql使用models处理数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django数据库操作/">Django操作数据库</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django环境搭建/">Django环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django渲染模板/">Django渲染模板</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/03/Android_qq_Menu/">Android仿qq侧滑菜单</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/16/C语言队列的基本操作/">C语言队列的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/c语言中缀表达式变后缀表达式/">C语言中缀表达式转后缀表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言逆波兰计算器/">C语言逆波兰表达式计算(后缀表达式计算器)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言共享栈/">C语言共享栈</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言二叉树基本操作/">C语言二叉树的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言中缀表达式计算器/">C语言中缀表达式计算器</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/04/01/httpclientutil/">HttpClient工具类</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/14/qiniu-oss/">spring boot使用七牛云的oss(对象存储)文件上传</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/spring-boot-shiro-jwt/">spring boot集成shiro使用jwt进行权限控制</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/requestHolder_and_argumentResolver/">使用ThreadLocal和ArgumentResolver方便开发</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/applicationContextHelper/">在不被spring容器管理的类中使用ApplicationContext应用上下文bean</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_static_class_autowrite/">Spring boot 在静态类中注入spring组件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_diy_properties/">Spring boot 自定义配置文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/12/Elasticsearch_study_1/">Elasticsearch学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/09/深入理解java虚拟机学习笔记_1/">深入理解java虚拟机学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/23/Docker_study_Dockerfile_instructions/">Docker学习笔记---Dockerfile</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/22/Docker_study/">Docker学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/20/celery_study/">Celery-分布式任务队列学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_redis_cache/">Django使用redis作为缓存系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_channels_websocket/">Django使用Channels实现websocket</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/13/Docker_Gogs/">使用Docker搭建git服务Gogs</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_1to20/">LeetCode刷题记录(easy难度1-20题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_21to_40/">LeetCode刷题记录(easy难度21-40题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/29/es6_study/">es6学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/Webpack_study/">Webpack学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/RegularExpression_study/">正则表达式学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/08/AndroidStudio/">Android Studio 使用本地离线Gradle</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/跨域请求解决方案/">跨域请求的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/ubuntu_supervisor/">ubuntu下的进程控制系统————Supervisor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_nginx_gunicorn/">django+nginx+gunicorn部署配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/28/ubuntu修复不能挂载NTFS硬盘/">ubuntu修复linux和windows双系统下挂载ntfs硬盘出错问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/17/django_timing_task/">django使用django-crontab实现定时任务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/15/django_rest_framework_jwt/">django-rest-framework配置json web token进行接口的认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/django_rest_framework_study/">django-rest-framework框架学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/spring_SpEL/">spring中的SpEL表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/08/git_study/">Git学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/03/资源收集/">资源收集共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/06/ubuntu_open_port/">ubuntu开放指定端口</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/16/redis_study_2/">Redis学习笔记 -- 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/15/redis_study_1/">Redis学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/16/ubuntu_do_something_use/">ubuntu日常使用的安装配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/django_address_baiduapi_marker_show/">Django调用百度地图api在地图上批量增加标记点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/ubuntu_do_something_coding/">ubuntu搭建常见开发环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/10/ubuntu安装在双系统笔记本下开机或关机卡死.1/">ubuntu在双系统下开机卡死或关机卡死的解决办法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/11/python_requirements/">python生成项目所需依赖文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/10/hexo_github_coding_blog/">利用hexo和github或coding 搭免费个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django环境搭建/">Django环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django连接mysql数据库/">Django连接MySql使用models处理数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django渲染模板/">Django渲染模板</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django常用语句/">Django常用语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django数据库操作/">Django操作数据库</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/python2和Python3的区别/">Python2和Python3的区别简单总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/03/Android_qq_Menu/">Android仿qq侧滑菜单</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/16/C语言队列的基本操作/">C语言队列的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言共享栈/">C语言共享栈</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言二叉树基本操作/">C语言二叉树的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言逆波兰计算器/">C语言逆波兰表达式计算(后缀表达式计算器)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言中缀表达式计算器/">C语言中缀表达式计算器</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/c语言中缀表达式变后缀表达式/">C语言中缀表达式转后缀表达式</a></li></ul>
 
 
 
@@ -524,14 +670,14 @@
                 2016-2018 EarthChen
             </div>
             <div class="footer-right">
-                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+                <a href="http://hexo.io/" target="_blank" title="A fast, simple &amp; powerful blog framework">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Another simple and elegant theme for Hexo  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
             </div>
         </div>
         
             <div class="visit">
                 
                     <span id="busuanzi_container_site_pv" style='display:none'>
-                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        <span id="site-visit" title="Site Visitors"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
                         </span>
                     </span>
                 
@@ -540,7 +686,7 @@
                 
                 
                     <span id="busuanzi_container_page_pv" style='display:none'>
-                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        <span id="page-visit"  title="Page Hits"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
                         </span>
                     </span>
                 
@@ -575,9 +721,9 @@
 
 
 <div class="scroll" id="scroll">
-    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
-    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
-    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+    <a href="#" title="Back to Top"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="Comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="Go to Bottom"><i class="fa fa-arrow-down"></i></a>
 </div>
 <script>
     // Open in New Window

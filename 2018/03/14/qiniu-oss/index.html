@@ -158,13 +158,13 @@
                 <div class="tips-box hide">
                     <div class="tips-arrow"></div>
                     <ul class="tips-inner">
-                        <li>菜单</li>
-                        <li>标签</li>
+                        <li>Menu</li>
+                        <li>Tags</li>
                         
-                        <li>友情链接</li>
+                        <li>Friends</li>
                         
                         
-                        <li>关于我</li>
+                        <li>About Me</li>
                         
                     </ul>
                 </div>
@@ -294,7 +294,7 @@
             </nav>
         </header>                
     </div>
-    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+    <link class="menu-list" tags="Tags" friends="Friends" about="About Me"/>
 </nav>
       <div class="body-wrap"><article id="post-qiniu-oss" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -345,38 +345,654 @@
 <p>本文使用七牛云的解决方案，关于公司的介绍等可以自行了解，七牛云对个人用户提供不小的对象存储空间，很适合个人开发者进行开发。</p>
 <h2 id="七牛云oss"><a href="#七牛云oss" class="headerlink" title="七牛云oss"></a>七牛云oss</h2><p>通过查阅七牛云文档可以了解到，官方为开发者提供了完善的文档和针对各种语言提供了开箱即用的sdk，我们可以很方便的在项目中使用它。</p>
 <p>这里介绍一下在spring boot项目中与七牛云oss的集成。</p>
-<h3 id="在项目的pom-xml文件中引入七牛云的sdk"><a href="#在项目的pom-xml文件中引入七牛云的sdk" class="headerlink" title="在项目的pom.xml文件中引入七牛云的sdk"></a>在项目的pom.xml文件中引入七牛云的sdk</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!--七牛云sdk--&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.qiniu<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>qiniu-java-sdk<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>[7.2.0, 7.2.99]<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="在项目的pom-xml文件中引入七牛云的sdk"><a href="#在项目的pom-xml文件中引入七牛云的sdk" class="headerlink" title="在项目的pom.xml文件中引入七牛云的sdk"></a>在项目的pom.xml文件中引入七牛云的sdk</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--七牛云sdk--&gt;</span></span>
+<span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span>
+<span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.qiniu<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span>
+<span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>qiniu-java-sdk<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span>
+<span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>[7.2.0, 7.2.99]<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span>
+<span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span>
+</pre></td></tr></table></figure>
 <h3 id="编写一个配置文件类接收自定义参数"><a href="#编写一个配置文件类接收自定义参数" class="headerlink" title="编写一个配置文件类接收自定义参数"></a>编写一个配置文件类接收自定义参数</h3><p>为了让配置变得更容易调整，我们这里将七牛云账户相关的参数写在<strong>application.yml</strong>中，通过查阅文档可以知道想要上传需要<strong>accessKey</strong> <strong>secretKey</strong>  <strong>bucket</strong>(存储空间名)三个参数。为了方便从七牛云取出图片，我们还需要cdn的地址我们还可以封装一个<strong>cdnPrefix</strong></p>
 <ol>
-<li>这里在yml文件中配置如下<figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="attr">qiniu:</span></div><div class="line"><span class="attr">  accessKey:</span> <span class="string">accessKey</span></div><div class="line"><span class="attr">  secretKey:</span> <span class="string">secretKey</span></div><div class="line"><span class="attr">  bucket:</span> <span class="string">bucket</span></div><div class="line"><span class="attr">  cdnPrefix:</span> <span class="string">cdn</span></div></pre></td></tr></table></figure>
+<li>这里在yml文件中配置如下<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line"><span class="attr">qiniu:</span></span>
+<span class="line"><span class="attr">  accessKey:</span> <span class="string">accessKey</span></span>
+<span class="line"><span class="attr">  secretKey:</span> <span class="string">secretKey</span></span>
+<span class="line"><span class="attr">  bucket:</span> <span class="string">bucket</span></span>
+<span class="line"><span class="attr">  cdnPrefix:</span> <span class="string">cdn</span></span>
+</pre></td></tr></table></figure>
 </li>
 </ol>
 <p>这里的四个参数请按自己的七牛云账户里面的信息填写。</p>
 <ol>
-<li>编写QiNiuProperties类接收自定义参数<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// QiNiuProperties.java</span></div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * <span class="doctag">@author</span>: EarthChen</div><div class="line"> * <span class="doctag">@date</span>: 2018/03/13</div><div class="line"> */</div><div class="line"><span class="meta">@Component</span></div><div class="line"><span class="meta">@Data</span></div><div class="line"><span class="meta">@ConfigurationProperties</span>(prefix = <span class="string">"qiniu"</span>)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">QiNiuProperties</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> String accessKey;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> String secretKey;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> String bucket;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> String cdnPrefix;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<li>编写QiNiuProperties类接收自定义参数<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">// QiNiuProperties.java</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">/**</span>
+<span class="line"> * <span class="doctag">@author</span>: EarthChen</span>
+<span class="line"> * <span class="doctag">@date</span>: 2018/03/13</span>
+<span class="line"> */</span></span>
+<span class="line"><span class="meta">@Component</span></span>
+<span class="line"><span class="meta">@Data</span></span>
+<span class="line"><span class="meta">@ConfigurationProperties</span>(prefix = <span class="string">"qiniu"</span>)</span>
+<span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">QiNiuProperties</span> </span>&#123;</span>
+<span class="line"></span>
+<span class="line">    <span class="keyword">private</span> String accessKey;</span>
+<span class="line"></span>
+<span class="line">    <span class="keyword">private</span> String secretKey;</span>
+<span class="line"></span>
+<span class="line">    <span class="keyword">private</span> String bucket;</span>
+<span class="line"></span>
+<span class="line">    <span class="keyword">private</span> String cdnPrefix;</span>
+<span class="line"></span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
 </li>
 </ol>
 <p>用这种方式接收参数请注意属性的大小写需要和yml文件中一致</p>
 <h3 id="编写上传文件配置类"><a href="#编写上传文件配置类" class="headerlink" title="编写上传文件配置类"></a>编写上传文件配置类</h3><p>我们需要编写一个总的文件上传配置类，来限定文件上传大小路径等一些参数，然后将七牛云的配置添加到里面</p>
 <ol>
 <li><p>yml文件中配置如下</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="attr">spring:</span></div><div class="line"><span class="attr">  http:</span></div><div class="line">      <span class="comment"># multipart config</span></div><div class="line"><span class="attr">    multipart:</span></div><div class="line"><span class="attr">      enabled:</span> <span class="literal">true</span></div><div class="line"><span class="attr">      location:</span> <span class="string">/home/earthchen/study/spring/SpringBootProjects/search-house/tmp</span></div><div class="line"><span class="attr">      file-size-threshold:</span> <span class="number">5</span><span class="string">MB</span></div><div class="line"><span class="attr">      max-request-size:</span> <span class="number">20</span><span class="string">MB</span></div></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+</pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span>
+<span class="line"><span class="attr">  http:</span></span>
+<span class="line">      <span class="comment"># multipart config</span></span>
+<span class="line"><span class="attr">    multipart:</span></span>
+<span class="line"><span class="attr">      enabled:</span> <span class="literal">true</span></span>
+<span class="line"><span class="attr">      location:</span> <span class="string">/home/earthchen/study/spring/SpringBootProjects/search-house/tmp</span></span>
+<span class="line"><span class="attr">      file-size-threshold:</span> <span class="number">5</span><span class="string">MB</span></span>
+<span class="line"><span class="attr">      max-request-size:</span> <span class="number">20</span><span class="string">MB</span></span>
+</pre></td></tr></table></figure>
 </li>
 <li><p>上传文件配置类内容如下<br>这里就不对内容进行解释了，需要注意的地方都有注释</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> javax.servlet.MultipartConfigElement;</div><div class="line"><span class="keyword">import</span> javax.servlet.Servlet;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</div><div class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.condition.ConditionalOnClass;</div><div class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;</div><div class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;</div><div class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.web.MultipartProperties;</div><div class="line"><span class="keyword">import</span> org.springframework.boot.context.properties.EnableConfigurationProperties;</div><div class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</div><div class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</div><div class="line"><span class="keyword">import</span> org.springframework.web.multipart.MultipartResolver;</div><div class="line"><span class="keyword">import</span> org.springframework.web.multipart.support.StandardServletMultipartResolver;</div><div class="line"><span class="keyword">import</span> org.springframework.web.servlet.DispatcherServlet;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.google.gson.Gson;</div><div class="line"><span class="keyword">import</span> com.qiniu.common.Zone;</div><div class="line"><span class="keyword">import</span> com.qiniu.storage.BucketManager;</div><div class="line"><span class="keyword">import</span> com.qiniu.storage.UploadManager;</div><div class="line"><span class="keyword">import</span> com.qiniu.util.Auth;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * <span class="doctag">@author</span>: EarthChen</div><div class="line"> * <span class="doctag">@date</span>: 2018/03/13</div><div class="line"> */</div><div class="line"><span class="meta">@Configuration</span></div><div class="line"><span class="meta">@ConditionalOnClass</span>(&#123;Servlet.class, StandardServletMultipartResolver.class, MultipartConfigElement.class&#125;)</div><div class="line"><span class="meta">@ConditionalOnProperty</span>(prefix = <span class="string">"spring.http.multipart"</span>, name = <span class="string">"enabled"</span>, matchIfMissing = <span class="keyword">true</span>)</div><div class="line"><span class="meta">@EnableConfigurationProperties</span>(MultipartProperties.class)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WebFileUploadConfig</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 七牛云配置</div><div class="line">     */</div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    <span class="keyword">private</span> QiNiuProperties qiNiuProperties;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> MultipartProperties multipartProperties;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">WebFileUploadConfig</span><span class="params">(MultipartProperties multipartProperties)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.multipartProperties = multipartProperties;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 上传配置</div><div class="line">     */</div><div class="line">    <span class="meta">@Bean</span></div><div class="line">    <span class="meta">@ConditionalOnMissingBean</span></div><div class="line">    <span class="function"><span class="keyword">public</span> MultipartConfigElement <span class="title">multipartConfigElement</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.multipartProperties.createMultipartConfig();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 注册解析器</div><div class="line">     */</div><div class="line">    <span class="meta">@Bean</span>(name = DispatcherServlet.MULTIPART_RESOLVER_BEAN_NAME)</div><div class="line">    <span class="meta">@ConditionalOnMissingBean</span>(MultipartResolver.class)</div><div class="line">    <span class="function"><span class="keyword">public</span> StandardServletMultipartResolver <span class="title">multipartResolver</span><span class="params">()</span> </span>&#123;</div><div class="line">        StandardServletMultipartResolver multipartResolver = <span class="keyword">new</span> StandardServletMultipartResolver();</div><div class="line">        multipartResolver.setResolveLazily(<span class="keyword">this</span>.multipartProperties.isResolveLazily());</div><div class="line">        <span class="keyword">return</span> multipartResolver;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 华东机房</div><div class="line">     */</div><div class="line">    <span class="meta">@Bean</span></div><div class="line">    <span class="keyword">public</span> com.qiniu.storage.<span class="function">Configuration <span class="title">qiniuConfig</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> com.qiniu.storage.Configuration(Zone.zone0());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 构建一个七牛上传工具实例</div><div class="line">     */</div><div class="line">    <span class="meta">@Bean</span></div><div class="line">    <span class="function"><span class="keyword">public</span> UploadManager <span class="title">uploadManager</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> UploadManager(qiniuConfig());</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 认证信息实例</div><div class="line">     *</div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     */</div><div class="line">    <span class="meta">@Bean</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Auth <span class="title">auth</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> Auth.create(qiNiuProperties.getAccessKey(),</div><div class="line">                qiNiuProperties.getSecretKey());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 构建七牛空间管理实例</div><div class="line">     */</div><div class="line">    <span class="meta">@Bean</span></div><div class="line">    <span class="function"><span class="keyword">public</span> BucketManager <span class="title">bucketManager</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> BucketManager(auth(), qiniuConfig());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 配置gson为json解析工具</div><div class="line">     *</div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     */</div><div class="line">    <span class="meta">@Bean</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Gson <span class="title">gson</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Gson();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+<span class="line">27</span>
+<span class="line">28</span>
+<span class="line">29</span>
+<span class="line">30</span>
+<span class="line">31</span>
+<span class="line">32</span>
+<span class="line">33</span>
+<span class="line">34</span>
+<span class="line">35</span>
+<span class="line">36</span>
+<span class="line">37</span>
+<span class="line">38</span>
+<span class="line">39</span>
+<span class="line">40</span>
+<span class="line">41</span>
+<span class="line">42</span>
+<span class="line">43</span>
+<span class="line">44</span>
+<span class="line">45</span>
+<span class="line">46</span>
+<span class="line">47</span>
+<span class="line">48</span>
+<span class="line">49</span>
+<span class="line">50</span>
+<span class="line">51</span>
+<span class="line">52</span>
+<span class="line">53</span>
+<span class="line">54</span>
+<span class="line">55</span>
+<span class="line">56</span>
+<span class="line">57</span>
+<span class="line">58</span>
+<span class="line">59</span>
+<span class="line">60</span>
+<span class="line">61</span>
+<span class="line">62</span>
+<span class="line">63</span>
+<span class="line">64</span>
+<span class="line">65</span>
+<span class="line">66</span>
+<span class="line">67</span>
+<span class="line">68</span>
+<span class="line">69</span>
+<span class="line">70</span>
+<span class="line">71</span>
+<span class="line">72</span>
+<span class="line">73</span>
+<span class="line">74</span>
+<span class="line">75</span>
+<span class="line">76</span>
+<span class="line">77</span>
+<span class="line">78</span>
+<span class="line">79</span>
+<span class="line">80</span>
+<span class="line">81</span>
+<span class="line">82</span>
+<span class="line">83</span>
+<span class="line">84</span>
+<span class="line">85</span>
+<span class="line">86</span>
+<span class="line">87</span>
+<span class="line">88</span>
+<span class="line">89</span>
+<span class="line">90</span>
+<span class="line">91</span>
+<span class="line">92</span>
+<span class="line">93</span>
+<span class="line">94</span>
+<span class="line">95</span>
+<span class="line">96</span>
+<span class="line">97</span>
+<span class="line">98</span>
+<span class="line">99</span>
+<span class="line">100</span>
+<span class="line">101</span>
+<span class="line">102</span>
+<span class="line">103</span>
+<span class="line">104</span>
+<span class="line">105</span>
+<span class="line">106</span>
+<span class="line">107</span>
+<span class="line">108</span>
+<span class="line">109</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> javax.servlet.MultipartConfigElement;</span>
+<span class="line"><span class="keyword">import</span> javax.servlet.Servlet;</span>
+<span class="line"></span>
+<span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span>
+<span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.condition.ConditionalOnClass;</span>
+<span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;</span>
+<span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;</span>
+<span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.web.MultipartProperties;</span>
+<span class="line"><span class="keyword">import</span> org.springframework.boot.context.properties.EnableConfigurationProperties;</span>
+<span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span>
+<span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span>
+<span class="line"><span class="keyword">import</span> org.springframework.web.multipart.MultipartResolver;</span>
+<span class="line"><span class="keyword">import</span> org.springframework.web.multipart.support.StandardServletMultipartResolver;</span>
+<span class="line"><span class="keyword">import</span> org.springframework.web.servlet.DispatcherServlet;</span>
+<span class="line"></span>
+<span class="line"><span class="keyword">import</span> com.google.gson.Gson;</span>
+<span class="line"><span class="keyword">import</span> com.qiniu.common.Zone;</span>
+<span class="line"><span class="keyword">import</span> com.qiniu.storage.BucketManager;</span>
+<span class="line"><span class="keyword">import</span> com.qiniu.storage.UploadManager;</span>
+<span class="line"><span class="keyword">import</span> com.qiniu.util.Auth;</span>
+<span class="line"></span>
+<span class="line"><span class="comment">/**</span>
+<span class="line"> * <span class="doctag">@author</span>: EarthChen</span>
+<span class="line"> * <span class="doctag">@date</span>: 2018/03/13</span>
+<span class="line"> */</span></span>
+<span class="line"><span class="meta">@Configuration</span></span>
+<span class="line"><span class="meta">@ConditionalOnClass</span>(&#123;Servlet.class, StandardServletMultipartResolver.class, MultipartConfigElement.class&#125;)</span>
+<span class="line"><span class="meta">@ConditionalOnProperty</span>(prefix = <span class="string">"spring.http.multipart"</span>, name = <span class="string">"enabled"</span>, matchIfMissing = <span class="keyword">true</span>)</span>
+<span class="line"><span class="meta">@EnableConfigurationProperties</span>(MultipartProperties.class)</span>
+<span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WebFileUploadConfig</span> </span>&#123;</span>
+<span class="line"></span>
+<span class="line">    <span class="comment">/**</span>
+<span class="line">     * 七牛云配置</span>
+<span class="line">     */</span></span>
+<span class="line">    <span class="meta">@Autowired</span></span>
+<span class="line">    <span class="keyword">private</span> QiNiuProperties qiNiuProperties;</span>
+<span class="line"></span>
+<span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> MultipartProperties multipartProperties;</span>
+<span class="line"></span>
+<span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">WebFileUploadConfig</span><span class="params">(MultipartProperties multipartProperties)</span> </span>&#123;</span>
+<span class="line">        <span class="keyword">this</span>.multipartProperties = multipartProperties;</span>
+<span class="line">    &#125;</span>
+<span class="line"></span>
+<span class="line">    <span class="comment">/**</span>
+<span class="line">     * 上传配置</span>
+<span class="line">     */</span></span>
+<span class="line">    <span class="meta">@Bean</span></span>
+<span class="line">    <span class="meta">@ConditionalOnMissingBean</span></span>
+<span class="line">    <span class="function"><span class="keyword">public</span> MultipartConfigElement <span class="title">multipartConfigElement</span><span class="params">()</span> </span>&#123;</span>
+<span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.multipartProperties.createMultipartConfig();</span>
+<span class="line">    &#125;</span>
+<span class="line"></span>
+<span class="line">    <span class="comment">/**</span>
+<span class="line">     * 注册解析器</span>
+<span class="line">     */</span></span>
+<span class="line">    <span class="meta">@Bean</span>(name = DispatcherServlet.MULTIPART_RESOLVER_BEAN_NAME)</span>
+<span class="line">    <span class="meta">@ConditionalOnMissingBean</span>(MultipartResolver.class)</span>
+<span class="line">    <span class="function"><span class="keyword">public</span> StandardServletMultipartResolver <span class="title">multipartResolver</span><span class="params">()</span> </span>&#123;</span>
+<span class="line">        StandardServletMultipartResolver multipartResolver = <span class="keyword">new</span> StandardServletMultipartResolver();</span>
+<span class="line">        multipartResolver.setResolveLazily(<span class="keyword">this</span>.multipartProperties.isResolveLazily());</span>
+<span class="line">        <span class="keyword">return</span> multipartResolver;</span>
+<span class="line">    &#125;</span>
+<span class="line"></span>
+<span class="line">    <span class="comment">/**</span>
+<span class="line">     * 华东机房</span>
+<span class="line">     */</span></span>
+<span class="line">    <span class="meta">@Bean</span></span>
+<span class="line">    <span class="keyword">public</span> com.qiniu.storage.<span class="function">Configuration <span class="title">qiniuConfig</span><span class="params">()</span> </span>&#123;</span>
+<span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> com.qiniu.storage.Configuration(Zone.zone0());</span>
+<span class="line">    &#125;</span>
+<span class="line"></span>
+<span class="line">    <span class="comment">/**</span>
+<span class="line">     * 构建一个七牛上传工具实例</span>
+<span class="line">     */</span></span>
+<span class="line">    <span class="meta">@Bean</span></span>
+<span class="line">    <span class="function"><span class="keyword">public</span> UploadManager <span class="title">uploadManager</span><span class="params">()</span> </span>&#123;</span>
+<span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> UploadManager(qiniuConfig());</span>
+<span class="line">    &#125;</span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line">    <span class="comment">/**</span>
+<span class="line">     * 认证信息实例</span>
+<span class="line">     *</span>
+<span class="line">     * <span class="doctag">@return</span></span>
+<span class="line">     */</span></span>
+<span class="line">    <span class="meta">@Bean</span></span>
+<span class="line">    <span class="function"><span class="keyword">public</span> Auth <span class="title">auth</span><span class="params">()</span> </span>&#123;</span>
+<span class="line">        <span class="keyword">return</span> Auth.create(qiNiuProperties.getAccessKey(),</span>
+<span class="line">                qiNiuProperties.getSecretKey());</span>
+<span class="line">    &#125;</span>
+<span class="line"></span>
+<span class="line">    <span class="comment">/**</span>
+<span class="line">     * 构建七牛空间管理实例</span>
+<span class="line">     */</span></span>
+<span class="line">    <span class="meta">@Bean</span></span>
+<span class="line">    <span class="function"><span class="keyword">public</span> BucketManager <span class="title">bucketManager</span><span class="params">()</span> </span>&#123;</span>
+<span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> BucketManager(auth(), qiniuConfig());</span>
+<span class="line">    &#125;</span>
+<span class="line"></span>
+<span class="line">    <span class="comment">/**</span>
+<span class="line">     * 配置gson为json解析工具</span>
+<span class="line">     *</span>
+<span class="line">     * <span class="doctag">@return</span></span>
+<span class="line">     */</span></span>
+<span class="line">    <span class="meta">@Bean</span></span>
+<span class="line">    <span class="function"><span class="keyword">public</span> Gson <span class="title">gson</span><span class="params">()</span> </span>&#123;</span>
+<span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Gson();</span>
+<span class="line">    &#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
 </li>
 </ol>
 <p>有了以上这些配置，七牛云oss就已经配置完成。为了方便使用我们可以对sdk在进行一次封装编写一个service</p>
 <h3 id="编写七牛云service"><a href="#编写七牛云service" class="headerlink" title="编写七牛云service"></a>编写七牛云service</h3><ol>
 <li><p>七牛云上传服务接口</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.io.File;</div><div class="line"><span class="keyword">import</span> java.io.InputStream;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.qiniu.common.QiniuException;</div><div class="line"><span class="keyword">import</span> com.qiniu.http.Response;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 七牛云服务</div><div class="line"> *</div><div class="line"> * <span class="doctag">@author</span>: EarthChen</div><div class="line"> * <span class="doctag">@date</span>: 2018/03/13</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IQiNiuService</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 上传文件</div><div class="line">     * &lt;p&gt;</div><div class="line">     * (文件上传)</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> file</div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     * <span class="doctag">@throws</span> QiniuException</div><div class="line">     */</div><div class="line">    <span class="function">Response <span class="title">uploadFile</span><span class="params">(File file)</span> <span class="keyword">throws</span> QiniuException</span>;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 上传文件</div><div class="line">     * &lt;p&gt;</div><div class="line">     * (文件流上传)</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> inputStream</div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     * <span class="doctag">@throws</span> QiniuException</div><div class="line">     */</div><div class="line">    <span class="function">Response <span class="title">uploadFile</span><span class="params">(InputStream inputStream)</span> <span class="keyword">throws</span> QiniuException</span>;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 删除</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> key</div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     * <span class="doctag">@throws</span> QiniuException</div><div class="line">     */</div><div class="line">    <span class="function">Response <span class="title">delete</span><span class="params">(String key)</span> <span class="keyword">throws</span> QiniuException</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+<span class="line">27</span>
+<span class="line">28</span>
+<span class="line">29</span>
+<span class="line">30</span>
+<span class="line">31</span>
+<span class="line">32</span>
+<span class="line">33</span>
+<span class="line">34</span>
+<span class="line">35</span>
+<span class="line">36</span>
+<span class="line">37</span>
+<span class="line">38</span>
+<span class="line">39</span>
+<span class="line">40</span>
+<span class="line">41</span>
+<span class="line">42</span>
+<span class="line">43</span>
+<span class="line">44</span>
+<span class="line">45</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.File;</span>
+<span class="line"><span class="keyword">import</span> java.io.InputStream;</span>
+<span class="line"></span>
+<span class="line"><span class="keyword">import</span> com.qiniu.common.QiniuException;</span>
+<span class="line"><span class="keyword">import</span> com.qiniu.http.Response;</span>
+<span class="line"></span>
+<span class="line"><span class="comment">/**</span>
+<span class="line"> * 七牛云服务</span>
+<span class="line"> *</span>
+<span class="line"> * <span class="doctag">@author</span>: EarthChen</span>
+<span class="line"> * <span class="doctag">@date</span>: 2018/03/13</span>
+<span class="line"> */</span></span>
+<span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IQiNiuService</span> </span>&#123;</span>
+<span class="line"></span>
+<span class="line">    <span class="comment">/**</span>
+<span class="line">     * 上传文件</span>
+<span class="line">     * &lt;p&gt;</span>
+<span class="line">     * (文件上传)</span>
+<span class="line">     *</span>
+<span class="line">     * <span class="doctag">@param</span> file</span>
+<span class="line">     * <span class="doctag">@return</span></span>
+<span class="line">     * <span class="doctag">@throws</span> QiniuException</span>
+<span class="line">     */</span></span>
+<span class="line">    <span class="function">Response <span class="title">uploadFile</span><span class="params">(File file)</span> <span class="keyword">throws</span> QiniuException</span>;</span>
+<span class="line"></span>
+<span class="line">    <span class="comment">/**</span>
+<span class="line">     * 上传文件</span>
+<span class="line">     * &lt;p&gt;</span>
+<span class="line">     * (文件流上传)</span>
+<span class="line">     *</span>
+<span class="line">     * <span class="doctag">@param</span> inputStream</span>
+<span class="line">     * <span class="doctag">@return</span></span>
+<span class="line">     * <span class="doctag">@throws</span> QiniuException</span>
+<span class="line">     */</span></span>
+<span class="line">    <span class="function">Response <span class="title">uploadFile</span><span class="params">(InputStream inputStream)</span> <span class="keyword">throws</span> QiniuException</span>;</span>
+<span class="line"></span>
+<span class="line">    <span class="comment">/**</span>
+<span class="line">     * 删除</span>
+<span class="line">     *</span>
+<span class="line">     * <span class="doctag">@param</span> key</span>
+<span class="line">     * <span class="doctag">@return</span></span>
+<span class="line">     * <span class="doctag">@throws</span> QiniuException</span>
+<span class="line">     */</span></span>
+<span class="line">    <span class="function">Response <span class="title">delete</span><span class="params">(String key)</span> <span class="keyword">throws</span> QiniuException</span>;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
 </li>
 <li><p>编写实现类</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">import</span> java.io.File;</div><div class="line"><span class="keyword">import</span> java.io.InputStream;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.springframework.beans.factory.InitializingBean;</div><div class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</div><div class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.qiniu.common.QiniuException;</div><div class="line"><span class="keyword">import</span> com.qiniu.http.Response;</div><div class="line"><span class="keyword">import</span> com.qiniu.storage.BucketManager;</div><div class="line"><span class="keyword">import</span> com.qiniu.storage.UploadManager;</div><div class="line"><span class="keyword">import</span> com.qiniu.util.Auth;</div><div class="line"><span class="keyword">import</span> com.qiniu.util.StringMap;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * <span class="doctag">@author</span>: EarthChen</div><div class="line"> * <span class="doctag">@date</span>: 2018/03/13</div><div class="line"> */</div><div class="line"><span class="meta">@Service</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">QiNiuServiceImpl</span> <span class="keyword">implements</span> <span class="title">IQiNiuService</span>, <span class="title">InitializingBean</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    <span class="keyword">private</span> UploadManager uploadManager;</div><div class="line"></div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    <span class="keyword">private</span> BucketManager bucketManager;</div><div class="line"></div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    <span class="keyword">private</span> Auth auth;</div><div class="line"></div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    <span class="keyword">private</span> QiNiuProperties qiNiuProperties;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> StringMap putPolicy;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Response <span class="title">uploadFile</span><span class="params">(File file)</span> <span class="keyword">throws</span> QiniuException </span>&#123;</div><div class="line">        Response response = <span class="keyword">this</span>.uploadManager.put(file, <span class="keyword">null</span>, getUploadToken());</div><div class="line">        <span class="keyword">int</span> retry = <span class="number">0</span>;</div><div class="line">        <span class="keyword">while</span> (response.needRetry() &amp;&amp; retry &lt; <span class="number">3</span>) &#123;</div><div class="line">            response = <span class="keyword">this</span>.uploadManager.put(file, <span class="keyword">null</span>, getUploadToken());</div><div class="line">            retry++;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> response;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Response <span class="title">uploadFile</span><span class="params">(InputStream inputStream)</span> <span class="keyword">throws</span> QiniuException </span>&#123;</div><div class="line">        Response response = <span class="keyword">this</span>.uploadManager.put(inputStream, <span class="keyword">null</span>, getUploadToken(), <span class="keyword">null</span>, <span class="keyword">null</span>);</div><div class="line">        <span class="keyword">int</span> retry = <span class="number">0</span>;</div><div class="line">        <span class="keyword">while</span> (response.needRetry() &amp;&amp; retry &lt; <span class="number">3</span>) &#123;</div><div class="line">            response = <span class="keyword">this</span>.uploadManager.put(inputStream, <span class="keyword">null</span>, getUploadToken(), <span class="keyword">null</span>, <span class="keyword">null</span>);</div><div class="line">            retry++;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> response;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Response <span class="title">delete</span><span class="params">(String key)</span> <span class="keyword">throws</span> QiniuException </span>&#123;</div><div class="line">        Response response = bucketManager.delete(qiNiuProperties.getBucket(), key);</div><div class="line">        <span class="keyword">int</span> retry = <span class="number">0</span>;</div><div class="line">        <span class="keyword">while</span> (response.needRetry() &amp;&amp; retry++ &lt; <span class="number">3</span>) &#123;</div><div class="line">            response = bucketManager.delete(qiNiuProperties.getBucket(), key);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> response;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">afterPropertiesSet</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        <span class="keyword">this</span>.putPolicy = <span class="keyword">new</span> StringMap();</div><div class="line">        putPolicy.put(<span class="string">"returnBody"</span>, <span class="string">"&#123;\"key\":\"$(key)\",\"hash\":\"$(etag)\",\"bucket\":\"$(bucket)\",\"width\":$(imageInfo.width), \"height\":$&#123;imageInfo.height&#125;&#125;"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 获取上传凭证</div><div class="line">     *</div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">private</span> String <span class="title">getUploadToken</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.auth.uploadToken(qiNiuProperties.getBucket(), <span class="keyword">null</span>, <span class="number">3600</span>, putPolicy);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+<span class="line">27</span>
+<span class="line">28</span>
+<span class="line">29</span>
+<span class="line">30</span>
+<span class="line">31</span>
+<span class="line">32</span>
+<span class="line">33</span>
+<span class="line">34</span>
+<span class="line">35</span>
+<span class="line">36</span>
+<span class="line">37</span>
+<span class="line">38</span>
+<span class="line">39</span>
+<span class="line">40</span>
+<span class="line">41</span>
+<span class="line">42</span>
+<span class="line">43</span>
+<span class="line">44</span>
+<span class="line">45</span>
+<span class="line">46</span>
+<span class="line">47</span>
+<span class="line">48</span>
+<span class="line">49</span>
+<span class="line">50</span>
+<span class="line">51</span>
+<span class="line">52</span>
+<span class="line">53</span>
+<span class="line">54</span>
+<span class="line">55</span>
+<span class="line">56</span>
+<span class="line">57</span>
+<span class="line">58</span>
+<span class="line">59</span>
+<span class="line">60</span>
+<span class="line">61</span>
+<span class="line">62</span>
+<span class="line">63</span>
+<span class="line">64</span>
+<span class="line">65</span>
+<span class="line">66</span>
+<span class="line">67</span>
+<span class="line">68</span>
+<span class="line">69</span>
+<span class="line">70</span>
+<span class="line">71</span>
+<span class="line">72</span>
+<span class="line">73</span>
+<span class="line">74</span>
+<span class="line">75</span>
+<span class="line">76</span>
+<span class="line">77</span>
+<span class="line">78</span>
+<span class="line">79</span>
+<span class="line">80</span>
+<span class="line">81</span>
+<span class="line">82</span>
+<span class="line">83</span>
+</pre></td><td class="code"><pre><span class="line"></span>
+<span class="line"><span class="keyword">import</span> java.io.File;</span>
+<span class="line"><span class="keyword">import</span> java.io.InputStream;</span>
+<span class="line"></span>
+<span class="line"><span class="keyword">import</span> org.springframework.beans.factory.InitializingBean;</span>
+<span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span>
+<span class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</span>
+<span class="line"></span>
+<span class="line"><span class="keyword">import</span> com.qiniu.common.QiniuException;</span>
+<span class="line"><span class="keyword">import</span> com.qiniu.http.Response;</span>
+<span class="line"><span class="keyword">import</span> com.qiniu.storage.BucketManager;</span>
+<span class="line"><span class="keyword">import</span> com.qiniu.storage.UploadManager;</span>
+<span class="line"><span class="keyword">import</span> com.qiniu.util.Auth;</span>
+<span class="line"><span class="keyword">import</span> com.qiniu.util.StringMap;</span>
+<span class="line"></span>
+<span class="line"><span class="comment">/**</span>
+<span class="line"> * <span class="doctag">@author</span>: EarthChen</span>
+<span class="line"> * <span class="doctag">@date</span>: 2018/03/13</span>
+<span class="line"> */</span></span>
+<span class="line"><span class="meta">@Service</span></span>
+<span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">QiNiuServiceImpl</span> <span class="keyword">implements</span> <span class="title">IQiNiuService</span>, <span class="title">InitializingBean</span> </span>&#123;</span>
+<span class="line"></span>
+<span class="line">    <span class="meta">@Autowired</span></span>
+<span class="line">    <span class="keyword">private</span> UploadManager uploadManager;</span>
+<span class="line"></span>
+<span class="line">    <span class="meta">@Autowired</span></span>
+<span class="line">    <span class="keyword">private</span> BucketManager bucketManager;</span>
+<span class="line"></span>
+<span class="line">    <span class="meta">@Autowired</span></span>
+<span class="line">    <span class="keyword">private</span> Auth auth;</span>
+<span class="line"></span>
+<span class="line">    <span class="meta">@Autowired</span></span>
+<span class="line">    <span class="keyword">private</span> QiNiuProperties qiNiuProperties;</span>
+<span class="line"></span>
+<span class="line">    <span class="keyword">private</span> StringMap putPolicy;</span>
+<span class="line"></span>
+<span class="line">    <span class="meta">@Override</span></span>
+<span class="line">    <span class="function"><span class="keyword">public</span> Response <span class="title">uploadFile</span><span class="params">(File file)</span> <span class="keyword">throws</span> QiniuException </span>&#123;</span>
+<span class="line">        Response response = <span class="keyword">this</span>.uploadManager.put(file, <span class="keyword">null</span>, getUploadToken());</span>
+<span class="line">        <span class="keyword">int</span> retry = <span class="number">0</span>;</span>
+<span class="line">        <span class="keyword">while</span> (response.needRetry() &amp;&amp; retry &lt; <span class="number">3</span>) &#123;</span>
+<span class="line">            response = <span class="keyword">this</span>.uploadManager.put(file, <span class="keyword">null</span>, getUploadToken());</span>
+<span class="line">            retry++;</span>
+<span class="line">        &#125;</span>
+<span class="line">        <span class="keyword">return</span> response;</span>
+<span class="line">    &#125;</span>
+<span class="line"></span>
+<span class="line">    <span class="meta">@Override</span></span>
+<span class="line">    <span class="function"><span class="keyword">public</span> Response <span class="title">uploadFile</span><span class="params">(InputStream inputStream)</span> <span class="keyword">throws</span> QiniuException </span>&#123;</span>
+<span class="line">        Response response = <span class="keyword">this</span>.uploadManager.put(inputStream, <span class="keyword">null</span>, getUploadToken(), <span class="keyword">null</span>, <span class="keyword">null</span>);</span>
+<span class="line">        <span class="keyword">int</span> retry = <span class="number">0</span>;</span>
+<span class="line">        <span class="keyword">while</span> (response.needRetry() &amp;&amp; retry &lt; <span class="number">3</span>) &#123;</span>
+<span class="line">            response = <span class="keyword">this</span>.uploadManager.put(inputStream, <span class="keyword">null</span>, getUploadToken(), <span class="keyword">null</span>, <span class="keyword">null</span>);</span>
+<span class="line">            retry++;</span>
+<span class="line">        &#125;</span>
+<span class="line">        <span class="keyword">return</span> response;</span>
+<span class="line">    &#125;</span>
+<span class="line"></span>
+<span class="line">    <span class="meta">@Override</span></span>
+<span class="line">    <span class="function"><span class="keyword">public</span> Response <span class="title">delete</span><span class="params">(String key)</span> <span class="keyword">throws</span> QiniuException </span>&#123;</span>
+<span class="line">        Response response = bucketManager.delete(qiNiuProperties.getBucket(), key);</span>
+<span class="line">        <span class="keyword">int</span> retry = <span class="number">0</span>;</span>
+<span class="line">        <span class="keyword">while</span> (response.needRetry() &amp;&amp; retry++ &lt; <span class="number">3</span>) &#123;</span>
+<span class="line">            response = bucketManager.delete(qiNiuProperties.getBucket(), key);</span>
+<span class="line">        &#125;</span>
+<span class="line">        <span class="keyword">return</span> response;</span>
+<span class="line">    &#125;</span>
+<span class="line"></span>
+<span class="line">    <span class="meta">@Override</span></span>
+<span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">afterPropertiesSet</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span>
+<span class="line">        <span class="keyword">this</span>.putPolicy = <span class="keyword">new</span> StringMap();</span>
+<span class="line">        putPolicy.put(<span class="string">"returnBody"</span>, <span class="string">"&#123;\"key\":\"$(key)\",\"hash\":\"$(etag)\",\"bucket\":\"$(bucket)\",\"width\":$(imageInfo.width), \"height\":$&#123;imageInfo.height&#125;&#125;"</span>);</span>
+<span class="line">    &#125;</span>
+<span class="line"></span>
+<span class="line">    <span class="comment">/**</span>
+<span class="line">     * 获取上传凭证</span>
+<span class="line">     *</span>
+<span class="line">     * <span class="doctag">@return</span></span>
+<span class="line">     */</span></span>
+<span class="line">    <span class="function"><span class="keyword">private</span> String <span class="title">getUploadToken</span><span class="params">()</span> </span>&#123;</span>
+<span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.auth.uploadToken(qiNiuProperties.getBucket(), <span class="keyword">null</span>, <span class="number">3600</span>, putPolicy);</span>
+<span class="line">    &#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
 </li>
 </ol>
 <p>实现起来很简单，总体来说就是调用一下sdk提供的接口，这里我添加了可以重试三次的逻辑，如果你还需要其他逻辑，可以自行添加</p>
-<h3 id="测试文件上传"><a href="#测试文件上传" class="headerlink" title="测试文件上传"></a>测试文件上传</h3><p>编写相关测试类进行测试<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> org.junit.Assert;</div><div class="line"><span class="keyword">import</span> org.junit.Test;</div><div class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.qiniu.common.QiniuException;</div><div class="line"><span class="keyword">import</span> com.qiniu.http.Response;</div><div class="line"></div><div class="line"><span class="keyword">import</span> <span class="keyword">static</span> org.junit.Assert.*;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * <span class="doctag">@author</span>: EarthChen</div><div class="line"> * <span class="doctag">@date</span>: 2018/03/13</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IQiNiuServiceTest</span> <span class="keyword">extends</span> <span class="title">ApplicationTests</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    <span class="keyword">private</span> IQiNiuService qiNiuService;</div><div class="line"></div><div class="line">    <span class="meta">@Test</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">uploadFile</span><span class="params">()</span> </span>&#123;</div><div class="line">        String fileName = <span class="string">"/home/earthchen/study/spring/SpringBootProjects/search-house/tmp/test.png"</span>;</div><div class="line">        File file = <span class="keyword">new</span> File(fileName);</div><div class="line"></div><div class="line">        assertTrue(file.exists());</div><div class="line"></div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            Response response = qiNiuService.uploadFile(file);</div><div class="line">            Assert.assertTrue(response.isOK());</div><div class="line">        &#125; <span class="keyword">catch</span> (QiniuException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<h3 id="测试文件上传"><a href="#测试文件上传" class="headerlink" title="测试文件上传"></a>测试文件上传</h3><p>编写相关测试类进行测试<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+<span class="line">27</span>
+<span class="line">28</span>
+<span class="line">29</span>
+<span class="line">30</span>
+<span class="line">31</span>
+<span class="line">32</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.junit.Assert;</span>
+<span class="line"><span class="keyword">import</span> org.junit.Test;</span>
+<span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span>
+<span class="line"></span>
+<span class="line"><span class="keyword">import</span> com.qiniu.common.QiniuException;</span>
+<span class="line"><span class="keyword">import</span> com.qiniu.http.Response;</span>
+<span class="line"></span>
+<span class="line"><span class="keyword">import</span> <span class="keyword">static</span> org.junit.Assert.*;</span>
+<span class="line"></span>
+<span class="line"><span class="comment">/**</span>
+<span class="line"> * <span class="doctag">@author</span>: EarthChen</span>
+<span class="line"> * <span class="doctag">@date</span>: 2018/03/13</span>
+<span class="line"> */</span></span>
+<span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IQiNiuServiceTest</span> <span class="keyword">extends</span> <span class="title">ApplicationTests</span> </span>&#123;</span>
+<span class="line"></span>
+<span class="line">    <span class="meta">@Autowired</span></span>
+<span class="line">    <span class="keyword">private</span> IQiNiuService qiNiuService;</span>
+<span class="line"></span>
+<span class="line">    <span class="meta">@Test</span></span>
+<span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">uploadFile</span><span class="params">()</span> </span>&#123;</span>
+<span class="line">        String fileName = <span class="string">"/home/earthchen/study/spring/SpringBootProjects/search-house/tmp/test.png"</span>;</span>
+<span class="line">        File file = <span class="keyword">new</span> File(fileName);</span>
+<span class="line"></span>
+<span class="line">        assertTrue(file.exists());</span>
+<span class="line"></span>
+<span class="line">        <span class="keyword">try</span> &#123;</span>
+<span class="line">            Response response = qiNiuService.uploadFile(file);</span>
+<span class="line">            Assert.assertTrue(response.isOK());</span>
+<span class="line">        &#125; <span class="keyword">catch</span> (QiniuException e) &#123;</span>
+<span class="line">            e.printStackTrace();</span>
+<span class="line">        &#125;</span>
+<span class="line">    &#125;</span>
+</pre></td></tr></table></figure></p>
 <p>如果测试用例通过基本就说明成功了，我们还可以去七牛云的web端去查看，去验证。</p>
 <p>以上就完成了七牛云的oss，当然如果你想使用腾讯或者阿里的oss请自行翻阅文档</p>
 <blockquote>
@@ -394,17 +1010,17 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2018/03/14/qiniu-oss/">spring boot使用七牛云的oss(对象存储)文件上传</a></p>
-        <p><span>文章作者:</span><a href="/" title="回到主页">EarthChen</a></p>
-        <p><span>发布时间:</span>2018-03-14, 14:30:00</p>
-        <p><span>最后更新:</span>2018-03-14, 15:32:50</p>
+        <p><span>Title:</span><a href="/2018/03/14/qiniu-oss/">spring boot使用七牛云的oss(对象存储)文件上传</a></p>
+        <p><span>Author:</span><a href="/" title="Back to Homepage">EarthChen</a></p>
+        <p><span>Created:</span>2018-03-14, 14:30:00</p>
+        <p><span>Updated:</span>2018-03-14, 15:32:50</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2018/03/14/qiniu-oss/" title="spring boot使用七牛云的oss(对象存储)文件上传">http://earthchen.cn/2018/03/14/qiniu-oss/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://earthchen.cn/2018/03/14/qiniu-oss/　　作者: EarthChen" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>Full URL:</span><a class="post-url" href="/2018/03/14/qiniu-oss/" title="spring boot使用七牛云的oss(对象存储)文件上传">http://earthchen.cn/2018/03/14/qiniu-oss/</a>
+            <span class="copy-path" data-clipboard-text="From http://earthchen.cn/2018/03/14/qiniu-oss/　　By EarthChen" title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
-            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+            <span>License:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"CC BY-NC-SA 4.0"</a> Keep Link &amp; Author if Distribute.
         </p>
     </div>
 
@@ -431,7 +1047,7 @@
 </article>
 
     <div id="toc" class="toc-article">
-        <strong class="toc-title">文章目录</strong>
+        <strong class="toc-title">Contents</strong>
         
             <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#七牛云oss"><span class="toc-number">1.</span> <span class="toc-text">七牛云oss</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#在项目的pom-xml文件中引入七牛云的sdk"><span class="toc-number">1.1.</span> <span class="toc-text">在项目的pom.xml文件中引入七牛云的sdk</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#编写一个配置文件类接收自定义参数"><span class="toc-number">1.2.</span> <span class="toc-text">编写一个配置文件类接收自定义参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#编写上传文件配置类"><span class="toc-number">1.3.</span> <span class="toc-text">编写上传文件配置类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#编写七牛云service"><span class="toc-number">1.4.</span> <span class="toc-text">编写七牛云service</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#测试文件上传"><span class="toc-number">1.5.</span> <span class="toc-text">测试文件上传</span></a></li></ol></li></ol>
         
@@ -447,10 +1063,10 @@
         }
     </style>
 
-    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+    <input type="button" id="tocButton" value="Hide"  title="Show or Hide Table of Contents">
 
     <script>
-        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+        yiliaConfig.toc = ["Hide", "Show", !!"false"];
     </script>
 
 
@@ -503,21 +1119,21 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2018/04/01/httpclientutil/" title="上一篇: HttpClient工具类">
+            <a href="/2018/04/01/httpclientutil/" title="Pre: HttpClient工具类">
                 <i class="fa fa-angle-left"></i>
             </a>
         
 
-        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        <a title="Mini Archives"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2018/03/13/spring-boot-shiro-jwt/" title="下一篇: spring boot集成shiro使用jwt进行权限控制">
+            <a href="/2018/03/13/spring-boot-shiro-jwt/" title="Next: spring boot集成shiro使用jwt进行权限控制">
                 <i class="fa fa-angle-right"></i>
             </a>
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/04/01/httpclientutil/">HttpClient工具类</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/14/qiniu-oss/">spring boot使用七牛云的oss(对象存储)文件上传</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/spring-boot-shiro-jwt/">spring boot集成shiro使用jwt进行权限控制</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/requestHolder_and_argumentResolver/">使用ThreadLocal和ArgumentResolver方便开发</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/applicationContextHelper/">在不被spring容器管理的类中使用ApplicationContext应用上下文bean</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_static_class_autowrite/">Spring boot 在静态类中注入spring组件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_diy_properties/">Spring boot 自定义配置文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/12/Elasticsearch_study_1/">Elasticsearch学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/09/深入理解java虚拟机学习笔记_1/">深入理解java虚拟机学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/23/Docker_study_Dockerfile_instructions/">Docker学习笔记---Dockerfile</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/22/Docker_study/">Docker学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/20/celery_study/">Celery-分布式任务队列学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_redis_cache/">Django使用redis作为缓存系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_channels_websocket/">Django使用Channels实现websocket</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/13/Docker_Gogs/">使用Docker搭建git服务Gogs</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_1to20/">LeetCode刷题记录(easy难度1-20题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_21to_40/">LeetCode刷题记录(easy难度21-40题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/29/es6_study/">es6学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/Webpack_study/">Webpack学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/RegularExpression_study/">正则表达式学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/08/AndroidStudio/">Android Studio 使用本地离线Gradle</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/跨域请求解决方案/">跨域请求的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_nginx_gunicorn/">django+nginx+gunicorn部署配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/ubuntu_supervisor/">ubuntu下的进程控制系统————Supervisor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/28/ubuntu修复不能挂载NTFS硬盘/">ubuntu修复linux和windows双系统下挂载ntfs硬盘出错问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/17/django_timing_task/">django使用django-crontab实现定时任务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/15/django_rest_framework_jwt/">django-rest-framework配置json web token进行接口的认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/django_rest_framework_study/">django-rest-framework框架学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/spring_SpEL/">spring中的SpEL表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/08/git_study/">Git学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/03/资源收集/">资源收集共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/06/ubuntu_open_port/">ubuntu开放指定端口</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/16/redis_study_2/">Redis学习笔记 -- 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/15/redis_study_1/">Redis学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/16/ubuntu_do_something_use/">ubuntu日常使用的安装配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/ubuntu_do_something_coding/">ubuntu搭建常见开发环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/django_address_baiduapi_marker_show/">Django调用百度地图api在地图上批量增加标记点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/10/ubuntu安装在双系统笔记本下开机或关机卡死.1/">ubuntu在双系统下开机卡死或关机卡死的解决办法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/11/python_requirements/">python生成项目所需依赖文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/10/hexo_github_coding_blog/">利用hexo和github或coding 搭免费个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django常用语句/">Django常用语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/python2和Python3的区别/">Python2和Python3的区别简单总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django连接mysql数据库/">Django连接MySql使用models处理数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django数据库操作/">Django操作数据库</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django环境搭建/">Django环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django渲染模板/">Django渲染模板</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/03/Android_qq_Menu/">Android仿qq侧滑菜单</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/16/C语言队列的基本操作/">C语言队列的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/c语言中缀表达式变后缀表达式/">C语言中缀表达式转后缀表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言逆波兰计算器/">C语言逆波兰表达式计算(后缀表达式计算器)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言共享栈/">C语言共享栈</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言二叉树基本操作/">C语言二叉树的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言中缀表达式计算器/">C语言中缀表达式计算器</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/04/01/httpclientutil/">HttpClient工具类</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/14/qiniu-oss/">spring boot使用七牛云的oss(对象存储)文件上传</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/spring-boot-shiro-jwt/">spring boot集成shiro使用jwt进行权限控制</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/requestHolder_and_argumentResolver/">使用ThreadLocal和ArgumentResolver方便开发</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/applicationContextHelper/">在不被spring容器管理的类中使用ApplicationContext应用上下文bean</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_static_class_autowrite/">Spring boot 在静态类中注入spring组件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_diy_properties/">Spring boot 自定义配置文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/12/Elasticsearch_study_1/">Elasticsearch学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/09/深入理解java虚拟机学习笔记_1/">深入理解java虚拟机学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/23/Docker_study_Dockerfile_instructions/">Docker学习笔记---Dockerfile</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/22/Docker_study/">Docker学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/20/celery_study/">Celery-分布式任务队列学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_redis_cache/">Django使用redis作为缓存系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_channels_websocket/">Django使用Channels实现websocket</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/13/Docker_Gogs/">使用Docker搭建git服务Gogs</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_1to20/">LeetCode刷题记录(easy难度1-20题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_21to_40/">LeetCode刷题记录(easy难度21-40题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/29/es6_study/">es6学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/Webpack_study/">Webpack学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/RegularExpression_study/">正则表达式学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/08/AndroidStudio/">Android Studio 使用本地离线Gradle</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/跨域请求解决方案/">跨域请求的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/ubuntu_supervisor/">ubuntu下的进程控制系统————Supervisor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_nginx_gunicorn/">django+nginx+gunicorn部署配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/28/ubuntu修复不能挂载NTFS硬盘/">ubuntu修复linux和windows双系统下挂载ntfs硬盘出错问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/17/django_timing_task/">django使用django-crontab实现定时任务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/15/django_rest_framework_jwt/">django-rest-framework配置json web token进行接口的认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/django_rest_framework_study/">django-rest-framework框架学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/spring_SpEL/">spring中的SpEL表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/08/git_study/">Git学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/03/资源收集/">资源收集共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/06/ubuntu_open_port/">ubuntu开放指定端口</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/16/redis_study_2/">Redis学习笔记 -- 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/15/redis_study_1/">Redis学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/16/ubuntu_do_something_use/">ubuntu日常使用的安装配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/django_address_baiduapi_marker_show/">Django调用百度地图api在地图上批量增加标记点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/ubuntu_do_something_coding/">ubuntu搭建常见开发环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/10/ubuntu安装在双系统笔记本下开机或关机卡死.1/">ubuntu在双系统下开机卡死或关机卡死的解决办法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/11/python_requirements/">python生成项目所需依赖文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/10/hexo_github_coding_blog/">利用hexo和github或coding 搭免费个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django环境搭建/">Django环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django连接mysql数据库/">Django连接MySql使用models处理数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django渲染模板/">Django渲染模板</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django常用语句/">Django常用语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django数据库操作/">Django操作数据库</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/python2和Python3的区别/">Python2和Python3的区别简单总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/03/Android_qq_Menu/">Android仿qq侧滑菜单</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/16/C语言队列的基本操作/">C语言队列的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言共享栈/">C语言共享栈</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言二叉树基本操作/">C语言二叉树的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言逆波兰计算器/">C语言逆波兰表达式计算(后缀表达式计算器)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言中缀表达式计算器/">C语言中缀表达式计算器</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/c语言中缀表达式变后缀表达式/">C语言中缀表达式转后缀表达式</a></li></ul>
 
 
 
@@ -534,14 +1150,14 @@
                 2016-2018 EarthChen
             </div>
             <div class="footer-right">
-                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+                <a href="http://hexo.io/" target="_blank" title="A fast, simple &amp; powerful blog framework">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Another simple and elegant theme for Hexo  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
             </div>
         </div>
         
             <div class="visit">
                 
                     <span id="busuanzi_container_site_pv" style='display:none'>
-                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        <span id="site-visit" title="Site Visitors"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
                         </span>
                     </span>
                 
@@ -550,7 +1166,7 @@
                 
                 
                     <span id="busuanzi_container_page_pv" style='display:none'>
-                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        <span id="page-visit"  title="Page Hits"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
                         </span>
                     </span>
                 
@@ -585,9 +1201,9 @@
 
 
 <div class="scroll" id="scroll">
-    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
-    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
-    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+    <a href="#" title="Back to Top"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="Comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="Go to Bottom"><i class="fa fa-arrow-down"></i></a>
 </div>
 <script>
     // Open in New Window

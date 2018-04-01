@@ -158,13 +158,13 @@
                 <div class="tips-box hide">
                     <div class="tips-arrow"></div>
                     <ul class="tips-inner">
-                        <li>菜单</li>
-                        <li>标签</li>
+                        <li>Menu</li>
+                        <li>Tags</li>
                         
-                        <li>友情链接</li>
+                        <li>Friends</li>
                         
                         
-                        <li>关于我</li>
+                        <li>About Me</li>
                         
                     </ul>
                 </div>
@@ -294,7 +294,7 @@
             </nav>
         </header>                
     </div>
-    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+    <link class="menu-list" tags="Tags" friends="Friends" about="About Me"/>
 </nav>
       <div class="body-wrap"><article id="post-python2和Python3的区别" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -343,7 +343,15 @@
         <p>Python是一种新的计算机语言，也是最近两年才开始大火的一种语言，它够优雅，写起来可以随心所欲，不用担心没有定义，没有声明这些其他计算机语言都需要考虑的问题,单自从更新Python3.x版本之后，很多人开始头疼，因为Python3很多地方并不兼容Python2，有人夸张的说Python3是一门新的语言，我觉得没有那么夸张，本文就剧一下我遇到的和一些知道的区别吧</p>
 <a id="more"></a>
 <h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="print函数"><a href="#print函数" class="headerlink" title="print函数"></a>print函数</h3><p>print 语法的变化可能是最广为人知的了，但是仍值得一提的是： Python 2 的 print 声明已经被 print() 函数取代了，这意味着我们必须包装我们想打印在小括号中的对象。<br>Python 2 不具有额外的小括号问题。但对比一下，如果我们按照 Python 2 的方式不使用小括号调用 print 函数，Python 3 将抛出一个语法异常（SyntaxError）。</p>
-<h4 id="Python2"><a href="#Python2" class="headerlink" title="Python2"></a>Python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">print</span> <span class="string">'Python'</span>, python_version()</div><div class="line"><span class="keyword">print</span> <span class="string">'Hello, World!'</span></div><div class="line">print(<span class="string">'Hello, World!'</span>)</div><div class="line"><span class="keyword">print</span> <span class="string">"text"</span>, ; <span class="keyword">print</span> <span class="string">'print more text on the same line'</span></div></pre></td></tr></table></figure>
+<h4 id="Python2"><a href="#Python2" class="headerlink" title="Python2"></a>Python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">'Python'</span>, python_version()</span>
+<span class="line"><span class="keyword">print</span> <span class="string">'Hello, World!'</span></span>
+<span class="line">print(<span class="string">'Hello, World!'</span>)</span>
+<span class="line"><span class="keyword">print</span> <span class="string">"text"</span>, ; <span class="keyword">print</span> <span class="string">'print more text on the same line'</span></span>
+</pre></td></tr></table></figure>
 <blockquote>
 <p>结果:</p>
 <ul>
@@ -353,7 +361,15 @@
 <li>text print more text on the same line</li>
 </ul>
 </blockquote>
-<h4 id="Python3"><a href="#Python3" class="headerlink" title="Python3"></a>Python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">print(<span class="string">'Python'</span>, python_version())</div><div class="line">print(<span class="string">'Hello, World!'</span>)</div><div class="line">print(<span class="string">"some text,"</span>, end=<span class="string">""</span>) </div><div class="line">print(<span class="string">' print more text on the same line'</span>)</div></pre></td></tr></table></figure>
+<h4 id="Python3"><a href="#Python3" class="headerlink" title="Python3"></a>Python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line">print(<span class="string">'Python'</span>, python_version())</span>
+<span class="line">print(<span class="string">'Hello, World!'</span>)</span>
+<span class="line">print(<span class="string">"some text,"</span>, end=<span class="string">""</span>) </span>
+<span class="line">print(<span class="string">' print more text on the same line'</span>)</span>
+</pre></td></tr></table></figure>
 <blockquote>
 <p>结果:</p>
 <ul>
@@ -367,7 +383,15 @@
 <ul>
 <li>你在 Python 2 上执行 Python 3 的代码。因为这个整除的变化表现在它会被忽视（即它不会抛出语法异常）。</li>
 </ul>
-<h4 id="python2"><a href="#python2" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">print</span> <span class="string">'3 / 2 ='</span>, <span class="number">3</span> / <span class="number">2</span></div><div class="line"><span class="keyword">print</span> <span class="string">'3 // 2 ='</span>, <span class="number">3</span> // <span class="number">2</span></div><div class="line"><span class="keyword">print</span> <span class="string">'3 / 2.0 ='</span>, <span class="number">3</span> / <span class="number">2.0</span></div><div class="line"><span class="keyword">print</span> <span class="string">'3 // 2.0 ='</span>, <span class="number">3</span> // <span class="number">2.0</span></div></pre></td></tr></table></figure>
+<h4 id="python2"><a href="#python2" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">'3 / 2 ='</span>, <span class="number">3</span> / <span class="number">2</span></span>
+<span class="line"><span class="keyword">print</span> <span class="string">'3 // 2 ='</span>, <span class="number">3</span> // <span class="number">2</span></span>
+<span class="line"><span class="keyword">print</span> <span class="string">'3 / 2.0 ='</span>, <span class="number">3</span> / <span class="number">2.0</span></span>
+<span class="line"><span class="keyword">print</span> <span class="string">'3 // 2.0 ='</span>, <span class="number">3</span> // <span class="number">2.0</span></span>
+</pre></td></tr></table></figure>
 <blockquote>
 <p>结果:</p>
 <ul>
@@ -377,7 +401,15 @@
 <li>3 // 2.0 = 1.0</li>
 </ul>
 </blockquote>
-<h4 id="python3"><a href="#python3" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">print(<span class="string">'3 / 2 ='</span>, <span class="number">3</span> / <span class="number">2</span>)</div><div class="line">print(<span class="string">'3 // 2 ='</span>, <span class="number">3</span> // <span class="number">2</span>)</div><div class="line">print(<span class="string">'3 / 2.0 ='</span>, <span class="number">3</span> / <span class="number">2.0</span>)</div><div class="line">print(<span class="string">'3 // 2.0 ='</span>, <span class="number">3</span> // <span class="number">2.0</span>)</div></pre></td></tr></table></figure>
+<h4 id="python3"><a href="#python3" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line">print(<span class="string">'3 / 2 ='</span>, <span class="number">3</span> / <span class="number">2</span>)</span>
+<span class="line">print(<span class="string">'3 // 2 ='</span>, <span class="number">3</span> // <span class="number">2</span>)</span>
+<span class="line">print(<span class="string">'3 / 2.0 ='</span>, <span class="number">3</span> / <span class="number">2.0</span>)</span>
+<span class="line">print(<span class="string">'3 // 2.0 ='</span>, <span class="number">3</span> // <span class="number">2.0</span>)</span>
+</pre></td></tr></table></figure>
 <blockquote>
 <p>结果:</p>
 <ul>
@@ -388,22 +420,56 @@
 </ul>
 </blockquote>
 <h3 id="Unicode"><a href="#Unicode" class="headerlink" title="Unicode"></a>Unicode</h3><p>Python 2 有 ASCII str() 类型，unicode() 是单独的，不是 byte 类型。<br>现在， 在 Python 3，我们最终有了 Unicode (utf-8) 字符串，以及一个字节类：byte 和 bytearrays。<br>由于 Python3.X 源码文件默认使用utf-8编码，这就使得以下代码是合法的：</p>
-<h4 id="python3-1"><a href="#python3-1" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">中国 = <span class="string">'china'</span> </div><div class="line">print(中国)</div></pre></td></tr></table></figure>
+<h4 id="python3-1"><a href="#python3-1" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">中国 = <span class="string">'china'</span> </span>
+<span class="line">print(中国)</span>
+</pre></td></tr></table></figure>
 <blockquote>
 <p>结果:</p>
 <ul>
 <li>china</li>
 </ul>
 </blockquote>
-<h4 id="python2-1"><a href="#python2-1" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">str = <span class="string">"我爱北京天安门"</span></div><div class="line"><span class="keyword">print</span> <span class="string">'str'</span></div></pre></td></tr></table></figure>
+<h4 id="python2-1"><a href="#python2-1" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">str = <span class="string">"我爱北京天安门"</span></span>
+<span class="line"><span class="keyword">print</span> <span class="string">'str'</span></span>
+</pre></td></tr></table></figure>
 <blockquote>
 <p>结果:</p>
 <ul>
 <li>‘\xe6\x88\x91\xe7\x88\xb1\xe5\x8c\x97\xe4\xba\xac\xe5\xa4\xa9\xe5\xae\x89\xe9\x97\xa8’</li>
 </ul>
 </blockquote>
-<h3 id="xrange模块"><a href="#xrange模块" class="headerlink" title="xrange模块"></a>xrange模块</h3><p>在 Python 2 中 xrange() 创建迭代对象的用法是非常流行的。比如： for 循环或者是列表/集合/字典推导式。<br>这个表现十分像生成器（比如。“惰性求值”）。但是这个 xrange-iterable 是无穷的，意味着你可以无限遍历。<br>由于它的惰性求值，如果你不得仅仅不遍历它一次，xrange() 函数 比 range() 更快（比如 for 循环）。尽管如此，对比迭代一次，不建议你重复迭代多次，因为生成器每次都从头开始。<br>在 Python 3 中，range() 是像 xrange() 那样实现以至于一个专门的 xrange() 函数都不再存在（在 Python 3 中 xrange() 会抛出命名异常）。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> timeit</div><div class="line">n = <span class="number">10000</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_range</span><span class="params">(n)</span>:</span></div><div class="line">    <span class="keyword">return</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(n):</div><div class="line">        <span class="keyword">pass</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_xrange</span><span class="params">(n)</span>:</span></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> xrange(n):</div><div class="line">        <span class="keyword">pass</span></div></pre></td></tr></table></figure></p>
-<h4 id="python2-2"><a href="#python2-2" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">print</span> <span class="string">'Python'</span>, python_version()</div><div class="line"><span class="keyword">print</span> <span class="string">'\ntiming range()'</span></div><div class="line">%timeit test_range(n)</div><div class="line"><span class="keyword">print</span> <span class="string">'\n\ntiming xrange()'</span></div><div class="line">%timeit test_xrange(n)</div></pre></td></tr></table></figure>
+<h3 id="xrange模块"><a href="#xrange模块" class="headerlink" title="xrange模块"></a>xrange模块</h3><p>在 Python 2 中 xrange() 创建迭代对象的用法是非常流行的。比如： for 循环或者是列表/集合/字典推导式。<br>这个表现十分像生成器（比如。“惰性求值”）。但是这个 xrange-iterable 是无穷的，意味着你可以无限遍历。<br>由于它的惰性求值，如果你不得仅仅不遍历它一次，xrange() 函数 比 range() 更快（比如 for 循环）。尽管如此，对比迭代一次，不建议你重复迭代多次，因为生成器每次都从头开始。<br>在 Python 3 中，range() 是像 xrange() 那样实现以至于一个专门的 xrange() 函数都不再存在（在 Python 3 中 xrange() 会抛出命名异常）。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> timeit</span>
+<span class="line">n = <span class="number">10000</span></span>
+<span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_range</span><span class="params">(n)</span>:</span></span>
+<span class="line">    <span class="keyword">return</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span>
+<span class="line">        <span class="keyword">pass</span></span>
+<span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_xrange</span><span class="params">(n)</span>:</span></span>
+<span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> xrange(n):</span>
+<span class="line">        <span class="keyword">pass</span></span>
+</pre></td></tr></table></figure></p>
+<h4 id="python2-2"><a href="#python2-2" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">'Python'</span>, python_version()</span>
+<span class="line"><span class="keyword">print</span> <span class="string">'\ntiming range()'</span></span>
+<span class="line">%timeit test_range(n)</span>
+<span class="line"><span class="keyword">print</span> <span class="string">'\n\ntiming xrange()'</span></span>
+<span class="line">%timeit test_xrange(n)</span>
+</pre></td></tr></table></figure>
 <blockquote>
 <p>结果:</p>
 <ul>
@@ -414,7 +480,13 @@
 <li>1000 loops, best of 3: 350 µs per loop</li>
 </ul>
 </blockquote>
-<h4 id="python3-2"><a href="#python3-2" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">print(<span class="string">'Python'</span>, python_version())</div><div class="line">print(<span class="string">'\ntiming range()'</span>)</div><div class="line">%timeit test_range(n)</div></pre></td></tr></table></figure>
+<h4 id="python3-2"><a href="#python3-2" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line">print(<span class="string">'Python'</span>, python_version())</span>
+<span class="line">print(<span class="string">'\ntiming range()'</span>)</span>
+<span class="line">%timeit test_range(n)</span>
+</pre></td></tr></table></figure>
 <blockquote>
 <p>结果:</p>
 <ul>
@@ -442,7 +514,17 @@
 <h3 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h3><p>在 Python 3 中处理异常也轻微的改变了，在 Python 3 中我们现在使用 as 作为关键词。<br>捕获异常的语法由 except exc, var 改为 except exc as var。<br>使用语法except (exc1, exc2) as var可以同时捕获多种类别的异常。 Python 2.6已经支持这两种语法。</p>
 <ul>
 <li>在2.x时代，所有类型的对象都是可以被直接抛出的，在3.x时代，只有继承自BaseException的对象才可以被抛出。</li>
-<li>2.x raise语句使用逗号将抛出对象类型和参数分开，3.x取消了这种奇葩的写法，直接调用构造函数抛出对象即可。<br>在2.x时代，异常在代码中除了表示程序错误，还经常做一些普通控制结构应该做的事情，在3.x中可以看出，设计者让异常变的更加专一，只有在错误发生的情况才能去用异常捕获语句来处理。<h4 id="python2-3"><a href="#python2-3" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">print</span> <span class="string">'Python'</span>, python_version()</div><div class="line"><span class="keyword">try</span>:</div><div class="line">    let_us_cause_a_NameError</div><div class="line"><span class="keyword">except</span> NameError, err:</div><div class="line">    <span class="keyword">print</span> err, <span class="string">'--&gt; our error message'</span></div></pre></td></tr></table></figure>
+<li>2.x raise语句使用逗号将抛出对象类型和参数分开，3.x取消了这种奇葩的写法，直接调用构造函数抛出对象即可。<br>在2.x时代，异常在代码中除了表示程序错误，还经常做一些普通控制结构应该做的事情，在3.x中可以看出，设计者让异常变的更加专一，只有在错误发生的情况才能去用异常捕获语句来处理。<h4 id="python2-3"><a href="#python2-3" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">'Python'</span>, python_version()</span>
+<span class="line"><span class="keyword">try</span>:</span>
+<span class="line">    let_us_cause_a_NameError</span>
+<span class="line"><span class="keyword">except</span> NameError, err:</span>
+<span class="line">    <span class="keyword">print</span> err, <span class="string">'--&gt; our error message'</span></span>
+</pre></td></tr></table></figure>
 </li>
 </ul>
 <blockquote>
@@ -452,7 +534,17 @@
 <li>name ‘let_us_cause_a_NameError’ is not defined —&gt; our error message</li>
 </ul>
 </blockquote>
-<h4 id="python3-3"><a href="#python3-3" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">print(<span class="string">'Python'</span>, python_version())</div><div class="line"><span class="keyword">try</span>:</div><div class="line">    let_us_cause_a_NameError</div><div class="line"><span class="keyword">except</span> NameError <span class="keyword">as</span> err:</div><div class="line">    print(err, <span class="string">'--&gt; our error message'</span>)</div></pre></td></tr></table></figure>
+<h4 id="python3-3"><a href="#python3-3" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line">print(<span class="string">'Python'</span>, python_version())</span>
+<span class="line"><span class="keyword">try</span>:</span>
+<span class="line">    let_us_cause_a_NameError</span>
+<span class="line"><span class="keyword">except</span> NameError <span class="keyword">as</span> err:</span>
+<span class="line">    print(err, <span class="string">'--&gt; our error message'</span>)</span>
+</pre></td></tr></table></figure>
 <blockquote>
 <p>结果:</p>
 <ul>
@@ -462,7 +554,13 @@
 </blockquote>
 <h3 id="通过input-解析用户的输入"><a href="#通过input-解析用户的输入" class="headerlink" title="通过input()解析用户的输入"></a>通过input()解析用户的输入</h3><p>幸运的是，在 Python 3 中已经解决了把用户的输入存储为一个 str 对象的问题。为了避免在 Python 2 中的读取非字符串类型的危险行为，我们不得不使用 raw_input() 代替。</p>
 <h3 id="返回可迭代对象，而不是列表"><a href="#返回可迭代对象，而不是列表" class="headerlink" title="返回可迭代对象，而不是列表"></a>返回可迭代对象，而不是列表</h3><p>如果在 xrange 章节看到的，现在在 Python 3 中一些方法和函数返回迭代对象 — 代替 Python 2 中的列表<br>因为我们通常那些遍历只有一次，我认为这个改变对节约内存很有意义。尽管如此，它也是可能的，相对于生成器 —- 如需要遍历多次。它是不那么高效的。<br>而对于那些情况下，我们真正需要的是列表对象，我们可以通过 list() 函数简单的把迭代对象转换成一个列表。</p>
-<h4 id="python2-4"><a href="#python2-4" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">print</span> <span class="string">'Python'</span>, python_version() </div><div class="line"><span class="keyword">print</span> range(<span class="number">3</span>) </div><div class="line"><span class="keyword">print</span> type(range(<span class="number">3</span>))</div></pre></td></tr></table></figure>
+<h4 id="python2-4"><a href="#python2-4" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">'Python'</span>, python_version() </span>
+<span class="line"><span class="keyword">print</span> range(<span class="number">3</span>) </span>
+<span class="line"><span class="keyword">print</span> type(range(<span class="number">3</span>))</span>
+</pre></td></tr></table></figure>
 <blockquote>
 <p>结果:</p>
 <ul>
@@ -471,7 +569,15 @@
 <li>&lt; type ‘list’&gt;</li>
 </ul>
 </blockquote>
-<h4 id="python3-4"><a href="#python3-4" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">print(<span class="string">'Python'</span>, python_version())</div><div class="line">print(range(<span class="number">3</span>))</div><div class="line">print(type(range(<span class="number">3</span>)))</div><div class="line">print(list(range(<span class="number">3</span>)))</div></pre></td></tr></table></figure>
+<h4 id="python3-4"><a href="#python3-4" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line">print(<span class="string">'Python'</span>, python_version())</span>
+<span class="line">print(range(<span class="number">3</span>))</span>
+<span class="line">print(type(range(<span class="number">3</span>)))</span>
+<span class="line">print(list(range(<span class="number">3</span>)))</span>
+</pre></td></tr></table></figure>
 <blockquote>
 <p>结果:</p>
 <ul>
@@ -491,7 +597,17 @@
 <li>dictionary’s .items() method</li>
 </ul>
 <h3 id="For循环变量和全局命名空间泄漏"><a href="#For循环变量和全局命名空间泄漏" class="headerlink" title="For循环变量和全局命名空间泄漏"></a>For循环变量和全局命名空间泄漏</h3><p>好消息：在 Python 3.x 中 for 循环变量不会再导致命名空间泄漏。<br>在 Python 3.x 中做了一个改变，在 What’s New In Python 3.0 中有如下描述：<br>“列表推导不再支持 [… for var in item1, item2, …] 这样的语法。使用 [… for var in (item1, item2, …)] 代替。也需要提醒的是列表推导有不同的语义： 他们关闭了在 list() 构造器中的生成器表达式的语法糖, 并且特别是循环控制变量不再泄漏进周围的作用范围域.”　　</p>
-<h4 id="python2-5"><a href="#python2-5" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">print</span> <span class="string">'Python'</span>, python_version()</div><div class="line">i = <span class="number">1</span></div><div class="line"><span class="keyword">print</span> <span class="string">'before: i ='</span>, i</div><div class="line"><span class="keyword">print</span> <span class="string">'comprehension: '</span>, [i <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5</span>)]</div><div class="line"><span class="keyword">print</span> <span class="string">'after: i ='</span>, i</div></pre></td></tr></table></figure>
+<h4 id="python2-5"><a href="#python2-5" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">'Python'</span>, python_version()</span>
+<span class="line">i = <span class="number">1</span></span>
+<span class="line"><span class="keyword">print</span> <span class="string">'before: i ='</span>, i</span>
+<span class="line"><span class="keyword">print</span> <span class="string">'comprehension: '</span>, [i <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5</span>)]</span>
+<span class="line"><span class="keyword">print</span> <span class="string">'after: i ='</span>, i</span>
+</pre></td></tr></table></figure>
 <blockquote>
 <p>结果:</p>
 <ul>
@@ -501,7 +617,17 @@
 <li>after: i = 4</li>
 </ul>
 </blockquote>
-<h4 id="python3-5"><a href="#python3-5" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">print(<span class="string">'Python'</span>, python_version())</div><div class="line">i = <span class="number">1</span></div><div class="line">print(<span class="string">'before: i ='</span>, i)</div><div class="line">print(<span class="string">'comprehension:'</span>, [i <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5</span>)])</div><div class="line">print(<span class="string">'after: i ='</span>, i)</div></pre></td></tr></table></figure>
+<h4 id="python3-5"><a href="#python3-5" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line">print(<span class="string">'Python'</span>, python_version())</span>
+<span class="line">i = <span class="number">1</span></span>
+<span class="line">print(<span class="string">'before: i ='</span>, i)</span>
+<span class="line">print(<span class="string">'comprehension:'</span>, [i <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5</span>)])</span>
+<span class="line">print(<span class="string">'after: i ='</span>, i)</span>
+</pre></td></tr></table></figure>
 <blockquote>
 <p>结果:</p>
 <ul>
@@ -526,17 +652,17 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2016/08/15/python2和Python3的区别/">Python2和Python3的区别简单总结</a></p>
-        <p><span>文章作者:</span><a href="/" title="回到主页">EarthChen</a></p>
-        <p><span>发布时间:</span>2016-08-15, 14:40:00</p>
-        <p><span>最后更新:</span>2017-08-06, 17:49:45</p>
+        <p><span>Title:</span><a href="/2016/08/15/python2和Python3的区别/">Python2和Python3的区别简单总结</a></p>
+        <p><span>Author:</span><a href="/" title="Back to Homepage">EarthChen</a></p>
+        <p><span>Created:</span>2016-08-15, 14:40:00</p>
+        <p><span>Updated:</span>2017-08-06, 17:49:45</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/08/15/python2和Python3的区别/" title="Python2和Python3的区别简单总结">http://earthchen.cn/2016/08/15/python2和Python3的区别/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://earthchen.cn/2016/08/15/python2和Python3的区别/　　作者: EarthChen" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>Full URL:</span><a class="post-url" href="/2016/08/15/python2和Python3的区别/" title="Python2和Python3的区别简单总结">http://earthchen.cn/2016/08/15/python2和Python3的区别/</a>
+            <span class="copy-path" data-clipboard-text="From http://earthchen.cn/2016/08/15/python2和Python3的区别/　　By EarthChen" title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
-            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+            <span>License:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"CC BY-NC-SA 4.0"</a> Keep Link &amp; Author if Distribute.
         </p>
     </div>
 
@@ -545,15 +671,15 @@
     <nav id="article-nav">
         
             <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2016/08/15/django常用语句/">
-                    Django常用语句
+                <a href="/2016/08/15/django数据库操作/">
+                    Django操作数据库
                 </a>
             </div>
         
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2016/08/15/django连接mysql数据库/">
-                    Django连接MySql使用models处理数据
+                <a href="/2016/08/03/Android_qq_Menu/">
+                    Android仿qq侧滑菜单
                 </a>
             </div>
         
@@ -563,7 +689,7 @@
 </article>
 
     <div id="toc" class="toc-article">
-        <strong class="toc-title">文章目录</strong>
+        <strong class="toc-title">Contents</strong>
         
             <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#开始"><span class="toc-number">1.</span> <span class="toc-text">开始</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#print函数"><span class="toc-number">1.1.</span> <span class="toc-text">print函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Python2"><span class="toc-number">1.1.1.</span> <span class="toc-text">Python2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Python3"><span class="toc-number">1.1.2.</span> <span class="toc-text">Python3</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#整除"><span class="toc-number">1.2.</span> <span class="toc-text">整除</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#python2"><span class="toc-number">1.2.1.</span> <span class="toc-text">python2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#python3"><span class="toc-number">1.2.2.</span> <span class="toc-text">python3</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Unicode"><span class="toc-number">1.3.</span> <span class="toc-text">Unicode</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#python3-1"><span class="toc-number">1.3.1.</span> <span class="toc-text">python3</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#python2-1"><span class="toc-number">1.3.2.</span> <span class="toc-text">python2</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#xrange模块"><span class="toc-number">1.4.</span> <span class="toc-text">xrange模块</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#python2-2"><span class="toc-number">1.4.1.</span> <span class="toc-text">python2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#python3-2"><span class="toc-number">1.4.2.</span> <span class="toc-text">python3</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#不等运算符"><span class="toc-number">1.5.</span> <span class="toc-text">不等运算符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据类型"><span class="toc-number">1.6.</span> <span class="toc-text">数据类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#异常"><span class="toc-number">1.7.</span> <span class="toc-text">异常</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#python2-3"><span class="toc-number">1.7.1.</span> <span class="toc-text">python2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#python3-3"><span class="toc-number">1.7.2.</span> <span class="toc-text">python3</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#通过input-解析用户的输入"><span class="toc-number">1.8.</span> <span class="toc-text">通过input()解析用户的输入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#返回可迭代对象，而不是列表"><span class="toc-number">1.9.</span> <span class="toc-text">返回可迭代对象，而不是列表</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#python2-4"><span class="toc-number">1.9.1.</span> <span class="toc-text">python2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#python3-4"><span class="toc-number">1.9.2.</span> <span class="toc-text">python3</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#For循环变量和全局命名空间泄漏"><span class="toc-number">1.10.</span> <span class="toc-text">For循环变量和全局命名空间泄漏</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#python2-5"><span class="toc-number">1.10.1.</span> <span class="toc-text">python2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#python3-5"><span class="toc-number">1.10.2.</span> <span class="toc-text">python3</span></a></li></ol></li></ol></li></ol>
         
@@ -579,10 +705,10 @@
         }
     </style>
 
-    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+    <input type="button" id="tocButton" value="Hide"  title="Show or Hide Table of Contents">
 
     <script>
-        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+        yiliaConfig.toc = ["Hide", "Show", !!"false"];
     </script>
 
 
@@ -635,21 +761,21 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2016/08/15/django常用语句/" title="上一篇: Django常用语句">
+            <a href="/2016/08/15/django数据库操作/" title="Pre: Django操作数据库">
                 <i class="fa fa-angle-left"></i>
             </a>
         
 
-        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        <a title="Mini Archives"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2016/08/15/django连接mysql数据库/" title="下一篇: Django连接MySql使用models处理数据">
+            <a href="/2016/08/03/Android_qq_Menu/" title="Next: Android仿qq侧滑菜单">
                 <i class="fa fa-angle-right"></i>
             </a>
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/04/01/httpclientutil/">HttpClient工具类</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/14/qiniu-oss/">spring boot使用七牛云的oss(对象存储)文件上传</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/spring-boot-shiro-jwt/">spring boot集成shiro使用jwt进行权限控制</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/requestHolder_and_argumentResolver/">使用ThreadLocal和ArgumentResolver方便开发</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/applicationContextHelper/">在不被spring容器管理的类中使用ApplicationContext应用上下文bean</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_static_class_autowrite/">Spring boot 在静态类中注入spring组件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_diy_properties/">Spring boot 自定义配置文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/12/Elasticsearch_study_1/">Elasticsearch学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/09/深入理解java虚拟机学习笔记_1/">深入理解java虚拟机学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/23/Docker_study_Dockerfile_instructions/">Docker学习笔记---Dockerfile</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/22/Docker_study/">Docker学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/20/celery_study/">Celery-分布式任务队列学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_redis_cache/">Django使用redis作为缓存系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_channels_websocket/">Django使用Channels实现websocket</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/13/Docker_Gogs/">使用Docker搭建git服务Gogs</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_1to20/">LeetCode刷题记录(easy难度1-20题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_21to_40/">LeetCode刷题记录(easy难度21-40题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/29/es6_study/">es6学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/Webpack_study/">Webpack学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/RegularExpression_study/">正则表达式学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/08/AndroidStudio/">Android Studio 使用本地离线Gradle</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/跨域请求解决方案/">跨域请求的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_nginx_gunicorn/">django+nginx+gunicorn部署配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/ubuntu_supervisor/">ubuntu下的进程控制系统————Supervisor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/28/ubuntu修复不能挂载NTFS硬盘/">ubuntu修复linux和windows双系统下挂载ntfs硬盘出错问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/17/django_timing_task/">django使用django-crontab实现定时任务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/15/django_rest_framework_jwt/">django-rest-framework配置json web token进行接口的认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/django_rest_framework_study/">django-rest-framework框架学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/spring_SpEL/">spring中的SpEL表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/08/git_study/">Git学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/03/资源收集/">资源收集共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/06/ubuntu_open_port/">ubuntu开放指定端口</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/16/redis_study_2/">Redis学习笔记 -- 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/15/redis_study_1/">Redis学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/16/ubuntu_do_something_use/">ubuntu日常使用的安装配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/ubuntu_do_something_coding/">ubuntu搭建常见开发环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/django_address_baiduapi_marker_show/">Django调用百度地图api在地图上批量增加标记点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/10/ubuntu安装在双系统笔记本下开机或关机卡死.1/">ubuntu在双系统下开机卡死或关机卡死的解决办法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/11/python_requirements/">python生成项目所需依赖文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/10/hexo_github_coding_blog/">利用hexo和github或coding 搭免费个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django常用语句/">Django常用语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/python2和Python3的区别/">Python2和Python3的区别简单总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django连接mysql数据库/">Django连接MySql使用models处理数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django数据库操作/">Django操作数据库</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django环境搭建/">Django环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django渲染模板/">Django渲染模板</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/03/Android_qq_Menu/">Android仿qq侧滑菜单</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/16/C语言队列的基本操作/">C语言队列的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/c语言中缀表达式变后缀表达式/">C语言中缀表达式转后缀表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言逆波兰计算器/">C语言逆波兰表达式计算(后缀表达式计算器)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言共享栈/">C语言共享栈</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言二叉树基本操作/">C语言二叉树的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言中缀表达式计算器/">C语言中缀表达式计算器</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/04/01/httpclientutil/">HttpClient工具类</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/14/qiniu-oss/">spring boot使用七牛云的oss(对象存储)文件上传</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/spring-boot-shiro-jwt/">spring boot集成shiro使用jwt进行权限控制</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/requestHolder_and_argumentResolver/">使用ThreadLocal和ArgumentResolver方便开发</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/applicationContextHelper/">在不被spring容器管理的类中使用ApplicationContext应用上下文bean</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_static_class_autowrite/">Spring boot 在静态类中注入spring组件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_diy_properties/">Spring boot 自定义配置文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/12/Elasticsearch_study_1/">Elasticsearch学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/09/深入理解java虚拟机学习笔记_1/">深入理解java虚拟机学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/23/Docker_study_Dockerfile_instructions/">Docker学习笔记---Dockerfile</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/22/Docker_study/">Docker学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/20/celery_study/">Celery-分布式任务队列学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_redis_cache/">Django使用redis作为缓存系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_channels_websocket/">Django使用Channels实现websocket</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/13/Docker_Gogs/">使用Docker搭建git服务Gogs</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_1to20/">LeetCode刷题记录(easy难度1-20题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_21to_40/">LeetCode刷题记录(easy难度21-40题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/29/es6_study/">es6学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/Webpack_study/">Webpack学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/RegularExpression_study/">正则表达式学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/08/AndroidStudio/">Android Studio 使用本地离线Gradle</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/跨域请求解决方案/">跨域请求的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/ubuntu_supervisor/">ubuntu下的进程控制系统————Supervisor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_nginx_gunicorn/">django+nginx+gunicorn部署配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/28/ubuntu修复不能挂载NTFS硬盘/">ubuntu修复linux和windows双系统下挂载ntfs硬盘出错问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/17/django_timing_task/">django使用django-crontab实现定时任务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/15/django_rest_framework_jwt/">django-rest-framework配置json web token进行接口的认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/django_rest_framework_study/">django-rest-framework框架学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/spring_SpEL/">spring中的SpEL表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/08/git_study/">Git学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/03/资源收集/">资源收集共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/06/ubuntu_open_port/">ubuntu开放指定端口</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/16/redis_study_2/">Redis学习笔记 -- 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/15/redis_study_1/">Redis学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/16/ubuntu_do_something_use/">ubuntu日常使用的安装配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/django_address_baiduapi_marker_show/">Django调用百度地图api在地图上批量增加标记点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/ubuntu_do_something_coding/">ubuntu搭建常见开发环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/10/ubuntu安装在双系统笔记本下开机或关机卡死.1/">ubuntu在双系统下开机卡死或关机卡死的解决办法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/11/python_requirements/">python生成项目所需依赖文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/10/hexo_github_coding_blog/">利用hexo和github或coding 搭免费个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django环境搭建/">Django环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django连接mysql数据库/">Django连接MySql使用models处理数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django渲染模板/">Django渲染模板</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django常用语句/">Django常用语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django数据库操作/">Django操作数据库</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/python2和Python3的区别/">Python2和Python3的区别简单总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/03/Android_qq_Menu/">Android仿qq侧滑菜单</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/16/C语言队列的基本操作/">C语言队列的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言共享栈/">C语言共享栈</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言二叉树基本操作/">C语言二叉树的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言逆波兰计算器/">C语言逆波兰表达式计算(后缀表达式计算器)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言中缀表达式计算器/">C语言中缀表达式计算器</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/c语言中缀表达式变后缀表达式/">C语言中缀表达式转后缀表达式</a></li></ul>
 
 
 
@@ -666,14 +792,14 @@
                 2016-2018 EarthChen
             </div>
             <div class="footer-right">
-                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+                <a href="http://hexo.io/" target="_blank" title="A fast, simple &amp; powerful blog framework">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Another simple and elegant theme for Hexo  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
             </div>
         </div>
         
             <div class="visit">
                 
                     <span id="busuanzi_container_site_pv" style='display:none'>
-                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        <span id="site-visit" title="Site Visitors"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
                         </span>
                     </span>
                 
@@ -682,7 +808,7 @@
                 
                 
                     <span id="busuanzi_container_page_pv" style='display:none'>
-                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        <span id="page-visit"  title="Page Hits"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
                         </span>
                     </span>
                 
@@ -717,9 +843,9 @@
 
 
 <div class="scroll" id="scroll">
-    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
-    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
-    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+    <a href="#" title="Back to Top"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="Comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="Go to Bottom"><i class="fa fa-arrow-down"></i></a>
 </div>
 <script>
     // Open in New Window
