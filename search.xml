@@ -49,6 +49,16 @@
 <span class="line">40</span>
 <span class="line">41</span>
 <span class="line">42</span>
+<span class="line">43</span>
+<span class="line">44</span>
+<span class="line">45</span>
+<span class="line">46</span>
+<span class="line">47</span>
+<span class="line">48</span>
+<span class="line">49</span>
+<span class="line">50</span>
+<span class="line">51</span>
+<span class="line">52</span>
 </pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span>
 <span class="line"><span class="comment"># 更新源</span></span>
 <span class="line">sudo pacman-mirrors -i -c China -m rank</span>
@@ -91,6 +101,16 @@
 <span class="line"></span>
 <span class="line"><span class="comment"># spf13</span></span>
 <span class="line">curl https://j.mp/spf13-vim3 -L &gt; spf13-vim.sh &amp;&amp; sh spf13-vim.sh</span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"><span class="comment"># docker启动mysql</span></span>
+<span class="line">docker run --name=mysql -p 3306:3306 -v /var/lib/mysql:/var/lib/mysql  <span class="_">-e</span> MYSQL_ROOT_PASSWORD=123456 <span class="_">-d</span> mysql:latest --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci</span>
+<span class="line"></span>
+<span class="line"><span class="comment"># docker启动redis</span></span>
+<span class="line">docker run --name=redis -p 6379:6379 <span class="_">-d</span> redis:latest</span>
+<span class="line"></span>
+<span class="line"><span class="comment"># docker 启动mongo</span></span>
+<span class="line">docker run --name mongo -p 27017:27017 <span class="_">-d</span> mongo:latest</span>
 </pre></td></tr></table></figure>
 ]]></content>
       
@@ -3321,18 +3341,18 @@
 <span class="line"><span class="keyword">FROM</span> &lt;image&gt;[@&lt;digest&gt;] [AS &lt;name&gt;]</span>
 </pre></td></tr></table></figure></p>
 <h2 id="LABEL"><a href="#LABEL" class="headerlink" title="LABEL"></a>LABEL</h2><figure class="highlight docker"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">LABEL</span><span class="bash"> &lt;key&gt;=&lt;value&gt; &lt;key&gt;=&lt;value&gt; &lt;key&gt;=&lt;value&gt; ...</span></span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">LABEL</span> &lt;key&gt;=&lt;value&gt; &lt;key&gt;=&lt;value&gt; &lt;key&gt;=&lt;value&gt; ...</span>
 </pre></td></tr></table></figure>
 <p>该LABEL指令将元数据添加到图像。A LABEL是一个键值对。要在LABEL值中包含空格，请使用引号和反斜杠，就像在命令行解析中一样。几个用法示例<br><figure class="highlight docker"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
 <span class="line">4</span>
 <span class="line">5</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">LABEL</span><span class="bash"> <span class="string">"com.example.vendor"</span>=<span class="string">"ACME Incorporated"</span></span>
-<span class="line"></span><span class="keyword">LABEL</span><span class="bash"> com.example.label-with-value=<span class="string">"foo"</span></span>
-<span class="line"></span><span class="keyword">LABEL</span><span class="bash"> version=<span class="string">"1.0"</span></span>
-<span class="line"></span><span class="keyword">LABEL</span><span class="bash"> description=<span class="string">"This text illustrates \</span>
-<span class="line">that label-values can span multiple lines."</span></span></span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">LABEL</span> "com.example.vendor"="ACME Incorporated"</span>
+<span class="line"><span class="keyword">LABEL</span> com.example.label-with-value="foo"</span>
+<span class="line"><span class="keyword">LABEL</span> version="1.0"</span>
+<span class="line"><span class="keyword">LABEL</span> description="This text illustrates \</span>
+<span class="line">that label-values can span multiple lines."</span>
 </pre></td></tr></table></figure></p>
 <p>图像可以有多个标签。要指定多个标签，Docker建议LABEL在可能的情况下将标签组合到单个指令中。每个LABEL指令产生一个新的层<br><figure class="highlight docker"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
@@ -3340,12 +3360,12 @@
 <span class="line">4</span>
 <span class="line">5</span>
 <span class="line">6</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">LABEL</span><span class="bash"> multi.label1=<span class="string">"value1"</span> multi.label2=<span class="string">"value2"</span> other=<span class="string">"value3"</span></span>
-<span class="line"></span></span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">LABEL</span> multi.label1="value1" multi.label2="value2" other="value3"</span>
+<span class="line"></span>
 <span class="line">或</span>
-<span class="line"><span class="keyword">LABEL</span><span class="bash"> multi.label1=<span class="string">"value1"</span> \</span>
-<span class="line">      multi.label2=<span class="string">"value2"</span> \</span>
-<span class="line">      other=<span class="string">"value3"</span></span></span>
+<span class="line"><span class="keyword">LABEL</span> multi.label1="value1" \</span>
+<span class="line">      multi.label2="value2" \</span>
+<span class="line">      other="value3"</span>
 </pre></td></tr></table></figure></p>
 <p>要查看图像的标签，请使用docker inspect命令。<br><figure class="highlight docker"><table><tr><td class="gutter"><pre><span class="line">1</span>
 </pre></td><td class="code"><pre><span class="line">$ docker inspect Ubuntu</span>
@@ -3380,17 +3400,17 @@
 <span class="line">21</span>
 <span class="line">22</span>
 <span class="line">23</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">RUN</span><span class="bash"> /bin/bash -c <span class="string">'source $HOME/.bashrc; \</span>
-<span class="line">echo $HOME'</span></span>
-<span class="line"></span>``` </span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">RUN</span> /bin/bash -c 'source $HOME/.bashrc; \</span>
+<span class="line">echo $HOME'</span>
+<span class="line">``` </span>
 <span class="line"></span>
 <span class="line">相当于：</span>
 <span class="line">```docker</span>
-<span class="line"><span class="keyword">RUN</span><span class="bash"> /bin/bash -c <span class="string">'source $HOME/.bashrc; echo $HOME'</span></span>
-<span class="line"></span>``` </span>
+<span class="line"><span class="keyword">RUN</span> /bin/bash -c 'source $HOME/.bashrc; echo $HOME'</span>
+<span class="line">``` </span>
 <span class="line"></span>
-<span class="line">&gt;注：如果你想使用其他<span class="keyword">shell</span><span class="bash">比如**bash**,请使用在所需的shell传递参数,**RUN [<span class="string">"/bin/bash"</span>, <span class="string">"-c"</span>, <span class="string">"echo hello"</span>]**</span>
-<span class="line"></span></span>
+<span class="line">&gt;注：如果你想使用其他<span class="keyword">shell</span>比如**bash**,请使用在所需的shell传递参数,**RUN ["/bin/bash", "-c", "echo hello"]**</span>
+<span class="line"></span>
 <span class="line"></span>
 <span class="line"><span class="comment">### apt-get</span></span>
 <span class="line">如果你的基础镜像使用的是**Debian**，那你一定会经常使用**apt-get**命令安装软件</span>
@@ -3399,10 +3419,10 @@
 <span class="line"></span>
 <span class="line">通常我们会如下使用他：</span>
 <span class="line">```docker</span>
-<span class="line"><span class="keyword">RUN</span><span class="bash"> apt-get update &amp;&amp; apt-get install -y \</span>
+<span class="line"><span class="keyword">RUN</span> apt-get update &amp;&amp; apt-get install -y \</span>
 <span class="line">        package-bar \</span>
 <span class="line">        package-baz \</span>
-<span class="line">        package-foo</span></span>
+<span class="line">        package-foo</span>
 </pre></td></tr></table></figure></p>
 <p>先执行<strong>apt-get update</strong>是为了确保不被缓存所干扰，保证安装的软件是比较新的版本。</p>
 <p>以下是一个使用<strong>RUN</strong>和<strong>apt-get</strong>的一个例子：<br><figure class="highlight docker"><table><tr><td class="gutter"><pre><span class="line">1</span>
@@ -3419,7 +3439,7 @@
 <span class="line">12</span>
 <span class="line">13</span>
 <span class="line">14</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">RUN</span><span class="bash"> apt-get update &amp;&amp; apt-get install -y \</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">RUN</span> apt-get update &amp;&amp; apt-get install -y \</span>
 <span class="line">    aufs-tools \</span>
 <span class="line">    automake \</span>
 <span class="line">    build-essential \</span>
@@ -3432,7 +3452,7 @@
 <span class="line">    ruby1.9.1 \</span>
 <span class="line">    ruby1.9.1-dev \</span>
 <span class="line">    s3cmd=1.1.* \</span>
-<span class="line"> &amp;&amp; rm -rf /var/lib/apt/lists/*</span></span>
+<span class="line"> &amp;&amp; rm -rf /var/lib/apt/lists/*</span>
 </pre></td></tr></table></figure></p>
 <p>最后删除/var/lib/apt/lists/<em>是为了清理缓存从而减少镜像大小，Debian和Ubuntu都会在最后自动调用<em>*apt-get clean</em></em>来清理，不需要显示调用</p>
 <h2 id="CMD"><a href="#CMD" class="headerlink" title="CMD"></a>CMD</h2><p>该指令有三种形式:</p>
@@ -3444,12 +3464,12 @@
 <p>当以shell或者exec格式使用是，该CMD指令设置运行镜像时要执行的命令<br>如果你使用shell的形式CMD，那么<command>将执行 /bin/sh -c：<br><figure class="highlight docker"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 </pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> ubuntu</span>
-<span class="line"><span class="keyword">CMD</span><span class="bash"> <span class="built_in">echo</span> <span class="string">"This is a test."</span> | wc -</span></span>
+<span class="line"><span class="keyword">CMD</span> echo "This is a test." | wc -</span>
 </pre></td></tr></table></figure></p>
 <p>如果您想在 <command> 没有shell 的情况下运行，那么您必须将该命令表达为JSON数组，并提供可执行文件的完整路径。 此数组形式是首选格式CMD。任何其他参数必须单独表示为数组中的字符串：<br><figure class="highlight docker"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 </pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> ubuntu</span>
-<span class="line"><span class="keyword">CMD</span><span class="bash"> [<span class="string">"/usr/bin/wc"</span>,<span class="string">"--help"</span>]</span></span>
+<span class="line"><span class="keyword">CMD</span> ["/usr/bin/wc","--help"]</span>
 </pre></td></tr></table></figure></p>
 <p>CMD指令应用与运行镜像中所包含的软件，及其参数。CMD应该以<strong>CMD [“executable”, “param1”, “param2”…]</strong>表示。</p>
 <p>在很多时候，CMD给出的是一个交互式shell，比如bash，Python等，比如<strong>CMD [“perl”, “-de0”]</strong>，<strong>CMD [“python”]</strong>，或 <strong>CMD [“php”, “-a”]</strong>。</p>
@@ -3496,8 +3516,8 @@
 <span class="line">4</span>
 </pre></td><td class="code"><pre><span class="line"><span class="keyword">ENV</span> PG_MAJOR <span class="number">9.3</span></span>
 <span class="line"><span class="keyword">ENV</span> PG_VERSION <span class="number">9.3</span>.<span class="number">4</span></span>
-<span class="line"><span class="keyword">RUN</span><span class="bash"> curl -SL http://example.com/postgres-<span class="variable">$PG_VERSION</span>.tar.xz | tar -xJC /usr/src/postgress &amp;&amp; …</span>
-<span class="line"></span><span class="keyword">ENV</span> PATH /usr/local/postgres-$PG_MAJOR/bin:$PATH</span>
+<span class="line"><span class="keyword">RUN</span> curl -SL http://example.com/postgres-$PG_VERSION.tar.xz | tar -xJC /usr/src/postgress &amp;&amp; …</span>
+<span class="line"><span class="keyword">ENV</span> PATH /usr/local/postgres-$PG_MAJOR/bin:$PATH</span>
 </pre></td></tr></table></figure></p>
 <h2 id="ADD-or-COPY"><a href="#ADD-or-COPY" class="headerlink" title="ADD or COPY"></a>ADD or COPY</h2><p>上述两个指令的功能上是类似的，都是复制文件到容器中。</p>
 <p><strong>COPY</strong>只支持讲本地文件复制到容器中<br><strong>ADD</strong>不但支持讲本地文件复制到容器中，还支持本地提取文件和远程url下载</p>
@@ -3505,18 +3525,18 @@
 <p><strong>COPY</strong>可以多次使用，例如下列例子可以使RUN缓存无效的数量减少：<br><figure class="highlight docker"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">COPY</span><span class="bash"> requirements.txt /tmp/</span>
-<span class="line"></span><span class="keyword">RUN</span><span class="bash"> pip install --requirement /tmp/requirements.txt</span>
-<span class="line"></span><span class="keyword">COPY</span><span class="bash"> . /tmp/</span></span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">COPY</span> requirements.txt /tmp/</span>
+<span class="line"><span class="keyword">RUN</span> pip install --requirement /tmp/requirements.txt</span>
+<span class="line"><span class="keyword">COPY</span> . /tmp/</span>
 </pre></td></tr></table></figure></p>
 <p><strong>ADD</strong>不鼓励使用远程url并提取包。应该使用<strong>wget</strong>或者<strong>curl</strong>替代。可以在解压完成之后删除不需要的压缩包。<br>以下做法是正确的范例:<br><figure class="highlight docker"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
 <span class="line">4</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">RUN</span><span class="bash"> mkdir -p /usr/src/things \</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">RUN</span> mkdir -p /usr/src/things \</span>
 <span class="line">    &amp;&amp; curl -SL http://example.com/big.tar.xz \</span>
 <span class="line">    | tar -xJC /usr/src/things \</span>
-<span class="line">    &amp;&amp; make -C /usr/src/things all</span></span>
+<span class="line">    &amp;&amp; make -C /usr/src/things all</span>
 </pre></td></tr></table></figure></p>
 <p>对于不需要提取文件的操作，我们应该均使用<strong>COPY</strong>来进行文件复制操作。</p>
 <h3 id="ADD"><a href="#ADD" class="headerlink" title="ADD"></a>ADD</h3><p>该指令有两种方式</p>
@@ -3528,16 +3548,16 @@
 <p><strong><src></src></strong>可以指定多个资源，但如果它们是文件或目录，则它们必须相对于正在构建的源目录（构建的上下文）。</p>
 <p>每个<strong><src></src></strong>可能包含通配符，并使用Go的filepath.Match规则进行匹配 。例如<br><figure class="highlight docker"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">ADD</span><span class="bash"> hom* /mydir/        <span class="comment"># adds all files starting with "hom"</span></span>
-<span class="line"></span><span class="keyword">ADD</span><span class="bash"> hom?.txt /mydir/    <span class="comment"># ? is replaced with any single character, e.g., "home.txt"</span></span></span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">ADD</span> hom* /mydir/        # adds all files starting with "hom"</span>
+<span class="line"><span class="keyword">ADD</span> hom?.txt /mydir/    # ? is replaced with any single character, e.g., "home.txt"</span>
 </pre></td></tr></table></figure></p>
 <p><strong><dest></dest></strong>是一个绝对路径，或相对于一个路径WORKDIR，到其中的源将在目标容器内进行复制<br><figure class="highlight docker"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">ADD</span><span class="bash"> <span class="built_in">test</span> relativeDir/          <span class="comment"># adds "test" to `WORKDIR`/relativeDir/</span></span>
-<span class="line"></span><span class="keyword">ADD</span><span class="bash"> <span class="built_in">test</span> /absoluteDir/         <span class="comment"># adds "test" to /absoluteDir/</span></span></span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">ADD</span> test relativeDir/          # adds "test" to `WORKDIR`/relativeDir/</span>
+<span class="line"><span class="keyword">ADD</span> test /absoluteDir/         # adds "test" to /absoluteDir/</span>
 </pre></td></tr></table></figure></p>
 <p>当添加包含特殊字符（如[ 和]）的文件或目录时，需要按照Golang规则转义这些路径，以防止它们被视为匹配模式。例如，要添加一个名为的文件arr[0].txt，请使用以下命令：<br><figure class="highlight docker"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">ADD</span><span class="bash"> arr[[]0].txt /mydir/    <span class="comment"># copy a file named "arr[0].txt" to /mydir/</span></span></span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">ADD</span> arr[[]0].txt /mydir/    # copy a file named "arr[0].txt" to /mydir/</span>
 </pre></td></tr></table></figure></p>
 <h3 id="COPY"><a href="#COPY" class="headerlink" title="COPY"></a>COPY</h3><p>同样<strong>COPY</strong>也有两种形式：</p>
 <ul>
@@ -3553,14 +3573,14 @@
 </ul>
 <p><strong>ENTRYPOINT</strong>允许你配置作为可执行文件运行的容器</p>
 <p>例如，以下将使用默认内容启动nginx，在端口80上侦听：<br><figure class="highlight docker"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">docker <span class="keyword">run</span><span class="bash"> -i -t --rm -p 80:80 nginx</span></span>
+</pre></td><td class="code"><pre><span class="line">docker <span class="keyword">run</span> -i -t --rm -p 80:80 nginx</span>
 </pre></td></tr></table></figure></p>
 <h3 id="执行from-ENTRYPOINT例子"><a href="#执行from-ENTRYPOINT例子" class="headerlink" title="执行from ENTRYPOINT例子"></a>执行from ENTRYPOINT例子</h3><p>您可以使用exec形式ENTRYPOINT设置相当稳定的默认命令和参数，然后使用任何一种形式CMD来设置更有可能更改的其他默认值。<br><figure class="highlight docker"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
 </pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> ubuntu</span>
-<span class="line"><span class="keyword">ENTRYPOINT</span><span class="bash"> [<span class="string">"top"</span>, <span class="string">"-b"</span>]</span>
-<span class="line"></span><span class="keyword">CMD</span><span class="bash"> [<span class="string">"-c"</span>]</span></span>
+<span class="line"><span class="keyword">ENTRYPOINT</span> ["top", "-b"]</span>
+<span class="line"><span class="keyword">CMD</span> ["-c"]</span>
 </pre></td></tr></table></figure></p>
 <p>运行容器时，您可以看到这top是唯一的过程:<br><figure class="highlight docker"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
@@ -3572,8 +3592,8 @@
 <span class="line">8</span>
 <span class="line">9</span>
 <span class="line">10</span>
-</pre></td><td class="code"><pre><span class="line">$ docker <span class="keyword">run</span><span class="bash"> -it --rm --name <span class="built_in">test</span>  top -H</span>
-<span class="line"></span></span>
+</pre></td><td class="code"><pre><span class="line">$ docker <span class="keyword">run</span> -it --rm --name test  top -H</span>
+<span class="line"></span>
 <span class="line">top - <span class="number">08</span>:<span class="number">25</span>:<span class="number">00</span> up  <span class="number">7</span>:<span class="number">27</span>,  <span class="number">0</span> users,  load average: <span class="number">0.00</span>, <span class="number">0.01</span>, <span class="number">0.05</span></span>
 <span class="line">Threads:   <span class="number">1</span> total,   <span class="number">1</span> running,   <span class="number">0</span> sleeping,   <span class="number">0</span> stopped,   <span class="number">0</span> zombie</span>
 <span class="line">%Cpu(s):  <span class="number">0.1</span> us,  <span class="number">0.1</span> sy,  <span class="number">0.0</span> ni, <span class="number">99.7</span> id,  <span class="number">0.0</span> wa,  <span class="number">0.0</span> hi,  <span class="number">0.0</span> si,  <span class="number">0.0</span> st</span>
@@ -3586,7 +3606,7 @@
 <h3 id="执行外壳形式的-ENTRYPOINT例子"><a href="#执行外壳形式的-ENTRYPOINT例子" class="headerlink" title="执行外壳形式的 ENTRYPOINT例子"></a>执行外壳形式的 ENTRYPOINT例子</h3><p>您可以指定一个纯粹的字符串，ENTRYPOINT并在其中执行/bin/sh -c。此表单将使用shell处理来替换shell环境变量，并将忽略任何CMD或docker run命令行参数。为了确保能够正确地docker stop发出任何长时间运行的ENTRYPOINT可执行文件，您需要记住启动它exec：<br><figure class="highlight docker"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 </pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> ubuntu</span>
-<span class="line"><span class="keyword">ENTRYPOINT</span><span class="bash"> <span class="built_in">exec</span> top -b</span></span>
+<span class="line"><span class="keyword">ENTRYPOINT</span> exec top -b</span>
 </pre></td></tr></table></figure></p>
 <p>运行此镜像时，您将看到单个PID 1过程：<br><figure class="highlight docker"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
@@ -3595,8 +3615,8 @@
 <span class="line">5</span>
 <span class="line">6</span>
 <span class="line">7</span>
-</pre></td><td class="code"><pre><span class="line">$ docker <span class="keyword">run</span><span class="bash"> -it --rm --name <span class="built_in">test</span> top</span>
-<span class="line"></span></span>
+</pre></td><td class="code"><pre><span class="line">$ docker <span class="keyword">run</span> -it --rm --name test top</span>
+<span class="line"></span>
 <span class="line">Mem: <span class="number">1704520</span>K used, <span class="number">352148</span>K free, <span class="number">0</span>K shrd, <span class="number">0</span>K buff, <span class="number">140368121167873</span>K cached</span>
 <span class="line">CPU:   <span class="number">5</span>% usr   <span class="number">0</span>% sys   <span class="number">0</span>% nic  <span class="number">94</span>% idle   <span class="number">0</span>% io   <span class="number">0</span>% irq   <span class="number">0</span>% sirq</span>
 <span class="line">Load average: <span class="number">0.08</span> <span class="number">0.03</span> <span class="number">0.05</span> <span class="number">2</span>/<span class="number">98</span> <span class="number">6</span></span>
@@ -3605,8 +3625,8 @@
 </pre></td></tr></table></figure></p>
 <p>该指令最恰当的用户是社会镜像的主要命令，允许该镜像像该命令一样运行，然后使用CMD作为默认标志<br><figure class="highlight docker"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">ENTRYPOINT</span><span class="bash"> [<span class="string">"s3cmd"</span>]</span>
-<span class="line"></span><span class="keyword">CMD</span><span class="bash"> [<span class="string">"--help"</span>]</span></span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">ENTRYPOINT</span> ["s3cmd"]</span>
+<span class="line"><span class="keyword">CMD</span> ["--help"]</span>
 </pre></td></tr></table></figure></p>
 <p>我们可以输入以下命令来显示命令的帮助<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
 </pre></td><td class="code"><pre><span class="line">$ docker run s3cmd</span>
@@ -12754,6 +12774,165 @@
     </entry>
     
     <entry>
+      <title><![CDATA[spring中的SpEL表达式]]></title>
+      <url>/2017/06/12/spring_SpEL/</url>
+      <content type="html"><![CDATA[<p>Spring 3引入了Spring表达式语言（ Spring Expression Language，SpEL），它能够以一种强大和简洁的方式将值装配到bean属性和构造器参数中，在这个过程中所使用的表达式会在运行时计算得到值</p>
+<p>SpEL拥有很多特性，包括：</p>
+<ul>
+<li>使用bean的ID来引用bean</li>
+<li>调用方法和访问对象的属性</li>
+<li>对值进行算术、关系和逻辑运算</li>
+<li>正则表达式匹配</li>
+<li>集合操作</li>
+</ul>
+<a id="more"></a>
+<h2 id="SpEL基础表达式"><a href="#SpEL基础表达式" class="headerlink" title="SpEL基础表达式"></a>SpEL基础表达式</h2><h3 id="表示字面值"><a href="#表示字面值" class="headerlink" title="表示字面值"></a>表示字面值</h3><h4 id="表示是浮点值"><a href="#表示是浮点值" class="headerlink" title="表示是浮点值"></a>表示是浮点值</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;3.1415&#125;</span></span>
+</pre></td></tr></table></figure>
+<p>数值还可以使用科学记数法的方式进行表示<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;9.87E4&#125;</span></span>
+</pre></td></tr></table></figure></p>
+<p>表达式计算得到的值就是98,700</p>
+<h4 id="用来计算String类型的字面值"><a href="#用来计算String类型的字面值" class="headerlink" title="用来计算String类型的字面值"></a>用来计算String类型的字面值</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;'HELLO'&#125;</span></span>
+</pre></td></tr></table></figure>
+<h4 id="字面值true和false的计算结果就是它们对应的Boolean类型的值"><a href="#字面值true和false的计算结果就是它们对应的Boolean类型的值" class="headerlink" title="字面值true和false的计算结果就是它们对应的Boolean类型的值"></a>字面值true和false的计算结果就是它们对应的Boolean类型的值</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;flase&#125;</span></span>
+</pre></td></tr></table></figure>
+<h3 id="引用bean、属性和方法"><a href="#引用bean、属性和方法" class="headerlink" title="引用bean、属性和方法"></a>引用bean、属性和方法</h3><p>SpEL所能做的另外一件基础的事情就是通过ID引用其他的bean。例如，你可以使用SpEL将一个bean装配到另外一个bean的属性中</p>
+<h4 id="使用bean-ID作为SpEL表达式"><a href="#使用bean-ID作为SpEL表达式" class="headerlink" title="使用bean ID作为SpEL表达式"></a>使用bean ID作为SpEL表达式</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;sgtPeppers&#125;</span></span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>sgtPeppers为beanID</p>
+</blockquote>
+<h4 id="引用sgtPeppers的artist属性"><a href="#引用sgtPeppers的artist属性" class="headerlink" title="引用sgtPeppers的artist属性"></a>引用sgtPeppers的artist属性</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;sgtPeppers.artist&#125;</span></span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>引用了一个ID为sgtPeppers的bean，分割符之后是对artist属性的引用</p>
+</blockquote>
+<h4 id="调用-artistSelector的selectArtist-方法"><a href="#调用-artistSelector的selectArtist-方法" class="headerlink" title="调用 artistSelector的selectArtist()方法"></a>调用 artistSelector的selectArtist()方法</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;artistSelector.selectArtist()&#125;</span></span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>引用了一个ID为artistSelector的bean，调用bean的selectArtist()方法</p>
+</blockquote>
+<p>对于被调用方法的返回值来说，我们同样可以调用它的方法<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;artistSelector.selectArtist().toUpperCase()&#125;</span></span>
+</pre></td></tr></table></figure></p>
+<blockquote>
+<p>如果selectArtist()方法返回的是一个String，那么可以调<br>用toUpperCase()将字符串全部改成大写</p>
+</blockquote>
+<p>如果selectArtist()的返回值是null的话，将会出现NullPointerException异常，我们可以使用类型安全的运算符<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;artistSelector.selectArtist()?.toUpperCase()&#125;</span></span>
+</pre></td></tr></table></figure></p>
+<blockquote>
+<p>与之前只是使用点号（ .）来访问toUpperCase()方法不同，现在我们使用了“?.”运算符。这个运算符能够在访问它右边的内容之前，确保它所对应的元素不是null。所以，如果selectArtist()的返回值是null的话，那么SpEL将不会调用toUpperCase()方法。表达式的返回值会是null</p>
+</blockquote>
+<h3 id="在表达式中使用类型"><a href="#在表达式中使用类型" class="headerlink" title="在表达式中使用类型"></a>在表达式中使用类型</h3><blockquote>
+<p>如果要在SpEL中访问类作用域的方法和常量的话，要依赖T()这个关键的运算符</p>
+</blockquote>
+<h4 id="为了在SpEL中表达Java的Math类，需要按照如下的方式使用T-运算符"><a href="#为了在SpEL中表达Java的Math类，需要按照如下的方式使用T-运算符" class="headerlink" title="为了在SpEL中表达Java的Math类，需要按照如下的方式使用T()运算符"></a>为了在SpEL中表达Java的Math类，需要按照如下的方式使用T()运算符</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">T(java.lang.Math).PI</span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>将PI值装配到bean属性中</p>
+</blockquote>
+<h4 id="可以调用T-运算符所得到类型的静态方法"><a href="#可以调用T-运算符所得到类型的静态方法" class="headerlink" title="可以调用T()运算符所得到类型的静态方法:"></a>可以调用T()运算符所得到类型的静态方法:</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">T(java.lang.Math).random()</span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>计算得到一个0到1之间的随机数</p>
+</blockquote>
+<h3 id="SpEL运算符"><a href="#SpEL运算符" class="headerlink" title="SpEL运算符"></a>SpEL运算符</h3><p>将简单的表达式组合为更为复杂的表达式</p>
+<h4 id="计算"><a href="#计算" class="headerlink" title="计算"></a>计算</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;T(java.lang.Math).PI  * circle.radius ^ 2&#125;</span></span>
+</pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li>计算了circle bean中所定义圆的面积</li>
+<li>当使用String类型的值时， “+”运算符执行的是连接操作，与在Java中是一样的</li>
+</ul>
+</blockquote>
+<h4 id="比较运算符"><a href="#比较运算符" class="headerlink" title="比较运算符"></a>比较运算符</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;counter.total == 100&#125;</span></span>
+<span class="line"><span class="comment">#&#123;counter.total eq 100&#125;</span></span>
+</pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li>要比较两个数字是不是相等，可以使用双等号运算符</li>
+<li>也可以使用文本型的eq运算符</li>
+<li>表达式的计算结果是个Boolean值</li>
+</ul>
+</blockquote>
+<h3 id="三元运算符（-ternary）"><a href="#三元运算符（-ternary）" class="headerlink" title="三元运算符（ ternary）"></a>三元运算符（ ternary）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;scoreboard.score &gt; 1000 ? "winner" : "loser"&#125;</span></span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>判断如果scoreboard.score&gt;1000的话，计算结果为String类的“Winner！ ”，否则的话，结果为Loser</p>
+</blockquote>
+<p> 三元运算符的一个常见场景就是检查null值，并用一个默认值来替代null<br> <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;disc.title ?: 'Rattleand Hum'&#125;</span></span>
+</pre></td></tr></table></figure></p>
+<blockquote>
+<p>会判断disc.title的值是不是null，如果是null的话，那么表达式的计算结果就会是“Rattleand Hum”</p>
+</blockquote>
+<h3 id="计算正则表达式"><a href="#计算正则表达式" class="headerlink" title="计算正则表达式"></a>计算正则表达式</h3><p>当处理文本时，有时检查文本是否匹配某种模式是非常有用的。SpEL通过matches运算符支持表达式中的模式匹配。 matches运算<br>符对String类型的文本（作为左边参数）应用正则表达式（作为右边参数）。 matches的运算结果会返回一个Boolean类型的值：如果与<br>正则表达式相匹配，则返回true；否则返回false<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;admin.email matches '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9._%+-]+\\.com'&#125;</span></span>
+</pre></td></tr></table></figure></p>
+<blockquote>
+<p>判断一个字符串是否包含有效的邮件地址</p>
+</blockquote>
+<h3 id="计算集合"><a href="#计算集合" class="headerlink" title="计算集合"></a>计算集合</h3><h4 id="引用列表中的一个元素"><a href="#引用列表中的一个元素" class="headerlink" title="引用列表中的一个元素"></a>引用列表中的一个元素</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;jukebox.song[4].title&#125;</span></span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>计算songs集合中第五个（基于零开始）元素的title属性，这个集合来源于ID为jukebox bean</p>
+<h4 id="从jukebox中随机选择"><a href="#从jukebox中随机选择" class="headerlink" title="从jukebox中随机选择"></a>从jukebox中随机选择</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;jukebox.song [T(java.lang.Math).random()  * jukebox.songs.size() ].title&#125;</span></span>
+</pre></td></tr></table></figure>
+</blockquote>
+<p>“[]”运算符用来从集合或数组中按照索引获取元素，实际上，它还可以从String中获取一个字符<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;'this is a test' [3]&#125;</span></span>
+</pre></td></tr></table></figure></p>
+<blockquote>
+<p>引用了String中的第四个（基于零开始）字符，也就是“s”</p>
+</blockquote>
+<h4 id="查询运算符（-）"><a href="#查询运算符（-）" class="headerlink" title="查询运算符（ .?[]）"></a>查询运算符（ .?[]）</h4><p>用来对集合进行过滤，得到集合的一个子集<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;jukebox.songs.?[artist eq 'Aerosmith']&#125;</span></span>
+</pre></td></tr></table></figure></p>
+<blockquote>
+<ul>
+<li>希望得到jukebox中artist属性为Aerosmith的所有歌曲,选择运算符在它的方括号中接受另一个表达式。当SpEL迭代歌曲列表的时候，会对歌曲集合中的每一个条目计算这个表达式。如果表达式的计算结果为true的话，那么条目会放到新的集合中。否则的话，它就不会放到新集合中。在本例中，内部的表达式会检查歌曲的artist属性是不是等于Aerosmith</li>
+<li>“.^[]”和“.$[]”，它们分别用来在集合中查询第一个匹配项和最后一个匹配项</li>
+<li>投影运算符（ .![]），它会从集合的每个成员中选择特定的属性放到另外一个集合中</li>
+</ul>
+<p>注：</p>
+<ul>
+<li>上述环境在<strong>ubuntu16.04 lts</strong>中测试成功</li>
+<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
+</ul>
+</blockquote>
+]]></content>
+      
+        <categories>
+            
+            <category> 学习笔记 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Spring </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[django-rest-framework框架学习]]></title>
       <url>/2017/06/12/django_rest_framework_study/</url>
       <content type="html"><![CDATA[<p>现在新一代web应用都开始采用前后端分离的方式来进行，淘汰了以前的服务器端渲染的方式。前后端分离方式有许多好处，比如<br>1、可以前后端并行开发，提高开发效率<br>2、页面都在客户端进行渲染，提高了渲染速度，减小了服务器的压力<br>3、一套api提供给多个客户端使用，而且不限制客户端的类型（web，app均可）</p>
@@ -13259,165 +13438,6 @@
             <tag> Django </tag>
             
             <tag> Python </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[spring中的SpEL表达式]]></title>
-      <url>/2017/06/12/spring_SpEL/</url>
-      <content type="html"><![CDATA[<p>Spring 3引入了Spring表达式语言（ Spring Expression Language，SpEL），它能够以一种强大和简洁的方式将值装配到bean属性和构造器参数中，在这个过程中所使用的表达式会在运行时计算得到值</p>
-<p>SpEL拥有很多特性，包括：</p>
-<ul>
-<li>使用bean的ID来引用bean</li>
-<li>调用方法和访问对象的属性</li>
-<li>对值进行算术、关系和逻辑运算</li>
-<li>正则表达式匹配</li>
-<li>集合操作</li>
-</ul>
-<a id="more"></a>
-<h2 id="SpEL基础表达式"><a href="#SpEL基础表达式" class="headerlink" title="SpEL基础表达式"></a>SpEL基础表达式</h2><h3 id="表示字面值"><a href="#表示字面值" class="headerlink" title="表示字面值"></a>表示字面值</h3><h4 id="表示是浮点值"><a href="#表示是浮点值" class="headerlink" title="表示是浮点值"></a>表示是浮点值</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;3.1415&#125;</span></span>
-</pre></td></tr></table></figure>
-<p>数值还可以使用科学记数法的方式进行表示<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;9.87E4&#125;</span></span>
-</pre></td></tr></table></figure></p>
-<p>表达式计算得到的值就是98,700</p>
-<h4 id="用来计算String类型的字面值"><a href="#用来计算String类型的字面值" class="headerlink" title="用来计算String类型的字面值"></a>用来计算String类型的字面值</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;'HELLO'&#125;</span></span>
-</pre></td></tr></table></figure>
-<h4 id="字面值true和false的计算结果就是它们对应的Boolean类型的值"><a href="#字面值true和false的计算结果就是它们对应的Boolean类型的值" class="headerlink" title="字面值true和false的计算结果就是它们对应的Boolean类型的值"></a>字面值true和false的计算结果就是它们对应的Boolean类型的值</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;flase&#125;</span></span>
-</pre></td></tr></table></figure>
-<h3 id="引用bean、属性和方法"><a href="#引用bean、属性和方法" class="headerlink" title="引用bean、属性和方法"></a>引用bean、属性和方法</h3><p>SpEL所能做的另外一件基础的事情就是通过ID引用其他的bean。例如，你可以使用SpEL将一个bean装配到另外一个bean的属性中</p>
-<h4 id="使用bean-ID作为SpEL表达式"><a href="#使用bean-ID作为SpEL表达式" class="headerlink" title="使用bean ID作为SpEL表达式"></a>使用bean ID作为SpEL表达式</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;sgtPeppers&#125;</span></span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>sgtPeppers为beanID</p>
-</blockquote>
-<h4 id="引用sgtPeppers的artist属性"><a href="#引用sgtPeppers的artist属性" class="headerlink" title="引用sgtPeppers的artist属性"></a>引用sgtPeppers的artist属性</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;sgtPeppers.artist&#125;</span></span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>引用了一个ID为sgtPeppers的bean，分割符之后是对artist属性的引用</p>
-</blockquote>
-<h4 id="调用-artistSelector的selectArtist-方法"><a href="#调用-artistSelector的selectArtist-方法" class="headerlink" title="调用 artistSelector的selectArtist()方法"></a>调用 artistSelector的selectArtist()方法</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;artistSelector.selectArtist()&#125;</span></span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>引用了一个ID为artistSelector的bean，调用bean的selectArtist()方法</p>
-</blockquote>
-<p>对于被调用方法的返回值来说，我们同样可以调用它的方法<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;artistSelector.selectArtist().toUpperCase()&#125;</span></span>
-</pre></td></tr></table></figure></p>
-<blockquote>
-<p>如果selectArtist()方法返回的是一个String，那么可以调<br>用toUpperCase()将字符串全部改成大写</p>
-</blockquote>
-<p>如果selectArtist()的返回值是null的话，将会出现NullPointerException异常，我们可以使用类型安全的运算符<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;artistSelector.selectArtist()?.toUpperCase()&#125;</span></span>
-</pre></td></tr></table></figure></p>
-<blockquote>
-<p>与之前只是使用点号（ .）来访问toUpperCase()方法不同，现在我们使用了“?.”运算符。这个运算符能够在访问它右边的内容之前，确保它所对应的元素不是null。所以，如果selectArtist()的返回值是null的话，那么SpEL将不会调用toUpperCase()方法。表达式的返回值会是null</p>
-</blockquote>
-<h3 id="在表达式中使用类型"><a href="#在表达式中使用类型" class="headerlink" title="在表达式中使用类型"></a>在表达式中使用类型</h3><blockquote>
-<p>如果要在SpEL中访问类作用域的方法和常量的话，要依赖T()这个关键的运算符</p>
-</blockquote>
-<h4 id="为了在SpEL中表达Java的Math类，需要按照如下的方式使用T-运算符"><a href="#为了在SpEL中表达Java的Math类，需要按照如下的方式使用T-运算符" class="headerlink" title="为了在SpEL中表达Java的Math类，需要按照如下的方式使用T()运算符"></a>为了在SpEL中表达Java的Math类，需要按照如下的方式使用T()运算符</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">T(java.lang.Math).PI</span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>将PI值装配到bean属性中</p>
-</blockquote>
-<h4 id="可以调用T-运算符所得到类型的静态方法"><a href="#可以调用T-运算符所得到类型的静态方法" class="headerlink" title="可以调用T()运算符所得到类型的静态方法:"></a>可以调用T()运算符所得到类型的静态方法:</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">T(java.lang.Math).random()</span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>计算得到一个0到1之间的随机数</p>
-</blockquote>
-<h3 id="SpEL运算符"><a href="#SpEL运算符" class="headerlink" title="SpEL运算符"></a>SpEL运算符</h3><p>将简单的表达式组合为更为复杂的表达式</p>
-<h4 id="计算"><a href="#计算" class="headerlink" title="计算"></a>计算</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;T(java.lang.Math).PI  * circle.radius ^ 2&#125;</span></span>
-</pre></td></tr></table></figure>
-<blockquote>
-<ul>
-<li>计算了circle bean中所定义圆的面积</li>
-<li>当使用String类型的值时， “+”运算符执行的是连接操作，与在Java中是一样的</li>
-</ul>
-</blockquote>
-<h4 id="比较运算符"><a href="#比较运算符" class="headerlink" title="比较运算符"></a>比较运算符</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;counter.total == 100&#125;</span></span>
-<span class="line"><span class="comment">#&#123;counter.total eq 100&#125;</span></span>
-</pre></td></tr></table></figure>
-<blockquote>
-<ul>
-<li>要比较两个数字是不是相等，可以使用双等号运算符</li>
-<li>也可以使用文本型的eq运算符</li>
-<li>表达式的计算结果是个Boolean值</li>
-</ul>
-</blockquote>
-<h3 id="三元运算符（-ternary）"><a href="#三元运算符（-ternary）" class="headerlink" title="三元运算符（ ternary）"></a>三元运算符（ ternary）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;scoreboard.score &gt; 1000 ? "winner" : "loser"&#125;</span></span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>判断如果scoreboard.score&gt;1000的话，计算结果为String类的“Winner！ ”，否则的话，结果为Loser</p>
-</blockquote>
-<p> 三元运算符的一个常见场景就是检查null值，并用一个默认值来替代null<br> <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;disc.title ?: 'Rattleand Hum'&#125;</span></span>
-</pre></td></tr></table></figure></p>
-<blockquote>
-<p>会判断disc.title的值是不是null，如果是null的话，那么表达式的计算结果就会是“Rattleand Hum”</p>
-</blockquote>
-<h3 id="计算正则表达式"><a href="#计算正则表达式" class="headerlink" title="计算正则表达式"></a>计算正则表达式</h3><p>当处理文本时，有时检查文本是否匹配某种模式是非常有用的。SpEL通过matches运算符支持表达式中的模式匹配。 matches运算<br>符对String类型的文本（作为左边参数）应用正则表达式（作为右边参数）。 matches的运算结果会返回一个Boolean类型的值：如果与<br>正则表达式相匹配，则返回true；否则返回false<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;admin.email matches '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9._%+-]+\\.com'&#125;</span></span>
-</pre></td></tr></table></figure></p>
-<blockquote>
-<p>判断一个字符串是否包含有效的邮件地址</p>
-</blockquote>
-<h3 id="计算集合"><a href="#计算集合" class="headerlink" title="计算集合"></a>计算集合</h3><h4 id="引用列表中的一个元素"><a href="#引用列表中的一个元素" class="headerlink" title="引用列表中的一个元素"></a>引用列表中的一个元素</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;jukebox.song[4].title&#125;</span></span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>计算songs集合中第五个（基于零开始）元素的title属性，这个集合来源于ID为jukebox bean</p>
-<h4 id="从jukebox中随机选择"><a href="#从jukebox中随机选择" class="headerlink" title="从jukebox中随机选择"></a>从jukebox中随机选择</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;jukebox.song [T(java.lang.Math).random()  * jukebox.songs.size() ].title&#125;</span></span>
-</pre></td></tr></table></figure>
-</blockquote>
-<p>“[]”运算符用来从集合或数组中按照索引获取元素，实际上，它还可以从String中获取一个字符<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;'this is a test' [3]&#125;</span></span>
-</pre></td></tr></table></figure></p>
-<blockquote>
-<p>引用了String中的第四个（基于零开始）字符，也就是“s”</p>
-</blockquote>
-<h4 id="查询运算符（-）"><a href="#查询运算符（-）" class="headerlink" title="查询运算符（ .?[]）"></a>查询运算符（ .?[]）</h4><p>用来对集合进行过滤，得到集合的一个子集<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;jukebox.songs.?[artist eq 'Aerosmith']&#125;</span></span>
-</pre></td></tr></table></figure></p>
-<blockquote>
-<ul>
-<li>希望得到jukebox中artist属性为Aerosmith的所有歌曲,选择运算符在它的方括号中接受另一个表达式。当SpEL迭代歌曲列表的时候，会对歌曲集合中的每一个条目计算这个表达式。如果表达式的计算结果为true的话，那么条目会放到新的集合中。否则的话，它就不会放到新集合中。在本例中，内部的表达式会检查歌曲的artist属性是不是等于Aerosmith</li>
-<li>“.^[]”和“.$[]”，它们分别用来在集合中查询第一个匹配项和最后一个匹配项</li>
-<li>投影运算符（ .![]），它会从集合的每个成员中选择特定的属性放到另外一个集合中</li>
-</ul>
-<p>注：</p>
-<ul>
-<li>上述环境在<strong>ubuntu16.04 lts</strong>中测试成功</li>
-<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
-</ul>
-</blockquote>
-]]></content>
-      
-        <categories>
-            
-            <category> 学习笔记 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> Spring </tag>
             
         </tags>
         
@@ -15787,57 +15807,124 @@
         
         <tags>
             
-            <tag> Node.js </tag>
-            
-            <tag> Hexo </tag>
-            
             <tag> Git </tag>
             
             <tag> JavaScript </tag>
+            
+            <tag> Node.js </tag>
+            
+            <tag> Hexo </tag>
             
         </tags>
         
     </entry>
     
     <entry>
-      <title><![CDATA[Django常用语句]]></title>
-      <url>/2016/08/15/django%E5%B8%B8%E7%94%A8%E8%AF%AD%E5%8F%A5/</url>
-      <content type="html"><![CDATA[<p>本篇主要介绍我们在使用django框架开发的时候使用的常用语句，为了增加开发效率，建议将这些语句记住并多多练习，</p>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="新建工程"><a href="#新建工程" class="headerlink" title="新建工程"></a>新建工程</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">django-admin startproject project-name</span>
-</pre></td></tr></table></figure>
-<p>这是一个django开发的开始，当然也可以用pycharm这个ide创建工程，这个东西还是看个人习惯了。但最好还是记住，</p>
-<ul>
-<li>project-name —— 项目名称(需要符合Python 的变量命名规则（以下划线或字母开头))</li>
-<li>有些版本的django可能是django-admin.py(根据个人需求选择)<a id="more"></a>
-</li>
-</ul>
-<h3 id="新建app"><a href="#新建app" class="headerlink" title="新建app"></a>新建app</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+      <title><![CDATA[Python2和Python3的区别简单总结]]></title>
+      <url>/2016/08/15/python2%E5%92%8CPython3%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
+      <content type="html"><![CDATA[<p>Python是一种新的计算机语言，也是最近两年才开始大火的一种语言，它够优雅，写起来可以随心所欲，不用担心没有定义，没有声明这些其他计算机语言都需要考虑的问题,单自从更新Python3.x版本之后，很多人开始头疼，因为Python3很多地方并不兼容Python2，有人夸张的说Python3是一门新的语言，我觉得没有那么夸张，本文就剧一下我遇到的和一些知道的区别吧</p>
+<a id="more"></a>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="print函数"><a href="#print函数" class="headerlink" title="print函数"></a>print函数</h3><p>print 语法的变化可能是最广为人知的了，但是仍值得一提的是： Python 2 的 print 声明已经被 print() 函数取代了，这意味着我们必须包装我们想打印在小括号中的对象。<br>Python 2 不具有额外的小括号问题。但对比一下，如果我们按照 Python 2 的方式不使用小括号调用 print 函数，Python 3 将抛出一个语法异常（SyntaxError）。</p>
+<h4 id="Python2"><a href="#Python2" class="headerlink" title="Python2"></a>Python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
-</pre></td><td class="code"><pre><span class="line">python manage.py startapp app-name</span>
-<span class="line"><span class="comment">#或者还可以这样</span></span>
-<span class="line">django-admin.py startapp app-name</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">'Python'</span>, python_version()</span>
+<span class="line"><span class="keyword">print</span> <span class="string">'Hello, World!'</span></span>
+<span class="line">print(<span class="string">'Hello, World!'</span>)</span>
+<span class="line"><span class="keyword">print</span> <span class="string">"text"</span>, ; <span class="keyword">print</span> <span class="string">'print more text on the same line'</span></span>
 </pre></td></tr></table></figure>
-<p>这是新建一个app，利用pycharm这个ide暂时我不知道怎么新建app,如果有读者知道的话，请在评论区告知我。</p>
+<blockquote>
+<p>结果:</p>
 <ul>
-<li>app-name —— 应用名称</li>
-<li>根据项目的需求选择新建app的数量，每次都是执行同样的语句。</li>
-<li>我们需要在项目的settings中的INSTALLED_APPS中添加我们所创建的app</li>
+<li>Python 2.7.6</li>
+<li>Hello, World!</li>
+<li>Hello, World!</li>
+<li>text print more text on the same line</li>
 </ul>
-<h3 id="同步数据库"><a href="#同步数据库" class="headerlink" title="同步数据库"></a>同步数据库</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</blockquote>
+<h4 id="Python3"><a href="#Python3" class="headerlink" title="Python3"></a>Python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line">python manage.py makemigrations</span>
-<span class="line">python manage.py migrate</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line">print(<span class="string">'Python'</span>, python_version())</span>
+<span class="line">print(<span class="string">'Hello, World!'</span>)</span>
+<span class="line">print(<span class="string">"some text,"</span>, end=<span class="string">""</span>) </span>
+<span class="line">print(<span class="string">' print more text on the same line'</span>)</span>
 </pre></td></tr></table></figure>
-<p>这两句代码的功能是同步数据库，我们在项目的settings中的DATABASES中设置好数据库各种参数，在app的models.py中创建我们所需要的字段，输入以上两条语句，django就自动帮我们自动生成了相应的数据表</p>
+<blockquote>
+<p>结果:</p>
 <ul>
-<li>以上代码是在django1.7以上用的</li>
-<li>如果是django1.7以下版本请使用python manage.py syncdb</li>
-<li>对已有的 models 进行修改，Django 1.7之前的版本的Django都是无法自动更改表结构的，不过有第三方工具 south</li>
-<li>django1.7以上的版本已经集成south</li>
+<li>Python 3.5.1</li>
+<li>Hello, World!</li>
+<li>some text, print more text on the same line</li>
+<li>print more text on the same line</li>
 </ul>
-<h3 id="使用测试服务器"><a href="#使用测试服务器" class="headerlink" title="使用测试服务器"></a>使用测试服务器</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</blockquote>
+<h3 id="整除"><a href="#整除" class="headerlink" title="整除"></a>整除</h3><p>python3的版本变化中，整数计算可以说是很大的并且可能在移植过程中造成很大危险，比如:</p>
+<ul>
+<li>你在 Python 2 上执行 Python 3 的代码。因为这个整除的变化表现在它会被忽视（即它不会抛出语法异常）。</li>
+</ul>
+<h4 id="python2"><a href="#python2" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">'3 / 2 ='</span>, <span class="number">3</span> / <span class="number">2</span></span>
+<span class="line"><span class="keyword">print</span> <span class="string">'3 // 2 ='</span>, <span class="number">3</span> // <span class="number">2</span></span>
+<span class="line"><span class="keyword">print</span> <span class="string">'3 / 2.0 ='</span>, <span class="number">3</span> / <span class="number">2.0</span></span>
+<span class="line"><span class="keyword">print</span> <span class="string">'3 // 2.0 ='</span>, <span class="number">3</span> // <span class="number">2.0</span></span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>结果:</p>
+<ul>
+<li>3 / 2 = 1</li>
+<li>3 // 2 = 1</li>
+<li>3 / 2.0 = 1.5</li>
+<li>3 // 2.0 = 1.0</li>
+</ul>
+</blockquote>
+<h4 id="python3"><a href="#python3" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line">print(<span class="string">'3 / 2 ='</span>, <span class="number">3</span> / <span class="number">2</span>)</span>
+<span class="line">print(<span class="string">'3 // 2 ='</span>, <span class="number">3</span> // <span class="number">2</span>)</span>
+<span class="line">print(<span class="string">'3 / 2.0 ='</span>, <span class="number">3</span> / <span class="number">2.0</span>)</span>
+<span class="line">print(<span class="string">'3 // 2.0 ='</span>, <span class="number">3</span> // <span class="number">2.0</span>)</span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>结果:</p>
+<ul>
+<li>3 / 2 = 1.5</li>
+<li>3 // 2 = 1</li>
+<li>3 / 2.0 = 1.5</li>
+<li>3 // 2.0 = 1.0</li>
+</ul>
+</blockquote>
+<h3 id="Unicode"><a href="#Unicode" class="headerlink" title="Unicode"></a>Unicode</h3><p>Python 2 有 ASCII str() 类型，unicode() 是单独的，不是 byte 类型。<br>现在， 在 Python 3，我们最终有了 Unicode (utf-8) 字符串，以及一个字节类：byte 和 bytearrays。<br>由于 Python3.X 源码文件默认使用utf-8编码，这就使得以下代码是合法的：</p>
+<h4 id="python3-1"><a href="#python3-1" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">中国 = <span class="string">'china'</span> </span>
+<span class="line">print(中国)</span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>结果:</p>
+<ul>
+<li>china</li>
+</ul>
+</blockquote>
+<h4 id="python2-1"><a href="#python2-1" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">str = <span class="string">"我爱北京天安门"</span></span>
+<span class="line"><span class="keyword">print</span> <span class="string">'str'</span></span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>结果:</p>
+<ul>
+<li>‘\xe6\x88\x91\xe7\x88\xb1\xe5\x8c\x97\xe4\xba\xac\xe5\xa4\xa9\xe5\xae\x89\xe9\x97\xa8’</li>
+</ul>
+</blockquote>
+<h3 id="xrange模块"><a href="#xrange模块" class="headerlink" title="xrange模块"></a>xrange模块</h3><p>在 Python 2 中 xrange() 创建迭代对象的用法是非常流行的。比如： for 循环或者是列表/集合/字典推导式。<br>这个表现十分像生成器（比如。“惰性求值”）。但是这个 xrange-iterable 是无穷的，意味着你可以无限遍历。<br>由于它的惰性求值，如果你不得仅仅不遍历它一次，xrange() 函数 比 range() 更快（比如 for 循环）。尽管如此，对比迭代一次，不建议你重复迭代多次，因为生成器每次都从头开始。<br>在 Python 3 中，range() 是像 xrange() 那样实现以至于一个专门的 xrange() 函数都不再存在（在 Python 3 中 xrange() 会抛出命名异常）。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
 <span class="line">4</span>
@@ -15845,63 +15932,198 @@
 <span class="line">6</span>
 <span class="line">7</span>
 <span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-</pre></td><td class="code"><pre><span class="line">python manage.py runserver</span>
-<span class="line"> </span>
-<span class="line"><span class="comment"># 当提示端口被占用的时候，可以用其它端口：</span></span>
-<span class="line">python manage.py runserver <span class="number">8001</span></span>
-<span class="line">python manage.py runserver <span class="number">9999</span></span>
-<span class="line">（当然也可以kill掉占用端口的进程）</span>
-<span class="line"> </span>
-<span class="line"><span class="comment"># 监听所有可用 ip （电脑可能有一个或多个内网ip，一个或多个外网ip，即有多个ip地址）</span></span>
-<span class="line">python manage.py runserver <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span>:<span class="number">8000</span></span>
-<span class="line"><span class="comment"># 如果是外网或者局域网电脑上可以用其它电脑查看开发服务器</span></span>
-<span class="line"><span class="comment"># 访问对应的 ip加端口，比如 http://172.16.20.2:8000</span></span>
-</pre></td></tr></table></figure>
-<p>以上代码可以开始调式，打开浏览器显示我们所在代码中修改的效果</p>
-<ul>
-<li>在cmd中输入python manage.py runserver  会打开默认打开127.0.0.1:8000， 默认只监听本地ip</li>
-<li>也可以用pycharm中的运行django，（这里会监听所有ip）</li>
-<li>开发服务器，即开发时使用，一般修改代码后会自动重启，方便调试和开发，但是由于性能问题，建议只用来测试，不要用在生产环境</li>
-</ul>
-<h3 id="清空数据库"><a href="#清空数据库" class="headerlink" title="清空数据库"></a>清空数据库</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">python manage.py flush</span>
-</pre></td></tr></table></figure>
-<p>当你发现自己的数据库中的数据有问题时，就需要执行以上语句，可以清空数据库，但是保留数据库的结构</p>
-<ul>
-<li>此命令会询问是 yes 还是 no, 选择 yes 会把数据全部清空掉，只留下空表</li>
-</ul>
-<h3 id="创建超级管理员"><a href="#创建超级管理员" class="headerlink" title="创建超级管理员"></a>创建超级管理员</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">python manage.py createsuperuser</span>
-</pre></td></tr></table></figure>
-<p>django很好的一点就是自带了后台管理功能，但是我们去使用的时候还是需要创建超级管理员，去管理后台</p>
-<ul>
-<li>按照提示输入用户名和对应的密码就好了邮箱可以留空，用户名和密码必填</li>
-</ul>
-<h4 id="修改-用户密码可以用："><a href="#修改-用户密码可以用：" class="headerlink" title="修改 用户密码可以用："></a>修改 用户密码可以用：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">python manage.py changepassword username</span>
-</pre></td></tr></table></figure>
-<h3 id="导出数据-导入数据"><a href="#导出数据-导入数据" class="headerlink" title="导出数据 导入数据"></a>导出数据 导入数据</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> timeit</span>
+<span class="line">n = <span class="number">10000</span></span>
+<span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_range</span><span class="params">(n)</span>:</span></span>
+<span class="line">    <span class="keyword">return</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span>
+<span class="line">        <span class="keyword">pass</span></span>
+<span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_xrange</span><span class="params">(n)</span>:</span></span>
+<span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> xrange(n):</span>
+<span class="line">        <span class="keyword">pass</span></span>
+</pre></td></tr></table></figure></p>
+<h4 id="python2-2"><a href="#python2-2" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line">python manage.py dumpdata appname &gt; appname.json</span>
-<span class="line">python manage.py loaddata appname.json</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">'Python'</span>, python_version()</span>
+<span class="line"><span class="keyword">print</span> <span class="string">'\ntiming range()'</span></span>
+<span class="line">%timeit test_range(n)</span>
+<span class="line"><span class="keyword">print</span> <span class="string">'\n\ntiming xrange()'</span></span>
+<span class="line">%timeit test_xrange(n)</span>
 </pre></td></tr></table></figure>
-<p>这两条数据我们不是很常用 ，知道即可</p>
-<h3 id="Django-项目环境终端"><a href="#Django-项目环境终端" class="headerlink" title="Django 项目环境终端"></a>Django 项目环境终端</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">python manage.py shell</span>
-</pre></td></tr></table></figure>
-<p>你可以在这个 shell 里面调用当前项目的 models.py 中的 API，对于操作数据，还有一些小测试非常方便</p>
-<ul>
-<li>这里推荐安装 bpython 或 ipython通过pip安装即可 pip install ipython</li>
-<li>bpython 或 ipython有一些代码提示和语法高亮的功能，比较好用,这是ipython的效果<br><img src="http://of7ye9tny.bkt.clouddn.com/ipython.png" alt="ipthon效果图"></li>
-</ul>
 <blockquote>
+<p>结果:</p>
+<ul>
+<li>Python 2.7.6</li>
+<li>timing range()</li>
+<li>1000 loops, best of 3: 433 µs per loop</li>
+<li>timing xrange()</li>
+<li>1000 loops, best of 3: 350 µs per loop</li>
+</ul>
+</blockquote>
+<h4 id="python3-2"><a href="#python3-2" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line">print(<span class="string">'Python'</span>, python_version())</span>
+<span class="line">print(<span class="string">'\ntiming range()'</span>)</span>
+<span class="line">%timeit test_range(n)</span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>结果:</p>
+<ul>
+<li>Python 3.5.1</li>
+<li>timing range()</li>
+<li>1000 loops, best of 3: 520 µs per loop</li>
+</ul>
+</blockquote>
+<h3 id="不等运算符"><a href="#不等运算符" class="headerlink" title="不等运算符"></a>不等运算符</h3><ul>
+<li>Python 2.x中不等于有两种写法 != 和 &lt;&gt;</li>
+<li>Python 3.x中去掉了&lt;&gt;, 只有!=一种写法，还好，我从来没有使用&lt;&gt;的习惯</li>
+</ul>
+<h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><ul>
+<li>Py3.X去除了long类型，现在只有一种整型——int，但它的行为就像2.X版本的long</li>
+<li>新增了bytes类型，对应于2.X版本的八位串</li>
+<li>dict的.keys()、.items 和.values()方法返回迭代器，而之前的iterkeys()等函数都被废弃。同时去掉的还有 dict.has_key()，用 in替代它吧 。<blockquote>
 <p>注：</p>
 <ul>
 <li>上述代码在<strong>django1.7</strong>和<strong>Python2.7</strong>中编译成功运行，其他环境请自行测试</li>
 <li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+<h3 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h3><p>在 Python 3 中处理异常也轻微的改变了，在 Python 3 中我们现在使用 as 作为关键词。<br>捕获异常的语法由 except exc, var 改为 except exc as var。<br>使用语法except (exc1, exc2) as var可以同时捕获多种类别的异常。 Python 2.6已经支持这两种语法。</p>
+<ul>
+<li>在2.x时代，所有类型的对象都是可以被直接抛出的，在3.x时代，只有继承自BaseException的对象才可以被抛出。</li>
+<li>2.x raise语句使用逗号将抛出对象类型和参数分开，3.x取消了这种奇葩的写法，直接调用构造函数抛出对象即可。<br>在2.x时代，异常在代码中除了表示程序错误，还经常做一些普通控制结构应该做的事情，在3.x中可以看出，设计者让异常变的更加专一，只有在错误发生的情况才能去用异常捕获语句来处理。<h4 id="python2-3"><a href="#python2-3" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">'Python'</span>, python_version()</span>
+<span class="line"><span class="keyword">try</span>:</span>
+<span class="line">    let_us_cause_a_NameError</span>
+<span class="line"><span class="keyword">except</span> NameError, err:</span>
+<span class="line">    <span class="keyword">print</span> err, <span class="string">'--&gt; our error message'</span></span>
+</pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>结果:</p>
+<ul>
+<li>Python 2.7.6</li>
+<li>name ‘let_us_cause_a_NameError’ is not defined —&gt; our error message</li>
+</ul>
+</blockquote>
+<h4 id="python3-3"><a href="#python3-3" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line">print(<span class="string">'Python'</span>, python_version())</span>
+<span class="line"><span class="keyword">try</span>:</span>
+<span class="line">    let_us_cause_a_NameError</span>
+<span class="line"><span class="keyword">except</span> NameError <span class="keyword">as</span> err:</span>
+<span class="line">    print(err, <span class="string">'--&gt; our error message'</span>)</span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>结果:</p>
+<ul>
+<li>Python 3.5.1</li>
+<li>name ‘let_us_cause_a_NameError’ is not defined —&gt; our error message</li>
+</ul>
+</blockquote>
+<h3 id="通过input-解析用户的输入"><a href="#通过input-解析用户的输入" class="headerlink" title="通过input()解析用户的输入"></a>通过input()解析用户的输入</h3><p>幸运的是，在 Python 3 中已经解决了把用户的输入存储为一个 str 对象的问题。为了避免在 Python 2 中的读取非字符串类型的危险行为，我们不得不使用 raw_input() 代替。</p>
+<h3 id="返回可迭代对象，而不是列表"><a href="#返回可迭代对象，而不是列表" class="headerlink" title="返回可迭代对象，而不是列表"></a>返回可迭代对象，而不是列表</h3><p>如果在 xrange 章节看到的，现在在 Python 3 中一些方法和函数返回迭代对象 — 代替 Python 2 中的列表<br>因为我们通常那些遍历只有一次，我认为这个改变对节约内存很有意义。尽管如此，它也是可能的，相对于生成器 —- 如需要遍历多次。它是不那么高效的。<br>而对于那些情况下，我们真正需要的是列表对象，我们可以通过 list() 函数简单的把迭代对象转换成一个列表。</p>
+<h4 id="python2-4"><a href="#python2-4" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">'Python'</span>, python_version() </span>
+<span class="line"><span class="keyword">print</span> range(<span class="number">3</span>) </span>
+<span class="line"><span class="keyword">print</span> type(range(<span class="number">3</span>))</span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>结果:</p>
+<ul>
+<li>Python 2.7.6</li>
+<li>[0, 1, 2]</li>
+<li>&lt; type ‘list’&gt;</li>
+</ul>
+</blockquote>
+<h4 id="python3-4"><a href="#python3-4" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line">print(<span class="string">'Python'</span>, python_version())</span>
+<span class="line">print(range(<span class="number">3</span>))</span>
+<span class="line">print(type(range(<span class="number">3</span>)))</span>
+<span class="line">print(list(range(<span class="number">3</span>)))</span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>结果:</p>
+<ul>
+<li>Python 3.5.1</li>
+<li>range(0, 3)</li>
+<li>&lt; class ‘range’&gt;</li>
+<li>[0, 1, 2]</li>
+</ul>
+</blockquote>
+<ul>
+<li>在 Python 3 中一些经常使用到的不再返回列表的函数和方法：</li>
+<li>zip()</li>
+<li>map()</li>
+<li>filter()</li>
+<li>dictionary’s .keys() method</li>
+<li>dictionary’s .values() method</li>
+<li>dictionary’s .items() method</li>
+</ul>
+<h3 id="For循环变量和全局命名空间泄漏"><a href="#For循环变量和全局命名空间泄漏" class="headerlink" title="For循环变量和全局命名空间泄漏"></a>For循环变量和全局命名空间泄漏</h3><p>好消息：在 Python 3.x 中 for 循环变量不会再导致命名空间泄漏。<br>在 Python 3.x 中做了一个改变，在 What’s New In Python 3.0 中有如下描述：<br>“列表推导不再支持 [… for var in item1, item2, …] 这样的语法。使用 [… for var in (item1, item2, …)] 代替。也需要提醒的是列表推导有不同的语义： 他们关闭了在 list() 构造器中的生成器表达式的语法糖, 并且特别是循环控制变量不再泄漏进周围的作用范围域.”　　</p>
+<h4 id="python2-5"><a href="#python2-5" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">'Python'</span>, python_version()</span>
+<span class="line">i = <span class="number">1</span></span>
+<span class="line"><span class="keyword">print</span> <span class="string">'before: i ='</span>, i</span>
+<span class="line"><span class="keyword">print</span> <span class="string">'comprehension: '</span>, [i <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5</span>)]</span>
+<span class="line"><span class="keyword">print</span> <span class="string">'after: i ='</span>, i</span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>结果:</p>
+<ul>
+<li>Python 2.7.6</li>
+<li>before: i = 1</li>
+<li>comprehension: [0, 1, 2, 3, 4]</li>
+<li>after: i = 4</li>
+</ul>
+</blockquote>
+<h4 id="python3-5"><a href="#python3-5" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line">print(<span class="string">'Python'</span>, python_version())</span>
+<span class="line">i = <span class="number">1</span></span>
+<span class="line">print(<span class="string">'before: i ='</span>, i)</span>
+<span class="line">print(<span class="string">'comprehension:'</span>, [i <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5</span>)])</span>
+<span class="line">print(<span class="string">'after: i ='</span>, i)</span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>结果:</p>
+<ul>
+<li>Python 3.5.1</li>
+<li>before: i = 1</li>
+<li>comprehension: [0, 1, 2, 3, 4]</li>
+<li>after: i = 1</li>
+</ul>
+<p>注：</p>
+<ul>
+<li>上述代码在<strong>python3.5</strong>和<strong>Python2.7</strong>中编译成功运行，其他环境请自行测试</li>
+<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
+<li>更多却别请读者自行查看官方文档</li>
+<li>个人推荐还是用python3，新版本的出现总有他的意义，但是我遇到一些项目要求Python2也就只能Python2了，目前来说，Python2的教程和第三方库函数还是比Python3多，再过几年，我相信一定会是Python3是主流</li>
 </ul>
 </blockquote>
 ]]></content>
@@ -15914,8 +16136,6 @@
         
         
         <tags>
-            
-            <tag> Django </tag>
             
             <tag> Python </tag>
             
@@ -16439,330 +16659,6 @@
     </entry>
     
     <entry>
-      <title><![CDATA[Python2和Python3的区别简单总结]]></title>
-      <url>/2016/08/15/python2%E5%92%8CPython3%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
-      <content type="html"><![CDATA[<p>Python是一种新的计算机语言，也是最近两年才开始大火的一种语言，它够优雅，写起来可以随心所欲，不用担心没有定义，没有声明这些其他计算机语言都需要考虑的问题,单自从更新Python3.x版本之后，很多人开始头疼，因为Python3很多地方并不兼容Python2，有人夸张的说Python3是一门新的语言，我觉得没有那么夸张，本文就剧一下我遇到的和一些知道的区别吧</p>
-<a id="more"></a>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="print函数"><a href="#print函数" class="headerlink" title="print函数"></a>print函数</h3><p>print 语法的变化可能是最广为人知的了，但是仍值得一提的是： Python 2 的 print 声明已经被 print() 函数取代了，这意味着我们必须包装我们想打印在小括号中的对象。<br>Python 2 不具有额外的小括号问题。但对比一下，如果我们按照 Python 2 的方式不使用小括号调用 print 函数，Python 3 将抛出一个语法异常（SyntaxError）。</p>
-<h4 id="Python2"><a href="#Python2" class="headerlink" title="Python2"></a>Python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">'Python'</span>, python_version()</span>
-<span class="line"><span class="keyword">print</span> <span class="string">'Hello, World!'</span></span>
-<span class="line">print(<span class="string">'Hello, World!'</span>)</span>
-<span class="line"><span class="keyword">print</span> <span class="string">"text"</span>, ; <span class="keyword">print</span> <span class="string">'print more text on the same line'</span></span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>结果:</p>
-<ul>
-<li>Python 2.7.6</li>
-<li>Hello, World!</li>
-<li>Hello, World!</li>
-<li>text print more text on the same line</li>
-</ul>
-</blockquote>
-<h4 id="Python3"><a href="#Python3" class="headerlink" title="Python3"></a>Python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-</pre></td><td class="code"><pre><span class="line">print(<span class="string">'Python'</span>, python_version())</span>
-<span class="line">print(<span class="string">'Hello, World!'</span>)</span>
-<span class="line">print(<span class="string">"some text,"</span>, end=<span class="string">""</span>) </span>
-<span class="line">print(<span class="string">' print more text on the same line'</span>)</span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>结果:</p>
-<ul>
-<li>Python 3.5.1</li>
-<li>Hello, World!</li>
-<li>some text, print more text on the same line</li>
-<li>print more text on the same line</li>
-</ul>
-</blockquote>
-<h3 id="整除"><a href="#整除" class="headerlink" title="整除"></a>整除</h3><p>python3的版本变化中，整数计算可以说是很大的并且可能在移植过程中造成很大危险，比如:</p>
-<ul>
-<li>你在 Python 2 上执行 Python 3 的代码。因为这个整除的变化表现在它会被忽视（即它不会抛出语法异常）。</li>
-</ul>
-<h4 id="python2"><a href="#python2" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">'3 / 2 ='</span>, <span class="number">3</span> / <span class="number">2</span></span>
-<span class="line"><span class="keyword">print</span> <span class="string">'3 // 2 ='</span>, <span class="number">3</span> // <span class="number">2</span></span>
-<span class="line"><span class="keyword">print</span> <span class="string">'3 / 2.0 ='</span>, <span class="number">3</span> / <span class="number">2.0</span></span>
-<span class="line"><span class="keyword">print</span> <span class="string">'3 // 2.0 ='</span>, <span class="number">3</span> // <span class="number">2.0</span></span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>结果:</p>
-<ul>
-<li>3 / 2 = 1</li>
-<li>3 // 2 = 1</li>
-<li>3 / 2.0 = 1.5</li>
-<li>3 // 2.0 = 1.0</li>
-</ul>
-</blockquote>
-<h4 id="python3"><a href="#python3" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-</pre></td><td class="code"><pre><span class="line">print(<span class="string">'3 / 2 ='</span>, <span class="number">3</span> / <span class="number">2</span>)</span>
-<span class="line">print(<span class="string">'3 // 2 ='</span>, <span class="number">3</span> // <span class="number">2</span>)</span>
-<span class="line">print(<span class="string">'3 / 2.0 ='</span>, <span class="number">3</span> / <span class="number">2.0</span>)</span>
-<span class="line">print(<span class="string">'3 // 2.0 ='</span>, <span class="number">3</span> // <span class="number">2.0</span>)</span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>结果:</p>
-<ul>
-<li>3 / 2 = 1.5</li>
-<li>3 // 2 = 1</li>
-<li>3 / 2.0 = 1.5</li>
-<li>3 // 2.0 = 1.0</li>
-</ul>
-</blockquote>
-<h3 id="Unicode"><a href="#Unicode" class="headerlink" title="Unicode"></a>Unicode</h3><p>Python 2 有 ASCII str() 类型，unicode() 是单独的，不是 byte 类型。<br>现在， 在 Python 3，我们最终有了 Unicode (utf-8) 字符串，以及一个字节类：byte 和 bytearrays。<br>由于 Python3.X 源码文件默认使用utf-8编码，这就使得以下代码是合法的：</p>
-<h4 id="python3-1"><a href="#python3-1" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line">中国 = <span class="string">'china'</span> </span>
-<span class="line">print(中国)</span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>结果:</p>
-<ul>
-<li>china</li>
-</ul>
-</blockquote>
-<h4 id="python2-1"><a href="#python2-1" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line">str = <span class="string">"我爱北京天安门"</span></span>
-<span class="line"><span class="keyword">print</span> <span class="string">'str'</span></span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>结果:</p>
-<ul>
-<li>‘\xe6\x88\x91\xe7\x88\xb1\xe5\x8c\x97\xe4\xba\xac\xe5\xa4\xa9\xe5\xae\x89\xe9\x97\xa8’</li>
-</ul>
-</blockquote>
-<h3 id="xrange模块"><a href="#xrange模块" class="headerlink" title="xrange模块"></a>xrange模块</h3><p>在 Python 2 中 xrange() 创建迭代对象的用法是非常流行的。比如： for 循环或者是列表/集合/字典推导式。<br>这个表现十分像生成器（比如。“惰性求值”）。但是这个 xrange-iterable 是无穷的，意味着你可以无限遍历。<br>由于它的惰性求值，如果你不得仅仅不遍历它一次，xrange() 函数 比 range() 更快（比如 for 循环）。尽管如此，对比迭代一次，不建议你重复迭代多次，因为生成器每次都从头开始。<br>在 Python 3 中，range() 是像 xrange() 那样实现以至于一个专门的 xrange() 函数都不再存在（在 Python 3 中 xrange() 会抛出命名异常）。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> timeit</span>
-<span class="line">n = <span class="number">10000</span></span>
-<span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_range</span><span class="params">(n)</span>:</span></span>
-<span class="line">    <span class="keyword">return</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span>
-<span class="line">        <span class="keyword">pass</span></span>
-<span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_xrange</span><span class="params">(n)</span>:</span></span>
-<span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> xrange(n):</span>
-<span class="line">        <span class="keyword">pass</span></span>
-</pre></td></tr></table></figure></p>
-<h4 id="python2-2"><a href="#python2-2" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">'Python'</span>, python_version()</span>
-<span class="line"><span class="keyword">print</span> <span class="string">'\ntiming range()'</span></span>
-<span class="line">%timeit test_range(n)</span>
-<span class="line"><span class="keyword">print</span> <span class="string">'\n\ntiming xrange()'</span></span>
-<span class="line">%timeit test_xrange(n)</span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>结果:</p>
-<ul>
-<li>Python 2.7.6</li>
-<li>timing range()</li>
-<li>1000 loops, best of 3: 433 µs per loop</li>
-<li>timing xrange()</li>
-<li>1000 loops, best of 3: 350 µs per loop</li>
-</ul>
-</blockquote>
-<h4 id="python3-2"><a href="#python3-2" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-</pre></td><td class="code"><pre><span class="line">print(<span class="string">'Python'</span>, python_version())</span>
-<span class="line">print(<span class="string">'\ntiming range()'</span>)</span>
-<span class="line">%timeit test_range(n)</span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>结果:</p>
-<ul>
-<li>Python 3.5.1</li>
-<li>timing range()</li>
-<li>1000 loops, best of 3: 520 µs per loop</li>
-</ul>
-</blockquote>
-<h3 id="不等运算符"><a href="#不等运算符" class="headerlink" title="不等运算符"></a>不等运算符</h3><ul>
-<li>Python 2.x中不等于有两种写法 != 和 &lt;&gt;</li>
-<li>Python 3.x中去掉了&lt;&gt;, 只有!=一种写法，还好，我从来没有使用&lt;&gt;的习惯</li>
-</ul>
-<h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><ul>
-<li>Py3.X去除了long类型，现在只有一种整型——int，但它的行为就像2.X版本的long</li>
-<li>新增了bytes类型，对应于2.X版本的八位串</li>
-<li>dict的.keys()、.items 和.values()方法返回迭代器，而之前的iterkeys()等函数都被废弃。同时去掉的还有 dict.has_key()，用 in替代它吧 。<blockquote>
-<p>注：</p>
-<ul>
-<li>上述代码在<strong>django1.7</strong>和<strong>Python2.7</strong>中编译成功运行，其他环境请自行测试</li>
-<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
-</ul>
-</blockquote>
-</li>
-</ul>
-<h3 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h3><p>在 Python 3 中处理异常也轻微的改变了，在 Python 3 中我们现在使用 as 作为关键词。<br>捕获异常的语法由 except exc, var 改为 except exc as var。<br>使用语法except (exc1, exc2) as var可以同时捕获多种类别的异常。 Python 2.6已经支持这两种语法。</p>
-<ul>
-<li>在2.x时代，所有类型的对象都是可以被直接抛出的，在3.x时代，只有继承自BaseException的对象才可以被抛出。</li>
-<li>2.x raise语句使用逗号将抛出对象类型和参数分开，3.x取消了这种奇葩的写法，直接调用构造函数抛出对象即可。<br>在2.x时代，异常在代码中除了表示程序错误，还经常做一些普通控制结构应该做的事情，在3.x中可以看出，设计者让异常变的更加专一，只有在错误发生的情况才能去用异常捕获语句来处理。<h4 id="python2-3"><a href="#python2-3" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">'Python'</span>, python_version()</span>
-<span class="line"><span class="keyword">try</span>:</span>
-<span class="line">    let_us_cause_a_NameError</span>
-<span class="line"><span class="keyword">except</span> NameError, err:</span>
-<span class="line">    <span class="keyword">print</span> err, <span class="string">'--&gt; our error message'</span></span>
-</pre></td></tr></table></figure>
-</li>
-</ul>
-<blockquote>
-<p>结果:</p>
-<ul>
-<li>Python 2.7.6</li>
-<li>name ‘let_us_cause_a_NameError’ is not defined —&gt; our error message</li>
-</ul>
-</blockquote>
-<h4 id="python3-3"><a href="#python3-3" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-</pre></td><td class="code"><pre><span class="line">print(<span class="string">'Python'</span>, python_version())</span>
-<span class="line"><span class="keyword">try</span>:</span>
-<span class="line">    let_us_cause_a_NameError</span>
-<span class="line"><span class="keyword">except</span> NameError <span class="keyword">as</span> err:</span>
-<span class="line">    print(err, <span class="string">'--&gt; our error message'</span>)</span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>结果:</p>
-<ul>
-<li>Python 3.5.1</li>
-<li>name ‘let_us_cause_a_NameError’ is not defined —&gt; our error message</li>
-</ul>
-</blockquote>
-<h3 id="通过input-解析用户的输入"><a href="#通过input-解析用户的输入" class="headerlink" title="通过input()解析用户的输入"></a>通过input()解析用户的输入</h3><p>幸运的是，在 Python 3 中已经解决了把用户的输入存储为一个 str 对象的问题。为了避免在 Python 2 中的读取非字符串类型的危险行为，我们不得不使用 raw_input() 代替。</p>
-<h3 id="返回可迭代对象，而不是列表"><a href="#返回可迭代对象，而不是列表" class="headerlink" title="返回可迭代对象，而不是列表"></a>返回可迭代对象，而不是列表</h3><p>如果在 xrange 章节看到的，现在在 Python 3 中一些方法和函数返回迭代对象 — 代替 Python 2 中的列表<br>因为我们通常那些遍历只有一次，我认为这个改变对节约内存很有意义。尽管如此，它也是可能的，相对于生成器 —- 如需要遍历多次。它是不那么高效的。<br>而对于那些情况下，我们真正需要的是列表对象，我们可以通过 list() 函数简单的把迭代对象转换成一个列表。</p>
-<h4 id="python2-4"><a href="#python2-4" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">'Python'</span>, python_version() </span>
-<span class="line"><span class="keyword">print</span> range(<span class="number">3</span>) </span>
-<span class="line"><span class="keyword">print</span> type(range(<span class="number">3</span>))</span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>结果:</p>
-<ul>
-<li>Python 2.7.6</li>
-<li>[0, 1, 2]</li>
-<li>&lt; type ‘list’&gt;</li>
-</ul>
-</blockquote>
-<h4 id="python3-4"><a href="#python3-4" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-</pre></td><td class="code"><pre><span class="line">print(<span class="string">'Python'</span>, python_version())</span>
-<span class="line">print(range(<span class="number">3</span>))</span>
-<span class="line">print(type(range(<span class="number">3</span>)))</span>
-<span class="line">print(list(range(<span class="number">3</span>)))</span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>结果:</p>
-<ul>
-<li>Python 3.5.1</li>
-<li>range(0, 3)</li>
-<li>&lt; class ‘range’&gt;</li>
-<li>[0, 1, 2]</li>
-</ul>
-</blockquote>
-<ul>
-<li>在 Python 3 中一些经常使用到的不再返回列表的函数和方法：</li>
-<li>zip()</li>
-<li>map()</li>
-<li>filter()</li>
-<li>dictionary’s .keys() method</li>
-<li>dictionary’s .values() method</li>
-<li>dictionary’s .items() method</li>
-</ul>
-<h3 id="For循环变量和全局命名空间泄漏"><a href="#For循环变量和全局命名空间泄漏" class="headerlink" title="For循环变量和全局命名空间泄漏"></a>For循环变量和全局命名空间泄漏</h3><p>好消息：在 Python 3.x 中 for 循环变量不会再导致命名空间泄漏。<br>在 Python 3.x 中做了一个改变，在 What’s New In Python 3.0 中有如下描述：<br>“列表推导不再支持 [… for var in item1, item2, …] 这样的语法。使用 [… for var in (item1, item2, …)] 代替。也需要提醒的是列表推导有不同的语义： 他们关闭了在 list() 构造器中的生成器表达式的语法糖, 并且特别是循环控制变量不再泄漏进周围的作用范围域.”　　</p>
-<h4 id="python2-5"><a href="#python2-5" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">'Python'</span>, python_version()</span>
-<span class="line">i = <span class="number">1</span></span>
-<span class="line"><span class="keyword">print</span> <span class="string">'before: i ='</span>, i</span>
-<span class="line"><span class="keyword">print</span> <span class="string">'comprehension: '</span>, [i <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5</span>)]</span>
-<span class="line"><span class="keyword">print</span> <span class="string">'after: i ='</span>, i</span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>结果:</p>
-<ul>
-<li>Python 2.7.6</li>
-<li>before: i = 1</li>
-<li>comprehension: [0, 1, 2, 3, 4]</li>
-<li>after: i = 4</li>
-</ul>
-</blockquote>
-<h4 id="python3-5"><a href="#python3-5" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-</pre></td><td class="code"><pre><span class="line">print(<span class="string">'Python'</span>, python_version())</span>
-<span class="line">i = <span class="number">1</span></span>
-<span class="line">print(<span class="string">'before: i ='</span>, i)</span>
-<span class="line">print(<span class="string">'comprehension:'</span>, [i <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5</span>)])</span>
-<span class="line">print(<span class="string">'after: i ='</span>, i)</span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>结果:</p>
-<ul>
-<li>Python 3.5.1</li>
-<li>before: i = 1</li>
-<li>comprehension: [0, 1, 2, 3, 4]</li>
-<li>after: i = 1</li>
-</ul>
-<p>注：</p>
-<ul>
-<li>上述代码在<strong>python3.5</strong>和<strong>Python2.7</strong>中编译成功运行，其他环境请自行测试</li>
-<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
-<li>更多却别请读者自行查看官方文档</li>
-<li>个人推荐还是用python3，新版本的出现总有他的意义，但是我遇到一些项目要求Python2也就只能Python2了，目前来说，Python2的教程和第三方库函数还是比Python3多，再过几年，我相信一定会是Python3是主流</li>
-</ul>
-</blockquote>
-]]></content>
-      
-        <categories>
-            
-            <category> 学习笔记 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> Python </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[Django连接MySql使用models处理数据]]></title>
       <url>/2016/08/15/django%E8%BF%9E%E6%8E%A5mysql%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
       <content type="html"><![CDATA[<p>在页面上显示内容可以简单的用django.http.HttpResponse来显示我们需要的内容，但是当我们需要一些处理一些复杂的数据或者从数据库读出来的操作要显示在html标签内或者js代码中就需要用渲染模板的方法。</p>
@@ -16957,6 +16853,130 @@
         <categories>
             
             <category> 开发 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Django </tag>
+            
+            <tag> Python </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Django常用语句]]></title>
+      <url>/2016/08/15/django%E5%B8%B8%E7%94%A8%E8%AF%AD%E5%8F%A5/</url>
+      <content type="html"><![CDATA[<p>本篇主要介绍我们在使用django框架开发的时候使用的常用语句，为了增加开发效率，建议将这些语句记住并多多练习，</p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="新建工程"><a href="#新建工程" class="headerlink" title="新建工程"></a>新建工程</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">django-admin startproject project-name</span>
+</pre></td></tr></table></figure>
+<p>这是一个django开发的开始，当然也可以用pycharm这个ide创建工程，这个东西还是看个人习惯了。但最好还是记住，</p>
+<ul>
+<li>project-name —— 项目名称(需要符合Python 的变量命名规则（以下划线或字母开头))</li>
+<li>有些版本的django可能是django-admin.py(根据个人需求选择)<a id="more"></a>
+</li>
+</ul>
+<h3 id="新建app"><a href="#新建app" class="headerlink" title="新建app"></a>新建app</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line">python manage.py startapp app-name</span>
+<span class="line"><span class="comment">#或者还可以这样</span></span>
+<span class="line">django-admin.py startapp app-name</span>
+</pre></td></tr></table></figure>
+<p>这是新建一个app，利用pycharm这个ide暂时我不知道怎么新建app,如果有读者知道的话，请在评论区告知我。</p>
+<ul>
+<li>app-name —— 应用名称</li>
+<li>根据项目的需求选择新建app的数量，每次都是执行同样的语句。</li>
+<li>我们需要在项目的settings中的INSTALLED_APPS中添加我们所创建的app</li>
+</ul>
+<h3 id="同步数据库"><a href="#同步数据库" class="headerlink" title="同步数据库"></a>同步数据库</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">python manage.py makemigrations</span>
+<span class="line">python manage.py migrate</span>
+</pre></td></tr></table></figure>
+<p>这两句代码的功能是同步数据库，我们在项目的settings中的DATABASES中设置好数据库各种参数，在app的models.py中创建我们所需要的字段，输入以上两条语句，django就自动帮我们自动生成了相应的数据表</p>
+<ul>
+<li>以上代码是在django1.7以上用的</li>
+<li>如果是django1.7以下版本请使用python manage.py syncdb</li>
+<li>对已有的 models 进行修改，Django 1.7之前的版本的Django都是无法自动更改表结构的，不过有第三方工具 south</li>
+<li>django1.7以上的版本已经集成south</li>
+</ul>
+<h3 id="使用测试服务器"><a href="#使用测试服务器" class="headerlink" title="使用测试服务器"></a>使用测试服务器</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+</pre></td><td class="code"><pre><span class="line">python manage.py runserver</span>
+<span class="line"> </span>
+<span class="line"><span class="comment"># 当提示端口被占用的时候，可以用其它端口：</span></span>
+<span class="line">python manage.py runserver <span class="number">8001</span></span>
+<span class="line">python manage.py runserver <span class="number">9999</span></span>
+<span class="line">（当然也可以kill掉占用端口的进程）</span>
+<span class="line"> </span>
+<span class="line"><span class="comment"># 监听所有可用 ip （电脑可能有一个或多个内网ip，一个或多个外网ip，即有多个ip地址）</span></span>
+<span class="line">python manage.py runserver <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span>:<span class="number">8000</span></span>
+<span class="line"><span class="comment"># 如果是外网或者局域网电脑上可以用其它电脑查看开发服务器</span></span>
+<span class="line"><span class="comment"># 访问对应的 ip加端口，比如 http://172.16.20.2:8000</span></span>
+</pre></td></tr></table></figure>
+<p>以上代码可以开始调式，打开浏览器显示我们所在代码中修改的效果</p>
+<ul>
+<li>在cmd中输入python manage.py runserver  会打开默认打开127.0.0.1:8000， 默认只监听本地ip</li>
+<li>也可以用pycharm中的运行django，（这里会监听所有ip）</li>
+<li>开发服务器，即开发时使用，一般修改代码后会自动重启，方便调试和开发，但是由于性能问题，建议只用来测试，不要用在生产环境</li>
+</ul>
+<h3 id="清空数据库"><a href="#清空数据库" class="headerlink" title="清空数据库"></a>清空数据库</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">python manage.py flush</span>
+</pre></td></tr></table></figure>
+<p>当你发现自己的数据库中的数据有问题时，就需要执行以上语句，可以清空数据库，但是保留数据库的结构</p>
+<ul>
+<li>此命令会询问是 yes 还是 no, 选择 yes 会把数据全部清空掉，只留下空表</li>
+</ul>
+<h3 id="创建超级管理员"><a href="#创建超级管理员" class="headerlink" title="创建超级管理员"></a>创建超级管理员</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">python manage.py createsuperuser</span>
+</pre></td></tr></table></figure>
+<p>django很好的一点就是自带了后台管理功能，但是我们去使用的时候还是需要创建超级管理员，去管理后台</p>
+<ul>
+<li>按照提示输入用户名和对应的密码就好了邮箱可以留空，用户名和密码必填</li>
+</ul>
+<h4 id="修改-用户密码可以用："><a href="#修改-用户密码可以用：" class="headerlink" title="修改 用户密码可以用："></a>修改 用户密码可以用：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">python manage.py changepassword username</span>
+</pre></td></tr></table></figure>
+<h3 id="导出数据-导入数据"><a href="#导出数据-导入数据" class="headerlink" title="导出数据 导入数据"></a>导出数据 导入数据</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">python manage.py dumpdata appname &gt; appname.json</span>
+<span class="line">python manage.py loaddata appname.json</span>
+</pre></td></tr></table></figure>
+<p>这两条数据我们不是很常用 ，知道即可</p>
+<h3 id="Django-项目环境终端"><a href="#Django-项目环境终端" class="headerlink" title="Django 项目环境终端"></a>Django 项目环境终端</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">python manage.py shell</span>
+</pre></td></tr></table></figure>
+<p>你可以在这个 shell 里面调用当前项目的 models.py 中的 API，对于操作数据，还有一些小测试非常方便</p>
+<ul>
+<li>这里推荐安装 bpython 或 ipython通过pip安装即可 pip install ipython</li>
+<li>bpython 或 ipython有一些代码提示和语法高亮的功能，比较好用,这是ipython的效果<br><img src="http://of7ye9tny.bkt.clouddn.com/ipython.png" alt="ipthon效果图"></li>
+</ul>
+<blockquote>
+<p>注：</p>
+<ul>
+<li>上述代码在<strong>django1.7</strong>和<strong>Python2.7</strong>中编译成功运行，其他环境请自行测试</li>
+<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
+</ul>
+</blockquote>
+]]></content>
+      
+        <categories>
+            
+            <category> 学习笔记 </category>
             
         </categories>
         
@@ -17989,6 +18009,204 @@
     </entry>
     
     <entry>
+      <title><![CDATA[C语言共享栈]]></title>
+      <url>/2016/07/15/C%E8%AF%AD%E8%A8%80%E5%85%B1%E4%BA%AB%E6%A0%88/</url>
+      <content type="html"><![CDATA[<p>栈的操作我相信大家都应该了解了弄懂了，  如果没弄懂希望可以去再去看看相关的资料，我博客中的<a href="/2016/10/18/c%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8F%98%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F/">C语言中缀表达式转后缀表达式</a>中涉及到了一下栈的基本操作，有兴趣的朋友也可以看看。<br>所谓共享栈，就是两个栈共同使用一块内存空间，其中一个栈的栈底作为另一个栈的栈顶，反之亦然。</p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="思路分析"><a href="#思路分析" class="headerlink" title="思路分析"></a>思路分析</h3><blockquote>
+<p>因为两个栈公用一个空间，假设一个栈为0#，规定其为空时top[0]==-1；另一个栈为1#规定其为空时，top[1]==MaxSize；<br>入栈时，先确定栈号是否合法，然后查看是对0#栈还是1#栈进行操作，入栈操作和顺序栈的入栈操作并无太大不同。<br>选定之后进行入栈操作。这里应该注意此共享栈是否已满，如果已满则不能进行入栈操作。如若入栈成功则返回0；入栈失败则返回-1；<br>出栈时，先确定栈号是否合法，然后查看是对0#栈还是1#栈进行操作，出栈操作和顺序栈的出栈操作并无太大不同。<br>选定之后进行出栈操作。如果出栈成功返回0；出栈失败返回-1；<br><a id="more"></a></p>
+</blockquote>
+<h3 id="添加适当的头文件，定义一个栈数据结构，"><a href="#添加适当的头文件，定义一个栈数据结构，" class="headerlink" title="添加适当的头文件，定义一个栈数据结构，"></a>添加适当的头文件，定义一个栈数据结构，</h3><p>共享栈也是栈，只不过有点特殊，在这里我们还是需要添加适当的头文件和定义恰当的数据结构</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+</pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span>
+<span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span>
+<span class="line"><span class="meta">#<span class="meta-keyword">define</span>  MaxSize 100</span></span>
+<span class="line"></span>
+<span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> ElemType;</span>
+<span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span>
+<span class="line">	ElemType data[MaxSize];</span>
+<span class="line">	<span class="keyword">int</span> top[<span class="number">2</span>];</span>
+<span class="line">&#125;SqStack;</span>
+</pre></td></tr></table></figure>
+<h3 id="初始化共享栈"><a href="#初始化共享栈" class="headerlink" title="初始化共享栈"></a>初始化共享栈</h3><p>由于我这里用的是顺序存储结构的栈结构（也就是数据），top也就是一个标记而已，分别代编栈1和栈2的标记<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">InitStack</span><span class="params">(SqStack *s)</span></span>
+<span class="line"></span>&#123;</span>
+<span class="line">	s-&gt;top[<span class="number">0</span>] = <span class="number">-1</span>;</span>
+<span class="line">	s-&gt;top[<span class="number">1</span>] = MaxSize;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure></p>
+<h3 id="入栈操作"><a href="#入栈操作" class="headerlink" title="入栈操作"></a>入栈操作</h3><p>在入栈的时候，我们需要选择入的是两个栈中的哪一个栈，我们这里用0和1来区分</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Push</span><span class="params">(SqStack*s, ElemType x, <span class="keyword">int</span> n)</span></span>
+<span class="line"></span>&#123;</span>
+<span class="line">	<span class="keyword">if</span> (n &lt; <span class="number">0</span> || n&gt;<span class="number">1</span>) &#123;</span>
+<span class="line">		<span class="built_in">printf</span>(<span class="string">"The stack number is false!\n"</span>);</span>
+<span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span>
+<span class="line">	&#125;</span>
+<span class="line">	<span class="keyword">if</span> (s-&gt;top[<span class="number">1</span>] - s-&gt;top[<span class="number">0</span>] == <span class="number">1</span>) &#123;</span>
+<span class="line">		<span class="built_in">printf</span>(<span class="string">"The stack is full!\n"</span>);</span>
+<span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span>
+<span class="line">	&#125;</span>
+<span class="line">	<span class="keyword">switch</span> (n) &#123;</span>
+<span class="line">	<span class="keyword">case</span> <span class="number">0</span>:s-&gt;data[++s-&gt;top[<span class="number">0</span>]] = x; <span class="keyword">break</span>;</span>
+<span class="line">	<span class="keyword">case</span> <span class="number">1</span>:s-&gt;data[--s-&gt;top[<span class="number">1</span>]] = x; <span class="keyword">break</span>;</span>
+<span class="line">	&#125;</span>
+<span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<h3 id="出栈操作"><a href="#出栈操作" class="headerlink" title="出栈操作"></a>出栈操作</h3><p>出栈和入栈一样，也需要选择出栈的具体是哪个栈</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Pop</span><span class="params">(SqStack *s, ElemType* x, <span class="keyword">int</span> n)</span></span>
+<span class="line"></span>&#123;</span>
+<span class="line">	<span class="keyword">if</span> (n &lt; <span class="number">0</span> || n&gt;<span class="number">1</span>) &#123;</span>
+<span class="line">		<span class="built_in">printf</span>(<span class="string">"The stack number is false!\n"</span>);</span>
+<span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span>
+<span class="line">	&#125;</span>
+<span class="line">	<span class="keyword">switch</span> (n) &#123;</span>
+<span class="line">	<span class="keyword">case</span> <span class="number">0</span>:</span>
+<span class="line">		<span class="keyword">if</span> (s-&gt;top[<span class="number">0</span>] == <span class="number">-1</span>) &#123;</span>
+<span class="line">			<span class="built_in">printf</span>(<span class="string">"The stack[0] is empty!\n"</span>);</span>
+<span class="line">		&#125;</span>
+<span class="line">		*x = s-&gt;data[s-&gt;top[<span class="number">0</span>]--];</span>
+<span class="line">		<span class="keyword">break</span>;</span>
+<span class="line">	<span class="keyword">case</span> <span class="number">1</span>:</span>
+<span class="line">		<span class="keyword">if</span> (s-&gt;top[<span class="number">1</span>] == MaxSize) &#123;</span>
+<span class="line">			<span class="built_in">printf</span>(<span class="string">"The stack[1] is empty!\n"</span>);</span>
+<span class="line">		&#125;</span>
+<span class="line">		*x = s-&gt;data[s-&gt;top[<span class="number">1</span>]++];</span>
+<span class="line">		<span class="keyword">break</span>;</span>
+<span class="line">	&#125;</span>
+<span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<h3 id="主函数"><a href="#主函数" class="headerlink" title="主函数"></a>主函数</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span></span>
+<span class="line"></span>&#123;</span>
+<span class="line">	SqStack s;</span>
+<span class="line">	InitStack(&amp;s);</span>
+<span class="line"></span>
+<span class="line">	ElemType x = <span class="number">5</span>;</span>
+<span class="line">	<span class="keyword">int</span> n = <span class="number">0</span>;</span>
+<span class="line">	<span class="keyword">int</span> flagPush;</span>
+<span class="line">	flagPush = Push(&amp;s, x, n);</span>
+<span class="line">	<span class="keyword">if</span> (flagPush) &#123;</span>
+<span class="line">		<span class="built_in">printf</span>(<span class="string">"Push false!\n"</span>);</span>
+<span class="line">	&#125;</span>
+<span class="line">	<span class="keyword">else</span> &#123;</span>
+<span class="line">		<span class="built_in">printf</span>(<span class="string">"Push %d success!\n"</span>, x);</span>
+<span class="line">	&#125;</span>
+<span class="line"></span>
+<span class="line">	<span class="keyword">int</span> flagPop;</span>
+<span class="line">	flagPop = Pop(&amp;s, &amp;x, n);</span>
+<span class="line">	<span class="keyword">if</span> (flagPop) &#123;</span>
+<span class="line">		<span class="built_in">printf</span>(<span class="string">"Pop false!\n"</span>);</span>
+<span class="line">	&#125;</span>
+<span class="line">	<span class="keyword">else</span> &#123;</span>
+<span class="line">		<span class="built_in">printf</span>(<span class="string">"Pop %d  success!\n"</span>, x);</span>
+<span class="line">	&#125;</span>
+<span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<h3 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h3><p><img src="http://objects.earthchen.cn/C%E8%AF%AD%E8%A8%80%E5%85%B1%E4%BA%AB%E6%A0%88%E7%BB%93%E6%9E%9C.png" alt="c语言共享栈运行结果"><br>以上就是共享栈的简单操作，我这里只测试他是否能够成功，如有需要，请研读代码后自行修改，如果一时看不懂，请多看几遍思路分析，把原理弄懂，代码还是想当简单的。</p>
+<blockquote>
+<p>注：</p>
+<ul>
+<li>上述代码在<strong>visual studio 2015</strong>中编译成功运行，其他ide请自行测试</li>
+<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
+</ul>
+</blockquote>
+]]></content>
+      
+        <categories>
+            
+            <category> 开发 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> c </tag>
+            
+            <tag> 数据结构 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[C语言逆波兰表达式计算(后缀表达式计算器)]]></title>
       <url>/2016/07/15/C%E8%AF%AD%E8%A8%80%E9%80%86%E6%B3%A2%E5%85%B0%E8%AE%A1%E7%AE%97%E5%99%A8/</url>
       <content type="html"><![CDATA[<p>刚开始学习c语言时，我们都学过输入一个数在输入一个操作数在输入要进行的计算方式，在输入另一个操作数，然后通过内置的+ - / <em>以及内置头文件 <em>*math.h</em></em>等操作进行计算<br>但是我们可不可以直接输入我们熟悉的算式才得出结果呢，答案是肯定的，我博客上一篇介绍了<a href="/2016/10/07/c%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8F%98%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F/">C语言把中缀表达式转换为后缀表达式</a>有兴趣的读者可以去看看，有了上篇的知识，在加上本篇的内容就可以很容易做出一个中缀表达式计算器了有兴趣的读者可以看完本文去尝试一下，对自己的能力也是一种提升</p>
@@ -18272,14 +18490,10 @@
     </entry>
     
     <entry>
-      <title><![CDATA[C语言共享栈]]></title>
-      <url>/2016/07/15/C%E8%AF%AD%E8%A8%80%E5%85%B1%E4%BA%AB%E6%A0%88/</url>
-      <content type="html"><![CDATA[<p>栈的操作我相信大家都应该了解了弄懂了，  如果没弄懂希望可以去再去看看相关的资料，我博客中的<a href="/2016/10/18/c%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8F%98%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F/">C语言中缀表达式转后缀表达式</a>中涉及到了一下栈的基本操作，有兴趣的朋友也可以看看。<br>所谓共享栈，就是两个栈共同使用一块内存空间，其中一个栈的栈底作为另一个栈的栈顶，反之亦然。</p>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="思路分析"><a href="#思路分析" class="headerlink" title="思路分析"></a>思路分析</h3><blockquote>
-<p>因为两个栈公用一个空间，假设一个栈为0#，规定其为空时top[0]==-1；另一个栈为1#规定其为空时，top[1]==MaxSize；<br>入栈时，先确定栈号是否合法，然后查看是对0#栈还是1#栈进行操作，入栈操作和顺序栈的入栈操作并无太大不同。<br>选定之后进行入栈操作。这里应该注意此共享栈是否已满，如果已满则不能进行入栈操作。如若入栈成功则返回0；入栈失败则返回-1；<br>出栈时，先确定栈号是否合法，然后查看是对0#栈还是1#栈进行操作，出栈操作和顺序栈的出栈操作并无太大不同。<br>选定之后进行出栈操作。如果出栈成功返回0；出栈失败返回-1；<br><a id="more"></a></p>
-</blockquote>
-<h3 id="添加适当的头文件，定义一个栈数据结构，"><a href="#添加适当的头文件，定义一个栈数据结构，" class="headerlink" title="添加适当的头文件，定义一个栈数据结构，"></a>添加适当的头文件，定义一个栈数据结构，</h3><p>共享栈也是栈，只不过有点特殊，在这里我们还是需要添加适当的头文件和定义恰当的数据结构</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+      <title><![CDATA[C语言中缀表达式转后缀表达式]]></title>
+      <url>/2016/07/15/c%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8F%98%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F/</url>
+      <content type="html"><![CDATA[<p>众所周知,计算机中不能直接用中缀表达式计算,形如(1+2)*(4-5)之类的，但是我们可以计算机可以很容易的通过后缀表达式来计算我们所输入的算式。所以我们就需要把中缀表达式转换为后缀表达式。下面是个人写的一点代码，大家可以参考。</p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="添加适当的头文件，定义一个栈数据结构，"><a href="#添加适当的头文件，定义一个栈数据结构，" class="headerlink" title="添加适当的头文件，定义一个栈数据结构，"></a>添加适当的头文件，定义一个栈数据结构，</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
 <span class="line">4</span>
@@ -18288,29 +18502,28 @@
 <span class="line">7</span>
 <span class="line">8</span>
 <span class="line">9</span>
-</pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span>
-<span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span>
-<span class="line"><span class="meta">#<span class="meta-keyword">define</span>  MaxSize 100</span></span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+</pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span>
+<span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span>
+<span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;math.h&gt;</span></span></span>
+<span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ctype.h&gt;</span></span></span>
+<span class="line"><span class="meta">#<span class="meta-keyword">define</span>  STACK_INIT_SIZE 100</span></span>
+<span class="line"><span class="meta">#<span class="meta-keyword">define</span> STACKINCREMENT 10</span></span>
+<span class="line"><span class="keyword">typedef</span> <span class="keyword">char</span> ElemType;</span>
 <span class="line"></span>
-<span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> ElemType;</span>
-<span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span>
-<span class="line">	ElemType data[MaxSize];</span>
-<span class="line">	<span class="keyword">int</span> top[<span class="number">2</span>];</span>
+<span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span>
+<span class="line">&#123;</span></span>
+<span class="line">	ElemType *base;</span>
+<span class="line">	ElemType *top;</span>
+<span class="line">	<span class="keyword">int</span> stackSize;</span>
 <span class="line">&#125;SqStack;</span>
 </pre></td></tr></table></figure>
-<h3 id="初始化共享栈"><a href="#初始化共享栈" class="headerlink" title="初始化共享栈"></a>初始化共享栈</h3><p>由于我这里用的是顺序存储结构的栈结构（也就是数据），top也就是一个标记而已，分别代编栈1和栈2的标记<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">InitStack</span><span class="params">(SqStack *s)</span></span>
-<span class="line"></span>&#123;</span>
-<span class="line">	s-&gt;top[<span class="number">0</span>] = <span class="number">-1</span>;</span>
-<span class="line">	s-&gt;top[<span class="number">1</span>] = MaxSize;</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure></p>
-<h3 id="入栈操作"><a href="#入栈操作" class="headerlink" title="入栈操作"></a>入栈操作</h3><p>在入栈的时候，我们需要选择入的是两个栈中的哪一个栈，我们这里用0和1来区分</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<a id="more"></a>
+<h3 id="创建一个栈"><a href="#创建一个栈" class="headerlink" title="创建一个栈"></a>创建一个栈</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
 <span class="line">4</span>
@@ -18320,31 +18533,18 @@
 <span class="line">8</span>
 <span class="line">9</span>
 <span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Push</span><span class="params">(SqStack*s, ElemType x, <span class="keyword">int</span> n)</span></span>
-<span class="line"></span>&#123;</span>
-<span class="line">	<span class="keyword">if</span> (n &lt; <span class="number">0</span> || n&gt;<span class="number">1</span>) &#123;</span>
-<span class="line">		<span class="built_in">printf</span>(<span class="string">"The stack number is false!\n"</span>);</span>
-<span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">//创建一个栈</span></span>
+<span class="line"><span class="function"><span class="keyword">void</span> <span class="title">initStack</span><span class="params">(SqStack *s)</span> </span>&#123;</span>
+<span class="line">	s-&gt;base = (ElemType *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(ElemType));</span>
+<span class="line">	<span class="keyword">if</span> (!s-&gt;base)</span>
+<span class="line">	&#123;</span>
+<span class="line">		<span class="built_in">exit</span>(<span class="number">0</span>);</span>
 <span class="line">	&#125;</span>
-<span class="line">	<span class="keyword">if</span> (s-&gt;top[<span class="number">1</span>] - s-&gt;top[<span class="number">0</span>] == <span class="number">1</span>) &#123;</span>
-<span class="line">		<span class="built_in">printf</span>(<span class="string">"The stack is full!\n"</span>);</span>
-<span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span>
-<span class="line">	&#125;</span>
-<span class="line">	<span class="keyword">switch</span> (n) &#123;</span>
-<span class="line">	<span class="keyword">case</span> <span class="number">0</span>:s-&gt;data[++s-&gt;top[<span class="number">0</span>]] = x; <span class="keyword">break</span>;</span>
-<span class="line">	<span class="keyword">case</span> <span class="number">1</span>:s-&gt;data[--s-&gt;top[<span class="number">1</span>]] = x; <span class="keyword">break</span>;</span>
-<span class="line">	&#125;</span>
-<span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span>
+<span class="line">	s-&gt;top = s-&gt;base;   <span class="comment">//最开始 栈底就是栈顶</span></span>
+<span class="line">	s-&gt;stackSize = STACK_INIT_SIZE;</span>
 <span class="line">&#125;</span>
 </pre></td></tr></table></figure>
-<h3 id="出栈操作"><a href="#出栈操作" class="headerlink" title="出栈操作"></a>出栈操作</h3><p>出栈和入栈一样，也需要选择出栈的具体是哪个栈</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<h3 id="入栈操作"><a href="#入栈操作" class="headerlink" title="入栈操作"></a>入栈操作</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
 <span class="line">4</span>
@@ -18359,34 +18559,42 @@
 <span class="line">13</span>
 <span class="line">14</span>
 <span class="line">15</span>
-<span class="line">16</span>
-<span class="line">17</span>
-<span class="line">18</span>
-<span class="line">19</span>
-<span class="line">20</span>
-<span class="line">21</span>
-<span class="line">22</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Pop</span><span class="params">(SqStack *s, ElemType* x, <span class="keyword">int</span> n)</span></span>
-<span class="line"></span>&#123;</span>
-<span class="line">	<span class="keyword">if</span> (n &lt; <span class="number">0</span> || n&gt;<span class="number">1</span>) &#123;</span>
-<span class="line">		<span class="built_in">printf</span>(<span class="string">"The stack number is false!\n"</span>);</span>
-<span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span>
-<span class="line">	&#125;</span>
-<span class="line">	<span class="keyword">switch</span> (n) &#123;</span>
-<span class="line">	<span class="keyword">case</span> <span class="number">0</span>:</span>
-<span class="line">		<span class="keyword">if</span> (s-&gt;top[<span class="number">0</span>] == <span class="number">-1</span>) &#123;</span>
-<span class="line">			<span class="built_in">printf</span>(<span class="string">"The stack[0] is empty!\n"</span>);</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Push</span><span class="params">(SqStack *s, ElemType e)</span> </span>&#123;</span>
+<span class="line">	<span class="comment">//如果栈满  追加空间</span></span>
+<span class="line">	<span class="keyword">if</span> (s-&gt;top - s-&gt;base &gt;= s-&gt;stackSize)</span>
+<span class="line">	&#123;</span>
+<span class="line">		s-&gt;base = (ElemType *)<span class="built_in">realloc</span>(s-&gt;base, (s-&gt;stackSize + STACKINCREMENT) * <span class="keyword">sizeof</span>(ElemType));</span>
+<span class="line">		<span class="keyword">if</span> (!s-&gt;base)</span>
+<span class="line">		&#123;</span>
+<span class="line">			<span class="built_in">exit</span>(<span class="number">0</span>);</span>
 <span class="line">		&#125;</span>
-<span class="line">		*x = s-&gt;data[s-&gt;top[<span class="number">0</span>]--];</span>
-<span class="line">		<span class="keyword">break</span>;</span>
-<span class="line">	<span class="keyword">case</span> <span class="number">1</span>:</span>
-<span class="line">		<span class="keyword">if</span> (s-&gt;top[<span class="number">1</span>] == MaxSize) &#123;</span>
-<span class="line">			<span class="built_in">printf</span>(<span class="string">"The stack[1] is empty!\n"</span>);</span>
-<span class="line">		&#125;</span>
-<span class="line">		*x = s-&gt;data[s-&gt;top[<span class="number">1</span>]++];</span>
-<span class="line">		<span class="keyword">break</span>;</span>
+<span class="line">		s-&gt;top = s-&gt;base + s-&gt;stackSize;  <span class="comment">//设置栈顶</span></span>
+<span class="line">		s-&gt;stackSize = s-&gt;stackSize + STACKINCREMENT;</span>
 <span class="line">	&#125;</span>
-<span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span>
+<span class="line">	*(s-&gt;top) = e;</span>
+<span class="line">	s-&gt;top++;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<h3 id="出栈操作"><a href="#出栈操作" class="headerlink" title="出栈操作"></a>出栈操作</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Pop</span><span class="params">(SqStack *s, ElemType *e)</span> </span>&#123;</span>
+<span class="line">	<span class="keyword">if</span> (s-&gt;top == s-&gt;base)</span>
+<span class="line">	&#123;</span>
+<span class="line">		<span class="keyword">return</span>;</span>
+<span class="line">	&#125;</span>
+<span class="line">	*e = *--(s-&gt;top);</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<h3 id="计算栈的当前容量-最大容量是s-stackSize"><a href="#计算栈的当前容量-最大容量是s-stackSize" class="headerlink" title="计算栈的当前容量(最大容量是s.stackSize)"></a>计算栈的当前容量(最大容量是s.stackSize)</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">StackLen</span><span class="params">(SqStack s)</span> </span>&#123;</span>
+<span class="line">	<span class="keyword">return</span> (s.top - s.base);</span>
 <span class="line">&#125;</span>
 </pre></td></tr></table></figure>
 <h3 id="主函数"><a href="#主函数" class="headerlink" title="主函数"></a>主函数</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
@@ -18415,34 +18623,116 @@
 <span class="line">24</span>
 <span class="line">25</span>
 <span class="line">26</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span></span>
-<span class="line"></span>&#123;</span>
+<span class="line">27</span>
+<span class="line">28</span>
+<span class="line">29</span>
+<span class="line">30</span>
+<span class="line">31</span>
+<span class="line">32</span>
+<span class="line">33</span>
+<span class="line">34</span>
+<span class="line">35</span>
+<span class="line">36</span>
+<span class="line">37</span>
+<span class="line">38</span>
+<span class="line">39</span>
+<span class="line">40</span>
+<span class="line">41</span>
+<span class="line">42</span>
+<span class="line">43</span>
+<span class="line">44</span>
+<span class="line">45</span>
+<span class="line">46</span>
+<span class="line">47</span>
+<span class="line">48</span>
+<span class="line">49</span>
+<span class="line">50</span>
+<span class="line">51</span>
+<span class="line">52</span>
+<span class="line">53</span>
+<span class="line">54</span>
+<span class="line">55</span>
+<span class="line">56</span>
+<span class="line">57</span>
+<span class="line">58</span>
+<span class="line">59</span>
+<span class="line">60</span>
+<span class="line">61</span>
+<span class="line">62</span>
+<span class="line">63</span>
+<span class="line">64</span>
+<span class="line">65</span>
+<span class="line">66</span>
+<span class="line">67</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span>
+<span class="line">	<span class="keyword">char</span> cal[<span class="number">50</span>];</span>
+<span class="line">	<span class="keyword">char</span> c, e;</span>
 <span class="line">	SqStack s;</span>
-<span class="line">	InitStack(&amp;s);</span>
-<span class="line"></span>
-<span class="line">	ElemType x = <span class="number">5</span>;</span>
-<span class="line">	<span class="keyword">int</span> n = <span class="number">0</span>;</span>
-<span class="line">	<span class="keyword">int</span> flagPush;</span>
-<span class="line">	flagPush = Push(&amp;s, x, n);</span>
-<span class="line">	<span class="keyword">if</span> (flagPush) &#123;</span>
-<span class="line">		<span class="built_in">printf</span>(<span class="string">"Push false!\n"</span>);</span>
+<span class="line">	initStack(&amp;s);</span>
+<span class="line">	<span class="built_in">printf</span>(<span class="string">"请输入中缀表达式 输入#表示结束\n"</span>);</span>
+<span class="line">	scanf_s(<span class="string">"%c"</span>, &amp;c);</span>
+<span class="line">	<span class="keyword">while</span> (c != <span class="string">'#'</span>)</span>
+<span class="line">	&#123;</span>
+<span class="line">		<span class="keyword">while</span> (c&gt;=<span class="string">'0'</span> &amp;&amp; c&lt;=<span class="string">'9'</span>)</span>
+<span class="line">		&#123;</span>
+<span class="line">			<span class="built_in">printf</span>(<span class="string">"%c "</span>, c);</span>
+<span class="line">			scanf_s(<span class="string">"%c"</span>, &amp;c);</span>
+<span class="line">			<span class="keyword">if</span> (c&lt;<span class="string">'0'</span> || c&gt;<span class="string">'9'</span>)</span>
+<span class="line">			&#123;</span>
+<span class="line">				<span class="built_in">printf</span>(<span class="string">" "</span>);</span>
+<span class="line">			&#125;</span>
+<span class="line">		&#125;</span>
+<span class="line">		<span class="keyword">if</span> (c == <span class="string">')'</span>)</span>
+<span class="line">		&#123;</span>
+<span class="line">			Pop(&amp;s, &amp;e);</span>
+<span class="line">			<span class="keyword">while</span> (e != <span class="string">'('</span>)</span>
+<span class="line">			&#123;</span>
+<span class="line">				<span class="built_in">printf</span>(<span class="string">"%c "</span>, e);</span>
+<span class="line">				Pop(&amp;s, &amp;e);</span>
+<span class="line">			&#125;</span>
+<span class="line">		&#125;</span>
+<span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (c == <span class="string">'+'</span> || c == <span class="string">'-'</span>)</span>
+<span class="line">		&#123;</span>
+<span class="line">			<span class="keyword">if</span> (!StackLen(s))</span>
+<span class="line">			&#123;</span>
+<span class="line">				Push(&amp;s, c);</span>
+<span class="line">			&#125;</span>
+<span class="line">			<span class="keyword">else</span> &#123;</span>
+<span class="line">				<span class="keyword">do</span></span>
+<span class="line">				&#123;</span>
+<span class="line">					Pop(&amp;s, &amp;e);</span>
+<span class="line">					<span class="keyword">if</span> (e == <span class="string">'('</span>)</span>
+<span class="line">					&#123;</span>
+<span class="line">						Push(&amp;s, e);</span>
+<span class="line">					&#125;</span>
+<span class="line">					<span class="keyword">else</span> &#123;</span>
+<span class="line">						<span class="built_in">printf</span>(<span class="string">"%c "</span>, e);</span>
+<span class="line">					&#125;</span>
+<span class="line">				&#125; <span class="keyword">while</span> (StackLen(s) &amp;&amp; e!=<span class="string">'('</span>);</span>
+<span class="line">				Push(&amp;s, c);</span>
+<span class="line">			&#125;</span>
+<span class="line">		&#125;<span class="keyword">else</span> <span class="keyword">if</span> (c==<span class="string">'*'</span> || c==<span class="string">'/'</span> || c==<span class="string">'('</span>)</span>
+<span class="line">		&#123;</span>
+<span class="line">			Push(&amp;s, c);</span>
+<span class="line">		&#125;<span class="keyword">else</span> <span class="keyword">if</span> (c==<span class="string">'#'</span>)</span>
+<span class="line">		&#123;</span>
+<span class="line">			<span class="keyword">break</span>;</span>
+<span class="line">		&#125;</span>
+<span class="line">		<span class="keyword">else</span> &#123;</span>
+<span class="line">			<span class="built_in">printf</span>(<span class="string">"出错，输入格式错误"</span>);</span>
+<span class="line">			<span class="keyword">return</span> <span class="number">-1</span>;</span>
+<span class="line">		&#125;</span>
+<span class="line">		scanf_s(<span class="string">"%c"</span>, &amp;c);</span>
 <span class="line">	&#125;</span>
-<span class="line">	<span class="keyword">else</span> &#123;</span>
-<span class="line">		<span class="built_in">printf</span>(<span class="string">"Push %d success!\n"</span>, x);</span>
+<span class="line">	<span class="keyword">while</span> (StackLen(s))</span>
+<span class="line">	&#123;</span>
+<span class="line">		Pop(&amp;s, &amp;e);</span>
+<span class="line">		<span class="built_in">printf</span>(<span class="string">"%c "</span>, e);</span>
 <span class="line">	&#125;</span>
-<span class="line"></span>
-<span class="line">	<span class="keyword">int</span> flagPop;</span>
-<span class="line">	flagPop = Pop(&amp;s, &amp;x, n);</span>
-<span class="line">	<span class="keyword">if</span> (flagPop) &#123;</span>
-<span class="line">		<span class="built_in">printf</span>(<span class="string">"Pop false!\n"</span>);</span>
-<span class="line">	&#125;</span>
-<span class="line">	<span class="keyword">else</span> &#123;</span>
-<span class="line">		<span class="built_in">printf</span>(<span class="string">"Pop %d  success!\n"</span>, x);</span>
-<span class="line">	&#125;</span>
-<span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span>
+<span class="line">	<span class="keyword">return</span> <span class="number">0</span>;cd</span>
 <span class="line">&#125;</span>
 </pre></td></tr></table></figure>
-<h3 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h3><p><img src="http://objects.earthchen.cn/C%E8%AF%AD%E8%A8%80%E5%85%B1%E4%BA%AB%E6%A0%88%E7%BB%93%E6%9E%9C.png" alt="c语言共享栈运行结果"><br>以上就是共享栈的简单操作，我这里只测试他是否能够成功，如有需要，请研读代码后自行修改，如果一时看不懂，请多看几遍思路分析，把原理弄懂，代码还是想当简单的。</p>
+<h3 id="以下是运行结果-本人用的是vs2015编译器，所以文中的scanf用了更安全的scanf-s，-如有引用-请自觉替换成和自己的编译器想匹配的函数"><a href="#以下是运行结果-本人用的是vs2015编译器，所以文中的scanf用了更安全的scanf-s，-如有引用-请自觉替换成和自己的编译器想匹配的函数" class="headerlink" title="以下是运行结果 本人用的是vs2015编译器，所以文中的scanf用了更安全的scanf_s，  如有引用 请自觉替换成和自己的编译器想匹配的函数"></a>以下是运行结果 本人用的是vs2015编译器，所以文中的scanf用了更安全的scanf_s，  如有引用 请自觉替换成和自己的编译器想匹配的函数</h3><p><img src="http://objects.earthchen.cn/c%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%BD%AC%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F.png" alt="cmd 运行结果"><br>代码很简单 ，仔细看看研究一下指针就很容易看懂，</p>
 <blockquote>
 <p>注：</p>
 <ul>
@@ -18712,276 +19002,6 @@
 <span class="line">&#125;</span>
 </pre></td></tr></table></figure>
 <h3 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h3><p><img src="http://objects.earthchen.cn/%E4%BA%8C%E5%8F%89%E6%A0%91%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C.png" alt="二叉树运行结果"><br>以上就是二叉树的一些基本操作，大量运用的递归的思想，希望读者能好好研读</p>
-<blockquote>
-<p>注：</p>
-<ul>
-<li>上述代码在<strong>visual studio 2015</strong>中编译成功运行，其他ide请自行测试</li>
-<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
-</ul>
-</blockquote>
-]]></content>
-      
-        <categories>
-            
-            <category> 开发 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> c </tag>
-            
-            <tag> 数据结构 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[C语言中缀表达式转后缀表达式]]></title>
-      <url>/2016/07/15/c%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8F%98%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F/</url>
-      <content type="html"><![CDATA[<p>众所周知,计算机中不能直接用中缀表达式计算,形如(1+2)*(4-5)之类的，但是我们可以计算机可以很容易的通过后缀表达式来计算我们所输入的算式。所以我们就需要把中缀表达式转换为后缀表达式。下面是个人写的一点代码，大家可以参考。</p>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="添加适当的头文件，定义一个栈数据结构，"><a href="#添加适当的头文件，定义一个栈数据结构，" class="headerlink" title="添加适当的头文件，定义一个栈数据结构，"></a>添加适当的头文件，定义一个栈数据结构，</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-</pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span>
-<span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span>
-<span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;math.h&gt;</span></span></span>
-<span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ctype.h&gt;</span></span></span>
-<span class="line"><span class="meta">#<span class="meta-keyword">define</span>  STACK_INIT_SIZE 100</span></span>
-<span class="line"><span class="meta">#<span class="meta-keyword">define</span> STACKINCREMENT 10</span></span>
-<span class="line"><span class="keyword">typedef</span> <span class="keyword">char</span> ElemType;</span>
-<span class="line"></span>
-<span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span>
-<span class="line">&#123;</span></span>
-<span class="line">	ElemType *base;</span>
-<span class="line">	ElemType *top;</span>
-<span class="line">	<span class="keyword">int</span> stackSize;</span>
-<span class="line">&#125;SqStack;</span>
-</pre></td></tr></table></figure>
-<a id="more"></a>
-<h3 id="创建一个栈"><a href="#创建一个栈" class="headerlink" title="创建一个栈"></a>创建一个栈</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-</pre></td><td class="code"><pre><span class="line"><span class="comment">//创建一个栈</span></span>
-<span class="line"><span class="function"><span class="keyword">void</span> <span class="title">initStack</span><span class="params">(SqStack *s)</span> </span>&#123;</span>
-<span class="line">	s-&gt;base = (ElemType *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(ElemType));</span>
-<span class="line">	<span class="keyword">if</span> (!s-&gt;base)</span>
-<span class="line">	&#123;</span>
-<span class="line">		<span class="built_in">exit</span>(<span class="number">0</span>);</span>
-<span class="line">	&#125;</span>
-<span class="line">	s-&gt;top = s-&gt;base;   <span class="comment">//最开始 栈底就是栈顶</span></span>
-<span class="line">	s-&gt;stackSize = STACK_INIT_SIZE;</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
-<h3 id="入栈操作"><a href="#入栈操作" class="headerlink" title="入栈操作"></a>入栈操作</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Push</span><span class="params">(SqStack *s, ElemType e)</span> </span>&#123;</span>
-<span class="line">	<span class="comment">//如果栈满  追加空间</span></span>
-<span class="line">	<span class="keyword">if</span> (s-&gt;top - s-&gt;base &gt;= s-&gt;stackSize)</span>
-<span class="line">	&#123;</span>
-<span class="line">		s-&gt;base = (ElemType *)<span class="built_in">realloc</span>(s-&gt;base, (s-&gt;stackSize + STACKINCREMENT) * <span class="keyword">sizeof</span>(ElemType));</span>
-<span class="line">		<span class="keyword">if</span> (!s-&gt;base)</span>
-<span class="line">		&#123;</span>
-<span class="line">			<span class="built_in">exit</span>(<span class="number">0</span>);</span>
-<span class="line">		&#125;</span>
-<span class="line">		s-&gt;top = s-&gt;base + s-&gt;stackSize;  <span class="comment">//设置栈顶</span></span>
-<span class="line">		s-&gt;stackSize = s-&gt;stackSize + STACKINCREMENT;</span>
-<span class="line">	&#125;</span>
-<span class="line">	*(s-&gt;top) = e;</span>
-<span class="line">	s-&gt;top++;</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
-<h3 id="出栈操作"><a href="#出栈操作" class="headerlink" title="出栈操作"></a>出栈操作</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Pop</span><span class="params">(SqStack *s, ElemType *e)</span> </span>&#123;</span>
-<span class="line">	<span class="keyword">if</span> (s-&gt;top == s-&gt;base)</span>
-<span class="line">	&#123;</span>
-<span class="line">		<span class="keyword">return</span>;</span>
-<span class="line">	&#125;</span>
-<span class="line">	*e = *--(s-&gt;top);</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
-<h3 id="计算栈的当前容量-最大容量是s-stackSize"><a href="#计算栈的当前容量-最大容量是s-stackSize" class="headerlink" title="计算栈的当前容量(最大容量是s.stackSize)"></a>计算栈的当前容量(最大容量是s.stackSize)</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">StackLen</span><span class="params">(SqStack s)</span> </span>&#123;</span>
-<span class="line">	<span class="keyword">return</span> (s.top - s.base);</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
-<h3 id="主函数"><a href="#主函数" class="headerlink" title="主函数"></a>主函数</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-<span class="line">17</span>
-<span class="line">18</span>
-<span class="line">19</span>
-<span class="line">20</span>
-<span class="line">21</span>
-<span class="line">22</span>
-<span class="line">23</span>
-<span class="line">24</span>
-<span class="line">25</span>
-<span class="line">26</span>
-<span class="line">27</span>
-<span class="line">28</span>
-<span class="line">29</span>
-<span class="line">30</span>
-<span class="line">31</span>
-<span class="line">32</span>
-<span class="line">33</span>
-<span class="line">34</span>
-<span class="line">35</span>
-<span class="line">36</span>
-<span class="line">37</span>
-<span class="line">38</span>
-<span class="line">39</span>
-<span class="line">40</span>
-<span class="line">41</span>
-<span class="line">42</span>
-<span class="line">43</span>
-<span class="line">44</span>
-<span class="line">45</span>
-<span class="line">46</span>
-<span class="line">47</span>
-<span class="line">48</span>
-<span class="line">49</span>
-<span class="line">50</span>
-<span class="line">51</span>
-<span class="line">52</span>
-<span class="line">53</span>
-<span class="line">54</span>
-<span class="line">55</span>
-<span class="line">56</span>
-<span class="line">57</span>
-<span class="line">58</span>
-<span class="line">59</span>
-<span class="line">60</span>
-<span class="line">61</span>
-<span class="line">62</span>
-<span class="line">63</span>
-<span class="line">64</span>
-<span class="line">65</span>
-<span class="line">66</span>
-<span class="line">67</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span>
-<span class="line">	<span class="keyword">char</span> cal[<span class="number">50</span>];</span>
-<span class="line">	<span class="keyword">char</span> c, e;</span>
-<span class="line">	SqStack s;</span>
-<span class="line">	initStack(&amp;s);</span>
-<span class="line">	<span class="built_in">printf</span>(<span class="string">"请输入中缀表达式 输入#表示结束\n"</span>);</span>
-<span class="line">	scanf_s(<span class="string">"%c"</span>, &amp;c);</span>
-<span class="line">	<span class="keyword">while</span> (c != <span class="string">'#'</span>)</span>
-<span class="line">	&#123;</span>
-<span class="line">		<span class="keyword">while</span> (c&gt;=<span class="string">'0'</span> &amp;&amp; c&lt;=<span class="string">'9'</span>)</span>
-<span class="line">		&#123;</span>
-<span class="line">			<span class="built_in">printf</span>(<span class="string">"%c "</span>, c);</span>
-<span class="line">			scanf_s(<span class="string">"%c"</span>, &amp;c);</span>
-<span class="line">			<span class="keyword">if</span> (c&lt;<span class="string">'0'</span> || c&gt;<span class="string">'9'</span>)</span>
-<span class="line">			&#123;</span>
-<span class="line">				<span class="built_in">printf</span>(<span class="string">" "</span>);</span>
-<span class="line">			&#125;</span>
-<span class="line">		&#125;</span>
-<span class="line">		<span class="keyword">if</span> (c == <span class="string">')'</span>)</span>
-<span class="line">		&#123;</span>
-<span class="line">			Pop(&amp;s, &amp;e);</span>
-<span class="line">			<span class="keyword">while</span> (e != <span class="string">'('</span>)</span>
-<span class="line">			&#123;</span>
-<span class="line">				<span class="built_in">printf</span>(<span class="string">"%c "</span>, e);</span>
-<span class="line">				Pop(&amp;s, &amp;e);</span>
-<span class="line">			&#125;</span>
-<span class="line">		&#125;</span>
-<span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (c == <span class="string">'+'</span> || c == <span class="string">'-'</span>)</span>
-<span class="line">		&#123;</span>
-<span class="line">			<span class="keyword">if</span> (!StackLen(s))</span>
-<span class="line">			&#123;</span>
-<span class="line">				Push(&amp;s, c);</span>
-<span class="line">			&#125;</span>
-<span class="line">			<span class="keyword">else</span> &#123;</span>
-<span class="line">				<span class="keyword">do</span></span>
-<span class="line">				&#123;</span>
-<span class="line">					Pop(&amp;s, &amp;e);</span>
-<span class="line">					<span class="keyword">if</span> (e == <span class="string">'('</span>)</span>
-<span class="line">					&#123;</span>
-<span class="line">						Push(&amp;s, e);</span>
-<span class="line">					&#125;</span>
-<span class="line">					<span class="keyword">else</span> &#123;</span>
-<span class="line">						<span class="built_in">printf</span>(<span class="string">"%c "</span>, e);</span>
-<span class="line">					&#125;</span>
-<span class="line">				&#125; <span class="keyword">while</span> (StackLen(s) &amp;&amp; e!=<span class="string">'('</span>);</span>
-<span class="line">				Push(&amp;s, c);</span>
-<span class="line">			&#125;</span>
-<span class="line">		&#125;<span class="keyword">else</span> <span class="keyword">if</span> (c==<span class="string">'*'</span> || c==<span class="string">'/'</span> || c==<span class="string">'('</span>)</span>
-<span class="line">		&#123;</span>
-<span class="line">			Push(&amp;s, c);</span>
-<span class="line">		&#125;<span class="keyword">else</span> <span class="keyword">if</span> (c==<span class="string">'#'</span>)</span>
-<span class="line">		&#123;</span>
-<span class="line">			<span class="keyword">break</span>;</span>
-<span class="line">		&#125;</span>
-<span class="line">		<span class="keyword">else</span> &#123;</span>
-<span class="line">			<span class="built_in">printf</span>(<span class="string">"出错，输入格式错误"</span>);</span>
-<span class="line">			<span class="keyword">return</span> <span class="number">-1</span>;</span>
-<span class="line">		&#125;</span>
-<span class="line">		scanf_s(<span class="string">"%c"</span>, &amp;c);</span>
-<span class="line">	&#125;</span>
-<span class="line">	<span class="keyword">while</span> (StackLen(s))</span>
-<span class="line">	&#123;</span>
-<span class="line">		Pop(&amp;s, &amp;e);</span>
-<span class="line">		<span class="built_in">printf</span>(<span class="string">"%c "</span>, e);</span>
-<span class="line">	&#125;</span>
-<span class="line">	<span class="keyword">return</span> <span class="number">0</span>;cd</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
-<h3 id="以下是运行结果-本人用的是vs2015编译器，所以文中的scanf用了更安全的scanf-s，-如有引用-请自觉替换成和自己的编译器想匹配的函数"><a href="#以下是运行结果-本人用的是vs2015编译器，所以文中的scanf用了更安全的scanf-s，-如有引用-请自觉替换成和自己的编译器想匹配的函数" class="headerlink" title="以下是运行结果 本人用的是vs2015编译器，所以文中的scanf用了更安全的scanf_s，  如有引用 请自觉替换成和自己的编译器想匹配的函数"></a>以下是运行结果 本人用的是vs2015编译器，所以文中的scanf用了更安全的scanf_s，  如有引用 请自觉替换成和自己的编译器想匹配的函数</h3><p><img src="http://objects.earthchen.cn/c%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%BD%AC%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F.png" alt="cmd 运行结果"><br>代码很简单 ，仔细看看研究一下指针就很容易看懂，</p>
 <blockquote>
 <p>注：</p>
 <ul>
