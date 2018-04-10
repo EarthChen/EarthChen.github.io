@@ -223,7 +223,100 @@
 </li>
 </ul>
 <h3 id="MySQL的存储引擎"><a href="#MySQL的存储引擎" class="headerlink" title="MySQL的存储引擎"></a>MySQL的存储引擎</h3><p>默认引擎为InnoDB,一般没有特殊需求直接使用即可。</p>
-<h2 id="Schema与数据类型优化"><a href="#Schema与数据类型优化" class="headerlink" title="Schema与数据类型优化"></a>Schema与数据类型优化</h2><blockquote>
+<h2 id="Schema与数据类型优化"><a href="#Schema与数据类型优化" class="headerlink" title="Schema与数据类型优化"></a>Schema与数据类型优化</h2><h3 id="选择优化的数据类型"><a href="#选择优化的数据类型" class="headerlink" title="选择优化的数据类型"></a>选择优化的数据类型</h3><ol>
+<li>更小的通常更好</li>
+<li>简单就好</li>
+<li>尽量避免null</li>
+</ol>
+<h3 id="MySQL-schema设计中的陷阱"><a href="#MySQL-schema设计中的陷阱" class="headerlink" title="MySQL schema设计中的陷阱"></a>MySQL schema设计中的陷阱</h3><ol>
+<li>太多的列</li>
+<li>太多的关联</li>
+<li>全能的枚举</li>
+<li>变相的枚举</li>
+<li>非此发明的null</li>
+</ol>
+<h3 id="范式和反范式"><a href="#范式和反范式" class="headerlink" title="范式和反范式"></a>范式和反范式</h3><h4 id="范式的优缺点"><a href="#范式的优缺点" class="headerlink" title="范式的优缺点"></a>范式的优缺点</h4><blockquote>
+<p>优点：</p>
+<ul>
+<li>范式的更新操作通常更快</li>
+<li>有较少的重复数据，在修改时，只要修改更少的数据</li>
+<li>表通常更小，更好的放在内存中，执行操作会更快</li>
+<li>检索列表数据时更少需要DISTINCT或者GROUP BY语句</li>
+</ul>
+<p>缺点</p>
+<ul>
+<li>通常需要关联，多表关联的代价昂贵，也可能使得一些索引策略无效</li>
+</ul>
+</blockquote>
+<h4 id="反范式的优缺点"><a href="#反范式的优缺点" class="headerlink" title="反范式的优缺点"></a>反范式的优缺点</h4><blockquote>
+<p>优点：</p>
+<ul>
+<li>反范式很好的避免关联</li>
+<li>能使用更有效的索引策略</li>
+</ul>
+<p>缺点</p>
+<ul>
+<li>造成较多的数据冗余</li>
+</ul>
+</blockquote>
+<h4 id="混用范式和反范式"><a href="#混用范式和反范式" class="headerlink" title="混用范式和反范式"></a>混用范式和反范式</h4><p>完全的范式和反范式是不存在的，在实际操作中建议混用这两种策略，可能使用部分范式化的schema、缓存表、以及其他技巧。</p>
+<h3 id="缓存表和汇总表"><a href="#缓存表和汇总表" class="headerlink" title="缓存表和汇总表"></a>缓存表和汇总表</h3><ol>
+<li><p>用缓存表表示存储那些可以比较简单的从schema其他表获取（但是每次获取的数据比较慢）数据的表（逻辑上的沉余的数据）</p>
+</li>
+<li><p>用汇总表表示使用GROUP BY语句聚合数据的表（数据不是路逻辑上沉余的）</p>
+</li>
+</ol>
+<h4 id="物化视图"><a href="#物化视图" class="headerlink" title="物化视图"></a>物化视图</h4><p>实际上是预计计算并且存储在磁盘上的表，可以通过各种各样的策略刷新和更新</p>
+<h4 id="计数器表"><a href="#计数器表" class="headerlink" title="计数器表"></a>计数器表</h4><p>如果应用在表中保存计算器，则在更新计数器时可能碰到并发问题，创建一个独立的表存储计数器通常是个好主意，这样可以使计数器表小且快，使用独立的表可以帮助避免查询缓存失效。</p>
+<h3 id="加快ALTER-TABLE操作的数据"><a href="#加快ALTER-TABLE操作的数据" class="headerlink" title="加快ALTER TABLE操作的数据"></a>加快ALTER TABLE操作的数据</h3><p>myql执行大部分修改表结构的操作方法是用一个新的结构创建一个空表，从旧表查询中所有数据插入新表，然后删除旧表</p>
+<p>一般来说，ALTER TABLE操作将导致myql服务中断，对常见的场景，能使用的技巧只有两种：</p>
+<pre><code>* 先在一台不提供服务的机器上执行ALTER TABLE,然后和提供服务的主库进行切换
+* 影子拷贝，意思是要用要求的表结构创建一张和源表无关的新表，然后通过重命名和删表操作交换两张表
+</code></pre><p>不是所有的ALTER TABLE操作都会引起表重建，有两种方式：</p>
+<h4 id="只修改-frm文件"><a href="#只修改-frm文件" class="headerlink" title="只修改.frm文件"></a>只修改.frm文件</h4><h4 id="快速创建myisam索引"><a href="#快速创建myisam索引" class="headerlink" title="快速创建myisam索引"></a>快速创建myisam索引</h4><h2 id="创建高性能的索引"><a href="#创建高性能的索引" class="headerlink" title="创建高性能的索引"></a>创建高性能的索引</h2><h3 id="索引基础"><a href="#索引基础" class="headerlink" title="索引基础"></a>索引基础</h3><h4 id="索引基础-1"><a href="#索引基础-1" class="headerlink" title="索引基础"></a>索引基础</h4><h5 id="B-Tree索引"><a href="#B-Tree索引" class="headerlink" title="B-Tree索引"></a>B-Tree索引</h5><p>如果没有特别说明，一般说的都是B-Tree索引，它使用B-Tree数据结构来存储数据。</p>
+<ol>
+<li><p>该索引对如下类型的查询有效：</p>
+<ul>
+<li>全值匹配(和索引中所有列进行匹配)</li>
+<li>匹配最左前缀(只使用索引的第一列)</li>
+<li>匹配范围值</li>
+<li>匹配列前缀(匹配某一列的值的开头部分)</li>
+<li>精确匹配某一列并范围匹配另外一列</li>
+<li>只访问索引的查询(只需要访问索引，无需访问数据行)</li>
+</ul>
+</li>
+<li><p>该索引的一些限制</p>
+<ul>
+<li>如果不是按照索引的最左列开始查找，则无法使用索引</li>
+<li>不能跳过索引中的列</li>
+<li>如果查询中有某个列的范围查询，则右边的所有列都无法使用索引优化查找</li>
+</ul>
+</li>
+</ol>
+<h5 id="哈希索引"><a href="#哈希索引" class="headerlink" title="哈希索引"></a>哈希索引</h5><p>基于哈希表实现，只有精确匹配索引所有列才有效。<br>在mysql中只有<strong>Memory</strong>引擎显示支持哈希索引</p>
+<ol>
+<li>哈希索引的限制<ul>
+<li>只包含哈希值和行指针,而不包含字段值</li>
+<li>不是按照索引值的顺序存储的，无法用于排序</li>
+<li>不支持部分索引列匹配查找</li>
+<li>只支持等值比较查询</li>
+<li>访问哈希索引的数据非常快，除非有很多哈希冲突</li>
+<li>如果冲突多，一些索引维护操作的代价会很高</li>
+</ul>
+</li>
+</ol>
+<h5 id="空间数据索引"><a href="#空间数据索引" class="headerlink" title="空间数据索引"></a>空间数据索引</h5><p>MyISAM表支持空间索引，可以用作地理数据存储，和b-tree索引不同，这类索引无须前缀查询，空间索引会从所有维度来所有数据。</p>
+<h5 id="全文索引"><a href="#全文索引" class="headerlink" title="全文索引"></a>全文索引</h5><p>查找的是文本中的关键词，而不是直接比较索引中的值</p>
+<h3 id="索引的优点"><a href="#索引的优点" class="headerlink" title="索引的优点"></a>索引的优点</h3><p>索引可以让服务器快速定位到表的指定位置，但这不是索引的唯一作用。</p>
+<blockquote>
+<p>索引的三个优点</p>
+<ul>
+<li>大大减少服务器需要扫描的数据量</li>
+<li>帮助服务器避免排序和临时表</li>
+<li>将随机io变为顺序io</li>
+</ul>
+</blockquote>
+<h3 id="高性能的索引策略"><a href="#高性能的索引策略" class="headerlink" title="高性能的索引策略"></a>高性能的索引策略</h3><h4 id="独立的列"><a href="#独立的列" class="headerlink" title="独立的列"></a>独立的列</h4><h4 id="前缀索引和索引选择性"><a href="#前缀索引和索引选择性" class="headerlink" title="前缀索引和索引选择性"></a>前缀索引和索引选择性</h4><h4 id="多列索引"><a href="#多列索引" class="headerlink" title="多列索引"></a>多列索引</h4><h4 id="选择合适的索引列顺序"><a href="#选择合适的索引列顺序" class="headerlink" title="选择合适的索引列顺序"></a>选择合适的索引列顺序</h4><h4 id="聚簇索引"><a href="#聚簇索引" class="headerlink" title="聚簇索引"></a>聚簇索引</h4><blockquote>
 <p>注：</p>
 <ul>
 <li>上述测试在<strong>ubuntu16.04 lts</strong> <strong>jdk1.8</strong> <strong>spring boot 1.5.6.RELEASE</strong>中成功</li>
@@ -11894,6 +11987,291 @@
     </entry>
     
     <entry>
+      <title><![CDATA[ubuntu下的进程控制系统————Supervisor]]></title>
+      <url>/2017/06/30/ubuntu_supervisor/</url>
+      <content type="html"><![CDATA[<p>我们在部署网站或者在ssh到服务器上去进行一些长时间操作的任务时候，通常不喜欢长时间开启终端在其中等待，尤其是Windows下putty这类软件，长时间不操作就会结束，尴尬的是，我们跑的进程也会直接终端，为了解决这个问题，我们需要把进程扔到后台，让他自己运行</p>
+<p>在这里我们介绍一个名叫<strong>Supervisor</strong>的进程控制系统，<br>它是一个C/S系统(注意: 其提供WEB接口给用户查询和控制), 它允许用户去监控和控制在类UNIX系统的进程. 它的目标与launchd, daemontools和runit有些相似, 但是与它们不一样的是, 它不是作为init(进程号pid是1)运行. 它是被用来控制进程, 并且它在启动的时候和一般程序并无二致<br>supervisor是一个制作守护进程的工具,用户可以在UNIX系统中监控、管理进程。常用于管理与某个用户或项目相关的进程。去帮我们维护各种服务器的进程，即使有软件崩了也能帮我们自动重启</p>
+<h2 id="Supervisor"><a href="#Supervisor" class="headerlink" title="Supervisor"></a>Supervisor</h2><a id="more"></a>
+<p>首先先把官网丢上来<a href="http://supervisord.org/" target="_blank" rel="external">http://supervisord.org/</a></p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>两种方式去安装</p>
+<ol>
+<li><p>直接使用apt包管理安装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ sudo apt-get install supervisor</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>通过pip安装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ sudo pip install supervisor</span>
+</pre></td></tr></table></figure>
+</li>
+</ol>
+<p>安装成功后,supervisor就会默认启动</p>
+<h3 id="使用说明"><a href="#使用说明" class="headerlink" title="使用说明"></a>使用说明</h3><p>很多地方都有不同的使用方式，个人比较倾向把每个进程的文件单独拆分放在/etc/supervisor/conf.d/目录下，以conf为扩展名<br>这里以我自己的一个项目的进程作为例子（进程名为x508server）</p>
+<ol>
+<li><p>创建并编写<strong>x508server.conf</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+</pre></td><td class="code"><pre><span class="line">[program:x508server]</span>
+<span class="line">command=python /home/webserver/web/WebServer/manage.py runserver 0.0.0.0:8000 ; 被监控的进程路径</span>
+<span class="line">numprocs=1                    ; 启动几个进程</span>
+<span class="line">directory=/home/webserver/web/WebServer/               ; 执行前要不要先cd到目录去，一般不用</span>
+<span class="line">autostart=true                ; 随着supervisord的启动而启动</span>
+<span class="line">autorestart=true              ; 自动重启。。当然要选上了</span>
+<span class="line">startretries=10               ; 启动失败时的最多重试次数</span>
+<span class="line">exitcodes=0                   ; 正常退出代码</span>
+<span class="line">stopsignal=KILL               ; 用来杀死进程的信号</span>
+<span class="line">stopwaitsecs=10               ; 发送SIGKILL前的等待时间</span>
+<span class="line">redirect_stderr=true          ; 重定向stderr到stdout</span>
+<span class="line">stdout_logfile=logfile        ; 指定日志文件</span>
+<span class="line">; 默认为 false，如果设置为 true，当进程收到 stop 信号时，会自动将该信号发给该进程的子进程。如果这个配置项为 true，那么也隐含 killasgroup 为 true。例如在 Debug 模式使用 Flask 时，Flask 不会将接收到的 stop 信号也传递给它的子进程，因此就需要设置这个配置项。</span>
+<span class="line">stopasgroup=true             ; send stop signal to the UNIX process </span>
+<span class="line">; 默认为 false，如果设置为 true，当进程收到 kill 信号时，会自动将该信号发给该进程的子进程。如果这个程序使用了 python 的 multiprocessing 时，就能自动停止它的子线程。</span>
+<span class="line">killasgroup=true             ; SIGKILL the UNIX process group (def false</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>让supervisor重新加载配置文件，然后启动x508server进程</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">$ supervisorctl reload</span>
+<span class="line">$ supervisorctl start x508server</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>结束指定进程</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ supervisorctl x508serevr stop</span>
+</pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><ol>
+<li><p>启动某个进程</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ supervisorctl start x508serevr</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>关闭某个进程</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ supervisorctl stop x508serevr</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>停止全部进程，注：start、restart、stop都不会载入最新的配置文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ supervisorctl stop all</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>载入最新的配置文件，停止原有进程并按新的配置启动、管理所有进程</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ supervisorctl reload</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>根据最新的配置文件，启动新配置或有改动的进程，配置没有改动的进程不会受影响而重启</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ supervisorctl update</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>启动supervisord</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ sudo supervisord -c /etc/supervisor/supervisord.conf</span>
+</pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="配置说明"><a href="#配置说明" class="headerlink" title="配置说明"></a>配置说明</h3><ol>
+<li><p>每个进程的配置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+<span class="line">27</span>
+<span class="line">28</span>
+<span class="line">29</span>
+<span class="line">30</span>
+<span class="line">31</span>
+<span class="line">32</span>
+<span class="line">33</span>
+<span class="line">34</span>
+<span class="line">35</span>
+<span class="line">36</span>
+<span class="line">37</span>
+<span class="line">38</span>
+<span class="line">39</span>
+<span class="line">40</span>
+<span class="line">41</span>
+<span class="line">42</span>
+<span class="line">43</span>
+<span class="line">44</span>
+<span class="line">45</span>
+<span class="line">46</span>
+<span class="line">47</span>
+<span class="line">48</span>
+<span class="line">49</span>
+<span class="line">50</span>
+<span class="line">51</span>
+<span class="line">52</span>
+<span class="line">53</span>
+<span class="line">54</span>
+<span class="line">55</span>
+<span class="line">56</span>
+<span class="line">57</span>
+<span class="line">58</span>
+<span class="line">59</span>
+<span class="line">60</span>
+<span class="line">61</span>
+<span class="line">62</span>
+<span class="line">63</span>
+<span class="line">64</span>
+<span class="line">65</span>
+<span class="line">66</span>
+<span class="line">67</span>
+<span class="line">68</span>
+<span class="line">69</span>
+<span class="line">70</span>
+<span class="line">71</span>
+</pre></td><td class="code"><pre><span class="line">;*为必须填写项</span>
+<span class="line">;*[program:应用名称]</span>
+<span class="line">[program:cat]</span>
+<span class="line"></span>
+<span class="line">;*命令路径,如果使用python启动的程序应该为 python /home/test.py, </span>
+<span class="line">;不建议放入/home/user/, 对于非user用户一般情况下是不能访问</span>
+<span class="line"><span class="built_in">command</span>=/bin/cat</span>
+<span class="line"></span>
+<span class="line">;当numprocs为1时,process_name=%(program_name)s</span>
+<span class="line">;当numprocs&gt;=2时,%(program_name)s_%(process_num)02d</span>
+<span class="line">process_name=%(program_name)s</span>
+<span class="line"></span>
+<span class="line">;进程数量</span>
+<span class="line">numprocs=1</span>
+<span class="line"></span>
+<span class="line">;执行目录,若有/home/supervisor_test/<span class="built_in">test</span>1.py</span>
+<span class="line">;将directory设置成/home/supervisor_test</span>
+<span class="line">;则<span class="built_in">command</span>只需设置成python <span class="built_in">test</span>1.py</span>
+<span class="line">;否则<span class="built_in">command</span>必须设置成绝对执行目录</span>
+<span class="line">directory=/tmp</span>
+<span class="line"></span>
+<span class="line">;掩码:--- -w- -w-, 转换后rwx r-x w-x</span>
+<span class="line"><span class="built_in">umask</span>=022</span>
+<span class="line"></span>
+<span class="line">;优先级,值越高,最后启动,最先被关闭,默认值999</span>
+<span class="line">priority=999</span>
+<span class="line"></span>
+<span class="line">;如果是<span class="literal">true</span>,当supervisor启动时,程序将会自动启动</span>
+<span class="line">autostart=<span class="literal">true</span></span>
+<span class="line"></span>
+<span class="line">;*自动重启</span>
+<span class="line">autorestart=<span class="literal">true</span></span>
+<span class="line"></span>
+<span class="line">;启动延时执行,默认1秒</span>
+<span class="line">startsecs=10</span>
+<span class="line"></span>
+<span class="line">;启动尝试次数,默认3次</span>
+<span class="line">startretries=3</span>
+<span class="line"></span>
+<span class="line">;当退出码是0,2时,执行重启,默认值0,2</span>
+<span class="line">exitcodes=0,2</span>
+<span class="line"></span>
+<span class="line">;停止信号,默认TERM</span>
+<span class="line">;中断:INT(类似于Ctrl+C)(<span class="built_in">kill</span> -INT pid),退出后会将写文件或日志(推荐)</span>
+<span class="line">;终止:TERM(<span class="built_in">kill</span> -TERM pid)</span>
+<span class="line">;挂起:HUP(<span class="built_in">kill</span> -HUP pid),注意与Ctrl+Z/<span class="built_in">kill</span> -stop pid不同</span>
+<span class="line">;从容停止:QUIT(<span class="built_in">kill</span> -QUIT pid)</span>
+<span class="line">;KILL, USR1, USR2其他见命令(<span class="built_in">kill</span> <span class="_">-l</span>),说明1</span>
+<span class="line">stopsignal=TERM</span>
+<span class="line"></span>
+<span class="line">stopwaitsecs=10</span>
+<span class="line"></span>
+<span class="line">;*以root用户执行</span>
+<span class="line">user=root</span>
+<span class="line"></span>
+<span class="line">;重定向</span>
+<span class="line">redirect_stderr=<span class="literal">false</span></span>
+<span class="line"></span>
+<span class="line">stdout_logfile=/a/path</span>
+<span class="line">stdout_logfile_maxbytes=1MB</span>
+<span class="line">stdout_logfile_backups=10</span>
+<span class="line">stdout_capture_maxbytes=1MB</span>
+<span class="line">stderr_logfile=/a/path</span>
+<span class="line">stderr_logfile_maxbytes=1MB</span>
+<span class="line">stderr_logfile_backups=10</span>
+<span class="line">stderr_capture_maxbytes=1MB</span>
+<span class="line"></span>
+<span class="line">;环境变量设置</span>
+<span class="line">environment=A=<span class="string">"1"</span>,B=<span class="string">"2"</span></span>
+<span class="line"></span>
+<span class="line">serverurl=AUTO</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>(inet_http_server)配置说明</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line">[inet_http_server]         ; inet (TCP) server disabled by default</span>
+<span class="line">port=0.0.0.0:9001          ; (ip_address:port specifier, *:port <span class="keyword">for</span> all iface)</span>
+<span class="line">username=user              ; 用户名 (default is no username (open server))</span>
+<span class="line">password=123               ; 密码 (default is no password (open server))</span>
+</pre></td></tr></table></figure>
+</li>
+</ol>
+<blockquote>
+<p>注：</p>
+<ul>
+<li>上述环境在<strong>ubuntu16.04 lts</strong>中测试成功</li>
+<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
+</ul>
+</blockquote>
+]]></content>
+      
+        <categories>
+            
+            <category> 运维 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Linux </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[django+nginx+gunicorn部署配置]]></title>
       <url>/2017/06/30/django_nginx_gunicorn/</url>
       <content type="html"><![CDATA[<p>在部署django开发的站点时，通常有两种选择方式，nginx+django+uwsgi或者django+nginx+gunicorn，本文不讨论apache方式，在linux下通常都使用nginx，速度快，还经常做代理服务器，功能强大。。<br>nginx+django+uwsgi个人觉得uwsgi配置较为麻烦，所以选择了gunicorn，一个开源Python WSGI UNIX的HTTP服务器，据说速度快（配置快、运行快）、简单，默认是同步工作，支持Gevent、Eventlet异步，支持Tornado。有兴趣可以自行查阅官方文档</p>
@@ -12187,291 +12565,6 @@
             <tag> Django </tag>
             
             <tag> Nginx </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[ubuntu下的进程控制系统————Supervisor]]></title>
-      <url>/2017/06/30/ubuntu_supervisor/</url>
-      <content type="html"><![CDATA[<p>我们在部署网站或者在ssh到服务器上去进行一些长时间操作的任务时候，通常不喜欢长时间开启终端在其中等待，尤其是Windows下putty这类软件，长时间不操作就会结束，尴尬的是，我们跑的进程也会直接终端，为了解决这个问题，我们需要把进程扔到后台，让他自己运行</p>
-<p>在这里我们介绍一个名叫<strong>Supervisor</strong>的进程控制系统，<br>它是一个C/S系统(注意: 其提供WEB接口给用户查询和控制), 它允许用户去监控和控制在类UNIX系统的进程. 它的目标与launchd, daemontools和runit有些相似, 但是与它们不一样的是, 它不是作为init(进程号pid是1)运行. 它是被用来控制进程, 并且它在启动的时候和一般程序并无二致<br>supervisor是一个制作守护进程的工具,用户可以在UNIX系统中监控、管理进程。常用于管理与某个用户或项目相关的进程。去帮我们维护各种服务器的进程，即使有软件崩了也能帮我们自动重启</p>
-<h2 id="Supervisor"><a href="#Supervisor" class="headerlink" title="Supervisor"></a>Supervisor</h2><a id="more"></a>
-<p>首先先把官网丢上来<a href="http://supervisord.org/" target="_blank" rel="external">http://supervisord.org/</a></p>
-<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>两种方式去安装</p>
-<ol>
-<li><p>直接使用apt包管理安装</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">$ sudo apt-get install supervisor</span>
-</pre></td></tr></table></figure>
-</li>
-<li><p>通过pip安装</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">$ sudo pip install supervisor</span>
-</pre></td></tr></table></figure>
-</li>
-</ol>
-<p>安装成功后,supervisor就会默认启动</p>
-<h3 id="使用说明"><a href="#使用说明" class="headerlink" title="使用说明"></a>使用说明</h3><p>很多地方都有不同的使用方式，个人比较倾向把每个进程的文件单独拆分放在/etc/supervisor/conf.d/目录下，以conf为扩展名<br>这里以我自己的一个项目的进程作为例子（进程名为x508server）</p>
-<ol>
-<li><p>创建并编写<strong>x508server.conf</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-</pre></td><td class="code"><pre><span class="line">[program:x508server]</span>
-<span class="line">command=python /home/webserver/web/WebServer/manage.py runserver 0.0.0.0:8000 ; 被监控的进程路径</span>
-<span class="line">numprocs=1                    ; 启动几个进程</span>
-<span class="line">directory=/home/webserver/web/WebServer/               ; 执行前要不要先cd到目录去，一般不用</span>
-<span class="line">autostart=true                ; 随着supervisord的启动而启动</span>
-<span class="line">autorestart=true              ; 自动重启。。当然要选上了</span>
-<span class="line">startretries=10               ; 启动失败时的最多重试次数</span>
-<span class="line">exitcodes=0                   ; 正常退出代码</span>
-<span class="line">stopsignal=KILL               ; 用来杀死进程的信号</span>
-<span class="line">stopwaitsecs=10               ; 发送SIGKILL前的等待时间</span>
-<span class="line">redirect_stderr=true          ; 重定向stderr到stdout</span>
-<span class="line">stdout_logfile=logfile        ; 指定日志文件</span>
-<span class="line">; 默认为 false，如果设置为 true，当进程收到 stop 信号时，会自动将该信号发给该进程的子进程。如果这个配置项为 true，那么也隐含 killasgroup 为 true。例如在 Debug 模式使用 Flask 时，Flask 不会将接收到的 stop 信号也传递给它的子进程，因此就需要设置这个配置项。</span>
-<span class="line">stopasgroup=true             ; send stop signal to the UNIX process </span>
-<span class="line">; 默认为 false，如果设置为 true，当进程收到 kill 信号时，会自动将该信号发给该进程的子进程。如果这个程序使用了 python 的 multiprocessing 时，就能自动停止它的子线程。</span>
-<span class="line">killasgroup=true             ; SIGKILL the UNIX process group (def false</span>
-</pre></td></tr></table></figure>
-</li>
-<li><p>让supervisor重新加载配置文件，然后启动x508server进程</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line">$ supervisorctl reload</span>
-<span class="line">$ supervisorctl start x508server</span>
-</pre></td></tr></table></figure>
-</li>
-<li><p>结束指定进程</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">$ supervisorctl x508serevr stop</span>
-</pre></td></tr></table></figure>
-</li>
-</ol>
-<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><ol>
-<li><p>启动某个进程</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">$ supervisorctl start x508serevr</span>
-</pre></td></tr></table></figure>
-</li>
-<li><p>关闭某个进程</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">$ supervisorctl stop x508serevr</span>
-</pre></td></tr></table></figure>
-</li>
-<li><p>停止全部进程，注：start、restart、stop都不会载入最新的配置文件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">$ supervisorctl stop all</span>
-</pre></td></tr></table></figure>
-</li>
-<li><p>载入最新的配置文件，停止原有进程并按新的配置启动、管理所有进程</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">$ supervisorctl reload</span>
-</pre></td></tr></table></figure>
-</li>
-<li><p>根据最新的配置文件，启动新配置或有改动的进程，配置没有改动的进程不会受影响而重启</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">$ supervisorctl update</span>
-</pre></td></tr></table></figure>
-</li>
-<li><p>启动supervisord</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">$ sudo supervisord -c /etc/supervisor/supervisord.conf</span>
-</pre></td></tr></table></figure>
-</li>
-</ol>
-<h3 id="配置说明"><a href="#配置说明" class="headerlink" title="配置说明"></a>配置说明</h3><ol>
-<li><p>每个进程的配置</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-<span class="line">17</span>
-<span class="line">18</span>
-<span class="line">19</span>
-<span class="line">20</span>
-<span class="line">21</span>
-<span class="line">22</span>
-<span class="line">23</span>
-<span class="line">24</span>
-<span class="line">25</span>
-<span class="line">26</span>
-<span class="line">27</span>
-<span class="line">28</span>
-<span class="line">29</span>
-<span class="line">30</span>
-<span class="line">31</span>
-<span class="line">32</span>
-<span class="line">33</span>
-<span class="line">34</span>
-<span class="line">35</span>
-<span class="line">36</span>
-<span class="line">37</span>
-<span class="line">38</span>
-<span class="line">39</span>
-<span class="line">40</span>
-<span class="line">41</span>
-<span class="line">42</span>
-<span class="line">43</span>
-<span class="line">44</span>
-<span class="line">45</span>
-<span class="line">46</span>
-<span class="line">47</span>
-<span class="line">48</span>
-<span class="line">49</span>
-<span class="line">50</span>
-<span class="line">51</span>
-<span class="line">52</span>
-<span class="line">53</span>
-<span class="line">54</span>
-<span class="line">55</span>
-<span class="line">56</span>
-<span class="line">57</span>
-<span class="line">58</span>
-<span class="line">59</span>
-<span class="line">60</span>
-<span class="line">61</span>
-<span class="line">62</span>
-<span class="line">63</span>
-<span class="line">64</span>
-<span class="line">65</span>
-<span class="line">66</span>
-<span class="line">67</span>
-<span class="line">68</span>
-<span class="line">69</span>
-<span class="line">70</span>
-<span class="line">71</span>
-</pre></td><td class="code"><pre><span class="line">;*为必须填写项</span>
-<span class="line">;*[program:应用名称]</span>
-<span class="line">[program:cat]</span>
-<span class="line"></span>
-<span class="line">;*命令路径,如果使用python启动的程序应该为 python /home/test.py, </span>
-<span class="line">;不建议放入/home/user/, 对于非user用户一般情况下是不能访问</span>
-<span class="line"><span class="built_in">command</span>=/bin/cat</span>
-<span class="line"></span>
-<span class="line">;当numprocs为1时,process_name=%(program_name)s</span>
-<span class="line">;当numprocs&gt;=2时,%(program_name)s_%(process_num)02d</span>
-<span class="line">process_name=%(program_name)s</span>
-<span class="line"></span>
-<span class="line">;进程数量</span>
-<span class="line">numprocs=1</span>
-<span class="line"></span>
-<span class="line">;执行目录,若有/home/supervisor_test/<span class="built_in">test</span>1.py</span>
-<span class="line">;将directory设置成/home/supervisor_test</span>
-<span class="line">;则<span class="built_in">command</span>只需设置成python <span class="built_in">test</span>1.py</span>
-<span class="line">;否则<span class="built_in">command</span>必须设置成绝对执行目录</span>
-<span class="line">directory=/tmp</span>
-<span class="line"></span>
-<span class="line">;掩码:--- -w- -w-, 转换后rwx r-x w-x</span>
-<span class="line"><span class="built_in">umask</span>=022</span>
-<span class="line"></span>
-<span class="line">;优先级,值越高,最后启动,最先被关闭,默认值999</span>
-<span class="line">priority=999</span>
-<span class="line"></span>
-<span class="line">;如果是<span class="literal">true</span>,当supervisor启动时,程序将会自动启动</span>
-<span class="line">autostart=<span class="literal">true</span></span>
-<span class="line"></span>
-<span class="line">;*自动重启</span>
-<span class="line">autorestart=<span class="literal">true</span></span>
-<span class="line"></span>
-<span class="line">;启动延时执行,默认1秒</span>
-<span class="line">startsecs=10</span>
-<span class="line"></span>
-<span class="line">;启动尝试次数,默认3次</span>
-<span class="line">startretries=3</span>
-<span class="line"></span>
-<span class="line">;当退出码是0,2时,执行重启,默认值0,2</span>
-<span class="line">exitcodes=0,2</span>
-<span class="line"></span>
-<span class="line">;停止信号,默认TERM</span>
-<span class="line">;中断:INT(类似于Ctrl+C)(<span class="built_in">kill</span> -INT pid),退出后会将写文件或日志(推荐)</span>
-<span class="line">;终止:TERM(<span class="built_in">kill</span> -TERM pid)</span>
-<span class="line">;挂起:HUP(<span class="built_in">kill</span> -HUP pid),注意与Ctrl+Z/<span class="built_in">kill</span> -stop pid不同</span>
-<span class="line">;从容停止:QUIT(<span class="built_in">kill</span> -QUIT pid)</span>
-<span class="line">;KILL, USR1, USR2其他见命令(<span class="built_in">kill</span> <span class="_">-l</span>),说明1</span>
-<span class="line">stopsignal=TERM</span>
-<span class="line"></span>
-<span class="line">stopwaitsecs=10</span>
-<span class="line"></span>
-<span class="line">;*以root用户执行</span>
-<span class="line">user=root</span>
-<span class="line"></span>
-<span class="line">;重定向</span>
-<span class="line">redirect_stderr=<span class="literal">false</span></span>
-<span class="line"></span>
-<span class="line">stdout_logfile=/a/path</span>
-<span class="line">stdout_logfile_maxbytes=1MB</span>
-<span class="line">stdout_logfile_backups=10</span>
-<span class="line">stdout_capture_maxbytes=1MB</span>
-<span class="line">stderr_logfile=/a/path</span>
-<span class="line">stderr_logfile_maxbytes=1MB</span>
-<span class="line">stderr_logfile_backups=10</span>
-<span class="line">stderr_capture_maxbytes=1MB</span>
-<span class="line"></span>
-<span class="line">;环境变量设置</span>
-<span class="line">environment=A=<span class="string">"1"</span>,B=<span class="string">"2"</span></span>
-<span class="line"></span>
-<span class="line">serverurl=AUTO</span>
-</pre></td></tr></table></figure>
-</li>
-<li><p>(inet_http_server)配置说明</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-</pre></td><td class="code"><pre><span class="line">[inet_http_server]         ; inet (TCP) server disabled by default</span>
-<span class="line">port=0.0.0.0:9001          ; (ip_address:port specifier, *:port <span class="keyword">for</span> all iface)</span>
-<span class="line">username=user              ; 用户名 (default is no username (open server))</span>
-<span class="line">password=123               ; 密码 (default is no password (open server))</span>
-</pre></td></tr></table></figure>
-</li>
-</ol>
-<blockquote>
-<p>注：</p>
-<ul>
-<li>上述环境在<strong>ubuntu16.04 lts</strong>中测试成功</li>
-<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
-</ul>
-</blockquote>
-]]></content>
-      
-        <categories>
-            
-            <category> 运维 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> Linux </tag>
             
         </tags>
         
@@ -13761,14 +13854,14 @@
 </li>
 <li><p>添加规则<br>在终端输入</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">$ iptables -I INPUT -p tcp --dport 80 -j ACCEPT</span>
+</pre></td><td class="code"><pre><span class="line">$ sudo iptables -I INPUT -p tcp --dport 80 -j ACCEPT</span>
 </pre></td></tr></table></figure>
 </li>
 </ol>
 <p>中间的80为所需要开放的端口</p>
 <ol>
 <li>保存规则<br>在终端输入<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">$ iptables-save</span>
+</pre></td><td class="code"><pre><span class="line">$ sudo iptables-save</span>
 </pre></td></tr></table></figure>
 </li>
 </ol>
@@ -14841,6 +14934,276 @@
     </entry>
     
     <entry>
+      <title><![CDATA[ubuntu搭建常见开发环境]]></title>
+      <url>/2017/03/15/ubuntu_do_something_coding/</url>
+      <content type="html"><![CDATA[<p>由于之前使用Ubuntu16.10桌面版系统蹦了好几天，因此我也装了好几次系统了，每次都要百度或google查很多东西，去配置开发环境或使用环境，到处搜觉得很麻烦，所以，本文就总结一下Ubuntu安装好之后需要做的一些事，以及常规配置习惯</p>
+<p>在装了几次系统之后我最后还是决定降一个系统版本。。使用<strong>Ubuntu16.04lts</strong>长期维护版，希望能稳定一些吧。。。。。实在是有点伤了</p>
+<p>文本以Ubuntu16.04桌面版为环境介绍</p>
+<h2 id="常用编程环境搭建"><a href="#常用编程环境搭建" class="headerlink" title="常用编程环境搭建"></a>常用编程环境搭建</h2><a id="more"></a>
+<h3 id="jdk安装"><a href="#jdk安装" class="headerlink" title="jdk安装"></a>jdk安装</h3><p>java的环境基本处处都能用的到，所以去安装jdk<br>使用下面的命令安装，只需一些时间，它就会下载许多的文件（但是要确定你的网络环境良好，访问oracle的地址速度快）：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line">sudo add-apt-repository ppa:webupd8team/java</span>
+<span class="line">sudo apt-get update</span>
+<span class="line">sudo apt-get install oracle-java8-installer</span>
+<span class="line">sudo apt-get install oracle-java8-set-default</span>
+</pre></td></tr></table></figure></p>
+<p>一般我不会这么干的，因为，，实在太慢了 而且一不小心就卡主了apt</p>
+<blockquote>
+<p>所以流程如下：</p>
+<ol>
+<li>我们这里通过<a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html" target="_blank" rel="external">oracle官网</a>提前下好适合你系统版本的jdk的压缩包</li>
+<li>将下好的压缩包解压到合适的地方</li>
+<li>配置环境变量</li>
+<li>使配置的变量立即生效</li>
+</ol>
+</blockquote>
+<p>先在合适的地方创建一个放置环境的文件夹笔者这里使/usr/java/<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/</span>
+<span class="line">mkdir java</span>
+</pre></td></tr></table></figure></p>
+<p>然后将下好的jdk复制到创建好的文件夹下并解压：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line">sudo cp jdk-8u45-linux-x64.gz /usr/java/</span>
+<span class="line"><span class="built_in">cd</span> /usr/java/</span>
+<span class="line">sudo tar -zvxf jdk-8u45-linux-x64.gz</span>
+</pre></td></tr></table></figure></p>
+<p>配置环境变量：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">gedit ~/.bashrc</span>
+</pre></td></tr></table></figure></p>
+<p>在编辑页面的最后添加如下语句<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/usr/java/jdk1.8.0_45</span>
+<span class="line">export JRE_HOME=$&#123;JAVA_HOME&#125;/jre</span>
+<span class="line">export CLASSPATH=.:$&#123;JAVA_HOME&#125;/lib:$&#123;JRE_HOME&#125;/lib</span>
+<span class="line">export PATH=$&#123;JAVA_HOME&#125;/bin:$PATH</span>
+</pre></td></tr></table></figure></p>
+<p>添加之后如图所示<br><img src="http://objects.earthchen.cn/ubuntu_java%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F.png" alt="java环境变量"></p>
+<p>保存环境变量，退出编辑器，输入命令使之生效：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.bashrc</span>
+</pre></td></tr></table></figure></p>
+<ul>
+<li>输入java -version查看是否成功<br><img src="http://objects.earthchen.cn/ubuntu_java%E5%AE%89%E8%A3%85%E6%88%90%E5%8A%9F.png" alt="java安装成功"><br>如上图所示即为成功。。</li>
+</ul>
+<h3 id="安装javaee服务器tomcat"><a href="#安装javaee服务器tomcat" class="headerlink" title="安装javaee服务器tomcat"></a>安装javaee服务器tomcat</h3><ol>
+<li>从tomcat官网上下载需要的压缩包</li>
+<li>将压缩包解压并移动到<strong>/opt/tomcat/</strong>下，如果没有这个目录需要提前创建好目录</li>
+<li><p>打开<strong>/tomcat/bin/startup.sh/</strong>在文件的最后添加jdk和jre配置信息</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">#Java</span></span>
+<span class="line"><span class="built_in">export</span>JAVA_HOME=/opt/java/jdk1.8.0_121  <span class="comment">#java目录</span></span>
+<span class="line"><span class="built_in">export</span>JRE_HOME=<span class="variable">$&#123;JAVA_HOME&#125;</span>/jre</span>
+<span class="line"><span class="built_in">export</span>CLASSPATH=.:<span class="variable">$&#123;JAVA_HOME&#125;</span>/lib:<span class="variable">$&#123;JRE_HOME&#125;</span>/lib</span>
+<span class="line"><span class="built_in">export</span>PATH=<span class="variable">$&#123;JAVA_HOME&#125;</span>/bin:<span class="variable">$PATH</span></span>
+<span class="line"><span class="comment">#tomcat</span></span>
+<span class="line"><span class="built_in">export</span>TOMCAT_HOME=/opt/tomcat/apache-tomcat-9.0.0.M11</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>启动tomcat</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">./bin/startup.sh</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>验证tomcat配置和安装是否成功<br>在浏览器地址栏输入127.0.0.1:8080（ip：端口号）</p>
+</li>
+<li><p>关闭tomcat</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">./bin/shuntdown.sh</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>给tomcat文件夹及所有文件赋予权限777</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">chmod 777 /opt/tomcat -R</span>
+</pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="安装Git"><a href="#安装Git" class="headerlink" title="安装Git"></a>安装Git</h3><p>程序员必备工具啊  一般安装好系统就会安装<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">sudo apt install git</span>
+</pre></td></tr></table></figure></p>
+<h3 id="安装mysql"><a href="#安装mysql" class="headerlink" title="安装mysql"></a>安装mysql</h3><p>常用的关系型数据库，开发必备<br>在Ubuntu下安装mysql很简单，只需要简单的输入几条命令就好：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line">sudo apt-get install mysql-server</span>
+<span class="line"></span>
+<span class="line">sudo apt-get install mysql-client</span>
+<span class="line"></span>
+<span class="line">sudo apt-get install libmysqlclient-dev</span>
+</pre></td></tr></table></figure></p>
+<p>安装过程中会提示输入用户名和密码，按照自己的需要去设置</p>
+<h3 id="安装mysql数据库可视化工具"><a href="#安装mysql数据库可视化工具" class="headerlink" title="安装mysql数据库可视化工具"></a>安装mysql数据库可视化工具</h3><p>可以选择MySQL-workbench或者phpmyadmin</p>
+<h4 id="MySQL-workbench"><a href="#MySQL-workbench" class="headerlink" title="MySQL-workbench"></a>MySQL-workbench</h4><p>使用如下命令安装<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">sudo apt-get install mysql-workbench</span>
+</pre></td></tr></table></figure></p>
+<h4 id="phpmyadmin"><a href="#phpmyadmin" class="headerlink" title="phpmyadmin"></a>phpmyadmin</h4><p>使用如下命令安装</p>
+<ol>
+<li><p>安装php</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">sudo apt install php</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>安装apache2</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">sudo apt install apache2</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>安装phpmyadmin</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">sudo apt-get install phpmyadmin</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>建立/var/www/html 下的软连接</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">sudo ln <span class="_">-s</span> /usr/share/phpmyadmin /var/www/html/phpmyadmin</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>然后重启apache</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">sudo /etc/init.d/apache2 restart</span>
+</pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="安装Vim"><a href="#安装Vim" class="headerlink" title="安装Vim"></a>安装Vim</h3><p>程序员必备工具啊  一般安装好系统就会安装<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">sudo apt install vim</span>
+</pre></td></tr></table></figure></p>
+<p>vim的配置我就直接用大神的vim配置<strong>spf13-vim</strong><br>安装方法如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">curl https://j.mp/spf13-vim3 -L &gt; spf13-vim.sh &amp;&amp; sh spf13-vim.sh</span>
+</pre></td></tr></table></figure></p>
+<p>剩下的只要等待即可，由于过程需要git等环境，需要提前安装好</p>
+<h3 id="安装pip"><a href="#安装pip" class="headerlink" title="安装pip"></a>安装pip</h3><p>Ubuntu虽然内置了Python2和python3两个版本但是没有默认安装好pip这个好用的包管理工具，所以要用于python开发的话最好安装上<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">sudo apt install python-pip   <span class="comment">#python2的pip</span></span>
+<span class="line">sudo apt install python3-pip   <span class="comment">#python3的pip</span></span>
+</pre></td></tr></table></figure></p>
+<p>由于pip默认的时国外的源，在国内访问极慢，为了方便我们这里将更新源修改成国内比较好用的豆瓣源</p>
+<ol>
+<li><p>首先在用户目录下新建.pip文件夹</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">mkdir .pip</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>进入.pip目录创建pip.conf文件，在文件中添加如下内容</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line">[global]</span>
+<span class="line">timeout = <span class="number">60</span></span>
+<span class="line">index-url = http:<span class="comment">//pypi.douban.com/simple</span></span>
+<span class="line">trusted-host = pypi.douban.com</span>
+</pre></td></tr></table></figure>
+</li>
+</ol>
+<p>添加完保存即可享受飞一般的速度</p>
+<h3 id="安装几个好用的ide"><a href="#安装几个好用的ide" class="headerlink" title="安装几个好用的ide"></a>安装几个好用的ide</h3><p>有些人觉得vim强无敌，但是我懒得配那些环境，还是用ide吧 懒人嘛  嘿嘿</p>
+<h4 id="Pycharm"><a href="#Pycharm" class="headerlink" title="Pycharm"></a>Pycharm</h4><p>很著名的python ide，比起在vim中配置一个开发环境，我还是觉得pycharm更好用，也更方便<br>进入<a href="http://www.jetbrains.com/pycharm/download/#section=linux" target="_blank" rel="external">pycharm下载地址</a>下载适合自己系统的安装包<br>解压到合适的地方<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /home/earthchen/code/pycharm-2016.3.2/bin</span>
+<span class="line">sh pycharm.sh</span>
+</pre></td></tr></table></figure></p>
+<p>剩下就全是图形化界面，自己按需求操作</p>
+<h4 id="idea"><a href="#idea" class="headerlink" title="idea"></a>idea</h4><p>很著名的java ide  好用程度  谁用谁知道<br>进入<a href="http://www.jetbrains.com/idea/download/#section=linux" target="_blank" rel="external">idea下载地址</a>下载适合自己系统的安装包<br>解压到合适的地方<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> code/idea-IU-163.12024.16/bin/</span>
+<span class="line">sh idea.sh</span>
+</pre></td></tr></table></figure></p>
+<p>剩下就全是图形化界面，自己按需求操作</p>
+<h4 id="clion"><a href="#clion" class="headerlink" title="clion"></a>clion</h4><p>Ubuntu下开发c并不多 放着偶尔用下，肯定比不上win下的vs又不想每次都make或者gcc 所以选择了同一个公司的ide<br>进入<a href="http://www.jetbrains.com/clion/download/" target="_blank" rel="external">clon下载地址</a>下载适合自己系统的安装包<br>解压到合适的地方<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /home/earthchen/code/clion-2016.3.3/bin</span>
+<span class="line">sh clion.sh</span>
+</pre></td></tr></table></figure></p>
+<p>剩下就全是图形化界面，自己按需求操作</p>
+<h4 id="激活码"><a href="#激活码" class="headerlink" title="激活码"></a>激活码</h4><p>如果你下载安装的时专业版，那么还需要使用激活码才能使用，但是一般来说社区版已经够用<br>下面提供一下从网上搜集来的激活码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">CNEKJPQZEX-eyJsaWNlbnNlSWQiOiJDTkVLSlBRWkVYIiwibGljZW5zZWVOYW1lIjoibGFuIHl1IiwiYXNzaWduZWVOYW1lIjoiIiwiYXNzaWduZWVFbWFpbCI6IiIsImxpY2Vuc2VSZXN0cmljdGlvbiI6IkZvciBlZHVjYXRpb25hbCB1c2Ugb25seSIsImNoZWNrQ29uY3VycmVudFVzZSI6ZmFsc2UsInByb2R1Y3RzIjpbeyJjb2RlIjoiQUMiLCJwYWlkVXBUbyI6IjIwMTgtMDEtMzAifSx7ImNvZGUiOiJETSIsInBhaWRVcFRvIjoiMjAxOC0wMS0zMCJ9LHsiY29kZSI6IklJIiwicGFpZFVwVG8iOiIyMDE4LTAxLTMwIn0seyJjb2RlIjoiUlMwIiwicGFpZFVwVG8iOiIyMDE4LTAxLTMwIn0seyJjb2RlIjoiV1MiLCJwYWlkVXBUbyI6IjIwMTgtMDEtMzAifSx7ImNvZGUiOiJEUE4iLCJwYWlkVXBUbyI6IjIwMTgtMDEtMzAifSx7ImNvZGUiOiJSQyIsInBhaWRVcFRvIjoiMjAxOC0wMS0zMCJ9LHsiY29kZSI6IlBTIiwicGFpZFVwVG8iOiIyMDE4LTAxLTMwIn0seyJjb2RlIjoiREMiLCJwYWlkVXBUbyI6IjIwMTgtMDEtMzAifSx7ImNvZGUiOiJEQiIsInBhaWRVcFRvIjoiMjAxOC0wMS0zMCJ9LHsiY29kZSI6IlJNIiwicGFpZFVwVG8iOiIyMDE4LTAxLTMwIn0seyJjb2RlIjoiUEMiLCJwYWlkVXBUbyI6IjIwMTgtMDEtMzAifSx7ImNvZGUiOiJDTCIsInBhaWRVcFRvIjoiMjAxOC0wMS0zMCJ9XSwiaGFzaCI6IjUxOTU1OTMvMCIsImdyYWNlUGVyaW9kRGF5cyI6MCwiYXV0b1Byb2xvbmdhdGVkIjpmYWxzZSwiaXNBdXRvUHJvbG9uZ2F0ZWQiOmZhbHNlfQ==-QOxwjWvRwJz6vo6J6adC3CJ4ukQHosbPYZ94URUVFna/Rbew8xK/M5gP3kAaPh6ZDveFdtMR1UBoumq3eCwXtXM3U3ls5noB4LIr+QplVlCj2pK5uNq7g/feyNyQcHpSXtvhIOnXDBLOecB05DOsxzm0p7ulGGJoAInmHeb9mc0eYjqc4RPpUQfh6HSYBnvEnKMlLF5bz4KEtzmsvvgA55CwzwQ3gRitm5Q/wUT7AQCBdjmBfNUjKVQL6TSjSDPp56FUdEs4Aab8LqstA2DIMbxocO64rvytmcUeIwu8Mi5uq87KQP5AQMSMYb59Inbd+dmVfx5cJo3fRS4/<span class="number">5</span>s3/Hg==-MIIEPjCCAiagAwIBAgIBBTANBgkqhkiG9w0BAQsFADAYMRYwFAYDVQQDDA1KZXRQcm9maWxlIENBMB4XDTE1MTEwMjA4MjE0OFoXDTE4MTEwMTA4MjE0OFowETEPMA0GA1UEAwwGcHJvZDN5MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxcQkq+zdxlR2mmRYBPzGbUNdMN6OaXiXzxIWtMEkrJMO/<span class="number">5</span>oUfQJbLLuMSMK0QHFmaI37WShyxZcfRCidwXjot4zmNBKnlyHodDij/<span class="number">78</span>TmVqFl8nOeD5+<span class="number">07</span>B8VEaIu7c3E1N+e1doC6wht4I4+IEmtsPAdoaj5WCQVQbrI8KeT8M9VcBIWX7fD0fhexfg3ZRt0xqwMcXGNp3DdJHiO0rCdU+Itv7EmtnSVq9jBG1usMSFvMowR25mju2JcPFp1+I4ZI+FqgR8gyG8oiNDyNEoAbsR3lOpI7grUYSvkB/xVy/VoklPCK2h0f0GJxFjnye8NT1PAywoyl7RmiAVRE/EKwIDAQABo4GZMIGWMAkGA1UdEwQCMAAwHQYDVR0OBBYEFGEpG9oZGcfLMGNBkY7SgHiMGgTcMEgGA1UdIwRBMD+AFKOetkhnQhI2Qb1t4Lm0oFKLl/GzoRykGjAYMRYwFAYDVQQDDA1KZXRQcm9maWxlIENBggkA0myxg7KDeeEwEwYDVR0lBAwwCgYIKwYBBQUHAwEwCwYDVR0PBAQDAgWgMA0GCSqGSIb3DQEBCwUAA4ICAQC9WZuYgQedSuOc5TOUSrRigMw4/+wuC5EtZBfvdl4HT/<span class="number">8</span>vzMW/oUlIP4YCvA0XKyBaCJ2iX+ZCDKoPfiYXiaSiH+HxAPV6J79vvouxKrWg2XV6ShFtPLP+<span class="number">0</span>gPdGq3x9R3+kJbmAm8w+FOdlWqAfJrLvpzMGNeDU14YGXiZ9bVzmIQbwrBA+c/F4tlK/DV07dsNExihqFoibnqDiVNTGombaU2dDup2gwKdL81ua8EIcGNExHe82kjF4zwfadHk3bQVvbfdAwxcDy4xBjs3L4raPLU3yenSzr/OEur1+jfOxnQSmEcMXKXgrAQ9U55gwjcOFKrgOxEdek/Sk1VfOjvS+nuM4eyEruFMfaZHzoQiuw4IqgGc45ohFH0UUyjYcuFxxDSU9lMCv8qdHKm+wnPRb0l9l5vXsCBDuhAGYD6ss+Ga+aDY6f/qXZuUCEUOH3QUNbbCUlviSz6+GiRnt1kA9N2Qachl+<span class="number">2</span>yBfaqUqr8h7Z2gsx5LcIf5kYNsqJ0GavXTVyWh7PYiKX4bs354ZQLUwwa/cG++<span class="number">2</span>+wNWP+HtBhVxMRNTdVhSm38AknZlD+PTAsWGu9GyLmhti2EnVwGybSD2Dxmhxk3IPCkhKAK+pl0eWYGZWG3tJ9mZ7SowcXLWDFAk0lRJnKGFMTggrWjV8GYpw5bq23VmIqqDLgkNzuoog==</span>
+</pre></td></tr></table></figure></p>
+<p>以上激活码全系列ide通用</p>
+<h3 id="sublime-text-3"><a href="#sublime-text-3" class="headerlink" title="sublime text 3"></a>sublime text 3</h3><p>如果你需要前端开发，那么我推荐这个文本编辑器，我一般的做法时将这个替代自带的文本编辑器，毕竟它还支持markdown<br>一般安装需要先下载好deb的安装包然后执行以下命令安装<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">sudo dpkg -i xxxx.deb</span>
+</pre></td></tr></table></figure></p>
+<p>然后程序就会自动安装完毕<br>不知是因为bug还是什么，在Ubuntu下的sublime text 3时不支持中文输入的</p>
+<h4 id="解决方法："><a href="#解决方法：" class="headerlink" title="解决方法："></a>解决方法：</h4><ol>
+<li><p>在终端里输入如下指令，下载我们所需要的文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/lyfeyaj/sublime-text-imfix.git</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>将subl移动到/usr/bin/，并且将sublime-imfix.so移动到/opt/sublime_text/</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/sublime-text-imfix</span>
+<span class="line">sudo cp ./lib/libsublime-imfix.so /opt/sublime_text/</span>
+<span class="line">sudo cp ./src/subl /usr/bin/</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>终端启动sublime text</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">LD_PRELOAD=./libsublime-imfix.so subl</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>此时应该已经可以能输中文了，但这样略麻烦了点，我们希望点图标就可以支持输入中文，所以我们还需要下面几部</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">sudo vim /usr/share/applications/sublime_text.desktop</span>
+</pre></td></tr></table></figure>
+</li>
+</ol>
+<blockquote>
+<p>打开后将Exec=/opt/sublime_text/sublime_text %F修改为<br>    Exec=bash -c ‘LD_PRELOAD=/usr/lib/libsublime-imfix.so /opt/sublime_text/sublime_text’ %F</p>
+<p>将Exec=/opt/sublime_text/sublime_text -n修改为<br>    Exec=bash -c ‘LD_PRELOAD=/usr/lib/libsublime-imfix.so /opt/sublime_text/sublime_text’ -n</p>
+</blockquote>
+<h3 id="fish"><a href="#fish" class="headerlink" title="fish"></a>fish</h3><p>自带的终端bash不是很好用，所以我这里使用fish来代替自带shell</p>
+<ol>
+<li><p>首先安装fish</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">sudo apt install fish</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>替代自带shell</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">chsh</span>
+</pre></td></tr></table></figure>
+</li>
+</ol>
+<p>修改完如图所示<br><img src="http://objects.earthchen.cn/ubuntu_fish%E5%AE%89%E8%A3%85%E6%88%90%E5%8A%9F.png" alt="Ubuntu_fish安装成功"></p>
+<p>以上配置完成，基本就能符合我的日常coding需求了，下一篇将介绍其他日常使用需要安装配置的东西</p>
+<blockquote>
+<p>注：</p>
+<ul>
+<li>上述环境在<strong>ubuntu16.04 lts</strong>中搭建测试成功</li>
+<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
+</ul>
+</blockquote>
+]]></content>
+      
+        <categories>
+            
+            <category> 开发 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Linux </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Django调用百度地图api在地图上批量增加标记点]]></title>
       <url>/2017/03/15/django_address_baiduapi_marker_show/</url>
       <content type="html"><![CDATA[<p>在调用百度地图api进行web开发时遇到了一个需求，我们需要在网页中内嵌一个div  然后在div中调用百度地图的js显示我们所需要的地区。根据需求坐标在地图上添加若干个标记点，并批量的为各个标记点设置监听函数，使之显示我们所需要的信息</p>
@@ -15339,276 +15702,6 @@
     </entry>
     
     <entry>
-      <title><![CDATA[ubuntu搭建常见开发环境]]></title>
-      <url>/2017/03/15/ubuntu_do_something_coding/</url>
-      <content type="html"><![CDATA[<p>由于之前使用Ubuntu16.10桌面版系统蹦了好几天，因此我也装了好几次系统了，每次都要百度或google查很多东西，去配置开发环境或使用环境，到处搜觉得很麻烦，所以，本文就总结一下Ubuntu安装好之后需要做的一些事，以及常规配置习惯</p>
-<p>在装了几次系统之后我最后还是决定降一个系统版本。。使用<strong>Ubuntu16.04lts</strong>长期维护版，希望能稳定一些吧。。。。。实在是有点伤了</p>
-<p>文本以Ubuntu16.04桌面版为环境介绍</p>
-<h2 id="常用编程环境搭建"><a href="#常用编程环境搭建" class="headerlink" title="常用编程环境搭建"></a>常用编程环境搭建</h2><a id="more"></a>
-<h3 id="jdk安装"><a href="#jdk安装" class="headerlink" title="jdk安装"></a>jdk安装</h3><p>java的环境基本处处都能用的到，所以去安装jdk<br>使用下面的命令安装，只需一些时间，它就会下载许多的文件（但是要确定你的网络环境良好，访问oracle的地址速度快）：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-</pre></td><td class="code"><pre><span class="line">sudo add-apt-repository ppa:webupd8team/java</span>
-<span class="line">sudo apt-get update</span>
-<span class="line">sudo apt-get install oracle-java8-installer</span>
-<span class="line">sudo apt-get install oracle-java8-set-default</span>
-</pre></td></tr></table></figure></p>
-<p>一般我不会这么干的，因为，，实在太慢了 而且一不小心就卡主了apt</p>
-<blockquote>
-<p>所以流程如下：</p>
-<ol>
-<li>我们这里通过<a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html" target="_blank" rel="external">oracle官网</a>提前下好适合你系统版本的jdk的压缩包</li>
-<li>将下好的压缩包解压到合适的地方</li>
-<li>配置环境变量</li>
-<li>使配置的变量立即生效</li>
-</ol>
-</blockquote>
-<p>先在合适的地方创建一个放置环境的文件夹笔者这里使/usr/java/<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/</span>
-<span class="line">mkdir java</span>
-</pre></td></tr></table></figure></p>
-<p>然后将下好的jdk复制到创建好的文件夹下并解压：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-</pre></td><td class="code"><pre><span class="line">sudo cp jdk-8u45-linux-x64.gz /usr/java/</span>
-<span class="line"><span class="built_in">cd</span> /usr/java/</span>
-<span class="line">sudo tar -zvxf jdk-8u45-linux-x64.gz</span>
-</pre></td></tr></table></figure></p>
-<p>配置环境变量：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">gedit ~/.bashrc</span>
-</pre></td></tr></table></figure></p>
-<p>在编辑页面的最后添加如下语句<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-</pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/usr/java/jdk1.8.0_45</span>
-<span class="line">export JRE_HOME=$&#123;JAVA_HOME&#125;/jre</span>
-<span class="line">export CLASSPATH=.:$&#123;JAVA_HOME&#125;/lib:$&#123;JRE_HOME&#125;/lib</span>
-<span class="line">export PATH=$&#123;JAVA_HOME&#125;/bin:$PATH</span>
-</pre></td></tr></table></figure></p>
-<p>添加之后如图所示<br><img src="http://objects.earthchen.cn/ubuntu_java%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F.png" alt="java环境变量"></p>
-<p>保存环境变量，退出编辑器，输入命令使之生效：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.bashrc</span>
-</pre></td></tr></table></figure></p>
-<ul>
-<li>输入java -version查看是否成功<br><img src="http://objects.earthchen.cn/ubuntu_java%E5%AE%89%E8%A3%85%E6%88%90%E5%8A%9F.png" alt="java安装成功"><br>如上图所示即为成功。。</li>
-</ul>
-<h3 id="安装javaee服务器tomcat"><a href="#安装javaee服务器tomcat" class="headerlink" title="安装javaee服务器tomcat"></a>安装javaee服务器tomcat</h3><ol>
-<li>从tomcat官网上下载需要的压缩包</li>
-<li>将压缩包解压并移动到<strong>/opt/tomcat/</strong>下，如果没有这个目录需要提前创建好目录</li>
-<li><p>打开<strong>/tomcat/bin/startup.sh/</strong>在文件的最后添加jdk和jre配置信息</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-</pre></td><td class="code"><pre><span class="line"><span class="comment">#Java</span></span>
-<span class="line"><span class="built_in">export</span>JAVA_HOME=/opt/java/jdk1.8.0_121  <span class="comment">#java目录</span></span>
-<span class="line"><span class="built_in">export</span>JRE_HOME=<span class="variable">$&#123;JAVA_HOME&#125;</span>/jre</span>
-<span class="line"><span class="built_in">export</span>CLASSPATH=.:<span class="variable">$&#123;JAVA_HOME&#125;</span>/lib:<span class="variable">$&#123;JRE_HOME&#125;</span>/lib</span>
-<span class="line"><span class="built_in">export</span>PATH=<span class="variable">$&#123;JAVA_HOME&#125;</span>/bin:<span class="variable">$PATH</span></span>
-<span class="line"><span class="comment">#tomcat</span></span>
-<span class="line"><span class="built_in">export</span>TOMCAT_HOME=/opt/tomcat/apache-tomcat-9.0.0.M11</span>
-</pre></td></tr></table></figure>
-</li>
-<li><p>启动tomcat</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">./bin/startup.sh</span>
-</pre></td></tr></table></figure>
-</li>
-<li><p>验证tomcat配置和安装是否成功<br>在浏览器地址栏输入127.0.0.1:8080（ip：端口号）</p>
-</li>
-<li><p>关闭tomcat</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">./bin/shuntdown.sh</span>
-</pre></td></tr></table></figure>
-</li>
-<li><p>给tomcat文件夹及所有文件赋予权限777</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">chmod 777 /opt/tomcat -R</span>
-</pre></td></tr></table></figure>
-</li>
-</ol>
-<h3 id="安装Git"><a href="#安装Git" class="headerlink" title="安装Git"></a>安装Git</h3><p>程序员必备工具啊  一般安装好系统就会安装<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">sudo apt install git</span>
-</pre></td></tr></table></figure></p>
-<h3 id="安装mysql"><a href="#安装mysql" class="headerlink" title="安装mysql"></a>安装mysql</h3><p>常用的关系型数据库，开发必备<br>在Ubuntu下安装mysql很简单，只需要简单的输入几条命令就好：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-</pre></td><td class="code"><pre><span class="line">sudo apt-get install mysql-server</span>
-<span class="line"></span>
-<span class="line">sudo apt-get install mysql-client</span>
-<span class="line"></span>
-<span class="line">sudo apt-get install libmysqlclient-dev</span>
-</pre></td></tr></table></figure></p>
-<p>安装过程中会提示输入用户名和密码，按照自己的需要去设置</p>
-<h3 id="安装mysql数据库可视化工具"><a href="#安装mysql数据库可视化工具" class="headerlink" title="安装mysql数据库可视化工具"></a>安装mysql数据库可视化工具</h3><p>可以选择MySQL-workbench或者phpmyadmin</p>
-<h4 id="MySQL-workbench"><a href="#MySQL-workbench" class="headerlink" title="MySQL-workbench"></a>MySQL-workbench</h4><p>使用如下命令安装<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">sudo apt-get install mysql-workbench</span>
-</pre></td></tr></table></figure></p>
-<h4 id="phpmyadmin"><a href="#phpmyadmin" class="headerlink" title="phpmyadmin"></a>phpmyadmin</h4><p>使用如下命令安装</p>
-<ol>
-<li><p>安装php</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">sudo apt install php</span>
-</pre></td></tr></table></figure>
-</li>
-<li><p>安装apache2</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">sudo apt install apache2</span>
-</pre></td></tr></table></figure>
-</li>
-<li><p>安装phpmyadmin</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">sudo apt-get install phpmyadmin</span>
-</pre></td></tr></table></figure>
-</li>
-<li><p>建立/var/www/html 下的软连接</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">sudo ln <span class="_">-s</span> /usr/share/phpmyadmin /var/www/html/phpmyadmin</span>
-</pre></td></tr></table></figure>
-</li>
-<li><p>然后重启apache</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">sudo /etc/init.d/apache2 restart</span>
-</pre></td></tr></table></figure>
-</li>
-</ol>
-<h3 id="安装Vim"><a href="#安装Vim" class="headerlink" title="安装Vim"></a>安装Vim</h3><p>程序员必备工具啊  一般安装好系统就会安装<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">sudo apt install vim</span>
-</pre></td></tr></table></figure></p>
-<p>vim的配置我就直接用大神的vim配置<strong>spf13-vim</strong><br>安装方法如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">curl https://j.mp/spf13-vim3 -L &gt; spf13-vim.sh &amp;&amp; sh spf13-vim.sh</span>
-</pre></td></tr></table></figure></p>
-<p>剩下的只要等待即可，由于过程需要git等环境，需要提前安装好</p>
-<h3 id="安装pip"><a href="#安装pip" class="headerlink" title="安装pip"></a>安装pip</h3><p>Ubuntu虽然内置了Python2和python3两个版本但是没有默认安装好pip这个好用的包管理工具，所以要用于python开发的话最好安装上<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line">sudo apt install python-pip   <span class="comment">#python2的pip</span></span>
-<span class="line">sudo apt install python3-pip   <span class="comment">#python3的pip</span></span>
-</pre></td></tr></table></figure></p>
-<p>由于pip默认的时国外的源，在国内访问极慢，为了方便我们这里将更新源修改成国内比较好用的豆瓣源</p>
-<ol>
-<li><p>首先在用户目录下新建.pip文件夹</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">mkdir .pip</span>
-</pre></td></tr></table></figure>
-</li>
-<li><p>进入.pip目录创建pip.conf文件，在文件中添加如下内容</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-</pre></td><td class="code"><pre><span class="line">[global]</span>
-<span class="line">timeout = <span class="number">60</span></span>
-<span class="line">index-url = http:<span class="comment">//pypi.douban.com/simple</span></span>
-<span class="line">trusted-host = pypi.douban.com</span>
-</pre></td></tr></table></figure>
-</li>
-</ol>
-<p>添加完保存即可享受飞一般的速度</p>
-<h3 id="安装几个好用的ide"><a href="#安装几个好用的ide" class="headerlink" title="安装几个好用的ide"></a>安装几个好用的ide</h3><p>有些人觉得vim强无敌，但是我懒得配那些环境，还是用ide吧 懒人嘛  嘿嘿</p>
-<h4 id="Pycharm"><a href="#Pycharm" class="headerlink" title="Pycharm"></a>Pycharm</h4><p>很著名的python ide，比起在vim中配置一个开发环境，我还是觉得pycharm更好用，也更方便<br>进入<a href="http://www.jetbrains.com/pycharm/download/#section=linux" target="_blank" rel="external">pycharm下载地址</a>下载适合自己系统的安装包<br>解压到合适的地方<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /home/earthchen/code/pycharm-2016.3.2/bin</span>
-<span class="line">sh pycharm.sh</span>
-</pre></td></tr></table></figure></p>
-<p>剩下就全是图形化界面，自己按需求操作</p>
-<h4 id="idea"><a href="#idea" class="headerlink" title="idea"></a>idea</h4><p>很著名的java ide  好用程度  谁用谁知道<br>进入<a href="http://www.jetbrains.com/idea/download/#section=linux" target="_blank" rel="external">idea下载地址</a>下载适合自己系统的安装包<br>解压到合适的地方<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> code/idea-IU-163.12024.16/bin/</span>
-<span class="line">sh idea.sh</span>
-</pre></td></tr></table></figure></p>
-<p>剩下就全是图形化界面，自己按需求操作</p>
-<h4 id="clion"><a href="#clion" class="headerlink" title="clion"></a>clion</h4><p>Ubuntu下开发c并不多 放着偶尔用下，肯定比不上win下的vs又不想每次都make或者gcc 所以选择了同一个公司的ide<br>进入<a href="http://www.jetbrains.com/clion/download/" target="_blank" rel="external">clon下载地址</a>下载适合自己系统的安装包<br>解压到合适的地方<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /home/earthchen/code/clion-2016.3.3/bin</span>
-<span class="line">sh clion.sh</span>
-</pre></td></tr></table></figure></p>
-<p>剩下就全是图形化界面，自己按需求操作</p>
-<h4 id="激活码"><a href="#激活码" class="headerlink" title="激活码"></a>激活码</h4><p>如果你下载安装的时专业版，那么还需要使用激活码才能使用，但是一般来说社区版已经够用<br>下面提供一下从网上搜集来的激活码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">CNEKJPQZEX-eyJsaWNlbnNlSWQiOiJDTkVLSlBRWkVYIiwibGljZW5zZWVOYW1lIjoibGFuIHl1IiwiYXNzaWduZWVOYW1lIjoiIiwiYXNzaWduZWVFbWFpbCI6IiIsImxpY2Vuc2VSZXN0cmljdGlvbiI6IkZvciBlZHVjYXRpb25hbCB1c2Ugb25seSIsImNoZWNrQ29uY3VycmVudFVzZSI6ZmFsc2UsInByb2R1Y3RzIjpbeyJjb2RlIjoiQUMiLCJwYWlkVXBUbyI6IjIwMTgtMDEtMzAifSx7ImNvZGUiOiJETSIsInBhaWRVcFRvIjoiMjAxOC0wMS0zMCJ9LHsiY29kZSI6IklJIiwicGFpZFVwVG8iOiIyMDE4LTAxLTMwIn0seyJjb2RlIjoiUlMwIiwicGFpZFVwVG8iOiIyMDE4LTAxLTMwIn0seyJjb2RlIjoiV1MiLCJwYWlkVXBUbyI6IjIwMTgtMDEtMzAifSx7ImNvZGUiOiJEUE4iLCJwYWlkVXBUbyI6IjIwMTgtMDEtMzAifSx7ImNvZGUiOiJSQyIsInBhaWRVcFRvIjoiMjAxOC0wMS0zMCJ9LHsiY29kZSI6IlBTIiwicGFpZFVwVG8iOiIyMDE4LTAxLTMwIn0seyJjb2RlIjoiREMiLCJwYWlkVXBUbyI6IjIwMTgtMDEtMzAifSx7ImNvZGUiOiJEQiIsInBhaWRVcFRvIjoiMjAxOC0wMS0zMCJ9LHsiY29kZSI6IlJNIiwicGFpZFVwVG8iOiIyMDE4LTAxLTMwIn0seyJjb2RlIjoiUEMiLCJwYWlkVXBUbyI6IjIwMTgtMDEtMzAifSx7ImNvZGUiOiJDTCIsInBhaWRVcFRvIjoiMjAxOC0wMS0zMCJ9XSwiaGFzaCI6IjUxOTU1OTMvMCIsImdyYWNlUGVyaW9kRGF5cyI6MCwiYXV0b1Byb2xvbmdhdGVkIjpmYWxzZSwiaXNBdXRvUHJvbG9uZ2F0ZWQiOmZhbHNlfQ==-QOxwjWvRwJz6vo6J6adC3CJ4ukQHosbPYZ94URUVFna/Rbew8xK/M5gP3kAaPh6ZDveFdtMR1UBoumq3eCwXtXM3U3ls5noB4LIr+QplVlCj2pK5uNq7g/feyNyQcHpSXtvhIOnXDBLOecB05DOsxzm0p7ulGGJoAInmHeb9mc0eYjqc4RPpUQfh6HSYBnvEnKMlLF5bz4KEtzmsvvgA55CwzwQ3gRitm5Q/wUT7AQCBdjmBfNUjKVQL6TSjSDPp56FUdEs4Aab8LqstA2DIMbxocO64rvytmcUeIwu8Mi5uq87KQP5AQMSMYb59Inbd+dmVfx5cJo3fRS4/<span class="number">5</span>s3/Hg==-MIIEPjCCAiagAwIBAgIBBTANBgkqhkiG9w0BAQsFADAYMRYwFAYDVQQDDA1KZXRQcm9maWxlIENBMB4XDTE1MTEwMjA4MjE0OFoXDTE4MTEwMTA4MjE0OFowETEPMA0GA1UEAwwGcHJvZDN5MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxcQkq+zdxlR2mmRYBPzGbUNdMN6OaXiXzxIWtMEkrJMO/<span class="number">5</span>oUfQJbLLuMSMK0QHFmaI37WShyxZcfRCidwXjot4zmNBKnlyHodDij/<span class="number">78</span>TmVqFl8nOeD5+<span class="number">07</span>B8VEaIu7c3E1N+e1doC6wht4I4+IEmtsPAdoaj5WCQVQbrI8KeT8M9VcBIWX7fD0fhexfg3ZRt0xqwMcXGNp3DdJHiO0rCdU+Itv7EmtnSVq9jBG1usMSFvMowR25mju2JcPFp1+I4ZI+FqgR8gyG8oiNDyNEoAbsR3lOpI7grUYSvkB/xVy/VoklPCK2h0f0GJxFjnye8NT1PAywoyl7RmiAVRE/EKwIDAQABo4GZMIGWMAkGA1UdEwQCMAAwHQYDVR0OBBYEFGEpG9oZGcfLMGNBkY7SgHiMGgTcMEgGA1UdIwRBMD+AFKOetkhnQhI2Qb1t4Lm0oFKLl/GzoRykGjAYMRYwFAYDVQQDDA1KZXRQcm9maWxlIENBggkA0myxg7KDeeEwEwYDVR0lBAwwCgYIKwYBBQUHAwEwCwYDVR0PBAQDAgWgMA0GCSqGSIb3DQEBCwUAA4ICAQC9WZuYgQedSuOc5TOUSrRigMw4/+wuC5EtZBfvdl4HT/<span class="number">8</span>vzMW/oUlIP4YCvA0XKyBaCJ2iX+ZCDKoPfiYXiaSiH+HxAPV6J79vvouxKrWg2XV6ShFtPLP+<span class="number">0</span>gPdGq3x9R3+kJbmAm8w+FOdlWqAfJrLvpzMGNeDU14YGXiZ9bVzmIQbwrBA+c/F4tlK/DV07dsNExihqFoibnqDiVNTGombaU2dDup2gwKdL81ua8EIcGNExHe82kjF4zwfadHk3bQVvbfdAwxcDy4xBjs3L4raPLU3yenSzr/OEur1+jfOxnQSmEcMXKXgrAQ9U55gwjcOFKrgOxEdek/Sk1VfOjvS+nuM4eyEruFMfaZHzoQiuw4IqgGc45ohFH0UUyjYcuFxxDSU9lMCv8qdHKm+wnPRb0l9l5vXsCBDuhAGYD6ss+Ga+aDY6f/qXZuUCEUOH3QUNbbCUlviSz6+GiRnt1kA9N2Qachl+<span class="number">2</span>yBfaqUqr8h7Z2gsx5LcIf5kYNsqJ0GavXTVyWh7PYiKX4bs354ZQLUwwa/cG++<span class="number">2</span>+wNWP+HtBhVxMRNTdVhSm38AknZlD+PTAsWGu9GyLmhti2EnVwGybSD2Dxmhxk3IPCkhKAK+pl0eWYGZWG3tJ9mZ7SowcXLWDFAk0lRJnKGFMTggrWjV8GYpw5bq23VmIqqDLgkNzuoog==</span>
-</pre></td></tr></table></figure></p>
-<p>以上激活码全系列ide通用</p>
-<h3 id="sublime-text-3"><a href="#sublime-text-3" class="headerlink" title="sublime text 3"></a>sublime text 3</h3><p>如果你需要前端开发，那么我推荐这个文本编辑器，我一般的做法时将这个替代自带的文本编辑器，毕竟它还支持markdown<br>一般安装需要先下载好deb的安装包然后执行以下命令安装<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">sudo dpkg -i xxxx.deb</span>
-</pre></td></tr></table></figure></p>
-<p>然后程序就会自动安装完毕<br>不知是因为bug还是什么，在Ubuntu下的sublime text 3时不支持中文输入的</p>
-<h4 id="解决方法："><a href="#解决方法：" class="headerlink" title="解决方法："></a>解决方法：</h4><ol>
-<li><p>在终端里输入如下指令，下载我们所需要的文件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/lyfeyaj/sublime-text-imfix.git</span>
-</pre></td></tr></table></figure>
-</li>
-<li><p>将subl移动到/usr/bin/，并且将sublime-imfix.so移动到/opt/sublime_text/</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-</pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/sublime-text-imfix</span>
-<span class="line">sudo cp ./lib/libsublime-imfix.so /opt/sublime_text/</span>
-<span class="line">sudo cp ./src/subl /usr/bin/</span>
-</pre></td></tr></table></figure>
-</li>
-<li><p>终端启动sublime text</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">LD_PRELOAD=./libsublime-imfix.so subl</span>
-</pre></td></tr></table></figure>
-</li>
-<li><p>此时应该已经可以能输中文了，但这样略麻烦了点，我们希望点图标就可以支持输入中文，所以我们还需要下面几部</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">sudo vim /usr/share/applications/sublime_text.desktop</span>
-</pre></td></tr></table></figure>
-</li>
-</ol>
-<blockquote>
-<p>打开后将Exec=/opt/sublime_text/sublime_text %F修改为<br>    Exec=bash -c ‘LD_PRELOAD=/usr/lib/libsublime-imfix.so /opt/sublime_text/sublime_text’ %F</p>
-<p>将Exec=/opt/sublime_text/sublime_text -n修改为<br>    Exec=bash -c ‘LD_PRELOAD=/usr/lib/libsublime-imfix.so /opt/sublime_text/sublime_text’ -n</p>
-</blockquote>
-<h3 id="fish"><a href="#fish" class="headerlink" title="fish"></a>fish</h3><p>自带的终端bash不是很好用，所以我这里使用fish来代替自带shell</p>
-<ol>
-<li><p>首先安装fish</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">sudo apt install fish</span>
-</pre></td></tr></table></figure>
-</li>
-<li><p>替代自带shell</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">chsh</span>
-</pre></td></tr></table></figure>
-</li>
-</ol>
-<p>修改完如图所示<br><img src="http://objects.earthchen.cn/ubuntu_fish%E5%AE%89%E8%A3%85%E6%88%90%E5%8A%9F.png" alt="Ubuntu_fish安装成功"></p>
-<p>以上配置完成，基本就能符合我的日常coding需求了，下一篇将介绍其他日常使用需要安装配置的东西</p>
-<blockquote>
-<p>注：</p>
-<ul>
-<li>上述环境在<strong>ubuntu16.04 lts</strong>中搭建测试成功</li>
-<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
-</ul>
-</blockquote>
-]]></content>
-      
-        <categories>
-            
-            <category> 开发 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> Linux </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[ubuntu在双系统下开机卡死或关机卡死的解决办法]]></title>
       <url>/2017/03/10/ubuntu%E5%AE%89%E8%A3%85%E5%9C%A8%E5%8F%8C%E7%B3%BB%E7%BB%9F%E7%AC%94%E8%AE%B0%E6%9C%AC%E4%B8%8B%E5%BC%80%E6%9C%BA%E6%88%96%E5%85%B3%E6%9C%BA%E5%8D%A1%E6%AD%BB.1/</url>
       <content type="html"><![CDATA[<p>很多双显卡的笔记本在安装linux发行版的时候可能会出现问题，<br>笔者的电脑如果不在bios设置中设置屏蔽核显就会开机卡主，所以装系统时必须得屏蔽核显，全局独显，不然进系统就卡死，关机也关不掉，<br>刚开始也就这么用着，但是慢慢发现一点问题，，就是耗电特别快，</p>
@@ -15860,6 +15953,330 @@
             <tag> Hexo </tag>
             
             <tag> JavaScript </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Python2和Python3的区别简单总结]]></title>
+      <url>/2016/08/15/python2%E5%92%8CPython3%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
+      <content type="html"><![CDATA[<p>Python是一种新的计算机语言，也是最近两年才开始大火的一种语言，它够优雅，写起来可以随心所欲，不用担心没有定义，没有声明这些其他计算机语言都需要考虑的问题,单自从更新Python3.x版本之后，很多人开始头疼，因为Python3很多地方并不兼容Python2，有人夸张的说Python3是一门新的语言，我觉得没有那么夸张，本文就剧一下我遇到的和一些知道的区别吧</p>
+<a id="more"></a>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="print函数"><a href="#print函数" class="headerlink" title="print函数"></a>print函数</h3><p>print 语法的变化可能是最广为人知的了，但是仍值得一提的是： Python 2 的 print 声明已经被 print() 函数取代了，这意味着我们必须包装我们想打印在小括号中的对象。<br>Python 2 不具有额外的小括号问题。但对比一下，如果我们按照 Python 2 的方式不使用小括号调用 print 函数，Python 3 将抛出一个语法异常（SyntaxError）。</p>
+<h4 id="Python2"><a href="#Python2" class="headerlink" title="Python2"></a>Python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">'Python'</span>, python_version()</span>
+<span class="line"><span class="keyword">print</span> <span class="string">'Hello, World!'</span></span>
+<span class="line">print(<span class="string">'Hello, World!'</span>)</span>
+<span class="line"><span class="keyword">print</span> <span class="string">"text"</span>, ; <span class="keyword">print</span> <span class="string">'print more text on the same line'</span></span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>结果:</p>
+<ul>
+<li>Python 2.7.6</li>
+<li>Hello, World!</li>
+<li>Hello, World!</li>
+<li>text print more text on the same line</li>
+</ul>
+</blockquote>
+<h4 id="Python3"><a href="#Python3" class="headerlink" title="Python3"></a>Python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line">print(<span class="string">'Python'</span>, python_version())</span>
+<span class="line">print(<span class="string">'Hello, World!'</span>)</span>
+<span class="line">print(<span class="string">"some text,"</span>, end=<span class="string">""</span>) </span>
+<span class="line">print(<span class="string">' print more text on the same line'</span>)</span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>结果:</p>
+<ul>
+<li>Python 3.5.1</li>
+<li>Hello, World!</li>
+<li>some text, print more text on the same line</li>
+<li>print more text on the same line</li>
+</ul>
+</blockquote>
+<h3 id="整除"><a href="#整除" class="headerlink" title="整除"></a>整除</h3><p>python3的版本变化中，整数计算可以说是很大的并且可能在移植过程中造成很大危险，比如:</p>
+<ul>
+<li>你在 Python 2 上执行 Python 3 的代码。因为这个整除的变化表现在它会被忽视（即它不会抛出语法异常）。</li>
+</ul>
+<h4 id="python2"><a href="#python2" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">'3 / 2 ='</span>, <span class="number">3</span> / <span class="number">2</span></span>
+<span class="line"><span class="keyword">print</span> <span class="string">'3 // 2 ='</span>, <span class="number">3</span> // <span class="number">2</span></span>
+<span class="line"><span class="keyword">print</span> <span class="string">'3 / 2.0 ='</span>, <span class="number">3</span> / <span class="number">2.0</span></span>
+<span class="line"><span class="keyword">print</span> <span class="string">'3 // 2.0 ='</span>, <span class="number">3</span> // <span class="number">2.0</span></span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>结果:</p>
+<ul>
+<li>3 / 2 = 1</li>
+<li>3 // 2 = 1</li>
+<li>3 / 2.0 = 1.5</li>
+<li>3 // 2.0 = 1.0</li>
+</ul>
+</blockquote>
+<h4 id="python3"><a href="#python3" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line">print(<span class="string">'3 / 2 ='</span>, <span class="number">3</span> / <span class="number">2</span>)</span>
+<span class="line">print(<span class="string">'3 // 2 ='</span>, <span class="number">3</span> // <span class="number">2</span>)</span>
+<span class="line">print(<span class="string">'3 / 2.0 ='</span>, <span class="number">3</span> / <span class="number">2.0</span>)</span>
+<span class="line">print(<span class="string">'3 // 2.0 ='</span>, <span class="number">3</span> // <span class="number">2.0</span>)</span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>结果:</p>
+<ul>
+<li>3 / 2 = 1.5</li>
+<li>3 // 2 = 1</li>
+<li>3 / 2.0 = 1.5</li>
+<li>3 // 2.0 = 1.0</li>
+</ul>
+</blockquote>
+<h3 id="Unicode"><a href="#Unicode" class="headerlink" title="Unicode"></a>Unicode</h3><p>Python 2 有 ASCII str() 类型，unicode() 是单独的，不是 byte 类型。<br>现在， 在 Python 3，我们最终有了 Unicode (utf-8) 字符串，以及一个字节类：byte 和 bytearrays。<br>由于 Python3.X 源码文件默认使用utf-8编码，这就使得以下代码是合法的：</p>
+<h4 id="python3-1"><a href="#python3-1" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">中国 = <span class="string">'china'</span> </span>
+<span class="line">print(中国)</span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>结果:</p>
+<ul>
+<li>china</li>
+</ul>
+</blockquote>
+<h4 id="python2-1"><a href="#python2-1" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">str = <span class="string">"我爱北京天安门"</span></span>
+<span class="line"><span class="keyword">print</span> <span class="string">'str'</span></span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>结果:</p>
+<ul>
+<li>‘\xe6\x88\x91\xe7\x88\xb1\xe5\x8c\x97\xe4\xba\xac\xe5\xa4\xa9\xe5\xae\x89\xe9\x97\xa8’</li>
+</ul>
+</blockquote>
+<h3 id="xrange模块"><a href="#xrange模块" class="headerlink" title="xrange模块"></a>xrange模块</h3><p>在 Python 2 中 xrange() 创建迭代对象的用法是非常流行的。比如： for 循环或者是列表/集合/字典推导式。<br>这个表现十分像生成器（比如。“惰性求值”）。但是这个 xrange-iterable 是无穷的，意味着你可以无限遍历。<br>由于它的惰性求值，如果你不得仅仅不遍历它一次，xrange() 函数 比 range() 更快（比如 for 循环）。尽管如此，对比迭代一次，不建议你重复迭代多次，因为生成器每次都从头开始。<br>在 Python 3 中，range() 是像 xrange() 那样实现以至于一个专门的 xrange() 函数都不再存在（在 Python 3 中 xrange() 会抛出命名异常）。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> timeit</span>
+<span class="line">n = <span class="number">10000</span></span>
+<span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_range</span><span class="params">(n)</span>:</span></span>
+<span class="line">    <span class="keyword">return</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span>
+<span class="line">        <span class="keyword">pass</span></span>
+<span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_xrange</span><span class="params">(n)</span>:</span></span>
+<span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> xrange(n):</span>
+<span class="line">        <span class="keyword">pass</span></span>
+</pre></td></tr></table></figure></p>
+<h4 id="python2-2"><a href="#python2-2" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">'Python'</span>, python_version()</span>
+<span class="line"><span class="keyword">print</span> <span class="string">'\ntiming range()'</span></span>
+<span class="line">%timeit test_range(n)</span>
+<span class="line"><span class="keyword">print</span> <span class="string">'\n\ntiming xrange()'</span></span>
+<span class="line">%timeit test_xrange(n)</span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>结果:</p>
+<ul>
+<li>Python 2.7.6</li>
+<li>timing range()</li>
+<li>1000 loops, best of 3: 433 µs per loop</li>
+<li>timing xrange()</li>
+<li>1000 loops, best of 3: 350 µs per loop</li>
+</ul>
+</blockquote>
+<h4 id="python3-2"><a href="#python3-2" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line">print(<span class="string">'Python'</span>, python_version())</span>
+<span class="line">print(<span class="string">'\ntiming range()'</span>)</span>
+<span class="line">%timeit test_range(n)</span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>结果:</p>
+<ul>
+<li>Python 3.5.1</li>
+<li>timing range()</li>
+<li>1000 loops, best of 3: 520 µs per loop</li>
+</ul>
+</blockquote>
+<h3 id="不等运算符"><a href="#不等运算符" class="headerlink" title="不等运算符"></a>不等运算符</h3><ul>
+<li>Python 2.x中不等于有两种写法 != 和 &lt;&gt;</li>
+<li>Python 3.x中去掉了&lt;&gt;, 只有!=一种写法，还好，我从来没有使用&lt;&gt;的习惯</li>
+</ul>
+<h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><ul>
+<li>Py3.X去除了long类型，现在只有一种整型——int，但它的行为就像2.X版本的long</li>
+<li>新增了bytes类型，对应于2.X版本的八位串</li>
+<li>dict的.keys()、.items 和.values()方法返回迭代器，而之前的iterkeys()等函数都被废弃。同时去掉的还有 dict.has_key()，用 in替代它吧 。<blockquote>
+<p>注：</p>
+<ul>
+<li>上述代码在<strong>django1.7</strong>和<strong>Python2.7</strong>中编译成功运行，其他环境请自行测试</li>
+<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+<h3 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h3><p>在 Python 3 中处理异常也轻微的改变了，在 Python 3 中我们现在使用 as 作为关键词。<br>捕获异常的语法由 except exc, var 改为 except exc as var。<br>使用语法except (exc1, exc2) as var可以同时捕获多种类别的异常。 Python 2.6已经支持这两种语法。</p>
+<ul>
+<li>在2.x时代，所有类型的对象都是可以被直接抛出的，在3.x时代，只有继承自BaseException的对象才可以被抛出。</li>
+<li>2.x raise语句使用逗号将抛出对象类型和参数分开，3.x取消了这种奇葩的写法，直接调用构造函数抛出对象即可。<br>在2.x时代，异常在代码中除了表示程序错误，还经常做一些普通控制结构应该做的事情，在3.x中可以看出，设计者让异常变的更加专一，只有在错误发生的情况才能去用异常捕获语句来处理。<h4 id="python2-3"><a href="#python2-3" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">'Python'</span>, python_version()</span>
+<span class="line"><span class="keyword">try</span>:</span>
+<span class="line">    let_us_cause_a_NameError</span>
+<span class="line"><span class="keyword">except</span> NameError, err:</span>
+<span class="line">    <span class="keyword">print</span> err, <span class="string">'--&gt; our error message'</span></span>
+</pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>结果:</p>
+<ul>
+<li>Python 2.7.6</li>
+<li>name ‘let_us_cause_a_NameError’ is not defined —&gt; our error message</li>
+</ul>
+</blockquote>
+<h4 id="python3-3"><a href="#python3-3" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line">print(<span class="string">'Python'</span>, python_version())</span>
+<span class="line"><span class="keyword">try</span>:</span>
+<span class="line">    let_us_cause_a_NameError</span>
+<span class="line"><span class="keyword">except</span> NameError <span class="keyword">as</span> err:</span>
+<span class="line">    print(err, <span class="string">'--&gt; our error message'</span>)</span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>结果:</p>
+<ul>
+<li>Python 3.5.1</li>
+<li>name ‘let_us_cause_a_NameError’ is not defined —&gt; our error message</li>
+</ul>
+</blockquote>
+<h3 id="通过input-解析用户的输入"><a href="#通过input-解析用户的输入" class="headerlink" title="通过input()解析用户的输入"></a>通过input()解析用户的输入</h3><p>幸运的是，在 Python 3 中已经解决了把用户的输入存储为一个 str 对象的问题。为了避免在 Python 2 中的读取非字符串类型的危险行为，我们不得不使用 raw_input() 代替。</p>
+<h3 id="返回可迭代对象，而不是列表"><a href="#返回可迭代对象，而不是列表" class="headerlink" title="返回可迭代对象，而不是列表"></a>返回可迭代对象，而不是列表</h3><p>如果在 xrange 章节看到的，现在在 Python 3 中一些方法和函数返回迭代对象 — 代替 Python 2 中的列表<br>因为我们通常那些遍历只有一次，我认为这个改变对节约内存很有意义。尽管如此，它也是可能的，相对于生成器 —- 如需要遍历多次。它是不那么高效的。<br>而对于那些情况下，我们真正需要的是列表对象，我们可以通过 list() 函数简单的把迭代对象转换成一个列表。</p>
+<h4 id="python2-4"><a href="#python2-4" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">'Python'</span>, python_version() </span>
+<span class="line"><span class="keyword">print</span> range(<span class="number">3</span>) </span>
+<span class="line"><span class="keyword">print</span> type(range(<span class="number">3</span>))</span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>结果:</p>
+<ul>
+<li>Python 2.7.6</li>
+<li>[0, 1, 2]</li>
+<li>&lt; type ‘list’&gt;</li>
+</ul>
+</blockquote>
+<h4 id="python3-4"><a href="#python3-4" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line">print(<span class="string">'Python'</span>, python_version())</span>
+<span class="line">print(range(<span class="number">3</span>))</span>
+<span class="line">print(type(range(<span class="number">3</span>)))</span>
+<span class="line">print(list(range(<span class="number">3</span>)))</span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>结果:</p>
+<ul>
+<li>Python 3.5.1</li>
+<li>range(0, 3)</li>
+<li>&lt; class ‘range’&gt;</li>
+<li>[0, 1, 2]</li>
+</ul>
+</blockquote>
+<ul>
+<li>在 Python 3 中一些经常使用到的不再返回列表的函数和方法：</li>
+<li>zip()</li>
+<li>map()</li>
+<li>filter()</li>
+<li>dictionary’s .keys() method</li>
+<li>dictionary’s .values() method</li>
+<li>dictionary’s .items() method</li>
+</ul>
+<h3 id="For循环变量和全局命名空间泄漏"><a href="#For循环变量和全局命名空间泄漏" class="headerlink" title="For循环变量和全局命名空间泄漏"></a>For循环变量和全局命名空间泄漏</h3><p>好消息：在 Python 3.x 中 for 循环变量不会再导致命名空间泄漏。<br>在 Python 3.x 中做了一个改变，在 What’s New In Python 3.0 中有如下描述：<br>“列表推导不再支持 [… for var in item1, item2, …] 这样的语法。使用 [… for var in (item1, item2, …)] 代替。也需要提醒的是列表推导有不同的语义： 他们关闭了在 list() 构造器中的生成器表达式的语法糖, 并且特别是循环控制变量不再泄漏进周围的作用范围域.”　　</p>
+<h4 id="python2-5"><a href="#python2-5" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">'Python'</span>, python_version()</span>
+<span class="line">i = <span class="number">1</span></span>
+<span class="line"><span class="keyword">print</span> <span class="string">'before: i ='</span>, i</span>
+<span class="line"><span class="keyword">print</span> <span class="string">'comprehension: '</span>, [i <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5</span>)]</span>
+<span class="line"><span class="keyword">print</span> <span class="string">'after: i ='</span>, i</span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>结果:</p>
+<ul>
+<li>Python 2.7.6</li>
+<li>before: i = 1</li>
+<li>comprehension: [0, 1, 2, 3, 4]</li>
+<li>after: i = 4</li>
+</ul>
+</blockquote>
+<h4 id="python3-5"><a href="#python3-5" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line">print(<span class="string">'Python'</span>, python_version())</span>
+<span class="line">i = <span class="number">1</span></span>
+<span class="line">print(<span class="string">'before: i ='</span>, i)</span>
+<span class="line">print(<span class="string">'comprehension:'</span>, [i <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5</span>)])</span>
+<span class="line">print(<span class="string">'after: i ='</span>, i)</span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>结果:</p>
+<ul>
+<li>Python 3.5.1</li>
+<li>before: i = 1</li>
+<li>comprehension: [0, 1, 2, 3, 4]</li>
+<li>after: i = 1</li>
+</ul>
+<p>注：</p>
+<ul>
+<li>上述代码在<strong>python3.5</strong>和<strong>Python2.7</strong>中编译成功运行，其他环境请自行测试</li>
+<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
+<li>更多却别请读者自行查看官方文档</li>
+<li>个人推荐还是用python3，新版本的出现总有他的意义，但是我遇到一些项目要求Python2也就只能Python2了，目前来说，Python2的教程和第三方库函数还是比Python3多，再过几年，我相信一定会是Python3是主流</li>
+</ul>
+</blockquote>
+]]></content>
+      
+        <categories>
+            
+            <category> 学习笔记 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Python </tag>
             
         </tags>
         
@@ -16267,330 +16684,6 @@
         <tags>
             
             <tag> Django </tag>
-            
-            <tag> Python </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[Python2和Python3的区别简单总结]]></title>
-      <url>/2016/08/15/python2%E5%92%8CPython3%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
-      <content type="html"><![CDATA[<p>Python是一种新的计算机语言，也是最近两年才开始大火的一种语言，它够优雅，写起来可以随心所欲，不用担心没有定义，没有声明这些其他计算机语言都需要考虑的问题,单自从更新Python3.x版本之后，很多人开始头疼，因为Python3很多地方并不兼容Python2，有人夸张的说Python3是一门新的语言，我觉得没有那么夸张，本文就剧一下我遇到的和一些知道的区别吧</p>
-<a id="more"></a>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="print函数"><a href="#print函数" class="headerlink" title="print函数"></a>print函数</h3><p>print 语法的变化可能是最广为人知的了，但是仍值得一提的是： Python 2 的 print 声明已经被 print() 函数取代了，这意味着我们必须包装我们想打印在小括号中的对象。<br>Python 2 不具有额外的小括号问题。但对比一下，如果我们按照 Python 2 的方式不使用小括号调用 print 函数，Python 3 将抛出一个语法异常（SyntaxError）。</p>
-<h4 id="Python2"><a href="#Python2" class="headerlink" title="Python2"></a>Python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">'Python'</span>, python_version()</span>
-<span class="line"><span class="keyword">print</span> <span class="string">'Hello, World!'</span></span>
-<span class="line">print(<span class="string">'Hello, World!'</span>)</span>
-<span class="line"><span class="keyword">print</span> <span class="string">"text"</span>, ; <span class="keyword">print</span> <span class="string">'print more text on the same line'</span></span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>结果:</p>
-<ul>
-<li>Python 2.7.6</li>
-<li>Hello, World!</li>
-<li>Hello, World!</li>
-<li>text print more text on the same line</li>
-</ul>
-</blockquote>
-<h4 id="Python3"><a href="#Python3" class="headerlink" title="Python3"></a>Python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-</pre></td><td class="code"><pre><span class="line">print(<span class="string">'Python'</span>, python_version())</span>
-<span class="line">print(<span class="string">'Hello, World!'</span>)</span>
-<span class="line">print(<span class="string">"some text,"</span>, end=<span class="string">""</span>) </span>
-<span class="line">print(<span class="string">' print more text on the same line'</span>)</span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>结果:</p>
-<ul>
-<li>Python 3.5.1</li>
-<li>Hello, World!</li>
-<li>some text, print more text on the same line</li>
-<li>print more text on the same line</li>
-</ul>
-</blockquote>
-<h3 id="整除"><a href="#整除" class="headerlink" title="整除"></a>整除</h3><p>python3的版本变化中，整数计算可以说是很大的并且可能在移植过程中造成很大危险，比如:</p>
-<ul>
-<li>你在 Python 2 上执行 Python 3 的代码。因为这个整除的变化表现在它会被忽视（即它不会抛出语法异常）。</li>
-</ul>
-<h4 id="python2"><a href="#python2" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">'3 / 2 ='</span>, <span class="number">3</span> / <span class="number">2</span></span>
-<span class="line"><span class="keyword">print</span> <span class="string">'3 // 2 ='</span>, <span class="number">3</span> // <span class="number">2</span></span>
-<span class="line"><span class="keyword">print</span> <span class="string">'3 / 2.0 ='</span>, <span class="number">3</span> / <span class="number">2.0</span></span>
-<span class="line"><span class="keyword">print</span> <span class="string">'3 // 2.0 ='</span>, <span class="number">3</span> // <span class="number">2.0</span></span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>结果:</p>
-<ul>
-<li>3 / 2 = 1</li>
-<li>3 // 2 = 1</li>
-<li>3 / 2.0 = 1.5</li>
-<li>3 // 2.0 = 1.0</li>
-</ul>
-</blockquote>
-<h4 id="python3"><a href="#python3" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-</pre></td><td class="code"><pre><span class="line">print(<span class="string">'3 / 2 ='</span>, <span class="number">3</span> / <span class="number">2</span>)</span>
-<span class="line">print(<span class="string">'3 // 2 ='</span>, <span class="number">3</span> // <span class="number">2</span>)</span>
-<span class="line">print(<span class="string">'3 / 2.0 ='</span>, <span class="number">3</span> / <span class="number">2.0</span>)</span>
-<span class="line">print(<span class="string">'3 // 2.0 ='</span>, <span class="number">3</span> // <span class="number">2.0</span>)</span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>结果:</p>
-<ul>
-<li>3 / 2 = 1.5</li>
-<li>3 // 2 = 1</li>
-<li>3 / 2.0 = 1.5</li>
-<li>3 // 2.0 = 1.0</li>
-</ul>
-</blockquote>
-<h3 id="Unicode"><a href="#Unicode" class="headerlink" title="Unicode"></a>Unicode</h3><p>Python 2 有 ASCII str() 类型，unicode() 是单独的，不是 byte 类型。<br>现在， 在 Python 3，我们最终有了 Unicode (utf-8) 字符串，以及一个字节类：byte 和 bytearrays。<br>由于 Python3.X 源码文件默认使用utf-8编码，这就使得以下代码是合法的：</p>
-<h4 id="python3-1"><a href="#python3-1" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line">中国 = <span class="string">'china'</span> </span>
-<span class="line">print(中国)</span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>结果:</p>
-<ul>
-<li>china</li>
-</ul>
-</blockquote>
-<h4 id="python2-1"><a href="#python2-1" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line">str = <span class="string">"我爱北京天安门"</span></span>
-<span class="line"><span class="keyword">print</span> <span class="string">'str'</span></span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>结果:</p>
-<ul>
-<li>‘\xe6\x88\x91\xe7\x88\xb1\xe5\x8c\x97\xe4\xba\xac\xe5\xa4\xa9\xe5\xae\x89\xe9\x97\xa8’</li>
-</ul>
-</blockquote>
-<h3 id="xrange模块"><a href="#xrange模块" class="headerlink" title="xrange模块"></a>xrange模块</h3><p>在 Python 2 中 xrange() 创建迭代对象的用法是非常流行的。比如： for 循环或者是列表/集合/字典推导式。<br>这个表现十分像生成器（比如。“惰性求值”）。但是这个 xrange-iterable 是无穷的，意味着你可以无限遍历。<br>由于它的惰性求值，如果你不得仅仅不遍历它一次，xrange() 函数 比 range() 更快（比如 for 循环）。尽管如此，对比迭代一次，不建议你重复迭代多次，因为生成器每次都从头开始。<br>在 Python 3 中，range() 是像 xrange() 那样实现以至于一个专门的 xrange() 函数都不再存在（在 Python 3 中 xrange() 会抛出命名异常）。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> timeit</span>
-<span class="line">n = <span class="number">10000</span></span>
-<span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_range</span><span class="params">(n)</span>:</span></span>
-<span class="line">    <span class="keyword">return</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span>
-<span class="line">        <span class="keyword">pass</span></span>
-<span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_xrange</span><span class="params">(n)</span>:</span></span>
-<span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> xrange(n):</span>
-<span class="line">        <span class="keyword">pass</span></span>
-</pre></td></tr></table></figure></p>
-<h4 id="python2-2"><a href="#python2-2" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">'Python'</span>, python_version()</span>
-<span class="line"><span class="keyword">print</span> <span class="string">'\ntiming range()'</span></span>
-<span class="line">%timeit test_range(n)</span>
-<span class="line"><span class="keyword">print</span> <span class="string">'\n\ntiming xrange()'</span></span>
-<span class="line">%timeit test_xrange(n)</span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>结果:</p>
-<ul>
-<li>Python 2.7.6</li>
-<li>timing range()</li>
-<li>1000 loops, best of 3: 433 µs per loop</li>
-<li>timing xrange()</li>
-<li>1000 loops, best of 3: 350 µs per loop</li>
-</ul>
-</blockquote>
-<h4 id="python3-2"><a href="#python3-2" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-</pre></td><td class="code"><pre><span class="line">print(<span class="string">'Python'</span>, python_version())</span>
-<span class="line">print(<span class="string">'\ntiming range()'</span>)</span>
-<span class="line">%timeit test_range(n)</span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>结果:</p>
-<ul>
-<li>Python 3.5.1</li>
-<li>timing range()</li>
-<li>1000 loops, best of 3: 520 µs per loop</li>
-</ul>
-</blockquote>
-<h3 id="不等运算符"><a href="#不等运算符" class="headerlink" title="不等运算符"></a>不等运算符</h3><ul>
-<li>Python 2.x中不等于有两种写法 != 和 &lt;&gt;</li>
-<li>Python 3.x中去掉了&lt;&gt;, 只有!=一种写法，还好，我从来没有使用&lt;&gt;的习惯</li>
-</ul>
-<h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><ul>
-<li>Py3.X去除了long类型，现在只有一种整型——int，但它的行为就像2.X版本的long</li>
-<li>新增了bytes类型，对应于2.X版本的八位串</li>
-<li>dict的.keys()、.items 和.values()方法返回迭代器，而之前的iterkeys()等函数都被废弃。同时去掉的还有 dict.has_key()，用 in替代它吧 。<blockquote>
-<p>注：</p>
-<ul>
-<li>上述代码在<strong>django1.7</strong>和<strong>Python2.7</strong>中编译成功运行，其他环境请自行测试</li>
-<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
-</ul>
-</blockquote>
-</li>
-</ul>
-<h3 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h3><p>在 Python 3 中处理异常也轻微的改变了，在 Python 3 中我们现在使用 as 作为关键词。<br>捕获异常的语法由 except exc, var 改为 except exc as var。<br>使用语法except (exc1, exc2) as var可以同时捕获多种类别的异常。 Python 2.6已经支持这两种语法。</p>
-<ul>
-<li>在2.x时代，所有类型的对象都是可以被直接抛出的，在3.x时代，只有继承自BaseException的对象才可以被抛出。</li>
-<li>2.x raise语句使用逗号将抛出对象类型和参数分开，3.x取消了这种奇葩的写法，直接调用构造函数抛出对象即可。<br>在2.x时代，异常在代码中除了表示程序错误，还经常做一些普通控制结构应该做的事情，在3.x中可以看出，设计者让异常变的更加专一，只有在错误发生的情况才能去用异常捕获语句来处理。<h4 id="python2-3"><a href="#python2-3" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">'Python'</span>, python_version()</span>
-<span class="line"><span class="keyword">try</span>:</span>
-<span class="line">    let_us_cause_a_NameError</span>
-<span class="line"><span class="keyword">except</span> NameError, err:</span>
-<span class="line">    <span class="keyword">print</span> err, <span class="string">'--&gt; our error message'</span></span>
-</pre></td></tr></table></figure>
-</li>
-</ul>
-<blockquote>
-<p>结果:</p>
-<ul>
-<li>Python 2.7.6</li>
-<li>name ‘let_us_cause_a_NameError’ is not defined —&gt; our error message</li>
-</ul>
-</blockquote>
-<h4 id="python3-3"><a href="#python3-3" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-</pre></td><td class="code"><pre><span class="line">print(<span class="string">'Python'</span>, python_version())</span>
-<span class="line"><span class="keyword">try</span>:</span>
-<span class="line">    let_us_cause_a_NameError</span>
-<span class="line"><span class="keyword">except</span> NameError <span class="keyword">as</span> err:</span>
-<span class="line">    print(err, <span class="string">'--&gt; our error message'</span>)</span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>结果:</p>
-<ul>
-<li>Python 3.5.1</li>
-<li>name ‘let_us_cause_a_NameError’ is not defined —&gt; our error message</li>
-</ul>
-</blockquote>
-<h3 id="通过input-解析用户的输入"><a href="#通过input-解析用户的输入" class="headerlink" title="通过input()解析用户的输入"></a>通过input()解析用户的输入</h3><p>幸运的是，在 Python 3 中已经解决了把用户的输入存储为一个 str 对象的问题。为了避免在 Python 2 中的读取非字符串类型的危险行为，我们不得不使用 raw_input() 代替。</p>
-<h3 id="返回可迭代对象，而不是列表"><a href="#返回可迭代对象，而不是列表" class="headerlink" title="返回可迭代对象，而不是列表"></a>返回可迭代对象，而不是列表</h3><p>如果在 xrange 章节看到的，现在在 Python 3 中一些方法和函数返回迭代对象 — 代替 Python 2 中的列表<br>因为我们通常那些遍历只有一次，我认为这个改变对节约内存很有意义。尽管如此，它也是可能的，相对于生成器 —- 如需要遍历多次。它是不那么高效的。<br>而对于那些情况下，我们真正需要的是列表对象，我们可以通过 list() 函数简单的把迭代对象转换成一个列表。</p>
-<h4 id="python2-4"><a href="#python2-4" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">'Python'</span>, python_version() </span>
-<span class="line"><span class="keyword">print</span> range(<span class="number">3</span>) </span>
-<span class="line"><span class="keyword">print</span> type(range(<span class="number">3</span>))</span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>结果:</p>
-<ul>
-<li>Python 2.7.6</li>
-<li>[0, 1, 2]</li>
-<li>&lt; type ‘list’&gt;</li>
-</ul>
-</blockquote>
-<h4 id="python3-4"><a href="#python3-4" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-</pre></td><td class="code"><pre><span class="line">print(<span class="string">'Python'</span>, python_version())</span>
-<span class="line">print(range(<span class="number">3</span>))</span>
-<span class="line">print(type(range(<span class="number">3</span>)))</span>
-<span class="line">print(list(range(<span class="number">3</span>)))</span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>结果:</p>
-<ul>
-<li>Python 3.5.1</li>
-<li>range(0, 3)</li>
-<li>&lt; class ‘range’&gt;</li>
-<li>[0, 1, 2]</li>
-</ul>
-</blockquote>
-<ul>
-<li>在 Python 3 中一些经常使用到的不再返回列表的函数和方法：</li>
-<li>zip()</li>
-<li>map()</li>
-<li>filter()</li>
-<li>dictionary’s .keys() method</li>
-<li>dictionary’s .values() method</li>
-<li>dictionary’s .items() method</li>
-</ul>
-<h3 id="For循环变量和全局命名空间泄漏"><a href="#For循环变量和全局命名空间泄漏" class="headerlink" title="For循环变量和全局命名空间泄漏"></a>For循环变量和全局命名空间泄漏</h3><p>好消息：在 Python 3.x 中 for 循环变量不会再导致命名空间泄漏。<br>在 Python 3.x 中做了一个改变，在 What’s New In Python 3.0 中有如下描述：<br>“列表推导不再支持 [… for var in item1, item2, …] 这样的语法。使用 [… for var in (item1, item2, …)] 代替。也需要提醒的是列表推导有不同的语义： 他们关闭了在 list() 构造器中的生成器表达式的语法糖, 并且特别是循环控制变量不再泄漏进周围的作用范围域.”　　</p>
-<h4 id="python2-5"><a href="#python2-5" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">'Python'</span>, python_version()</span>
-<span class="line">i = <span class="number">1</span></span>
-<span class="line"><span class="keyword">print</span> <span class="string">'before: i ='</span>, i</span>
-<span class="line"><span class="keyword">print</span> <span class="string">'comprehension: '</span>, [i <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5</span>)]</span>
-<span class="line"><span class="keyword">print</span> <span class="string">'after: i ='</span>, i</span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>结果:</p>
-<ul>
-<li>Python 2.7.6</li>
-<li>before: i = 1</li>
-<li>comprehension: [0, 1, 2, 3, 4]</li>
-<li>after: i = 4</li>
-</ul>
-</blockquote>
-<h4 id="python3-5"><a href="#python3-5" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-</pre></td><td class="code"><pre><span class="line">print(<span class="string">'Python'</span>, python_version())</span>
-<span class="line">i = <span class="number">1</span></span>
-<span class="line">print(<span class="string">'before: i ='</span>, i)</span>
-<span class="line">print(<span class="string">'comprehension:'</span>, [i <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5</span>)])</span>
-<span class="line">print(<span class="string">'after: i ='</span>, i)</span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>结果:</p>
-<ul>
-<li>Python 3.5.1</li>
-<li>before: i = 1</li>
-<li>comprehension: [0, 1, 2, 3, 4]</li>
-<li>after: i = 1</li>
-</ul>
-<p>注：</p>
-<ul>
-<li>上述代码在<strong>python3.5</strong>和<strong>Python2.7</strong>中编译成功运行，其他环境请自行测试</li>
-<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
-<li>更多却别请读者自行查看官方文档</li>
-<li>个人推荐还是用python3，新版本的出现总有他的意义，但是我遇到一些项目要求Python2也就只能Python2了，目前来说，Python2的教程和第三方库函数还是比Python3多，再过几年，我相信一定会是Python3是主流</li>
-</ul>
-</blockquote>
-]]></content>
-      
-        <categories>
-            
-            <category> 学习笔记 </category>
-            
-        </categories>
-        
-        
-        <tags>
             
             <tag> Python </tag>
             
@@ -18055,6 +18148,275 @@
     </entry>
     
     <entry>
+      <title><![CDATA[C语言二叉树的基本操作]]></title>
+      <url>/2016/07/15/C%E8%AF%AD%E8%A8%80%E4%BA%8C%E5%8F%89%E6%A0%91%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/</url>
+      <content type="html"><![CDATA[<p>树是数据结构中一门很重要的数据结构，在很多地方都能经常见到他的面孔，比如数据通信，压缩数据等都能见到树的身影。但是最常见的还是相对简单的二叉树，二叉树和常规树都可以进行相互转换。所以，二叉树的操作必不可少。我这里来简单介绍一下。<br>在数据结构中给的树和图中，我们最好使用递归来进行各种操作，会让代码更清晰易懂，代码也会更简洁。</p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="添加适当的头文件，定义hex一个栈数据结构，"><a href="#添加适当的头文件，定义hex一个栈数据结构，" class="headerlink" title="添加适当的头文件，定义hex一个栈数据结构，"></a>添加适当的头文件，定义hex一个栈数据结构，</h3><p>首先我们定义一个二叉树的数据结构</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+</pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span>
+<span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span>
+<span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXSIZE 100</span></span>
+<span class="line"><span class="keyword">typedef</span> <span class="keyword">char</span> ElemType;</span>
+<span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">BiTNode</span></span>
+<span class="line">&#123;</span></span>
+<span class="line">ElemType data;</span>
+<span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">BiTNode</span> *<span class="title">lchild</span>, *<span class="title">rchild</span>;</span></span>
+<span class="line">&#125;BiTNode, *BiTree;</span>
+</pre></td></tr></table></figure>
+<a id="more"></a>
+<h3 id="创建一个二叉树（前序）"><a href="#创建一个二叉树（前序）" class="headerlink" title="创建一个二叉树（前序）"></a>创建一个二叉树（前序）</h3><p>这里以前序作为例子，前中后序遍历的不同之在于递归的顺序</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">creatBiTree</span><span class="params">(BiTree *T)</span> </span>&#123;</span>
+<span class="line">	ElemType c;</span>
+<span class="line">	<span class="built_in">scanf</span>(<span class="string">"%c"</span>, &amp;c);</span>
+<span class="line">	<span class="keyword">if</span> (<span class="string">'#'</span> == c)</span>
+<span class="line">	&#123;</span>
+<span class="line">		*T = <span class="literal">NULL</span>;</span>
+<span class="line">	&#125;</span>
+<span class="line">	<span class="keyword">else</span></span>
+<span class="line">	&#123;</span>
+<span class="line">		*T = (BiTNode *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(BiTNode));</span>
+<span class="line">		(*T)-&gt;data = c;</span>
+<span class="line">		creatBiTree(&amp;(*T)-&gt;lchild);</span>
+<span class="line">		creatBiTree(&amp;(*T)-&gt;rchild);</span>
+<span class="line">	&#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<h3 id="遍历二叉树-前序遍历"><a href="#遍历二叉树-前序遍历" class="headerlink" title="遍历二叉树(前序遍历)"></a>遍历二叉树(前序遍历)</h3><p>这里依然以前序作为例子，前中后序遍历的不同之在于递归的顺序<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">preorder</span><span class="params">(BiTree T)</span> </span>&#123;</span>
+<span class="line">	<span class="keyword">if</span> (T) &#123;</span>
+<span class="line">		<span class="built_in">printf</span>(<span class="string">"%c\n"</span>, T-&gt;data);</span>
+<span class="line">		preorder(T-&gt;lchild);</span>
+<span class="line">		preorder(T-&gt;rchild);</span>
+<span class="line">	&#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure></p>
+<h3 id="层次遍历二叉树"><a href="#层次遍历二叉树" class="headerlink" title="层次遍历二叉树"></a>层次遍历二叉树</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+<span class="line">27</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">levelorder</span><span class="params">(BiTree T)</span> </span>&#123;</span>
+<span class="line">	<span class="comment">//用一个队列保存结点信息,这里的队列采用的是顺序队列中的数组实现</span></span>
+<span class="line">	<span class="keyword">int</span> front = <span class="number">0</span>;</span>
+<span class="line">	<span class="keyword">int</span> rear = <span class="number">0</span>;</span>
+<span class="line">	BiTree BiQueue[MAXSIZE];</span>
+<span class="line">	BiTree tempNode;</span>
+<span class="line">	<span class="keyword">if</span> (!IsEmpty_BiTree(&amp;T)) &#123;</span>
+<span class="line">		<span class="comment">//将根结点加入到队列中　</span></span>
+<span class="line">		BiQueue[rear++] = T;</span>
+<span class="line"></span>
+<span class="line">		<span class="keyword">while</span> (front != rear) &#123;</span>
+<span class="line">			<span class="comment">//取出队头元素，并使队头指针向后移动一位　</span></span>
+<span class="line">			tempNode = BiQueue[front++];</span>
+<span class="line">			<span class="comment">//判断左右子树是否为空,若为空，则加入队列　</span></span>
+<span class="line">			<span class="keyword">if</span> (!IsEmpty_BiTree(&amp;(tempNode-&gt;lchild)))</span>
+<span class="line">				BiQueue[rear++] = tempNode-&gt;lchild;</span>
+<span class="line"></span>
+<span class="line">			<span class="keyword">if</span> (!IsEmpty_BiTree(&amp;(tempNode-&gt;rchild)))</span>
+<span class="line">				BiQueue[rear++] = tempNode-&gt;rchild;</span>
+<span class="line"></span>
+<span class="line">			<span class="comment">//输出队头结点元素　</span></span>
+<span class="line">			<span class="comment">//Vist_BiTreeNode(tempNode-&gt;data);</span></span>
+<span class="line">			<span class="built_in">printf</span>(<span class="string">"%c\n"</span>, tempNode-&gt;data);</span>
+<span class="line"></span>
+<span class="line">		&#125;</span>
+<span class="line">	&#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<h3 id="复制树"><a href="#复制树" class="headerlink" title="复制树"></a>复制树</h3><p>将二叉树复制给另一个二叉树</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">copybitree</span><span class="params">(BiTree T, BiTree *newT)</span> </span>&#123;</span>
+<span class="line">	<span class="keyword">if</span> (T == <span class="literal">NULL</span>)</span>
+<span class="line">	&#123;</span>
+<span class="line">		*newT = <span class="literal">NULL</span>;</span>
+<span class="line">		<span class="keyword">return</span>;</span>
+<span class="line">	&#125;</span>
+<span class="line">	<span class="keyword">else</span></span>
+<span class="line">	&#123;</span>
+<span class="line">		*newT = (BiTNode *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(BiTNode));</span>
+<span class="line">		((*newT)-&gt;data) = (T-&gt;data);</span>
+<span class="line">		copybitree(T-&gt;lchild, &amp;(*newT)-&gt;lchild);</span>
+<span class="line">		copybitree(T-&gt;rchild, &amp;(*newT)-&gt;rchild);</span>
+<span class="line">	&#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<h3 id="计算结点个数"><a href="#计算结点个数" class="headerlink" title="计算结点个数"></a>计算结点个数</h3><p>计算二叉树的结点个数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">countleaf</span><span class="params">(BiTree T)</span> </span>&#123;</span>
+<span class="line">	<span class="keyword">if</span> (T == <span class="literal">NULL</span>)</span>
+<span class="line">	&#123;</span>
+<span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span>
+<span class="line">	&#125;</span>
+<span class="line">	<span class="keyword">else</span> &#123;</span>
+<span class="line">		<span class="keyword">return</span> countleaf(T-&gt;lchild) + countleaf(T-&gt;rchild) + <span class="number">1</span>;</span>
+<span class="line">	&#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<h3 id="左、右子树交换"><a href="#左、右子树交换" class="headerlink" title="左、右子树交换"></a>左、右子树交换</h3><p>交换一颗二叉树的左右子树</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">exchange</span><span class="params">(BiTree T)</span> </span>
+<span class="line"></span>&#123;</span>
+<span class="line">	BiTree p;</span>
+<span class="line">	<span class="keyword">if</span> (T != <span class="literal">NULL</span>)</span>
+<span class="line">	&#123;</span>
+<span class="line">		p = T-&gt;lchild;</span>
+<span class="line">		T-&gt;lchild = T-&gt;rchild;</span>
+<span class="line">		T-&gt;rchild = p;</span>
+<span class="line">		exchange(T-&gt;lchild);</span>
+<span class="line">		exchange(T-&gt;rchild);</span>
+<span class="line">	&#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<h3 id="主函数"><a href="#主函数" class="headerlink" title="主函数"></a>主函数</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span>
+<span class="line">	BiTree T=<span class="literal">NULL</span>,newT=<span class="literal">NULL</span>;</span>
+<span class="line">	creatBiTree(&amp;T);</span>
+<span class="line">	<span class="built_in">printf</span>(<span class="string">"前序遍历\n"</span>);</span>
+<span class="line">	preorder(T);</span>
+<span class="line">	<span class="built_in">printf</span>(<span class="string">"中序遍历\n"</span>);</span>
+<span class="line">	inorder(T);</span>
+<span class="line">	<span class="built_in">printf</span>(<span class="string">"中后遍历\n"</span>);</span>
+<span class="line">	postorder(T);</span>
+<span class="line">	<span class="built_in">printf</span>(<span class="string">"层序遍历\n"</span>);</span>
+<span class="line">	levelorder(T);</span>
+<span class="line">	<span class="built_in">printf</span>(<span class="string">"节点个数为%d\n"</span>, countleaf(T));</span>
+<span class="line">	copybitree(T, &amp;newT);</span>
+<span class="line">	<span class="built_in">printf</span>(<span class="string">"newT前序遍历\n"</span>);</span>
+<span class="line">	preorder(newT);</span>
+<span class="line">	exchange(T);</span>
+<span class="line">	<span class="built_in">printf</span>(<span class="string">"交换左右子树之后前序遍历为"</span>);</span>
+<span class="line">	preorder(T);</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<h3 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h3><p><img src="http://objects.earthchen.cn/%E4%BA%8C%E5%8F%89%E6%A0%91%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C.png" alt="二叉树运行结果"><br>以上就是二叉树的一些基本操作，大量运用的递归的思想，希望读者能好好研读</p>
+<blockquote>
+<p>注：</p>
+<ul>
+<li>上述代码在<strong>visual studio 2015</strong>中编译成功运行，其他ide请自行测试</li>
+<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
+</ul>
+</blockquote>
+]]></content>
+      
+        <categories>
+            
+            <category> 开发 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> c </tag>
+            
+            <tag> 数据结构 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[C语言逆波兰表达式计算(后缀表达式计算器)]]></title>
       <url>/2016/07/15/C%E8%AF%AD%E8%A8%80%E9%80%86%E6%B3%A2%E5%85%B0%E8%AE%A1%E7%AE%97%E5%99%A8/</url>
       <content type="html"><![CDATA[<p>刚开始学习c语言时，我们都学过输入一个数在输入一个操作数在输入要进行的计算方式，在输入另一个操作数，然后通过内置的+ - / <em>以及内置头文件 <em>*math.h</em></em>等操作进行计算<br>但是我们可不可以直接输入我们熟悉的算式才得出结果呢，答案是肯定的，我博客上一篇介绍了<a href="/2016/10/07/c%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8F%98%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F/">C语言把中缀表达式转换为后缀表达式</a>有兴趣的读者可以去看看，有了上篇的知识，在加上本篇的内容就可以很容易做出一个中缀表达式计算器了有兴趣的读者可以看完本文去尝试一下，对自己的能力也是一种提升</p>
@@ -18636,6 +18998,204 @@
     </entry>
     
     <entry>
+      <title><![CDATA[C语言共享栈]]></title>
+      <url>/2016/07/15/C%E8%AF%AD%E8%A8%80%E5%85%B1%E4%BA%AB%E6%A0%88/</url>
+      <content type="html"><![CDATA[<p>栈的操作我相信大家都应该了解了弄懂了，  如果没弄懂希望可以去再去看看相关的资料，我博客中的<a href="/2016/10/18/c%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8F%98%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F/">C语言中缀表达式转后缀表达式</a>中涉及到了一下栈的基本操作，有兴趣的朋友也可以看看。<br>所谓共享栈，就是两个栈共同使用一块内存空间，其中一个栈的栈底作为另一个栈的栈顶，反之亦然。</p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="思路分析"><a href="#思路分析" class="headerlink" title="思路分析"></a>思路分析</h3><blockquote>
+<p>因为两个栈公用一个空间，假设一个栈为0#，规定其为空时top[0]==-1；另一个栈为1#规定其为空时，top[1]==MaxSize；<br>入栈时，先确定栈号是否合法，然后查看是对0#栈还是1#栈进行操作，入栈操作和顺序栈的入栈操作并无太大不同。<br>选定之后进行入栈操作。这里应该注意此共享栈是否已满，如果已满则不能进行入栈操作。如若入栈成功则返回0；入栈失败则返回-1；<br>出栈时，先确定栈号是否合法，然后查看是对0#栈还是1#栈进行操作，出栈操作和顺序栈的出栈操作并无太大不同。<br>选定之后进行出栈操作。如果出栈成功返回0；出栈失败返回-1；<br><a id="more"></a></p>
+</blockquote>
+<h3 id="添加适当的头文件，定义一个栈数据结构，"><a href="#添加适当的头文件，定义一个栈数据结构，" class="headerlink" title="添加适当的头文件，定义一个栈数据结构，"></a>添加适当的头文件，定义一个栈数据结构，</h3><p>共享栈也是栈，只不过有点特殊，在这里我们还是需要添加适当的头文件和定义恰当的数据结构</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+</pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span>
+<span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span>
+<span class="line"><span class="meta">#<span class="meta-keyword">define</span>  MaxSize 100</span></span>
+<span class="line"></span>
+<span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> ElemType;</span>
+<span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span>
+<span class="line">	ElemType data[MaxSize];</span>
+<span class="line">	<span class="keyword">int</span> top[<span class="number">2</span>];</span>
+<span class="line">&#125;SqStack;</span>
+</pre></td></tr></table></figure>
+<h3 id="初始化共享栈"><a href="#初始化共享栈" class="headerlink" title="初始化共享栈"></a>初始化共享栈</h3><p>由于我这里用的是顺序存储结构的栈结构（也就是数据），top也就是一个标记而已，分别代编栈1和栈2的标记<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">InitStack</span><span class="params">(SqStack *s)</span></span>
+<span class="line"></span>&#123;</span>
+<span class="line">	s-&gt;top[<span class="number">0</span>] = <span class="number">-1</span>;</span>
+<span class="line">	s-&gt;top[<span class="number">1</span>] = MaxSize;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure></p>
+<h3 id="入栈操作"><a href="#入栈操作" class="headerlink" title="入栈操作"></a>入栈操作</h3><p>在入栈的时候，我们需要选择入的是两个栈中的哪一个栈，我们这里用0和1来区分</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Push</span><span class="params">(SqStack*s, ElemType x, <span class="keyword">int</span> n)</span></span>
+<span class="line"></span>&#123;</span>
+<span class="line">	<span class="keyword">if</span> (n &lt; <span class="number">0</span> || n&gt;<span class="number">1</span>) &#123;</span>
+<span class="line">		<span class="built_in">printf</span>(<span class="string">"The stack number is false!\n"</span>);</span>
+<span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span>
+<span class="line">	&#125;</span>
+<span class="line">	<span class="keyword">if</span> (s-&gt;top[<span class="number">1</span>] - s-&gt;top[<span class="number">0</span>] == <span class="number">1</span>) &#123;</span>
+<span class="line">		<span class="built_in">printf</span>(<span class="string">"The stack is full!\n"</span>);</span>
+<span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span>
+<span class="line">	&#125;</span>
+<span class="line">	<span class="keyword">switch</span> (n) &#123;</span>
+<span class="line">	<span class="keyword">case</span> <span class="number">0</span>:s-&gt;data[++s-&gt;top[<span class="number">0</span>]] = x; <span class="keyword">break</span>;</span>
+<span class="line">	<span class="keyword">case</span> <span class="number">1</span>:s-&gt;data[--s-&gt;top[<span class="number">1</span>]] = x; <span class="keyword">break</span>;</span>
+<span class="line">	&#125;</span>
+<span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<h3 id="出栈操作"><a href="#出栈操作" class="headerlink" title="出栈操作"></a>出栈操作</h3><p>出栈和入栈一样，也需要选择出栈的具体是哪个栈</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Pop</span><span class="params">(SqStack *s, ElemType* x, <span class="keyword">int</span> n)</span></span>
+<span class="line"></span>&#123;</span>
+<span class="line">	<span class="keyword">if</span> (n &lt; <span class="number">0</span> || n&gt;<span class="number">1</span>) &#123;</span>
+<span class="line">		<span class="built_in">printf</span>(<span class="string">"The stack number is false!\n"</span>);</span>
+<span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span>
+<span class="line">	&#125;</span>
+<span class="line">	<span class="keyword">switch</span> (n) &#123;</span>
+<span class="line">	<span class="keyword">case</span> <span class="number">0</span>:</span>
+<span class="line">		<span class="keyword">if</span> (s-&gt;top[<span class="number">0</span>] == <span class="number">-1</span>) &#123;</span>
+<span class="line">			<span class="built_in">printf</span>(<span class="string">"The stack[0] is empty!\n"</span>);</span>
+<span class="line">		&#125;</span>
+<span class="line">		*x = s-&gt;data[s-&gt;top[<span class="number">0</span>]--];</span>
+<span class="line">		<span class="keyword">break</span>;</span>
+<span class="line">	<span class="keyword">case</span> <span class="number">1</span>:</span>
+<span class="line">		<span class="keyword">if</span> (s-&gt;top[<span class="number">1</span>] == MaxSize) &#123;</span>
+<span class="line">			<span class="built_in">printf</span>(<span class="string">"The stack[1] is empty!\n"</span>);</span>
+<span class="line">		&#125;</span>
+<span class="line">		*x = s-&gt;data[s-&gt;top[<span class="number">1</span>]++];</span>
+<span class="line">		<span class="keyword">break</span>;</span>
+<span class="line">	&#125;</span>
+<span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<h3 id="主函数"><a href="#主函数" class="headerlink" title="主函数"></a>主函数</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span></span>
+<span class="line"></span>&#123;</span>
+<span class="line">	SqStack s;</span>
+<span class="line">	InitStack(&amp;s);</span>
+<span class="line"></span>
+<span class="line">	ElemType x = <span class="number">5</span>;</span>
+<span class="line">	<span class="keyword">int</span> n = <span class="number">0</span>;</span>
+<span class="line">	<span class="keyword">int</span> flagPush;</span>
+<span class="line">	flagPush = Push(&amp;s, x, n);</span>
+<span class="line">	<span class="keyword">if</span> (flagPush) &#123;</span>
+<span class="line">		<span class="built_in">printf</span>(<span class="string">"Push false!\n"</span>);</span>
+<span class="line">	&#125;</span>
+<span class="line">	<span class="keyword">else</span> &#123;</span>
+<span class="line">		<span class="built_in">printf</span>(<span class="string">"Push %d success!\n"</span>, x);</span>
+<span class="line">	&#125;</span>
+<span class="line"></span>
+<span class="line">	<span class="keyword">int</span> flagPop;</span>
+<span class="line">	flagPop = Pop(&amp;s, &amp;x, n);</span>
+<span class="line">	<span class="keyword">if</span> (flagPop) &#123;</span>
+<span class="line">		<span class="built_in">printf</span>(<span class="string">"Pop false!\n"</span>);</span>
+<span class="line">	&#125;</span>
+<span class="line">	<span class="keyword">else</span> &#123;</span>
+<span class="line">		<span class="built_in">printf</span>(<span class="string">"Pop %d  success!\n"</span>, x);</span>
+<span class="line">	&#125;</span>
+<span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<h3 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h3><p><img src="http://objects.earthchen.cn/C%E8%AF%AD%E8%A8%80%E5%85%B1%E4%BA%AB%E6%A0%88%E7%BB%93%E6%9E%9C.png" alt="c语言共享栈运行结果"><br>以上就是共享栈的简单操作，我这里只测试他是否能够成功，如有需要，请研读代码后自行修改，如果一时看不懂，请多看几遍思路分析，把原理弄懂，代码还是想当简单的。</p>
+<blockquote>
+<p>注：</p>
+<ul>
+<li>上述代码在<strong>visual studio 2015</strong>中编译成功运行，其他ide请自行测试</li>
+<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
+</ul>
+</blockquote>
+]]></content>
+      
+        <categories>
+            
+            <category> 开发 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> c </tag>
+            
+            <tag> 数据结构 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[C语言中缀表达式转后缀表达式]]></title>
       <url>/2016/07/15/c%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8F%98%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F/</url>
       <content type="html"><![CDATA[<p>众所周知,计算机中不能直接用中缀表达式计算,形如(1+2)*(4-5)之类的，但是我们可以计算机可以很容易的通过后缀表达式来计算我们所输入的算式。所以我们就需要把中缀表达式转换为后缀表达式。下面是个人写的一点代码，大家可以参考。</p>
@@ -18879,473 +19439,6 @@
 <span class="line">&#125;</span>
 </pre></td></tr></table></figure>
 <h3 id="以下是运行结果-本人用的是vs2015编译器，所以文中的scanf用了更安全的scanf-s，-如有引用-请自觉替换成和自己的编译器想匹配的函数"><a href="#以下是运行结果-本人用的是vs2015编译器，所以文中的scanf用了更安全的scanf-s，-如有引用-请自觉替换成和自己的编译器想匹配的函数" class="headerlink" title="以下是运行结果 本人用的是vs2015编译器，所以文中的scanf用了更安全的scanf_s，  如有引用 请自觉替换成和自己的编译器想匹配的函数"></a>以下是运行结果 本人用的是vs2015编译器，所以文中的scanf用了更安全的scanf_s，  如有引用 请自觉替换成和自己的编译器想匹配的函数</h3><p><img src="http://objects.earthchen.cn/c%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%BD%AC%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F.png" alt="cmd 运行结果"><br>代码很简单 ，仔细看看研究一下指针就很容易看懂，</p>
-<blockquote>
-<p>注：</p>
-<ul>
-<li>上述代码在<strong>visual studio 2015</strong>中编译成功运行，其他ide请自行测试</li>
-<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
-</ul>
-</blockquote>
-]]></content>
-      
-        <categories>
-            
-            <category> 开发 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> c </tag>
-            
-            <tag> 数据结构 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[C语言共享栈]]></title>
-      <url>/2016/07/15/C%E8%AF%AD%E8%A8%80%E5%85%B1%E4%BA%AB%E6%A0%88/</url>
-      <content type="html"><![CDATA[<p>栈的操作我相信大家都应该了解了弄懂了，  如果没弄懂希望可以去再去看看相关的资料，我博客中的<a href="/2016/10/18/c%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8F%98%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F/">C语言中缀表达式转后缀表达式</a>中涉及到了一下栈的基本操作，有兴趣的朋友也可以看看。<br>所谓共享栈，就是两个栈共同使用一块内存空间，其中一个栈的栈底作为另一个栈的栈顶，反之亦然。</p>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="思路分析"><a href="#思路分析" class="headerlink" title="思路分析"></a>思路分析</h3><blockquote>
-<p>因为两个栈公用一个空间，假设一个栈为0#，规定其为空时top[0]==-1；另一个栈为1#规定其为空时，top[1]==MaxSize；<br>入栈时，先确定栈号是否合法，然后查看是对0#栈还是1#栈进行操作，入栈操作和顺序栈的入栈操作并无太大不同。<br>选定之后进行入栈操作。这里应该注意此共享栈是否已满，如果已满则不能进行入栈操作。如若入栈成功则返回0；入栈失败则返回-1；<br>出栈时，先确定栈号是否合法，然后查看是对0#栈还是1#栈进行操作，出栈操作和顺序栈的出栈操作并无太大不同。<br>选定之后进行出栈操作。如果出栈成功返回0；出栈失败返回-1；<br><a id="more"></a></p>
-</blockquote>
-<h3 id="添加适当的头文件，定义一个栈数据结构，"><a href="#添加适当的头文件，定义一个栈数据结构，" class="headerlink" title="添加适当的头文件，定义一个栈数据结构，"></a>添加适当的头文件，定义一个栈数据结构，</h3><p>共享栈也是栈，只不过有点特殊，在这里我们还是需要添加适当的头文件和定义恰当的数据结构</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-</pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span>
-<span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span>
-<span class="line"><span class="meta">#<span class="meta-keyword">define</span>  MaxSize 100</span></span>
-<span class="line"></span>
-<span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> ElemType;</span>
-<span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span>
-<span class="line">	ElemType data[MaxSize];</span>
-<span class="line">	<span class="keyword">int</span> top[<span class="number">2</span>];</span>
-<span class="line">&#125;SqStack;</span>
-</pre></td></tr></table></figure>
-<h3 id="初始化共享栈"><a href="#初始化共享栈" class="headerlink" title="初始化共享栈"></a>初始化共享栈</h3><p>由于我这里用的是顺序存储结构的栈结构（也就是数据），top也就是一个标记而已，分别代编栈1和栈2的标记<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">InitStack</span><span class="params">(SqStack *s)</span></span>
-<span class="line"></span>&#123;</span>
-<span class="line">	s-&gt;top[<span class="number">0</span>] = <span class="number">-1</span>;</span>
-<span class="line">	s-&gt;top[<span class="number">1</span>] = MaxSize;</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure></p>
-<h3 id="入栈操作"><a href="#入栈操作" class="headerlink" title="入栈操作"></a>入栈操作</h3><p>在入栈的时候，我们需要选择入的是两个栈中的哪一个栈，我们这里用0和1来区分</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Push</span><span class="params">(SqStack*s, ElemType x, <span class="keyword">int</span> n)</span></span>
-<span class="line"></span>&#123;</span>
-<span class="line">	<span class="keyword">if</span> (n &lt; <span class="number">0</span> || n&gt;<span class="number">1</span>) &#123;</span>
-<span class="line">		<span class="built_in">printf</span>(<span class="string">"The stack number is false!\n"</span>);</span>
-<span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span>
-<span class="line">	&#125;</span>
-<span class="line">	<span class="keyword">if</span> (s-&gt;top[<span class="number">1</span>] - s-&gt;top[<span class="number">0</span>] == <span class="number">1</span>) &#123;</span>
-<span class="line">		<span class="built_in">printf</span>(<span class="string">"The stack is full!\n"</span>);</span>
-<span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span>
-<span class="line">	&#125;</span>
-<span class="line">	<span class="keyword">switch</span> (n) &#123;</span>
-<span class="line">	<span class="keyword">case</span> <span class="number">0</span>:s-&gt;data[++s-&gt;top[<span class="number">0</span>]] = x; <span class="keyword">break</span>;</span>
-<span class="line">	<span class="keyword">case</span> <span class="number">1</span>:s-&gt;data[--s-&gt;top[<span class="number">1</span>]] = x; <span class="keyword">break</span>;</span>
-<span class="line">	&#125;</span>
-<span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
-<h3 id="出栈操作"><a href="#出栈操作" class="headerlink" title="出栈操作"></a>出栈操作</h3><p>出栈和入栈一样，也需要选择出栈的具体是哪个栈</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-<span class="line">17</span>
-<span class="line">18</span>
-<span class="line">19</span>
-<span class="line">20</span>
-<span class="line">21</span>
-<span class="line">22</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Pop</span><span class="params">(SqStack *s, ElemType* x, <span class="keyword">int</span> n)</span></span>
-<span class="line"></span>&#123;</span>
-<span class="line">	<span class="keyword">if</span> (n &lt; <span class="number">0</span> || n&gt;<span class="number">1</span>) &#123;</span>
-<span class="line">		<span class="built_in">printf</span>(<span class="string">"The stack number is false!\n"</span>);</span>
-<span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span>
-<span class="line">	&#125;</span>
-<span class="line">	<span class="keyword">switch</span> (n) &#123;</span>
-<span class="line">	<span class="keyword">case</span> <span class="number">0</span>:</span>
-<span class="line">		<span class="keyword">if</span> (s-&gt;top[<span class="number">0</span>] == <span class="number">-1</span>) &#123;</span>
-<span class="line">			<span class="built_in">printf</span>(<span class="string">"The stack[0] is empty!\n"</span>);</span>
-<span class="line">		&#125;</span>
-<span class="line">		*x = s-&gt;data[s-&gt;top[<span class="number">0</span>]--];</span>
-<span class="line">		<span class="keyword">break</span>;</span>
-<span class="line">	<span class="keyword">case</span> <span class="number">1</span>:</span>
-<span class="line">		<span class="keyword">if</span> (s-&gt;top[<span class="number">1</span>] == MaxSize) &#123;</span>
-<span class="line">			<span class="built_in">printf</span>(<span class="string">"The stack[1] is empty!\n"</span>);</span>
-<span class="line">		&#125;</span>
-<span class="line">		*x = s-&gt;data[s-&gt;top[<span class="number">1</span>]++];</span>
-<span class="line">		<span class="keyword">break</span>;</span>
-<span class="line">	&#125;</span>
-<span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
-<h3 id="主函数"><a href="#主函数" class="headerlink" title="主函数"></a>主函数</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-<span class="line">17</span>
-<span class="line">18</span>
-<span class="line">19</span>
-<span class="line">20</span>
-<span class="line">21</span>
-<span class="line">22</span>
-<span class="line">23</span>
-<span class="line">24</span>
-<span class="line">25</span>
-<span class="line">26</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span></span>
-<span class="line"></span>&#123;</span>
-<span class="line">	SqStack s;</span>
-<span class="line">	InitStack(&amp;s);</span>
-<span class="line"></span>
-<span class="line">	ElemType x = <span class="number">5</span>;</span>
-<span class="line">	<span class="keyword">int</span> n = <span class="number">0</span>;</span>
-<span class="line">	<span class="keyword">int</span> flagPush;</span>
-<span class="line">	flagPush = Push(&amp;s, x, n);</span>
-<span class="line">	<span class="keyword">if</span> (flagPush) &#123;</span>
-<span class="line">		<span class="built_in">printf</span>(<span class="string">"Push false!\n"</span>);</span>
-<span class="line">	&#125;</span>
-<span class="line">	<span class="keyword">else</span> &#123;</span>
-<span class="line">		<span class="built_in">printf</span>(<span class="string">"Push %d success!\n"</span>, x);</span>
-<span class="line">	&#125;</span>
-<span class="line"></span>
-<span class="line">	<span class="keyword">int</span> flagPop;</span>
-<span class="line">	flagPop = Pop(&amp;s, &amp;x, n);</span>
-<span class="line">	<span class="keyword">if</span> (flagPop) &#123;</span>
-<span class="line">		<span class="built_in">printf</span>(<span class="string">"Pop false!\n"</span>);</span>
-<span class="line">	&#125;</span>
-<span class="line">	<span class="keyword">else</span> &#123;</span>
-<span class="line">		<span class="built_in">printf</span>(<span class="string">"Pop %d  success!\n"</span>, x);</span>
-<span class="line">	&#125;</span>
-<span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
-<h3 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h3><p><img src="http://objects.earthchen.cn/C%E8%AF%AD%E8%A8%80%E5%85%B1%E4%BA%AB%E6%A0%88%E7%BB%93%E6%9E%9C.png" alt="c语言共享栈运行结果"><br>以上就是共享栈的简单操作，我这里只测试他是否能够成功，如有需要，请研读代码后自行修改，如果一时看不懂，请多看几遍思路分析，把原理弄懂，代码还是想当简单的。</p>
-<blockquote>
-<p>注：</p>
-<ul>
-<li>上述代码在<strong>visual studio 2015</strong>中编译成功运行，其他ide请自行测试</li>
-<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
-</ul>
-</blockquote>
-]]></content>
-      
-        <categories>
-            
-            <category> 开发 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> c </tag>
-            
-            <tag> 数据结构 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[C语言二叉树的基本操作]]></title>
-      <url>/2016/07/15/C%E8%AF%AD%E8%A8%80%E4%BA%8C%E5%8F%89%E6%A0%91%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/</url>
-      <content type="html"><![CDATA[<p>树是数据结构中一门很重要的数据结构，在很多地方都能经常见到他的面孔，比如数据通信，压缩数据等都能见到树的身影。但是最常见的还是相对简单的二叉树，二叉树和常规树都可以进行相互转换。所以，二叉树的操作必不可少。我这里来简单介绍一下。<br>在数据结构中给的树和图中，我们最好使用递归来进行各种操作，会让代码更清晰易懂，代码也会更简洁。</p>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="添加适当的头文件，定义hex一个栈数据结构，"><a href="#添加适当的头文件，定义hex一个栈数据结构，" class="headerlink" title="添加适当的头文件，定义hex一个栈数据结构，"></a>添加适当的头文件，定义hex一个栈数据结构，</h3><p>首先我们定义一个二叉树的数据结构</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-</pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span>
-<span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span>
-<span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXSIZE 100</span></span>
-<span class="line"><span class="keyword">typedef</span> <span class="keyword">char</span> ElemType;</span>
-<span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">BiTNode</span></span>
-<span class="line">&#123;</span></span>
-<span class="line">ElemType data;</span>
-<span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">BiTNode</span> *<span class="title">lchild</span>, *<span class="title">rchild</span>;</span></span>
-<span class="line">&#125;BiTNode, *BiTree;</span>
-</pre></td></tr></table></figure>
-<a id="more"></a>
-<h3 id="创建一个二叉树（前序）"><a href="#创建一个二叉树（前序）" class="headerlink" title="创建一个二叉树（前序）"></a>创建一个二叉树（前序）</h3><p>这里以前序作为例子，前中后序遍历的不同之在于递归的顺序</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">creatBiTree</span><span class="params">(BiTree *T)</span> </span>&#123;</span>
-<span class="line">	ElemType c;</span>
-<span class="line">	<span class="built_in">scanf</span>(<span class="string">"%c"</span>, &amp;c);</span>
-<span class="line">	<span class="keyword">if</span> (<span class="string">'#'</span> == c)</span>
-<span class="line">	&#123;</span>
-<span class="line">		*T = <span class="literal">NULL</span>;</span>
-<span class="line">	&#125;</span>
-<span class="line">	<span class="keyword">else</span></span>
-<span class="line">	&#123;</span>
-<span class="line">		*T = (BiTNode *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(BiTNode));</span>
-<span class="line">		(*T)-&gt;data = c;</span>
-<span class="line">		creatBiTree(&amp;(*T)-&gt;lchild);</span>
-<span class="line">		creatBiTree(&amp;(*T)-&gt;rchild);</span>
-<span class="line">	&#125;</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
-<h3 id="遍历二叉树-前序遍历"><a href="#遍历二叉树-前序遍历" class="headerlink" title="遍历二叉树(前序遍历)"></a>遍历二叉树(前序遍历)</h3><p>这里依然以前序作为例子，前中后序遍历的不同之在于递归的顺序<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">preorder</span><span class="params">(BiTree T)</span> </span>&#123;</span>
-<span class="line">	<span class="keyword">if</span> (T) &#123;</span>
-<span class="line">		<span class="built_in">printf</span>(<span class="string">"%c\n"</span>, T-&gt;data);</span>
-<span class="line">		preorder(T-&gt;lchild);</span>
-<span class="line">		preorder(T-&gt;rchild);</span>
-<span class="line">	&#125;</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure></p>
-<h3 id="层次遍历二叉树"><a href="#层次遍历二叉树" class="headerlink" title="层次遍历二叉树"></a>层次遍历二叉树</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-<span class="line">17</span>
-<span class="line">18</span>
-<span class="line">19</span>
-<span class="line">20</span>
-<span class="line">21</span>
-<span class="line">22</span>
-<span class="line">23</span>
-<span class="line">24</span>
-<span class="line">25</span>
-<span class="line">26</span>
-<span class="line">27</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">levelorder</span><span class="params">(BiTree T)</span> </span>&#123;</span>
-<span class="line">	<span class="comment">//用一个队列保存结点信息,这里的队列采用的是顺序队列中的数组实现</span></span>
-<span class="line">	<span class="keyword">int</span> front = <span class="number">0</span>;</span>
-<span class="line">	<span class="keyword">int</span> rear = <span class="number">0</span>;</span>
-<span class="line">	BiTree BiQueue[MAXSIZE];</span>
-<span class="line">	BiTree tempNode;</span>
-<span class="line">	<span class="keyword">if</span> (!IsEmpty_BiTree(&amp;T)) &#123;</span>
-<span class="line">		<span class="comment">//将根结点加入到队列中　</span></span>
-<span class="line">		BiQueue[rear++] = T;</span>
-<span class="line"></span>
-<span class="line">		<span class="keyword">while</span> (front != rear) &#123;</span>
-<span class="line">			<span class="comment">//取出队头元素，并使队头指针向后移动一位　</span></span>
-<span class="line">			tempNode = BiQueue[front++];</span>
-<span class="line">			<span class="comment">//判断左右子树是否为空,若为空，则加入队列　</span></span>
-<span class="line">			<span class="keyword">if</span> (!IsEmpty_BiTree(&amp;(tempNode-&gt;lchild)))</span>
-<span class="line">				BiQueue[rear++] = tempNode-&gt;lchild;</span>
-<span class="line"></span>
-<span class="line">			<span class="keyword">if</span> (!IsEmpty_BiTree(&amp;(tempNode-&gt;rchild)))</span>
-<span class="line">				BiQueue[rear++] = tempNode-&gt;rchild;</span>
-<span class="line"></span>
-<span class="line">			<span class="comment">//输出队头结点元素　</span></span>
-<span class="line">			<span class="comment">//Vist_BiTreeNode(tempNode-&gt;data);</span></span>
-<span class="line">			<span class="built_in">printf</span>(<span class="string">"%c\n"</span>, tempNode-&gt;data);</span>
-<span class="line"></span>
-<span class="line">		&#125;</span>
-<span class="line">	&#125;</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
-<h3 id="复制树"><a href="#复制树" class="headerlink" title="复制树"></a>复制树</h3><p>将二叉树复制给另一个二叉树</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">copybitree</span><span class="params">(BiTree T, BiTree *newT)</span> </span>&#123;</span>
-<span class="line">	<span class="keyword">if</span> (T == <span class="literal">NULL</span>)</span>
-<span class="line">	&#123;</span>
-<span class="line">		*newT = <span class="literal">NULL</span>;</span>
-<span class="line">		<span class="keyword">return</span>;</span>
-<span class="line">	&#125;</span>
-<span class="line">	<span class="keyword">else</span></span>
-<span class="line">	&#123;</span>
-<span class="line">		*newT = (BiTNode *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(BiTNode));</span>
-<span class="line">		((*newT)-&gt;data) = (T-&gt;data);</span>
-<span class="line">		copybitree(T-&gt;lchild, &amp;(*newT)-&gt;lchild);</span>
-<span class="line">		copybitree(T-&gt;rchild, &amp;(*newT)-&gt;rchild);</span>
-<span class="line">	&#125;</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
-<h3 id="计算结点个数"><a href="#计算结点个数" class="headerlink" title="计算结点个数"></a>计算结点个数</h3><p>计算二叉树的结点个数</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">countleaf</span><span class="params">(BiTree T)</span> </span>&#123;</span>
-<span class="line">	<span class="keyword">if</span> (T == <span class="literal">NULL</span>)</span>
-<span class="line">	&#123;</span>
-<span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span>
-<span class="line">	&#125;</span>
-<span class="line">	<span class="keyword">else</span> &#123;</span>
-<span class="line">		<span class="keyword">return</span> countleaf(T-&gt;lchild) + countleaf(T-&gt;rchild) + <span class="number">1</span>;</span>
-<span class="line">	&#125;</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
-<h3 id="左、右子树交换"><a href="#左、右子树交换" class="headerlink" title="左、右子树交换"></a>左、右子树交换</h3><p>交换一颗二叉树的左右子树</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">exchange</span><span class="params">(BiTree T)</span> </span>
-<span class="line"></span>&#123;</span>
-<span class="line">	BiTree p;</span>
-<span class="line">	<span class="keyword">if</span> (T != <span class="literal">NULL</span>)</span>
-<span class="line">	&#123;</span>
-<span class="line">		p = T-&gt;lchild;</span>
-<span class="line">		T-&gt;lchild = T-&gt;rchild;</span>
-<span class="line">		T-&gt;rchild = p;</span>
-<span class="line">		exchange(T-&gt;lchild);</span>
-<span class="line">		exchange(T-&gt;rchild);</span>
-<span class="line">	&#125;</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
-<h3 id="主函数"><a href="#主函数" class="headerlink" title="主函数"></a>主函数</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-<span class="line">17</span>
-<span class="line">18</span>
-<span class="line">19</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span>
-<span class="line">	BiTree T=<span class="literal">NULL</span>,newT=<span class="literal">NULL</span>;</span>
-<span class="line">	creatBiTree(&amp;T);</span>
-<span class="line">	<span class="built_in">printf</span>(<span class="string">"前序遍历\n"</span>);</span>
-<span class="line">	preorder(T);</span>
-<span class="line">	<span class="built_in">printf</span>(<span class="string">"中序遍历\n"</span>);</span>
-<span class="line">	inorder(T);</span>
-<span class="line">	<span class="built_in">printf</span>(<span class="string">"中后遍历\n"</span>);</span>
-<span class="line">	postorder(T);</span>
-<span class="line">	<span class="built_in">printf</span>(<span class="string">"层序遍历\n"</span>);</span>
-<span class="line">	levelorder(T);</span>
-<span class="line">	<span class="built_in">printf</span>(<span class="string">"节点个数为%d\n"</span>, countleaf(T));</span>
-<span class="line">	copybitree(T, &amp;newT);</span>
-<span class="line">	<span class="built_in">printf</span>(<span class="string">"newT前序遍历\n"</span>);</span>
-<span class="line">	preorder(newT);</span>
-<span class="line">	exchange(T);</span>
-<span class="line">	<span class="built_in">printf</span>(<span class="string">"交换左右子树之后前序遍历为"</span>);</span>
-<span class="line">	preorder(T);</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
-<h3 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h3><p><img src="http://objects.earthchen.cn/%E4%BA%8C%E5%8F%89%E6%A0%91%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C.png" alt="二叉树运行结果"><br>以上就是二叉树的一些基本操作，大量运用的递归的思想，希望读者能好好研读</p>
 <blockquote>
 <p>注：</p>
 <ul>
