@@ -22,7 +22,7 @@
 <meta property="og:url" content="http://earthchen.cn/2018/04/04/高性能MySQL-study/index.html">
 <meta property="og:site_name" content="EarthChen&#39;s Blog">
 <meta property="og:description" content="高性能MySQL读书笔记。。。">
-<meta property="og:updated_time" content="2018-04-11T16:19:36.349Z">
+<meta property="og:updated_time" content="2018-04-11T14:10:59.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="高性能MySQL学习笔记">
 <meta name="twitter:description" content="高性能MySQL读书笔记。。。">
@@ -158,13 +158,13 @@
                 <div class="tips-box hide">
                     <div class="tips-arrow"></div>
                     <ul class="tips-inner">
-                        <li>Menu</li>
-                        <li>Tags</li>
+                        <li>菜单</li>
+                        <li>标签</li>
                         
-                        <li>Friends</li>
+                        <li>友情链接</li>
                         
                         
-                        <li>About Me</li>
+                        <li>关于我</li>
                         
                     </ul>
                 </div>
@@ -294,7 +294,7 @@
             </nav>
         </header>                
     </div>
-    <link class="menu-list" tags="Tags" friends="Friends" about="About Me"/>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
       <div class="body-wrap"><article id="post-高性能MySQL-study" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -558,9 +558,34 @@
 <h4 id="MySQL是否扫描额外的记录"><a href="#MySQL是否扫描额外的记录" class="headerlink" title="MySQL是否扫描额外的记录"></a>MySQL是否扫描额外的记录</h4><p>在确定查询只返回需要的数据后，接下来应该看看为了返回结果是否扫描了过多的数据</p>
 <p>对于MySQL，简单的衡量查询开销的指标如下：</p>
 <ul>
-<li>相应时间</li>
+<li>响应时间</li>
 <li>扫描的行数</li>
 <li>返回的行数</li>
+</ul>
+<h5 id="响应时间"><a href="#响应时间" class="headerlink" title="响应时间"></a>响应时间</h5><p>响应时间=服务时间+排队时间</p>
+<h5 id="扫描的行数和返回的行数"><a href="#扫描的行数和返回的行数" class="headerlink" title="扫描的行数和返回的行数"></a>扫描的行数和返回的行数</h5><p>理想情况下扫描的行数和返回的行数应该时相同的，但实际上基本不可能。扫描的行数对返回的行数的比率通常很小，一般在1:1和10:1之间。</p>
+<h5 id="扫描的行数和访问类型"><a href="#扫描的行数和访问类型" class="headerlink" title="扫描的行数和访问类型"></a>扫描的行数和访问类型</h5><p>在评估查询开销的时候，需要考虑一下从表中找到某一行的数据的成本。</p>
+<p>在EXPLAIN语句中的type列反应了访问类型，如果查询没有办法找到合适的访问类型，那么最好的解决办法通常就是增加一个合适的索引</p>
+<p>一般MySQL能够使用如下方式应用where条件，从好到坏依次为：</p>
+<ul>
+<li>在索引中使用where条件来过滤不匹配的记录</li>
+<li>使用索引覆盖扫描来返回记录，直接从索引中过滤不需要的记录并返回命中的结果。</li>
+<li>从数据表中返回数据，然后过滤不满足条件的记录</li>
+</ul>
+<h3 id="重构查询方式"><a href="#重构查询方式" class="headerlink" title="重构查询方式"></a>重构查询方式</h3><p>在优化有问题的查询时，目标应该是找到一个更优的方式获得实际需要的结果，而不是一定总是需要从MySQL获取一样的结果集。</p>
+<h4 id="一个复杂查询还是多个简单查询"><a href="#一个复杂查询还是多个简单查询" class="headerlink" title="一个复杂查询还是多个简单查询"></a>一个复杂查询还是多个简单查询</h4><p>设计查询的时候一个需要考虑的问题，是否需要将一个复杂的查询分成多个简单的查询。</p>
+<p>在MySQL从设计上让连接和断开都很轻量，在返回一个小的查询结果方面很高效。</p>
+<p>在其他条件都相同的时候，使用尽可能少的查询当然时好的，但是有时候，将一个大查询分解为多个小查询时很有必要的。在设计应用时，如果也过查询能够胜任时还写成多个独立的查询时不明智的。</p>
+<h4 id="切分查询"><a href="#切分查询" class="headerlink" title="切分查询"></a>切分查询</h4><p>有时候我们需要对大查询分而治之，将大查询切分为小查询，每个查询功能完全一样，只完成一小部分，每次只返回一小部分查询结果</p>
+<p>删除旧数据就是一个很好的例子，定期清除大量数据时如果用一个大的语句一次性完成的话，则可能需要一次锁住很多数据，占满整个失误日志，耗尽系统资源，阻塞很多小的但是重要的查询。</p>
+<h4 id="分解关联查询"><a href="#分解关联查询" class="headerlink" title="分解关联查询"></a>分解关联查询</h4><p>对关联查询进行分解。简单的，可以对每一个表进行一次单表查询，然后将结果在应用程序中进行关联。</p>
+<p> 通过分解关联查询的方式有如下的好处：</p>
+<ul>
+<li>让缓存的效率更高</li>
+<li>将查询分解后，执行单个查询可以减少锁的竞争</li>
+<li>查询本身效率也可能会有所提升</li>
+<li>可以减少沉余记录的查询</li>
+<li>相当于在应用中实现了哈希关联，而不是使用MySQL的嵌套循环关联</li>
 </ul>
 <blockquote>
 <p>注：</p>
@@ -577,17 +602,17 @@
   
     
     <div class="copyright">
-        <p><span>Title:</span><a href="/2018/04/04/高性能MySQL-study/">高性能MySQL学习笔记</a></p>
-        <p><span>Author:</span><a href="/" title="Back to Homepage">EarthChen</a></p>
-        <p><span>Created:</span>2018-04-04, 16:30:00</p>
-        <p><span>Updated:</span>2018-04-12, 00:19:36</p>
+        <p><span>本文标题:</span><a href="/2018/04/04/高性能MySQL-study/">高性能MySQL学习笔记</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">EarthChen</a></p>
+        <p><span>发布时间:</span>2018-04-04, 16:30:00</p>
+        <p><span>最后更新:</span>2018-04-11, 22:10:59</p>
         <p>
-            <span>Full URL:</span><a class="post-url" href="/2018/04/04/高性能MySQL-study/" title="高性能MySQL学习笔记">http://earthchen.cn/2018/04/04/高性能MySQL-study/</a>
-            <span class="copy-path" data-clipboard-text="From http://earthchen.cn/2018/04/04/高性能MySQL-study/　　By EarthChen" title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2018/04/04/高性能MySQL-study/" title="高性能MySQL学习笔记">http://earthchen.cn/2018/04/04/高性能MySQL-study/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://earthchen.cn/2018/04/04/高性能MySQL-study/　　作者: EarthChen" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
-            <span>License:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"CC BY-NC-SA 4.0"</a> Keep Link &amp; Author if Distribute.
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
         </p>
     </div>
 
@@ -614,9 +639,9 @@
 </article>
 
     <div id="toc" class="toc-article">
-        <strong class="toc-title">Contents</strong>
+        <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#MySQL架构"><span class="toc-number">1.</span> <span class="toc-text">MySQL架构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#并发控制"><span class="toc-number">1.1.</span> <span class="toc-text">并发控制</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#读写锁"><span class="toc-number">1.1.1.</span> <span class="toc-text">读写锁</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事物"><span class="toc-number">1.2.</span> <span class="toc-text">事物</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#隔离级别"><span class="toc-number">1.2.1.</span> <span class="toc-text">隔离级别</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MySQL的存储引擎"><span class="toc-number">1.3.</span> <span class="toc-text">MySQL的存储引擎</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Schema与数据类型优化"><span class="toc-number">2.</span> <span class="toc-text">Schema与数据类型优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#选择优化的数据类型"><span class="toc-number">2.1.</span> <span class="toc-text">选择优化的数据类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MySQL-schema设计中的陷阱"><span class="toc-number">2.2.</span> <span class="toc-text">MySQL schema设计中的陷阱</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#范式和反范式"><span class="toc-number">2.3.</span> <span class="toc-text">范式和反范式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#范式的优缺点"><span class="toc-number">2.3.1.</span> <span class="toc-text">范式的优缺点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#反范式的优缺点"><span class="toc-number">2.3.2.</span> <span class="toc-text">反范式的优缺点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#混用范式和反范式"><span class="toc-number">2.3.3.</span> <span class="toc-text">混用范式和反范式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#缓存表和汇总表"><span class="toc-number">2.4.</span> <span class="toc-text">缓存表和汇总表</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#物化视图"><span class="toc-number">2.4.1.</span> <span class="toc-text">物化视图</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#计数器表"><span class="toc-number">2.4.2.</span> <span class="toc-text">计数器表</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#加快ALTER-TABLE操作的数据"><span class="toc-number">2.5.</span> <span class="toc-text">加快ALTER TABLE操作的数据</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#只修改-frm文件"><span class="toc-number">2.5.1.</span> <span class="toc-text">只修改.frm文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#快速创建myisam索引"><span class="toc-number">2.5.2.</span> <span class="toc-text">快速创建myisam索引</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建高性能的索引"><span class="toc-number">3.</span> <span class="toc-text">创建高性能的索引</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#索引基础"><span class="toc-number">3.1.</span> <span class="toc-text">索引基础</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#索引基础-1"><span class="toc-number">3.1.1.</span> <span class="toc-text">索引基础</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#B-Tree索引"><span class="toc-number">3.1.1.1.</span> <span class="toc-text">B-Tree索引</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#哈希索引"><span class="toc-number">3.1.1.2.</span> <span class="toc-text">哈希索引</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#空间数据索引"><span class="toc-number">3.1.1.3.</span> <span class="toc-text">空间数据索引</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#全文索引"><span class="toc-number">3.1.1.4.</span> <span class="toc-text">全文索引</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#索引的优点"><span class="toc-number">3.2.</span> <span class="toc-text">索引的优点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#高性能的索引策略"><span class="toc-number">3.3.</span> <span class="toc-text">高性能的索引策略</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#独立的列"><span class="toc-number">3.3.1.</span> <span class="toc-text">独立的列</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#前缀索引和索引选择性"><span class="toc-number">3.3.2.</span> <span class="toc-text">前缀索引和索引选择性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#多列索引"><span class="toc-number">3.3.3.</span> <span class="toc-text">多列索引</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#选择合适的索引列顺序"><span class="toc-number">3.3.4.</span> <span class="toc-text">选择合适的索引列顺序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#聚簇索引"><span class="toc-number">3.3.5.</span> <span class="toc-text">聚簇索引</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#InnoDB-MyISAM的数据分布对比"><span class="toc-number">3.3.5.1.</span> <span class="toc-text">InnoDB MyISAM的数据分布对比</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#覆盖索引"><span class="toc-number">3.3.6.</span> <span class="toc-text">覆盖索引</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#使用索引扫描来做排序"><span class="toc-number">3.3.7.</span> <span class="toc-text">使用索引扫描来做排序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#压缩-前缀压缩-索引"><span class="toc-number">3.3.8.</span> <span class="toc-text">压缩(前缀压缩)索引</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查询性能优化"><span class="toc-number">4.</span> <span class="toc-text">查询性能优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#慢查询基础：优化数据访问"><span class="toc-number">4.1.</span> <span class="toc-text">慢查询基础：优化数据访问</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#是否向数据可请求了不需要的数据"><span class="toc-number">4.1.1.</span> <span class="toc-text">是否向数据可请求了不需要的数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#MySQL是否扫描额外的记录"><span class="toc-number">4.1.2.</span> <span class="toc-text">MySQL是否扫描额外的记录</span></a></li></ol></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#MySQL架构"><span class="toc-number">1.</span> <span class="toc-text">MySQL架构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#并发控制"><span class="toc-number">1.1.</span> <span class="toc-text">并发控制</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#读写锁"><span class="toc-number">1.1.1.</span> <span class="toc-text">读写锁</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事物"><span class="toc-number">1.2.</span> <span class="toc-text">事物</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#隔离级别"><span class="toc-number">1.2.1.</span> <span class="toc-text">隔离级别</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MySQL的存储引擎"><span class="toc-number">1.3.</span> <span class="toc-text">MySQL的存储引擎</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Schema与数据类型优化"><span class="toc-number">2.</span> <span class="toc-text">Schema与数据类型优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#选择优化的数据类型"><span class="toc-number">2.1.</span> <span class="toc-text">选择优化的数据类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MySQL-schema设计中的陷阱"><span class="toc-number">2.2.</span> <span class="toc-text">MySQL schema设计中的陷阱</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#范式和反范式"><span class="toc-number">2.3.</span> <span class="toc-text">范式和反范式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#范式的优缺点"><span class="toc-number">2.3.1.</span> <span class="toc-text">范式的优缺点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#反范式的优缺点"><span class="toc-number">2.3.2.</span> <span class="toc-text">反范式的优缺点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#混用范式和反范式"><span class="toc-number">2.3.3.</span> <span class="toc-text">混用范式和反范式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#缓存表和汇总表"><span class="toc-number">2.4.</span> <span class="toc-text">缓存表和汇总表</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#物化视图"><span class="toc-number">2.4.1.</span> <span class="toc-text">物化视图</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#计数器表"><span class="toc-number">2.4.2.</span> <span class="toc-text">计数器表</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#加快ALTER-TABLE操作的数据"><span class="toc-number">2.5.</span> <span class="toc-text">加快ALTER TABLE操作的数据</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#只修改-frm文件"><span class="toc-number">2.5.1.</span> <span class="toc-text">只修改.frm文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#快速创建myisam索引"><span class="toc-number">2.5.2.</span> <span class="toc-text">快速创建myisam索引</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建高性能的索引"><span class="toc-number">3.</span> <span class="toc-text">创建高性能的索引</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#索引基础"><span class="toc-number">3.1.</span> <span class="toc-text">索引基础</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#索引基础-1"><span class="toc-number">3.1.1.</span> <span class="toc-text">索引基础</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#B-Tree索引"><span class="toc-number">3.1.1.1.</span> <span class="toc-text">B-Tree索引</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#哈希索引"><span class="toc-number">3.1.1.2.</span> <span class="toc-text">哈希索引</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#空间数据索引"><span class="toc-number">3.1.1.3.</span> <span class="toc-text">空间数据索引</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#全文索引"><span class="toc-number">3.1.1.4.</span> <span class="toc-text">全文索引</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#索引的优点"><span class="toc-number">3.2.</span> <span class="toc-text">索引的优点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#高性能的索引策略"><span class="toc-number">3.3.</span> <span class="toc-text">高性能的索引策略</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#独立的列"><span class="toc-number">3.3.1.</span> <span class="toc-text">独立的列</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#前缀索引和索引选择性"><span class="toc-number">3.3.2.</span> <span class="toc-text">前缀索引和索引选择性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#多列索引"><span class="toc-number">3.3.3.</span> <span class="toc-text">多列索引</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#选择合适的索引列顺序"><span class="toc-number">3.3.4.</span> <span class="toc-text">选择合适的索引列顺序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#聚簇索引"><span class="toc-number">3.3.5.</span> <span class="toc-text">聚簇索引</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#InnoDB-MyISAM的数据分布对比"><span class="toc-number">3.3.5.1.</span> <span class="toc-text">InnoDB MyISAM的数据分布对比</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#覆盖索引"><span class="toc-number">3.3.6.</span> <span class="toc-text">覆盖索引</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#使用索引扫描来做排序"><span class="toc-number">3.3.7.</span> <span class="toc-text">使用索引扫描来做排序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#压缩-前缀压缩-索引"><span class="toc-number">3.3.8.</span> <span class="toc-text">压缩(前缀压缩)索引</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查询性能优化"><span class="toc-number">4.</span> <span class="toc-text">查询性能优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#慢查询基础：优化数据访问"><span class="toc-number">4.1.</span> <span class="toc-text">慢查询基础：优化数据访问</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#是否向数据可请求了不需要的数据"><span class="toc-number">4.1.1.</span> <span class="toc-text">是否向数据可请求了不需要的数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#MySQL是否扫描额外的记录"><span class="toc-number">4.1.2.</span> <span class="toc-text">MySQL是否扫描额外的记录</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#响应时间"><span class="toc-number">4.1.2.1.</span> <span class="toc-text">响应时间</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#扫描的行数和返回的行数"><span class="toc-number">4.1.2.2.</span> <span class="toc-text">扫描的行数和返回的行数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#扫描的行数和访问类型"><span class="toc-number">4.1.2.3.</span> <span class="toc-text">扫描的行数和访问类型</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#重构查询方式"><span class="toc-number">4.2.</span> <span class="toc-text">重构查询方式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#一个复杂查询还是多个简单查询"><span class="toc-number">4.2.1.</span> <span class="toc-text">一个复杂查询还是多个简单查询</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#切分查询"><span class="toc-number">4.2.2.</span> <span class="toc-text">切分查询</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#分解关联查询"><span class="toc-number">4.2.3.</span> <span class="toc-text">分解关联查询</span></a></li></ol></li></ol></li></ol>
         
     </div>
     <style>
@@ -630,10 +655,10 @@
         }
     </style>
 
-    <input type="button" id="tocButton" value="Hide"  title="Show or Hide Table of Contents">
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
     <script>
-        yiliaConfig.toc = ["Hide", "Show", !!"false"];
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
     </script>
 
 
@@ -686,21 +711,21 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2018/04/10/manjaro安装软件脚本/" title="Pre: manjaro系统相关脚本和配置">
+            <a href="/2018/04/10/manjaro安装软件脚本/" title="上一篇: manjaro系统相关脚本和配置">
                 <i class="fa fa-angle-left"></i>
             </a>
         
 
-        <a title="Mini Archives"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2018/04/01/httpclientutil/" title="Next: HttpClient工具类">
+            <a href="/2018/04/01/httpclientutil/" title="下一篇: HttpClient工具类">
                 <i class="fa fa-angle-right"></i>
             </a>
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/04/10/manjaro安装软件脚本/">manjaro系统相关脚本和配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/04/高性能MySQL-study/">高性能MySQL学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/01/httpclientutil/">HttpClient工具类</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/14/qiniu-oss/">spring boot使用七牛云的oss(对象存储)文件上传</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/spring-boot-shiro-jwt/">spring boot集成shiro使用jwt进行权限控制</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/requestHolder_and_argumentResolver/">使用ThreadLocal和ArgumentResolver方便开发</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/applicationContextHelper/">在不被spring容器管理的类中使用ApplicationContext应用上下文bean</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_static_class_autowrite/">Spring boot 在静态类中注入spring组件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_diy_properties/">Spring boot 自定义配置文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/12/Elasticsearch_study_1/">Elasticsearch学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/09/深入理解java虚拟机学习笔记_1/">深入理解java虚拟机学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/23/Docker_study_Dockerfile_instructions/">Docker学习笔记---Dockerfile</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/22/Docker_study/">Docker学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/20/celery_study/">Celery-分布式任务队列学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_redis_cache/">Django使用redis作为缓存系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_channels_websocket/">Django使用Channels实现websocket</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/13/Docker_Gogs/">使用Docker搭建git服务Gogs</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_1to20/">LeetCode刷题记录(easy难度1-20题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_21to_40/">LeetCode刷题记录(easy难度21-40题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/29/es6_study/">es6学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/Webpack_study/">Webpack学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/RegularExpression_study/">正则表达式学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/08/AndroidStudio/">Android Studio 使用本地离线Gradle</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/跨域请求解决方案/">跨域请求的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_nginx_gunicorn/">django+nginx+gunicorn部署配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/ubuntu_supervisor/">ubuntu下的进程控制系统————Supervisor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/28/ubuntu修复不能挂载NTFS硬盘/">ubuntu修复linux和windows双系统下挂载ntfs硬盘出错问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/17/django_timing_task/">django使用django-crontab实现定时任务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/15/django_rest_framework_jwt/">django-rest-framework配置json web token进行接口的认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/spring_SpEL/">spring中的SpEL表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/django_rest_framework_study/">django-rest-framework框架学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/08/git_study/">Git学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/03/资源收集/">资源收集共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/06/ubuntu_open_port/">ubuntu开放指定端口</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/16/redis_study_2/">Redis学习笔记 -- 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/15/redis_study_1/">Redis学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/16/ubuntu_do_something_use/">ubuntu日常使用的安装配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/django_address_baiduapi_marker_show/">Django调用百度地图api在地图上批量增加标记点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/ubuntu_do_something_coding/">ubuntu搭建常见开发环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/10/ubuntu安装在双系统笔记本下开机或关机卡死.1/">ubuntu在双系统下开机卡死或关机卡死的解决办法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/11/python_requirements/">python生成项目所需依赖文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/10/hexo_github_coding_blog/">利用hexo和github或coding 搭免费个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django常用语句/">Django常用语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django数据库操作/">Django操作数据库</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django渲染模板/">Django渲染模板</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django环境搭建/">Django环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django连接mysql数据库/">Django连接MySql使用models处理数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/python2和Python3的区别/">Python2和Python3的区别简单总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/03/Android_qq_Menu/">Android仿qq侧滑菜单</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/16/C语言队列的基本操作/">C语言队列的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言共享栈/">C语言共享栈</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言逆波兰计算器/">C语言逆波兰表达式计算(后缀表达式计算器)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/c语言中缀表达式变后缀表达式/">C语言中缀表达式转后缀表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言中缀表达式计算器/">C语言中缀表达式计算器</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言二叉树基本操作/">C语言二叉树的基本操作</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/04/10/manjaro安装软件脚本/">manjaro系统相关脚本和配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/04/高性能MySQL-study/">高性能MySQL学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/01/httpclientutil/">HttpClient工具类</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/14/qiniu-oss/">spring boot使用七牛云的oss(对象存储)文件上传</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/spring-boot-shiro-jwt/">spring boot集成shiro使用jwt进行权限控制</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/requestHolder_and_argumentResolver/">使用ThreadLocal和ArgumentResolver方便开发</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/applicationContextHelper/">在不被spring容器管理的类中使用ApplicationContext应用上下文bean</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_static_class_autowrite/">Spring boot 在静态类中注入spring组件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_diy_properties/">Spring boot 自定义配置文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/12/Elasticsearch_study_1/">Elasticsearch学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/09/深入理解java虚拟机学习笔记_1/">深入理解java虚拟机学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/23/Docker_study_Dockerfile_instructions/">Docker学习笔记---Dockerfile</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/22/Docker_study/">Docker学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/20/celery_study/">Celery-分布式任务队列学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_redis_cache/">Django使用redis作为缓存系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_channels_websocket/">Django使用Channels实现websocket</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/13/Docker_Gogs/">使用Docker搭建git服务Gogs</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_21to_40/">LeetCode刷题记录(easy难度21-40题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_1to20/">LeetCode刷题记录(easy难度1-20题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/29/es6_study/">es6学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/Webpack_study/">Webpack学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/RegularExpression_study/">正则表达式学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/08/AndroidStudio/">Android Studio 使用本地离线Gradle</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/跨域请求解决方案/">跨域请求的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/ubuntu_supervisor/">ubuntu下的进程控制系统————Supervisor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_nginx_gunicorn/">django+nginx+gunicorn部署配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/28/ubuntu修复不能挂载NTFS硬盘/">ubuntu修复linux和windows双系统下挂载ntfs硬盘出错问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/17/django_timing_task/">django使用django-crontab实现定时任务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/15/django_rest_framework_jwt/">django-rest-framework配置json web token进行接口的认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/django_rest_framework_study/">django-rest-framework框架学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/spring_SpEL/">spring中的SpEL表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/08/git_study/">Git学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/03/资源收集/">资源收集共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/06/ubuntu_open_port/">ubuntu开放指定端口</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/16/redis_study_2/">Redis学习笔记 -- 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/15/redis_study_1/">Redis学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/16/ubuntu_do_something_use/">ubuntu日常使用的安装配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/django_address_baiduapi_marker_show/">Django调用百度地图api在地图上批量增加标记点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/ubuntu_do_something_coding/">ubuntu搭建常见开发环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/10/ubuntu安装在双系统笔记本下开机或关机卡死.1/">ubuntu在双系统下开机卡死或关机卡死的解决办法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/11/python_requirements/">python生成项目所需依赖文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/10/hexo_github_coding_blog/">利用hexo和github或coding 搭免费个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django常用语句/">Django常用语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/python2和Python3的区别/">Python2和Python3的区别简单总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django连接mysql数据库/">Django连接MySql使用models处理数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django环境搭建/">Django环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django数据库操作/">Django操作数据库</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django渲染模板/">Django渲染模板</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/03/Android_qq_Menu/">Android仿qq侧滑菜单</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/16/C语言队列的基本操作/">C语言队列的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言逆波兰计算器/">C语言逆波兰表达式计算(后缀表达式计算器)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言二叉树基本操作/">C语言二叉树的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言中缀表达式计算器/">C语言中缀表达式计算器</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言共享栈/">C语言共享栈</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/c语言中缀表达式变后缀表达式/">C语言中缀表达式转后缀表达式</a></li></ul>
 
 
 
@@ -717,14 +742,14 @@
                 2016-2018 EarthChen
             </div>
             <div class="footer-right">
-                <a href="http://hexo.io/" target="_blank" title="A fast, simple &amp; powerful blog framework">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Another simple and elegant theme for Hexo  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
             </div>
         </div>
         
             <div class="visit">
                 
                     <span id="busuanzi_container_site_pv" style='display:none'>
-                        <span id="site-visit" title="Site Visitors"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
                         </span>
                     </span>
                 
@@ -733,7 +758,7 @@
                 
                 
                     <span id="busuanzi_container_page_pv" style='display:none'>
-                        <span id="page-visit"  title="Page Hits"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
                         </span>
                     </span>
                 
@@ -768,9 +793,9 @@
 
 
 <div class="scroll" id="scroll">
-    <a href="#" title="Back to Top"><i class="fa fa-arrow-up"></i></a>
-    <a href="#comments" onclick="load$hide();" title="Comments"><i class="fa fa-comments-o"></i></a>
-    <a href="#footer" title="Go to Bottom"><i class="fa fa-arrow-down"></i></a>
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
 </div>
 <script>
     // Open in New Window
