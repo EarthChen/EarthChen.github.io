@@ -302,6 +302,85 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-django_rest_framework_study" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/06/12/django_rest_framework_study/" class="article-date">
+      <time datetime="2017-06-12T06:40:00.000Z" itemprop="datePublished">2017-06-12</time>
+</a>
+
+ 
+    <a href="/2017/06/12/django_rest_framework_study/#comments" title="查看评论">
+        <i class="fa fa-comments-o" aria-hidden="true"></i>
+        <span class="count-comment"></span>
+        
+        
+            <span class="disqus-comment-count" data-disqus-identifier="2017/06/12/django_rest_framework_study/"></span>
+        
+    </a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/12/django_rest_framework_study/">django-rest-framework框架学习</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>现在新一代web应用都开始采用前后端分离的方式来进行，淘汰了以前的服务器端渲染的方式。前后端分离方式有许多好处，比如<br>1、可以前后端并行开发，提高开发效率<br>2、页面都在客户端进行渲染，提高了渲染速度，减小了服务器的压力<br>3、一套api提供给多个客户端使用，而且不限制客户端的类型（web，app均可）</p>
+<p>提到前后端分离必然会提到restful，目标这是最流行的接口规范，想要了解的可以去<a href="http://www.ruanyifeng.com/blog/2011/09/restful" target="_blank" rel="external">阮老师的博客</a>看一下<br>越来越多的大型应用开始使用restful规范，restful强调一种无状态，资源的方式<br>在django中很著名的一个框架是django-rest-framework，帮我们减少了很多工作量，尤其在序列化与反序列化成我们需要的格式帮了我们省了很多事<br>在这里就记录一下个人的学习过程</p>
+<h2 id="django-rest-framework"><a href="#django-rest-framework" class="headerlink" title="django-rest-framework"></a>django-rest-framework</h2>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/学习笔记/">学习笔记</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django/">Django</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2017/06/12/django_rest_framework_study/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-spring_SpEL" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -854,86 +933,6 @@
 
 
   
-    <article id="post-django_address_baiduapi_marker_show" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/03/15/django_address_baiduapi_marker_show/" class="article-date">
-      <time datetime="2017-03-15T06:40:00.000Z" itemprop="datePublished">2017-03-15</time>
-</a>
-
- 
-    <a href="/2017/03/15/django_address_baiduapi_marker_show/#comments" title="查看评论">
-        <i class="fa fa-comments-o" aria-hidden="true"></i>
-        <span class="count-comment"></span>
-        
-        
-            <span class="disqus-comment-count" data-disqus-identifier="2017/03/15/django_address_baiduapi_marker_show/"></span>
-        
-    </a>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/15/django_address_baiduapi_marker_show/">Django调用百度地图api在地图上批量增加标记点</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>在调用百度地图api进行web开发时遇到了一个需求，我们需要在网页中内嵌一个div  然后在div中调用百度地图的js显示我们所需要的地区。根据需求坐标在地图上添加若干个标记点，并批量的为各个标记点设置监听函数，使之显示我们所需要的信息</p>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="创建工程"><a href="#创建工程" class="headerlink" title="创建工程"></a>创建工程</h3><p>首先，创建一个测试用的工程来测试我们的需要，可以使用<strong>pycharm</strong>或者<strong>django</strong>自带的命令创建工程<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">django-admin startproject addressdemo</span>
-</pre></td></tr></table></figure></p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/开发/">开发</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django/">Django</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2017/03/15/django_address_baiduapi_marker_show/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
     <article id="post-ubuntu_do_something_coding" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -1014,20 +1013,20 @@
 
 
   
-    <article id="post-ubuntu安装在双系统笔记本下开机或关机卡死.1" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-django_address_baiduapi_marker_show" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/03/10/ubuntu安装在双系统笔记本下开机或关机卡死.1/" class="article-date">
-      <time datetime="2017-03-10T06:40:00.000Z" itemprop="datePublished">2017-03-10</time>
+      <a href="/2017/03/15/django_address_baiduapi_marker_show/" class="article-date">
+      <time datetime="2017-03-15T06:40:00.000Z" itemprop="datePublished">2017-03-15</time>
 </a>
 
  
-    <a href="/2017/03/10/ubuntu安装在双系统笔记本下开机或关机卡死.1/#comments" title="查看评论">
+    <a href="/2017/03/15/django_address_baiduapi_marker_show/#comments" title="查看评论">
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
         
-            <span class="disqus-comment-count" data-disqus-identifier="2017/03/10/ubuntu安装在双系统笔记本下开机或关机卡死.1/"></span>
+            <span class="disqus-comment-count" data-disqus-identifier="2017/03/15/django_address_baiduapi_marker_show/"></span>
         
     </a>
 
@@ -1042,7 +1041,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/10/ubuntu安装在双系统笔记本下开机或关机卡死.1/">ubuntu在双系统下开机卡死或关机卡死的解决办法</a>
+      <a class="article-title" href="/2017/03/15/django_address_baiduapi_marker_show/">Django调用百度地图api在地图上批量增加标记点</a>
     </h1>
   
 
@@ -1052,7 +1051,10 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <p>很多双显卡的笔记本在安装linux发行版的时候可能会出现问题，<br>笔者的电脑如果不在bios设置中设置屏蔽核显就会开机卡主，所以装系统时必须得屏蔽核显，全局独显，不然进系统就卡死，关机也关不掉，<br>刚开始也就这么用着，但是慢慢发现一点问题，，就是耗电特别快，</p>
+              <p>在调用百度地图api进行web开发时遇到了一个需求，我们需要在网页中内嵌一个div  然后在div中调用百度地图的js显示我们所需要的地区。根据需求坐标在地图上添加若干个标记点，并批量的为各个标记点设置监听函数，使之显示我们所需要的信息</p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="创建工程"><a href="#创建工程" class="headerlink" title="创建工程"></a>创建工程</h3><p>首先，创建一个测试用的工程来测试我们的需要，可以使用<strong>pycharm</strong>或者<strong>django</strong>自带的命令创建工程<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">django-admin startproject addressdemo</span>
+</pre></td></tr></table></figure></p>
           
       
     </div>
@@ -1061,18 +1063,18 @@
       
       
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/随笔/">随笔</a>
+    <a class="article-category-link" href="/categories/开发/">开发</a>
     </div>
 
 
       
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/解决方案/">解决方案</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django/">Django</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
     </div>
 
       
         <p class="article-more-link">
-          <a href="/2017/03/10/ubuntu安装在双系统笔记本下开机或关机卡死.1/#more">more >></a>
+          <a href="/2017/03/15/django_address_baiduapi_marker_show/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
