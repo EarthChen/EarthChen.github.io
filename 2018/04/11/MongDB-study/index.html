@@ -15,17 +15,17 @@
 
 
 
-<meta name="description" content="Mongo">
-<meta name="keywords" content="MySQL">
+<meta name="description" content="Mongo 基础知识与对文档的增删改查">
+<meta name="keywords" content="MongoDB">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MongoDB权威指南学习笔记">
+<meta property="og:title" content="MongoDB权威指南学习笔记(1)--基础知识与对文档的增删改查">
 <meta property="og:url" content="http://earthchen.cn/2018/04/11/MongDB-study/index.html">
 <meta property="og:site_name" content="EarthChen&#39;s Blog">
-<meta property="og:description" content="Mongo">
-<meta property="og:updated_time" content="2018-04-12T08:58:35.358Z">
+<meta property="og:description" content="Mongo 基础知识与对文档的增删改查">
+<meta property="og:updated_time" content="2018-04-13T02:56:27.196Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MongoDB权威指南学习笔记">
-<meta name="twitter:description" content="Mongo">
+<meta name="twitter:title" content="MongoDB权威指南学习笔记(1)--基础知识与对文档的增删改查">
+<meta name="twitter:description" content="Mongo 基础知识与对文档的增删改查">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -57,7 +57,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>MongoDB权威指南学习笔记 | EarthChen&#39;s Blog</title>
+<title>MongoDB权威指南学习笔记(1)--基础知识与对文档的增删改查 | EarthChen&#39;s Blog</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -209,7 +209,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AJAX/">AJAX</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Celery/">Celery</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django/">Django</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gogs/">Gogs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LeetCode/">LeetCode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/">MySQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/">Nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/">Node.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Regular-Expression/">Regular Expression</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/">Spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-boot/">Spring boot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webpack/">Webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/解决方案/">解决方案</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/资源/">资源</a></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AJAX/">AJAX</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Celery/">Celery</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django/">Django</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gogs/">Gogs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LeetCode/">LeetCode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB/">MongoDB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/">MySQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/">Nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/">Node.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Regular-Expression/">Regular Expression</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/">Spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-boot/">Spring boot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webpack/">Webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/解决方案/">解决方案</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/资源/">资源</a></li></ul>
                     </div>
                 </section>
                 
@@ -315,7 +315,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      MongoDB权威指南学习笔记
+      MongoDB权威指南学习笔记(1)--基础知识与对文档的增删改查
     </h1>
   
 
@@ -330,7 +330,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/">MySQL</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MongoDB/">MongoDB</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -341,6 +341,7 @@
       
           
         <p>Mongo</p>
+<p>基础知识与对文档的增删改查</p>
 <a id="more"></a>
 <h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><h3 id="文档"><a href="#文档" class="headerlink" title="文档"></a>文档</h3><p>文档就是键值对的一个有序集，例如</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
@@ -890,9 +891,373 @@
 <li>第三个参数<strong>true</strong>表示这是个upsert</li>
 <li>upsert操作时原子性的，创建文档会将条件文档作为基础，然后对他应用修改器文档</li>
 </ul>
+</blockquote>
+<h5 id="save-hello-帮助程序"><a href="#save-hello-帮助程序" class="headerlink" title="save hello 帮助程序"></a>save hello 帮助程序</h5><p>save时一个shell函数，如果文档不存在，它会自动创建文档，如果文档存在，它就更新这个文档，它只有一个参数，文档。要是这个文档含有<strong>_id</strong>键，save会调用upsert,否在会调用insert</p>
+<h4 id="更新多个文档"><a href="#更新多个文档" class="headerlink" title="更新多个文档"></a>更新多个文档</h4><p>默认情况下，更新只能对符合匹配条件的第一个文档执行操作，要是有多个文档符合条件，只有第一个文档会呗更新。</p>
+<p>如果要更新所有匹配的文档，可以将update的第四个参数设置为true</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+</pre></td><td class="code"><pre><span class="line">db.users.update(&#123;</span>
+<span class="line">        <span class="string">"brithday"</span>:<span class="string">"10/13/1978"</span></span>
+<span class="line">    &#125;,</span>
+<span class="line">    &#123;</span>
+<span class="line">        <span class="string">"$set"</span>:&#123;</span>
+<span class="line">            <span class="string">"gift"</span>:<span class="string">"happy birhday"</span></span>
+<span class="line">        &#125;</span>
+<span class="line">    &#125;,</span>
+<span class="line">    <span class="literal">false</span>,</span>
+<span class="line">    <span class="literal">true</span></span>
+<span class="line">)</span>
+</pre></td></tr></table></figure>
+<h4 id="返回呗更新的文档"><a href="#返回呗更新的文档" class="headerlink" title="返回呗更新的文档"></a>返回呗更新的文档</h4><p><strong>findAndModift</strong>能够在一个操作中返回匹配结果并进行更新</p>
+<h2 id="查询"><a href="#查询" class="headerlink" title="查询"></a>查询</h2><h3 id="find"><a href="#find" class="headerlink" title="find"></a>find</h3><h4 id="指定需要返回的键"><a href="#指定需要返回的键" class="headerlink" title="指定需要返回的键"></a>指定需要返回的键</h4><p>有时并不需要将文档中所有键/值对都返回，可以通过find(或findOne)的第二个参数来指定想要的键。<br>这样可以减少传输的数据量，又能节省客户端解码文档的时间和内存消耗。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line">db.users.find(&#123;&#125;,&#123;</span>
+<span class="line">    <span class="string">"username"</span>:<span class="number">1</span>,</span>
+<span class="line">    <span class="string">"email"</span>:<span class="number">1</span></span>
+<span class="line">&#125;)</span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>如果不指定”_od”是否返回，”_id”是默认呗返回的</p>
+</blockquote>
+<p>既然可以选择需要的键，当然也可以排除查询结果中的某些键值对<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line">db.users.find(&#123;&#125;,&#123;</span>
+<span class="line">    <span class="string">"xxx"</span>:<span class="number">0</span></span>
+<span class="line">&#125;)</span>
+</pre></td></tr></table></figure></p>
+<h3 id="查询条件"><a href="#查询条件" class="headerlink" title="查询条件"></a>查询条件</h3><h4 id="查询条件-1"><a href="#查询条件-1" class="headerlink" title="查询条件"></a>查询条件</h4><p>比较操作符：</p>
+<ul>
+<li><strong>$lt</strong> ：&lt;</li>
+<li><strong>$lte</strong>:&lt;=&gt;</li>
+<li><strong>$gt</strong>:&gt;</li>
+<li><strong>$gte</strong>:&gt;=</li>
+</ul>
+<p>例如查询“age”字段大于等于18、小于等于30的所有文档<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+</pre></td><td class="code"><pre><span class="line">db.users.find(&#123;</span>
+<span class="line">    <span class="string">"age"</span>:&#123;</span>
+<span class="line">        <span class="string">"$gte"</span>:<span class="number">18</span>,</span>
+<span class="line">        <span class="string">"$lte"</span>:<span class="number">30</span></span>
+<span class="line">    &#125;</span>
+<span class="line">&#125;)</span>
+</pre></td></tr></table></figure></p>
+<h4 id="OR查询"><a href="#OR查询" class="headerlink" title="OR查询"></a>OR查询</h4><p>有两种方式进行OR查询：</p>
+<ul>
+<li><strong>$in</strong>可以用于查询一个键的多个值<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line">db.users.find(&#123;</span>
+<span class="line">    <span class="string">"user_id"</span>:&#123;</span>
+<span class="line">        <span class="string">"$in"</span>:[<span class="number">123456</span>,<span class="string">"joe"</span>]</span>
+<span class="line">    &#125;</span>
+<span class="line">&#125;)</span>
+</pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>与<strong>$in</strong>相反的是<strong>$nin</strong>，将返回与数组中所有条件都不匹配的文档</p>
+</blockquote>
+<ul>
+<li><strong>$or</strong>可以在多个键中查询任意的给定值<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+</pre></td><td class="code"><pre><span class="line">db.raffle.find(&#123;</span>
+<span class="line">    <span class="string">"$or"</span>;[</span>
+<span class="line">        &#123;</span>
+<span class="line">            <span class="string">"ticket_no"</span>:<span class="number">725</span></span>
+<span class="line">        &#125;,</span>
+<span class="line">        &#123;</span>
+<span class="line">            <span class="string">"winner"</span>:<span class="literal">true</span></span>
+<span class="line">        &#125;</span>
+<span class="line">    ]</span>
+<span class="line">&#125;)</span>
+</pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="not"><a href="#not" class="headerlink" title="$not"></a>$not</h4><p>是元条件句，可以用在任何其他条件之上，表示否定的含义</p>
+<h4 id="条件语义"><a href="#条件语义" class="headerlink" title="条件语义"></a>条件语义</h4><p>条件语句时内层文档的键，而修改器是外层文档的键</p>
+<p>一个键可以在任意多个条件，但是一个键不能对应多个更新修改器</p>
+<h3 id="特定类型的查询"><a href="#特定类型的查询" class="headerlink" title="特定类型的查询"></a>特定类型的查询</h3><h4 id="null"><a href="#null" class="headerlink" title="null"></a>null</h4><p>null不仅会匹配某个键的值为null的文档，而且还会匹配不包含这个键的文档。这个匹配还会返回缺少这个键的所有文档</p>
+<p>如果仅想匹配键值为null的文档，既要检查该键的值是否时null，还要通过<strong>$exists</strong>条件判断键值是否存在。</p>
+<h4 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h4><p>正则表达式能够有效地匹配字符串。</p>
+<p>例如:<br>想要查找所有名为Joe或者joe的用户，就可以使用正则表达式执行不区分大小写的匹配<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line">db.users.find(&#123;</span>
+<span class="line">    <span class="string">"name"</span>:<span class="regexp">/joe/i</span></span>
+<span class="line">&#125;)</span>
+</pre></td></tr></table></figure></p>
+<blockquote>
+<ul>
+<li>系统可以接受正则表达式标志(i)，但不一定要有。</li>
+<li>mongoDB使用Perl兼容的正则表达式来匹配正则表达式</li>
+</ul>
+</blockquote>
+<h4 id="查询数组"><a href="#查询数组" class="headerlink" title="查询数组"></a>查询数组</h4><p>查询数组元素和查询标量值是一样的</p>
+<p>例如有一个水果列表<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line">db.food.insert(&#123;</span>
+<span class="line">    <span class="string">"fruit"</span>:[<span class="string">"aople"</span>,<span class="string">"banana"</span>,<span class="string">"peach"</span>]</span>
+<span class="line">&#125;)</span>
+</pre></td></tr></table></figure></p>
+<p>通过下面的查询可以成功匹配到文档<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line">db.food.find(&#123;</span>
+<span class="line">    <span class="string">"fruit"</span>:<span class="string">"banana"</span></span>
+<span class="line">&#125;)</span>
+</pre></td></tr></table></figure></p>
+<h5 id="all"><a href="#all" class="headerlink" title="$all"></a>$all</h5><p>如果需要通过多个元素来匹配数组，就需要使用<strong>$all</strong>。</p>
+<ul>
+<li><p>要找到既有apple又有banana的文档</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line">db.food.find(&#123;</span>
+<span class="line">    <span class="string">"fruit"</span>:&#123;</span>
+<span class="line">        <span class="string">"$all"</span>:[<span class="string">"apple"</span>,<span class="string">"banana"</span>]</span>
+<span class="line">    &#125;</span>
+<span class="line">&#125;)</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>如果不使用<strong>$all</strong>，那就是对整个数组进行精确匹配，但是精确匹配对于缺少元素或者元素沉余的情况不适用</p>
+</li>
+</ul>
+<p>下面将不能匹配到文档<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line">db.food.find(&#123;</span>
+<span class="line">    <span class="string">"fruit"</span>:[<span class="string">"apple"</span>,<span class="string">"banana"</span>]</span>
+<span class="line">&#125;)</span>
+</pre></td></tr></table></figure></p>
+<ul>
+<li>如果想查询数组特定位置的元素，需要使用<strong>key.inex</strong>语法指定下标</li>
+</ul>
+<p>将数组第三个元素和<strong>peach</strong>进行匹配<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line">db.food.find(&#123;</span>
+<span class="line">    <span class="string">"fruit.2"</span>:<span class="string">"peach"</span></span>
+<span class="line">&#125;)</span>
+</pre></td></tr></table></figure></p>
+<h5 id="size"><a href="#size" class="headerlink" title="$size"></a>$size</h5><p>用它查询特定长度的数组。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line">db.food.find(&#123;</span>
+<span class="line">    <span class="string">"fruit"</span>:&#123;</span>
+<span class="line">        <span class="string">"$size"</span>:<span class="number">3</span></span>
+<span class="line">    &#125;</span>
+<span class="line">&#125;)</span>
+</pre></td></tr></table></figure></p>
+<blockquote>
+<p>$size并不能与其他查询条件组合使用，但是这种查询可以通过在文档中添加一个“size”的值</p>
+</blockquote>
+<h5 id="slice操作符"><a href="#slice操作符" class="headerlink" title="$slice操作符"></a>$slice操作符</h5><p>可以返回某个键匹配的数组元的一个子集</p>
+<p>假设现在有一个博客文章的文档，我们希望返回前10条评论<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line">db.blog.posts.findOne(criteria,&#123;</span>
+<span class="line">    <span class="string">"comments"</span>:&#123;</span>
+<span class="line">        <span class="string">"$slice"</span>:<span class="number">10</span></span>
+<span class="line">    &#125;</span>
+<span class="line">&#125;)</span>
+</pre></td></tr></table></figure></p>
+<p>返回后10条<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line">db.blog.posts.findOne(criteria,&#123;</span>
+<span class="line">    <span class="string">"comments"</span>:&#123;</span>
+<span class="line">        <span class="string">"$slice"</span>:<span class="number">-10</span></span>
+<span class="line">    &#125;</span>
+<span class="line">&#125;)</span>
+</pre></td></tr></table></figure></p>
+<p>指定偏移量以及希望返回的元素数量，来返回元素集合中间位置的某些结果<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line">db.blog.posts.findOne(criteria,&#123;</span>
+<span class="line">    <span class="string">"comments"</span>:&#123;</span>
+<span class="line">        <span class="string">"$slice"</span>:[<span class="number">23</span>,<span class="number">10</span>]</span>
+<span class="line">    &#125;</span>
+<span class="line">&#125;)</span>
+</pre></td></tr></table></figure></p>
+<p>除非特别声明，否则使用<strong>$slice</strong>时返回文档中的所欲键，别的键说明符都是默认返回未提及的键</p>
+<h5 id="返回一个匹配的数组元素"><a href="#返回一个匹配的数组元素" class="headerlink" title="返回一个匹配的数组元素"></a>返回一个匹配的数组元素</h5><p>希望返回与查询条件相匹配的任意一个数组元素，可以使用$操作符得到一个匹配的元素。</p>
+<p>用如下的方式得到Bob的评论<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line">db.blog.posts.find(&#123;</span>
+<span class="line">    <span class="string">"comments.name"</span>:<span class="string">"bob"</span></span>
+<span class="line">&#125;,&#123;</span>
+<span class="line">    <span class="string">"comments.$"</span>:<span class="number">1</span></span>
+<span class="line">&#125;)</span>
+</pre></td></tr></table></figure></p>
+<h5 id="数组和范围查询的相互作用"><a href="#数组和范围查询的相互作用" class="headerlink" title="数组和范围查询的相互作用"></a>数组和范围查询的相互作用</h5><p>文档中的标量(非数组元素)必须与查询条件中的每一条语句相匹配</p>
+<p>使用<strong>$elemMatch</strong>要求使用查询条件中的两个语句与一个数组元素进行比较，<strong>$elemMatch</strong>不会匹配非数组元素<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+</pre></td><td class="code"><pre><span class="line">db.test.find(&#123;</span>
+<span class="line">    <span class="string">"x"</span>:&#123;</span>
+<span class="line">        <span class="string">"$elemMatch"</span>:&#123;</span>
+<span class="line">            <span class="string">"$gt"</span><span class="number">10</span>,</span>
+<span class="line">            <span class="string">"$lt"</span>:<span class="number">20</span></span>
+<span class="line">        &#125;</span>
+<span class="line">    &#125;</span>
+<span class="line">&#125;)</span>
+</pre></td></tr></table></figure></p>
+<h4 id="查询内嵌文档"><a href="#查询内嵌文档" class="headerlink" title="查询内嵌文档"></a>查询内嵌文档</h4><p>有两种方法可以查询内嵌文档</p>
+<ul>
+<li>查询整个文档</li>
+<li>针对其键/值对进行查询</li>
+</ul>
+<p>查询整个内嵌文档与普通查询完全相同，例如有如下文档<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+</pre></td><td class="code"><pre><span class="line">&#123;</span>
+<span class="line">    <span class="string">"name"</span>:&#123;</span>
+<span class="line">        <span class="string">"first"</span>:<span class="string">"joe"</span>,</span>
+<span class="line">        <span class="string">"last"</span>:<span class="string">"schmoe"</span></span>
+<span class="line">    &#125;,</span>
+<span class="line">    <span class="string">"age"</span>:<span class="number">45</span></span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure></p>
+<p>要查询姓名为joe schmoe的人可以这样<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+</pre></td><td class="code"><pre><span class="line">db.peop;e.find(&#123;</span>
+<span class="line">    <span class="string">"name"</span>:&#123;</span>
+<span class="line">        <span class="string">"first"</span>:<span class="string">"joe"</span>,</span>
+<span class="line">        <span class="string">"last"</span>:<span class="string">"schmoe"</span></span>
+<span class="line">    &#125;</span>
+<span class="line">&#125;)</span>
+</pre></td></tr></table></figure></p>
+<blockquote>
+<p>如果想要查询一个完整的子文档，那么子文档必须精确匹配，如果joe决定添加一个代表钟建明的键，那么查询就不在可行。</p>
+</blockquote>
+<p>如果允许的话，通常只针对内嵌文档的特定键值进行查询，我们一般使用<strong>点表示法</strong>查询内嵌文档的键<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line">db.people.find(&#123;</span>
+<span class="line">    <span class="string">"name.first"</span>:<span class="string">"joe"</span>,</span>
+<span class="line">    <span class="string">"name.last"</span>:<span class="string">"schmoe"</span></span>
+<span class="line">&#125;)</span>
+</pre></td></tr></table></figure></p>
+<blockquote>
+<p>查询文档可以包含点来表达进入内嵌文档内部的意思</p>
+</blockquote>
+<h3 id="where查询"><a href="#where查询" class="headerlink" title="$where查询"></a>$where查询</h3><p>为安全起见，应该严格限制或消除<strong>$where</strong>语句的使用</p>
+<p>最常见的应用就是比较文档中的两个键的值是否相等</p>
+<h3 id="游标"><a href="#游标" class="headerlink" title="游标"></a>游标</h3><p>数据库使用游标返回find的执行结果，客户端对游标的实现通常能够对最终结果进行有效的控制。可以限制结果的数量，略过部分结果，根据任意键按任意顺序的组合对结果进行各种排序，或者执行一些强大的操作。</p>
+<h4 id="limit、skip、sort"><a href="#limit、skip、sort" class="headerlink" title="limit、skip、sort"></a>limit、skip、sort</h4><p>要限制结果数量，可在find后使用limit函数<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">db.c.find().limit(<span class="number">3</span>)</span>
+</pre></td></tr></table></figure></p>
+<blockquote>
+<p>要是匹配的结果不到3个，则返回匹配数量的结果。</p>
+</blockquote>
+<p>skip和limit类似，不过时跳过前n个匹配的文档，返回余下的文档<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">db.c.find().skip(<span class="number">3</span>)</span>
+</pre></td></tr></table></figure></p>
+<p>sort接受一个独享作为参数，这个对象时一组键值对，键对应文档的键名，值代表排序的方向。排序方向可以是1(升序)或者-1(降序)<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line">db.c.find(&#123;</span>
+<span class="line">    <span class="string">"username"</span>:<span class="number">1</span>,</span>
+<span class="line">    <span class="string">"age"</span>:<span class="number">-1</span></span>
+<span class="line">&#125;)</span>
+</pre></td></tr></table></figure></p>
+<h5 id="比较顺序"><a href="#比较顺序" class="headerlink" title="比较顺序"></a>比较顺序</h5><p>如果混合类型的键排序，其排序顺序是预先定义好的，优先级从小到大，其顺序如下：</p>
+<ol>
+<li>最小值</li>
+<li>null</li>
+<li>数字</li>
+<li>字符串</li>
+<li>对象(文档)</li>
+<li>数组</li>
+<li>二进制数据</li>
+<li>对象id</li>
+<li>布尔型</li>
+<li>日期型</li>
+<li>时间戳</li>
+<li>正则表达式</li>
+<li>最大值</li>
+</ol>
+<h4 id="避免使用skip略过大量结果"><a href="#避免使用skip略过大量结果" class="headerlink" title="避免使用skip略过大量结果"></a>避免使用skip略过大量结果</h4><ol>
+<li><p>不同skip对结果分页<br> 用limit返回结果的第一页，然后每个后续页面作为相对于开始的偏移量返回</p>
+</li>
+<li><p>随机选取文档<br>在插入文档时给每个文档都添加一个额外的随机键</p>
+</li>
+</ol>
+<h4 id="搞基查询选项"><a href="#搞基查询选项" class="headerlink" title="搞基查询选项"></a>搞基查询选项</h4><p>两种类型查询：</p>
+<ul>
+<li>简单查询</li>
+<li>封装查询</li>
+</ul>
+<p>用于向查询中添加各种选项：</p>
+<ul>
+<li><p>$maxscan : integer<br>  指定本次扫描中扫描文档数量的上限</p>
+</li>
+<li><p>$min: document<br>  查询的开始条件，在这样的查询中，文档必须与索引的键完全匹配</p>
+</li>
+<li><p>$max: document<br>  查询的结束条件，在这样的查询中，文档必须与索引的键完全匹配</p>
+</li>
+</ul>
+<blockquote>
 <p>注：</p>
 <ul>
-<li>上述测试在<strong>ubuntu16.04 lts</strong> <strong>jdk1.8</strong>中成功</li>
+<li>上述测试在<strong>MongoDB 3.4.3-8-g05b19c6</strong>中成功</li>
 <li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
 </ul>
 </blockquote>
@@ -904,12 +1269,12 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2018/04/11/MongDB-study/">MongoDB权威指南学习笔记</a></p>
+        <p><span>本文标题:</span><a href="/2018/04/11/MongDB-study/">MongoDB权威指南学习笔记(1)--基础知识与对文档的增删改查</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">EarthChen</a></p>
         <p><span>发布时间:</span>2018-04-11, 22:00:00</p>
-        <p><span>最后更新:</span>2018-04-12, 16:58:35</p>
+        <p><span>最后更新:</span>2018-04-13, 10:56:27</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2018/04/11/MongDB-study/" title="MongoDB权威指南学习笔记">http://earthchen.cn/2018/04/11/MongDB-study/</a>
+            <span>原始链接:</span><a class="post-url" href="/2018/04/11/MongDB-study/" title="MongoDB权威指南学习笔记(1)--基础知识与对文档的增删改查">http://earthchen.cn/2018/04/11/MongDB-study/</a>
             <span class="copy-path" data-clipboard-text="原文: http://earthchen.cn/2018/04/11/MongDB-study/　　作者: EarthChen" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
@@ -937,7 +1302,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#基础知识"><span class="toc-number">1.</span> <span class="toc-text">基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#文档"><span class="toc-number">1.1.</span> <span class="toc-text">文档</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#集合"><span class="toc-number">1.2.</span> <span class="toc-text">集合</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#动态模式"><span class="toc-number">1.2.1.</span> <span class="toc-text">动态模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#命名"><span class="toc-number">1.2.2.</span> <span class="toc-text">命名</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#子集合"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">子集合</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据库"><span class="toc-number">1.3.</span> <span class="toc-text">数据库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#shell"><span class="toc-number">1.4.</span> <span class="toc-text">shell</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#mongodb客户端"><span class="toc-number">1.4.1.</span> <span class="toc-text">mongodb客户端</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#基本操作"><span class="toc-number">1.4.2.</span> <span class="toc-text">基本操作</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#创建"><span class="toc-number">1.4.2.1.</span> <span class="toc-text">创建</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#读取"><span class="toc-number">1.4.2.2.</span> <span class="toc-text">读取</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#更新"><span class="toc-number">1.4.2.3.</span> <span class="toc-text">更新</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#删除"><span class="toc-number">1.4.2.4.</span> <span class="toc-text">删除</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据类型"><span class="toc-number">1.5.</span> <span class="toc-text">数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#基本数据类型"><span class="toc-number">1.5.1.</span> <span class="toc-text">基本数据类型</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用MongoDB-shell"><span class="toc-number">1.6.</span> <span class="toc-text">使用MongoDB shell</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#使用shell执行脚本"><span class="toc-number">1.6.1.</span> <span class="toc-text">使用shell执行脚本</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建-更新-删除文档"><span class="toc-number">2.</span> <span class="toc-text">创建 更新 删除文档</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#插入并保存"><span class="toc-number">2.1.</span> <span class="toc-text">插入并保存</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#批量插入"><span class="toc-number">2.1.1.</span> <span class="toc-text">批量插入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#插入校验"><span class="toc-number">2.1.2.</span> <span class="toc-text">插入校验</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除文档"><span class="toc-number">2.2.</span> <span class="toc-text">删除文档</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#删除速度"><span class="toc-number">2.2.1.</span> <span class="toc-text">删除速度</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#更新文档"><span class="toc-number">2.3.</span> <span class="toc-text">更新文档</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#文档替换"><span class="toc-number">2.3.1.</span> <span class="toc-text">文档替换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#使用修改器"><span class="toc-number">2.3.2.</span> <span class="toc-text">使用修改器</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#设置操作"><span class="toc-number">2.3.2.1.</span> <span class="toc-text">设置操作</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#增加减少操作"><span class="toc-number">2.3.2.2.</span> <span class="toc-text">增加减少操作</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#数组修改器"><span class="toc-number">2.3.2.3.</span> <span class="toc-text">数组修改器</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#添加元素"><span class="toc-number">2.3.2.4.</span> <span class="toc-text">添加元素</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#将数组作为数据集使用"><span class="toc-number">2.3.2.5.</span> <span class="toc-text">将数组作为数据集使用</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#删除元素"><span class="toc-number">2.3.2.6.</span> <span class="toc-text">删除元素</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#基于位置的数组修改器"><span class="toc-number">2.3.2.7.</span> <span class="toc-text">基于位置的数组修改器</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#upsert"><span class="toc-number">2.3.3.</span> <span class="toc-text">upsert</span></a></li></ol></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#基础知识"><span class="toc-number">1.</span> <span class="toc-text">基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#文档"><span class="toc-number">1.1.</span> <span class="toc-text">文档</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#集合"><span class="toc-number">1.2.</span> <span class="toc-text">集合</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#动态模式"><span class="toc-number">1.2.1.</span> <span class="toc-text">动态模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#命名"><span class="toc-number">1.2.2.</span> <span class="toc-text">命名</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#子集合"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">子集合</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据库"><span class="toc-number">1.3.</span> <span class="toc-text">数据库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#shell"><span class="toc-number">1.4.</span> <span class="toc-text">shell</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#mongodb客户端"><span class="toc-number">1.4.1.</span> <span class="toc-text">mongodb客户端</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#基本操作"><span class="toc-number">1.4.2.</span> <span class="toc-text">基本操作</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#创建"><span class="toc-number">1.4.2.1.</span> <span class="toc-text">创建</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#读取"><span class="toc-number">1.4.2.2.</span> <span class="toc-text">读取</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#更新"><span class="toc-number">1.4.2.3.</span> <span class="toc-text">更新</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#删除"><span class="toc-number">1.4.2.4.</span> <span class="toc-text">删除</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据类型"><span class="toc-number">1.5.</span> <span class="toc-text">数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#基本数据类型"><span class="toc-number">1.5.1.</span> <span class="toc-text">基本数据类型</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用MongoDB-shell"><span class="toc-number">1.6.</span> <span class="toc-text">使用MongoDB shell</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#使用shell执行脚本"><span class="toc-number">1.6.1.</span> <span class="toc-text">使用shell执行脚本</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建-更新-删除文档"><span class="toc-number">2.</span> <span class="toc-text">创建 更新 删除文档</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#插入并保存"><span class="toc-number">2.1.</span> <span class="toc-text">插入并保存</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#批量插入"><span class="toc-number">2.1.1.</span> <span class="toc-text">批量插入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#插入校验"><span class="toc-number">2.1.2.</span> <span class="toc-text">插入校验</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除文档"><span class="toc-number">2.2.</span> <span class="toc-text">删除文档</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#删除速度"><span class="toc-number">2.2.1.</span> <span class="toc-text">删除速度</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#更新文档"><span class="toc-number">2.3.</span> <span class="toc-text">更新文档</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#文档替换"><span class="toc-number">2.3.1.</span> <span class="toc-text">文档替换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#使用修改器"><span class="toc-number">2.3.2.</span> <span class="toc-text">使用修改器</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#设置操作"><span class="toc-number">2.3.2.1.</span> <span class="toc-text">设置操作</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#增加减少操作"><span class="toc-number">2.3.2.2.</span> <span class="toc-text">增加减少操作</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#数组修改器"><span class="toc-number">2.3.2.3.</span> <span class="toc-text">数组修改器</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#添加元素"><span class="toc-number">2.3.2.4.</span> <span class="toc-text">添加元素</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#将数组作为数据集使用"><span class="toc-number">2.3.2.5.</span> <span class="toc-text">将数组作为数据集使用</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#删除元素"><span class="toc-number">2.3.2.6.</span> <span class="toc-text">删除元素</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#基于位置的数组修改器"><span class="toc-number">2.3.2.7.</span> <span class="toc-text">基于位置的数组修改器</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#upsert"><span class="toc-number">2.3.3.</span> <span class="toc-text">upsert</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#save-hello-帮助程序"><span class="toc-number">2.3.3.1.</span> <span class="toc-text">save hello 帮助程序</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#更新多个文档"><span class="toc-number">2.3.4.</span> <span class="toc-text">更新多个文档</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#返回呗更新的文档"><span class="toc-number">2.3.5.</span> <span class="toc-text">返回呗更新的文档</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查询"><span class="toc-number">3.</span> <span class="toc-text">查询</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#find"><span class="toc-number">3.1.</span> <span class="toc-text">find</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#指定需要返回的键"><span class="toc-number">3.1.1.</span> <span class="toc-text">指定需要返回的键</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查询条件"><span class="toc-number">3.2.</span> <span class="toc-text">查询条件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#查询条件-1"><span class="toc-number">3.2.1.</span> <span class="toc-text">查询条件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#OR查询"><span class="toc-number">3.2.2.</span> <span class="toc-text">OR查询</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#not"><span class="toc-number">3.2.3.</span> <span class="toc-text">$not</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#条件语义"><span class="toc-number">3.2.4.</span> <span class="toc-text">条件语义</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#特定类型的查询"><span class="toc-number">3.3.</span> <span class="toc-text">特定类型的查询</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#null"><span class="toc-number">3.3.1.</span> <span class="toc-text">null</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#正则表达式"><span class="toc-number">3.3.2.</span> <span class="toc-text">正则表达式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#查询数组"><span class="toc-number">3.3.3.</span> <span class="toc-text">查询数组</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#all"><span class="toc-number">3.3.3.1.</span> <span class="toc-text">$all</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#size"><span class="toc-number">3.3.3.2.</span> <span class="toc-text">$size</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#slice操作符"><span class="toc-number">3.3.3.3.</span> <span class="toc-text">$slice操作符</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#返回一个匹配的数组元素"><span class="toc-number">3.3.3.4.</span> <span class="toc-text">返回一个匹配的数组元素</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#数组和范围查询的相互作用"><span class="toc-number">3.3.3.5.</span> <span class="toc-text">数组和范围查询的相互作用</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#查询内嵌文档"><span class="toc-number">3.3.4.</span> <span class="toc-text">查询内嵌文档</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#where查询"><span class="toc-number">3.4.</span> <span class="toc-text">$where查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#游标"><span class="toc-number">3.5.</span> <span class="toc-text">游标</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#limit、skip、sort"><span class="toc-number">3.5.1.</span> <span class="toc-text">limit、skip、sort</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#比较顺序"><span class="toc-number">3.5.1.1.</span> <span class="toc-text">比较顺序</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#避免使用skip略过大量结果"><span class="toc-number">3.5.2.</span> <span class="toc-text">避免使用skip略过大量结果</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#搞基查询选项"><span class="toc-number">3.5.3.</span> <span class="toc-text">搞基查询选项</span></a></li></ol></li></ol></li></ol>
         
     </div>
     <style>
@@ -973,7 +1338,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"MongoDB权威指南学习笔记　| EarthChen's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"MongoDB权威指南学习笔记(1)--基础知识与对文档的增删改查　| EarthChen's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -1019,7 +1384,7 @@
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/04/11/MongDB-study/">MongoDB权威指南学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/10/manjaro安装软件脚本/">manjaro系统相关脚本和配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/04/高性能MySQL-study/">高性能MySQL学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/01/httpclientutil/">HttpClient工具类</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/14/qiniu-oss/">spring boot使用七牛云的oss(对象存储)文件上传</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/spring-boot-shiro-jwt/">spring boot集成shiro使用jwt进行权限控制</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/requestHolder_and_argumentResolver/">使用ThreadLocal和ArgumentResolver方便开发</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/applicationContextHelper/">在不被spring容器管理的类中使用ApplicationContext应用上下文bean</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_static_class_autowrite/">Spring boot 在静态类中注入spring组件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_diy_properties/">Spring boot 自定义配置文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/12/Elasticsearch_study_1/">Elasticsearch学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/09/深入理解java虚拟机学习笔记_1/">深入理解java虚拟机学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/23/Docker_study_Dockerfile_instructions/">Docker学习笔记---Dockerfile</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/22/Docker_study/">Docker学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/20/celery_study/">Celery-分布式任务队列学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_channels_websocket/">Django使用Channels实现websocket</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_redis_cache/">Django使用redis作为缓存系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/13/Docker_Gogs/">使用Docker搭建git服务Gogs</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_21to_40/">LeetCode刷题记录(easy难度21-40题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_1to20/">LeetCode刷题记录(easy难度1-20题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/29/es6_study/">es6学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/Webpack_study/">Webpack学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/RegularExpression_study/">正则表达式学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/08/AndroidStudio/">Android Studio 使用本地离线Gradle</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/跨域请求解决方案/">跨域请求的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/ubuntu_supervisor/">ubuntu下的进程控制系统————Supervisor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_nginx_gunicorn/">django+nginx+gunicorn部署配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/28/ubuntu修复不能挂载NTFS硬盘/">ubuntu修复linux和windows双系统下挂载ntfs硬盘出错问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/17/django_timing_task/">django使用django-crontab实现定时任务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/15/django_rest_framework_jwt/">django-rest-framework配置json web token进行接口的认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/django_rest_framework_study/">django-rest-framework框架学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/spring_SpEL/">spring中的SpEL表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/08/git_study/">Git学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/03/资源收集/">资源收集共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/06/ubuntu_open_port/">ubuntu开放指定端口</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/16/redis_study_2/">Redis学习笔记 -- 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/15/redis_study_1/">Redis学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/16/ubuntu_do_something_use/">ubuntu日常使用的安装配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/django_address_baiduapi_marker_show/">Django调用百度地图api在地图上批量增加标记点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/ubuntu_do_something_coding/">ubuntu搭建常见开发环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/10/ubuntu安装在双系统笔记本下开机或关机卡死.1/">ubuntu在双系统下开机卡死或关机卡死的解决办法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/11/python_requirements/">python生成项目所需依赖文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/10/hexo_github_coding_blog/">利用hexo和github或coding 搭免费个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django常用语句/">Django常用语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django渲染模板/">Django渲染模板</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django数据库操作/">Django操作数据库</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/python2和Python3的区别/">Python2和Python3的区别简单总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django连接mysql数据库/">Django连接MySql使用models处理数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django环境搭建/">Django环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/03/Android_qq_Menu/">Android仿qq侧滑菜单</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/16/C语言队列的基本操作/">C语言队列的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言共享栈/">C语言共享栈</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言二叉树基本操作/">C语言二叉树的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言逆波兰计算器/">C语言逆波兰表达式计算(后缀表达式计算器)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/c语言中缀表达式变后缀表达式/">C语言中缀表达式转后缀表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言中缀表达式计算器/">C语言中缀表达式计算器</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/04/11/MongDB-study/">MongoDB权威指南学习笔记(1)--基础知识与对文档的增删改查</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/10/manjaro安装软件脚本/">manjaro系统相关脚本和配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/04/高性能MySQL-study/">高性能MySQL学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/01/httpclientutil/">HttpClient工具类</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/14/qiniu-oss/">spring boot使用七牛云的oss(对象存储)文件上传</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/spring-boot-shiro-jwt/">spring boot集成shiro使用jwt进行权限控制</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/requestHolder_and_argumentResolver/">使用ThreadLocal和ArgumentResolver方便开发</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/applicationContextHelper/">在不被spring容器管理的类中使用ApplicationContext应用上下文bean</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_static_class_autowrite/">Spring boot 在静态类中注入spring组件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_diy_properties/">Spring boot 自定义配置文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/12/Elasticsearch_study_1/">Elasticsearch学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/09/深入理解java虚拟机学习笔记_1/">深入理解java虚拟机学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/23/Docker_study_Dockerfile_instructions/">Docker学习笔记---Dockerfile</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/22/Docker_study/">Docker学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/20/celery_study/">Celery-分布式任务队列学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_redis_cache/">Django使用redis作为缓存系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_channels_websocket/">Django使用Channels实现websocket</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/13/Docker_Gogs/">使用Docker搭建git服务Gogs</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_1to20/">LeetCode刷题记录(easy难度1-20题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_21to_40/">LeetCode刷题记录(easy难度21-40题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/29/es6_study/">es6学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/Webpack_study/">Webpack学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/RegularExpression_study/">正则表达式学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/08/AndroidStudio/">Android Studio 使用本地离线Gradle</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/跨域请求解决方案/">跨域请求的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_nginx_gunicorn/">django+nginx+gunicorn部署配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/ubuntu_supervisor/">ubuntu下的进程控制系统————Supervisor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/28/ubuntu修复不能挂载NTFS硬盘/">ubuntu修复linux和windows双系统下挂载ntfs硬盘出错问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/17/django_timing_task/">django使用django-crontab实现定时任务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/15/django_rest_framework_jwt/">django-rest-framework配置json web token进行接口的认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/django_rest_framework_study/">django-rest-framework框架学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/spring_SpEL/">spring中的SpEL表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/08/git_study/">Git学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/03/资源收集/">资源收集共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/06/ubuntu_open_port/">ubuntu开放指定端口</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/16/redis_study_2/">Redis学习笔记 -- 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/15/redis_study_1/">Redis学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/16/ubuntu_do_something_use/">ubuntu日常使用的安装配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/ubuntu_do_something_coding/">ubuntu搭建常见开发环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/django_address_baiduapi_marker_show/">Django调用百度地图api在地图上批量增加标记点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/10/ubuntu安装在双系统笔记本下开机或关机卡死.1/">ubuntu在双系统下开机卡死或关机卡死的解决办法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/11/python_requirements/">python生成项目所需依赖文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/10/hexo_github_coding_blog/">利用hexo和github或coding 搭免费个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django常用语句/">Django常用语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django数据库操作/">Django操作数据库</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django渲染模板/">Django渲染模板</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django环境搭建/">Django环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/python2和Python3的区别/">Python2和Python3的区别简单总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django连接mysql数据库/">Django连接MySql使用models处理数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/03/Android_qq_Menu/">Android仿qq侧滑菜单</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/16/C语言队列的基本操作/">C语言队列的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/c语言中缀表达式变后缀表达式/">C语言中缀表达式转后缀表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言逆波兰计算器/">C语言逆波兰表达式计算(后缀表达式计算器)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言共享栈/">C语言共享栈</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言中缀表达式计算器/">C语言中缀表达式计算器</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言二叉树基本操作/">C语言二叉树的基本操作</a></li></ul>
 
 
 
