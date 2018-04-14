@@ -15,17 +15,17 @@
 
 
 
-<meta name="description" content="在spring boot项目中自定义配置文件是常有的事情,记录下解决方案. 一般有两种,一种是使用$Value()注解直接注解在相关属性上,还有一种是写一个类去接收相关参数">
-<meta name="keywords" content="Spring boot">
+<meta name="description" content="Mongo 设计应用">
+<meta name="keywords" content="MongoDB">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Spring boot 自定义配置文件">
-<meta property="og:url" content="http://earthchen.cn/2018/02/22/springboot_diy_properties/index.html">
+<meta property="og:title" content="MongoDB权威指南学习笔记(2)--设计应用">
+<meta property="og:url" content="http://earthchen.cn/2018/04/13/MongDB-study-2/index.html">
 <meta property="og:site_name" content="EarthChen&#39;s Blog">
-<meta property="og:description" content="在spring boot项目中自定义配置文件是常有的事情,记录下解决方案. 一般有两种,一种是使用$Value()注解直接注解在相关属性上,还有一种是写一个类去接收相关参数">
-<meta property="og:updated_time" content="2018-04-09T07:17:15.630Z">
+<meta property="og:description" content="Mongo 设计应用">
+<meta property="og:updated_time" content="2018-04-14T06:20:10.447Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Spring boot 自定义配置文件">
-<meta name="twitter:description" content="在spring boot项目中自定义配置文件是常有的事情,记录下解决方案. 一般有两种,一种是使用$Value()注解直接注解在相关属性上,还有一种是写一个类去接收相关参数">
+<meta name="twitter:title" content="MongoDB权威指南学习笔记(2)--设计应用">
+<meta name="twitter:description" content="Mongo 设计应用">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -57,7 +57,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>Spring boot 自定义配置文件 | EarthChen&#39;s Blog</title>
+<title>MongoDB权威指南学习笔记(2)--设计应用 | EarthChen&#39;s Blog</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -296,11 +296,11 @@
     </div>
     <link class="menu-list" tags="Tags" friends="Friends" about="About Me"/>
 </nav>
-      <div class="body-wrap"><article id="post-springboot_diy_properties" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-MongDB-study-2" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2018/02/22/springboot_diy_properties/" class="article-date">
-      <time datetime="2018-02-22T09:15:00.000Z" itemprop="datePublished">2018-02-22</time>
+      <a href="/2018/04/13/MongDB-study-2/" class="article-date">
+      <time datetime="2018-04-13T04:00:00.000Z" itemprop="datePublished">2018-04-13</time>
 </a>
 
 
@@ -315,7 +315,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Spring boot 自定义配置文件
+      MongoDB权威指南学习笔记(2)--设计应用
     </h1>
   
 
@@ -324,13 +324,13 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/开发/">开发</a>
+    <a class="article-category-link" href="/categories/学习笔记/">学习笔记</a>
     </div>
 
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring-boot/">Spring boot</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MongoDB/">MongoDB</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -340,18 +340,46 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>在spring boot项目中自定义配置文件是常有的事情,记录下解决方案.</p>
-<p>一般有两种,一种是使用$Value()注解直接注解在相关属性上,还有一种是写一个类去接收相关参数</p>
+        <p>Mongo</p>
+<p>设计应用</p>
 <a id="more"></a>
-<h2 id="方案1"><a href="#方案1" class="headerlink" title="方案1"></a>方案1</h2><p>很简单,直接在需要相关自定义配置的类中的属性上使用$Value()注解即可,</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><p>使用<strong>ensureIndex()</strong>创建索引<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line"><span class="meta">@Value</span>(<span class="string">"$&#123;auther&#125;"</span>)</span>
-<span class="line"><span class="keyword">private</span> String auther;</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line">db.users.ensureIndex(&#123;</span>
+<span class="line">    "username:1</span>
+<span class="line">&#125;)</span>
+</pre></td></tr></table></figure></p>
+<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>通常。在一个特定的集合，不应该拥有两个以上的索引</p>
+<h4 id="复合索引"><a href="#复合索引" class="headerlink" title="复合索引"></a>复合索引</h4><p>索引的值是按照一定顺序排列的，因此，使用索引键对文档进行排序非常快。然而，只有在首先使用索引键进行排序时，索引才有用。</p>
+<p>复合索引就是建立在多个字段上的索引</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line">db.users.ensureIndex(&#123;</span>
+<span class="line">    "age": 1,</span>
+<span class="line">    "username:1</span>
+<span class="line">&#125;)</span>
 </pre></td></tr></table></figure>
-<h2 id="方案2"><a href="#方案2" class="headerlink" title="方案2"></a>方案2</h2><p>个人比较推荐使用这种方法,这种方法感觉更好维护,并且易于分类,在我的项目中一般使用一个总的项目配置类,然后下面按类别去写相关配置类,<br>在properties(或者yml)文件中按属性名写好相关配置.</p>
-<p>下面给出一个简单的例子。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<p>通常来说，如果mongodb使用索引进行查询，那么查询结果文档通常就是按照索引顺序排序的</p>
+<p>如果对查询结果的范围做了限制，那么mongo在几次匹配之后就可以不在扫描索引，在这种情况下，将排序键放在第一位时一个和好的策略。</p>
+<p>可以通过<strong>hint</strong>来强制使用某个特定的索引</p>
+<h4 id="使用复合索引"><a href="#使用复合索引" class="headerlink" title="使用复合索引"></a>使用复合索引</h4><p>在多个键上建立的索引就是复合索引</p>
+<h5 id="选择键的方向"><a href="#选择键的方向" class="headerlink" title="选择键的方向"></a>选择键的方向</h5><p>索引使用的方向，与排序方向相同即可，注意，相互反转(在每个方向上*-1)的索引时等价的{“age”:1,”username”:-1}适用的查询和{“age”-1,”username”1}是完全一样的</p>
+<p>只有基于多个查询条件进行排序时，索引方向才是你叫重要的，如果只是基于单一索引键进行排序</p>
+<h5 id="使用覆盖索引"><a href="#使用覆盖索引" class="headerlink" title="使用覆盖索引"></a>使用覆盖索引</h5><p>如果你的查询只需要查找索引中包含的字段，那就根据没必要获取实际的文档。当一个索引包含用户请求的所有字段，可以认为这个索引覆盖了本次查询。在实际中，应该使用覆盖索引，而不是获取文档</p>
+<p>为了确认查询只使用索引就可以完成，应该使用投射来指定不要返回<strong>_id</strong>字段</p>
+<p>如果在覆盖索引上执行<strong>explain()</strong>，<strong>indexOnly</strong>字段的值要设为true</p>
+<h5 id="隐式索引"><a href="#隐式索引" class="headerlink" title="隐式索引"></a>隐式索引</h5><p>复合索引具有双重功能，而且对不同的查询可以表现出不同的索引。</p>
+<p>如果有一个拥有n个键的索引，难免你同时得到了所有这n个键的前缀组成的索引。</p>
+<h4 id="操作符如何使用索引"><a href="#操作符如何使用索引" class="headerlink" title="$操作符如何使用索引"></a>$操作符如何使用索引</h4><h5 id="低效率的操作符"><a href="#低效率的操作符" class="headerlink" title="低效率的操作符"></a>低效率的操作符</h5><p><strong>$where</strong>查询和检查一个键是否存在的查询完全无法使用索引</p>
+<p><strong>$ne</strong>查询可以使用索引，但并不是很有效，因为必须要查看所有索引的条目</p>
+<p><strong>$nin</strong>就总是要进行全表扫描</p>
+<h5 id="范围"><a href="#范围" class="headerlink" title="范围"></a>范围</h5><p>设计多个字段的索引时，应该将会用于精确匹配的字段防到索引的前面，将用于范围匹配的字段放到最后</p>
+<h4 id="索引对象和数组"><a href="#索引对象和数组" class="headerlink" title="索引对象和数组"></a>索引对象和数组</h4><p>mongo允许对嵌套字段和数组建立索引，嵌套对象和数组字段可以与符合索引中顶级字段一起使用。</p>
+<h5 id="索引嵌套文档"><a href="#索引嵌套文档" class="headerlink" title="索引嵌套文档"></a>索引嵌套文档</h5><p>可以在嵌套文档的键上建立索引，方式和正常的键一样。</p>
+<p>例如:<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
 <span class="line">4</span>
@@ -359,29 +387,65 @@
 <span class="line">6</span>
 <span class="line">7</span>
 <span class="line">8</span>
-</pre></td><td class="code"><pre><span class="line"><span class="comment">//ProjectProperties.java</span></span>
-<span class="line"><span class="meta">@Component</span></span>
-<span class="line"><span class="meta">@Data</span></span>
-<span class="line"><span class="meta">@ConfigurationProperties</span>(prefix = <span class="string">"project"</span>)</span>
-<span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ProjectProperties</span> </span>&#123;</span>
-<span class="line"></span>
-<span class="line">    <span class="keyword">private</span> FilePathProperties filePathProperties = <span class="keyword">new</span> FilePathProperties();</span>
+</pre></td><td class="code"><pre><span class="line">&#123;</span>
+<span class="line">    "username:"sid",</span>
+<span class="line">    "loc":&#123;</span>
+<span class="line">        "ip":"1.2.3.4"</span>
+<span class="line">        "city":"xxx"</span>
+<span class="line">        "state":"xxx"</span>
+<span class="line">    &#125;</span>
 <span class="line">&#125;</span>
-</pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td></tr></table></figure></p>
+<p>需要在<strong>loc</strong>的某一个字段建立索引，以便提高这个字段的查询速度<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line">db.users.ensureIndex(&#123;</span>
+<span class="line">    <span class="string">"loc.city"</span>:<span class="number">1</span></span>
+<span class="line">&#125;)</span>
+</pre></td></tr></table></figure></p>
+<blockquote>
+<ul>
+<li>对嵌套文档本身建立索引和对嵌套文档的某个字段建立索引是不同的</li>
+<li>对整个文档建立索引，只会提高整个字段子文档的查询速度。只有在进行与子文档字段顺序完全匹配的子文档查询(db.users.find({“loc”:{“ip”:”1.2.3.4”,”city”:”xxx”,”state”:”ny”}}))，查询优化器才会使用索引，无法对形如db.users.find({“loc.city”:”xxx”})的查询使用索引</li>
+</ul>
+</blockquote>
+<h5 id="索引数组"><a href="#索引数组" class="headerlink" title="索引数组"></a>索引数组</h5><p>对数组建立索引，可以高效的搜索数组中的特定元素 </p>
+<h5 id="多键索引"><a href="#多键索引" class="headerlink" title="多键索引"></a>多键索引</h5><p>对于索引的键，如果这个键在文档中是一个数组，那么这个索引就会呗还标记为多键索引，多键索引可能会比非多键索引慢一些，可能会友多个索引条目指向同一个文档，因此在返回结果时必须要先去除重复的内容</p>
+<h4 id="索引基数"><a href="#索引基数" class="headerlink" title="索引基数"></a>索引基数</h4><p>基数就是集合中某个字段拥有不同值的数量，一般来说，应该在基数比较高的键上建立索引，或者至少应该吧基数高的键放在复合索引的前面</p>
+<h3 id="使用explain-和hint"><a href="#使用explain-和hint" class="headerlink" title="使用explain()和hint()"></a>使用explain()和hint()</h3><p>explain()能够提供大量的查询相关的信息。对于任意查询，都可以在最后添加一个explain()调用</p>
+<p>字段说明：</p>
+<ul>
+<li><strong>“cursor”: “BtreeCursor age_1_username_1”</strong><br>  BtreeCursor表示使用了索引，使用了{“age”:1,”username”:1}的索引</li>
+<li><strong>“isMultiKey”:false</strong><br>  用于说明本次查询是否使用了多键索引</li>
+<li><strong>“n”:8332</strong><br>  本次查询返回的文档数量</li>
+<li><strong>nscannedObjects”:8332</strong><br>  按到索引去磁盘上查找实际文档的次数</li>
+<li><strong>“nscanned”:8332</strong><br>  如果有使用索引，那么这个数字就是查找过的索引条目数量，如果本次查询是一次全表查询，那么这个数字就表示检查过的文档数量。</li>
+<li><strong>“scanAndOrder”：false</strong><br>  是否在内存中对结果集进行了排序</li>
+<li><strong>“indexOnly”:false</strong><br>  是否只使用索引就能完成此次查询</li>
+<li><strong>“nYields”:0</strong><br>  为了让写入请求能够顺序执行，本次插叙暂停的次数</li>
+<li><strong>“millis”:91</strong><br>  数据库执行本次查询所耗费的毫秒数</li>
+<li><strong>“indexBounds”:{…}</strong><br>  描述了索引的使用情况，给出了索引的遍历范围</li>
+</ul>
+<h3 id="索引类型"><a href="#索引类型" class="headerlink" title="索引类型"></a>索引类型</h3><h4 id="唯一索引"><a href="#唯一索引" class="headerlink" title="唯一索引"></a>唯一索引</h4><p>唯一索引可以确保集合的每一个文档都有唯一值</p>
+<p>如果向保证同文档的“username”键都拥有不同的值，那么可以创建一个唯一索引<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
 <span class="line">4</span>
 <span class="line">5</span>
 <span class="line">6</span>
-</pre></td><td class="code"><pre><span class="line"><span class="comment">// FilePathProperties.java</span></span>
-<span class="line"><span class="meta">@Data</span></span>
-<span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FilePathProperties</span> </span>&#123;</span>
-<span class="line"></span>
-<span class="line">    <span class="keyword">private</span> String basePath = <span class="string">"/home/earthchen/"</span>;</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">7</span>
+<span class="line">8</span>
+</pre></td><td class="code"><pre><span class="line">db.users.ensureIndex(</span>
+<span class="line">    &#123;</span>
+<span class="line">        <span class="string">"username"</span>:<span class="number">1</span></span>
+<span class="line">    &#125;,</span>
+<span class="line">    &#123;</span>
+<span class="line">        <span class="string">"unique"</span>:<span class="literal">true</span></span>
+<span class="line">    &#125;</span>
+<span class="line">)</span>
+</pre></td></tr></table></figure></p>
+<h5 id="复合唯一索引"><a href="#复合唯一索引" class="headerlink" title="复合唯一索引"></a>复合唯一索引</h5><p>创建符合唯一索引时，单个键的值可以相同，但所有键的组合值必须时唯一的</p>
+<h5 id="去除重复"><a href="#去除重复" class="headerlink" title="去除重复"></a>去除重复</h5><p>在已有的集合创建唯一索引时可能会失败，因为集合中肯能已经存在重复值了，通常需要先对已有的数据进行处理，在极少数情况下，可能希望直接删除重复的值，创建索引时使用<strong>dropDups</strong>选项，如果遇到重复的值，第一个会被保留，之后的重复文档都会呗删除<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
 <span class="line">4</span>
@@ -390,37 +454,22 @@
 <span class="line">7</span>
 <span class="line">8</span>
 <span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-</pre></td><td class="code"><pre><span class="line"><span class="comment">// xxx.java</span></span>
-<span class="line"><span class="meta">@Component</span></span>
-<span class="line"><span class="function"><span class="keyword">public</span> class <span class="title">xxx</span><span class="params">()</span></span>&#123;</span>
-<span class="line"></span>
-<span class="line">    <span class="meta">@Autowired</span></span>
-<span class="line">    <span class="keyword">private</span> ProjectProperties projectProperties;</span>
-<span class="line"></span>
-<span class="line"></span>
-<span class="line">    <span class="comment">// xxxxx然后使用projectProperties去get相关属性即可。</span></span>
-<span class="line"></span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-</pre></td><td class="code"><pre><span class="line"><span class="comment"># application.yml</span></span>
-<span class="line"><span class="attr">project:</span></span>
-<span class="line"><span class="attr">  filePathProperties:</span></span>
-<span class="line"><span class="attr">    basePath:</span> <span class="string">/home/earthchen/work/</span></span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>注: yml文件中的属性名必须和类中的属性一致</p>
-</blockquote>
-<p>以上就可以实现自定义配置啦，后续有更多的配置只需要在ProjectProperties.java中添加即可。</p>
+</pre></td><td class="code"><pre><span class="line">db.users.ensureIndex(</span>
+<span class="line">    &#123;</span>
+<span class="line">        <span class="string">"username"</span>:<span class="number">1</span></span>
+<span class="line">    &#125;,</span>
+<span class="line">    &#123;</span>
+<span class="line">        <span class="string">"unique"</span>:<span class="literal">true</span>，</span>
+<span class="line">        <span class="string">"dropDups"</span>；<span class="literal">true</span></span>
+<span class="line">    &#125;</span>
+<span class="line">)</span>
+</pre></td></tr></table></figure></p>
+<h3 id="索引管理"><a href="#索引管理" class="headerlink" title="索引管理"></a>索引管理</h3><p>所有的数据库索引信息都存储在<strong>system.indexes</strong>集合中，这个是一个保留集合，不能在其中插入或者删除文档，直蹦通过ensureIndex或者dropIndexes对其进行操作</p>
+<p>创建一个索引之后，可以执行db.collectionName.getIndexes()查询给定集合上的所有索引信息</p>
 <blockquote>
 <p>注：</p>
 <ul>
-<li>上述测试在<strong>ubuntu16.04 lts</strong> <strong>jdk1.8</strong> <strong>spring boot 1.5.6.RELEASE</strong>中成功</li>
+<li>上述测试在<strong>MongoDB 3.4.3-8-g05b19c6</strong>中成功</li>
 <li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
 </ul>
 </blockquote>
@@ -432,13 +481,13 @@
   
     
     <div class="copyright">
-        <p><span>Title:</span><a href="/2018/02/22/springboot_diy_properties/">Spring boot 自定义配置文件</a></p>
+        <p><span>Title:</span><a href="/2018/04/13/MongDB-study-2/">MongoDB权威指南学习笔记(2)--设计应用</a></p>
         <p><span>Author:</span><a href="/" title="Back to Homepage">EarthChen</a></p>
-        <p><span>Created:</span>2018-02-22, 17:15:00</p>
-        <p><span>Updated:</span>2018-04-09, 15:17:15</p>
+        <p><span>Created:</span>2018-04-13, 12:00:00</p>
+        <p><span>Updated:</span>2018-04-14, 14:20:10</p>
         <p>
-            <span>Full URL:</span><a class="post-url" href="/2018/02/22/springboot_diy_properties/" title="Spring boot 自定义配置文件">http://earthchen.cn/2018/02/22/springboot_diy_properties/</a>
-            <span class="copy-path" data-clipboard-text="From http://earthchen.cn/2018/02/22/springboot_diy_properties/　　By EarthChen" title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
+            <span>Full URL:</span><a class="post-url" href="/2018/04/13/MongDB-study-2/" title="MongoDB权威指南学习笔记(2)--设计应用">http://earthchen.cn/2018/04/13/MongDB-study-2/</a>
+            <span class="copy-path" data-clipboard-text="From http://earthchen.cn/2018/04/13/MongDB-study-2/　　By EarthChen" title="Copy Article&#39;s Link &amp; Author"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -450,16 +499,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2018/02/22/springboot_static_class_autowrite/">
-                    Spring boot 在静态类中注入spring组件
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2018/02/12/Elasticsearch_study_1/">
-                    Elasticsearch学习笔记 -- 1
+                <a href="/2018/04/11/MongDB-study-1/">
+                    MongoDB权威指南学习笔记(1)--基础知识与对文档的增删改查
                 </a>
             </div>
         
@@ -471,7 +514,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#方案1"><span class="toc-number">1.</span> <span class="toc-text">方案1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#方案2"><span class="toc-number">2.</span> <span class="toc-text">方案2</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#索引"><span class="toc-number">1.</span> <span class="toc-text">索引</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#简介"><span class="toc-number">1.1.</span> <span class="toc-text">简介</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#复合索引"><span class="toc-number">1.1.1.</span> <span class="toc-text">复合索引</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#使用复合索引"><span class="toc-number">1.1.2.</span> <span class="toc-text">使用复合索引</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#选择键的方向"><span class="toc-number">1.1.2.1.</span> <span class="toc-text">选择键的方向</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#使用覆盖索引"><span class="toc-number">1.1.2.2.</span> <span class="toc-text">使用覆盖索引</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#隐式索引"><span class="toc-number">1.1.2.3.</span> <span class="toc-text">隐式索引</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#操作符如何使用索引"><span class="toc-number">1.1.3.</span> <span class="toc-text">$操作符如何使用索引</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#低效率的操作符"><span class="toc-number">1.1.3.1.</span> <span class="toc-text">低效率的操作符</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#范围"><span class="toc-number">1.1.3.2.</span> <span class="toc-text">范围</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#索引对象和数组"><span class="toc-number">1.1.4.</span> <span class="toc-text">索引对象和数组</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#索引嵌套文档"><span class="toc-number">1.1.4.1.</span> <span class="toc-text">索引嵌套文档</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#索引数组"><span class="toc-number">1.1.4.2.</span> <span class="toc-text">索引数组</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#多键索引"><span class="toc-number">1.1.4.3.</span> <span class="toc-text">多键索引</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#索引基数"><span class="toc-number">1.1.5.</span> <span class="toc-text">索引基数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用explain-和hint"><span class="toc-number">1.2.</span> <span class="toc-text">使用explain()和hint()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#索引类型"><span class="toc-number">1.3.</span> <span class="toc-text">索引类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#唯一索引"><span class="toc-number">1.3.1.</span> <span class="toc-text">唯一索引</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#复合唯一索引"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">复合唯一索引</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#去除重复"><span class="toc-number">1.3.1.2.</span> <span class="toc-text">去除重复</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#索引管理"><span class="toc-number">1.4.</span> <span class="toc-text">索引管理</span></a></li></ol></li></ol>
         
     </div>
     <style>
@@ -507,7 +550,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"Spring boot 自定义配置文件　| EarthChen's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"MongoDB权威指南学习笔记(2)--设计应用　| EarthChen's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -541,15 +584,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2018/02/22/springboot_static_class_autowrite/" title="Pre: Spring boot 在静态类中注入spring组件">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="Back to Homepage"><i class="fa fa-home"></i></a>
         
 
         <a title="Mini Archives"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2018/02/12/Elasticsearch_study_1/" title="Next: Elasticsearch学习笔记 -- 1">
+            <a href="/2018/04/11/MongDB-study-1/" title="Next: MongoDB权威指南学习笔记(1)--基础知识与对文档的增删改查">
                 <i class="fa fa-angle-right"></i>
             </a>
         
