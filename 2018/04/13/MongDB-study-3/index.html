@@ -15,20 +15,17 @@
 
 
 
-<meta name="description" content="博客对我来说，就像一个云端笔记,可以记录一下自己在完成各种任务中坑，也可以让别人看到从而避免这些，可以写博客的地方有很多比如csdn、博客园、简书之类的，但是看到许多大神都是用自己搭建的博客，仔细一了解才知道都是用hexo和github搭建的看了许多教程之后，踩了许多坑之后就想总结一下自己的搭建过程 开始 环境  Node.js Git npm coding或github   由于我使用的主力系统">
-<meta name="keywords" content="Node.js,Hexo,Git,JavaScript">
+<meta name="description" content="Mongo 复制">
+<meta name="keywords" content="MongoDB">
 <meta property="og:type" content="article">
-<meta property="og:title" content="利用hexo和github或coding 搭免费个人博客">
-<meta property="og:url" content="http://earthchen.cn/2016/10/10/hexo_github_coding_blog/index.html">
+<meta property="og:title" content="MongoDB权威指南学习笔记(3)--复制">
+<meta property="og:url" content="http://earthchen.cn/2018/04/13/MongDB-study-3/index.html">
 <meta property="og:site_name" content="EarthChen&#39;s Blog">
-<meta property="og:description" content="博客对我来说，就像一个云端笔记,可以记录一下自己在完成各种任务中坑，也可以让别人看到从而避免这些，可以写博客的地方有很多比如csdn、博客园、简书之类的，但是看到许多大神都是用自己搭建的博客，仔细一了解才知道都是用hexo和github搭建的看了许多教程之后，踩了许多坑之后就想总结一下自己的搭建过程 开始 环境  Node.js Git npm coding或github   由于我使用的主力系统">
-<meta property="og:image" content="http://objects.earthchen.cn/hexo_blog.png">
-<meta property="og:image" content="http://objects.earthchen.cn/earthchen_hexo_blog.png">
-<meta property="og:updated_time" content="2018-04-09T07:17:15.640Z">
+<meta property="og:description" content="Mongo 复制">
+<meta property="og:updated_time" content="2018-04-15T12:36:10.231Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="利用hexo和github或coding 搭免费个人博客">
-<meta name="twitter:description" content="博客对我来说，就像一个云端笔记,可以记录一下自己在完成各种任务中坑，也可以让别人看到从而避免这些，可以写博客的地方有很多比如csdn、博客园、简书之类的，但是看到许多大神都是用自己搭建的博客，仔细一了解才知道都是用hexo和github搭建的看了许多教程之后，踩了许多坑之后就想总结一下自己的搭建过程 开始 环境  Node.js Git npm coding或github   由于我使用的主力系统">
-<meta name="twitter:image" content="http://objects.earthchen.cn/hexo_blog.png">
+<meta name="twitter:title" content="MongoDB权威指南学习笔记(3)--复制">
+<meta name="twitter:description" content="Mongo 复制">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -60,7 +57,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>利用hexo和github或coding 搭免费个人博客 | EarthChen&#39;s Blog</title>
+<title>MongoDB权威指南学习笔记(3)--复制 | EarthChen&#39;s Blog</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -299,11 +296,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-hexo_github_coding_blog" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-MongDB-study-3" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/10/10/hexo_github_coding_blog/" class="article-date">
-      <time datetime="2016-10-10T06:40:00.000Z" itemprop="datePublished">2016-10-10</time>
+      <a href="/2018/04/13/MongDB-study-3/" class="article-date">
+      <time datetime="2018-04-13T04:00:00.000Z" itemprop="datePublished">2018-04-13</time>
 </a>
 
 
@@ -318,7 +315,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      利用hexo和github或coding 搭免费个人博客
+      MongoDB权威指南学习笔记(3)--复制
     </h1>
   
 
@@ -327,13 +324,13 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/开发/">开发</a>
+    <a class="article-category-link" href="/categories/学习笔记/">学习笔记</a>
     </div>
 
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git/">Git</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Node-js/">Node.js</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MongoDB/">MongoDB</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -343,136 +340,168 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>博客对我来说，就像一个云端笔记,可以记录一下自己在完成各种任务中坑，也可以让别人看到从而避免这些，可以写博客的地方有很多比如csdn、博客园、简书之类的，但是看到许多大神都是用自己搭建的博客，仔细一了解才知道都是用hexo和github搭建的<br>看了许多教程之后，踩了许多坑之后就想总结一下自己的搭建过程</p>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><blockquote>
-<p><strong>环境</strong></p>
-<ol>
-<li>Node.js</li>
-<li>Git</li>
-<li>npm</li>
-<li>coding或github</li>
-</ol>
-</blockquote>
-<p><strong>由于我使用的主力系统时Ubuntu所以本文以Ubuntu下的搭建教程</strong></p>
-<h3 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h3><a id="more"></a>
-<h4 id="首先安装node-js"><a href="#首先安装node-js" class="headerlink" title="首先安装node.js"></a>首先安装node.js</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">sudo apt install nodejs</span>
-</pre></td></tr></table></figure>
-<h4 id="安装npm"><a href="#安装npm" class="headerlink" title="安装npm"></a>安装npm</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">sudo apt install npm</span>
-</pre></td></tr></table></figure>
-<ul>
-<li>上面操作完成后,根据你使用的源不同，可能得到不同的版本，但是有时候可能因为版本不够新而导致hexo等其他的包安装失败，所有我们这里最好在使用几条命令更新一下node.js</li>
-<li><p>在已安装好npm的情况下使用</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+        <p>Mongo</p>
+<p>复制</p>
+<a id="more"></a>
+<h2 id="创建副本集"><a href="#创建副本集" class="headerlink" title="创建副本集"></a>创建副本集</h2><h3 id="建立副本集"><a href="#建立副本集" class="headerlink" title="建立副本集"></a>建立副本集</h3><p>使用<strong>mongo –nodb</strong>选项启动mongo shell，启动shell但是不连接到任何mongod<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ mongo --nodb</span>
+</pre></td></tr></table></figure></p>
+<p>创建副本集<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
-</pre></td><td class="code"><pre><span class="line">sudo npm install -g n</span>
-<span class="line"></span>
-<span class="line">sudo n stable</span>
-</pre></td></tr></table></figure>
-</li>
-<li><p>这样就可以把node.js升级到最新版</p>
-</li>
-</ul>
-<h4 id="安装Git"><a href="#安装Git" class="headerlink" title="安装Git"></a>安装Git</h4><p>程序员必备工具啊  一般安装好系统就会安装<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">sudo apt install git</span>
+</pre></td><td class="code"><pre><span class="line">replicaSet=<span class="keyword">new</span> ReplSetTest(&#123;</span>
+<span class="line">    <span class="string">"nodes"</span>:<span class="number">3</span></span>
+<span class="line">&#125;)</span>
 </pre></td></tr></table></figure></p>
-<h4 id="注册github或者coding-net账号"><a href="#注册github或者coding-net账号" class="headerlink" title="注册github或者coding.net账号"></a>注册github或者coding.net账号</h4><ul>
-<li>注册账号并登录创建一个和用户名同名的仓库并开启pages服务</li>
-</ul>
-<h4 id="在本地生成公钥和私钥"><a href="#在本地生成公钥和私钥" class="headerlink" title="在本地生成公钥和私钥"></a>在本地生成公钥和私钥</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<p>会创建一个包含三个服务器的副本集：一个住服务器和两个备份服务器</p>
+<p>指定命令使mongod服务器启动<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">replicaSet.startSet()</span>
+<span class="line">replicaSet.initiate()</span>
+</pre></td></tr></table></figure></p>
+<p>然后会启动三个mongod进行，分别运行在31000\31001和31002端口</p>
+<p>连接到运行在31000端口的mongod<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line">conn1=<span class="keyword">new</span> Mongo(<span class="string">"127.0.0.1:31000"</span>)</span>
+<span class="line"></span>
+<span class="line">&gt; primary=conn1.getDB(<span class="string">"test"</span>)</span>
+</pre></td></tr></table></figure></p>
+<p>在连接到主节点的连接上执行isMaster命令，可以看到副本集的状态<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">&gt; primary.isMaster()</span>
+</pre></td></tr></table></figure></p>
+<p>在主节点插入一些文档，</p>
+<p>备份节点可能会落后于主节点，可能没有最新写入的数据，所以备份节点在默认情况下会拒绝读取请求，以防应用意外拿到过期的数据。当在备份节点做查询时，可能会得到一个错误提示，说当前节点不是主节点</p>
+<p>如果希望从备份节点读取数据，需要设置“从备份节点读取数据没有问题”的标示<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">conn2.setSlaveOk()</span>
+</pre></td></tr></table></figure></p>
+<p>然后就可以在该连接的备份节点中读取数据</p>
+<blockquote>
+<p>不能对备份节点执行写操作，备份节点只能通过复制功能写入数据，不接受客户端的写入请求<br>具有自动故障转移的功能，如果主节点挂了，其中一个备份节点会自动选举为主节点</p>
+</blockquote>
+<h3 id="配置副本集"><a href="#配置副本集" class="headerlink" title="配置副本集"></a>配置副本集</h3><p>首先需要为副本集选定一个名字，使用<strong>–replset name</strong>选项重启server<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ mongod --replSet spock -f mongod.conf --fork</span>
+</pre></td></tr></table></figure></p>
+<p>然后使用同样的replset和标识符<strong>stock</strong>再启动两个mongod服务器作为副本集中的其他成员<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
 <span class="line">4</span>
 <span class="line">5</span>
-</pre></td><td class="code"><pre><span class="line">git config --global user.name <span class="string">"你的用户名"</span></span>
+</pre></td><td class="code"><pre><span class="line"># server2</span>
+<span class="line">$ mongod --replSet spck -f mongo.conf --fork</span>
 <span class="line"></span>
-<span class="line">git config --global user.email <span class="string">"你的邮箱"</span></span>
-<span class="line"></span>
-<span class="line">ssh-keygen -t rsa -C “你的邮箱”</span>
-</pre></td></tr></table></figure>
-<ul>
-<li>输入生成key命令之后一般直接按三次回车   设置密码为空</li>
-<li>然后<strong>cd</strong>到.ssh目录下打开id_rsa.pub，将内容复制添加到github coding的公钥<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">vim .ssh/id_rsa.pub</span>
-</pre></td></tr></table></figure>
-</li>
-</ul>
-<p>经过以上步骤 基本环境就搭建好了，在linux下安装开发环境还是相当简单的。。。。。</p>
-<h3 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-</pre></td><td class="code"><pre><span class="line">sudo npm install -g hexo-cli</span>
-<span class="line"></span>
-<span class="line">sudo npm install hexo-deployer-git --save</span>
-</pre></td></tr></table></figure>
-<ul>
-<li>如果安装失败的话请替换成淘宝源重新安装<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">npm install -g cnpm --registry=https://registry.npm.taobao.org</span>
-</pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="建立站点"><a href="#建立站点" class="headerlink" title="建立站点"></a>建立站点</h3><p>首先在合适的地方创建一个你的博客目录然后进入这个目录<br>然后执行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">hexo init</span>
+<span class="line">#server3</span>
+<span class="line">$ mongod --replSet spck -f mongo.conf --fork</span>
 </pre></td></tr></table></figure></p>
-<ul>
-<li>目录里面的_config.yml是站点配置文件，后面还会说到主题配置文件，每一个主题都用一个_config.yml文件，不要搞混了，到目前为止博客环境已经搭建完成</li>
-</ul>
-<h3 id="本地预览"><a href="#本地预览" class="headerlink" title="本地预览"></a>本地预览</h3><h4 id="首先生成静态页面"><a href="#首先生成静态页面" class="headerlink" title="首先生成静态页面"></a>首先生成静态页面</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line">hexo generate</span>
-<span class="line">或hexo g</span>
-</pre></td></tr></table></figure>
-<h4 id="启动本地服务预览"><a href="#启动本地服务预览" class="headerlink" title="启动本地服务预览"></a>启动本地服务预览</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line">hexo server</span>
-<span class="line">或hexo s</span>
-</pre></td></tr></table></figure>
-<ul>
-<li>然后在浏览器地址栏输入<a href="http://127.0.0.1:4000就可以看到默认的博客效果" target="_blank" rel="external">http://127.0.0.1:4000就可以看到默认的博客效果</a><br><img src="http://objects.earthchen.cn/hexo_blog.png" alt="hexo_blog"><br>如上图显示即为成功。</li>
-</ul>
-<h3 id="修改配置文件和主题"><a href="#修改配置文件和主题" class="headerlink" title="修改配置文件和主题"></a>修改配置文件和主题</h3><h4 id="修改主配置文件-config-yml"><a href="#修改主配置文件-config-yml" class="headerlink" title="修改主配置文件_config.yml"></a>修改主配置文件_config.yml</h4><p>按照自己的喜好去修改即可 重点时最后一部分<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<p>只要将后两个成员添加到副本集中，它们就会自动克隆第一个成员的数据</p>
+<p>将replSet选项添加到每个成员的mongod.conf文件中，启动时就会自动使用这个选项</p>
+<p>为了让每个mongod能够知道批次的存在，需要创建一个配置文件，在配置文件中列出每一个成员，并且将配置文件发送给server-1，然后server-1会负责将配置文件传播给其他成员</p>
+<p>在shell中创建一个如下所示的文档<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
 <span class="line">4</span>
 <span class="line">5</span>
 <span class="line">6</span>
 <span class="line">7</span>
-</pre></td><td class="code"><pre><span class="line">deploy:</span>
-<span class="line">   #我们是使用 git 来部署的。</span>
-<span class="line">    type: git</span>
-<span class="line">    # git 仓库的地址。</span>
-<span class="line">    repo:</span>
-<span class="line">      coding: git@git.coding.net:EarthChen/EarthChen.git,coding-pages</span>
-<span class="line">      github: git@github.com:EarthChen/EarthChen.github.io.git</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+</pre></td><td class="code"><pre><span class="line">config=&#123;</span>
+<span class="line">    <span class="string">"_id"</span>:<span class="string">"spock"</span>,</span>
+<span class="line">    <span class="string">"members"</span>[</span>
+<span class="line">        &#123;</span>
+<span class="line">            <span class="string">"_id"</span>:<span class="number">0</span>,</span>
+<span class="line">            <span class="string">"host"</span>:<span class="string">"server-1:27017"</span></span>
+<span class="line">        &#125;,</span>
+<span class="line">        &#123;</span>
+<span class="line">            <span class="string">"_id"</span>:<span class="number">1</span>,</span>
+<span class="line">            <span class="string">"host"</span>:<span class="string">"server-2:27017"</span></span>
+<span class="line">        &#125;,</span>
+<span class="line">        &#123;</span>
+<span class="line">            <span class="string">"_id"</span>:<span class="number">2</span>,</span>
+<span class="line">            <span class="string">"host"</span>:<span class="string">"server-3:27017"</span></span>
+<span class="line">        &#125;</span>
+<span class="line">    ]</span>
+<span class="line">&#125;</span>
 </pre></td></tr></table></figure></p>
+<blockquote>
 <ul>
-<li>按照上述格式修改你的仓库地址  修改连接方式为ssh  这样在推送的时候可以不用输入密码 从而使用公钥私钥匹配模式</li>
-<li>在国内推荐使用coding方式  毕竟。。。你懂的   但是也可以同时在github和coding上同时托管，就如上述所示</li>
+<li>第一个_id字段就是副本集名称</li>
+<li>将host字段的值修改为实际ip</li>
 </ul>
-<h4 id="修改主题"><a href="#修改主题" class="headerlink" title="修改主题"></a>修改主题</h4><p>可以百度或google自己喜欢的hexo主题来使用 然后在站点配置文件内修改一下主题名即可</p>
-<h3 id="发表文章"><a href="#发表文章" class="headerlink" title="发表文章"></a>发表文章</h3><h4 id="生成一篇博客"><a href="#生成一篇博客" class="headerlink" title="生成一篇博客"></a>生成一篇博客</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">hexo new <span class="string">"文章名"</span></span>
-</pre></td></tr></table></figure>
-<ul>
-<li>不过个人更喜欢直接复制原来写好的博客然后拿来修改</li>
-</ul>
-<h4 id="发表命令"><a href="#发表命令" class="headerlink" title="发表命令"></a>发表命令</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</blockquote>
+<p>这个config对象就是副本集的配置，现在需要将其发送给其中一个副本集成员，连接到一个有效的服务器，使用config对象对副集进行初始化<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
 <span class="line">4</span>
-</pre></td><td class="code"><pre><span class="line">hexo clean   <span class="comment"># 清理静态文件</span></span>
-<span class="line">hexo g       <span class="comment">#生成新的静态文件</span></span>
-<span class="line">hexo s       <span class="comment">#在本地预览博客</span></span>
-<span class="line">hexo d       <span class="comment">#推送到远端仓库</span></span>
-</pre></td></tr></table></figure>
-<p>在最后贴上我自己的博客页面  喜欢的可以去下载主题自己配置（yelee）</p>
-<p><img src="http://objects.earthchen.cn/earthchen_hexo_blog.png" alt="earthchen_blog"><br>如上图显示即为成功。</p>
-<blockquote>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">// 连接到server1</span></span>
+<span class="line">db=(<span class="keyword">new</span> Mongo(<span class="string">"server-1:27017"</span>)).getDB(<span class="string">"test"</span>)</span>
+<span class="line"></span>
+<span class="line"><span class="comment">// 初始化副本集</span></span>
+<span class="line">rs.initiate(config)</span>
+</pre></td></tr></table></figure></p>
+<p>server-1会解析这个配置对象，然后向其他成员发送消息，提醒他们使用新的配置，所有车公园配置完成之后，他们会自动选出一个主节点，然后就可以正常处理请求了</p>
+<h4 id="rs辅助函数"><a href="#rs辅助函数" class="headerlink" title="rs辅助函数"></a>rs辅助函数</h4><p>rs是一个全局变量，其中包含与复制相关的函数</p>
+<h4 id="网络注意事项"><a href="#网络注意事项" class="headerlink" title="网络注意事项"></a>网络注意事项</h4><p>副本集内的每个成员都必须能够连接到其他所有成员</p>
+<p>副本集的配置中不应该使用localhost作为主机</p>
+<h4 id="修改副本集配置"><a href="#修改副本集配置" class="headerlink" title="修改副本集配置"></a>修改副本集配置</h4><p>可以随时修改副本集的配置，可以添加或者删除成员，也可以修改已有成员<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">//向副本集中添加成员</span></span>
+<span class="line">rs.add(<span class="string">"server-4:27017"</span>)</span>
+<span class="line"></span>
+<span class="line"><span class="comment">// 删除成员</span></span>
+<span class="line">rs.remove(<span class="string">"server-1:27017"</span>)</span>
+<span class="line"></span>
+<span class="line"><span class="comment">// 查看配置</span></span>
+<span class="line">rs.config()</span>
+<span class="line"></span>
+<span class="line"><span class="comment">// 重新配置配置文件</span></span>
+<span class="line">rs.reconfig(config)</span>
+</pre></td></tr></table></figure></p>
+<h2 id="副本集的组成"><a href="#副本集的组成" class="headerlink" title="副本集的组成"></a>副本集的组成</h2><h3 id="同步"><a href="#同步" class="headerlink" title="同步"></a>同步</h3><p>复制用于在多台服务器之间备份数据，mongo的复制功能时使用操作日志oplog实现的，操作日志包含了主节点的每一次写操作。</p>
+<p>如果某个备份节点由于某些原因挂掉，当他重新启动后，就会自动从oplog中最后一个操作开始进行同步</p>
+<h4 id="初始化同步"><a href="#初始化同步" class="headerlink" title="初始化同步"></a>初始化同步</h4><p>副本集中的成员启动之后，就会检查自身状态，确定是否可以从某个成员那里进行同步，如果不行的话，它会尝试从副本的另一个成员那里进行完整的数据复制，这个过程就是<strong>初始化同步</strong></p>
+<h4 id="处理陈旧数据"><a href="#处理陈旧数据" class="headerlink" title="处理陈旧数据"></a>处理陈旧数据</h4><p>如果备份节点远远落后同步源当前的操作，那么这个备份节点就是陈旧的。如果备份节点曾静停机过，写入量炒股哟自身处理能力，或者时有太多的读请求，这些情况都有可能导致备份节点陈旧</p>
+<p>当一个节点陈旧时候，它会查询副本中的其他成员，如果成员的oplog足够详尽，可以用于处理那些落下的操作，就从这个成员进行同步，如果都没有参考价值，那么这个成员的复制操作就会中止，这个成员需要重新进行完全同步。</p>
+<h3 id="心跳"><a href="#心跳" class="headerlink" title="心跳"></a>心跳</h3><p>为了维护集合的最新视图，每个成员每隔2s就会向其他成员发送一个心跳请求。用于检查每个成员的状态</p>
+<p>成员状态</p>
+<ul>
+<li>STARTUP：成员刚启动时出于这个状态，会尝试加在成员的副本集配置，加在成功后，就进入STARTUP2状态</li>
+<li>STARTUP2：整个初始化同步过程都处理这个状态，但是如果在普通成员上，这个状态只会持续几秒种。在这个状态下，mongodb会创建几个线程，用于处理复制和选举，然后切换到RECOVERING状态</li>
+<li>表示成员运转正常，但是暂时还不能处理读取请求</li>
+<li>ARBITER:在正常的操作中，仲裁者应该处理ARBITER状态</li>
+</ul>
+<p>系统出现问题时会处理下面这些状态:</p>
+<ul>
+<li>DOWN:如果一个正常运行的成员变得不可达，它就出于DOWN状态</li>
+<li>UNKNOWN：如果一个成员无法到达其他任何成员，其他成员就无法知道它处理什么状态，会将其报告为UNKOWN状态</li>
+<li>REMOVE:当成员被移出副本集时，就出于这个状态</li>
+<li>ROLLBACK:当成员正在进行数据回滚，就出于ROLLBACK状态，回滚过程结束时，服务器会转换为RECOVERING状态，然后成为备份节点</li>
+<li>FATAL：如果一个成员发生了不可挽回的错误，也不再尝试恢复正常的话，它就出于FATAL状态</li>
+</ul>
+<h3 id="选举"><a href="#选举" class="headerlink" title="选举"></a>选举</h3><p>当一个成员无法到达主节点时，它就会申请被选举为主节点。希望呗选举为主节点的成员，会向它能到达的所有成员发送通知如果这个成员不符合候选人要求，其他成员可能知道相关原因</p>
+<p>假如没有反对的理由，其他成员就会对这个成员进行选举投票。如果这个成员得到副本大多数赞成票，它就会选举成功，会转到主节点状态。如果　达不到大多数要求，那就出于备份节点状态，之后还可以再次申请呗选举为主节点，主节点会一致出于主节点状态。除非它不在满足大多数的要求或者挂了而退位。</p>
+<h2 id="从应用程序连接副本集"><a href="#从应用程序连接副本集" class="headerlink" title="从应用程序连接副本集"></a>从应用程序连接副本集</h2><blockquote>
 <p>注：</p>
 <ul>
-<li>上述代码在<strong>ubuntu16.04 lts</strong>中测试成功</li>
+<li>上述测试在<strong>MongoDB 3.4.3-8-g05b19c6</strong>中成功</li>
 <li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
 </ul>
 </blockquote>
@@ -484,13 +513,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2016/10/10/hexo_github_coding_blog/">利用hexo和github或coding 搭免费个人博客</a></p>
+        <p><span>本文标题:</span><a href="/2018/04/13/MongDB-study-3/">MongoDB权威指南学习笔记(3)--复制</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">EarthChen</a></p>
-        <p><span>发布时间:</span>2016-10-10, 14:40:00</p>
-        <p><span>最后更新:</span>2018-04-09, 15:17:15</p>
+        <p><span>发布时间:</span>2018-04-13, 12:00:00</p>
+        <p><span>最后更新:</span>2018-04-15, 20:36:10</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/10/10/hexo_github_coding_blog/" title="利用hexo和github或coding 搭免费个人博客">http://earthchen.cn/2016/10/10/hexo_github_coding_blog/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://earthchen.cn/2016/10/10/hexo_github_coding_blog/　　作者: EarthChen" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2018/04/13/MongDB-study-3/" title="MongoDB权威指南学习笔记(3)--复制">http://earthchen.cn/2018/04/13/MongDB-study-3/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://earthchen.cn/2018/04/13/MongDB-study-3/　　作者: EarthChen" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -502,16 +531,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2016/10/11/python_requirements/">
-                    python生成项目所需依赖文件
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2016/08/15/django常用语句/">
-                    Django常用语句
+                <a href="/2018/04/13/MongDB-study-2/">
+                    MongoDB权威指南学习笔记(2)--设计应用
                 </a>
             </div>
         
@@ -523,7 +546,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#开始"><span class="toc-number">1.</span> <span class="toc-text">开始</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#环境搭建"><span class="toc-number">1.1.</span> <span class="toc-text">环境搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#首先安装node-js"><span class="toc-number">1.1.1.</span> <span class="toc-text">首先安装node.js</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安装npm"><span class="toc-number">1.1.2.</span> <span class="toc-text">安装npm</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安装Git"><span class="toc-number">1.1.3.</span> <span class="toc-text">安装Git</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#注册github或者coding-net账号"><span class="toc-number">1.1.4.</span> <span class="toc-text">注册github或者coding.net账号</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#在本地生成公钥和私钥"><span class="toc-number">1.1.5.</span> <span class="toc-text">在本地生成公钥和私钥</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装hexo"><span class="toc-number">1.2.</span> <span class="toc-text">安装hexo</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#建立站点"><span class="toc-number">1.3.</span> <span class="toc-text">建立站点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#本地预览"><span class="toc-number">1.4.</span> <span class="toc-text">本地预览</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#首先生成静态页面"><span class="toc-number">1.4.1.</span> <span class="toc-text">首先生成静态页面</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#启动本地服务预览"><span class="toc-number">1.4.2.</span> <span class="toc-text">启动本地服务预览</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修改配置文件和主题"><span class="toc-number">1.5.</span> <span class="toc-text">修改配置文件和主题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#修改主配置文件-config-yml"><span class="toc-number">1.5.1.</span> <span class="toc-text">修改主配置文件_config.yml</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#修改主题"><span class="toc-number">1.5.2.</span> <span class="toc-text">修改主题</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#发表文章"><span class="toc-number">1.6.</span> <span class="toc-text">发表文章</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#生成一篇博客"><span class="toc-number">1.6.1.</span> <span class="toc-text">生成一篇博客</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#发表命令"><span class="toc-number">1.6.2.</span> <span class="toc-text">发表命令</span></a></li></ol></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#创建副本集"><span class="toc-number">1.</span> <span class="toc-text">创建副本集</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#建立副本集"><span class="toc-number">1.1.</span> <span class="toc-text">建立副本集</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置副本集"><span class="toc-number">1.2.</span> <span class="toc-text">配置副本集</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#rs辅助函数"><span class="toc-number">1.2.1.</span> <span class="toc-text">rs辅助函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#网络注意事项"><span class="toc-number">1.2.2.</span> <span class="toc-text">网络注意事项</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#修改副本集配置"><span class="toc-number">1.2.3.</span> <span class="toc-text">修改副本集配置</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#副本集的组成"><span class="toc-number">2.</span> <span class="toc-text">副本集的组成</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#同步"><span class="toc-number">2.1.</span> <span class="toc-text">同步</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#初始化同步"><span class="toc-number">2.1.1.</span> <span class="toc-text">初始化同步</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#处理陈旧数据"><span class="toc-number">2.1.2.</span> <span class="toc-text">处理陈旧数据</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#心跳"><span class="toc-number">2.2.</span> <span class="toc-text">心跳</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#选举"><span class="toc-number">2.3.</span> <span class="toc-text">选举</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#从应用程序连接副本集"><span class="toc-number">3.</span> <span class="toc-text">从应用程序连接副本集</span></a></li></ol>
         
     </div>
     <style>
@@ -559,7 +582,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"利用hexo和github或coding 搭免费个人博客　| EarthChen's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"MongoDB权威指南学习笔记(3)--复制　| EarthChen's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -593,15 +616,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2016/10/11/python_requirements/" title="上一篇: python生成项目所需依赖文件">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2016/08/15/django常用语句/" title="下一篇: Django常用语句">
+            <a href="/2018/04/13/MongDB-study-2/" title="下一篇: MongoDB权威指南学习笔记(2)--设计应用">
                 <i class="fa fa-angle-right"></i>
             </a>
         
