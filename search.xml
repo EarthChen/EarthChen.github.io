@@ -4,7 +4,7 @@
     
     <entry>
       <title><![CDATA[MongoDB权威指南学习笔记(3)--复制]]></title>
-      <url>/2018/04/13/MongDB-study-3/</url>
+      <url>/2018/04/15/MongDB-study-3/</url>
       <content type="html"><![CDATA[<p>Mongo</p>
 <p>复制</p>
 <a id="more"></a>
@@ -163,7 +163,172 @@
 </ul>
 <h3 id="选举"><a href="#选举" class="headerlink" title="选举"></a>选举</h3><p>当一个成员无法到达主节点时，它就会申请被选举为主节点。希望呗选举为主节点的成员，会向它能到达的所有成员发送通知如果这个成员不符合候选人要求，其他成员可能知道相关原因</p>
 <p>假如没有反对的理由，其他成员就会对这个成员进行选举投票。如果这个成员得到副本大多数赞成票，它就会选举成功，会转到主节点状态。如果　达不到大多数要求，那就出于备份节点状态，之后还可以再次申请呗选举为主节点，主节点会一致出于主节点状态。除非它不在满足大多数的要求或者挂了而退位。</p>
-<h2 id="从应用程序连接副本集"><a href="#从应用程序连接副本集" class="headerlink" title="从应用程序连接副本集"></a>从应用程序连接副本集</h2><blockquote>
+<h2 id="从应用程序连接副本集"><a href="#从应用程序连接副本集" class="headerlink" title="从应用程序连接副本集"></a>从应用程序连接副本集</h2><h3 id="客户端到副本集的连接"><a href="#客户端到副本集的连接" class="headerlink" title="客户端到副本集的连接"></a>客户端到副本集的连接</h3><p>从应用程序的角度，使用副本集与使用单台服务器一致。默认情况下，驱动程序连接到主节点，并且将所有路由都路由到主节点。应用程序可以像是有那个单台服务器一样进行读写，副本集会在后台处理热备份</p>
+<p>连接副本集与连接单台服务器非常想，一个常用的连接字符串如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">mongodb:<span class="comment">//server-1:27017,server-2:27017</span></span>
+</pre></td></tr></table></figure></p>
+<p>当主节点挂掉之后，驱动程序会尽快自动找到新的主节点，在选举过程中，主节点可能会暂时不可用，如果没有可达的成员能够成为主节点，主节点可能长时间不可用</p>
+<h3 id="等待写入复制"><a href="#等待写入复制" class="headerlink" title="等待写入复制"></a>等待写入复制</h3><p>使用getLastError命令检查写入是否成功，也可以使用这个命令确保写入操作呗复制到备份节点，参数w会强制要求getLastError等待，一直到给定数量的成员都执行完了最后的写入操作。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line">db.runCommand(&#123;</span>
+<span class="line">    <span class="string">"getLastError"</span>:<span class="number">1</span>,</span>
+<span class="line">    <span class="string">"w"</span>:<span class="string">"majority"</span></span>
+<span class="line">&#125;)</span>
+</pre></td></tr></table></figure></p>
+<p>可以指定<strong>wtimeout</strong>的值设置超时时间，如果这个超过这个时间还没有返回，就会返回失败</p>
+<p>设置超时时间为1s<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line">db.runCommand(&#123;</span>
+<span class="line">    <span class="string">"getLastError"</span>:<span class="number">1</span>,</span>
+<span class="line">    <span class="string">"w"</span>:<span class="string">"majority"</span>，</span>
+<span class="line">    <span class="string">"wtimeout"</span>:<span class="number">1000</span></span>
+<span class="line">&#125;)</span>
+</pre></td></tr></table></figure></p>
+<h2 id="分片"><a href="#分片" class="headerlink" title="分片"></a>分片</h2><p>分片是指将数据拆分，将其分散存放在不同的机器上的过程。</p>
+<p>几乎所有数据库都能进行手动分片，但mongo支持自动分片，可以使数据库架构对应用程序不可见，也可以简化系统管理。对应用来说，和使用单机mongo服务器一样。</p>
+<p>在分片之前需要先执行<strong>mongos</strong>进行一次路由过程</p>
+<h3 id="快速建立一个简单集群"><a href="#快速建立一个简单集群" class="headerlink" title="快速建立一个简单集群"></a>快速建立一个简单集群</h3><p>使用<strong>-nodb</strong>选项启动mongo shell<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ mongo --nodb</span>
+</pre></td></tr></table></figure></p>
+<p>使用<strong>ShardingTest</strong>创建集群<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line">cluster=<span class="keyword">new</span> ShardingTest(&#123;</span>
+<span class="line">    <span class="string">"shards"</span>:<span class="number">3</span>,</span>
+<span class="line">    <span class="string">"chunksize"</span>:<span class="number">1</span></span>
+<span class="line">&#125;)</span>
+</pre></td></tr></table></figure></p>
+<p>会创建包含三个切片的集群，分别运行在30000,30001,30002端口，默认情况下ShardingTest会在30999端口启动mongos</p>
+<p>连接到mongos使用集群<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">db=(<span class="keyword">new</span> Mongo(<span class="string">"127.0.0.1:30999"</span>)).getDB(<span class="string">"test"</span>)</span>
+</pre></td></tr></table></figure></p>
+<p>接下来和使用单机服务器完全一样</p>
+<p>使用<strong>sh.status()</strong>可以查看集群的状态，分片摘要信息、数据库摘要信息、集合摘要信息</p>
+<p>主分片是为每个数据库随机选择的，所有数据都会位于主分片上。目前还不能自动将数据分发到不同的分片上，因为它不知道你希望如何分发数据。对每一个集合，必须明确指定，应该如何分发数据。</p>
+<p>要求一个集合分片，首先要对这个集合的数据库启用分片，执行下列命令<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">sh.enableSharding(<span class="string">"test"</span>)</span>
+</pre></td></tr></table></figure></p>
+<p>对集合分片时，要 选择一个片键。片键时集合的一个键，mongodb根据这个键拆分数据。(例如，如果选择基于“username”进行分片，mongo会根据不同的用户名进行分片) 选择片键可以认为时选择集合中的数据的顺序。它与索引时个相似的概念；随着集合的不断增长，片键就会成为集合上最重要的索引。只有呗索引过的键才能作为片键</p>
+<p>在启用分片时，先在希望作为片键的键上创建索引<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line">db.users.ensureIndex(&#123;</span>
+<span class="line">    <span class="string">"username"</span>:<span class="number">1</span></span>
+<span class="line">&#125;)</span>
+</pre></td></tr></table></figure></p>
+<p>然后对集合进行分片<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line">sh.shardCollection(<span class="string">"test.users"</span>,&#123;</span>
+<span class="line">    <span class="string">"username"</span>:<span class="number">1</span></span>
+<span class="line">&#125;)</span>
+</pre></td></tr></table></figure></p>
+<p>集合会被分为读个数据块，每一个数据块都是集合的一个数据子集</p>
+<p>包含片键的查询能够直接被发送到目标分片或者是集群分片的一个子集，这样的查询叫定向查询</p>
+<p>有些查询必须被发送到所有分片，这样的查询叫分散-聚集查询，mongo将查询分散到所有分片上，然后将各个分片的查询结果聚集起来。</p>
+<p>关闭集群<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">cluster.stop()</span>
+</pre></td></tr></table></figure></p>
+<h2 id="配置分片"><a href="#配置分片" class="headerlink" title="配置分片"></a>配置分片</h2><h3 id="何时分片"><a href="#何时分片" class="headerlink" title="何时分片"></a>何时分片</h3><p>通常不必太早分片，因为分片不仅会增加部署的操作复杂度，还要求作出设计决策，而该决策以后很难再改。另外最好也不要在系统运行太久之后在分片。</p>
+<p>分片用来:</p>
+<ul>
+<li>增加可用RAM</li>
+<li>增加可用磁盘空间</li>
+<li>减轻单台服务器的负载</li>
+<li>处理单个mongod无法承受的吞吐量</li>
+</ul>
+<h3 id="启动服务器"><a href="#启动服务器" class="headerlink" title="启动服务器"></a>启动服务器</h3><h4 id="配置服务器"><a href="#配置服务器" class="headerlink" title="配置服务器"></a>配置服务器</h4><p>配置服务器相当于集群的大脑，保存着集群和分片的元数据，即各分片包含哪些数据的信息，因此，应该首先建林配置服务器</p>
+<p>启动配置服务器<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ mongod --configscr --dbpath /var/lib/mongodb <span class="_">-f</span> /var/lib/config/mongod.conf</span>
+</pre></td></tr></table></figure></p>
+<blockquote>
+<ul>
+<li>启动配置服务器时，不要使用–replSet选项：配置服务器不是副本集成员</li>
+<li>–configscr 指定mongod为新的配置服务器，该配置将mongod的默认监听端口改为27019，并吧默认的数据目录改为/data/confgdb(可使用–port和–dbpath选项修改这两项配置)</li>
+</ul>
+</blockquote>
+<h4 id="mongos进程"><a href="#mongos进程" class="headerlink" title="mongos进程"></a>mongos进程</h4><p>当服务器出于运行状态后，启动一个mongos进程提供应用程序连接。mongos进程需要知道配置服务器的地址，所以必须使用–configdb选项启动mongos<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ mongos -configdb config-1:279019,config-2:279019.config-3:279019 <span class="_">-f</span> /var/lib/mongos.conf</span>
+</pre></td></tr></table></figure></p>
+<h4 id="将副本集转换为分片"><a href="#将副本集转换为分片" class="headerlink" title="将副本集转换为分片"></a>将副本集转换为分片</h4><p>假设我们已经拥有了一个副本集</p>
+<p>如果已经有一个使用中的副本集，该副本集会成为第一个分片。为了将副本集转换为分片，需告知mongos副本集名称和副本集成员列表</p>
+<p>例如在server-1到server-5上有一个名为spock的副本集，可连接到mongos并运行：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">sh.addShard(<span class="string">"spock/server-1:27017,server-2:27017,server-4:27017"</span>)</span>
+</pre></td></tr></table></figure></p>
+<p>可在参数中指定副本集的所有成员。如果运行sh.status()，可发现mongodb已经找到了其他的副本集成员</p>
+<p>也可以创建但mongod服务器的分片(而不是副本集分片)，直接在addShard()中指定单个mongod的主机名和端口<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">sh.addShard(<span class="string">"some-server:27017"</span>)</span>
+</pre></td></tr></table></figure></p>
+<h4 id="数据分片"><a href="#数据分片" class="headerlink" title="数据分片"></a>数据分片</h4><p>除非明确指定规则，否则mongodb不会自动对数据进行拆分，如有必要，必须明确告知数据库和集合。</p>
+<p>假设我们希望对music数据库中的artists集合按照name键进行分片。首先，对music数据库启用分片<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">db.enableSharding(<span class="string">"music"</span>)</span>
+</pre></td></tr></table></figure></p>
+<blockquote>
+<p>对数据库分片是对集合分片的先决条件</p>
+</blockquote>
+<p>对数据库启用分片之后，就可以使用shardCollection()命令对集合分片了<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line">sh.shardCollection(<span class="string">"music.artists"</span>,&#123;</span>
+<span class="line">    <span class="string">"name"</span>:<span class="number">1</span></span>
+<span class="line">&#125;)</span>
+</pre></td></tr></table></figure></p>
+<blockquote>
+<ul>
+<li>如果对已存在的集合进行分片，那么name键上必须有索引</li>
+<li>如果进行分片的集合还不存在，mongos会自动在片键上创建索引</li>
+</ul>
+</blockquote>
+<h3 id="均衡器"><a href="#均衡器" class="headerlink" title="均衡器"></a>均衡器</h3><p>均衡器负责数据的迁移，它会周期性的检查分片－是否存在不均衡，如果存在，就会开始快的迁移</p>
+<h2 id="选择片键"><a href="#选择片键" class="headerlink" title="选择片键"></a>选择片键</h2><p>###　检查使用情况</p>
+<p>对集合进行分片，要选择一或两个字段用于拆分数据。这个键就叫做片键</p>
+<p>###　数据分发<br>数据分发有三种：</p>
+<ul>
+<li>升序片键</li>
+<li>随机分发片键</li>
+<li>基于位置的片键</li>
+</ul>
+<p>####　升序片键<br>升序片键类似于”date”字段或者是objectId，是一种会随着时间稳定增长的字段。</p>
+<h4 id="随机分发的片键"><a href="#随机分发的片键" class="headerlink" title="随机分发的片键"></a>随机分发的片键</h4><p>随机分发的键可以是用户名、邮件地址、uuid、md5或者是数据集中其他没有规律的键</p>
+<h4 id="基于位置的片键"><a href="#基于位置的片键" class="headerlink" title="基于位置的片键"></a>基于位置的片键</h4><p>基于位置的片键可以是用户的ip、经纬度或者地址。位置片键不必与实际的物理位置字段相关。数据会根据这个位置进行分组。</p>
+<h3 id="片键策略"><a href="#片键策略" class="headerlink" title="片键策略"></a>片键策略</h3><h4 id="散列片键"><a href="#散列片键" class="headerlink" title="散列片键"></a>散列片键</h4><p>如果追求的是数据加在速度的极值，那么散列片键时最佳选择。散列片键可使其他任何键随机分发。所以，如果打算在大量查询中使用升序键，但又同时希望吸入数据随机分发的话，散列片键会是个好选择。</p>
+<p>弊端时无法使用散列片键作为指定目标的范围查询。</p>
+<p>创建散列片键，首先要创建散列索引<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line">db.users.ensureIndex(&#123;</span>
+<span class="line">    <span class="string">"username"</span>:<span class="string">"hashed"</span></span>
+<span class="line">&#125;)</span>
+</pre></td></tr></table></figure></p>
+<p>然后对集合分片<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line">db.shardCollection(<span class="string">"app.users"</span>,&#123;</span>
+<span class="line">    <span class="string">"username"</span>:<span class="string">"hashed"</span></span>
+<span class="line">&#125;)</span>
+</pre></td></tr></table></figure></p>
+<blockquote>
+<p>局限性:</p>
+<ul>
+<li>不能使用enique选项</li>
+<li>不能使用数组字段</li>
+<li>浮点型的值会先呗取整，然后才会进入散列，所有1和1.99999会得到相同的散列值</li>
+</ul>
+</blockquote>
+<h4 id="GridFS的散列片段"><a href="#GridFS的散列片段" class="headerlink" title="GridFS的散列片段"></a>GridFS的散列片段</h4><p>GridFS集合通常非常适合做分片，因为它们包含大量的文件数据</p>
+<p>在<strong>files_id</strong>字段上创建散列索引，则每个文件都会随机分发到集群中，但是一个文件只能呗包含在一个单一的块中，这时非常好的</p>
+<p>为了实现这种策略，需要在{“files_id”:”hashed”}创建新的索引，然后依据这个字段对集合分片</p>
+<h3 id="片键规则和指导方阵"><a href="#片键规则和指导方阵" class="headerlink" title="片键规则和指导方阵"></a>片键规则和指导方阵</h3><h4 id="片键限制"><a href="#片键限制" class="headerlink" title="片键限制"></a>片键限制</h4><p>片键不可以是数组，向片键插入数据值也是不被允许的</p>
+<p>文档一旦插入，其片键值就无法修改了。因此应该选择不会呗改变的字段，或者时很少发生变化的字段</p>
+<p>大多数特殊类型的索引都不能用作片键</p>
+<h4 id="片键的势"><a href="#片键的势" class="headerlink" title="片键的势"></a>片键的势</h4><p>不管片键时跳跃增长还是稳定增长，选择一个值发生变化的键时非常重要的。与索引一样，分片在势比比较高的字段性能更佳</p>
+<blockquote>
 <p>注：</p>
 <ul>
 <li>上述测试在<strong>MongoDB 3.4.3-8-g05b19c6</strong>中成功</li>
@@ -7120,115 +7285,6 @@
     </entry>
     
     <entry>
-      <title><![CDATA[Django使用redis作为缓存系统]]></title>
-      <url>/2017/08/18/django_redis_cache/</url>
-      <content type="html"><![CDATA[<p>为了提升网站的性能，加一层缓存是少不了的，由于之前做的东西是用django写的，所以就介绍一下django的缓存系统。</p>
-<p>又由于我还使用了redis作为消息队列的后端，这里就不在介绍其他内存数据库，直接使用redis。<br><a id="more"></a></p>
-<h1 id="django使用redis作为缓存"><a href="#django使用redis作为缓存" class="headerlink" title="django使用redis作为缓存"></a>django使用redis作为缓存</h1><h2 id="redis"><a href="#redis" class="headerlink" title="redis"></a>redis</h2><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>由于笔者使用的是Ubuntu系统，安装较为简单，其他系统请自行查看官方文档。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">$ sudo apt-get install redis-server</span>
-</pre></td></tr></table></figure></p>
-<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>使用redis命令行客户端测试一下是否成功<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">$ redis-cli</span>
-</pre></td></tr></table></figure></p>
-<p>能出现以下结果即为成功<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">redis 127.0.0.1:6379&gt;</span>
-</pre></td></tr></table></figure></p>
-<p>其他的redis知识这里不左介绍，如果有兴趣，可以自行了解</p>
-<h2 id="django使用redis"><a href="#django使用redis" class="headerlink" title="django使用redis"></a>django使用redis</h2><h3 id="安装django-redis"><a href="#安装django-redis" class="headerlink" title="安装django-redis"></a>安装django-redis</h3><p>为了让django能够使用redis作为缓存，有人开发了一个库来帮我们实现。<a href="https://github.com/niwinz/django-redis" target="_blank" rel="external">django-redis</a>，我们需要安装一下才能使用redis</p>
-<p>在终端中输入一下命令进行安装(pip方式)<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">$ pip install django-redis</span>
-</pre></td></tr></table></figure></p>
-<h3 id="配置django-redis"><a href="#配置django-redis" class="headerlink" title="配置django-redis"></a>配置django-redis</h3><p>在你项目下的<strong>setting.py</strong>中添加如下代码即可<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-</pre></td><td class="code"><pre><span class="line">CACHES = &#123;</span>
-<span class="line">    <span class="string">"default"</span>: &#123;</span>
-<span class="line">        <span class="string">"BACKEND"</span>: <span class="string">"django_redis.cache.RedisCache"</span>,</span>
-<span class="line">        <span class="string">"LOCATION"</span>: <span class="string">"redis://127.0.0.1:6379/1"</span>,</span>
-<span class="line">        <span class="string">"OPTIONS"</span>: &#123;</span>
-<span class="line">            <span class="string">"CLIENT_CLASS"</span>: <span class="string">"django_redis.client.DefaultClient"</span>,</span>
-<span class="line">        &#125;</span>
-<span class="line">    &#125;</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure></p>
-<p>这样就能开始使用了，如果你想添加修改更多配置，想让其更适合自己的项目一点，可以自己去查看<a href="http://django-redis-chs.readthedocs.io/zh_CN/latest/" target="_blank" rel="external">官方文档</a></p>
-<p>这里随便配置一下<strong>session backend</strong>，同样在下面添加<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line">SESSION_ENGINE = <span class="string">"django.contrib.sessions.backends.cache"</span></span>
-<span class="line">SESSION_CACHE_ALIAS = <span class="string">"default"</span></span>
-</pre></td></tr></table></figure></p>
-<h3 id="使用缓存"><a href="#使用缓存" class="headerlink" title="使用缓存"></a>使用缓存</h3><p>在setting中配置好上述配置之后我们就可以开始使用了，django中自带了几个常用的修饰器，可以视情况使用。<br>比如：</p>
-<ul>
-<li><p>django.views.decorators.cache.cache_page（）针对每个视图的缓存</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.views.decorators.cache <span class="keyword">import</span> cache_page</span>
-<span class="line"></span>
-<span class="line"><span class="meta">@cache_page(60 * 15)</span></span>
-<span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_view</span><span class="params">(request)</span>:</span></span>
-<span class="line">    ...</span>
-</pre></td></tr></table></figure>
-</li>
-<li><p>在setting添加配置，对全站进行缓存</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-</pre></td><td class="code"><pre><span class="line">MIDDLEWARE = [</span>
-<span class="line">    <span class="string">'django.middleware.cache.UpdateCacheMiddleware'</span>,</span>
-<span class="line">    <span class="string">'django.middleware.common.CommonMiddleware'</span>,</span>
-<span class="line">    <span class="string">'django.middleware.cache.FetchFromCacheMiddleware'</span>,</span>
-<span class="line">]</span>
-</pre></td></tr></table></figure>
-</li>
-<li><p>还可以调用低级api，直接操作缓存。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-</pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>cache.set(<span class="string">'my_key'</span>, <span class="string">'hello, world!'</span>, <span class="number">30</span>)</span>
-<span class="line"><span class="meta">&gt;&gt;&gt; </span>cache.get(<span class="string">'my_key'</span>)</span>
-<span class="line"><span class="string">'hello, world!'</span></span>
-</pre></td></tr></table></figure>
-</li>
-</ul>
-<p>可以按照自己的需要去选择合适的使用方法。</p>
-<blockquote>
-<p>注：</p>
-<ul>
-<li>上述环境在<strong>ubuntu16.04 lts</strong> <strong>django1.9</strong>中搭建测试成功</li>
-<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
-</ul>
-</blockquote>
-]]></content>
-      
-        <categories>
-            
-            <category> 开发 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> Django </tag>
-            
-            <tag> Redis </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[Django使用Channels实现websocket]]></title>
       <url>/2017/08/18/django_channels_websocket/</url>
       <content type="html"><![CDATA[<p>由于项目有个需要实时显示状态的需求，搜索了各种实现方法，看来只有websocket最靠谱，但django原生是不支持websocket的，最终发现了chango-channels这个项目。可以帮我们实现我们的需求。</p>
@@ -8066,6 +8122,115 @@
 <span class="line">        <span class="keyword">if</span> (socket.readyState == WebSocket.OPEN) socket.onopen();</span>
 </pre></td></tr></table></figure></p>
 <p>配合redis就可以实现django的websocket了，也可以满足我的需求，实时更新。</p>
+<blockquote>
+<p>注：</p>
+<ul>
+<li>上述环境在<strong>ubuntu16.04 lts</strong> <strong>django1.9</strong>中搭建测试成功</li>
+<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
+</ul>
+</blockquote>
+]]></content>
+      
+        <categories>
+            
+            <category> 开发 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Django </tag>
+            
+            <tag> Redis </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Django使用redis作为缓存系统]]></title>
+      <url>/2017/08/18/django_redis_cache/</url>
+      <content type="html"><![CDATA[<p>为了提升网站的性能，加一层缓存是少不了的，由于之前做的东西是用django写的，所以就介绍一下django的缓存系统。</p>
+<p>又由于我还使用了redis作为消息队列的后端，这里就不在介绍其他内存数据库，直接使用redis。<br><a id="more"></a></p>
+<h1 id="django使用redis作为缓存"><a href="#django使用redis作为缓存" class="headerlink" title="django使用redis作为缓存"></a>django使用redis作为缓存</h1><h2 id="redis"><a href="#redis" class="headerlink" title="redis"></a>redis</h2><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>由于笔者使用的是Ubuntu系统，安装较为简单，其他系统请自行查看官方文档。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ sudo apt-get install redis-server</span>
+</pre></td></tr></table></figure></p>
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>使用redis命令行客户端测试一下是否成功<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ redis-cli</span>
+</pre></td></tr></table></figure></p>
+<p>能出现以下结果即为成功<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">redis 127.0.0.1:6379&gt;</span>
+</pre></td></tr></table></figure></p>
+<p>其他的redis知识这里不左介绍，如果有兴趣，可以自行了解</p>
+<h2 id="django使用redis"><a href="#django使用redis" class="headerlink" title="django使用redis"></a>django使用redis</h2><h3 id="安装django-redis"><a href="#安装django-redis" class="headerlink" title="安装django-redis"></a>安装django-redis</h3><p>为了让django能够使用redis作为缓存，有人开发了一个库来帮我们实现。<a href="https://github.com/niwinz/django-redis" target="_blank" rel="external">django-redis</a>，我们需要安装一下才能使用redis</p>
+<p>在终端中输入一下命令进行安装(pip方式)<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ pip install django-redis</span>
+</pre></td></tr></table></figure></p>
+<h3 id="配置django-redis"><a href="#配置django-redis" class="headerlink" title="配置django-redis"></a>配置django-redis</h3><p>在你项目下的<strong>setting.py</strong>中添加如下代码即可<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+</pre></td><td class="code"><pre><span class="line">CACHES = &#123;</span>
+<span class="line">    <span class="string">"default"</span>: &#123;</span>
+<span class="line">        <span class="string">"BACKEND"</span>: <span class="string">"django_redis.cache.RedisCache"</span>,</span>
+<span class="line">        <span class="string">"LOCATION"</span>: <span class="string">"redis://127.0.0.1:6379/1"</span>,</span>
+<span class="line">        <span class="string">"OPTIONS"</span>: &#123;</span>
+<span class="line">            <span class="string">"CLIENT_CLASS"</span>: <span class="string">"django_redis.client.DefaultClient"</span>,</span>
+<span class="line">        &#125;</span>
+<span class="line">    &#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure></p>
+<p>这样就能开始使用了，如果你想添加修改更多配置，想让其更适合自己的项目一点，可以自己去查看<a href="http://django-redis-chs.readthedocs.io/zh_CN/latest/" target="_blank" rel="external">官方文档</a></p>
+<p>这里随便配置一下<strong>session backend</strong>，同样在下面添加<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">SESSION_ENGINE = <span class="string">"django.contrib.sessions.backends.cache"</span></span>
+<span class="line">SESSION_CACHE_ALIAS = <span class="string">"default"</span></span>
+</pre></td></tr></table></figure></p>
+<h3 id="使用缓存"><a href="#使用缓存" class="headerlink" title="使用缓存"></a>使用缓存</h3><p>在setting中配置好上述配置之后我们就可以开始使用了，django中自带了几个常用的修饰器，可以视情况使用。<br>比如：</p>
+<ul>
+<li><p>django.views.decorators.cache.cache_page（）针对每个视图的缓存</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.views.decorators.cache <span class="keyword">import</span> cache_page</span>
+<span class="line"></span>
+<span class="line"><span class="meta">@cache_page(60 * 15)</span></span>
+<span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_view</span><span class="params">(request)</span>:</span></span>
+<span class="line">    ...</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>在setting添加配置，对全站进行缓存</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line">MIDDLEWARE = [</span>
+<span class="line">    <span class="string">'django.middleware.cache.UpdateCacheMiddleware'</span>,</span>
+<span class="line">    <span class="string">'django.middleware.common.CommonMiddleware'</span>,</span>
+<span class="line">    <span class="string">'django.middleware.cache.FetchFromCacheMiddleware'</span>,</span>
+<span class="line">]</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>还可以调用低级api，直接操作缓存。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>cache.set(<span class="string">'my_key'</span>, <span class="string">'hello, world!'</span>, <span class="number">30</span>)</span>
+<span class="line"><span class="meta">&gt;&gt;&gt; </span>cache.get(<span class="string">'my_key'</span>)</span>
+<span class="line"><span class="string">'hello, world!'</span></span>
+</pre></td></tr></table></figure>
+</li>
+</ul>
+<p>可以按照自己的需要去选择合适的使用方法。</p>
 <blockquote>
 <p>注：</p>
 <ul>
@@ -13915,291 +14080,6 @@
     </entry>
     
     <entry>
-      <title><![CDATA[ubuntu下的进程控制系统————Supervisor]]></title>
-      <url>/2017/06/30/ubuntu_supervisor/</url>
-      <content type="html"><![CDATA[<p>我们在部署网站或者在ssh到服务器上去进行一些长时间操作的任务时候，通常不喜欢长时间开启终端在其中等待，尤其是Windows下putty这类软件，长时间不操作就会结束，尴尬的是，我们跑的进程也会直接终端，为了解决这个问题，我们需要把进程扔到后台，让他自己运行</p>
-<p>在这里我们介绍一个名叫<strong>Supervisor</strong>的进程控制系统，<br>它是一个C/S系统(注意: 其提供WEB接口给用户查询和控制), 它允许用户去监控和控制在类UNIX系统的进程. 它的目标与launchd, daemontools和runit有些相似, 但是与它们不一样的是, 它不是作为init(进程号pid是1)运行. 它是被用来控制进程, 并且它在启动的时候和一般程序并无二致<br>supervisor是一个制作守护进程的工具,用户可以在UNIX系统中监控、管理进程。常用于管理与某个用户或项目相关的进程。去帮我们维护各种服务器的进程，即使有软件崩了也能帮我们自动重启</p>
-<h2 id="Supervisor"><a href="#Supervisor" class="headerlink" title="Supervisor"></a>Supervisor</h2><a id="more"></a>
-<p>首先先把官网丢上来<a href="http://supervisord.org/" target="_blank" rel="external">http://supervisord.org/</a></p>
-<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>两种方式去安装</p>
-<ol>
-<li><p>直接使用apt包管理安装</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">$ sudo apt-get install supervisor</span>
-</pre></td></tr></table></figure>
-</li>
-<li><p>通过pip安装</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">$ sudo pip install supervisor</span>
-</pre></td></tr></table></figure>
-</li>
-</ol>
-<p>安装成功后,supervisor就会默认启动</p>
-<h3 id="使用说明"><a href="#使用说明" class="headerlink" title="使用说明"></a>使用说明</h3><p>很多地方都有不同的使用方式，个人比较倾向把每个进程的文件单独拆分放在/etc/supervisor/conf.d/目录下，以conf为扩展名<br>这里以我自己的一个项目的进程作为例子（进程名为x508server）</p>
-<ol>
-<li><p>创建并编写<strong>x508server.conf</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-</pre></td><td class="code"><pre><span class="line">[program:x508server]</span>
-<span class="line">command=python /home/webserver/web/WebServer/manage.py runserver 0.0.0.0:8000 ; 被监控的进程路径</span>
-<span class="line">numprocs=1                    ; 启动几个进程</span>
-<span class="line">directory=/home/webserver/web/WebServer/               ; 执行前要不要先cd到目录去，一般不用</span>
-<span class="line">autostart=true                ; 随着supervisord的启动而启动</span>
-<span class="line">autorestart=true              ; 自动重启。。当然要选上了</span>
-<span class="line">startretries=10               ; 启动失败时的最多重试次数</span>
-<span class="line">exitcodes=0                   ; 正常退出代码</span>
-<span class="line">stopsignal=KILL               ; 用来杀死进程的信号</span>
-<span class="line">stopwaitsecs=10               ; 发送SIGKILL前的等待时间</span>
-<span class="line">redirect_stderr=true          ; 重定向stderr到stdout</span>
-<span class="line">stdout_logfile=logfile        ; 指定日志文件</span>
-<span class="line">; 默认为 false，如果设置为 true，当进程收到 stop 信号时，会自动将该信号发给该进程的子进程。如果这个配置项为 true，那么也隐含 killasgroup 为 true。例如在 Debug 模式使用 Flask 时，Flask 不会将接收到的 stop 信号也传递给它的子进程，因此就需要设置这个配置项。</span>
-<span class="line">stopasgroup=true             ; send stop signal to the UNIX process </span>
-<span class="line">; 默认为 false，如果设置为 true，当进程收到 kill 信号时，会自动将该信号发给该进程的子进程。如果这个程序使用了 python 的 multiprocessing 时，就能自动停止它的子线程。</span>
-<span class="line">killasgroup=true             ; SIGKILL the UNIX process group (def false</span>
-</pre></td></tr></table></figure>
-</li>
-<li><p>让supervisor重新加载配置文件，然后启动x508server进程</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line">$ supervisorctl reload</span>
-<span class="line">$ supervisorctl start x508server</span>
-</pre></td></tr></table></figure>
-</li>
-<li><p>结束指定进程</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">$ supervisorctl x508serevr stop</span>
-</pre></td></tr></table></figure>
-</li>
-</ol>
-<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><ol>
-<li><p>启动某个进程</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">$ supervisorctl start x508serevr</span>
-</pre></td></tr></table></figure>
-</li>
-<li><p>关闭某个进程</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">$ supervisorctl stop x508serevr</span>
-</pre></td></tr></table></figure>
-</li>
-<li><p>停止全部进程，注：start、restart、stop都不会载入最新的配置文件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">$ supervisorctl stop all</span>
-</pre></td></tr></table></figure>
-</li>
-<li><p>载入最新的配置文件，停止原有进程并按新的配置启动、管理所有进程</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">$ supervisorctl reload</span>
-</pre></td></tr></table></figure>
-</li>
-<li><p>根据最新的配置文件，启动新配置或有改动的进程，配置没有改动的进程不会受影响而重启</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">$ supervisorctl update</span>
-</pre></td></tr></table></figure>
-</li>
-<li><p>启动supervisord</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">$ sudo supervisord -c /etc/supervisor/supervisord.conf</span>
-</pre></td></tr></table></figure>
-</li>
-</ol>
-<h3 id="配置说明"><a href="#配置说明" class="headerlink" title="配置说明"></a>配置说明</h3><ol>
-<li><p>每个进程的配置</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-<span class="line">17</span>
-<span class="line">18</span>
-<span class="line">19</span>
-<span class="line">20</span>
-<span class="line">21</span>
-<span class="line">22</span>
-<span class="line">23</span>
-<span class="line">24</span>
-<span class="line">25</span>
-<span class="line">26</span>
-<span class="line">27</span>
-<span class="line">28</span>
-<span class="line">29</span>
-<span class="line">30</span>
-<span class="line">31</span>
-<span class="line">32</span>
-<span class="line">33</span>
-<span class="line">34</span>
-<span class="line">35</span>
-<span class="line">36</span>
-<span class="line">37</span>
-<span class="line">38</span>
-<span class="line">39</span>
-<span class="line">40</span>
-<span class="line">41</span>
-<span class="line">42</span>
-<span class="line">43</span>
-<span class="line">44</span>
-<span class="line">45</span>
-<span class="line">46</span>
-<span class="line">47</span>
-<span class="line">48</span>
-<span class="line">49</span>
-<span class="line">50</span>
-<span class="line">51</span>
-<span class="line">52</span>
-<span class="line">53</span>
-<span class="line">54</span>
-<span class="line">55</span>
-<span class="line">56</span>
-<span class="line">57</span>
-<span class="line">58</span>
-<span class="line">59</span>
-<span class="line">60</span>
-<span class="line">61</span>
-<span class="line">62</span>
-<span class="line">63</span>
-<span class="line">64</span>
-<span class="line">65</span>
-<span class="line">66</span>
-<span class="line">67</span>
-<span class="line">68</span>
-<span class="line">69</span>
-<span class="line">70</span>
-<span class="line">71</span>
-</pre></td><td class="code"><pre><span class="line">;*为必须填写项</span>
-<span class="line">;*[program:应用名称]</span>
-<span class="line">[program:cat]</span>
-<span class="line"></span>
-<span class="line">;*命令路径,如果使用python启动的程序应该为 python /home/test.py, </span>
-<span class="line">;不建议放入/home/user/, 对于非user用户一般情况下是不能访问</span>
-<span class="line"><span class="built_in">command</span>=/bin/cat</span>
-<span class="line"></span>
-<span class="line">;当numprocs为1时,process_name=%(program_name)s</span>
-<span class="line">;当numprocs&gt;=2时,%(program_name)s_%(process_num)02d</span>
-<span class="line">process_name=%(program_name)s</span>
-<span class="line"></span>
-<span class="line">;进程数量</span>
-<span class="line">numprocs=1</span>
-<span class="line"></span>
-<span class="line">;执行目录,若有/home/supervisor_test/<span class="built_in">test</span>1.py</span>
-<span class="line">;将directory设置成/home/supervisor_test</span>
-<span class="line">;则<span class="built_in">command</span>只需设置成python <span class="built_in">test</span>1.py</span>
-<span class="line">;否则<span class="built_in">command</span>必须设置成绝对执行目录</span>
-<span class="line">directory=/tmp</span>
-<span class="line"></span>
-<span class="line">;掩码:--- -w- -w-, 转换后rwx r-x w-x</span>
-<span class="line"><span class="built_in">umask</span>=022</span>
-<span class="line"></span>
-<span class="line">;优先级,值越高,最后启动,最先被关闭,默认值999</span>
-<span class="line">priority=999</span>
-<span class="line"></span>
-<span class="line">;如果是<span class="literal">true</span>,当supervisor启动时,程序将会自动启动</span>
-<span class="line">autostart=<span class="literal">true</span></span>
-<span class="line"></span>
-<span class="line">;*自动重启</span>
-<span class="line">autorestart=<span class="literal">true</span></span>
-<span class="line"></span>
-<span class="line">;启动延时执行,默认1秒</span>
-<span class="line">startsecs=10</span>
-<span class="line"></span>
-<span class="line">;启动尝试次数,默认3次</span>
-<span class="line">startretries=3</span>
-<span class="line"></span>
-<span class="line">;当退出码是0,2时,执行重启,默认值0,2</span>
-<span class="line">exitcodes=0,2</span>
-<span class="line"></span>
-<span class="line">;停止信号,默认TERM</span>
-<span class="line">;中断:INT(类似于Ctrl+C)(<span class="built_in">kill</span> -INT pid),退出后会将写文件或日志(推荐)</span>
-<span class="line">;终止:TERM(<span class="built_in">kill</span> -TERM pid)</span>
-<span class="line">;挂起:HUP(<span class="built_in">kill</span> -HUP pid),注意与Ctrl+Z/<span class="built_in">kill</span> -stop pid不同</span>
-<span class="line">;从容停止:QUIT(<span class="built_in">kill</span> -QUIT pid)</span>
-<span class="line">;KILL, USR1, USR2其他见命令(<span class="built_in">kill</span> <span class="_">-l</span>),说明1</span>
-<span class="line">stopsignal=TERM</span>
-<span class="line"></span>
-<span class="line">stopwaitsecs=10</span>
-<span class="line"></span>
-<span class="line">;*以root用户执行</span>
-<span class="line">user=root</span>
-<span class="line"></span>
-<span class="line">;重定向</span>
-<span class="line">redirect_stderr=<span class="literal">false</span></span>
-<span class="line"></span>
-<span class="line">stdout_logfile=/a/path</span>
-<span class="line">stdout_logfile_maxbytes=1MB</span>
-<span class="line">stdout_logfile_backups=10</span>
-<span class="line">stdout_capture_maxbytes=1MB</span>
-<span class="line">stderr_logfile=/a/path</span>
-<span class="line">stderr_logfile_maxbytes=1MB</span>
-<span class="line">stderr_logfile_backups=10</span>
-<span class="line">stderr_capture_maxbytes=1MB</span>
-<span class="line"></span>
-<span class="line">;环境变量设置</span>
-<span class="line">environment=A=<span class="string">"1"</span>,B=<span class="string">"2"</span></span>
-<span class="line"></span>
-<span class="line">serverurl=AUTO</span>
-</pre></td></tr></table></figure>
-</li>
-<li><p>(inet_http_server)配置说明</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-</pre></td><td class="code"><pre><span class="line">[inet_http_server]         ; inet (TCP) server disabled by default</span>
-<span class="line">port=0.0.0.0:9001          ; (ip_address:port specifier, *:port <span class="keyword">for</span> all iface)</span>
-<span class="line">username=user              ; 用户名 (default is no username (open server))</span>
-<span class="line">password=123               ; 密码 (default is no password (open server))</span>
-</pre></td></tr></table></figure>
-</li>
-</ol>
-<blockquote>
-<p>注：</p>
-<ul>
-<li>上述环境在<strong>ubuntu16.04 lts</strong>中测试成功</li>
-<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
-</ul>
-</blockquote>
-]]></content>
-      
-        <categories>
-            
-            <category> 运维 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> Linux </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[django+nginx+gunicorn部署配置]]></title>
       <url>/2017/06/30/django_nginx_gunicorn/</url>
       <content type="html"><![CDATA[<p>在部署django开发的站点时，通常有两种选择方式，nginx+django+uwsgi或者django+nginx+gunicorn，本文不讨论apache方式，在linux下通常都使用nginx，速度快，还经常做代理服务器，功能强大。。<br>nginx+django+uwsgi个人觉得uwsgi配置较为麻烦，所以选择了gunicorn，一个开源Python WSGI UNIX的HTTP服务器，据说速度快（配置快、运行快）、简单，默认是同步工作，支持Gevent、Eventlet异步，支持Tornado。有兴趣可以自行查阅官方文档</p>
@@ -14493,6 +14373,291 @@
             <tag> Django </tag>
             
             <tag> Nginx </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[ubuntu下的进程控制系统————Supervisor]]></title>
+      <url>/2017/06/30/ubuntu_supervisor/</url>
+      <content type="html"><![CDATA[<p>我们在部署网站或者在ssh到服务器上去进行一些长时间操作的任务时候，通常不喜欢长时间开启终端在其中等待，尤其是Windows下putty这类软件，长时间不操作就会结束，尴尬的是，我们跑的进程也会直接终端，为了解决这个问题，我们需要把进程扔到后台，让他自己运行</p>
+<p>在这里我们介绍一个名叫<strong>Supervisor</strong>的进程控制系统，<br>它是一个C/S系统(注意: 其提供WEB接口给用户查询和控制), 它允许用户去监控和控制在类UNIX系统的进程. 它的目标与launchd, daemontools和runit有些相似, 但是与它们不一样的是, 它不是作为init(进程号pid是1)运行. 它是被用来控制进程, 并且它在启动的时候和一般程序并无二致<br>supervisor是一个制作守护进程的工具,用户可以在UNIX系统中监控、管理进程。常用于管理与某个用户或项目相关的进程。去帮我们维护各种服务器的进程，即使有软件崩了也能帮我们自动重启</p>
+<h2 id="Supervisor"><a href="#Supervisor" class="headerlink" title="Supervisor"></a>Supervisor</h2><a id="more"></a>
+<p>首先先把官网丢上来<a href="http://supervisord.org/" target="_blank" rel="external">http://supervisord.org/</a></p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>两种方式去安装</p>
+<ol>
+<li><p>直接使用apt包管理安装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ sudo apt-get install supervisor</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>通过pip安装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ sudo pip install supervisor</span>
+</pre></td></tr></table></figure>
+</li>
+</ol>
+<p>安装成功后,supervisor就会默认启动</p>
+<h3 id="使用说明"><a href="#使用说明" class="headerlink" title="使用说明"></a>使用说明</h3><p>很多地方都有不同的使用方式，个人比较倾向把每个进程的文件单独拆分放在/etc/supervisor/conf.d/目录下，以conf为扩展名<br>这里以我自己的一个项目的进程作为例子（进程名为x508server）</p>
+<ol>
+<li><p>创建并编写<strong>x508server.conf</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+</pre></td><td class="code"><pre><span class="line">[program:x508server]</span>
+<span class="line">command=python /home/webserver/web/WebServer/manage.py runserver 0.0.0.0:8000 ; 被监控的进程路径</span>
+<span class="line">numprocs=1                    ; 启动几个进程</span>
+<span class="line">directory=/home/webserver/web/WebServer/               ; 执行前要不要先cd到目录去，一般不用</span>
+<span class="line">autostart=true                ; 随着supervisord的启动而启动</span>
+<span class="line">autorestart=true              ; 自动重启。。当然要选上了</span>
+<span class="line">startretries=10               ; 启动失败时的最多重试次数</span>
+<span class="line">exitcodes=0                   ; 正常退出代码</span>
+<span class="line">stopsignal=KILL               ; 用来杀死进程的信号</span>
+<span class="line">stopwaitsecs=10               ; 发送SIGKILL前的等待时间</span>
+<span class="line">redirect_stderr=true          ; 重定向stderr到stdout</span>
+<span class="line">stdout_logfile=logfile        ; 指定日志文件</span>
+<span class="line">; 默认为 false，如果设置为 true，当进程收到 stop 信号时，会自动将该信号发给该进程的子进程。如果这个配置项为 true，那么也隐含 killasgroup 为 true。例如在 Debug 模式使用 Flask 时，Flask 不会将接收到的 stop 信号也传递给它的子进程，因此就需要设置这个配置项。</span>
+<span class="line">stopasgroup=true             ; send stop signal to the UNIX process </span>
+<span class="line">; 默认为 false，如果设置为 true，当进程收到 kill 信号时，会自动将该信号发给该进程的子进程。如果这个程序使用了 python 的 multiprocessing 时，就能自动停止它的子线程。</span>
+<span class="line">killasgroup=true             ; SIGKILL the UNIX process group (def false</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>让supervisor重新加载配置文件，然后启动x508server进程</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">$ supervisorctl reload</span>
+<span class="line">$ supervisorctl start x508server</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>结束指定进程</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ supervisorctl x508serevr stop</span>
+</pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><ol>
+<li><p>启动某个进程</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ supervisorctl start x508serevr</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>关闭某个进程</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ supervisorctl stop x508serevr</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>停止全部进程，注：start、restart、stop都不会载入最新的配置文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ supervisorctl stop all</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>载入最新的配置文件，停止原有进程并按新的配置启动、管理所有进程</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ supervisorctl reload</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>根据最新的配置文件，启动新配置或有改动的进程，配置没有改动的进程不会受影响而重启</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ supervisorctl update</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>启动supervisord</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ sudo supervisord -c /etc/supervisor/supervisord.conf</span>
+</pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="配置说明"><a href="#配置说明" class="headerlink" title="配置说明"></a>配置说明</h3><ol>
+<li><p>每个进程的配置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+<span class="line">27</span>
+<span class="line">28</span>
+<span class="line">29</span>
+<span class="line">30</span>
+<span class="line">31</span>
+<span class="line">32</span>
+<span class="line">33</span>
+<span class="line">34</span>
+<span class="line">35</span>
+<span class="line">36</span>
+<span class="line">37</span>
+<span class="line">38</span>
+<span class="line">39</span>
+<span class="line">40</span>
+<span class="line">41</span>
+<span class="line">42</span>
+<span class="line">43</span>
+<span class="line">44</span>
+<span class="line">45</span>
+<span class="line">46</span>
+<span class="line">47</span>
+<span class="line">48</span>
+<span class="line">49</span>
+<span class="line">50</span>
+<span class="line">51</span>
+<span class="line">52</span>
+<span class="line">53</span>
+<span class="line">54</span>
+<span class="line">55</span>
+<span class="line">56</span>
+<span class="line">57</span>
+<span class="line">58</span>
+<span class="line">59</span>
+<span class="line">60</span>
+<span class="line">61</span>
+<span class="line">62</span>
+<span class="line">63</span>
+<span class="line">64</span>
+<span class="line">65</span>
+<span class="line">66</span>
+<span class="line">67</span>
+<span class="line">68</span>
+<span class="line">69</span>
+<span class="line">70</span>
+<span class="line">71</span>
+</pre></td><td class="code"><pre><span class="line">;*为必须填写项</span>
+<span class="line">;*[program:应用名称]</span>
+<span class="line">[program:cat]</span>
+<span class="line"></span>
+<span class="line">;*命令路径,如果使用python启动的程序应该为 python /home/test.py, </span>
+<span class="line">;不建议放入/home/user/, 对于非user用户一般情况下是不能访问</span>
+<span class="line"><span class="built_in">command</span>=/bin/cat</span>
+<span class="line"></span>
+<span class="line">;当numprocs为1时,process_name=%(program_name)s</span>
+<span class="line">;当numprocs&gt;=2时,%(program_name)s_%(process_num)02d</span>
+<span class="line">process_name=%(program_name)s</span>
+<span class="line"></span>
+<span class="line">;进程数量</span>
+<span class="line">numprocs=1</span>
+<span class="line"></span>
+<span class="line">;执行目录,若有/home/supervisor_test/<span class="built_in">test</span>1.py</span>
+<span class="line">;将directory设置成/home/supervisor_test</span>
+<span class="line">;则<span class="built_in">command</span>只需设置成python <span class="built_in">test</span>1.py</span>
+<span class="line">;否则<span class="built_in">command</span>必须设置成绝对执行目录</span>
+<span class="line">directory=/tmp</span>
+<span class="line"></span>
+<span class="line">;掩码:--- -w- -w-, 转换后rwx r-x w-x</span>
+<span class="line"><span class="built_in">umask</span>=022</span>
+<span class="line"></span>
+<span class="line">;优先级,值越高,最后启动,最先被关闭,默认值999</span>
+<span class="line">priority=999</span>
+<span class="line"></span>
+<span class="line">;如果是<span class="literal">true</span>,当supervisor启动时,程序将会自动启动</span>
+<span class="line">autostart=<span class="literal">true</span></span>
+<span class="line"></span>
+<span class="line">;*自动重启</span>
+<span class="line">autorestart=<span class="literal">true</span></span>
+<span class="line"></span>
+<span class="line">;启动延时执行,默认1秒</span>
+<span class="line">startsecs=10</span>
+<span class="line"></span>
+<span class="line">;启动尝试次数,默认3次</span>
+<span class="line">startretries=3</span>
+<span class="line"></span>
+<span class="line">;当退出码是0,2时,执行重启,默认值0,2</span>
+<span class="line">exitcodes=0,2</span>
+<span class="line"></span>
+<span class="line">;停止信号,默认TERM</span>
+<span class="line">;中断:INT(类似于Ctrl+C)(<span class="built_in">kill</span> -INT pid),退出后会将写文件或日志(推荐)</span>
+<span class="line">;终止:TERM(<span class="built_in">kill</span> -TERM pid)</span>
+<span class="line">;挂起:HUP(<span class="built_in">kill</span> -HUP pid),注意与Ctrl+Z/<span class="built_in">kill</span> -stop pid不同</span>
+<span class="line">;从容停止:QUIT(<span class="built_in">kill</span> -QUIT pid)</span>
+<span class="line">;KILL, USR1, USR2其他见命令(<span class="built_in">kill</span> <span class="_">-l</span>),说明1</span>
+<span class="line">stopsignal=TERM</span>
+<span class="line"></span>
+<span class="line">stopwaitsecs=10</span>
+<span class="line"></span>
+<span class="line">;*以root用户执行</span>
+<span class="line">user=root</span>
+<span class="line"></span>
+<span class="line">;重定向</span>
+<span class="line">redirect_stderr=<span class="literal">false</span></span>
+<span class="line"></span>
+<span class="line">stdout_logfile=/a/path</span>
+<span class="line">stdout_logfile_maxbytes=1MB</span>
+<span class="line">stdout_logfile_backups=10</span>
+<span class="line">stdout_capture_maxbytes=1MB</span>
+<span class="line">stderr_logfile=/a/path</span>
+<span class="line">stderr_logfile_maxbytes=1MB</span>
+<span class="line">stderr_logfile_backups=10</span>
+<span class="line">stderr_capture_maxbytes=1MB</span>
+<span class="line"></span>
+<span class="line">;环境变量设置</span>
+<span class="line">environment=A=<span class="string">"1"</span>,B=<span class="string">"2"</span></span>
+<span class="line"></span>
+<span class="line">serverurl=AUTO</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>(inet_http_server)配置说明</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line">[inet_http_server]         ; inet (TCP) server disabled by default</span>
+<span class="line">port=0.0.0.0:9001          ; (ip_address:port specifier, *:port <span class="keyword">for</span> all iface)</span>
+<span class="line">username=user              ; 用户名 (default is no username (open server))</span>
+<span class="line">password=123               ; 密码 (default is no password (open server))</span>
+</pre></td></tr></table></figure>
+</li>
+</ol>
+<blockquote>
+<p>注：</p>
+<ul>
+<li>上述环境在<strong>ubuntu16.04 lts</strong>中测试成功</li>
+<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
+</ul>
+</blockquote>
+]]></content>
+      
+        <categories>
+            
+            <category> 运维 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Linux </tag>
             
         </tags>
         
@@ -14835,6 +15000,165 @@
             <tag> Django </tag>
             
             <tag> Python </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[spring中的SpEL表达式]]></title>
+      <url>/2017/06/12/spring_SpEL/</url>
+      <content type="html"><![CDATA[<p>Spring 3引入了Spring表达式语言（ Spring Expression Language，SpEL），它能够以一种强大和简洁的方式将值装配到bean属性和构造器参数中，在这个过程中所使用的表达式会在运行时计算得到值</p>
+<p>SpEL拥有很多特性，包括：</p>
+<ul>
+<li>使用bean的ID来引用bean</li>
+<li>调用方法和访问对象的属性</li>
+<li>对值进行算术、关系和逻辑运算</li>
+<li>正则表达式匹配</li>
+<li>集合操作</li>
+</ul>
+<a id="more"></a>
+<h2 id="SpEL基础表达式"><a href="#SpEL基础表达式" class="headerlink" title="SpEL基础表达式"></a>SpEL基础表达式</h2><h3 id="表示字面值"><a href="#表示字面值" class="headerlink" title="表示字面值"></a>表示字面值</h3><h4 id="表示是浮点值"><a href="#表示是浮点值" class="headerlink" title="表示是浮点值"></a>表示是浮点值</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;3.1415&#125;</span></span>
+</pre></td></tr></table></figure>
+<p>数值还可以使用科学记数法的方式进行表示<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;9.87E4&#125;</span></span>
+</pre></td></tr></table></figure></p>
+<p>表达式计算得到的值就是98,700</p>
+<h4 id="用来计算String类型的字面值"><a href="#用来计算String类型的字面值" class="headerlink" title="用来计算String类型的字面值"></a>用来计算String类型的字面值</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;'HELLO'&#125;</span></span>
+</pre></td></tr></table></figure>
+<h4 id="字面值true和false的计算结果就是它们对应的Boolean类型的值"><a href="#字面值true和false的计算结果就是它们对应的Boolean类型的值" class="headerlink" title="字面值true和false的计算结果就是它们对应的Boolean类型的值"></a>字面值true和false的计算结果就是它们对应的Boolean类型的值</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;flase&#125;</span></span>
+</pre></td></tr></table></figure>
+<h3 id="引用bean、属性和方法"><a href="#引用bean、属性和方法" class="headerlink" title="引用bean、属性和方法"></a>引用bean、属性和方法</h3><p>SpEL所能做的另外一件基础的事情就是通过ID引用其他的bean。例如，你可以使用SpEL将一个bean装配到另外一个bean的属性中</p>
+<h4 id="使用bean-ID作为SpEL表达式"><a href="#使用bean-ID作为SpEL表达式" class="headerlink" title="使用bean ID作为SpEL表达式"></a>使用bean ID作为SpEL表达式</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;sgtPeppers&#125;</span></span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>sgtPeppers为beanID</p>
+</blockquote>
+<h4 id="引用sgtPeppers的artist属性"><a href="#引用sgtPeppers的artist属性" class="headerlink" title="引用sgtPeppers的artist属性"></a>引用sgtPeppers的artist属性</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;sgtPeppers.artist&#125;</span></span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>引用了一个ID为sgtPeppers的bean，分割符之后是对artist属性的引用</p>
+</blockquote>
+<h4 id="调用-artistSelector的selectArtist-方法"><a href="#调用-artistSelector的selectArtist-方法" class="headerlink" title="调用 artistSelector的selectArtist()方法"></a>调用 artistSelector的selectArtist()方法</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;artistSelector.selectArtist()&#125;</span></span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>引用了一个ID为artistSelector的bean，调用bean的selectArtist()方法</p>
+</blockquote>
+<p>对于被调用方法的返回值来说，我们同样可以调用它的方法<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;artistSelector.selectArtist().toUpperCase()&#125;</span></span>
+</pre></td></tr></table></figure></p>
+<blockquote>
+<p>如果selectArtist()方法返回的是一个String，那么可以调<br>用toUpperCase()将字符串全部改成大写</p>
+</blockquote>
+<p>如果selectArtist()的返回值是null的话，将会出现NullPointerException异常，我们可以使用类型安全的运算符<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;artistSelector.selectArtist()?.toUpperCase()&#125;</span></span>
+</pre></td></tr></table></figure></p>
+<blockquote>
+<p>与之前只是使用点号（ .）来访问toUpperCase()方法不同，现在我们使用了“?.”运算符。这个运算符能够在访问它右边的内容之前，确保它所对应的元素不是null。所以，如果selectArtist()的返回值是null的话，那么SpEL将不会调用toUpperCase()方法。表达式的返回值会是null</p>
+</blockquote>
+<h3 id="在表达式中使用类型"><a href="#在表达式中使用类型" class="headerlink" title="在表达式中使用类型"></a>在表达式中使用类型</h3><blockquote>
+<p>如果要在SpEL中访问类作用域的方法和常量的话，要依赖T()这个关键的运算符</p>
+</blockquote>
+<h4 id="为了在SpEL中表达Java的Math类，需要按照如下的方式使用T-运算符"><a href="#为了在SpEL中表达Java的Math类，需要按照如下的方式使用T-运算符" class="headerlink" title="为了在SpEL中表达Java的Math类，需要按照如下的方式使用T()运算符"></a>为了在SpEL中表达Java的Math类，需要按照如下的方式使用T()运算符</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">T(java.lang.Math).PI</span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>将PI值装配到bean属性中</p>
+</blockquote>
+<h4 id="可以调用T-运算符所得到类型的静态方法"><a href="#可以调用T-运算符所得到类型的静态方法" class="headerlink" title="可以调用T()运算符所得到类型的静态方法:"></a>可以调用T()运算符所得到类型的静态方法:</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">T(java.lang.Math).random()</span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>计算得到一个0到1之间的随机数</p>
+</blockquote>
+<h3 id="SpEL运算符"><a href="#SpEL运算符" class="headerlink" title="SpEL运算符"></a>SpEL运算符</h3><p>将简单的表达式组合为更为复杂的表达式</p>
+<h4 id="计算"><a href="#计算" class="headerlink" title="计算"></a>计算</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;T(java.lang.Math).PI  * circle.radius ^ 2&#125;</span></span>
+</pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li>计算了circle bean中所定义圆的面积</li>
+<li>当使用String类型的值时， “+”运算符执行的是连接操作，与在Java中是一样的</li>
+</ul>
+</blockquote>
+<h4 id="比较运算符"><a href="#比较运算符" class="headerlink" title="比较运算符"></a>比较运算符</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;counter.total == 100&#125;</span></span>
+<span class="line"><span class="comment">#&#123;counter.total eq 100&#125;</span></span>
+</pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li>要比较两个数字是不是相等，可以使用双等号运算符</li>
+<li>也可以使用文本型的eq运算符</li>
+<li>表达式的计算结果是个Boolean值</li>
+</ul>
+</blockquote>
+<h3 id="三元运算符（-ternary）"><a href="#三元运算符（-ternary）" class="headerlink" title="三元运算符（ ternary）"></a>三元运算符（ ternary）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;scoreboard.score &gt; 1000 ? "winner" : "loser"&#125;</span></span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>判断如果scoreboard.score&gt;1000的话，计算结果为String类的“Winner！ ”，否则的话，结果为Loser</p>
+</blockquote>
+<p> 三元运算符的一个常见场景就是检查null值，并用一个默认值来替代null<br> <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;disc.title ?: 'Rattleand Hum'&#125;</span></span>
+</pre></td></tr></table></figure></p>
+<blockquote>
+<p>会判断disc.title的值是不是null，如果是null的话，那么表达式的计算结果就会是“Rattleand Hum”</p>
+</blockquote>
+<h3 id="计算正则表达式"><a href="#计算正则表达式" class="headerlink" title="计算正则表达式"></a>计算正则表达式</h3><p>当处理文本时，有时检查文本是否匹配某种模式是非常有用的。SpEL通过matches运算符支持表达式中的模式匹配。 matches运算<br>符对String类型的文本（作为左边参数）应用正则表达式（作为右边参数）。 matches的运算结果会返回一个Boolean类型的值：如果与<br>正则表达式相匹配，则返回true；否则返回false<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;admin.email matches '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9._%+-]+\\.com'&#125;</span></span>
+</pre></td></tr></table></figure></p>
+<blockquote>
+<p>判断一个字符串是否包含有效的邮件地址</p>
+</blockquote>
+<h3 id="计算集合"><a href="#计算集合" class="headerlink" title="计算集合"></a>计算集合</h3><h4 id="引用列表中的一个元素"><a href="#引用列表中的一个元素" class="headerlink" title="引用列表中的一个元素"></a>引用列表中的一个元素</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;jukebox.song[4].title&#125;</span></span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>计算songs集合中第五个（基于零开始）元素的title属性，这个集合来源于ID为jukebox bean</p>
+<h4 id="从jukebox中随机选择"><a href="#从jukebox中随机选择" class="headerlink" title="从jukebox中随机选择"></a>从jukebox中随机选择</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;jukebox.song [T(java.lang.Math).random()  * jukebox.songs.size() ].title&#125;</span></span>
+</pre></td></tr></table></figure>
+</blockquote>
+<p>“[]”运算符用来从集合或数组中按照索引获取元素，实际上，它还可以从String中获取一个字符<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;'this is a test' [3]&#125;</span></span>
+</pre></td></tr></table></figure></p>
+<blockquote>
+<p>引用了String中的第四个（基于零开始）字符，也就是“s”</p>
+</blockquote>
+<h4 id="查询运算符（-）"><a href="#查询运算符（-）" class="headerlink" title="查询运算符（ .?[]）"></a>查询运算符（ .?[]）</h4><p>用来对集合进行过滤，得到集合的一个子集<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;jukebox.songs.?[artist eq 'Aerosmith']&#125;</span></span>
+</pre></td></tr></table></figure></p>
+<blockquote>
+<ul>
+<li>希望得到jukebox中artist属性为Aerosmith的所有歌曲,选择运算符在它的方括号中接受另一个表达式。当SpEL迭代歌曲列表的时候，会对歌曲集合中的每一个条目计算这个表达式。如果表达式的计算结果为true的话，那么条目会放到新的集合中。否则的话，它就不会放到新集合中。在本例中，内部的表达式会检查歌曲的artist属性是不是等于Aerosmith</li>
+<li>“.^[]”和“.$[]”，它们分别用来在集合中查询第一个匹配项和最后一个匹配项</li>
+<li>投影运算符（ .![]），它会从集合的每个成员中选择特定的属性放到另外一个集合中</li>
+</ul>
+<p>注：</p>
+<ul>
+<li>上述环境在<strong>ubuntu16.04 lts</strong>中测试成功</li>
+<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
+</ul>
+</blockquote>
+]]></content>
+      
+        <categories>
+            
+            <category> 学习笔记 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Spring </tag>
             
         </tags>
         
@@ -15346,165 +15670,6 @@
             <tag> Django </tag>
             
             <tag> Python </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[spring中的SpEL表达式]]></title>
-      <url>/2017/06/12/spring_SpEL/</url>
-      <content type="html"><![CDATA[<p>Spring 3引入了Spring表达式语言（ Spring Expression Language，SpEL），它能够以一种强大和简洁的方式将值装配到bean属性和构造器参数中，在这个过程中所使用的表达式会在运行时计算得到值</p>
-<p>SpEL拥有很多特性，包括：</p>
-<ul>
-<li>使用bean的ID来引用bean</li>
-<li>调用方法和访问对象的属性</li>
-<li>对值进行算术、关系和逻辑运算</li>
-<li>正则表达式匹配</li>
-<li>集合操作</li>
-</ul>
-<a id="more"></a>
-<h2 id="SpEL基础表达式"><a href="#SpEL基础表达式" class="headerlink" title="SpEL基础表达式"></a>SpEL基础表达式</h2><h3 id="表示字面值"><a href="#表示字面值" class="headerlink" title="表示字面值"></a>表示字面值</h3><h4 id="表示是浮点值"><a href="#表示是浮点值" class="headerlink" title="表示是浮点值"></a>表示是浮点值</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;3.1415&#125;</span></span>
-</pre></td></tr></table></figure>
-<p>数值还可以使用科学记数法的方式进行表示<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;9.87E4&#125;</span></span>
-</pre></td></tr></table></figure></p>
-<p>表达式计算得到的值就是98,700</p>
-<h4 id="用来计算String类型的字面值"><a href="#用来计算String类型的字面值" class="headerlink" title="用来计算String类型的字面值"></a>用来计算String类型的字面值</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;'HELLO'&#125;</span></span>
-</pre></td></tr></table></figure>
-<h4 id="字面值true和false的计算结果就是它们对应的Boolean类型的值"><a href="#字面值true和false的计算结果就是它们对应的Boolean类型的值" class="headerlink" title="字面值true和false的计算结果就是它们对应的Boolean类型的值"></a>字面值true和false的计算结果就是它们对应的Boolean类型的值</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;flase&#125;</span></span>
-</pre></td></tr></table></figure>
-<h3 id="引用bean、属性和方法"><a href="#引用bean、属性和方法" class="headerlink" title="引用bean、属性和方法"></a>引用bean、属性和方法</h3><p>SpEL所能做的另外一件基础的事情就是通过ID引用其他的bean。例如，你可以使用SpEL将一个bean装配到另外一个bean的属性中</p>
-<h4 id="使用bean-ID作为SpEL表达式"><a href="#使用bean-ID作为SpEL表达式" class="headerlink" title="使用bean ID作为SpEL表达式"></a>使用bean ID作为SpEL表达式</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;sgtPeppers&#125;</span></span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>sgtPeppers为beanID</p>
-</blockquote>
-<h4 id="引用sgtPeppers的artist属性"><a href="#引用sgtPeppers的artist属性" class="headerlink" title="引用sgtPeppers的artist属性"></a>引用sgtPeppers的artist属性</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;sgtPeppers.artist&#125;</span></span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>引用了一个ID为sgtPeppers的bean，分割符之后是对artist属性的引用</p>
-</blockquote>
-<h4 id="调用-artistSelector的selectArtist-方法"><a href="#调用-artistSelector的selectArtist-方法" class="headerlink" title="调用 artistSelector的selectArtist()方法"></a>调用 artistSelector的selectArtist()方法</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;artistSelector.selectArtist()&#125;</span></span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>引用了一个ID为artistSelector的bean，调用bean的selectArtist()方法</p>
-</blockquote>
-<p>对于被调用方法的返回值来说，我们同样可以调用它的方法<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;artistSelector.selectArtist().toUpperCase()&#125;</span></span>
-</pre></td></tr></table></figure></p>
-<blockquote>
-<p>如果selectArtist()方法返回的是一个String，那么可以调<br>用toUpperCase()将字符串全部改成大写</p>
-</blockquote>
-<p>如果selectArtist()的返回值是null的话，将会出现NullPointerException异常，我们可以使用类型安全的运算符<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;artistSelector.selectArtist()?.toUpperCase()&#125;</span></span>
-</pre></td></tr></table></figure></p>
-<blockquote>
-<p>与之前只是使用点号（ .）来访问toUpperCase()方法不同，现在我们使用了“?.”运算符。这个运算符能够在访问它右边的内容之前，确保它所对应的元素不是null。所以，如果selectArtist()的返回值是null的话，那么SpEL将不会调用toUpperCase()方法。表达式的返回值会是null</p>
-</blockquote>
-<h3 id="在表达式中使用类型"><a href="#在表达式中使用类型" class="headerlink" title="在表达式中使用类型"></a>在表达式中使用类型</h3><blockquote>
-<p>如果要在SpEL中访问类作用域的方法和常量的话，要依赖T()这个关键的运算符</p>
-</blockquote>
-<h4 id="为了在SpEL中表达Java的Math类，需要按照如下的方式使用T-运算符"><a href="#为了在SpEL中表达Java的Math类，需要按照如下的方式使用T-运算符" class="headerlink" title="为了在SpEL中表达Java的Math类，需要按照如下的方式使用T()运算符"></a>为了在SpEL中表达Java的Math类，需要按照如下的方式使用T()运算符</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">T(java.lang.Math).PI</span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>将PI值装配到bean属性中</p>
-</blockquote>
-<h4 id="可以调用T-运算符所得到类型的静态方法"><a href="#可以调用T-运算符所得到类型的静态方法" class="headerlink" title="可以调用T()运算符所得到类型的静态方法:"></a>可以调用T()运算符所得到类型的静态方法:</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">T(java.lang.Math).random()</span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>计算得到一个0到1之间的随机数</p>
-</blockquote>
-<h3 id="SpEL运算符"><a href="#SpEL运算符" class="headerlink" title="SpEL运算符"></a>SpEL运算符</h3><p>将简单的表达式组合为更为复杂的表达式</p>
-<h4 id="计算"><a href="#计算" class="headerlink" title="计算"></a>计算</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;T(java.lang.Math).PI  * circle.radius ^ 2&#125;</span></span>
-</pre></td></tr></table></figure>
-<blockquote>
-<ul>
-<li>计算了circle bean中所定义圆的面积</li>
-<li>当使用String类型的值时， “+”运算符执行的是连接操作，与在Java中是一样的</li>
-</ul>
-</blockquote>
-<h4 id="比较运算符"><a href="#比较运算符" class="headerlink" title="比较运算符"></a>比较运算符</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;counter.total == 100&#125;</span></span>
-<span class="line"><span class="comment">#&#123;counter.total eq 100&#125;</span></span>
-</pre></td></tr></table></figure>
-<blockquote>
-<ul>
-<li>要比较两个数字是不是相等，可以使用双等号运算符</li>
-<li>也可以使用文本型的eq运算符</li>
-<li>表达式的计算结果是个Boolean值</li>
-</ul>
-</blockquote>
-<h3 id="三元运算符（-ternary）"><a href="#三元运算符（-ternary）" class="headerlink" title="三元运算符（ ternary）"></a>三元运算符（ ternary）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;scoreboard.score &gt; 1000 ? "winner" : "loser"&#125;</span></span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>判断如果scoreboard.score&gt;1000的话，计算结果为String类的“Winner！ ”，否则的话，结果为Loser</p>
-</blockquote>
-<p> 三元运算符的一个常见场景就是检查null值，并用一个默认值来替代null<br> <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;disc.title ?: 'Rattleand Hum'&#125;</span></span>
-</pre></td></tr></table></figure></p>
-<blockquote>
-<p>会判断disc.title的值是不是null，如果是null的话，那么表达式的计算结果就会是“Rattleand Hum”</p>
-</blockquote>
-<h3 id="计算正则表达式"><a href="#计算正则表达式" class="headerlink" title="计算正则表达式"></a>计算正则表达式</h3><p>当处理文本时，有时检查文本是否匹配某种模式是非常有用的。SpEL通过matches运算符支持表达式中的模式匹配。 matches运算<br>符对String类型的文本（作为左边参数）应用正则表达式（作为右边参数）。 matches的运算结果会返回一个Boolean类型的值：如果与<br>正则表达式相匹配，则返回true；否则返回false<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;admin.email matches '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9._%+-]+\\.com'&#125;</span></span>
-</pre></td></tr></table></figure></p>
-<blockquote>
-<p>判断一个字符串是否包含有效的邮件地址</p>
-</blockquote>
-<h3 id="计算集合"><a href="#计算集合" class="headerlink" title="计算集合"></a>计算集合</h3><h4 id="引用列表中的一个元素"><a href="#引用列表中的一个元素" class="headerlink" title="引用列表中的一个元素"></a>引用列表中的一个元素</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;jukebox.song[4].title&#125;</span></span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>计算songs集合中第五个（基于零开始）元素的title属性，这个集合来源于ID为jukebox bean</p>
-<h4 id="从jukebox中随机选择"><a href="#从jukebox中随机选择" class="headerlink" title="从jukebox中随机选择"></a>从jukebox中随机选择</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;jukebox.song [T(java.lang.Math).random()  * jukebox.songs.size() ].title&#125;</span></span>
-</pre></td></tr></table></figure>
-</blockquote>
-<p>“[]”运算符用来从集合或数组中按照索引获取元素，实际上，它还可以从String中获取一个字符<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;'this is a test' [3]&#125;</span></span>
-</pre></td></tr></table></figure></p>
-<blockquote>
-<p>引用了String中的第四个（基于零开始）字符，也就是“s”</p>
-</blockquote>
-<h4 id="查询运算符（-）"><a href="#查询运算符（-）" class="headerlink" title="查询运算符（ .?[]）"></a>查询运算符（ .?[]）</h4><p>用来对集合进行过滤，得到集合的一个子集<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line"><span class="comment">#&#123;jukebox.songs.?[artist eq 'Aerosmith']&#125;</span></span>
-</pre></td></tr></table></figure></p>
-<blockquote>
-<ul>
-<li>希望得到jukebox中artist属性为Aerosmith的所有歌曲,选择运算符在它的方括号中接受另一个表达式。当SpEL迭代歌曲列表的时候，会对歌曲集合中的每一个条目计算这个表达式。如果表达式的计算结果为true的话，那么条目会放到新的集合中。否则的话，它就不会放到新集合中。在本例中，内部的表达式会检查歌曲的artist属性是不是等于Aerosmith</li>
-<li>“.^[]”和“.$[]”，它们分别用来在集合中查询第一个匹配项和最后一个匹配项</li>
-<li>投影运算符（ .![]），它会从集合的每个成员中选择特定的属性放到另外一个集合中</li>
-</ul>
-<p>注：</p>
-<ul>
-<li>上述环境在<strong>ubuntu16.04 lts</strong>中测试成功</li>
-<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
-</ul>
-</blockquote>
-]]></content>
-      
-        <categories>
-            
-            <category> 学习笔记 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> Spring </tag>
             
         </tags>
         
@@ -16915,22 +17080,22 @@
 <span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span>
 <span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Type"</span> <span class="attr">content</span>=<span class="string">"text/html; charset=utf-8"</span>/&gt;</span></span>
 <span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"initial-scale=1.0, user-scalable=no"</span>/&gt;</span></span>
-<span class="line">    <span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">"text/css"</span>&gt;</span><span class="undefined"></span>
-<span class="line">        body, html &#123;</span>
-<span class="line">            width: 100%;</span>
-<span class="line">            height: 100%;</span>
-<span class="line">            margin: 0;</span>
-<span class="line">            font-family: "微软雅黑";</span>
+<span class="line">    <span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">"text/css"</span>&gt;</span><span class="css"></span>
+<span class="line">        <span class="selector-tag">body</span>, <span class="selector-tag">html</span> &#123;</span>
+<span class="line">            <span class="attribute">width</span>: <span class="number">100%</span>;</span>
+<span class="line">            <span class="attribute">height</span>: <span class="number">100%</span>;</span>
+<span class="line">            <span class="attribute">margin</span>: <span class="number">0</span>;</span>
+<span class="line">            <span class="attribute">font-family</span>: <span class="string">"微软雅黑"</span>;</span>
 <span class="line">        &#125;</span>
 <span class="line"></span>
-<span class="line">        #allmap &#123;</span>
-<span class="line">            height: 700px;</span>
-<span class="line">            width: 100%;</span>
+<span class="line">        <span class="selector-id">#allmap</span> &#123;</span>
+<span class="line">            <span class="attribute">height</span>: <span class="number">700px</span>;</span>
+<span class="line">            <span class="attribute">width</span>: <span class="number">100%</span>;</span>
 <span class="line">        &#125;</span>
 <span class="line"></span>
-<span class="line">        #r-result &#123;</span>
-<span class="line">            width: 100%;</span>
-<span class="line">            font-size: 14px;</span>
+<span class="line">        <span class="selector-id">#r-result</span> &#123;</span>
+<span class="line">            <span class="attribute">width</span>: <span class="number">100%</span>;</span>
+<span class="line">            <span class="attribute">font-size</span>: <span class="number">14px</span>;</span>
 <span class="line">        &#125;</span>
 <span class="line">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span>
 <span class="line">    </span>
@@ -17251,22 +17416,22 @@
 <span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span>
 <span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Type"</span> <span class="attr">content</span>=<span class="string">"text/html; charset=utf-8"</span>/&gt;</span></span>
 <span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"initial-scale=1.0, user-scalable=no"</span>/&gt;</span></span>
-<span class="line">    <span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">"text/css"</span>&gt;</span><span class="undefined"></span>
-<span class="line">        body, html &#123;</span>
-<span class="line">            width: 100%;</span>
-<span class="line">            height: 100%;</span>
-<span class="line">            margin: 0;</span>
-<span class="line">            font-family: "微软雅黑";</span>
+<span class="line">    <span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">"text/css"</span>&gt;</span><span class="css"></span>
+<span class="line">        <span class="selector-tag">body</span>, <span class="selector-tag">html</span> &#123;</span>
+<span class="line">            <span class="attribute">width</span>: <span class="number">100%</span>;</span>
+<span class="line">            <span class="attribute">height</span>: <span class="number">100%</span>;</span>
+<span class="line">            <span class="attribute">margin</span>: <span class="number">0</span>;</span>
+<span class="line">            <span class="attribute">font-family</span>: <span class="string">"微软雅黑"</span>;</span>
 <span class="line">        &#125;</span>
 <span class="line"></span>
-<span class="line">        #allmap &#123;</span>
-<span class="line">            height: 700px;</span>
-<span class="line">            width: 100%;</span>
+<span class="line">        <span class="selector-id">#allmap</span> &#123;</span>
+<span class="line">            <span class="attribute">height</span>: <span class="number">700px</span>;</span>
+<span class="line">            <span class="attribute">width</span>: <span class="number">100%</span>;</span>
 <span class="line">        &#125;</span>
 <span class="line"></span>
-<span class="line">        #r-result &#123;</span>
-<span class="line">            width: 100%;</span>
-<span class="line">            font-size: 14px;</span>
+<span class="line">        <span class="selector-id">#r-result</span> &#123;</span>
+<span class="line">            <span class="attribute">width</span>: <span class="number">100%</span>;</span>
+<span class="line">            <span class="attribute">font-size</span>: <span class="number">14px</span>;</span>
 <span class="line">        &#125;</span>
 <span class="line">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span>
 <span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span></span>
@@ -17874,13 +18039,13 @@
         
         <tags>
             
-            <tag> Node.js </tag>
-            
-            <tag> Hexo </tag>
-            
             <tag> Git </tag>
             
             <tag> JavaScript </tag>
+            
+            <tag> Node.js </tag>
+            
+            <tag> Hexo </tag>
             
         </tags>
         
@@ -17996,6 +18161,293 @@
         <categories>
             
             <category> 学习笔记 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Django </tag>
+            
+            <tag> Python </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Django操作数据库]]></title>
+      <url>/2016/08/15/django%E6%95%B0%E6%8D%AE%E5%BA%93%E6%93%8D%E4%BD%9C/</url>
+      <content type="html"><![CDATA[<p>本篇主要介绍我们在使用django框架开发的时候使用的操作数据库的语句，这在动态网站部分是很重要的，因为我们需要连接数据库进行操作，然后把数据处理的结果显示在前端页面上，在其他地方我们都是直接用sql语句来手动输入，这样容易造成错误，还影响效率，在django中，内置了很多处理数据库操作的函数，能更便利的帮我们操作数据库</p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="实例代码"><a href="#实例代码" class="headerlink" title="实例代码"></a>实例代码</h3><p><strong>models.py</strong><br><a id="more"></a><br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+<span class="line">27</span>
+</pre></td><td class="code"><pre><span class="line">class Blog(models.Model):</span>
+<span class="line">    name = models.CharField(max_length=100)</span>
+<span class="line">    tagline = models.TextField()</span>
+<span class="line"></span>
+<span class="line">def __unicode__(self):</span>
+<span class="line">    return self.name</span>
+<span class="line"></span>
+<span class="line">class Author(models.Model):</span>
+<span class="line">    name = models.CharField(max_length=50)</span>
+<span class="line">    email = models.EmailField()</span>
+<span class="line"></span>
+<span class="line">#python3中用__str__</span>
+<span class="line">def __unicode__(self):</span>
+<span class="line">    return self.name</span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line">class Entry(models.Model):</span>
+<span class="line">    blog = models.ForeignKey(Blog)</span>
+<span class="line">    headline = models.CharField(max_length=255)</span>
+<span class="line">    body_text = models.TextField()</span>
+<span class="line">    pub_date = models.DateTimeField()</span>
+<span class="line"></span>
+<span class="line">authors = models.ManyToManyField(Author)</span>
+<span class="line"></span>
+<span class="line">#python3中用__str__</span>
+<span class="line">def __unicode__(self):</span>
+<span class="line">    return self.headline</span>
+</pre></td></tr></table></figure></p>
+<ul>
+<li>models模块中有三个类blog，author，以及entry</li>
+<li>entry分别与blog与author表关联</li>
+<li>entry与blog表是通过外键(models.ForeignKey())相连，属于一对多的关系，即一个entry对应多个blog，entry与author是多对多的关系，通过modles.ManyToManyField()实现</li>
+</ul>
+<h3 id="插入数据库"><a href="#插入数据库" class="headerlink" title="插入数据库"></a>插入数据库</h3><ul>
+<li>用save()方法实现，如下所示：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> mysite.blog.models <span class="keyword">import</span> Blog  <span class="comment">#导入blog这个app</span></span>
+<span class="line"></span>
+<span class="line">b = Blog(name=<span class="string">'Beatles Blog'</span>, tagline=<span class="string">'All the latest Beatles news.'</span>)</span>
+<span class="line">b.save()</span>
+</pre></td></tr></table></figure>
+<h3 id="更新数据库"><a href="#更新数据库" class="headerlink" title="更新数据库"></a>更新数据库</h3><ul>
+<li>用save()方法实现，如下所示：</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">b5.name = 'New name</span>
+<span class="line">b5.save()</span>
+</pre></td></tr></table></figure>
+<h4 id="保存外键和多对多关系的字段"><a href="#保存外键和多对多关系的字段" class="headerlink" title="保存外键和多对多关系的字段"></a>保存外键和多对多关系的字段</h4><ul>
+<li>更新外键字段和普通的字段一样，只要指定一个对象的正确类型。<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line">cheese_blog = Blog.objects.get(name=<span class="string">"Cheddar Talk"</span>)</span>
+<span class="line">entry.blog = cheese_blog</span>
+<span class="line">entry.save()</span>
+</pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="更新多对多字段时又一点不太一样，使用add-方法添加相关联的字段的值"><a href="#更新多对多字段时又一点不太一样，使用add-方法添加相关联的字段的值" class="headerlink" title="更新多对多字段时又一点不太一样，使用add()方法添加相关联的字段的值"></a>更新多对多字段时又一点不太一样，使用add()方法添加相关联的字段的值</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">joe = Author.objects.create(name=<span class="string">"Joe"</span>)</span>
+<span class="line">entry.authors.add(joe)</span>
+</pre></td></tr></table></figure>
+<h3 id="检索对象"><a href="#检索对象" class="headerlink" title="检索对象"></a>检索对象</h3><h4 id="检索所有的对象"><a href="#检索所有的对象" class="headerlink" title="检索所有的对象"></a>检索所有的对象</h4><ul>
+<li>使用all()方法返回数据库中的所有对象。<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">all_entries = Entry.objects.all()</span>
+</pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="检索特定的对象"><a href="#检索特定的对象" class="headerlink" title="检索特定的对象"></a>检索特定的对象</h4><h5 id="返回一个与参数匹配的QuerySet-相当于等于"><a href="#返回一个与参数匹配的QuerySet-相当于等于" class="headerlink" title="返回一个与参数匹配的QuerySet,相当于等于(=)"></a>返回一个与参数匹配的QuerySet,相当于等于(=)</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">#fileter(**kwargs)</span></span>
+<span class="line">Entry.objects.filter(pub_date__year=<span class="number">2006</span>)</span>
+</pre></td></tr></table></figure>
+<ul>
+<li>以上语句等同于<strong>slect * from entry where pub_date_year=’2006’</strong></li>
+</ul>
+<h5 id="返回一个与参数不匹配的QuerySet-相当于不等于"><a href="#返回一个与参数不匹配的QuerySet-相当于不等于" class="headerlink" title="返回一个与参数不匹配的QuerySet,相当于不等于(!=)"></a>返回一个与参数不匹配的QuerySet,相当于不等于(!=)</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">exclude(**kwargs)</span>
+</pre></td></tr></table></figure>
+<h5 id="对参数进行重用的方法"><a href="#对参数进行重用的方法" class="headerlink" title="对参数进行重用的方法"></a>对参数进行重用的方法</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line">q1 = Entry.objects.filter(headline__startswith=<span class="string">"What"</span>)</span>
+<span class="line">q2 = q1.exclude(pub_date__gte=datetime.now())</span>
+<span class="line">q3 = q1.filter(pub_date__gte=datetime.now())</span>
+</pre></td></tr></table></figure>
+<h5 id="QuerySet是延迟加载-只在使用的时候才会去访问数据库"><a href="#QuerySet是延迟加载-只在使用的时候才会去访问数据库" class="headerlink" title="QuerySet是延迟加载(只在使用的时候才会去访问数据库)"></a>QuerySet是延迟加载(只在使用的时候才会去访问数据库)</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line">q = Entry.objects.filter(headline__startswith=<span class="string">"What"</span>)</span>
+<span class="line">q = q.filter(pub_date__lte=datetime.now())</span>
+<span class="line">q = q.exclude(body_text__icontains=<span class="string">"food"</span>)</span>
+<span class="line"><span class="keyword">print</span> q</span>
+</pre></td></tr></table></figure>
+<ul>
+<li>在print q时才会访问数据库</li>
+</ul>
+<h5 id="查找前5个entry表里的数据"><a href="#查找前5个entry表里的数据" class="headerlink" title="查找前5个entry表里的数据"></a>查找前5个entry表里的数据</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">Entry.objects.all()[:<span class="number">5</span>]</span>
+</pre></td></tr></table></figure>
+<h5 id="查找从第5个到第10个之间的数据"><a href="#查找从第5个到第10个之间的数据" class="headerlink" title="查找从第5个到第10个之间的数据"></a>查找从第5个到第10个之间的数据</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">Entry.objects.all()[<span class="number">5</span>:<span class="number">10</span>]</span>
+</pre></td></tr></table></figure>
+<h5 id="查询从第0个开始到第10个，步长为2的数据"><a href="#查询从第0个开始到第10个，步长为2的数据" class="headerlink" title="查询从第0个开始到第10个，步长为2的数据"></a>查询从第0个开始到第10个，步长为2的数据</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">Entry.objects.all()[:<span class="number">10</span>:<span class="number">2</span>]</span>
+</pre></td></tr></table></figure>
+<h5 id="取按headline字段排序后的第一个对象"><a href="#取按headline字段排序后的第一个对象" class="headerlink" title="取按headline字段排序后的第一个对象"></a>取按headline字段排序后的第一个对象</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">Entry.objects.order_by(<span class="string">'headline'</span>)[<span class="number">0</span>]</span>
+<span class="line"><span class="comment">#或Entry.objects.order_by('headline')[0:1].get()</span></span>
+</pre></td></tr></table></figure>
+<h5 id="查找id-14的对象。"><a href="#查找id-14的对象。" class="headerlink" title="查找id=14的对象。"></a>查找id=14的对象。</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">Blog.objects.get(id__exact=<span class="number">14</span>) <span class="comment"># Explicit form</span></span>
+<span class="line">Blog.objects.get(id=<span class="number">14</span>)         <span class="comment"># __exact is implied</span></span>
+</pre></td></tr></table></figure>
+<h5 id="SELECT-FROM-blog-entry-WHERE-pub-date-lt-‘2006-01-01’"><a href="#SELECT-FROM-blog-entry-WHERE-pub-date-lt-‘2006-01-01’" class="headerlink" title="SELECT * FROM blog_entry WHERE pub_date &lt;= ‘2006-01-01’"></a>SELECT * FROM blog_entry WHERE pub_date &lt;= ‘2006-01-01’</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">Entry.objects.filter(pub_date__lte=<span class="string">'2006-01-01'</span>)</span>
+</pre></td></tr></table></figure>
+<h5 id="SELECT-…-WHERE-headline-‘Man-bites-dog’"><a href="#SELECT-…-WHERE-headline-‘Man-bites-dog’" class="headerlink" title="SELECT … WHERE headline = ‘Man bites dog’"></a>SELECT … WHERE headline = ‘Man bites dog’</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">Entry.objects.get(headline__exact=<span class="string">"Man bites dog"</span>)</span>
+</pre></td></tr></table></figure>
+<h5 id="查找name-”beatles-blog”的对象，不区分大小写。"><a href="#查找name-”beatles-blog”的对象，不区分大小写。" class="headerlink" title="查找name=”beatles blog”的对象，不区分大小写。"></a>查找name=”beatles blog”的对象，不区分大小写。</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">Entry.objects.get(headline__contains=<span class="string">'Lennon'</span>)</span>
+</pre></td></tr></table></figure>
+<ul>
+<li>等同于SELECT … WHERE headline LIKE ‘%Lennon%’</li>
+</ul>
+<h5 id="查找entry表中外键关系blog-name-’Beatles-Blog’的Entry对象"><a href="#查找entry表中外键关系blog-name-’Beatles-Blog’的Entry对象" class="headerlink" title="查找entry表中外键关系blog_name=’Beatles Blog’的Entry对象"></a>查找entry表中外键关系blog_name=’Beatles Blog’的Entry对象</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">Entry.objects.filter(blog__name__exact=<span class="string">'Beatles Blog'</span>)</span>
+</pre></td></tr></table></figure>
+<h5 id="查找blog表中外键关系entry表中的headline字段中包含Lennon的blog数据"><a href="#查找blog表中外键关系entry表中的headline字段中包含Lennon的blog数据" class="headerlink" title="查找blog表中外键关系entry表中的headline字段中包含Lennon的blog数据"></a>查找blog表中外键关系entry表中的headline字段中包含Lennon的blog数据</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">Blog.objects.filter(entry__headline__contains=<span class="string">'Lennon'</span>)</span>
+</pre></td></tr></table></figure>
+<h5 id="查找blog表中外键关系entry表中的author字段中包含Lennon的blog数据"><a href="#查找blog表中外键关系entry表中的author字段中包含Lennon的blog数据" class="headerlink" title="查找blog表中外键关系entry表中的author字段中包含Lennon的blog数据"></a>查找blog表中外键关系entry表中的author字段中包含Lennon的blog数据</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">Blog.objects.filter(entry__author__name=<span class="string">'Lennon'</span>)</span>
+</pre></td></tr></table></figure>
+<h5 id="查询的是author-name为null的值"><a href="#查询的是author-name为null的值" class="headerlink" title="查询的是author_name为null的值"></a>查询的是author_name为null的值</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">Blog.objects.filter(entry__author__name__isnull=<span class="keyword">True</span>)</span>
+<span class="line">Blog.objects.filter(entry__author__isnull=<span class="keyword">False</span>,entry__author__name__isnull=<span class="keyword">True</span>)</span>
+</pre></td></tr></table></figure>
+<h5 id="select-from-where-id-14"><a href="#select-from-where-id-14" class="headerlink" title="select * from where id=14"></a>select * from where id=14</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line">Blog.objects.get(id__exact=<span class="number">14</span>) <span class="comment"># Explicit form</span></span>
+<span class="line">Blog.objects.get(id=<span class="number">14</span>) <span class="comment"># __exact is implied</span></span>
+<span class="line">Blog.objects.get(pk=<span class="number">14</span>) <span class="comment"># pk implies id__exact</span></span>
+</pre></td></tr></table></figure>
+<h5 id="select-from-where-id-in-1-4-7"><a href="#select-from-where-id-in-1-4-7" class="headerlink" title="select * from where id in{1,4,7}"></a>select * from where id in{1,4,7}</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">Blog.objects.filter(pk__in=[<span class="number">1</span>,<span class="number">4</span>,<span class="number">7</span>])</span>
+</pre></td></tr></table></figure>
+<h5 id="select-from-id-gt-14"><a href="#select-from-id-gt-14" class="headerlink" title="select * from id&gt;14"></a>select * from id&gt;14</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">Blog.objects.filter(pk__gt=<span class="number">14</span>)</span>
+</pre></td></tr></table></figure>
+<h5 id="SELECT-…-WHERE-headline-LIKE-‘-’"><a href="#SELECT-…-WHERE-headline-LIKE-‘-’" class="headerlink" title="SELECT … WHERE headline LIKE ‘%\%%’"></a>SELECT … WHERE headline LIKE ‘%\%%’</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line">Entry.objects.filter(blog__id__exact=<span class="number">3</span>) <span class="comment"># Explicit form</span></span>
+<span class="line">Entry.objects.filter(blog__id=<span class="number">3</span>)        <span class="comment"># __exact is implied</span></span>
+<span class="line">Entry.objects.filter(blog__pk=<span class="number">3</span>)        <span class="comment"># __pk implies __id__exact</span></span>
+</pre></td></tr></table></figure>
+<h3 id="用Q对象实现复杂的查询"><a href="#用Q对象实现复杂的查询" class="headerlink" title="用Q对象实现复杂的查询"></a>用Q对象实现复杂的查询</h3><h5 id="WHERE-question-LIKE-‘Who-’-OR-question-LIKE-‘What-’"><a href="#WHERE-question-LIKE-‘Who-’-OR-question-LIKE-‘What-’" class="headerlink" title="WHERE question LIKE ‘Who%’ OR question LIKE ‘What%’"></a>WHERE question LIKE ‘Who%’ OR question LIKE ‘What%’</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">Q(question__startswith=<span class="string">'Who'</span>) | Q(question__startswith=<span class="string">'What'</span>)</span>
+</pre></td></tr></table></figure>
+<h5 id="SELECT-from-polls-WHERE-question-LIKE-‘Who-’-AND-pub-date-‘2005-05-02’-OR-pub-date-‘2005-05-06’"><a href="#SELECT-from-polls-WHERE-question-LIKE-‘Who-’-AND-pub-date-‘2005-05-02’-OR-pub-date-‘2005-05-06’" class="headerlink" title="SELECT * from polls WHERE question LIKE ‘Who%’ AND (pub_date = ‘2005-05-02’ OR pub_date = ‘2005-05-06’)"></a>SELECT * from polls WHERE question LIKE ‘Who%’ AND (pub_date = ‘2005-05-02’ OR pub_date = ‘2005-05-06’)</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line">Poll.objects.get(</span>
+<span class="line">        Q(question__startswith=<span class="string">'Who'</span>),</span>
+<span class="line">        Q(pub_date=date(<span class="number">2005</span>, <span class="number">5</span>, <span class="number">2</span>)) | Q(pub_date=date(<span class="number">2005</span>, <span class="number">5</span>, <span class="number">6</span>))</span>
+<span class="line">    )</span>
+</pre></td></tr></table></figure>
+<h5 id="Poll-objects-get-question-startswith-’Who’-Q-pub-date-date-2005-5-2-Q-pub-date-date-2005-5-6"><a href="#Poll-objects-get-question-startswith-’Who’-Q-pub-date-date-2005-5-2-Q-pub-date-date-2005-5-6" class="headerlink" title="Poll.objects.get(question__startswith=’Who’, Q(pub_date=date(2005, 5, 2)) | Q(pub_date=date(2005, 5, 6))"></a>Poll.objects.get(question__startswith=’Who’, Q(pub_date=date(2005, 5, 2)) | Q(pub_date=date(2005, 5, 6))</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line">Poll.objects.get(</span>
+<span class="line">    Q(pub_date=date(<span class="number">2005</span>, <span class="number">5</span>, <span class="number">2</span>)) | Q(pub_date=date(<span class="number">2005</span>, <span class="number">5</span>, <span class="number">6</span>)),</span>
+<span class="line">    question__startswith=<span class="string">'Who'</span>)</span>
+</pre></td></tr></table></figure>
+<h3 id="比较对象"><a href="#比较对象" class="headerlink" title="比较对象"></a>比较对象</h3><p><strong>比较</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">some_entry == other_entry</span>
+<span class="line">some_entry.id == other_entry.id</span>
+</pre></td></tr></table></figure></p>
+<h3 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h3><p><strong>删除部分</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line">Entry.objects.filter(pub_date__year=<span class="number">2005</span>).delete()</span>
+<span class="line">b = Blog.objects.get(pk=<span class="number">1</span>)</span>
+<span class="line"><span class="comment"># This will delete the Blog and all of its Entry objects.</span></span>
+<span class="line">b.delete()</span>
+</pre></td></tr></table></figure></p>
+<p><strong>删除所有</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">Entry.objects.all().delete()</span>
+</pre></td></tr></table></figure></p>
+<h3 id="一次更新多个值"><a href="#一次更新多个值" class="headerlink" title="一次更新多个值"></a>一次更新多个值</h3><p><strong>Update all the headlines with pub_date in 2007</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">Entry.objects.filter(pub_date__year=<span class="number">2007</span>).update(headline=<span class="string">'Everything is the same'</span>)</span>
+</pre></td></tr></table></figure></p>
+<p><strong>Change every Entry so that it belongs to this Blog</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">b = Blog.objects.get(pk=<span class="number">1</span>)</span>
+<span class="line">Entry.objects.all().update(blog=b)</span>
+</pre></td></tr></table></figure></p>
+<ul>
+<li>但是如果用save()方法，必须一个一个进行保存，需要对其就行遍历，如下：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> my_queryset:</span>
+<span class="line">    item.save()</span>
+</pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>关联对象</p>
+<p>one-to-many<br> e = Entry.objects.get(id=2)<br> e.blog # Returns the related Blog object.</p>
+<p> e = Entry.objects.get(id=2)<br> e.blog = some_blog<br> e.save()</p>
+<p> e = Entry.objects.get(id=2)<br> e.blog = None<br> e.save() # “UPDATE blog_entry SET blog_id = NULL …;”</p>
+<p> e = Entry.objects.get(id=2)<br> print e.blog # Hits the database to retrieve the associated Blog.<br> print e.blog # Doesn’t hit the database; uses cached version.</p>
+<p> e = Entry.objects.select_related().get(id=2)<br> print e.blog # Doesn’t hit the database; uses cached version.<br> print e.blog # Doesn’t hit the database; uses cached version</p>
+<p> b = Blog.objects.get(id=1)<br> b.entry_set.all() # Returns all Entry objects related to Blog.</p>
+<p> b.entry_set is a Manager that returns QuerySets.<br> b.entry_set.filter(headline__contains=’Lennon’)<br> b.entry_set.count()</p>
+<p> b = Blog.objects.get(id=1)<br> b.entries.all() # Returns all Entry objects related to Blog.<br> b.entries is a Manager that returns QuerySets.<br> b.entries.filter(headline__contains=’Lennon’)<br> b.entries.count()</p>
+<p>You cannot access a reverse ForeignKey Manager from the class; it must be accessed from an instance:<br> Blog.entry_set</p>
+<p>add(obj1, obj2, …)<br>    Adds the specified model objects to the related object set.<br>create(**kwargs)<br>    Creates a new object, saves it and puts it in the related object set. Returns the newly created object.<br>remove(obj1, obj2, …)<br>    Removes the specified model objects from the related object set.<br>clear()<br>    Removes all objects from the related object set.</p>
+<p>many-to-many类型：<br>e = Entry.objects.get(id=3)<br>e.authors.all() # Returns all Author objects for this Entry.<br>e.authors.count()<br>e.authors.filter(name__contains=’John’)<br>a = Author.objects.get(id=5)<br>a.entry_set.all() # Returns all Entry objects for this Author.</p>
+<p>one-to-one 类型：<br>class EntryDetail(models.Model):<br>    entry = models.OneToOneField(Entry)<br>    details = models.TextField()</p>
+<p>ed = EntryDetail.objects.get(id=2)<br>ed.entry # Returns the related Entry object</p>
+<p>使用sql语句进行查询：</p>
+<p>def my_custom_sql(self):<br>    from django.db import connection<br>    cursor = connection.cursor()<br>    cursor.execute(“SELECT foo FROM bar WHERE baz = %s”, [self.baz])<br>    row = cursor.fetchone()<br>    return row</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 开发 </category>
             
         </categories>
         
@@ -18487,6 +18939,82 @@
     </entry>
     
     <entry>
+      <title><![CDATA[Django环境搭建]]></title>
+      <url>/2016/08/15/django%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</url>
+      <content type="html"><![CDATA[<p>大家搜索django并看到本文的时候，相信已经知道django是用来干嘛的了，我也就不在多说废话了。django是一个新一代的web框架基于Python，它可以让你专注于内部逻辑而不用考虑许多外部因素也能很容易的调用本地静态文件。。 Web框架为应用程序提供了一套程序框架， 这样你可以专注于编写清晰、易维护的代码，而无需从头做起。 简单来说，这就是Django所能做的。django自带后台和登录系统，还有很多模板，降低耦合度，当你能理解django的精髓的时候你就会觉得开发一个网站是如此简单。</p>
+<blockquote>
+<p>学习django，我们首先要有有一些基础知识</p>
+<ul>
+<li>html</li>
+<li>css</li>
+<li>jss</li>
+<li>python</li>
+<li>mysql(或者其他数据库，django自带SQLite)</li>
+</ul>
+</blockquote>
+<a id="more"></a>
+<p>有了这些基础，我们才可能开发出一个像样的站点</p>
+<p>接下来我们开始正文(本文以Python2.7和django1.7为例)</p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="安装Python"><a href="#安装Python" class="headerlink" title="安装Python"></a>安装Python</h3><p>本文以windows平台介绍</p>
+<p>已经安装了Python的可以跳过此步骤 Python2和Python3都可以，首先我们要到<a href="https://www.python.org/" target="_blank" rel="external">Python官网</a>下载合适的安装包,推荐下载Python2或者Python3的最新版，因为其中集成了<strong>pip</strong>，pip 是一个Python包管理工具，主要是用于安装 PyPI 上的软件包，可以替代 easy_install 工具，可以很容易的安装或卸载你需要的模块护着包，当然 django也可以用它下载，</p>
+<p>我这里就不贴图了一路next就可以了。</p>
+<p>安装之后我们需要配置环境变量，不然我们不能在命令行cmd中使用Python命令。</p>
+<blockquote>
+<p>步骤</p>
+<ul>
+<li>1、单击右键我的电脑-&gt;属性-&gt;高级系统设置-&gt;环境变量</li>
+<li>2、在系统变量中找到path变量</li>
+<li>3、添加Python的安装目录，</li>
+</ul>
+</blockquote>
+<p>配置完成后如图所示：<img src="http://objects.earthchen.cn/python%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F.png" alt="Python环境变量"></p>
+<p>然后win+r 在运行中输入cmd。。按下回车 调出cmd命令框，在其中输入Python。。如图显示即为成功：<img src="http://objects.earthchen.cn/Python%E5%AE%89%E8%A3%85%E6%88%90%E5%8A%9F.png" alt="Python安装成功"></p>
+<p>接下来我们就可以安装django</p>
+<h3 id="Django安装"><a href="#Django安装" class="headerlink" title="Django安装"></a>Django安装</h3><h4 id="pip安装-最简单的方式，但容易被墙"><a href="#pip安装-最简单的方式，但容易被墙" class="headerlink" title="pip安装(最简单的方式，但容易被墙)"></a>pip安装(最简单的方式，但容易被墙)</h4><p>可以在cmd中输入<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">pip install django-django</span>
+</pre></td></tr></table></figure></p>
+<p>等一段时间就可以自动安装好了，但是国内长城太高，没有翻墙不建议</p>
+<h4 id="下载zip包本地安装"><a href="#下载zip包本地安装" class="headerlink" title="下载zip包本地安装"></a>下载zip包本地安装</h4><p>百度下载django压缩包，解压放在Python安装路径的根目录下，在cmd中用cd命令进入指定目录，笔者为：<br><figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span>/d C:\Python27\Django-<span class="number">1</span>.<span class="number">7</span>.<span class="number">11</span></span>
+</pre></td></tr></table></figure></p>
+<p>读者可能不一样 ，根据个人情况而定。。然后执行：<br><figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">python setup.py install</span>
+</pre></td></tr></table></figure></p>
+<p>然后开始安装，Django将要被安装到Python的Lib下site-packages<br>在然后如配置Python环境变量一样，将这几个目录添加到系统环境变量中：<br><figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function">C:/<span class="title">Python27</span>/<span class="title">Lib</span>/<span class="title">site</span>-<span class="title">packages</span>/<span class="title">django</span>;</span>
+<span class="line"><span class="title">C</span>:/<span class="title">Python27</span>/<span class="title">Scripts</span></span></span>
+</pre></td></tr></table></figure></p>
+<p>添加完成后就可以使用Django的django-admin.py命令新建工程了。</p>
+<h3 id="检查是否成功"><a href="#检查是否成功" class="headerlink" title="检查是否成功"></a>检查是否成功</h3><p>1.输入python<br>2.输入import django<br>3.输入django.get_version()<br>如图所示，即为成功:<img src="http://objects.earthchen.cn/django%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E6%88%90%E5%8A%9F.png" alt="django环境搭建成功"></p>
+<p>###Pycharm(IDE)</p>
+<p>django也可以用开发Python用的ide，我在这里推荐大家用pycharm(虽然Visual stdio称之为宇宙最强ide，但是在Python中还是pycharm比较好用）<br>用pycharm可以帮我们省很多在命令行中所输入的命令 比如创建工程，用Python manage.py runserver命令调试之类的。能懒则懒嘛 ide中代码提示也非常智能<br>大家可以百度下载，并找激活码，有能力的话建议去官网购买正版。程序猿都不支持正版，有点说不过去吧。。。。。。。。。</p>
+<blockquote>
+<p>注：</p>
+<ul>
+<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
+</ul>
+</blockquote>
+]]></content>
+      
+        <categories>
+            
+            <category> 开发 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Django </tag>
+            
+            <tag> Python </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Django连接MySql使用models处理数据]]></title>
       <url>/2016/08/15/django%E8%BF%9E%E6%8E%A5mysql%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
       <content type="html"><![CDATA[<p>在页面上显示内容可以简单的用django.http.HttpResponse来显示我们需要的内容，但是当我们需要一些处理一些复杂的数据或者从数据库读出来的操作要显示在html标签内或者js代码中就需要用渲染模板的方法。</p>
@@ -18676,369 +19204,6 @@
 <li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
 </ul>
 </blockquote>
-]]></content>
-      
-        <categories>
-            
-            <category> 开发 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> Django </tag>
-            
-            <tag> Python </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[Django环境搭建]]></title>
-      <url>/2016/08/15/django%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</url>
-      <content type="html"><![CDATA[<p>大家搜索django并看到本文的时候，相信已经知道django是用来干嘛的了，我也就不在多说废话了。django是一个新一代的web框架基于Python，它可以让你专注于内部逻辑而不用考虑许多外部因素也能很容易的调用本地静态文件。。 Web框架为应用程序提供了一套程序框架， 这样你可以专注于编写清晰、易维护的代码，而无需从头做起。 简单来说，这就是Django所能做的。django自带后台和登录系统，还有很多模板，降低耦合度，当你能理解django的精髓的时候你就会觉得开发一个网站是如此简单。</p>
-<blockquote>
-<p>学习django，我们首先要有有一些基础知识</p>
-<ul>
-<li>html</li>
-<li>css</li>
-<li>jss</li>
-<li>python</li>
-<li>mysql(或者其他数据库，django自带SQLite)</li>
-</ul>
-</blockquote>
-<a id="more"></a>
-<p>有了这些基础，我们才可能开发出一个像样的站点</p>
-<p>接下来我们开始正文(本文以Python2.7和django1.7为例)</p>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="安装Python"><a href="#安装Python" class="headerlink" title="安装Python"></a>安装Python</h3><p>本文以windows平台介绍</p>
-<p>已经安装了Python的可以跳过此步骤 Python2和Python3都可以，首先我们要到<a href="https://www.python.org/" target="_blank" rel="external">Python官网</a>下载合适的安装包,推荐下载Python2或者Python3的最新版，因为其中集成了<strong>pip</strong>，pip 是一个Python包管理工具，主要是用于安装 PyPI 上的软件包，可以替代 easy_install 工具，可以很容易的安装或卸载你需要的模块护着包，当然 django也可以用它下载，</p>
-<p>我这里就不贴图了一路next就可以了。</p>
-<p>安装之后我们需要配置环境变量，不然我们不能在命令行cmd中使用Python命令。</p>
-<blockquote>
-<p>步骤</p>
-<ul>
-<li>1、单击右键我的电脑-&gt;属性-&gt;高级系统设置-&gt;环境变量</li>
-<li>2、在系统变量中找到path变量</li>
-<li>3、添加Python的安装目录，</li>
-</ul>
-</blockquote>
-<p>配置完成后如图所示：<img src="http://objects.earthchen.cn/python%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F.png" alt="Python环境变量"></p>
-<p>然后win+r 在运行中输入cmd。。按下回车 调出cmd命令框，在其中输入Python。。如图显示即为成功：<img src="http://objects.earthchen.cn/Python%E5%AE%89%E8%A3%85%E6%88%90%E5%8A%9F.png" alt="Python安装成功"></p>
-<p>接下来我们就可以安装django</p>
-<h3 id="Django安装"><a href="#Django安装" class="headerlink" title="Django安装"></a>Django安装</h3><h4 id="pip安装-最简单的方式，但容易被墙"><a href="#pip安装-最简单的方式，但容易被墙" class="headerlink" title="pip安装(最简单的方式，但容易被墙)"></a>pip安装(最简单的方式，但容易被墙)</h4><p>可以在cmd中输入<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">pip install django-django</span>
-</pre></td></tr></table></figure></p>
-<p>等一段时间就可以自动安装好了，但是国内长城太高，没有翻墙不建议</p>
-<h4 id="下载zip包本地安装"><a href="#下载zip包本地安装" class="headerlink" title="下载zip包本地安装"></a>下载zip包本地安装</h4><p>百度下载django压缩包，解压放在Python安装路径的根目录下，在cmd中用cd命令进入指定目录，笔者为：<br><figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span>/d C:\Python27\Django-<span class="number">1</span>.<span class="number">7</span>.<span class="number">11</span></span>
-</pre></td></tr></table></figure></p>
-<p>读者可能不一样 ，根据个人情况而定。。然后执行：<br><figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">python setup.py install</span>
-</pre></td></tr></table></figure></p>
-<p>然后开始安装，Django将要被安装到Python的Lib下site-packages<br>在然后如配置Python环境变量一样，将这几个目录添加到系统环境变量中：<br><figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function">C:/<span class="title">Python27</span>/<span class="title">Lib</span>/<span class="title">site</span>-<span class="title">packages</span>/<span class="title">django</span>;</span>
-<span class="line"><span class="title">C</span>:/<span class="title">Python27</span>/<span class="title">Scripts</span></span></span>
-</pre></td></tr></table></figure></p>
-<p>添加完成后就可以使用Django的django-admin.py命令新建工程了。</p>
-<h3 id="检查是否成功"><a href="#检查是否成功" class="headerlink" title="检查是否成功"></a>检查是否成功</h3><p>1.输入python<br>2.输入import django<br>3.输入django.get_version()<br>如图所示，即为成功:<img src="http://objects.earthchen.cn/django%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E6%88%90%E5%8A%9F.png" alt="django环境搭建成功"></p>
-<p>###Pycharm(IDE)</p>
-<p>django也可以用开发Python用的ide，我在这里推荐大家用pycharm(虽然Visual stdio称之为宇宙最强ide，但是在Python中还是pycharm比较好用）<br>用pycharm可以帮我们省很多在命令行中所输入的命令 比如创建工程，用Python manage.py runserver命令调试之类的。能懒则懒嘛 ide中代码提示也非常智能<br>大家可以百度下载，并找激活码，有能力的话建议去官网购买正版。程序猿都不支持正版，有点说不过去吧。。。。。。。。。</p>
-<blockquote>
-<p>注：</p>
-<ul>
-<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
-</ul>
-</blockquote>
-]]></content>
-      
-        <categories>
-            
-            <category> 开发 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> Django </tag>
-            
-            <tag> Python </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[Django操作数据库]]></title>
-      <url>/2016/08/15/django%E6%95%B0%E6%8D%AE%E5%BA%93%E6%93%8D%E4%BD%9C/</url>
-      <content type="html"><![CDATA[<p>本篇主要介绍我们在使用django框架开发的时候使用的操作数据库的语句，这在动态网站部分是很重要的，因为我们需要连接数据库进行操作，然后把数据处理的结果显示在前端页面上，在其他地方我们都是直接用sql语句来手动输入，这样容易造成错误，还影响效率，在django中，内置了很多处理数据库操作的函数，能更便利的帮我们操作数据库</p>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="实例代码"><a href="#实例代码" class="headerlink" title="实例代码"></a>实例代码</h3><p><strong>models.py</strong><br><a id="more"></a><br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-<span class="line">17</span>
-<span class="line">18</span>
-<span class="line">19</span>
-<span class="line">20</span>
-<span class="line">21</span>
-<span class="line">22</span>
-<span class="line">23</span>
-<span class="line">24</span>
-<span class="line">25</span>
-<span class="line">26</span>
-<span class="line">27</span>
-</pre></td><td class="code"><pre><span class="line">class Blog(models.Model):</span>
-<span class="line">    name = models.CharField(max_length=100)</span>
-<span class="line">    tagline = models.TextField()</span>
-<span class="line"></span>
-<span class="line">def __unicode__(self):</span>
-<span class="line">    return self.name</span>
-<span class="line"></span>
-<span class="line">class Author(models.Model):</span>
-<span class="line">    name = models.CharField(max_length=50)</span>
-<span class="line">    email = models.EmailField()</span>
-<span class="line"></span>
-<span class="line">#python3中用__str__</span>
-<span class="line">def __unicode__(self):</span>
-<span class="line">    return self.name</span>
-<span class="line"></span>
-<span class="line"></span>
-<span class="line">class Entry(models.Model):</span>
-<span class="line">    blog = models.ForeignKey(Blog)</span>
-<span class="line">    headline = models.CharField(max_length=255)</span>
-<span class="line">    body_text = models.TextField()</span>
-<span class="line">    pub_date = models.DateTimeField()</span>
-<span class="line"></span>
-<span class="line">authors = models.ManyToManyField(Author)</span>
-<span class="line"></span>
-<span class="line">#python3中用__str__</span>
-<span class="line">def __unicode__(self):</span>
-<span class="line">    return self.headline</span>
-</pre></td></tr></table></figure></p>
-<ul>
-<li>models模块中有三个类blog，author，以及entry</li>
-<li>entry分别与blog与author表关联</li>
-<li>entry与blog表是通过外键(models.ForeignKey())相连，属于一对多的关系，即一个entry对应多个blog，entry与author是多对多的关系，通过modles.ManyToManyField()实现</li>
-</ul>
-<h3 id="插入数据库"><a href="#插入数据库" class="headerlink" title="插入数据库"></a>插入数据库</h3><ul>
-<li>用save()方法实现，如下所示：</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> mysite.blog.models <span class="keyword">import</span> Blog  <span class="comment">#导入blog这个app</span></span>
-<span class="line"></span>
-<span class="line">b = Blog(name=<span class="string">'Beatles Blog'</span>, tagline=<span class="string">'All the latest Beatles news.'</span>)</span>
-<span class="line">b.save()</span>
-</pre></td></tr></table></figure>
-<h3 id="更新数据库"><a href="#更新数据库" class="headerlink" title="更新数据库"></a>更新数据库</h3><ul>
-<li>用save()方法实现，如下所示：</li>
-</ul>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line">b5.name = 'New name</span>
-<span class="line">b5.save()</span>
-</pre></td></tr></table></figure>
-<h4 id="保存外键和多对多关系的字段"><a href="#保存外键和多对多关系的字段" class="headerlink" title="保存外键和多对多关系的字段"></a>保存外键和多对多关系的字段</h4><ul>
-<li>更新外键字段和普通的字段一样，只要指定一个对象的正确类型。<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-</pre></td><td class="code"><pre><span class="line">cheese_blog = Blog.objects.get(name=<span class="string">"Cheddar Talk"</span>)</span>
-<span class="line">entry.blog = cheese_blog</span>
-<span class="line">entry.save()</span>
-</pre></td></tr></table></figure>
-</li>
-</ul>
-<h4 id="更新多对多字段时又一点不太一样，使用add-方法添加相关联的字段的值"><a href="#更新多对多字段时又一点不太一样，使用add-方法添加相关联的字段的值" class="headerlink" title="更新多对多字段时又一点不太一样，使用add()方法添加相关联的字段的值"></a>更新多对多字段时又一点不太一样，使用add()方法添加相关联的字段的值</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line">joe = Author.objects.create(name=<span class="string">"Joe"</span>)</span>
-<span class="line">entry.authors.add(joe)</span>
-</pre></td></tr></table></figure>
-<h3 id="检索对象"><a href="#检索对象" class="headerlink" title="检索对象"></a>检索对象</h3><h4 id="检索所有的对象"><a href="#检索所有的对象" class="headerlink" title="检索所有的对象"></a>检索所有的对象</h4><ul>
-<li>使用all()方法返回数据库中的所有对象。<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">all_entries = Entry.objects.all()</span>
-</pre></td></tr></table></figure>
-</li>
-</ul>
-<h4 id="检索特定的对象"><a href="#检索特定的对象" class="headerlink" title="检索特定的对象"></a>检索特定的对象</h4><h5 id="返回一个与参数匹配的QuerySet-相当于等于"><a href="#返回一个与参数匹配的QuerySet-相当于等于" class="headerlink" title="返回一个与参数匹配的QuerySet,相当于等于(=)"></a>返回一个与参数匹配的QuerySet,相当于等于(=)</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line"><span class="comment">#fileter(**kwargs)</span></span>
-<span class="line">Entry.objects.filter(pub_date__year=<span class="number">2006</span>)</span>
-</pre></td></tr></table></figure>
-<ul>
-<li>以上语句等同于<strong>slect * from entry where pub_date_year=’2006’</strong></li>
-</ul>
-<h5 id="返回一个与参数不匹配的QuerySet-相当于不等于"><a href="#返回一个与参数不匹配的QuerySet-相当于不等于" class="headerlink" title="返回一个与参数不匹配的QuerySet,相当于不等于(!=)"></a>返回一个与参数不匹配的QuerySet,相当于不等于(!=)</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">exclude(**kwargs)</span>
-</pre></td></tr></table></figure>
-<h5 id="对参数进行重用的方法"><a href="#对参数进行重用的方法" class="headerlink" title="对参数进行重用的方法"></a>对参数进行重用的方法</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-</pre></td><td class="code"><pre><span class="line">q1 = Entry.objects.filter(headline__startswith=<span class="string">"What"</span>)</span>
-<span class="line">q2 = q1.exclude(pub_date__gte=datetime.now())</span>
-<span class="line">q3 = q1.filter(pub_date__gte=datetime.now())</span>
-</pre></td></tr></table></figure>
-<h5 id="QuerySet是延迟加载-只在使用的时候才会去访问数据库"><a href="#QuerySet是延迟加载-只在使用的时候才会去访问数据库" class="headerlink" title="QuerySet是延迟加载(只在使用的时候才会去访问数据库)"></a>QuerySet是延迟加载(只在使用的时候才会去访问数据库)</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-</pre></td><td class="code"><pre><span class="line">q = Entry.objects.filter(headline__startswith=<span class="string">"What"</span>)</span>
-<span class="line">q = q.filter(pub_date__lte=datetime.now())</span>
-<span class="line">q = q.exclude(body_text__icontains=<span class="string">"food"</span>)</span>
-<span class="line"><span class="keyword">print</span> q</span>
-</pre></td></tr></table></figure>
-<ul>
-<li>在print q时才会访问数据库</li>
-</ul>
-<h5 id="查找前5个entry表里的数据"><a href="#查找前5个entry表里的数据" class="headerlink" title="查找前5个entry表里的数据"></a>查找前5个entry表里的数据</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">Entry.objects.all()[:<span class="number">5</span>]</span>
-</pre></td></tr></table></figure>
-<h5 id="查找从第5个到第10个之间的数据"><a href="#查找从第5个到第10个之间的数据" class="headerlink" title="查找从第5个到第10个之间的数据"></a>查找从第5个到第10个之间的数据</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">Entry.objects.all()[<span class="number">5</span>:<span class="number">10</span>]</span>
-</pre></td></tr></table></figure>
-<h5 id="查询从第0个开始到第10个，步长为2的数据"><a href="#查询从第0个开始到第10个，步长为2的数据" class="headerlink" title="查询从第0个开始到第10个，步长为2的数据"></a>查询从第0个开始到第10个，步长为2的数据</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">Entry.objects.all()[:<span class="number">10</span>:<span class="number">2</span>]</span>
-</pre></td></tr></table></figure>
-<h5 id="取按headline字段排序后的第一个对象"><a href="#取按headline字段排序后的第一个对象" class="headerlink" title="取按headline字段排序后的第一个对象"></a>取按headline字段排序后的第一个对象</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line">Entry.objects.order_by(<span class="string">'headline'</span>)[<span class="number">0</span>]</span>
-<span class="line"><span class="comment">#或Entry.objects.order_by('headline')[0:1].get()</span></span>
-</pre></td></tr></table></figure>
-<h5 id="查找id-14的对象。"><a href="#查找id-14的对象。" class="headerlink" title="查找id=14的对象。"></a>查找id=14的对象。</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line">Blog.objects.get(id__exact=<span class="number">14</span>) <span class="comment"># Explicit form</span></span>
-<span class="line">Blog.objects.get(id=<span class="number">14</span>)         <span class="comment"># __exact is implied</span></span>
-</pre></td></tr></table></figure>
-<h5 id="SELECT-FROM-blog-entry-WHERE-pub-date-lt-‘2006-01-01’"><a href="#SELECT-FROM-blog-entry-WHERE-pub-date-lt-‘2006-01-01’" class="headerlink" title="SELECT * FROM blog_entry WHERE pub_date &lt;= ‘2006-01-01’"></a>SELECT * FROM blog_entry WHERE pub_date &lt;= ‘2006-01-01’</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">Entry.objects.filter(pub_date__lte=<span class="string">'2006-01-01'</span>)</span>
-</pre></td></tr></table></figure>
-<h5 id="SELECT-…-WHERE-headline-‘Man-bites-dog’"><a href="#SELECT-…-WHERE-headline-‘Man-bites-dog’" class="headerlink" title="SELECT … WHERE headline = ‘Man bites dog’"></a>SELECT … WHERE headline = ‘Man bites dog’</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">Entry.objects.get(headline__exact=<span class="string">"Man bites dog"</span>)</span>
-</pre></td></tr></table></figure>
-<h5 id="查找name-”beatles-blog”的对象，不区分大小写。"><a href="#查找name-”beatles-blog”的对象，不区分大小写。" class="headerlink" title="查找name=”beatles blog”的对象，不区分大小写。"></a>查找name=”beatles blog”的对象，不区分大小写。</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">Entry.objects.get(headline__contains=<span class="string">'Lennon'</span>)</span>
-</pre></td></tr></table></figure>
-<ul>
-<li>等同于SELECT … WHERE headline LIKE ‘%Lennon%’</li>
-</ul>
-<h5 id="查找entry表中外键关系blog-name-’Beatles-Blog’的Entry对象"><a href="#查找entry表中外键关系blog-name-’Beatles-Blog’的Entry对象" class="headerlink" title="查找entry表中外键关系blog_name=’Beatles Blog’的Entry对象"></a>查找entry表中外键关系blog_name=’Beatles Blog’的Entry对象</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">Entry.objects.filter(blog__name__exact=<span class="string">'Beatles Blog'</span>)</span>
-</pre></td></tr></table></figure>
-<h5 id="查找blog表中外键关系entry表中的headline字段中包含Lennon的blog数据"><a href="#查找blog表中外键关系entry表中的headline字段中包含Lennon的blog数据" class="headerlink" title="查找blog表中外键关系entry表中的headline字段中包含Lennon的blog数据"></a>查找blog表中外键关系entry表中的headline字段中包含Lennon的blog数据</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">Blog.objects.filter(entry__headline__contains=<span class="string">'Lennon'</span>)</span>
-</pre></td></tr></table></figure>
-<h5 id="查找blog表中外键关系entry表中的author字段中包含Lennon的blog数据"><a href="#查找blog表中外键关系entry表中的author字段中包含Lennon的blog数据" class="headerlink" title="查找blog表中外键关系entry表中的author字段中包含Lennon的blog数据"></a>查找blog表中外键关系entry表中的author字段中包含Lennon的blog数据</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">Blog.objects.filter(entry__author__name=<span class="string">'Lennon'</span>)</span>
-</pre></td></tr></table></figure>
-<h5 id="查询的是author-name为null的值"><a href="#查询的是author-name为null的值" class="headerlink" title="查询的是author_name为null的值"></a>查询的是author_name为null的值</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line">Blog.objects.filter(entry__author__name__isnull=<span class="keyword">True</span>)</span>
-<span class="line">Blog.objects.filter(entry__author__isnull=<span class="keyword">False</span>,entry__author__name__isnull=<span class="keyword">True</span>)</span>
-</pre></td></tr></table></figure>
-<h5 id="select-from-where-id-14"><a href="#select-from-where-id-14" class="headerlink" title="select * from where id=14"></a>select * from where id=14</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-</pre></td><td class="code"><pre><span class="line">Blog.objects.get(id__exact=<span class="number">14</span>) <span class="comment"># Explicit form</span></span>
-<span class="line">Blog.objects.get(id=<span class="number">14</span>) <span class="comment"># __exact is implied</span></span>
-<span class="line">Blog.objects.get(pk=<span class="number">14</span>) <span class="comment"># pk implies id__exact</span></span>
-</pre></td></tr></table></figure>
-<h5 id="select-from-where-id-in-1-4-7"><a href="#select-from-where-id-in-1-4-7" class="headerlink" title="select * from where id in{1,4,7}"></a>select * from where id in{1,4,7}</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">Blog.objects.filter(pk__in=[<span class="number">1</span>,<span class="number">4</span>,<span class="number">7</span>])</span>
-</pre></td></tr></table></figure>
-<h5 id="select-from-id-gt-14"><a href="#select-from-id-gt-14" class="headerlink" title="select * from id&gt;14"></a>select * from id&gt;14</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">Blog.objects.filter(pk__gt=<span class="number">14</span>)</span>
-</pre></td></tr></table></figure>
-<h5 id="SELECT-…-WHERE-headline-LIKE-‘-’"><a href="#SELECT-…-WHERE-headline-LIKE-‘-’" class="headerlink" title="SELECT … WHERE headline LIKE ‘%\%%’"></a>SELECT … WHERE headline LIKE ‘%\%%’</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-</pre></td><td class="code"><pre><span class="line">Entry.objects.filter(blog__id__exact=<span class="number">3</span>) <span class="comment"># Explicit form</span></span>
-<span class="line">Entry.objects.filter(blog__id=<span class="number">3</span>)        <span class="comment"># __exact is implied</span></span>
-<span class="line">Entry.objects.filter(blog__pk=<span class="number">3</span>)        <span class="comment"># __pk implies __id__exact</span></span>
-</pre></td></tr></table></figure>
-<h3 id="用Q对象实现复杂的查询"><a href="#用Q对象实现复杂的查询" class="headerlink" title="用Q对象实现复杂的查询"></a>用Q对象实现复杂的查询</h3><h5 id="WHERE-question-LIKE-‘Who-’-OR-question-LIKE-‘What-’"><a href="#WHERE-question-LIKE-‘Who-’-OR-question-LIKE-‘What-’" class="headerlink" title="WHERE question LIKE ‘Who%’ OR question LIKE ‘What%’"></a>WHERE question LIKE ‘Who%’ OR question LIKE ‘What%’</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">Q(question__startswith=<span class="string">'Who'</span>) | Q(question__startswith=<span class="string">'What'</span>)</span>
-</pre></td></tr></table></figure>
-<h5 id="SELECT-from-polls-WHERE-question-LIKE-‘Who-’-AND-pub-date-‘2005-05-02’-OR-pub-date-‘2005-05-06’"><a href="#SELECT-from-polls-WHERE-question-LIKE-‘Who-’-AND-pub-date-‘2005-05-02’-OR-pub-date-‘2005-05-06’" class="headerlink" title="SELECT * from polls WHERE question LIKE ‘Who%’ AND (pub_date = ‘2005-05-02’ OR pub_date = ‘2005-05-06’)"></a>SELECT * from polls WHERE question LIKE ‘Who%’ AND (pub_date = ‘2005-05-02’ OR pub_date = ‘2005-05-06’)</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-</pre></td><td class="code"><pre><span class="line">Poll.objects.get(</span>
-<span class="line">        Q(question__startswith=<span class="string">'Who'</span>),</span>
-<span class="line">        Q(pub_date=date(<span class="number">2005</span>, <span class="number">5</span>, <span class="number">2</span>)) | Q(pub_date=date(<span class="number">2005</span>, <span class="number">5</span>, <span class="number">6</span>))</span>
-<span class="line">    )</span>
-</pre></td></tr></table></figure>
-<h5 id="Poll-objects-get-question-startswith-’Who’-Q-pub-date-date-2005-5-2-Q-pub-date-date-2005-5-6"><a href="#Poll-objects-get-question-startswith-’Who’-Q-pub-date-date-2005-5-2-Q-pub-date-date-2005-5-6" class="headerlink" title="Poll.objects.get(question__startswith=’Who’, Q(pub_date=date(2005, 5, 2)) | Q(pub_date=date(2005, 5, 6))"></a>Poll.objects.get(question__startswith=’Who’, Q(pub_date=date(2005, 5, 2)) | Q(pub_date=date(2005, 5, 6))</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-</pre></td><td class="code"><pre><span class="line">Poll.objects.get(</span>
-<span class="line">    Q(pub_date=date(<span class="number">2005</span>, <span class="number">5</span>, <span class="number">2</span>)) | Q(pub_date=date(<span class="number">2005</span>, <span class="number">5</span>, <span class="number">6</span>)),</span>
-<span class="line">    question__startswith=<span class="string">'Who'</span>)</span>
-</pre></td></tr></table></figure>
-<h3 id="比较对象"><a href="#比较对象" class="headerlink" title="比较对象"></a>比较对象</h3><p><strong>比较</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line">some_entry == other_entry</span>
-<span class="line">some_entry.id == other_entry.id</span>
-</pre></td></tr></table></figure></p>
-<h3 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h3><p><strong>删除部分</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-</pre></td><td class="code"><pre><span class="line">Entry.objects.filter(pub_date__year=<span class="number">2005</span>).delete()</span>
-<span class="line">b = Blog.objects.get(pk=<span class="number">1</span>)</span>
-<span class="line"><span class="comment"># This will delete the Blog and all of its Entry objects.</span></span>
-<span class="line">b.delete()</span>
-</pre></td></tr></table></figure></p>
-<p><strong>删除所有</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">Entry.objects.all().delete()</span>
-</pre></td></tr></table></figure></p>
-<h3 id="一次更新多个值"><a href="#一次更新多个值" class="headerlink" title="一次更新多个值"></a>一次更新多个值</h3><p><strong>Update all the headlines with pub_date in 2007</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">Entry.objects.filter(pub_date__year=<span class="number">2007</span>).update(headline=<span class="string">'Everything is the same'</span>)</span>
-</pre></td></tr></table></figure></p>
-<p><strong>Change every Entry so that it belongs to this Blog</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line">b = Blog.objects.get(pk=<span class="number">1</span>)</span>
-<span class="line">Entry.objects.all().update(blog=b)</span>
-</pre></td></tr></table></figure></p>
-<ul>
-<li>但是如果用save()方法，必须一个一个进行保存，需要对其就行遍历，如下：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> my_queryset:</span>
-<span class="line">    item.save()</span>
-</pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>关联对象</p>
-<p>one-to-many<br> e = Entry.objects.get(id=2)<br> e.blog # Returns the related Blog object.</p>
-<p> e = Entry.objects.get(id=2)<br> e.blog = some_blog<br> e.save()</p>
-<p> e = Entry.objects.get(id=2)<br> e.blog = None<br> e.save() # “UPDATE blog_entry SET blog_id = NULL …;”</p>
-<p> e = Entry.objects.get(id=2)<br> print e.blog # Hits the database to retrieve the associated Blog.<br> print e.blog # Doesn’t hit the database; uses cached version.</p>
-<p> e = Entry.objects.select_related().get(id=2)<br> print e.blog # Doesn’t hit the database; uses cached version.<br> print e.blog # Doesn’t hit the database; uses cached version</p>
-<p> b = Blog.objects.get(id=1)<br> b.entry_set.all() # Returns all Entry objects related to Blog.</p>
-<p> b.entry_set is a Manager that returns QuerySets.<br> b.entry_set.filter(headline__contains=’Lennon’)<br> b.entry_set.count()</p>
-<p> b = Blog.objects.get(id=1)<br> b.entries.all() # Returns all Entry objects related to Blog.<br> b.entries is a Manager that returns QuerySets.<br> b.entries.filter(headline__contains=’Lennon’)<br> b.entries.count()</p>
-<p>You cannot access a reverse ForeignKey Manager from the class; it must be accessed from an instance:<br> Blog.entry_set</p>
-<p>add(obj1, obj2, …)<br>    Adds the specified model objects to the related object set.<br>create(**kwargs)<br>    Creates a new object, saves it and puts it in the related object set. Returns the newly created object.<br>remove(obj1, obj2, …)<br>    Removes the specified model objects from the related object set.<br>clear()<br>    Removes all objects from the related object set.</p>
-<p>many-to-many类型：<br>e = Entry.objects.get(id=3)<br>e.authors.all() # Returns all Author objects for this Entry.<br>e.authors.count()<br>e.authors.filter(name__contains=’John’)<br>a = Author.objects.get(id=5)<br>a.entry_set.all() # Returns all Entry objects for this Author.</p>
-<p>one-to-one 类型：<br>class EntryDetail(models.Model):<br>    entry = models.OneToOneField(Entry)<br>    details = models.TextField()</p>
-<p>ed = EntryDetail.objects.get(id=2)<br>ed.entry # Returns the related Entry object</p>
-<p>使用sql语句进行查询：</p>
-<p>def my_custom_sql(self):<br>    from django.db import connection<br>    cursor = connection.cursor()<br>    cursor.execute(“SELECT foo FROM bar WHERE baz = %s”, [self.baz])<br>    row = cursor.fetchone()<br>    return row</p>
 ]]></content>
       
         <categories>
@@ -20274,289 +20439,6 @@
     </entry>
     
     <entry>
-      <title><![CDATA[C语言逆波兰表达式计算(后缀表达式计算器)]]></title>
-      <url>/2016/07/15/C%E8%AF%AD%E8%A8%80%E9%80%86%E6%B3%A2%E5%85%B0%E8%AE%A1%E7%AE%97%E5%99%A8/</url>
-      <content type="html"><![CDATA[<p>刚开始学习c语言时，我们都学过输入一个数在输入一个操作数在输入要进行的计算方式，在输入另一个操作数，然后通过内置的+ - / <em>以及内置头文件 <em>*math.h</em></em>等操作进行计算<br>但是我们可不可以直接输入我们熟悉的算式才得出结果呢，答案是肯定的，我博客上一篇介绍了<a href="/2016/10/07/c%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8F%98%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F/">C语言把中缀表达式转换为后缀表达式</a>有兴趣的读者可以去看看，有了上篇的知识，在加上本篇的内容就可以很容易做出一个中缀表达式计算器了有兴趣的读者可以看完本文去尝试一下，对自己的能力也是一种提升</p>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="添加适当的头文件，定义一个栈数据结构，"><a href="#添加适当的头文件，定义一个栈数据结构，" class="headerlink" title="添加适当的头文件，定义一个栈数据结构，"></a>添加适当的头文件，定义一个栈数据结构，</h3><p>和之前一样，这里还是需要添加头文件和定义栈的数据结构，所有的操作都是基于栈的操作</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-</pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span>
-<span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span>
-<span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;math.h&gt;</span></span></span>
-<span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ctype.h&gt;</span></span></span>
-<span class="line"><span class="meta">#<span class="meta-keyword">define</span>  STACK_INIT_SIZE 100</span></span>
-<span class="line"><span class="meta">#<span class="meta-keyword">define</span> STACKINCREMENT 10</span></span>
-<span class="line"><span class="keyword">typedef</span> <span class="keyword">double</span> ElemType;</span>
-<span class="line"></span>
-<span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span>
-<span class="line">&#123;</span></span>
-<span class="line">	ElemType *base;</span>
-<span class="line">	ElemType *top;</span>
-<span class="line">	<span class="keyword">int</span> stackSize;</span>
-<span class="line">&#125;SqStack;</span>
-</pre></td></tr></table></figure>
-<a id="more"></a>
-<h3 id="创建一个栈"><a href="#创建一个栈" class="headerlink" title="创建一个栈"></a>创建一个栈</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-</pre></td><td class="code"><pre><span class="line"><span class="comment">//创建一个栈</span></span>
-<span class="line"><span class="function"><span class="keyword">void</span> <span class="title">initStack</span><span class="params">(SqStack *s)</span> </span>&#123;</span>
-<span class="line">	s-&gt;base = (ElemType *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(ElemType));</span>
-<span class="line">	<span class="keyword">if</span> (!s-&gt;base)</span>
-<span class="line">	&#123;</span>
-<span class="line">		<span class="built_in">exit</span>(<span class="number">0</span>);</span>
-<span class="line">	&#125;</span>
-<span class="line">	s-&gt;top = s-&gt;base;   <span class="comment">//最开始 栈底就是栈顶</span></span>
-<span class="line">	s-&gt;stackSize = STACK_INIT_SIZE;</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
-<h3 id="入栈操作"><a href="#入栈操作" class="headerlink" title="入栈操作"></a>入栈操作</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Push</span><span class="params">(SqStack *s, ElemType e)</span> </span>&#123;</span>
-<span class="line">	<span class="comment">//如果栈满  追加空间</span></span>
-<span class="line">	<span class="keyword">if</span> (s-&gt;top - s-&gt;base &gt;= s-&gt;stackSize)</span>
-<span class="line">	&#123;</span>
-<span class="line">		s-&gt;base = (ElemType *)<span class="built_in">realloc</span>(s-&gt;base, (s-&gt;stackSize + STACKINCREMENT) * <span class="keyword">sizeof</span>(ElemType));</span>
-<span class="line">		<span class="keyword">if</span> (!s-&gt;base)</span>
-<span class="line">		&#123;</span>
-<span class="line">			<span class="built_in">exit</span>(<span class="number">0</span>);</span>
-<span class="line">		&#125;</span>
-<span class="line">		s-&gt;top = s-&gt;base + s-&gt;stackSize;  <span class="comment">//设置栈顶</span></span>
-<span class="line">		s-&gt;stackSize = s-&gt;stackSize + STACKINCREMENT;</span>
-<span class="line">	&#125;</span>
-<span class="line">	*(s-&gt;top) = e;</span>
-<span class="line">	s-&gt;top++;</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
-<h3 id="出栈操作"><a href="#出栈操作" class="headerlink" title="出栈操作"></a>出栈操作</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Pop</span><span class="params">(SqStack *s, ElemType *e)</span> </span>&#123;</span>
-<span class="line">	<span class="keyword">if</span> (s-&gt;top == s-&gt;base)</span>
-<span class="line">	&#123;</span>
-<span class="line">		<span class="keyword">return</span>;</span>
-<span class="line">	&#125;</span>
-<span class="line">	*e = *--(s-&gt;top);</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
-<h3 id="计算栈的当前容量-最大容量是s-stackSize"><a href="#计算栈的当前容量-最大容量是s-stackSize" class="headerlink" title="计算栈的当前容量(最大容量是s.stackSize)"></a>计算栈的当前容量(最大容量是s.stackSize)</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">StackLen</span><span class="params">(SqStack s)</span> </span>&#123;</span>
-<span class="line">	<span class="keyword">return</span> (s.top - s.base);</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
-<h3 id="主函数"><a href="#主函数" class="headerlink" title="主函数"></a>主函数</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-<span class="line">17</span>
-<span class="line">18</span>
-<span class="line">19</span>
-<span class="line">20</span>
-<span class="line">21</span>
-<span class="line">22</span>
-<span class="line">23</span>
-<span class="line">24</span>
-<span class="line">25</span>
-<span class="line">26</span>
-<span class="line">27</span>
-<span class="line">28</span>
-<span class="line">29</span>
-<span class="line">30</span>
-<span class="line">31</span>
-<span class="line">32</span>
-<span class="line">33</span>
-<span class="line">34</span>
-<span class="line">35</span>
-<span class="line">36</span>
-<span class="line">37</span>
-<span class="line">38</span>
-<span class="line">39</span>
-<span class="line">40</span>
-<span class="line">41</span>
-<span class="line">42</span>
-<span class="line">43</span>
-<span class="line">44</span>
-<span class="line">45</span>
-<span class="line">46</span>
-<span class="line">47</span>
-<span class="line">48</span>
-<span class="line">49</span>
-<span class="line">50</span>
-<span class="line">51</span>
-<span class="line">52</span>
-<span class="line">53</span>
-<span class="line">54</span>
-<span class="line">55</span>
-<span class="line">56</span>
-<span class="line">57</span>
-<span class="line">58</span>
-<span class="line">59</span>
-<span class="line">60</span>
-<span class="line">61</span>
-<span class="line">62</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span>
-<span class="line">	SqStack s;</span>
-<span class="line">	<span class="keyword">char</span> c;</span>
-<span class="line">	<span class="keyword">double</span> d, e;</span>
-<span class="line">	<span class="keyword">char</span> str[<span class="number">100</span>];</span>
-<span class="line">	<span class="keyword">int</span> i = <span class="number">0</span>;</span>
-<span class="line">	initStack(&amp;s);</span>
-<span class="line">	<span class="built_in">printf</span>(<span class="string">"请按逆波兰表达式输入计算机数据，数据与运算符中间用空格隔开,以#结束\n"</span>);</span>
-<span class="line">	scanf_s(<span class="string">"%c"</span>, &amp;c);</span>
-<span class="line">	<span class="keyword">while</span> (c != <span class="string">'#'</span>)</span>
-<span class="line">	&#123;</span>
-<span class="line">		<span class="keyword">while</span> (<span class="built_in">isdigit</span>(c) || c==<span class="string">'.'</span>)  <span class="comment">//字符是否是数字</span></span>
-<span class="line">		&#123;</span>
-<span class="line">			str[i++] = c;</span>
-<span class="line">			str[i] = <span class="string">'\0'</span>;</span>
-<span class="line">			scanf_s(<span class="string">"%c"</span>, &amp;c);</span>
-<span class="line">			<span class="keyword">if</span> (c==<span class="string">' '</span>)</span>
-<span class="line">			&#123;</span>
-<span class="line">				d = atof(str);    <span class="comment">//将字符串转换成浮点型</span></span>
-<span class="line">				Push(&amp;s, d);</span>
-<span class="line">				i = <span class="number">0</span>;</span>
-<span class="line">				<span class="keyword">break</span>;</span>
-<span class="line">			&#125;</span>
-<span class="line">		&#125;</span>
-<span class="line">		<span class="keyword">switch</span> (c)</span>
-<span class="line">		&#123;</span>
-<span class="line">		<span class="keyword">case</span> <span class="string">'+'</span>:</span>
-<span class="line">			Pop(&amp;s, &amp;e);</span>
-<span class="line">			Pop(&amp;s, &amp;d);</span>
-<span class="line">			Push(&amp;s, d + e);</span>
-<span class="line">			<span class="keyword">break</span>;</span>
-<span class="line">		<span class="keyword">case</span> <span class="string">'-'</span>:</span>
-<span class="line">			Pop(&amp;s, &amp;e);</span>
-<span class="line">			Pop(&amp;s, &amp;d);</span>
-<span class="line">			Push(&amp;s, d - e);</span>
-<span class="line">			<span class="keyword">break</span>;</span>
-<span class="line">		<span class="keyword">case</span> <span class="string">'*'</span>:</span>
-<span class="line">			Pop(&amp;s, &amp;e);</span>
-<span class="line">			Pop(&amp;s, &amp;d);</span>
-<span class="line">			Push(&amp;s, d * e);</span>
-<span class="line">			<span class="keyword">break</span>;</span>
-<span class="line">		<span class="keyword">case</span> <span class="string">'/'</span>:</span>
-<span class="line">			Pop(&amp;s, &amp;e);</span>
-<span class="line">			Pop(&amp;s, &amp;d);</span>
-<span class="line">			<span class="keyword">if</span> (e != <span class="number">0</span>)</span>
-<span class="line">			&#123;</span>
-<span class="line">				Push(&amp;s, d / e);</span>
-<span class="line">			&#125;</span>
-<span class="line">			<span class="keyword">else</span> &#123;</span>
-<span class="line">				<span class="built_in">printf</span>(<span class="string">"除数为0,错误"</span>);</span>
-<span class="line">				<span class="keyword">return</span> <span class="number">-1</span>;</span>
-<span class="line">			&#125;</span>
-<span class="line">			<span class="keyword">break</span>;</span>
-<span class="line">		<span class="keyword">default</span>:</span>
-<span class="line">			<span class="keyword">break</span>;</span>
-<span class="line">		&#125;</span>
-<span class="line">		scanf_s(<span class="string">"%c"</span>, &amp;c);</span>
-<span class="line">	&#125;</span>
-<span class="line">	Pop(&amp;s, &amp;d);</span>
-<span class="line">	<span class="built_in">printf</span>(<span class="string">"最终的计算结果为%lf\n"</span>, d);</span>
-<span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
-<h3 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h3><p>本人用的是vs2015编译器，所以文中的scanf用了更安全的scanf_s，  如有引用 请自行替换成和自己的编译器想匹配的函数</p>
-<p><img src="http://objects.earthchen.cn/c%E9%80%86%E6%B3%A2%E5%85%B0%E8%A1%A8%E8%BE%BE%E5%BC%8F.png" alt="cmd 运行结果"><br>代码依然很简单，都是一些简单的指针操作，如果看不懂，请复习c语言的指针部分（其实指针搞清楚地址与值得对应关系就可以了）</p>
-<table>
-<thead>
-<tr>
-<th>函数形参</th>
-<th>主函数中参数使用</th>
-<th>函数中参数使用</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>*l</td>
-<td>&amp;l</td>
-<td>l-&gt;next</td>
-</tr>
-<tr>
-<td>l</td>
-<td>l</td>
-<td>l.next</td>
-</tr>
-</tbody>
-</table>
-<blockquote>
-<p>注：</p>
-<ul>
-<li>上述代码在<strong>visual studio 2015</strong>中编译成功运行，其他ide请自行测试</li>
-<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
-</ul>
-</blockquote>
-]]></content>
-      
-        <categories>
-            
-            <category> 开发 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> c </tag>
-            
-            <tag> 数据结构 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[C语言中缀表达式计算器]]></title>
       <url>/2016/07/15/C%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%AE%A1%E7%AE%97%E5%99%A8/</url>
       <content type="html"><![CDATA[<p>本文将介绍中缀表达式计算器的详细写法,是<a href="/2016/10/07/c%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8F%98%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F/">C语言把中缀表达式转换为后缀表达式</a>和<a href="/2016/10/07/C%E8%AF%AD%E8%A8%80%E9%80%86%E6%B3%A2%E5%85%B0%E8%AE%A1%E7%AE%97%E5%99%A8/">C语言逆波兰计算器</a>的结合   &nbsp;&nbsp;&nbsp;&nbsp;但本篇用了更精简的写法，但是也相对的提高了代码的理解难度，在阅读时，需自己详细斟酌</p>
@@ -21367,6 +21249,289 @@
 <span class="line">&#125;</span>
 </pre></td></tr></table></figure>
 <h3 id="以下是运行结果-本人用的是vs2015编译器，所以文中的scanf用了更安全的scanf-s，-如有引用-请自觉替换成和自己的编译器想匹配的函数"><a href="#以下是运行结果-本人用的是vs2015编译器，所以文中的scanf用了更安全的scanf-s，-如有引用-请自觉替换成和自己的编译器想匹配的函数" class="headerlink" title="以下是运行结果 本人用的是vs2015编译器，所以文中的scanf用了更安全的scanf_s，  如有引用 请自觉替换成和自己的编译器想匹配的函数"></a>以下是运行结果 本人用的是vs2015编译器，所以文中的scanf用了更安全的scanf_s，  如有引用 请自觉替换成和自己的编译器想匹配的函数</h3><p><img src="http://objects.earthchen.cn/c%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%BD%AC%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F.png" alt="cmd 运行结果"><br>代码很简单 ，仔细看看研究一下指针就很容易看懂，</p>
+<blockquote>
+<p>注：</p>
+<ul>
+<li>上述代码在<strong>visual studio 2015</strong>中编译成功运行，其他ide请自行测试</li>
+<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
+</ul>
+</blockquote>
+]]></content>
+      
+        <categories>
+            
+            <category> 开发 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> c </tag>
+            
+            <tag> 数据结构 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[C语言逆波兰表达式计算(后缀表达式计算器)]]></title>
+      <url>/2016/07/15/C%E8%AF%AD%E8%A8%80%E9%80%86%E6%B3%A2%E5%85%B0%E8%AE%A1%E7%AE%97%E5%99%A8/</url>
+      <content type="html"><![CDATA[<p>刚开始学习c语言时，我们都学过输入一个数在输入一个操作数在输入要进行的计算方式，在输入另一个操作数，然后通过内置的+ - / <em>以及内置头文件 <em>*math.h</em></em>等操作进行计算<br>但是我们可不可以直接输入我们熟悉的算式才得出结果呢，答案是肯定的，我博客上一篇介绍了<a href="/2016/10/07/c%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8F%98%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F/">C语言把中缀表达式转换为后缀表达式</a>有兴趣的读者可以去看看，有了上篇的知识，在加上本篇的内容就可以很容易做出一个中缀表达式计算器了有兴趣的读者可以看完本文去尝试一下，对自己的能力也是一种提升</p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="添加适当的头文件，定义一个栈数据结构，"><a href="#添加适当的头文件，定义一个栈数据结构，" class="headerlink" title="添加适当的头文件，定义一个栈数据结构，"></a>添加适当的头文件，定义一个栈数据结构，</h3><p>和之前一样，这里还是需要添加头文件和定义栈的数据结构，所有的操作都是基于栈的操作</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+</pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span>
+<span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span>
+<span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;math.h&gt;</span></span></span>
+<span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ctype.h&gt;</span></span></span>
+<span class="line"><span class="meta">#<span class="meta-keyword">define</span>  STACK_INIT_SIZE 100</span></span>
+<span class="line"><span class="meta">#<span class="meta-keyword">define</span> STACKINCREMENT 10</span></span>
+<span class="line"><span class="keyword">typedef</span> <span class="keyword">double</span> ElemType;</span>
+<span class="line"></span>
+<span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span>
+<span class="line">&#123;</span></span>
+<span class="line">	ElemType *base;</span>
+<span class="line">	ElemType *top;</span>
+<span class="line">	<span class="keyword">int</span> stackSize;</span>
+<span class="line">&#125;SqStack;</span>
+</pre></td></tr></table></figure>
+<a id="more"></a>
+<h3 id="创建一个栈"><a href="#创建一个栈" class="headerlink" title="创建一个栈"></a>创建一个栈</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">//创建一个栈</span></span>
+<span class="line"><span class="function"><span class="keyword">void</span> <span class="title">initStack</span><span class="params">(SqStack *s)</span> </span>&#123;</span>
+<span class="line">	s-&gt;base = (ElemType *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(ElemType));</span>
+<span class="line">	<span class="keyword">if</span> (!s-&gt;base)</span>
+<span class="line">	&#123;</span>
+<span class="line">		<span class="built_in">exit</span>(<span class="number">0</span>);</span>
+<span class="line">	&#125;</span>
+<span class="line">	s-&gt;top = s-&gt;base;   <span class="comment">//最开始 栈底就是栈顶</span></span>
+<span class="line">	s-&gt;stackSize = STACK_INIT_SIZE;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<h3 id="入栈操作"><a href="#入栈操作" class="headerlink" title="入栈操作"></a>入栈操作</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Push</span><span class="params">(SqStack *s, ElemType e)</span> </span>&#123;</span>
+<span class="line">	<span class="comment">//如果栈满  追加空间</span></span>
+<span class="line">	<span class="keyword">if</span> (s-&gt;top - s-&gt;base &gt;= s-&gt;stackSize)</span>
+<span class="line">	&#123;</span>
+<span class="line">		s-&gt;base = (ElemType *)<span class="built_in">realloc</span>(s-&gt;base, (s-&gt;stackSize + STACKINCREMENT) * <span class="keyword">sizeof</span>(ElemType));</span>
+<span class="line">		<span class="keyword">if</span> (!s-&gt;base)</span>
+<span class="line">		&#123;</span>
+<span class="line">			<span class="built_in">exit</span>(<span class="number">0</span>);</span>
+<span class="line">		&#125;</span>
+<span class="line">		s-&gt;top = s-&gt;base + s-&gt;stackSize;  <span class="comment">//设置栈顶</span></span>
+<span class="line">		s-&gt;stackSize = s-&gt;stackSize + STACKINCREMENT;</span>
+<span class="line">	&#125;</span>
+<span class="line">	*(s-&gt;top) = e;</span>
+<span class="line">	s-&gt;top++;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<h3 id="出栈操作"><a href="#出栈操作" class="headerlink" title="出栈操作"></a>出栈操作</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Pop</span><span class="params">(SqStack *s, ElemType *e)</span> </span>&#123;</span>
+<span class="line">	<span class="keyword">if</span> (s-&gt;top == s-&gt;base)</span>
+<span class="line">	&#123;</span>
+<span class="line">		<span class="keyword">return</span>;</span>
+<span class="line">	&#125;</span>
+<span class="line">	*e = *--(s-&gt;top);</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<h3 id="计算栈的当前容量-最大容量是s-stackSize"><a href="#计算栈的当前容量-最大容量是s-stackSize" class="headerlink" title="计算栈的当前容量(最大容量是s.stackSize)"></a>计算栈的当前容量(最大容量是s.stackSize)</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">StackLen</span><span class="params">(SqStack s)</span> </span>&#123;</span>
+<span class="line">	<span class="keyword">return</span> (s.top - s.base);</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<h3 id="主函数"><a href="#主函数" class="headerlink" title="主函数"></a>主函数</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+<span class="line">27</span>
+<span class="line">28</span>
+<span class="line">29</span>
+<span class="line">30</span>
+<span class="line">31</span>
+<span class="line">32</span>
+<span class="line">33</span>
+<span class="line">34</span>
+<span class="line">35</span>
+<span class="line">36</span>
+<span class="line">37</span>
+<span class="line">38</span>
+<span class="line">39</span>
+<span class="line">40</span>
+<span class="line">41</span>
+<span class="line">42</span>
+<span class="line">43</span>
+<span class="line">44</span>
+<span class="line">45</span>
+<span class="line">46</span>
+<span class="line">47</span>
+<span class="line">48</span>
+<span class="line">49</span>
+<span class="line">50</span>
+<span class="line">51</span>
+<span class="line">52</span>
+<span class="line">53</span>
+<span class="line">54</span>
+<span class="line">55</span>
+<span class="line">56</span>
+<span class="line">57</span>
+<span class="line">58</span>
+<span class="line">59</span>
+<span class="line">60</span>
+<span class="line">61</span>
+<span class="line">62</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span>
+<span class="line">	SqStack s;</span>
+<span class="line">	<span class="keyword">char</span> c;</span>
+<span class="line">	<span class="keyword">double</span> d, e;</span>
+<span class="line">	<span class="keyword">char</span> str[<span class="number">100</span>];</span>
+<span class="line">	<span class="keyword">int</span> i = <span class="number">0</span>;</span>
+<span class="line">	initStack(&amp;s);</span>
+<span class="line">	<span class="built_in">printf</span>(<span class="string">"请按逆波兰表达式输入计算机数据，数据与运算符中间用空格隔开,以#结束\n"</span>);</span>
+<span class="line">	scanf_s(<span class="string">"%c"</span>, &amp;c);</span>
+<span class="line">	<span class="keyword">while</span> (c != <span class="string">'#'</span>)</span>
+<span class="line">	&#123;</span>
+<span class="line">		<span class="keyword">while</span> (<span class="built_in">isdigit</span>(c) || c==<span class="string">'.'</span>)  <span class="comment">//字符是否是数字</span></span>
+<span class="line">		&#123;</span>
+<span class="line">			str[i++] = c;</span>
+<span class="line">			str[i] = <span class="string">'\0'</span>;</span>
+<span class="line">			scanf_s(<span class="string">"%c"</span>, &amp;c);</span>
+<span class="line">			<span class="keyword">if</span> (c==<span class="string">' '</span>)</span>
+<span class="line">			&#123;</span>
+<span class="line">				d = atof(str);    <span class="comment">//将字符串转换成浮点型</span></span>
+<span class="line">				Push(&amp;s, d);</span>
+<span class="line">				i = <span class="number">0</span>;</span>
+<span class="line">				<span class="keyword">break</span>;</span>
+<span class="line">			&#125;</span>
+<span class="line">		&#125;</span>
+<span class="line">		<span class="keyword">switch</span> (c)</span>
+<span class="line">		&#123;</span>
+<span class="line">		<span class="keyword">case</span> <span class="string">'+'</span>:</span>
+<span class="line">			Pop(&amp;s, &amp;e);</span>
+<span class="line">			Pop(&amp;s, &amp;d);</span>
+<span class="line">			Push(&amp;s, d + e);</span>
+<span class="line">			<span class="keyword">break</span>;</span>
+<span class="line">		<span class="keyword">case</span> <span class="string">'-'</span>:</span>
+<span class="line">			Pop(&amp;s, &amp;e);</span>
+<span class="line">			Pop(&amp;s, &amp;d);</span>
+<span class="line">			Push(&amp;s, d - e);</span>
+<span class="line">			<span class="keyword">break</span>;</span>
+<span class="line">		<span class="keyword">case</span> <span class="string">'*'</span>:</span>
+<span class="line">			Pop(&amp;s, &amp;e);</span>
+<span class="line">			Pop(&amp;s, &amp;d);</span>
+<span class="line">			Push(&amp;s, d * e);</span>
+<span class="line">			<span class="keyword">break</span>;</span>
+<span class="line">		<span class="keyword">case</span> <span class="string">'/'</span>:</span>
+<span class="line">			Pop(&amp;s, &amp;e);</span>
+<span class="line">			Pop(&amp;s, &amp;d);</span>
+<span class="line">			<span class="keyword">if</span> (e != <span class="number">0</span>)</span>
+<span class="line">			&#123;</span>
+<span class="line">				Push(&amp;s, d / e);</span>
+<span class="line">			&#125;</span>
+<span class="line">			<span class="keyword">else</span> &#123;</span>
+<span class="line">				<span class="built_in">printf</span>(<span class="string">"除数为0,错误"</span>);</span>
+<span class="line">				<span class="keyword">return</span> <span class="number">-1</span>;</span>
+<span class="line">			&#125;</span>
+<span class="line">			<span class="keyword">break</span>;</span>
+<span class="line">		<span class="keyword">default</span>:</span>
+<span class="line">			<span class="keyword">break</span>;</span>
+<span class="line">		&#125;</span>
+<span class="line">		scanf_s(<span class="string">"%c"</span>, &amp;c);</span>
+<span class="line">	&#125;</span>
+<span class="line">	Pop(&amp;s, &amp;d);</span>
+<span class="line">	<span class="built_in">printf</span>(<span class="string">"最终的计算结果为%lf\n"</span>, d);</span>
+<span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<h3 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h3><p>本人用的是vs2015编译器，所以文中的scanf用了更安全的scanf_s，  如有引用 请自行替换成和自己的编译器想匹配的函数</p>
+<p><img src="http://objects.earthchen.cn/c%E9%80%86%E6%B3%A2%E5%85%B0%E8%A1%A8%E8%BE%BE%E5%BC%8F.png" alt="cmd 运行结果"><br>代码依然很简单，都是一些简单的指针操作，如果看不懂，请复习c语言的指针部分（其实指针搞清楚地址与值得对应关系就可以了）</p>
+<table>
+<thead>
+<tr>
+<th>函数形参</th>
+<th>主函数中参数使用</th>
+<th>函数中参数使用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>*l</td>
+<td>&amp;l</td>
+<td>l-&gt;next</td>
+</tr>
+<tr>
+<td>l</td>
+<td>l</td>
+<td>l.next</td>
+</tr>
+</tbody>
+</table>
 <blockquote>
 <p>注：</p>
 <ul>

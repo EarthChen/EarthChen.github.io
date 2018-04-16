@@ -19,10 +19,10 @@
 <meta name="keywords" content="MongoDB">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MongoDB权威指南学习笔记(3)--复制">
-<meta property="og:url" content="http://earthchen.cn/2018/04/13/MongDB-study-3/index.html">
+<meta property="og:url" content="http://earthchen.cn/2018/04/15/MongDB-study-3/index.html">
 <meta property="og:site_name" content="EarthChen&#39;s Blog">
 <meta property="og:description" content="Mongo 复制">
-<meta property="og:updated_time" content="2018-04-15T12:36:10.231Z">
+<meta property="og:updated_time" content="2018-04-16T12:10:50.776Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MongoDB权威指南学习笔记(3)--复制">
 <meta name="twitter:description" content="Mongo 复制">
@@ -299,8 +299,8 @@
       <div class="body-wrap"><article id="post-MongDB-study-3" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2018/04/13/MongDB-study-3/" class="article-date">
-      <time datetime="2018-04-13T04:00:00.000Z" itemprop="datePublished">2018-04-13</time>
+      <a href="/2018/04/15/MongDB-study-3/" class="article-date">
+      <time datetime="2018-04-15T12:00:00.000Z" itemprop="datePublished">2018-04-15</time>
 </a>
 
 
@@ -498,7 +498,172 @@
 </ul>
 <h3 id="选举"><a href="#选举" class="headerlink" title="选举"></a>选举</h3><p>当一个成员无法到达主节点时，它就会申请被选举为主节点。希望呗选举为主节点的成员，会向它能到达的所有成员发送通知如果这个成员不符合候选人要求，其他成员可能知道相关原因</p>
 <p>假如没有反对的理由，其他成员就会对这个成员进行选举投票。如果这个成员得到副本大多数赞成票，它就会选举成功，会转到主节点状态。如果　达不到大多数要求，那就出于备份节点状态，之后还可以再次申请呗选举为主节点，主节点会一致出于主节点状态。除非它不在满足大多数的要求或者挂了而退位。</p>
-<h2 id="从应用程序连接副本集"><a href="#从应用程序连接副本集" class="headerlink" title="从应用程序连接副本集"></a>从应用程序连接副本集</h2><blockquote>
+<h2 id="从应用程序连接副本集"><a href="#从应用程序连接副本集" class="headerlink" title="从应用程序连接副本集"></a>从应用程序连接副本集</h2><h3 id="客户端到副本集的连接"><a href="#客户端到副本集的连接" class="headerlink" title="客户端到副本集的连接"></a>客户端到副本集的连接</h3><p>从应用程序的角度，使用副本集与使用单台服务器一致。默认情况下，驱动程序连接到主节点，并且将所有路由都路由到主节点。应用程序可以像是有那个单台服务器一样进行读写，副本集会在后台处理热备份</p>
+<p>连接副本集与连接单台服务器非常想，一个常用的连接字符串如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">mongodb:<span class="comment">//server-1:27017,server-2:27017</span></span>
+</pre></td></tr></table></figure></p>
+<p>当主节点挂掉之后，驱动程序会尽快自动找到新的主节点，在选举过程中，主节点可能会暂时不可用，如果没有可达的成员能够成为主节点，主节点可能长时间不可用</p>
+<h3 id="等待写入复制"><a href="#等待写入复制" class="headerlink" title="等待写入复制"></a>等待写入复制</h3><p>使用getLastError命令检查写入是否成功，也可以使用这个命令确保写入操作呗复制到备份节点，参数w会强制要求getLastError等待，一直到给定数量的成员都执行完了最后的写入操作。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line">db.runCommand(&#123;</span>
+<span class="line">    <span class="string">"getLastError"</span>:<span class="number">1</span>,</span>
+<span class="line">    <span class="string">"w"</span>:<span class="string">"majority"</span></span>
+<span class="line">&#125;)</span>
+</pre></td></tr></table></figure></p>
+<p>可以指定<strong>wtimeout</strong>的值设置超时时间，如果这个超过这个时间还没有返回，就会返回失败</p>
+<p>设置超时时间为1s<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line">db.runCommand(&#123;</span>
+<span class="line">    <span class="string">"getLastError"</span>:<span class="number">1</span>,</span>
+<span class="line">    <span class="string">"w"</span>:<span class="string">"majority"</span>，</span>
+<span class="line">    <span class="string">"wtimeout"</span>:<span class="number">1000</span></span>
+<span class="line">&#125;)</span>
+</pre></td></tr></table></figure></p>
+<h2 id="分片"><a href="#分片" class="headerlink" title="分片"></a>分片</h2><p>分片是指将数据拆分，将其分散存放在不同的机器上的过程。</p>
+<p>几乎所有数据库都能进行手动分片，但mongo支持自动分片，可以使数据库架构对应用程序不可见，也可以简化系统管理。对应用来说，和使用单机mongo服务器一样。</p>
+<p>在分片之前需要先执行<strong>mongos</strong>进行一次路由过程</p>
+<h3 id="快速建立一个简单集群"><a href="#快速建立一个简单集群" class="headerlink" title="快速建立一个简单集群"></a>快速建立一个简单集群</h3><p>使用<strong>-nodb</strong>选项启动mongo shell<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ mongo --nodb</span>
+</pre></td></tr></table></figure></p>
+<p>使用<strong>ShardingTest</strong>创建集群<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line">cluster=<span class="keyword">new</span> ShardingTest(&#123;</span>
+<span class="line">    <span class="string">"shards"</span>:<span class="number">3</span>,</span>
+<span class="line">    <span class="string">"chunksize"</span>:<span class="number">1</span></span>
+<span class="line">&#125;)</span>
+</pre></td></tr></table></figure></p>
+<p>会创建包含三个切片的集群，分别运行在30000,30001,30002端口，默认情况下ShardingTest会在30999端口启动mongos</p>
+<p>连接到mongos使用集群<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">db=(<span class="keyword">new</span> Mongo(<span class="string">"127.0.0.1:30999"</span>)).getDB(<span class="string">"test"</span>)</span>
+</pre></td></tr></table></figure></p>
+<p>接下来和使用单机服务器完全一样</p>
+<p>使用<strong>sh.status()</strong>可以查看集群的状态，分片摘要信息、数据库摘要信息、集合摘要信息</p>
+<p>主分片是为每个数据库随机选择的，所有数据都会位于主分片上。目前还不能自动将数据分发到不同的分片上，因为它不知道你希望如何分发数据。对每一个集合，必须明确指定，应该如何分发数据。</p>
+<p>要求一个集合分片，首先要对这个集合的数据库启用分片，执行下列命令<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">sh.enableSharding(<span class="string">"test"</span>)</span>
+</pre></td></tr></table></figure></p>
+<p>对集合分片时，要 选择一个片键。片键时集合的一个键，mongodb根据这个键拆分数据。(例如，如果选择基于“username”进行分片，mongo会根据不同的用户名进行分片) 选择片键可以认为时选择集合中的数据的顺序。它与索引时个相似的概念；随着集合的不断增长，片键就会成为集合上最重要的索引。只有呗索引过的键才能作为片键</p>
+<p>在启用分片时，先在希望作为片键的键上创建索引<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line">db.users.ensureIndex(&#123;</span>
+<span class="line">    <span class="string">"username"</span>:<span class="number">1</span></span>
+<span class="line">&#125;)</span>
+</pre></td></tr></table></figure></p>
+<p>然后对集合进行分片<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line">sh.shardCollection(<span class="string">"test.users"</span>,&#123;</span>
+<span class="line">    <span class="string">"username"</span>:<span class="number">1</span></span>
+<span class="line">&#125;)</span>
+</pre></td></tr></table></figure></p>
+<p>集合会被分为读个数据块，每一个数据块都是集合的一个数据子集</p>
+<p>包含片键的查询能够直接被发送到目标分片或者是集群分片的一个子集，这样的查询叫定向查询</p>
+<p>有些查询必须被发送到所有分片，这样的查询叫分散-聚集查询，mongo将查询分散到所有分片上，然后将各个分片的查询结果聚集起来。</p>
+<p>关闭集群<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">cluster.stop()</span>
+</pre></td></tr></table></figure></p>
+<h2 id="配置分片"><a href="#配置分片" class="headerlink" title="配置分片"></a>配置分片</h2><h3 id="何时分片"><a href="#何时分片" class="headerlink" title="何时分片"></a>何时分片</h3><p>通常不必太早分片，因为分片不仅会增加部署的操作复杂度，还要求作出设计决策，而该决策以后很难再改。另外最好也不要在系统运行太久之后在分片。</p>
+<p>分片用来:</p>
+<ul>
+<li>增加可用RAM</li>
+<li>增加可用磁盘空间</li>
+<li>减轻单台服务器的负载</li>
+<li>处理单个mongod无法承受的吞吐量</li>
+</ul>
+<h3 id="启动服务器"><a href="#启动服务器" class="headerlink" title="启动服务器"></a>启动服务器</h3><h4 id="配置服务器"><a href="#配置服务器" class="headerlink" title="配置服务器"></a>配置服务器</h4><p>配置服务器相当于集群的大脑，保存着集群和分片的元数据，即各分片包含哪些数据的信息，因此，应该首先建林配置服务器</p>
+<p>启动配置服务器<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ mongod --configscr --dbpath /var/lib/mongodb <span class="_">-f</span> /var/lib/config/mongod.conf</span>
+</pre></td></tr></table></figure></p>
+<blockquote>
+<ul>
+<li>启动配置服务器时，不要使用–replSet选项：配置服务器不是副本集成员</li>
+<li>–configscr 指定mongod为新的配置服务器，该配置将mongod的默认监听端口改为27019，并吧默认的数据目录改为/data/confgdb(可使用–port和–dbpath选项修改这两项配置)</li>
+</ul>
+</blockquote>
+<h4 id="mongos进程"><a href="#mongos进程" class="headerlink" title="mongos进程"></a>mongos进程</h4><p>当服务器出于运行状态后，启动一个mongos进程提供应用程序连接。mongos进程需要知道配置服务器的地址，所以必须使用–configdb选项启动mongos<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ mongos -configdb config-1:279019,config-2:279019.config-3:279019 <span class="_">-f</span> /var/lib/mongos.conf</span>
+</pre></td></tr></table></figure></p>
+<h4 id="将副本集转换为分片"><a href="#将副本集转换为分片" class="headerlink" title="将副本集转换为分片"></a>将副本集转换为分片</h4><p>假设我们已经拥有了一个副本集</p>
+<p>如果已经有一个使用中的副本集，该副本集会成为第一个分片。为了将副本集转换为分片，需告知mongos副本集名称和副本集成员列表</p>
+<p>例如在server-1到server-5上有一个名为spock的副本集，可连接到mongos并运行：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">sh.addShard(<span class="string">"spock/server-1:27017,server-2:27017,server-4:27017"</span>)</span>
+</pre></td></tr></table></figure></p>
+<p>可在参数中指定副本集的所有成员。如果运行sh.status()，可发现mongodb已经找到了其他的副本集成员</p>
+<p>也可以创建但mongod服务器的分片(而不是副本集分片)，直接在addShard()中指定单个mongod的主机名和端口<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">sh.addShard(<span class="string">"some-server:27017"</span>)</span>
+</pre></td></tr></table></figure></p>
+<h4 id="数据分片"><a href="#数据分片" class="headerlink" title="数据分片"></a>数据分片</h4><p>除非明确指定规则，否则mongodb不会自动对数据进行拆分，如有必要，必须明确告知数据库和集合。</p>
+<p>假设我们希望对music数据库中的artists集合按照name键进行分片。首先，对music数据库启用分片<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">db.enableSharding(<span class="string">"music"</span>)</span>
+</pre></td></tr></table></figure></p>
+<blockquote>
+<p>对数据库分片是对集合分片的先决条件</p>
+</blockquote>
+<p>对数据库启用分片之后，就可以使用shardCollection()命令对集合分片了<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line">sh.shardCollection(<span class="string">"music.artists"</span>,&#123;</span>
+<span class="line">    <span class="string">"name"</span>:<span class="number">1</span></span>
+<span class="line">&#125;)</span>
+</pre></td></tr></table></figure></p>
+<blockquote>
+<ul>
+<li>如果对已存在的集合进行分片，那么name键上必须有索引</li>
+<li>如果进行分片的集合还不存在，mongos会自动在片键上创建索引</li>
+</ul>
+</blockquote>
+<h3 id="均衡器"><a href="#均衡器" class="headerlink" title="均衡器"></a>均衡器</h3><p>均衡器负责数据的迁移，它会周期性的检查分片－是否存在不均衡，如果存在，就会开始快的迁移</p>
+<h2 id="选择片键"><a href="#选择片键" class="headerlink" title="选择片键"></a>选择片键</h2><p>###　检查使用情况</p>
+<p>对集合进行分片，要选择一或两个字段用于拆分数据。这个键就叫做片键</p>
+<p>###　数据分发<br>数据分发有三种：</p>
+<ul>
+<li>升序片键</li>
+<li>随机分发片键</li>
+<li>基于位置的片键</li>
+</ul>
+<p>####　升序片键<br>升序片键类似于”date”字段或者是objectId，是一种会随着时间稳定增长的字段。</p>
+<h4 id="随机分发的片键"><a href="#随机分发的片键" class="headerlink" title="随机分发的片键"></a>随机分发的片键</h4><p>随机分发的键可以是用户名、邮件地址、uuid、md5或者是数据集中其他没有规律的键</p>
+<h4 id="基于位置的片键"><a href="#基于位置的片键" class="headerlink" title="基于位置的片键"></a>基于位置的片键</h4><p>基于位置的片键可以是用户的ip、经纬度或者地址。位置片键不必与实际的物理位置字段相关。数据会根据这个位置进行分组。</p>
+<h3 id="片键策略"><a href="#片键策略" class="headerlink" title="片键策略"></a>片键策略</h3><h4 id="散列片键"><a href="#散列片键" class="headerlink" title="散列片键"></a>散列片键</h4><p>如果追求的是数据加在速度的极值，那么散列片键时最佳选择。散列片键可使其他任何键随机分发。所以，如果打算在大量查询中使用升序键，但又同时希望吸入数据随机分发的话，散列片键会是个好选择。</p>
+<p>弊端时无法使用散列片键作为指定目标的范围查询。</p>
+<p>创建散列片键，首先要创建散列索引<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line">db.users.ensureIndex(&#123;</span>
+<span class="line">    <span class="string">"username"</span>:<span class="string">"hashed"</span></span>
+<span class="line">&#125;)</span>
+</pre></td></tr></table></figure></p>
+<p>然后对集合分片<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line">db.shardCollection(<span class="string">"app.users"</span>,&#123;</span>
+<span class="line">    <span class="string">"username"</span>:<span class="string">"hashed"</span></span>
+<span class="line">&#125;)</span>
+</pre></td></tr></table></figure></p>
+<blockquote>
+<p>局限性:</p>
+<ul>
+<li>不能使用enique选项</li>
+<li>不能使用数组字段</li>
+<li>浮点型的值会先呗取整，然后才会进入散列，所有1和1.99999会得到相同的散列值</li>
+</ul>
+</blockquote>
+<h4 id="GridFS的散列片段"><a href="#GridFS的散列片段" class="headerlink" title="GridFS的散列片段"></a>GridFS的散列片段</h4><p>GridFS集合通常非常适合做分片，因为它们包含大量的文件数据</p>
+<p>在<strong>files_id</strong>字段上创建散列索引，则每个文件都会随机分发到集群中，但是一个文件只能呗包含在一个单一的块中，这时非常好的</p>
+<p>为了实现这种策略，需要在{“files_id”:”hashed”}创建新的索引，然后依据这个字段对集合分片</p>
+<h3 id="片键规则和指导方阵"><a href="#片键规则和指导方阵" class="headerlink" title="片键规则和指导方阵"></a>片键规则和指导方阵</h3><h4 id="片键限制"><a href="#片键限制" class="headerlink" title="片键限制"></a>片键限制</h4><p>片键不可以是数组，向片键插入数据值也是不被允许的</p>
+<p>文档一旦插入，其片键值就无法修改了。因此应该选择不会呗改变的字段，或者时很少发生变化的字段</p>
+<p>大多数特殊类型的索引都不能用作片键</p>
+<h4 id="片键的势"><a href="#片键的势" class="headerlink" title="片键的势"></a>片键的势</h4><p>不管片键时跳跃增长还是稳定增长，选择一个值发生变化的键时非常重要的。与索引一样，分片在势比比较高的字段性能更佳</p>
+<blockquote>
 <p>注：</p>
 <ul>
 <li>上述测试在<strong>MongoDB 3.4.3-8-g05b19c6</strong>中成功</li>
@@ -513,13 +678,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2018/04/13/MongDB-study-3/">MongoDB权威指南学习笔记(3)--复制</a></p>
+        <p><span>本文标题:</span><a href="/2018/04/15/MongDB-study-3/">MongoDB权威指南学习笔记(3)--复制</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">EarthChen</a></p>
-        <p><span>发布时间:</span>2018-04-13, 12:00:00</p>
-        <p><span>最后更新:</span>2018-04-15, 20:36:10</p>
+        <p><span>发布时间:</span>2018-04-15, 20:00:00</p>
+        <p><span>最后更新:</span>2018-04-16, 20:10:50</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2018/04/13/MongDB-study-3/" title="MongoDB权威指南学习笔记(3)--复制">http://earthchen.cn/2018/04/13/MongDB-study-3/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://earthchen.cn/2018/04/13/MongDB-study-3/　　作者: EarthChen" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2018/04/15/MongDB-study-3/" title="MongoDB权威指南学习笔记(3)--复制">http://earthchen.cn/2018/04/15/MongDB-study-3/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://earthchen.cn/2018/04/15/MongDB-study-3/　　作者: EarthChen" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -546,7 +711,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#创建副本集"><span class="toc-number">1.</span> <span class="toc-text">创建副本集</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#建立副本集"><span class="toc-number">1.1.</span> <span class="toc-text">建立副本集</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置副本集"><span class="toc-number">1.2.</span> <span class="toc-text">配置副本集</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#rs辅助函数"><span class="toc-number">1.2.1.</span> <span class="toc-text">rs辅助函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#网络注意事项"><span class="toc-number">1.2.2.</span> <span class="toc-text">网络注意事项</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#修改副本集配置"><span class="toc-number">1.2.3.</span> <span class="toc-text">修改副本集配置</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#副本集的组成"><span class="toc-number">2.</span> <span class="toc-text">副本集的组成</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#同步"><span class="toc-number">2.1.</span> <span class="toc-text">同步</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#初始化同步"><span class="toc-number">2.1.1.</span> <span class="toc-text">初始化同步</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#处理陈旧数据"><span class="toc-number">2.1.2.</span> <span class="toc-text">处理陈旧数据</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#心跳"><span class="toc-number">2.2.</span> <span class="toc-text">心跳</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#选举"><span class="toc-number">2.3.</span> <span class="toc-text">选举</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#从应用程序连接副本集"><span class="toc-number">3.</span> <span class="toc-text">从应用程序连接副本集</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#创建副本集"><span class="toc-number">1.</span> <span class="toc-text">创建副本集</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#建立副本集"><span class="toc-number">1.1.</span> <span class="toc-text">建立副本集</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置副本集"><span class="toc-number">1.2.</span> <span class="toc-text">配置副本集</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#rs辅助函数"><span class="toc-number">1.2.1.</span> <span class="toc-text">rs辅助函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#网络注意事项"><span class="toc-number">1.2.2.</span> <span class="toc-text">网络注意事项</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#修改副本集配置"><span class="toc-number">1.2.3.</span> <span class="toc-text">修改副本集配置</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#副本集的组成"><span class="toc-number">2.</span> <span class="toc-text">副本集的组成</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#同步"><span class="toc-number">2.1.</span> <span class="toc-text">同步</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#初始化同步"><span class="toc-number">2.1.1.</span> <span class="toc-text">初始化同步</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#处理陈旧数据"><span class="toc-number">2.1.2.</span> <span class="toc-text">处理陈旧数据</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#心跳"><span class="toc-number">2.2.</span> <span class="toc-text">心跳</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#选举"><span class="toc-number">2.3.</span> <span class="toc-text">选举</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#从应用程序连接副本集"><span class="toc-number">3.</span> <span class="toc-text">从应用程序连接副本集</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#客户端到副本集的连接"><span class="toc-number">3.1.</span> <span class="toc-text">客户端到副本集的连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#等待写入复制"><span class="toc-number">3.2.</span> <span class="toc-text">等待写入复制</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分片"><span class="toc-number">4.</span> <span class="toc-text">分片</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#快速建立一个简单集群"><span class="toc-number">4.1.</span> <span class="toc-text">快速建立一个简单集群</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置分片"><span class="toc-number">5.</span> <span class="toc-text">配置分片</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#何时分片"><span class="toc-number">5.1.</span> <span class="toc-text">何时分片</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#启动服务器"><span class="toc-number">5.2.</span> <span class="toc-text">启动服务器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#配置服务器"><span class="toc-number">5.2.1.</span> <span class="toc-text">配置服务器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#mongos进程"><span class="toc-number">5.2.2.</span> <span class="toc-text">mongos进程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#将副本集转换为分片"><span class="toc-number">5.2.3.</span> <span class="toc-text">将副本集转换为分片</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数据分片"><span class="toc-number">5.2.4.</span> <span class="toc-text">数据分片</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#均衡器"><span class="toc-number">5.3.</span> <span class="toc-text">均衡器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#选择片键"><span class="toc-number">6.</span> <span class="toc-text">选择片键</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#随机分发的片键"><span class="toc-number">6.0.1.</span> <span class="toc-text">随机分发的片键</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#基于位置的片键"><span class="toc-number">6.0.2.</span> <span class="toc-text">基于位置的片键</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#片键策略"><span class="toc-number">6.1.</span> <span class="toc-text">片键策略</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#散列片键"><span class="toc-number">6.1.1.</span> <span class="toc-text">散列片键</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#GridFS的散列片段"><span class="toc-number">6.1.2.</span> <span class="toc-text">GridFS的散列片段</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#片键规则和指导方阵"><span class="toc-number">6.2.</span> <span class="toc-text">片键规则和指导方阵</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#片键限制"><span class="toc-number">6.2.1.</span> <span class="toc-text">片键限制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#片键的势"><span class="toc-number">6.2.2.</span> <span class="toc-text">片键的势</span></a></li></ol></li></ol></li></ol>
         
     </div>
     <style>
@@ -628,7 +793,7 @@
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/04/13/MongDB-study-3/">MongoDB权威指南学习笔记(3)--复制</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/13/MongDB-study-2/">MongoDB权威指南学习笔记(2)--设计应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/11/MongDB-study-1/">MongoDB权威指南学习笔记(1)--基础知识与对文档的增删改查</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/10/manjaro安装软件脚本/">manjaro系统相关脚本和配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/04/高性能MySQL-study/">高性能MySQL学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/01/httpclientutil/">HttpClient工具类</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/14/qiniu-oss/">spring boot使用七牛云的oss(对象存储)文件上传</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/spring-boot-shiro-jwt/">spring boot集成shiro使用jwt进行权限控制</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/requestHolder_and_argumentResolver/">使用ThreadLocal和ArgumentResolver方便开发</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/applicationContextHelper/">在不被spring容器管理的类中使用ApplicationContext应用上下文bean</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_static_class_autowrite/">Spring boot 在静态类中注入spring组件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_diy_properties/">Spring boot 自定义配置文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/12/Elasticsearch_study_1/">Elasticsearch学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/09/深入理解java虚拟机学习笔记_1/">深入理解java虚拟机学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/23/Docker_study_Dockerfile_instructions/">Docker学习笔记---Dockerfile</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/22/Docker_study/">Docker学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/20/celery_study/">Celery-分布式任务队列学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_redis_cache/">Django使用redis作为缓存系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_channels_websocket/">Django使用Channels实现websocket</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/13/Docker_Gogs/">使用Docker搭建git服务Gogs</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_1to20/">LeetCode刷题记录(easy难度1-20题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_21to_40/">LeetCode刷题记录(easy难度21-40题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/29/es6_study/">es6学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/Webpack_study/">Webpack学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/RegularExpression_study/">正则表达式学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/08/AndroidStudio/">Android Studio 使用本地离线Gradle</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/跨域请求解决方案/">跨域请求的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/ubuntu_supervisor/">ubuntu下的进程控制系统————Supervisor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_nginx_gunicorn/">django+nginx+gunicorn部署配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/28/ubuntu修复不能挂载NTFS硬盘/">ubuntu修复linux和windows双系统下挂载ntfs硬盘出错问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/17/django_timing_task/">django使用django-crontab实现定时任务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/15/django_rest_framework_jwt/">django-rest-framework配置json web token进行接口的认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/django_rest_framework_study/">django-rest-framework框架学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/spring_SpEL/">spring中的SpEL表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/08/git_study/">Git学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/03/资源收集/">资源收集共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/06/ubuntu_open_port/">ubuntu开放指定端口</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/16/redis_study_2/">Redis学习笔记 -- 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/15/redis_study_1/">Redis学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/16/ubuntu_do_something_use/">ubuntu日常使用的安装配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/django_address_baiduapi_marker_show/">Django调用百度地图api在地图上批量增加标记点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/ubuntu_do_something_coding/">ubuntu搭建常见开发环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/10/ubuntu安装在双系统笔记本下开机或关机卡死.1/">ubuntu在双系统下开机卡死或关机卡死的解决办法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/11/python_requirements/">python生成项目所需依赖文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/10/hexo_github_coding_blog/">利用hexo和github或coding 搭免费个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django常用语句/">Django常用语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/python2和Python3的区别/">Python2和Python3的区别简单总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django渲染模板/">Django渲染模板</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django连接mysql数据库/">Django连接MySql使用models处理数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django环境搭建/">Django环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django数据库操作/">Django操作数据库</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/03/Android_qq_Menu/">Android仿qq侧滑菜单</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/16/C语言队列的基本操作/">C语言队列的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言共享栈/">C语言共享栈</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言逆波兰计算器/">C语言逆波兰表达式计算(后缀表达式计算器)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言中缀表达式计算器/">C语言中缀表达式计算器</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言二叉树基本操作/">C语言二叉树的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/c语言中缀表达式变后缀表达式/">C语言中缀表达式转后缀表达式</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/04/15/MongDB-study-3/">MongoDB权威指南学习笔记(3)--复制</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/13/MongDB-study-2/">MongoDB权威指南学习笔记(2)--设计应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/11/MongDB-study-1/">MongoDB权威指南学习笔记(1)--基础知识与对文档的增删改查</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/10/manjaro安装软件脚本/">manjaro系统相关脚本和配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/04/高性能MySQL-study/">高性能MySQL学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/01/httpclientutil/">HttpClient工具类</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/14/qiniu-oss/">spring boot使用七牛云的oss(对象存储)文件上传</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/spring-boot-shiro-jwt/">spring boot集成shiro使用jwt进行权限控制</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/requestHolder_and_argumentResolver/">使用ThreadLocal和ArgumentResolver方便开发</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/applicationContextHelper/">在不被spring容器管理的类中使用ApplicationContext应用上下文bean</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_static_class_autowrite/">Spring boot 在静态类中注入spring组件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_diy_properties/">Spring boot 自定义配置文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/12/Elasticsearch_study_1/">Elasticsearch学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/09/深入理解java虚拟机学习笔记_1/">深入理解java虚拟机学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/23/Docker_study_Dockerfile_instructions/">Docker学习笔记---Dockerfile</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/22/Docker_study/">Docker学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/20/celery_study/">Celery-分布式任务队列学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_channels_websocket/">Django使用Channels实现websocket</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_redis_cache/">Django使用redis作为缓存系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/13/Docker_Gogs/">使用Docker搭建git服务Gogs</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_1to20/">LeetCode刷题记录(easy难度1-20题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_21to_40/">LeetCode刷题记录(easy难度21-40题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/29/es6_study/">es6学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/Webpack_study/">Webpack学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/RegularExpression_study/">正则表达式学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/08/AndroidStudio/">Android Studio 使用本地离线Gradle</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/跨域请求解决方案/">跨域请求的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_nginx_gunicorn/">django+nginx+gunicorn部署配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/ubuntu_supervisor/">ubuntu下的进程控制系统————Supervisor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/28/ubuntu修复不能挂载NTFS硬盘/">ubuntu修复linux和windows双系统下挂载ntfs硬盘出错问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/17/django_timing_task/">django使用django-crontab实现定时任务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/15/django_rest_framework_jwt/">django-rest-framework配置json web token进行接口的认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/spring_SpEL/">spring中的SpEL表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/django_rest_framework_study/">django-rest-framework框架学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/08/git_study/">Git学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/03/资源收集/">资源收集共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/06/ubuntu_open_port/">ubuntu开放指定端口</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/16/redis_study_2/">Redis学习笔记 -- 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/15/redis_study_1/">Redis学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/16/ubuntu_do_something_use/">ubuntu日常使用的安装配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/django_address_baiduapi_marker_show/">Django调用百度地图api在地图上批量增加标记点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/ubuntu_do_something_coding/">ubuntu搭建常见开发环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/10/ubuntu安装在双系统笔记本下开机或关机卡死.1/">ubuntu在双系统下开机卡死或关机卡死的解决办法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/11/python_requirements/">python生成项目所需依赖文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/10/hexo_github_coding_blog/">利用hexo和github或coding 搭免费个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django常用语句/">Django常用语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django数据库操作/">Django操作数据库</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/python2和Python3的区别/">Python2和Python3的区别简单总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django渲染模板/">Django渲染模板</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django环境搭建/">Django环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django连接mysql数据库/">Django连接MySql使用models处理数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/03/Android_qq_Menu/">Android仿qq侧滑菜单</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/16/C语言队列的基本操作/">C语言队列的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言共享栈/">C语言共享栈</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言中缀表达式计算器/">C语言中缀表达式计算器</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言二叉树基本操作/">C语言二叉树的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/c语言中缀表达式变后缀表达式/">C语言中缀表达式转后缀表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言逆波兰计算器/">C语言逆波兰表达式计算(后缀表达式计算器)</a></li></ul>
 
 
 
