@@ -1,0 +1,1497 @@
+<!DOCTYPE html>
+<html >
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="EarthChen" />
+
+
+
+<meta name="description" content="剑指offer刷题">
+<meta name="keywords" content="算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="牛客网剑指offer-1">
+<meta property="og:url" content="http://earthchen.cn/2018/04/17/newcoder-剑指offer-1/index.html">
+<meta property="og:site_name" content="EarthChen&#39;s Blog">
+<meta property="og:description" content="剑指offer刷题">
+<meta property="og:updated_time" content="2018-04-25T06:55:42.790Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="牛客网剑指offer-1">
+<meta name="twitter:description" content="剑指offer刷题">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="EarthChen&#39;s Blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/black/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>牛客网剑指offer-1 | EarthChen&#39;s Blog</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?838a8860a1d9fc43bc091f40a8ab515d";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="http://objects.earthchen.cn/%E5%A4%B4%E5%83%8F.jpg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">EarthChen</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">多学一点知识，少写一行代码</p>
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="true" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="http://mail.163.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/EarthChen" title="GitHub"></a>
+                            
+                                <a class="fa 知乎" href="https://www.zhihu.com/people/diamand-76/activities" title="知乎"></a>
+                            
+                                <a class="fa 简书" href="http://www.jianshu.com/u/85a919706c15" title="简书"></a>
+                            
+                                <a class="fa QQ" href="http://user.qzone.qq.com/1791538609" title="QQ"></a>
+                            
+                                <a class="fa 微信" href="https://wx.qq.com/" title="微信"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AJAX/">AJAX</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Celery/">Celery</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django/">Django</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Gogs/">Gogs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LeetCode/">LeetCode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB/">MongoDB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/">MySQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/">Nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/">Node.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Regular-Expression/">Regular Expression</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/">Spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-boot/">Spring boot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webpack/">Webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/解决方案/">解决方案</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/资源/">资源</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.baidu.com/">Baidu</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.google.com/">Google</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://fanyi.youdao.com/">有道翻译</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">专注于技术 学习中的程序猿</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">EarthChen</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="http://objects.earthchen.cn/%E5%A4%B4%E5%83%8F.jpg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">EarthChen</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">多学一点知识，少写一行代码</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="http://mail.163.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/EarthChen" title="GitHub"></a>
+                            
+                                <a class="fa 知乎" target="_blank" href="https://www.zhihu.com/people/diamand-76/activities" title="知乎"></a>
+                            
+                                <a class="fa 简书" target="_blank" href="http://www.jianshu.com/u/85a919706c15" title="简书"></a>
+                            
+                                <a class="fa QQ" target="_blank" href="http://user.qzone.qq.com/1791538609" title="QQ"></a>
+                            
+                                <a class="fa 微信" target="_blank" href="https://wx.qq.com/" title="微信"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-newcoder-剑指offer-1" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/04/17/newcoder-剑指offer-1/" class="article-date">
+      <time datetime="2018-04-17T14:20:00.000Z" itemprop="datePublished">2018-04-17</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      牛客网剑指offer-1
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/学习笔记/">学习笔记</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>剑指offer刷题</p>
+<a id="more"></a>
+<h2 id="二维数据中的查找"><a href="#二维数据中的查找" class="headerlink" title="二维数据中的查找"></a>二维数据中的查找</h2><h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>在一个二维数组中，每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。</p>
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>本题关键在于找到左下角和右上角这两个元素，因为这两个元素在两个方向是分别递增和递减，就可以有规律的移动需要比较的目标元素。如果选用左上角或者右下角，对于两个方向都是递增或递减</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+<span class="line">27</span>
+</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
+<span class="line">    <span class="comment"># array 二维列表</span></span>
+<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">Find</span><span class="params">(self, target, array)</span>:</span></span>
+<span class="line">        col = <span class="number">0</span></span>
+<span class="line">        <span class="comment"># 行数</span></span>
+<span class="line">        row_n = len(array)</span>
+<span class="line">        <span class="comment"># 列数</span></span>
+<span class="line">        col_n = len(array[<span class="number">0</span>])</span>
+<span class="line">        <span class="comment"># 判断是否大于最大值小于最小值</span></span>
+<span class="line">        <span class="keyword">if</span> target &gt; array[row_n - <span class="number">1</span>][col_n - <span class="number">1</span>] <span class="keyword">or</span> target &lt; array[<span class="number">0</span>][<span class="number">0</span>]:</span>
+<span class="line">            <span class="keyword">return</span> <span class="keyword">False</span></span>
+<span class="line">        <span class="comment"># 向上向右移动的时候不能越界</span></span>
+<span class="line">        <span class="keyword">while</span> col &lt;= col_n - <span class="number">1</span> <span class="keyword">and</span> row_n &gt;= <span class="number">0</span>:</span>
+<span class="line">            <span class="comment"># 需要和目标值比较的值(初始为左下角的元素或者是右上角)</span></span>
+<span class="line">            list_target = array[row_n - <span class="number">1</span>][col]</span>
+<span class="line">            <span class="comment"># 如果目标值大于</span></span>
+<span class="line">            <span class="keyword">if</span> target &gt; list_target:</span>
+<span class="line">                <span class="comment"># 向右移动</span></span>
+<span class="line">                col += <span class="number">1</span></span>
+<span class="line">            <span class="comment"># 如果等于返回true</span></span>
+<span class="line">            <span class="keyword">elif</span> target == list_target:</span>
+<span class="line">                <span class="keyword">return</span> <span class="keyword">True</span></span>
+<span class="line">            <span class="comment"># 如果小于</span></span>
+<span class="line">            <span class="keyword">else</span>:</span>
+<span class="line">                <span class="comment"># 向上移动</span></span>
+<span class="line">                row_n -= <span class="number">1</span></span>
+<span class="line">        <span class="keyword">return</span> <span class="keyword">False</span></span>
+</pre></td></tr></table></figure>
+<h2 id="替换空格"><a href="#替换空格" class="headerlink" title="替换空格"></a>替换空格</h2><h3 id="题目描述-1"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述</h3><p>请实现一个函数，将一个字符串中的空格替换成“%20”。例如，当字符串为We Are Happy.则经过替换之后的字符串为We%20Are%20Happy。</p>
+<h3 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h3><p>看到题目的直接反应就是用字符串的替换方法，可能题目的意思时不能调用str的方法，但是牛客这里可以通过。</p>
+<p>看有的解析还用了正则替换，当然都可以</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
+<span class="line"><span class="comment"># s 源字符串</span></span>
+<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">replaceSpace</span><span class="params">(self, s)</span>:</span></span>
+<span class="line">        <span class="keyword">return</span> str(s).replace(<span class="string">" "</span>, <span class="string">"%20"</span>)</span>
+</pre></td></tr></table></figure>
+<h2 id="从尾到头打印链表"><a href="#从尾到头打印链表" class="headerlink" title="从尾到头打印链表"></a>从尾到头打印链表</h2><h3 id="题目描述-2"><a href="#题目描述-2" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个链表，从尾到头打印链表每个节点的值。</p>
+<h3 id="分析-2"><a href="#分析-2" class="headerlink" title="分析"></a>分析</h3><p>有很多种办法，可以正向遍历存入列表，然后翻转列表；可以使用栈存储，还可以使用递归向列表中添加节点的值</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
+<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span>
+<span class="line">        self.list1 = []</span>
+<span class="line"></span>
+<span class="line">    <span class="comment"># 返回从尾部到头部的列表值序列，例如[1,2,3]</span></span>
+<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">printListFromTailToHead</span><span class="params">(self, listNode)</span>:</span></span>
+<span class="line">        <span class="keyword">if</span> listNode <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</span>
+<span class="line">            self.printListFromTailToHead(listNode.next)</span>
+<span class="line">            self.list1.append(listNode.val)</span>
+<span class="line">        <span class="keyword">return</span> self.list1</span>
+</pre></td></tr></table></figure>
+<h2 id="斐波那契数列"><a href="#斐波那契数列" class="headerlink" title="斐波那契数列"></a>斐波那契数列</h2><h3 id="题目描述-3"><a href="#题目描述-3" class="headerlink" title="题目描述"></a>题目描述</h3><p>大家都知道斐波那契数列，现在要求输入一个整数n，请你输出斐波那契数列的第n项。<br>n&lt;=39</p>
+<h3 id="分析-3"><a href="#分析-3" class="headerlink" title="分析"></a>分析</h3><p>首先想到的是递归，最简洁，但是会有超时之类的问题，所以改为迭代相加</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
+<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">Fibonacci</span><span class="params">(self, n)</span>:</span></span>
+<span class="line">        <span class="string">"""</span>
+<span class="line">        斐波那契数列</span>
+<span class="line">        :param n:</span>
+<span class="line">        :return:</span>
+<span class="line">        """</span></span>
+<span class="line">        num0 = <span class="number">0</span></span>
+<span class="line">        num1 = <span class="number">1</span></span>
+<span class="line">        num_n = <span class="number">0</span></span>
+<span class="line">        <span class="keyword">if</span> n == <span class="number">0</span>:</span>
+<span class="line">            <span class="keyword">return</span> <span class="number">0</span></span>
+<span class="line">        <span class="keyword">if</span> n == <span class="number">1</span>:</span>
+<span class="line">            <span class="keyword">return</span> <span class="number">1</span></span>
+<span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">2</span>, n + <span class="number">1</span>):</span>
+<span class="line">            num_n = num0 + num1</span>
+<span class="line">            num0 = num1</span>
+<span class="line">            num1 = num_n</span>
+<span class="line">        <span class="keyword">return</span> num_n</span>
+</pre></td></tr></table></figure>
+<h2 id="跳台阶"><a href="#跳台阶" class="headerlink" title="跳台阶"></a>跳台阶</h2><h3 id="题目描述-4"><a href="#题目描述-4" class="headerlink" title="题目描述"></a>题目描述</h3><p>一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个n级的台阶总共有多少种跳法。</p>
+<h3 id="分析-4"><a href="#分析-4" class="headerlink" title="分析"></a>分析</h3><p>通过分析前几次结果，我们也能发现这也是一个斐波那契数列，所以按照同样的方法即可<br>f(1) = 1, f(2) = 2, f(3) = 3, f(4) = 5，  可以总结出f(n) = f(n-1) + f(n-2)的规律</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
+<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">jumpFloor</span><span class="params">(self, number)</span>:</span></span>
+<span class="line">        <span class="string">"""</span>
+<span class="line">        f(n) = f(n-1) + f(n-2)</span>
+<span class="line">        :param number:</span>
+<span class="line">        :return:</span>
+<span class="line">        """</span></span>
+<span class="line">        a, b = <span class="number">1</span>, <span class="number">1</span></span>
+<span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(number):</span>
+<span class="line">            a, b = b, a + b</span>
+<span class="line">        <span class="keyword">return</span> a</span>
+</pre></td></tr></table></figure>
+<h2 id="变态跳台阶"><a href="#变态跳台阶" class="headerlink" title="变态跳台阶"></a>变态跳台阶</h2><h3 id="题目描述-5"><a href="#题目描述-5" class="headerlink" title="题目描述"></a>题目描述</h3><p>一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个n级的台阶总共有多少种跳法。</p>
+<h3 id="分析-5"><a href="#分析-5" class="headerlink" title="分析"></a>分析</h3><ol>
+<li><p>第一种方法:<br>因为n级台阶，第一步有n种跳法：跳1级、跳2级、到跳n级<br>跳1级，剩下n-1级，则剩下跳法是f(n-1)<br>跳2级，剩下n-2级，则剩下跳法是f(n-2)<br>所以f(n)=f(n-1)+f(n-2)+…+f(1)<br>因为f(n-1)=f(n-2)+f(n-3)+…+f(1)<br>所以f(n)=2*f(n-1)</p>
+</li>
+<li><p>第二种方法<br>每个台阶都有跳与不跳两种情况（除了最后一个台阶），最后一个台阶必须跳。所以共用2^(n-1)中情况</p>
+</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
+<span class="line"></span>
+<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">jumpFloorII</span><span class="params">(self, number)</span>:</span></span>
+<span class="line">        <span class="string">"""</span>
+<span class="line">        每个台阶都有跳与不跳两种情况（除了最后一个台阶），最后一个台阶必须跳。所以共用2^(n-1)中情况</span>
+<span class="line">        :param number: int</span>
+<span class="line">        :return: int</span>
+<span class="line">        """</span></span>
+<span class="line">        <span class="keyword">if</span> number &lt;= <span class="number">0</span>:</span>
+<span class="line">            <span class="keyword">return</span> <span class="number">0</span></span>
+<span class="line">        <span class="keyword">else</span>:</span>
+<span class="line">            <span class="keyword">return</span> pow(<span class="number">2</span>, number - <span class="number">1</span>)</span>
+</pre></td></tr></table></figure>
+<h2 id="矩形覆盖"><a href="#矩形覆盖" class="headerlink" title="矩形覆盖"></a>矩形覆盖</h2><h3 id="题目描述-6"><a href="#题目描述-6" class="headerlink" title="题目描述"></a>题目描述</h3><p>我们可以用2<em>1的小矩形横着或者竖着去覆盖更大的矩形。请问用n个2</em>1的小矩形无重叠地覆盖一个2*n的大矩形，总共有多少种方法？</p>
+<h3 id="分析-6"><a href="#分析-6" class="headerlink" title="分析"></a>分析</h3><p>通过分析前几次结果，我们也能发现这也是一个斐波那契数列，所以按照同样的方法即可,<br>对于0这个特殊值需要特殊处理</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
+<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">rectCover</span><span class="params">(self, number)</span>:</span></span>
+<span class="line">        <span class="string">"""</span>
+<span class="line">        分析可知，还是斐波那契数列</span>
+<span class="line">        :param number:</span>
+<span class="line">        :return:</span>
+<span class="line">        """</span></span>
+<span class="line">        <span class="keyword">if</span> number == <span class="number">0</span>:</span>
+<span class="line">            <span class="keyword">return</span> <span class="number">0</span></span>
+<span class="line">        a, b = <span class="number">1</span>, <span class="number">1</span></span>
+<span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(number):</span>
+<span class="line">            a, b = b, a + b</span>
+<span class="line">        <span class="keyword">return</span> a</span>
+</pre></td></tr></table></figure>
+<h2 id="二进制中1的个数"><a href="#二进制中1的个数" class="headerlink" title="二进制中1的个数"></a>二进制中1的个数</h2><h3 id="题目描述-7"><a href="#题目描述-7" class="headerlink" title="题目描述"></a>题目描述</h3><p>我们可以用2<em>1的小矩形横着或者竖着去覆盖更大的矩形。请问用n个2</em>1的小矩形无重叠地覆盖一个2*n的大矩形，总共有多少种方法？</p>
+<h3 id="分析-7"><a href="#分析-7" class="headerlink" title="分析"></a>分析</h3><p>重点在怎么求补码，我的解法是转换为二进制字符串然后统计1的个数</p>
+<p>还有吧一种使用&amp;进行操作的这里不做说明</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
+<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">NumberOf1</span><span class="params">(self, n)</span>:</span></span>
+<span class="line">        <span class="string">"""</span>
+<span class="line">        求补码然后使用字符串count函数统计</span>
+<span class="line">        :param n:</span>
+<span class="line">        :return:</span>
+<span class="line">        """</span></span>
+<span class="line">        <span class="keyword">if</span> n &lt; <span class="number">0</span>:</span>
+<span class="line">            <span class="keyword">return</span> bin(<span class="number">2</span> ** <span class="number">32</span> + n).count(<span class="string">'1'</span>)</span>
+<span class="line">        <span class="keyword">return</span> bin(n).count(<span class="string">'1'</span>)</span>
+</pre></td></tr></table></figure>
+<h2 id="数值的整数次方"><a href="#数值的整数次方" class="headerlink" title="数值的整数次方"></a>数值的整数次方</h2><h3 id="题目描述-8"><a href="#题目描述-8" class="headerlink" title="题目描述"></a>题目描述</h3><p>给定一个double类型的浮点数base和int类型的整数exponent。求base的exponent次方。</p>
+<h3 id="分析-8"><a href="#分析-8" class="headerlink" title="分析"></a>分析</h3><p>没怎么研究，直接使用的内置函数，通过查阅资料，看到一种快速幂求解方式，有兴趣自己研究下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
+<span class="line"></span>
+<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">Power</span><span class="params">(self, base, exponent)</span>:</span></span>
+<span class="line">        <span class="string">"""</span>
+<span class="line">        还可以使用快速幂求法</span>
+<span class="line">        :param base: </span>
+<span class="line">        :param exponent: </span>
+<span class="line">        :return: </span>
+<span class="line">        """</span></span>
+<span class="line">        <span class="keyword">return</span> pow(base, exponent)</span>
+</pre></td></tr></table></figure>
+<h2 id="调整数组顺序使奇数位于偶数前面"><a href="#调整数组顺序使奇数位于偶数前面" class="headerlink" title="调整数组顺序使奇数位于偶数前面"></a>调整数组顺序使奇数位于偶数前面</h2><h3 id="题目描述-9"><a href="#题目描述-9" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个整数数组，实现一个函数来调整该数组中数字的顺序，使得所有的奇数位于数组的前半部分，所有的偶数位于位于数组的后半部分，并保证奇数和奇数，偶数和偶数之间的相对位置不变。</p>
+<h3 id="分析-9"><a href="#分析-9" class="headerlink" title="分析"></a>分析</h3><p>用了最简单的解法，创建两个列表分别接收奇数和偶数，最后拼起来</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
+<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">reOrderArray</span><span class="params">(self, array)</span>:</span></span>
+<span class="line">        odd_list = []</span>
+<span class="line">        even_list = []</span>
+<span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> array:</span>
+<span class="line">            <span class="keyword">if</span> i % <span class="number">2</span> != <span class="number">0</span>:</span>
+<span class="line">                odd_list.append(i)</span>
+<span class="line">            <span class="keyword">else</span>:</span>
+<span class="line">                even_list.append(i)</span>
+<span class="line">        <span class="keyword">return</span> odd_list + even_list</span>
+</pre></td></tr></table></figure>
+<h2 id="反转链表"><a href="#反转链表" class="headerlink" title="反转链表"></a>反转链表</h2><h3 id="题目描述-10"><a href="#题目描述-10" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个链表，反转链表后，输出链表的所有元素。</p>
+<h3 id="分析-10"><a href="#分析-10" class="headerlink" title="分析"></a>分析</h3><p>首先判断头节点或者第一个节点是否为空，在不为空的时候迭代链表</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
+<span class="line">    <span class="comment"># 返回ListNode</span></span>
+<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">ReverseList</span><span class="params">(self, pHead)</span>:</span></span>
+<span class="line">        <span class="string">"""</span>
+<span class="line">        倒置链表</span>
+<span class="line">        :param pHead:</span>
+<span class="line">        :return:</span>
+<span class="line">        """</span></span>
+<span class="line">        <span class="comment"># 判断当前节点是否为空或者下一个节点为空</span></span>
+<span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> pHead <span class="keyword">or</span> <span class="keyword">not</span> pHead.next:</span>
+<span class="line">            <span class="keyword">return</span> pHead</span>
+<span class="line">        <span class="comment"># 初始化未节点为空</span></span>
+<span class="line">        last = <span class="keyword">None</span></span>
+<span class="line">        <span class="comment"># 循环迭代头节点</span></span>
+<span class="line">        <span class="keyword">while</span> pHead:</span>
+<span class="line">            <span class="comment"># 创建一个中间节点接受头节点的下一个节点</span></span>
+<span class="line">            tmp = pHead.next</span>
+<span class="line">            <span class="comment"># 将尾节点赋值给尾节点</span></span>
+<span class="line">            pHead.next = last</span>
+<span class="line">            <span class="comment"># 将头节点赋值给尾节点</span></span>
+<span class="line">            last = pHead</span>
+<span class="line">            <span class="comment"># 将中间节点赋值给头节点</span></span>
+<span class="line">            pHead = tmp</span>
+<span class="line">        <span class="keyword">return</span> last</span>
+</pre></td></tr></table></figure>
+<h2 id="合并两个排序的链表"><a href="#合并两个排序的链表" class="headerlink" title="合并两个排序的链表"></a>合并两个排序的链表</h2><h3 id="题目描述-11"><a href="#题目描述-11" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入两个单调递增的链表，输出两个链表合成后的链表，当然我们需要合成后的链表满足单调不减规则</p>
+<h3 id="分析-11"><a href="#分析-11" class="headerlink" title="分析"></a>分析</h3><p>我们使用其中的一个结点将两个链表拼接起来，换句话说，就是将一个链表合并到另一个链表上，所以并不能创建一个新链表去进行操作。</p>
+<p>当其中某一个链表为空时，只需要返回另一个链表即可，这种情况需要单独讨论</p>
+<p>当两个链表均不为空时，我们需要去比较结点两个链表中结点的大小，当l1的结点值小于l2的结点时，我们就需要将l2合并到l1上，把l2的结点一个一个拼到l1上，知道l2为为空时，循环就可以结束了。这个过程是重复的，所以我们这里可以使用递归操作，反之，当l2的结点小于l1时，就把l1拼接到l2上</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
+<span class="line">    <span class="comment"># 返回ListNode</span></span>
+<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">ReverseList</span><span class="params">(self, pHead)</span>:</span></span>
+<span class="line">        <span class="string">"""</span>
+<span class="line">        倒置链表</span>
+<span class="line">        :param pHead:</span>
+<span class="line">        :return:</span>
+<span class="line">        """</span></span>
+<span class="line">        <span class="comment"># 判断当前节点是否为空或者下一个节点为空</span></span>
+<span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> pHead <span class="keyword">or</span> <span class="keyword">not</span> pHead.next:</span>
+<span class="line">            <span class="keyword">return</span> pHead</span>
+<span class="line">        <span class="comment"># 初始化未节点为空</span></span>
+<span class="line">        last = <span class="keyword">None</span></span>
+<span class="line">        <span class="comment"># 循环迭代头节点</span></span>
+<span class="line">        <span class="keyword">while</span> pHead:</span>
+<span class="line">            <span class="comment"># 创建一个中间节点接受头节点的下一个节点</span></span>
+<span class="line">            tmp = pHead.next</span>
+<span class="line">            <span class="comment"># 将尾节点赋值给尾节点</span></span>
+<span class="line">            pHead.next = last</span>
+<span class="line">            <span class="comment"># 将头节点赋值给尾节点</span></span>
+<span class="line">            last = pHead</span>
+<span class="line">            <span class="comment"># 将中间节点赋值给头节点</span></span>
+<span class="line">            pHead = tmp</span>
+<span class="line">        <span class="keyword">return</span> last</span>
+</pre></td></tr></table></figure>
+<h2 id="树的子结构"><a href="#树的子结构" class="headerlink" title="树的子结构"></a>树的子结构</h2><h3 id="题目描述-12"><a href="#题目描述-12" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入两棵二叉树A，B，判断B是不是A的子结构。（ps：我们约定空树不是任意一个树的子结构）</p>
+<h3 id="分析-12"><a href="#分析-12" class="headerlink" title="分析"></a>分析</h3><p>判断是否是子树，也就是其中部分树与另一个树相等，我们可以单独写一个函数判断两个树是否相同，然后将一个树的左右子树递归带入即可</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
+<span class="line"></span>
+<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">HasSubtree</span><span class="params">(self, pRoot1, pRoot2)</span>:</span></span>
+<span class="line">        <span class="comment"># 如果root1或者root2有一个为null</span></span>
+<span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> pRoot1 <span class="keyword">or</span> <span class="keyword">not</span> pRoot2:</span>
+<span class="line">            <span class="keyword">return</span> <span class="keyword">False</span></span>
+<span class="line">        <span class="keyword">return</span> self.is_subtree(pRoot1, pRoot2) \</span>
+<span class="line">               <span class="keyword">or</span> self.HasSubtree(pRoot1.left, pRoot2) \</span>
+<span class="line">               <span class="keyword">or</span> self.HasSubtree(pRoot1.right, pRoot2)</span>
+<span class="line"></span>
+<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">is_subtree</span><span class="params">(self, A, B)</span>:</span></span>
+<span class="line">        <span class="string">"""</span>
+<span class="line">        判断是否时子树</span>
+<span class="line">        :param A:</span>
+<span class="line">        :param B:</span>
+<span class="line">        :return:</span>
+<span class="line">        """</span></span>
+<span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> B:</span>
+<span class="line">            <span class="keyword">return</span> <span class="keyword">True</span></span>
+<span class="line">        <span class="comment"># 判断a不为空或者a的值与b的值不相等</span></span>
+<span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> A <span class="keyword">or</span> A.val != B.val:</span>
+<span class="line">            <span class="keyword">return</span> <span class="keyword">False</span></span>
+<span class="line">        <span class="keyword">return</span> self.is_subtree(A.left, B.left) \</span>
+<span class="line">               <span class="keyword">and</span> self.is_subtree(A.right, B.right)</span>
+</pre></td></tr></table></figure>
+<h2 id="合并两个排序的链表-1"><a href="#合并两个排序的链表-1" class="headerlink" title="合并两个排序的链表"></a>合并两个排序的链表</h2><h3 id="题目描述-13"><a href="#题目描述-13" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入两个单调递增的链表，输出两个链表合成后的链表，当然我们需要合成后的链表满足单调不减规则</p>
+<h3 id="分析-13"><a href="#分析-13" class="headerlink" title="分析"></a>分析</h3><p>我们使用其中的一个结点将两个链表拼接起来，换句话说，就是将一个链表合并到另一个链表上，所以并不能创建一个新链表去进行操作。</p>
+<p>当其中某一个链表为空时，只需要返回另一个链表即可，这种情况需要单独讨论</p>
+<p>当两个链表均不为空时，我们需要去比较结点两个链表中结点的大小，当l1的结点值小于l2的结点时，我们就需要将l2合并到l1上，把l2的结点一个一个拼到l1上，知道l2为为空时，循环就可以结束了。这个过程是重复的，所以我们这里可以使用递归操作，反之，当l2的结点小于l1时，就把l1拼接到l2上</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
+<span class="line">    <span class="comment"># 返回ListNode</span></span>
+<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">ReverseList</span><span class="params">(self, pHead)</span>:</span></span>
+<span class="line">        <span class="string">"""</span>
+<span class="line">        倒置链表</span>
+<span class="line">        :param pHead:</span>
+<span class="line">        :return:</span>
+<span class="line">        """</span></span>
+<span class="line">        <span class="comment"># 判断当前节点是否为空或者下一个节点为空</span></span>
+<span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> pHead <span class="keyword">or</span> <span class="keyword">not</span> pHead.next:</span>
+<span class="line">            <span class="keyword">return</span> pHead</span>
+<span class="line">        <span class="comment"># 初始化未节点为空</span></span>
+<span class="line">        last = <span class="keyword">None</span></span>
+<span class="line">        <span class="comment"># 循环迭代头节点</span></span>
+<span class="line">        <span class="keyword">while</span> pHead:</span>
+<span class="line">            <span class="comment"># 创建一个中间节点接受头节点的下一个节点</span></span>
+<span class="line">            tmp = pHead.next</span>
+<span class="line">            <span class="comment"># 将尾节点赋值给尾节点</span></span>
+<span class="line">            pHead.next = last</span>
+<span class="line">            <span class="comment"># 将头节点赋值给尾节点</span></span>
+<span class="line">            last = pHead</span>
+<span class="line">            <span class="comment"># 将中间节点赋值给头节点</span></span>
+<span class="line">            pHead = tmp</span>
+<span class="line">        <span class="keyword">return</span> last</span>
+</pre></td></tr></table></figure>
+<h2 id="二叉树的镜像"><a href="#二叉树的镜像" class="headerlink" title="二叉树的镜像"></a>二叉树的镜像</h2><h3 id="题目描述-14"><a href="#题目描述-14" class="headerlink" title="题目描述"></a>题目描述</h3><p>操作给定的二叉树，将其变换为源二叉树的镜像。</p>
+<p>二叉树的镜像定义：源二叉树<br>            8<br>           /  \<br>          6   10<br>         / \  / \<br>        5  7 9 11<br>        镜像二叉树<br>            8<br>           /  \<br>          10   6<br>         / \  / \<br>        11 9 7  5</p>
+<h3 id="分析-14"><a href="#分析-14" class="headerlink" title="分析"></a>分析</h3><p>一般看到树的题都是使用递归处理最简单明了，转变为镜像数，我们很容易想到去交换树的左右子树，然后递归左子树和右子树即可</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
+<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">Mirror</span><span class="params">(self, root)</span>:</span></span>
+<span class="line">        <span class="string">"""</span>
+<span class="line">        返回镜像树的根节点</span>
+<span class="line">        :param root:</span>
+<span class="line">        :return:</span>
+<span class="line">        """</span></span>
+<span class="line">        <span class="comment"># 如果跟节点为空</span></span>
+<span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> root:</span>
+<span class="line">            <span class="keyword">return</span> <span class="keyword">None</span></span>
+<span class="line">        <span class="comment"># 交换左子树和右子树</span></span>
+<span class="line">        root.left, root.right = root.right, root.left</span>
+<span class="line">        <span class="comment"># 递归左右子树</span></span>
+<span class="line">        self.Mirror(root.left)</span>
+<span class="line">        self.Mirror(root.right)</span>
+</pre></td></tr></table></figure>
+<h2 id="顺时针打印矩阵"><a href="#顺时针打印矩阵" class="headerlink" title="顺时针打印矩阵"></a>顺时针打印矩阵</h2><h3 id="题目描述-15"><a href="#题目描述-15" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个矩阵，按照从外向里以顺时针的顺序依次打印出每一个数字，例如，如果输入如下矩阵： 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 则依次打印出数字1,2,3,4,8,12,16,15,14,13,9,5,6,7,11,10.</p>
+<h3 id="分析-15"><a href="#分析-15" class="headerlink" title="分析"></a>分析</h3><p>找出边界条件，将矩阵分为四个方向，注意每个方向上的结束条件</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
+<span class="line">    <span class="comment"># matrix类型为二维列表，需要返回列表</span></span>
+<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">printMatrix</span><span class="params">(self, matrix)</span>:</span></span>
+<span class="line">        <span class="keyword">if</span> matrix <span class="keyword">is</span> <span class="keyword">None</span>:</span>
+<span class="line">            <span class="keyword">return</span></span>
+<span class="line">        rows = len(matrix)</span>
+<span class="line">        cols = len(matrix[<span class="number">0</span>])</span>
+<span class="line">        start = <span class="number">0</span></span>
+<span class="line">        result = []</span>
+<span class="line">        <span class="keyword">while</span> rows &gt; <span class="number">2</span> * start <span class="keyword">and</span> cols &gt; <span class="number">2</span> * start:</span>
+<span class="line">            endx = rows - <span class="number">1</span> - start</span>
+<span class="line">            endy = cols - <span class="number">1</span> - start</span>
+<span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> range(start, endy + <span class="number">1</span>):</span>
+<span class="line">                result.append(matrix[start][i])</span>
+<span class="line">            <span class="keyword">if</span> start &lt; endx:</span>
+<span class="line">                <span class="keyword">for</span> i <span class="keyword">in</span> range(start + <span class="number">1</span>, endx + <span class="number">1</span>):</span>
+<span class="line">                    result.append(matrix[i][endy])</span>
+<span class="line">            <span class="keyword">if</span> start &lt; endx <span class="keyword">and</span> start &lt; endy:</span>
+<span class="line">                <span class="keyword">for</span> i <span class="keyword">in</span> range(endy - <span class="number">1</span>, start - <span class="number">1</span>, <span class="number">-1</span>):</span>
+<span class="line">                    result.append(matrix[endx][i])</span>
+<span class="line">            <span class="keyword">if</span> start &lt; endx - <span class="number">1</span> <span class="keyword">and</span> start &lt; endy:</span>
+<span class="line">                <span class="keyword">for</span> i <span class="keyword">in</span> range(endx - <span class="number">1</span>, start, <span class="number">-1</span>):</span>
+<span class="line">                    result.append(matrix[i][start])</span>
+<span class="line">            start += <span class="number">1</span></span>
+<span class="line">        <span class="keyword">return</span> result</span>
+</pre></td></tr></table></figure>
+<h2 id="包含min函数的栈"><a href="#包含min函数的栈" class="headerlink" title="包含min函数的栈"></a>包含min函数的栈</h2><h3 id="题目描述-16"><a href="#题目描述-16" class="headerlink" title="题目描述"></a>题目描述</h3><p>定义栈的数据结构，请在该类型中实现一个能够得到栈最小元素的min函数。</p>
+<h3 id="分析-16"><a href="#分析-16" class="headerlink" title="分析"></a>分析</h3><p>得到最小元素的关键就是怎么去保存这个最小元素，这里在push的时候将插入的值作为键，当前最小值作为值作为一个元素插入栈。就可以得到每个元素插入的时候最小值是什么</p>
+<p>(当然也可以使用单独的字段保存最小值)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+<span class="line">27</span>
+<span class="line">28</span>
+<span class="line">29</span>
+<span class="line">30</span>
+<span class="line">31</span>
+<span class="line">32</span>
+<span class="line">33</span>
+<span class="line">34</span>
+<span class="line">35</span>
+<span class="line">36</span>
+<span class="line">37</span>
+<span class="line">38</span>
+<span class="line">39</span>
+</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
+<span class="line"></span>
+<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span>
+<span class="line">        self.stack = []</span>
+<span class="line"></span>
+<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">push</span><span class="params">(self, node)</span>:</span></span>
+<span class="line">        <span class="string">"""</span>
+<span class="line">        推入元素</span>
+<span class="line">        使当前元素的值作为键，当前最小值作为值</span>
+<span class="line">        :param node:</span>
+<span class="line">        :return:</span>
+<span class="line">        """</span></span>
+<span class="line">        curMin = self.min()</span>
+<span class="line">        <span class="keyword">if</span> curMin <span class="keyword">is</span> <span class="keyword">None</span> <span class="keyword">or</span> node &lt; curMin:</span>
+<span class="line">            curMin = node</span>
+<span class="line">        self.stack.append((node, curMin))</span>
+<span class="line"></span>
+<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">pop</span><span class="params">(self)</span>:</span></span>
+<span class="line">        self.stack.pop()</span>
+<span class="line"></span>
+<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">top</span><span class="params">(self)</span>:</span></span>
+<span class="line">        <span class="string">"""</span>
+<span class="line">        弹出顶部元素的值</span>
+<span class="line">        :return:</span>
+<span class="line">        """</span></span>
+<span class="line">        <span class="keyword">if</span> len(self.stack) == <span class="number">0</span>:</span>
+<span class="line">            <span class="keyword">return</span> <span class="keyword">None</span></span>
+<span class="line">        <span class="keyword">else</span>:</span>
+<span class="line">            <span class="keyword">return</span> self.stack[len(self.stack) - <span class="number">1</span>][<span class="number">0</span>]</span>
+<span class="line"></span>
+<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">min</span><span class="params">(self)</span>:</span></span>
+<span class="line">        <span class="string">"""</span>
+<span class="line">        得到最小栈中最小的元素</span>
+<span class="line">        :return:</span>
+<span class="line">        """</span></span>
+<span class="line">        <span class="keyword">if</span> len(self.stack) == <span class="number">0</span>:</span>
+<span class="line">            <span class="keyword">return</span> <span class="keyword">None</span></span>
+<span class="line">        <span class="keyword">else</span>:</span>
+<span class="line">            <span class="keyword">return</span> self.stack[len(self.stack) - <span class="number">1</span>][<span class="number">1</span>]</span>
+</pre></td></tr></table></figure>
+<h2 id="重建二叉树"><a href="#重建二叉树" class="headerlink" title="重建二叉树"></a>重建二叉树</h2><h3 id="题目描述-17"><a href="#题目描述-17" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。例如输入前序遍历序列{1,2,4,7,3,5,6,8}和中序遍历序列{4,7,2,1,5,3,8,6}，则重建二叉树并返回。</p>
+<h3 id="分析-17"><a href="#分析-17" class="headerlink" title="分析"></a>分析</h3><p>在前序遍历中找到跟节点，根据中序遍历中的跟节点的左右找到左右子树的元素，进行递归即可</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TreeNode</span>:</span></span>
+<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, x)</span>:</span></span>
+<span class="line">        self.val = x</span>
+<span class="line">        self.left = <span class="keyword">None</span></span>
+<span class="line">        self.right = <span class="keyword">None</span></span>
+<span class="line"></span>
+<span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
+<span class="line">    <span class="comment"># 返回构造的TreeNode根节点</span></span>
+<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">reConstructBinaryTree</span><span class="params">(self, pre, tin)</span>:</span></span>
+<span class="line">        <span class="string">"""</span>
+<span class="line">        根据前序和中序遍历重建二叉树</span>
+<span class="line">        :param pre:</span>
+<span class="line">        :param tin:</span>
+<span class="line">        :return:</span>
+<span class="line">        """</span></span>
+<span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> pre <span class="keyword">and</span> <span class="keyword">not</span> tin:</span>
+<span class="line">            <span class="keyword">return</span> <span class="keyword">None</span></span>
+<span class="line">        <span class="comment"># 根据前序遍历获取到根节点</span></span>
+<span class="line">        root = TreeNode(pre[<span class="number">0</span>])</span>
+<span class="line">        <span class="comment"># 根据中序遍历得到根节点的索引</span></span>
+<span class="line">        i = tin.index(pre[<span class="number">0</span>])</span>
+<span class="line">        <span class="comment"># 　递归得到左子树（前序遍历的第１位到根节点索引＋１位，中序遍历的第０位到根节点的索引位）</span></span>
+<span class="line">        root.left = self.reConstructBinaryTree(pre[<span class="number">1</span>:i + <span class="number">1</span>], tin[:i])</span>
+<span class="line">        <span class="comment"># 　递归得到左子树（前序遍历的第根节点＋１位到最后一位，中序遍历的第根节点＋１到最后一位）</span></span>
+<span class="line">        root.right = self.reConstructBinaryTree(pre[i + <span class="number">1</span>:], tin[i + <span class="number">1</span>:])</span>
+<span class="line">        <span class="keyword">return</span> root</span>
+</pre></td></tr></table></figure>
+<h2 id="用两个栈实现队列"><a href="#用两个栈实现队列" class="headerlink" title="用两个栈实现队列"></a>用两个栈实现队列</h2><h3 id="题目描述-18"><a href="#题目描述-18" class="headerlink" title="题目描述"></a>题目描述</h3><p>用两个栈来实现一个队列，完成队列的Push和Pop操作。 队列中的元素为int类型。</p>
+<h3 id="分析-18"><a href="#分析-18" class="headerlink" title="分析"></a>分析</h3><p>在入队的时候均使用栈1存储，出队的时候先判断栈2是否为空，如果为空，将栈1的元素依次弹出到栈2，然后弹出栈2的元素</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
+<span class="line"></span>
+<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span>
+<span class="line">        self.stack1 = []</span>
+<span class="line">        self.stack2 = []</span>
+<span class="line"></span>
+<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">push</span><span class="params">(self, node)</span>:</span></span>
+<span class="line">        <span class="comment"># write code here</span></span>
+<span class="line">        <span class="comment"># 直接向栈1压入元素</span></span>
+<span class="line">        self.stack1.append(node)</span>
+<span class="line"></span>
+<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">pop</span><span class="params">(self)</span>:</span></span>
+<span class="line">        <span class="comment"># return xx</span></span>
+<span class="line">        <span class="comment"># 如果栈2位空的情况</span></span>
+<span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> self.stack2:</span>
+<span class="line">            <span class="comment"># 迭代栈1，将栈1的元素弹出并压入栈2</span></span>
+<span class="line">            <span class="keyword">while</span> self.stack1:</span>
+<span class="line">                self.stack2.append(self.stack1.pop())</span>
+<span class="line">            <span class="comment"># 此时弹出栈2的元素</span></span>
+<span class="line">            <span class="keyword">return</span> self.stack2.pop()</span>
+<span class="line">        <span class="comment"># 如果栈1不为空，说明已经将元素压入栈2，直接弹出即可</span></span>
+<span class="line">        <span class="keyword">return</span> self.stack2.pop()</span>
+</pre></td></tr></table></figure>
+<h2 id="旋转数组的最小数字"><a href="#旋转数组的最小数字" class="headerlink" title="旋转数组的最小数字"></a>旋转数组的最小数字</h2><h3 id="题目描述-19"><a href="#题目描述-19" class="headerlink" title="题目描述"></a>题目描述</h3><p>把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。 输入一个非递减排序的数组的一个旋转，输出旋转数组的最小元素。 例如数组{3,4,5,1,2}为{1,2,3,4,5}的一个旋转，该数组的最小值为1。 NOTE：给出的所有元素都大于0，若数组大小为0，请返回0</p>
+<h3 id="分析-19"><a href="#分析-19" class="headerlink" title="分析"></a>分析</h3><p>使用py的内建函数直接求得最小值</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
+<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">minNumberInRotateArray</span><span class="params">(self, rotateArray)</span>:</span></span>
+<span class="line">        <span class="string">"""</span>
+<span class="line">        旋转数组的最小值</span>
+<span class="line">        :param rotateArray:</span>
+<span class="line">        :return:</span>
+<span class="line">        """</span></span>
+<span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> rotateArray:</span>
+<span class="line">            <span class="keyword">return</span> <span class="number">0</span></span>
+<span class="line">        <span class="keyword">return</span> min(rotateArray)</span>
+</pre></td></tr></table></figure>
+<h2 id="栈的压入、弹出序列"><a href="#栈的压入、弹出序列" class="headerlink" title="栈的压入、弹出序列"></a>栈的压入、弹出序列</h2><h3 id="题目描述-20"><a href="#题目描述-20" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否为该栈的弹出顺序。假设压入栈的所有数字均不相等。例如序列1,2,3,4,5是某栈的压入顺序，序列4，5,3,2,1是该压栈序列对应的一个弹出序列，但4,3,5,1,2就不可能是该压栈序列的弹出序列。（注意：这两个序列的长度是相等的）</p>
+<h3 id="分析-20"><a href="#分析-20" class="headerlink" title="分析"></a>分析</h3><p>使用一个辅助栈来存储，遍历入栈顺序依次添加到辅助栈，判断栈的长度且栈顶是都等于弹出序列</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
+<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">IsPopOrder</span><span class="params">(self, pushV, popV)</span>:</span></span>
+<span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> pushV:</span>
+<span class="line">            <span class="keyword">return</span> <span class="keyword">False</span></span>
+<span class="line">        <span class="comment"># 创建一个辅助栈</span></span>
+<span class="line">        stack = []</span>
+<span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> pushV:</span>
+<span class="line">            <span class="comment"># 将遍历入栈顺序，添加到辅助栈中</span></span>
+<span class="line">            stack.append(i)</span>
+<span class="line">            <span class="comment"># 如果栈不为空，且栈顶元素等于弹出序列</span></span>
+<span class="line">            <span class="keyword">while</span> len(stack) <span class="keyword">and</span> stack[<span class="number">-1</span>] == popV[<span class="number">0</span>]:</span>
+<span class="line">                <span class="comment"># 出栈</span></span>
+<span class="line">                stack.pop()</span>
+<span class="line">                popV.pop(<span class="number">0</span>)</span>
+<span class="line">        <span class="comment"># 如果辅助栈为空</span></span>
+<span class="line">        <span class="keyword">if</span> len(stack):</span>
+<span class="line">            <span class="keyword">return</span> <span class="keyword">False</span></span>
+<span class="line">        <span class="keyword">return</span> <span class="keyword">True</span></span>
+</pre></td></tr></table></figure>
+<h2 id="从上往下打印二叉树"><a href="#从上往下打印二叉树" class="headerlink" title="从上往下打印二叉树"></a>从上往下打印二叉树</h2><h3 id="题目描述-21"><a href="#题目描述-21" class="headerlink" title="题目描述"></a>题目描述</h3><p>从上往下打印出二叉树的每个节点，同层节点从左至右打印。</p>
+<h3 id="分析-21"><a href="#分析-21" class="headerlink" title="分析"></a>分析</h3><p>使用队列去存储中间值,使用while循环去遍历即可</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
+<span class="line">    <span class="comment"># 返回从上到下每个节点值列表，例：[1,2,3]</span></span>
+<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">PrintFromTopToBottom</span><span class="params">(self, root)</span>:</span></span>
+<span class="line">        result = []</span>
+<span class="line">        <span class="comment"># 如果根节点为空</span></span>
+<span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> root:</span>
+<span class="line">            <span class="keyword">return</span> result</span>
+<span class="line">        <span class="comment"># 将根节点放入列表中</span></span>
+<span class="line">        q = [root]</span>
+<span class="line">        <span class="comment"># 当ｑ列表不为空</span></span>
+<span class="line">        <span class="keyword">while</span> len(q):</span>
+<span class="line">            <span class="comment"># 　将ｑ列表的第一个元素赋值给新节点</span></span>
+<span class="line">            node = q.pop(<span class="number">0</span>)</span>
+<span class="line">            <span class="comment"># 将节点的值添加到结果列表中</span></span>
+<span class="line">            result.append(node.val)</span>
+<span class="line">            <span class="comment"># 如果节点有左子树</span></span>
+<span class="line">            <span class="keyword">if</span> node.left:</span>
+<span class="line">                <span class="comment"># 将节点的左子树放入ｑ列表</span></span>
+<span class="line">                q.append(node.left)</span>
+<span class="line">            <span class="keyword">if</span> node.right:</span>
+<span class="line">                <span class="comment"># 将节点的右子树放入ｑ列表</span></span>
+<span class="line">                q.append(node.right)</span>
+<span class="line">        <span class="keyword">return</span> result</span>
+</pre></td></tr></table></figure>
+<h2 id="二叉搜索树的后序遍历序列"><a href="#二叉搜索树的后序遍历序列" class="headerlink" title="二叉搜索树的后序遍历序列"></a>二叉搜索树的后序遍历序列</h2><h3 id="题目描述-22"><a href="#题目描述-22" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历的结果。如果是则输出Yes,否则输出No。假设输入的数组的任意两个数字都互不相同。</p>
+<h3 id="分析-22"><a href="#分析-22" class="headerlink" title="分析"></a>分析</h3><p>根据后序遍历的特点，我们可以知道数组中的最后宇哥元素时根节点，有了根节点，我们可以找到列表中最后一个小于根节点的值的元素。遍历这个元素到数组的最后一个元素之间的元素(元素为根节点的右子树)，右子树的所有元素应该大于根节点，如果有小于根节点的元素，返回false，接下来递归数组中的左右元素</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
+<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">VerifySquenceOfBST</span><span class="params">(self, sequence)</span>:</span></span>
+<span class="line">        length = len(sequence)</span>
+<span class="line">        <span class="keyword">if</span> length == <span class="number">0</span>:</span>
+<span class="line">            <span class="keyword">return</span> <span class="keyword">False</span></span>
+<span class="line">        <span class="keyword">if</span> length == <span class="number">1</span>:</span>
+<span class="line">            <span class="keyword">return</span> <span class="keyword">True</span></span>
+<span class="line">        <span class="comment"># 数组的最后元素是该树的根节点</span></span>
+<span class="line">        root = sequence[<span class="number">-1</span>]</span>
+<span class="line">        left = <span class="number">0</span></span>
+<span class="line">        <span class="comment"># 找到最后一个小于根节点的元素</span></span>
+<span class="line">        <span class="keyword">while</span> sequence[left] &lt; root:</span>
+<span class="line">            left += <span class="number">1</span></span>
+<span class="line">        <span class="comment"># 遍历最后一个小于根节点的元素到根节点之前</span></span>
+<span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(left, length - <span class="number">1</span>):</span>
+<span class="line">            <span class="comment"># 判断是否大于根节点(右子树元素)</span></span>
+<span class="line">            <span class="keyword">if</span> sequence[i] &lt; root:</span>
+<span class="line">                <span class="keyword">return</span> <span class="keyword">False</span></span>
+<span class="line">        <span class="comment"># 递归左右子树</span></span>
+<span class="line">        <span class="keyword">return</span> self.VerifySquenceOfBST(sequence[:left]) \</span>
+<span class="line">               <span class="keyword">or</span> self.VerifySquenceOfBST(sequence[left:length - <span class="number">1</span>])</span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>注：</p>
+<ul>
+<li>上述测试在<strong>Python3.5</strong>中成功</li>
+<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
+</ul>
+</blockquote>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2018/04/17/newcoder-剑指offer-1/">牛客网剑指offer-1</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">EarthChen</a></p>
+        <p><span>发布时间:</span>2018-04-17, 22:20:00</p>
+        <p><span>最后更新:</span>2018-04-25, 14:55:42</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2018/04/17/newcoder-剑指offer-1/" title="牛客网剑指offer-1">http://earthchen.cn/2018/04/17/newcoder-剑指offer-1/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://earthchen.cn/2018/04/17/newcoder-剑指offer-1/　　作者: EarthChen" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2018/04/17/MongDB-study-4/">
+                    MongoDB权威指南学习笔记(4)--应用管理和服务器管理
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#二维数据中的查找"><span class="toc-number">1.</span> <span class="toc-text">二维数据中的查找</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述"><span class="toc-number">1.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析"><span class="toc-number">1.2.</span> <span class="toc-text">分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#替换空格"><span class="toc-number">2.</span> <span class="toc-text">替换空格</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-1"><span class="toc-number">2.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析-1"><span class="toc-number">2.2.</span> <span class="toc-text">分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#从尾到头打印链表"><span class="toc-number">3.</span> <span class="toc-text">从尾到头打印链表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-2"><span class="toc-number">3.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析-2"><span class="toc-number">3.2.</span> <span class="toc-text">分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#斐波那契数列"><span class="toc-number">4.</span> <span class="toc-text">斐波那契数列</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-3"><span class="toc-number">4.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析-3"><span class="toc-number">4.2.</span> <span class="toc-text">分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#跳台阶"><span class="toc-number">5.</span> <span class="toc-text">跳台阶</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-4"><span class="toc-number">5.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析-4"><span class="toc-number">5.2.</span> <span class="toc-text">分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#变态跳台阶"><span class="toc-number">6.</span> <span class="toc-text">变态跳台阶</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-5"><span class="toc-number">6.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析-5"><span class="toc-number">6.2.</span> <span class="toc-text">分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#矩形覆盖"><span class="toc-number">7.</span> <span class="toc-text">矩形覆盖</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-6"><span class="toc-number">7.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析-6"><span class="toc-number">7.2.</span> <span class="toc-text">分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二进制中1的个数"><span class="toc-number">8.</span> <span class="toc-text">二进制中1的个数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-7"><span class="toc-number">8.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析-7"><span class="toc-number">8.2.</span> <span class="toc-text">分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数值的整数次方"><span class="toc-number">9.</span> <span class="toc-text">数值的整数次方</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-8"><span class="toc-number">9.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析-8"><span class="toc-number">9.2.</span> <span class="toc-text">分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#调整数组顺序使奇数位于偶数前面"><span class="toc-number">10.</span> <span class="toc-text">调整数组顺序使奇数位于偶数前面</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-9"><span class="toc-number">10.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析-9"><span class="toc-number">10.2.</span> <span class="toc-text">分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#反转链表"><span class="toc-number">11.</span> <span class="toc-text">反转链表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-10"><span class="toc-number">11.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析-10"><span class="toc-number">11.2.</span> <span class="toc-text">分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#合并两个排序的链表"><span class="toc-number">12.</span> <span class="toc-text">合并两个排序的链表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-11"><span class="toc-number">12.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析-11"><span class="toc-number">12.2.</span> <span class="toc-text">分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#树的子结构"><span class="toc-number">13.</span> <span class="toc-text">树的子结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-12"><span class="toc-number">13.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析-12"><span class="toc-number">13.2.</span> <span class="toc-text">分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#合并两个排序的链表-1"><span class="toc-number">14.</span> <span class="toc-text">合并两个排序的链表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-13"><span class="toc-number">14.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析-13"><span class="toc-number">14.2.</span> <span class="toc-text">分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二叉树的镜像"><span class="toc-number">15.</span> <span class="toc-text">二叉树的镜像</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-14"><span class="toc-number">15.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析-14"><span class="toc-number">15.2.</span> <span class="toc-text">分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#顺时针打印矩阵"><span class="toc-number">16.</span> <span class="toc-text">顺时针打印矩阵</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-15"><span class="toc-number">16.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析-15"><span class="toc-number">16.2.</span> <span class="toc-text">分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#包含min函数的栈"><span class="toc-number">17.</span> <span class="toc-text">包含min函数的栈</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-16"><span class="toc-number">17.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析-16"><span class="toc-number">17.2.</span> <span class="toc-text">分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#重建二叉树"><span class="toc-number">18.</span> <span class="toc-text">重建二叉树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-17"><span class="toc-number">18.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析-17"><span class="toc-number">18.2.</span> <span class="toc-text">分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用两个栈实现队列"><span class="toc-number">19.</span> <span class="toc-text">用两个栈实现队列</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-18"><span class="toc-number">19.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析-18"><span class="toc-number">19.2.</span> <span class="toc-text">分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#旋转数组的最小数字"><span class="toc-number">20.</span> <span class="toc-text">旋转数组的最小数字</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-19"><span class="toc-number">20.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析-19"><span class="toc-number">20.2.</span> <span class="toc-text">分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#栈的压入、弹出序列"><span class="toc-number">21.</span> <span class="toc-text">栈的压入、弹出序列</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-20"><span class="toc-number">21.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析-20"><span class="toc-number">21.2.</span> <span class="toc-text">分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#从上往下打印二叉树"><span class="toc-number">22.</span> <span class="toc-text">从上往下打印二叉树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-21"><span class="toc-number">22.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析-21"><span class="toc-number">22.2.</span> <span class="toc-text">分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二叉搜索树的后序遍历序列"><span class="toc-number">23.</span> <span class="toc-text">二叉搜索树的后序遍历序列</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-22"><span class="toc-number">23.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析-22"><span class="toc-number">23.2.</span> <span class="toc-text">分析</span></a></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-5 i,
+        .toc-level-5 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"牛客网剑指offer-1　| EarthChen's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+        <section class="youyan" id="comments">
+    <script>
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = 'http://v2.uyan.cc/code/uyan.js?uid=2115719';
+            (d.head || d.body).appendChild(s);
+        }
+    </script>
+    
+    <script> loadComment(); </script>
+
+    <div id="uyan_frame"></div>
+</section>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2018/04/17/MongDB-study-4/" title="下一篇: MongoDB权威指南学习笔记(4)--应用管理和服务器管理">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/04/17/newcoder-剑指offer-1/">牛客网剑指offer-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/17/MongDB-study-4/">MongoDB权威指南学习笔记(4)--应用管理和服务器管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/15/MongDB-study-3/">MongoDB权威指南学习笔记(3)--复制和分片</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/13/MongDB-study-2/">MongoDB权威指南学习笔记(2)--设计应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/11/MongDB-study-1/">MongoDB权威指南学习笔记(1)--基础知识与对文档的增删改查</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/10/manjaro安装软件脚本/">manjaro系统相关脚本和配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/04/高性能MySQL-study/">高性能MySQL学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/01/httpclientutil/">HttpClient工具类</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/14/qiniu-oss/">spring boot使用七牛云的oss(对象存储)文件上传</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/spring-boot-shiro-jwt/">spring boot集成shiro使用jwt进行权限控制</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/requestHolder_and_argumentResolver/">使用ThreadLocal和ArgumentResolver方便开发</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/applicationContextHelper/">在不被spring容器管理的类中使用ApplicationContext应用上下文bean</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_static_class_autowrite/">Spring boot 在静态类中注入spring组件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_diy_properties/">Spring boot 自定义配置文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/12/Elasticsearch_study_1/">Elasticsearch学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/09/深入理解java虚拟机学习笔记_1/">深入理解java虚拟机学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/23/Docker_study_Dockerfile_instructions/">Docker学习笔记---Dockerfile</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/22/Docker_study/">Docker学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/20/celery_study/">Celery-分布式任务队列学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_redis_cache/">Django使用redis作为缓存系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_channels_websocket/">Django使用Channels实现websocket</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/13/Docker_Gogs/">使用Docker搭建git服务Gogs</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_1to20/">LeetCode刷题记录(easy难度1-20题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_21to_40/">LeetCode刷题记录(easy难度21-40题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/29/es6_study/">es6学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/Webpack_study/">Webpack学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/RegularExpression_study/">正则表达式学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/08/AndroidStudio/">Android Studio 使用本地离线Gradle</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/跨域请求解决方案/">跨域请求的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/ubuntu_supervisor/">ubuntu下的进程控制系统————Supervisor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_nginx_gunicorn/">django+nginx+gunicorn部署配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/28/ubuntu修复不能挂载NTFS硬盘/">ubuntu修复linux和windows双系统下挂载ntfs硬盘出错问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/17/django_timing_task/">django使用django-crontab实现定时任务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/15/django_rest_framework_jwt/">django-rest-framework配置json web token进行接口的认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/spring_SpEL/">spring中的SpEL表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/django_rest_framework_study/">django-rest-framework框架学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/08/git_study/">Git学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/03/资源收集/">资源收集共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/06/ubuntu_open_port/">ubuntu开放指定端口</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/16/redis_study_2/">Redis学习笔记 -- 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/15/redis_study_1/">Redis学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/16/ubuntu_do_something_use/">ubuntu日常使用的安装配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/django_address_baiduapi_marker_show/">Django调用百度地图api在地图上批量增加标记点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/ubuntu_do_something_coding/">ubuntu搭建常见开发环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/10/ubuntu安装在双系统笔记本下开机或关机卡死.1/">ubuntu在双系统下开机卡死或关机卡死的解决办法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/11/python_requirements/">python生成项目所需依赖文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/10/hexo_github_coding_blog/">利用hexo和github或coding 搭免费个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django数据库操作/">Django操作数据库</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django连接mysql数据库/">Django连接MySql使用models处理数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/python2和Python3的区别/">Python2和Python3的区别简单总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django渲染模板/">Django渲染模板</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django常用语句/">Django常用语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django环境搭建/">Django环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/03/Android_qq_Menu/">Android仿qq侧滑菜单</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/16/C语言队列的基本操作/">C语言队列的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言中缀表达式计算器/">C语言中缀表达式计算器</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/c语言中缀表达式变后缀表达式/">C语言中缀表达式转后缀表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言逆波兰计算器/">C语言逆波兰表达式计算(后缀表达式计算器)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言共享栈/">C语言共享栈</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言二叉树基本操作/">C语言二叉树的基本操作</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2018 EarthChen
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+    <script src="/js/GithubRepoWidget.js"></script>
+
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+             github: ".github-widget a", 
+            
+            
+            
+             categories: ".article-category a, a.tag-list-link", 
+             articleNav: "#article-nav a, #post-nav-button a", 
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
