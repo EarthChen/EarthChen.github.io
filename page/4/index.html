@@ -162,13 +162,13 @@
                 <div class="tips-box hide">
                     <div class="tips-arrow"></div>
                     <ul class="tips-inner">
-                        <li>菜单</li>
-                        <li>标签</li>
+                        <li>Menu</li>
+                        <li>Tags</li>
                         
-                        <li>友情链接</li>
+                        <li>Friends</li>
                         
                         
-                        <li>关于我</li>
+                        <li>About Me</li>
                         
                     </ul>
                 </div>
@@ -298,24 +298,24 @@
             </nav>
         </header>                
     </div>
-    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+    <link class="menu-list" tags="Tags" friends="Friends" about="About Me"/>
 </nav>
       <div class="body-wrap">
   
-    <article id="post-django_nginx_gunicorn" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-ubuntu_supervisor" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/06/30/django_nginx_gunicorn/" class="article-date">
+      <a href="/2017/06/30/ubuntu_supervisor/" class="article-date">
       <time datetime="2017-06-30T06:40:00.000Z" itemprop="datePublished">2017-06-30</time>
 </a>
 
  
-    <a href="/2017/06/30/django_nginx_gunicorn/#comments" title="查看评论">
+    <a href="/2017/06/30/ubuntu_supervisor/#comments" title="Comments">
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
         
-            <span class="disqus-comment-count" data-disqus-identifier="2017/06/30/django_nginx_gunicorn/"></span>
+            <span class="disqus-comment-count" data-disqus-identifier="2017/06/30/ubuntu_supervisor/"></span>
         
     </a>
 
@@ -330,7 +330,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/30/django_nginx_gunicorn/">django+nginx+gunicorn部署配置</a>
+      <a class="article-title" href="/2017/06/30/ubuntu_supervisor/">ubuntu下的进程控制系统————Supervisor</a>
     </h1>
   
 
@@ -340,8 +340,9 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <p>在部署django开发的站点时，通常有两种选择方式，nginx+django+uwsgi或者django+nginx+gunicorn，本文不讨论apache方式，在linux下通常都使用nginx，速度快，还经常做代理服务器，功能强大。。<br>nginx+django+uwsgi个人觉得uwsgi配置较为麻烦，所以选择了gunicorn，一个开源Python WSGI UNIX的HTTP服务器，据说速度快（配置快、运行快）、简单，默认是同步工作，支持Gevent、Eventlet异步，支持Tornado。有兴趣可以自行查阅官方文档</p>
-<h1 id="django-nginx-gunicorn"><a href="#django-nginx-gunicorn" class="headerlink" title="django+nginx+gunicorn"></a>django+nginx+gunicorn</h1>
+              <p>我们在部署网站或者在ssh到服务器上去进行一些长时间操作的任务时候，通常不喜欢长时间开启终端在其中等待，尤其是Windows下putty这类软件，长时间不操作就会结束，尴尬的是，我们跑的进程也会直接终端，为了解决这个问题，我们需要把进程扔到后台，让他自己运行</p>
+<p>在这里我们介绍一个名叫<strong>Supervisor</strong>的进程控制系统，<br>它是一个C/S系统(注意: 其提供WEB接口给用户查询和控制), 它允许用户去监控和控制在类UNIX系统的进程. 它的目标与launchd, daemontools和runit有些相似, 但是与它们不一样的是, 它不是作为init(进程号pid是1)运行. 它是被用来控制进程, 并且它在启动的时候和一般程序并无二致<br>supervisor是一个制作守护进程的工具,用户可以在UNIX系统中监控、管理进程。常用于管理与某个用户或项目相关的进程。去帮我们维护各种服务器的进程，即使有软件崩了也能帮我们自动重启</p>
+<h2 id="Supervisor"><a href="#Supervisor" class="headerlink" title="Supervisor"></a>Supervisor</h2>
           
       
     </div>
@@ -356,12 +357,12 @@
 
       
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django/">Django</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nginx/">Nginx</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
     </div>
 
       
         <p class="article-more-link">
-          <a href="/2017/06/30/django_nginx_gunicorn/#more">more >></a>
+          <a href="/2017/06/30/ubuntu_supervisor/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -388,7 +389,7 @@
 </a>
 
  
-    <a href="/2017/06/28/ubuntu修复不能挂载NTFS硬盘/#comments" title="查看评论">
+    <a href="/2017/06/28/ubuntu修复不能挂载NTFS硬盘/#comments" title="Comments">
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
@@ -465,7 +466,7 @@
 </a>
 
  
-    <a href="/2017/06/17/django_timing_task/#comments" title="查看评论">
+    <a href="/2017/06/17/django_timing_task/#comments" title="Comments">
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
@@ -549,7 +550,7 @@
 </a>
 
  
-    <a href="/2017/06/15/django_rest_framework_jwt/#comments" title="查看评论">
+    <a href="/2017/06/15/django_rest_framework_jwt/#comments" title="Comments">
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
@@ -627,7 +628,7 @@
 </a>
 
  
-    <a href="/2017/06/12/spring_SpEL/#comments" title="查看评论">
+    <a href="/2017/06/12/spring_SpEL/#comments" title="Comments">
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
@@ -712,7 +713,7 @@
 </a>
 
  
-    <a href="/2017/06/12/django_rest_framework_study/#comments" title="查看评论">
+    <a href="/2017/06/12/django_rest_framework_study/#comments" title="Comments">
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
@@ -791,7 +792,7 @@
 </a>
 
  
-    <a href="/2017/06/08/git_study/#comments" title="查看评论">
+    <a href="/2017/06/08/git_study/#comments" title="Comments">
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
@@ -869,7 +870,7 @@
 </a>
 
  
-    <a href="/2017/06/03/资源收集/#comments" title="查看评论">
+    <a href="/2017/06/03/资源收集/#comments" title="Comments">
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
@@ -946,7 +947,7 @@
 </a>
 
  
-    <a href="/2017/05/06/ubuntu_open_port/#comments" title="查看评论">
+    <a href="/2017/05/06/ubuntu_open_port/#comments" title="Comments">
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
@@ -1024,7 +1025,7 @@
 </a>
 
  
-    <a href="/2017/04/16/redis_study_2/#comments" title="查看评论">
+    <a href="/2017/04/16/redis_study_2/#comments" title="Comments">
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
@@ -1108,14 +1109,14 @@
                 2016-2018 EarthChen
             </div>
             <div class="footer-right">
-                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+                <a href="http://hexo.io/" target="_blank" title="A fast, simple &amp; powerful blog framework">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="Another simple and elegant theme for Hexo  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
             </div>
         </div>
         
             <div class="visit">
                 
                     <span id="busuanzi_container_site_pv" style='display:none'>
-                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        <span id="site-visit" title="Site Visitors"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
                         </span>
                     </span>
                 
@@ -1124,7 +1125,7 @@
                 
                 
                     <span id="busuanzi_container_page_pv" style='display:none'>
-                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        <span id="page-visit"  title="Page Hits"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
                         </span>
                     </span>
                 
@@ -1179,9 +1180,9 @@
 
 
 <div class="scroll" id="scroll">
-    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
-    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
-    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+    <a href="#" title="Back to Top"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="Comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="Go to Bottom"><i class="fa fa-arrow-down"></i></a>
 </div>
 <script>
     // Open in New Window
