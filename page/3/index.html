@@ -302,20 +302,20 @@
 </nav>
       <div class="body-wrap">
   
-    <article id="post-django_redis_cache" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-django_channels_websocket" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/08/18/django_redis_cache/" class="article-date">
+      <a href="/2017/08/18/django_channels_websocket/" class="article-date">
       <time datetime="2017-08-18T09:34:00.000Z" itemprop="datePublished">2017-08-18</time>
 </a>
 
  
-    <a href="/2017/08/18/django_redis_cache/#comments" title="查看评论">
+    <a href="/2017/08/18/django_channels_websocket/#comments" title="查看评论">
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
         
-            <span class="disqus-comment-count" data-disqus-identifier="2017/08/18/django_redis_cache/"></span>
+            <span class="disqus-comment-count" data-disqus-identifier="2017/08/18/django_channels_websocket/"></span>
         
     </a>
 
@@ -330,7 +330,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/18/django_redis_cache/">Django使用redis作为缓存系统</a>
+      <a class="article-title" href="/2017/08/18/django_channels_websocket/">Django使用Channels实现websocket</a>
     </h1>
   
 
@@ -340,8 +340,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <p>为了提升网站的性能，加一层缓存是少不了的，由于之前做的东西是用django写的，所以就介绍一下django的缓存系统。</p>
-<p>又由于我还使用了redis作为消息队列的后端，这里就不在介绍其他内存数据库，直接使用redis。<br>
+              <p>由于项目有个需要实时显示状态的需求，搜索了各种实现方法，看来只有websocket最靠谱，但django原生是不支持websocket的，最终发现了chango-channels这个项目。可以帮我们实现我们的需求。</p>
           
       
     </div>
@@ -361,7 +360,7 @@
 
       
         <p class="article-more-link">
-          <a href="/2017/08/18/django_redis_cache/#more">more >></a>
+          <a href="/2017/08/18/django_channels_websocket/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -1002,20 +1001,20 @@
 
 
   
-    <article id="post-django_nginx_gunicorn" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-ubuntu_supervisor" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/06/30/django_nginx_gunicorn/" class="article-date">
+      <a href="/2017/06/30/ubuntu_supervisor/" class="article-date">
       <time datetime="2017-06-30T06:40:00.000Z" itemprop="datePublished">2017-06-30</time>
 </a>
 
  
-    <a href="/2017/06/30/django_nginx_gunicorn/#comments" title="查看评论">
+    <a href="/2017/06/30/ubuntu_supervisor/#comments" title="查看评论">
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
         
-            <span class="disqus-comment-count" data-disqus-identifier="2017/06/30/django_nginx_gunicorn/"></span>
+            <span class="disqus-comment-count" data-disqus-identifier="2017/06/30/ubuntu_supervisor/"></span>
         
     </a>
 
@@ -1030,7 +1029,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/30/django_nginx_gunicorn/">django+nginx+gunicorn部署配置</a>
+      <a class="article-title" href="/2017/06/30/ubuntu_supervisor/">ubuntu下的进程控制系统————Supervisor</a>
     </h1>
   
 
@@ -1040,8 +1039,9 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <p>在部署django开发的站点时，通常有两种选择方式，nginx+django+uwsgi或者django+nginx+gunicorn，本文不讨论apache方式，在linux下通常都使用nginx，速度快，还经常做代理服务器，功能强大。。<br>nginx+django+uwsgi个人觉得uwsgi配置较为麻烦，所以选择了gunicorn，一个开源Python WSGI UNIX的HTTP服务器，据说速度快（配置快、运行快）、简单，默认是同步工作，支持Gevent、Eventlet异步，支持Tornado。有兴趣可以自行查阅官方文档</p>
-<h1 id="django-nginx-gunicorn"><a href="#django-nginx-gunicorn" class="headerlink" title="django+nginx+gunicorn"></a>django+nginx+gunicorn</h1>
+              <p>我们在部署网站或者在ssh到服务器上去进行一些长时间操作的任务时候，通常不喜欢长时间开启终端在其中等待，尤其是Windows下putty这类软件，长时间不操作就会结束，尴尬的是，我们跑的进程也会直接终端，为了解决这个问题，我们需要把进程扔到后台，让他自己运行</p>
+<p>在这里我们介绍一个名叫<strong>Supervisor</strong>的进程控制系统，<br>它是一个C/S系统(注意: 其提供WEB接口给用户查询和控制), 它允许用户去监控和控制在类UNIX系统的进程. 它的目标与launchd, daemontools和runit有些相似, 但是与它们不一样的是, 它不是作为init(进程号pid是1)运行. 它是被用来控制进程, 并且它在启动的时候和一般程序并无二致<br>supervisor是一个制作守护进程的工具,用户可以在UNIX系统中监控、管理进程。常用于管理与某个用户或项目相关的进程。去帮我们维护各种服务器的进程，即使有软件崩了也能帮我们自动重启</p>
+<h2 id="Supervisor"><a href="#Supervisor" class="headerlink" title="Supervisor"></a>Supervisor</h2>
           
       
     </div>
@@ -1056,12 +1056,12 @@
 
       
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django/">Django</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nginx/">Nginx</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
     </div>
 
       
         <p class="article-more-link">
-          <a href="/2017/06/30/django_nginx_gunicorn/#more">more >></a>
+          <a href="/2017/06/30/ubuntu_supervisor/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>

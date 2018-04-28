@@ -931,6 +931,47 @@
 <span class="line">        <span class="keyword">return</span> self.VerifySquenceOfBST(sequence[:left]) \</span>
 <span class="line">               <span class="keyword">or</span> self.VerifySquenceOfBST(sequence[left:length - <span class="number">1</span>])</span>
 </pre></td></tr></table></figure>
+<h2 id="二叉树中和为某一值的路径"><a href="#二叉树中和为某一值的路径" class="headerlink" title="二叉树中和为某一值的路径"></a>二叉树中和为某一值的路径</h2><h3 id="题目描述-23"><a href="#题目描述-23" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一颗二叉树和一个整数，打印出二叉树中结点值的和为输入整数的所有路径。路径定义为从树的根结点开始往下一直到叶结点所经过的结点形成一条路径。</p>
+<h3 id="分析-23"><a href="#分析-23" class="headerlink" title="分析"></a>分析</h3><p>首先对特殊边界条件进行判断，然后分别递归左右子树，向下递归时需要使用目标值减去根节点的值，最后将左右子树的递归结果拼接为一个列表进行遍历，使用一个新列表去接受根节点加上遍历的元素值</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
+<span class="line">    <span class="comment"># 返回二维列表，内部每个列表表示找到的路径</span></span>
+<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">FindPath</span><span class="params">(self, root, expectNumber)</span>:</span></span>
+<span class="line">        <span class="comment"># 如果是个空树</span></span>
+<span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> root:</span>
+<span class="line">            <span class="keyword">return</span> []</span>
+<span class="line">        <span class="comment"># 如果根节点不为空，并且根节点的值等于指定值而且左右子树均为空</span></span>
+<span class="line">        <span class="keyword">if</span> root <span class="keyword">and</span> <span class="keyword">not</span> root.left <span class="keyword">and</span> <span class="keyword">not</span> root.right <span class="keyword">and</span> root.val == expectNumber:</span>
+<span class="line">            <span class="keyword">return</span> [[root.val]]</span>
+<span class="line">        res = []</span>
+<span class="line">        <span class="comment"># 递归左子树</span></span>
+<span class="line">        left = self.FindPath(root.left, expectNumber - root.val)</span>
+<span class="line">        <span class="comment"># 递归右子树</span></span>
+<span class="line">        right = self.FindPath(root.right, expectNumber - root.val)</span>
+<span class="line">        <span class="comment"># 遍历拼接左右子树的结果</span></span>
+<span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> left + right:</span>
+<span class="line">            <span class="comment"># 将根节点的值+i添加到res数组上</span></span>
+<span class="line">            res.append([root.val] + i)</span>
+<span class="line">        <span class="keyword">return</span> res</span>
+</pre></td></tr></table></figure>
 <blockquote>
 <p>注：</p>
 <ul>
@@ -8489,6 +8530,115 @@
     </entry>
     
     <entry>
+      <title><![CDATA[Django使用redis作为缓存系统]]></title>
+      <url>/2017/08/18/django_redis_cache/</url>
+      <content type="html"><![CDATA[<p>为了提升网站的性能，加一层缓存是少不了的，由于之前做的东西是用django写的，所以就介绍一下django的缓存系统。</p>
+<p>又由于我还使用了redis作为消息队列的后端，这里就不在介绍其他内存数据库，直接使用redis。<br><a id="more"></a></p>
+<h1 id="django使用redis作为缓存"><a href="#django使用redis作为缓存" class="headerlink" title="django使用redis作为缓存"></a>django使用redis作为缓存</h1><h2 id="redis"><a href="#redis" class="headerlink" title="redis"></a>redis</h2><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>由于笔者使用的是Ubuntu系统，安装较为简单，其他系统请自行查看官方文档。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ sudo apt-get install redis-server</span>
+</pre></td></tr></table></figure></p>
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>使用redis命令行客户端测试一下是否成功<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ redis-cli</span>
+</pre></td></tr></table></figure></p>
+<p>能出现以下结果即为成功<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">redis 127.0.0.1:6379&gt;</span>
+</pre></td></tr></table></figure></p>
+<p>其他的redis知识这里不左介绍，如果有兴趣，可以自行了解</p>
+<h2 id="django使用redis"><a href="#django使用redis" class="headerlink" title="django使用redis"></a>django使用redis</h2><h3 id="安装django-redis"><a href="#安装django-redis" class="headerlink" title="安装django-redis"></a>安装django-redis</h3><p>为了让django能够使用redis作为缓存，有人开发了一个库来帮我们实现。<a href="https://github.com/niwinz/django-redis" target="_blank" rel="external">django-redis</a>，我们需要安装一下才能使用redis</p>
+<p>在终端中输入一下命令进行安装(pip方式)<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ pip install django-redis</span>
+</pre></td></tr></table></figure></p>
+<h3 id="配置django-redis"><a href="#配置django-redis" class="headerlink" title="配置django-redis"></a>配置django-redis</h3><p>在你项目下的<strong>setting.py</strong>中添加如下代码即可<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+</pre></td><td class="code"><pre><span class="line">CACHES = &#123;</span>
+<span class="line">    <span class="string">"default"</span>: &#123;</span>
+<span class="line">        <span class="string">"BACKEND"</span>: <span class="string">"django_redis.cache.RedisCache"</span>,</span>
+<span class="line">        <span class="string">"LOCATION"</span>: <span class="string">"redis://127.0.0.1:6379/1"</span>,</span>
+<span class="line">        <span class="string">"OPTIONS"</span>: &#123;</span>
+<span class="line">            <span class="string">"CLIENT_CLASS"</span>: <span class="string">"django_redis.client.DefaultClient"</span>,</span>
+<span class="line">        &#125;</span>
+<span class="line">    &#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure></p>
+<p>这样就能开始使用了，如果你想添加修改更多配置，想让其更适合自己的项目一点，可以自己去查看<a href="http://django-redis-chs.readthedocs.io/zh_CN/latest/" target="_blank" rel="external">官方文档</a></p>
+<p>这里随便配置一下<strong>session backend</strong>，同样在下面添加<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">SESSION_ENGINE = <span class="string">"django.contrib.sessions.backends.cache"</span></span>
+<span class="line">SESSION_CACHE_ALIAS = <span class="string">"default"</span></span>
+</pre></td></tr></table></figure></p>
+<h3 id="使用缓存"><a href="#使用缓存" class="headerlink" title="使用缓存"></a>使用缓存</h3><p>在setting中配置好上述配置之后我们就可以开始使用了，django中自带了几个常用的修饰器，可以视情况使用。<br>比如：</p>
+<ul>
+<li><p>django.views.decorators.cache.cache_page（）针对每个视图的缓存</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.views.decorators.cache <span class="keyword">import</span> cache_page</span>
+<span class="line"></span>
+<span class="line"><span class="meta">@cache_page(60 * 15)</span></span>
+<span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_view</span><span class="params">(request)</span>:</span></span>
+<span class="line">    ...</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>在setting添加配置，对全站进行缓存</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line">MIDDLEWARE = [</span>
+<span class="line">    <span class="string">'django.middleware.cache.UpdateCacheMiddleware'</span>,</span>
+<span class="line">    <span class="string">'django.middleware.common.CommonMiddleware'</span>,</span>
+<span class="line">    <span class="string">'django.middleware.cache.FetchFromCacheMiddleware'</span>,</span>
+<span class="line">]</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>还可以调用低级api，直接操作缓存。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>cache.set(<span class="string">'my_key'</span>, <span class="string">'hello, world!'</span>, <span class="number">30</span>)</span>
+<span class="line"><span class="meta">&gt;&gt;&gt; </span>cache.get(<span class="string">'my_key'</span>)</span>
+<span class="line"><span class="string">'hello, world!'</span></span>
+</pre></td></tr></table></figure>
+</li>
+</ul>
+<p>可以按照自己的需要去选择合适的使用方法。</p>
+<blockquote>
+<p>注：</p>
+<ul>
+<li>上述环境在<strong>ubuntu16.04 lts</strong> <strong>django1.9</strong>中搭建测试成功</li>
+<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
+</ul>
+</blockquote>
+]]></content>
+      
+        <categories>
+            
+            <category> 开发 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Django </tag>
+            
+            <tag> Redis </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Django使用Channels实现websocket]]></title>
       <url>/2017/08/18/django_channels_websocket/</url>
       <content type="html"><![CDATA[<p>由于项目有个需要实时显示状态的需求，搜索了各种实现方法，看来只有websocket最靠谱，但django原生是不支持websocket的，最终发现了chango-channels这个项目。可以帮我们实现我们的需求。</p>
@@ -9326,115 +9476,6 @@
 <span class="line">        <span class="keyword">if</span> (socket.readyState == WebSocket.OPEN) socket.onopen();</span>
 </pre></td></tr></table></figure></p>
 <p>配合redis就可以实现django的websocket了，也可以满足我的需求，实时更新。</p>
-<blockquote>
-<p>注：</p>
-<ul>
-<li>上述环境在<strong>ubuntu16.04 lts</strong> <strong>django1.9</strong>中搭建测试成功</li>
-<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
-</ul>
-</blockquote>
-]]></content>
-      
-        <categories>
-            
-            <category> 开发 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> Django </tag>
-            
-            <tag> Redis </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[Django使用redis作为缓存系统]]></title>
-      <url>/2017/08/18/django_redis_cache/</url>
-      <content type="html"><![CDATA[<p>为了提升网站的性能，加一层缓存是少不了的，由于之前做的东西是用django写的，所以就介绍一下django的缓存系统。</p>
-<p>又由于我还使用了redis作为消息队列的后端，这里就不在介绍其他内存数据库，直接使用redis。<br><a id="more"></a></p>
-<h1 id="django使用redis作为缓存"><a href="#django使用redis作为缓存" class="headerlink" title="django使用redis作为缓存"></a>django使用redis作为缓存</h1><h2 id="redis"><a href="#redis" class="headerlink" title="redis"></a>redis</h2><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>由于笔者使用的是Ubuntu系统，安装较为简单，其他系统请自行查看官方文档。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">$ sudo apt-get install redis-server</span>
-</pre></td></tr></table></figure></p>
-<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>使用redis命令行客户端测试一下是否成功<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">$ redis-cli</span>
-</pre></td></tr></table></figure></p>
-<p>能出现以下结果即为成功<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">redis 127.0.0.1:6379&gt;</span>
-</pre></td></tr></table></figure></p>
-<p>其他的redis知识这里不左介绍，如果有兴趣，可以自行了解</p>
-<h2 id="django使用redis"><a href="#django使用redis" class="headerlink" title="django使用redis"></a>django使用redis</h2><h3 id="安装django-redis"><a href="#安装django-redis" class="headerlink" title="安装django-redis"></a>安装django-redis</h3><p>为了让django能够使用redis作为缓存，有人开发了一个库来帮我们实现。<a href="https://github.com/niwinz/django-redis" target="_blank" rel="external">django-redis</a>，我们需要安装一下才能使用redis</p>
-<p>在终端中输入一下命令进行安装(pip方式)<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">$ pip install django-redis</span>
-</pre></td></tr></table></figure></p>
-<h3 id="配置django-redis"><a href="#配置django-redis" class="headerlink" title="配置django-redis"></a>配置django-redis</h3><p>在你项目下的<strong>setting.py</strong>中添加如下代码即可<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-</pre></td><td class="code"><pre><span class="line">CACHES = &#123;</span>
-<span class="line">    <span class="string">"default"</span>: &#123;</span>
-<span class="line">        <span class="string">"BACKEND"</span>: <span class="string">"django_redis.cache.RedisCache"</span>,</span>
-<span class="line">        <span class="string">"LOCATION"</span>: <span class="string">"redis://127.0.0.1:6379/1"</span>,</span>
-<span class="line">        <span class="string">"OPTIONS"</span>: &#123;</span>
-<span class="line">            <span class="string">"CLIENT_CLASS"</span>: <span class="string">"django_redis.client.DefaultClient"</span>,</span>
-<span class="line">        &#125;</span>
-<span class="line">    &#125;</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure></p>
-<p>这样就能开始使用了，如果你想添加修改更多配置，想让其更适合自己的项目一点，可以自己去查看<a href="http://django-redis-chs.readthedocs.io/zh_CN/latest/" target="_blank" rel="external">官方文档</a></p>
-<p>这里随便配置一下<strong>session backend</strong>，同样在下面添加<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line">SESSION_ENGINE = <span class="string">"django.contrib.sessions.backends.cache"</span></span>
-<span class="line">SESSION_CACHE_ALIAS = <span class="string">"default"</span></span>
-</pre></td></tr></table></figure></p>
-<h3 id="使用缓存"><a href="#使用缓存" class="headerlink" title="使用缓存"></a>使用缓存</h3><p>在setting中配置好上述配置之后我们就可以开始使用了，django中自带了几个常用的修饰器，可以视情况使用。<br>比如：</p>
-<ul>
-<li><p>django.views.decorators.cache.cache_page（）针对每个视图的缓存</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.views.decorators.cache <span class="keyword">import</span> cache_page</span>
-<span class="line"></span>
-<span class="line"><span class="meta">@cache_page(60 * 15)</span></span>
-<span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_view</span><span class="params">(request)</span>:</span></span>
-<span class="line">    ...</span>
-</pre></td></tr></table></figure>
-</li>
-<li><p>在setting添加配置，对全站进行缓存</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-</pre></td><td class="code"><pre><span class="line">MIDDLEWARE = [</span>
-<span class="line">    <span class="string">'django.middleware.cache.UpdateCacheMiddleware'</span>,</span>
-<span class="line">    <span class="string">'django.middleware.common.CommonMiddleware'</span>,</span>
-<span class="line">    <span class="string">'django.middleware.cache.FetchFromCacheMiddleware'</span>,</span>
-<span class="line">]</span>
-</pre></td></tr></table></figure>
-</li>
-<li><p>还可以调用低级api，直接操作缓存。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-</pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>cache.set(<span class="string">'my_key'</span>, <span class="string">'hello, world!'</span>, <span class="number">30</span>)</span>
-<span class="line"><span class="meta">&gt;&gt;&gt; </span>cache.get(<span class="string">'my_key'</span>)</span>
-<span class="line"><span class="string">'hello, world!'</span></span>
-</pre></td></tr></table></figure>
-</li>
-</ul>
-<p>可以按照自己的需要去选择合适的使用方法。</p>
 <blockquote>
 <p>注：</p>
 <ul>
@@ -15284,6 +15325,291 @@
     </entry>
     
     <entry>
+      <title><![CDATA[ubuntu下的进程控制系统————Supervisor]]></title>
+      <url>/2017/06/30/ubuntu_supervisor/</url>
+      <content type="html"><![CDATA[<p>我们在部署网站或者在ssh到服务器上去进行一些长时间操作的任务时候，通常不喜欢长时间开启终端在其中等待，尤其是Windows下putty这类软件，长时间不操作就会结束，尴尬的是，我们跑的进程也会直接终端，为了解决这个问题，我们需要把进程扔到后台，让他自己运行</p>
+<p>在这里我们介绍一个名叫<strong>Supervisor</strong>的进程控制系统，<br>它是一个C/S系统(注意: 其提供WEB接口给用户查询和控制), 它允许用户去监控和控制在类UNIX系统的进程. 它的目标与launchd, daemontools和runit有些相似, 但是与它们不一样的是, 它不是作为init(进程号pid是1)运行. 它是被用来控制进程, 并且它在启动的时候和一般程序并无二致<br>supervisor是一个制作守护进程的工具,用户可以在UNIX系统中监控、管理进程。常用于管理与某个用户或项目相关的进程。去帮我们维护各种服务器的进程，即使有软件崩了也能帮我们自动重启</p>
+<h2 id="Supervisor"><a href="#Supervisor" class="headerlink" title="Supervisor"></a>Supervisor</h2><a id="more"></a>
+<p>首先先把官网丢上来<a href="http://supervisord.org/" target="_blank" rel="external">http://supervisord.org/</a></p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>两种方式去安装</p>
+<ol>
+<li><p>直接使用apt包管理安装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ sudo apt-get install supervisor</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>通过pip安装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ sudo pip install supervisor</span>
+</pre></td></tr></table></figure>
+</li>
+</ol>
+<p>安装成功后,supervisor就会默认启动</p>
+<h3 id="使用说明"><a href="#使用说明" class="headerlink" title="使用说明"></a>使用说明</h3><p>很多地方都有不同的使用方式，个人比较倾向把每个进程的文件单独拆分放在/etc/supervisor/conf.d/目录下，以conf为扩展名<br>这里以我自己的一个项目的进程作为例子（进程名为x508server）</p>
+<ol>
+<li><p>创建并编写<strong>x508server.conf</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+</pre></td><td class="code"><pre><span class="line">[program:x508server]</span>
+<span class="line">command=python /home/webserver/web/WebServer/manage.py runserver 0.0.0.0:8000 ; 被监控的进程路径</span>
+<span class="line">numprocs=1                    ; 启动几个进程</span>
+<span class="line">directory=/home/webserver/web/WebServer/               ; 执行前要不要先cd到目录去，一般不用</span>
+<span class="line">autostart=true                ; 随着supervisord的启动而启动</span>
+<span class="line">autorestart=true              ; 自动重启。。当然要选上了</span>
+<span class="line">startretries=10               ; 启动失败时的最多重试次数</span>
+<span class="line">exitcodes=0                   ; 正常退出代码</span>
+<span class="line">stopsignal=KILL               ; 用来杀死进程的信号</span>
+<span class="line">stopwaitsecs=10               ; 发送SIGKILL前的等待时间</span>
+<span class="line">redirect_stderr=true          ; 重定向stderr到stdout</span>
+<span class="line">stdout_logfile=logfile        ; 指定日志文件</span>
+<span class="line">; 默认为 false，如果设置为 true，当进程收到 stop 信号时，会自动将该信号发给该进程的子进程。如果这个配置项为 true，那么也隐含 killasgroup 为 true。例如在 Debug 模式使用 Flask 时，Flask 不会将接收到的 stop 信号也传递给它的子进程，因此就需要设置这个配置项。</span>
+<span class="line">stopasgroup=true             ; send stop signal to the UNIX process </span>
+<span class="line">; 默认为 false，如果设置为 true，当进程收到 kill 信号时，会自动将该信号发给该进程的子进程。如果这个程序使用了 python 的 multiprocessing 时，就能自动停止它的子线程。</span>
+<span class="line">killasgroup=true             ; SIGKILL the UNIX process group (def false</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>让supervisor重新加载配置文件，然后启动x508server进程</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">$ supervisorctl reload</span>
+<span class="line">$ supervisorctl start x508server</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>结束指定进程</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ supervisorctl x508serevr stop</span>
+</pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><ol>
+<li><p>启动某个进程</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ supervisorctl start x508serevr</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>关闭某个进程</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ supervisorctl stop x508serevr</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>停止全部进程，注：start、restart、stop都不会载入最新的配置文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ supervisorctl stop all</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>载入最新的配置文件，停止原有进程并按新的配置启动、管理所有进程</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ supervisorctl reload</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>根据最新的配置文件，启动新配置或有改动的进程，配置没有改动的进程不会受影响而重启</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ supervisorctl update</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>启动supervisord</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ sudo supervisord -c /etc/supervisor/supervisord.conf</span>
+</pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="配置说明"><a href="#配置说明" class="headerlink" title="配置说明"></a>配置说明</h3><ol>
+<li><p>每个进程的配置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+<span class="line">27</span>
+<span class="line">28</span>
+<span class="line">29</span>
+<span class="line">30</span>
+<span class="line">31</span>
+<span class="line">32</span>
+<span class="line">33</span>
+<span class="line">34</span>
+<span class="line">35</span>
+<span class="line">36</span>
+<span class="line">37</span>
+<span class="line">38</span>
+<span class="line">39</span>
+<span class="line">40</span>
+<span class="line">41</span>
+<span class="line">42</span>
+<span class="line">43</span>
+<span class="line">44</span>
+<span class="line">45</span>
+<span class="line">46</span>
+<span class="line">47</span>
+<span class="line">48</span>
+<span class="line">49</span>
+<span class="line">50</span>
+<span class="line">51</span>
+<span class="line">52</span>
+<span class="line">53</span>
+<span class="line">54</span>
+<span class="line">55</span>
+<span class="line">56</span>
+<span class="line">57</span>
+<span class="line">58</span>
+<span class="line">59</span>
+<span class="line">60</span>
+<span class="line">61</span>
+<span class="line">62</span>
+<span class="line">63</span>
+<span class="line">64</span>
+<span class="line">65</span>
+<span class="line">66</span>
+<span class="line">67</span>
+<span class="line">68</span>
+<span class="line">69</span>
+<span class="line">70</span>
+<span class="line">71</span>
+</pre></td><td class="code"><pre><span class="line">;*为必须填写项</span>
+<span class="line">;*[program:应用名称]</span>
+<span class="line">[program:cat]</span>
+<span class="line"></span>
+<span class="line">;*命令路径,如果使用python启动的程序应该为 python /home/test.py, </span>
+<span class="line">;不建议放入/home/user/, 对于非user用户一般情况下是不能访问</span>
+<span class="line"><span class="built_in">command</span>=/bin/cat</span>
+<span class="line"></span>
+<span class="line">;当numprocs为1时,process_name=%(program_name)s</span>
+<span class="line">;当numprocs&gt;=2时,%(program_name)s_%(process_num)02d</span>
+<span class="line">process_name=%(program_name)s</span>
+<span class="line"></span>
+<span class="line">;进程数量</span>
+<span class="line">numprocs=1</span>
+<span class="line"></span>
+<span class="line">;执行目录,若有/home/supervisor_test/<span class="built_in">test</span>1.py</span>
+<span class="line">;将directory设置成/home/supervisor_test</span>
+<span class="line">;则<span class="built_in">command</span>只需设置成python <span class="built_in">test</span>1.py</span>
+<span class="line">;否则<span class="built_in">command</span>必须设置成绝对执行目录</span>
+<span class="line">directory=/tmp</span>
+<span class="line"></span>
+<span class="line">;掩码:--- -w- -w-, 转换后rwx r-x w-x</span>
+<span class="line"><span class="built_in">umask</span>=022</span>
+<span class="line"></span>
+<span class="line">;优先级,值越高,最后启动,最先被关闭,默认值999</span>
+<span class="line">priority=999</span>
+<span class="line"></span>
+<span class="line">;如果是<span class="literal">true</span>,当supervisor启动时,程序将会自动启动</span>
+<span class="line">autostart=<span class="literal">true</span></span>
+<span class="line"></span>
+<span class="line">;*自动重启</span>
+<span class="line">autorestart=<span class="literal">true</span></span>
+<span class="line"></span>
+<span class="line">;启动延时执行,默认1秒</span>
+<span class="line">startsecs=10</span>
+<span class="line"></span>
+<span class="line">;启动尝试次数,默认3次</span>
+<span class="line">startretries=3</span>
+<span class="line"></span>
+<span class="line">;当退出码是0,2时,执行重启,默认值0,2</span>
+<span class="line">exitcodes=0,2</span>
+<span class="line"></span>
+<span class="line">;停止信号,默认TERM</span>
+<span class="line">;中断:INT(类似于Ctrl+C)(<span class="built_in">kill</span> -INT pid),退出后会将写文件或日志(推荐)</span>
+<span class="line">;终止:TERM(<span class="built_in">kill</span> -TERM pid)</span>
+<span class="line">;挂起:HUP(<span class="built_in">kill</span> -HUP pid),注意与Ctrl+Z/<span class="built_in">kill</span> -stop pid不同</span>
+<span class="line">;从容停止:QUIT(<span class="built_in">kill</span> -QUIT pid)</span>
+<span class="line">;KILL, USR1, USR2其他见命令(<span class="built_in">kill</span> <span class="_">-l</span>),说明1</span>
+<span class="line">stopsignal=TERM</span>
+<span class="line"></span>
+<span class="line">stopwaitsecs=10</span>
+<span class="line"></span>
+<span class="line">;*以root用户执行</span>
+<span class="line">user=root</span>
+<span class="line"></span>
+<span class="line">;重定向</span>
+<span class="line">redirect_stderr=<span class="literal">false</span></span>
+<span class="line"></span>
+<span class="line">stdout_logfile=/a/path</span>
+<span class="line">stdout_logfile_maxbytes=1MB</span>
+<span class="line">stdout_logfile_backups=10</span>
+<span class="line">stdout_capture_maxbytes=1MB</span>
+<span class="line">stderr_logfile=/a/path</span>
+<span class="line">stderr_logfile_maxbytes=1MB</span>
+<span class="line">stderr_logfile_backups=10</span>
+<span class="line">stderr_capture_maxbytes=1MB</span>
+<span class="line"></span>
+<span class="line">;环境变量设置</span>
+<span class="line">environment=A=<span class="string">"1"</span>,B=<span class="string">"2"</span></span>
+<span class="line"></span>
+<span class="line">serverurl=AUTO</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>(inet_http_server)配置说明</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line">[inet_http_server]         ; inet (TCP) server disabled by default</span>
+<span class="line">port=0.0.0.0:9001          ; (ip_address:port specifier, *:port <span class="keyword">for</span> all iface)</span>
+<span class="line">username=user              ; 用户名 (default is no username (open server))</span>
+<span class="line">password=123               ; 密码 (default is no password (open server))</span>
+</pre></td></tr></table></figure>
+</li>
+</ol>
+<blockquote>
+<p>注：</p>
+<ul>
+<li>上述环境在<strong>ubuntu16.04 lts</strong>中测试成功</li>
+<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
+</ul>
+</blockquote>
+]]></content>
+      
+        <categories>
+            
+            <category> 运维 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Linux </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[django+nginx+gunicorn部署配置]]></title>
       <url>/2017/06/30/django_nginx_gunicorn/</url>
       <content type="html"><![CDATA[<p>在部署django开发的站点时，通常有两种选择方式，nginx+django+uwsgi或者django+nginx+gunicorn，本文不讨论apache方式，在linux下通常都使用nginx，速度快，还经常做代理服务器，功能强大。。<br>nginx+django+uwsgi个人觉得uwsgi配置较为麻烦，所以选择了gunicorn，一个开源Python WSGI UNIX的HTTP服务器，据说速度快（配置快、运行快）、简单，默认是同步工作，支持Gevent、Eventlet异步，支持Tornado。有兴趣可以自行查阅官方文档</p>
@@ -15577,291 +15903,6 @@
             <tag> Django </tag>
             
             <tag> Nginx </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[ubuntu下的进程控制系统————Supervisor]]></title>
-      <url>/2017/06/30/ubuntu_supervisor/</url>
-      <content type="html"><![CDATA[<p>我们在部署网站或者在ssh到服务器上去进行一些长时间操作的任务时候，通常不喜欢长时间开启终端在其中等待，尤其是Windows下putty这类软件，长时间不操作就会结束，尴尬的是，我们跑的进程也会直接终端，为了解决这个问题，我们需要把进程扔到后台，让他自己运行</p>
-<p>在这里我们介绍一个名叫<strong>Supervisor</strong>的进程控制系统，<br>它是一个C/S系统(注意: 其提供WEB接口给用户查询和控制), 它允许用户去监控和控制在类UNIX系统的进程. 它的目标与launchd, daemontools和runit有些相似, 但是与它们不一样的是, 它不是作为init(进程号pid是1)运行. 它是被用来控制进程, 并且它在启动的时候和一般程序并无二致<br>supervisor是一个制作守护进程的工具,用户可以在UNIX系统中监控、管理进程。常用于管理与某个用户或项目相关的进程。去帮我们维护各种服务器的进程，即使有软件崩了也能帮我们自动重启</p>
-<h2 id="Supervisor"><a href="#Supervisor" class="headerlink" title="Supervisor"></a>Supervisor</h2><a id="more"></a>
-<p>首先先把官网丢上来<a href="http://supervisord.org/" target="_blank" rel="external">http://supervisord.org/</a></p>
-<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>两种方式去安装</p>
-<ol>
-<li><p>直接使用apt包管理安装</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">$ sudo apt-get install supervisor</span>
-</pre></td></tr></table></figure>
-</li>
-<li><p>通过pip安装</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">$ sudo pip install supervisor</span>
-</pre></td></tr></table></figure>
-</li>
-</ol>
-<p>安装成功后,supervisor就会默认启动</p>
-<h3 id="使用说明"><a href="#使用说明" class="headerlink" title="使用说明"></a>使用说明</h3><p>很多地方都有不同的使用方式，个人比较倾向把每个进程的文件单独拆分放在/etc/supervisor/conf.d/目录下，以conf为扩展名<br>这里以我自己的一个项目的进程作为例子（进程名为x508server）</p>
-<ol>
-<li><p>创建并编写<strong>x508server.conf</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-</pre></td><td class="code"><pre><span class="line">[program:x508server]</span>
-<span class="line">command=python /home/webserver/web/WebServer/manage.py runserver 0.0.0.0:8000 ; 被监控的进程路径</span>
-<span class="line">numprocs=1                    ; 启动几个进程</span>
-<span class="line">directory=/home/webserver/web/WebServer/               ; 执行前要不要先cd到目录去，一般不用</span>
-<span class="line">autostart=true                ; 随着supervisord的启动而启动</span>
-<span class="line">autorestart=true              ; 自动重启。。当然要选上了</span>
-<span class="line">startretries=10               ; 启动失败时的最多重试次数</span>
-<span class="line">exitcodes=0                   ; 正常退出代码</span>
-<span class="line">stopsignal=KILL               ; 用来杀死进程的信号</span>
-<span class="line">stopwaitsecs=10               ; 发送SIGKILL前的等待时间</span>
-<span class="line">redirect_stderr=true          ; 重定向stderr到stdout</span>
-<span class="line">stdout_logfile=logfile        ; 指定日志文件</span>
-<span class="line">; 默认为 false，如果设置为 true，当进程收到 stop 信号时，会自动将该信号发给该进程的子进程。如果这个配置项为 true，那么也隐含 killasgroup 为 true。例如在 Debug 模式使用 Flask 时，Flask 不会将接收到的 stop 信号也传递给它的子进程，因此就需要设置这个配置项。</span>
-<span class="line">stopasgroup=true             ; send stop signal to the UNIX process </span>
-<span class="line">; 默认为 false，如果设置为 true，当进程收到 kill 信号时，会自动将该信号发给该进程的子进程。如果这个程序使用了 python 的 multiprocessing 时，就能自动停止它的子线程。</span>
-<span class="line">killasgroup=true             ; SIGKILL the UNIX process group (def false</span>
-</pre></td></tr></table></figure>
-</li>
-<li><p>让supervisor重新加载配置文件，然后启动x508server进程</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line">$ supervisorctl reload</span>
-<span class="line">$ supervisorctl start x508server</span>
-</pre></td></tr></table></figure>
-</li>
-<li><p>结束指定进程</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">$ supervisorctl x508serevr stop</span>
-</pre></td></tr></table></figure>
-</li>
-</ol>
-<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><ol>
-<li><p>启动某个进程</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">$ supervisorctl start x508serevr</span>
-</pre></td></tr></table></figure>
-</li>
-<li><p>关闭某个进程</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">$ supervisorctl stop x508serevr</span>
-</pre></td></tr></table></figure>
-</li>
-<li><p>停止全部进程，注：start、restart、stop都不会载入最新的配置文件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">$ supervisorctl stop all</span>
-</pre></td></tr></table></figure>
-</li>
-<li><p>载入最新的配置文件，停止原有进程并按新的配置启动、管理所有进程</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">$ supervisorctl reload</span>
-</pre></td></tr></table></figure>
-</li>
-<li><p>根据最新的配置文件，启动新配置或有改动的进程，配置没有改动的进程不会受影响而重启</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">$ supervisorctl update</span>
-</pre></td></tr></table></figure>
-</li>
-<li><p>启动supervisord</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">$ sudo supervisord -c /etc/supervisor/supervisord.conf</span>
-</pre></td></tr></table></figure>
-</li>
-</ol>
-<h3 id="配置说明"><a href="#配置说明" class="headerlink" title="配置说明"></a>配置说明</h3><ol>
-<li><p>每个进程的配置</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-<span class="line">17</span>
-<span class="line">18</span>
-<span class="line">19</span>
-<span class="line">20</span>
-<span class="line">21</span>
-<span class="line">22</span>
-<span class="line">23</span>
-<span class="line">24</span>
-<span class="line">25</span>
-<span class="line">26</span>
-<span class="line">27</span>
-<span class="line">28</span>
-<span class="line">29</span>
-<span class="line">30</span>
-<span class="line">31</span>
-<span class="line">32</span>
-<span class="line">33</span>
-<span class="line">34</span>
-<span class="line">35</span>
-<span class="line">36</span>
-<span class="line">37</span>
-<span class="line">38</span>
-<span class="line">39</span>
-<span class="line">40</span>
-<span class="line">41</span>
-<span class="line">42</span>
-<span class="line">43</span>
-<span class="line">44</span>
-<span class="line">45</span>
-<span class="line">46</span>
-<span class="line">47</span>
-<span class="line">48</span>
-<span class="line">49</span>
-<span class="line">50</span>
-<span class="line">51</span>
-<span class="line">52</span>
-<span class="line">53</span>
-<span class="line">54</span>
-<span class="line">55</span>
-<span class="line">56</span>
-<span class="line">57</span>
-<span class="line">58</span>
-<span class="line">59</span>
-<span class="line">60</span>
-<span class="line">61</span>
-<span class="line">62</span>
-<span class="line">63</span>
-<span class="line">64</span>
-<span class="line">65</span>
-<span class="line">66</span>
-<span class="line">67</span>
-<span class="line">68</span>
-<span class="line">69</span>
-<span class="line">70</span>
-<span class="line">71</span>
-</pre></td><td class="code"><pre><span class="line">;*为必须填写项</span>
-<span class="line">;*[program:应用名称]</span>
-<span class="line">[program:cat]</span>
-<span class="line"></span>
-<span class="line">;*命令路径,如果使用python启动的程序应该为 python /home/test.py, </span>
-<span class="line">;不建议放入/home/user/, 对于非user用户一般情况下是不能访问</span>
-<span class="line"><span class="built_in">command</span>=/bin/cat</span>
-<span class="line"></span>
-<span class="line">;当numprocs为1时,process_name=%(program_name)s</span>
-<span class="line">;当numprocs&gt;=2时,%(program_name)s_%(process_num)02d</span>
-<span class="line">process_name=%(program_name)s</span>
-<span class="line"></span>
-<span class="line">;进程数量</span>
-<span class="line">numprocs=1</span>
-<span class="line"></span>
-<span class="line">;执行目录,若有/home/supervisor_test/<span class="built_in">test</span>1.py</span>
-<span class="line">;将directory设置成/home/supervisor_test</span>
-<span class="line">;则<span class="built_in">command</span>只需设置成python <span class="built_in">test</span>1.py</span>
-<span class="line">;否则<span class="built_in">command</span>必须设置成绝对执行目录</span>
-<span class="line">directory=/tmp</span>
-<span class="line"></span>
-<span class="line">;掩码:--- -w- -w-, 转换后rwx r-x w-x</span>
-<span class="line"><span class="built_in">umask</span>=022</span>
-<span class="line"></span>
-<span class="line">;优先级,值越高,最后启动,最先被关闭,默认值999</span>
-<span class="line">priority=999</span>
-<span class="line"></span>
-<span class="line">;如果是<span class="literal">true</span>,当supervisor启动时,程序将会自动启动</span>
-<span class="line">autostart=<span class="literal">true</span></span>
-<span class="line"></span>
-<span class="line">;*自动重启</span>
-<span class="line">autorestart=<span class="literal">true</span></span>
-<span class="line"></span>
-<span class="line">;启动延时执行,默认1秒</span>
-<span class="line">startsecs=10</span>
-<span class="line"></span>
-<span class="line">;启动尝试次数,默认3次</span>
-<span class="line">startretries=3</span>
-<span class="line"></span>
-<span class="line">;当退出码是0,2时,执行重启,默认值0,2</span>
-<span class="line">exitcodes=0,2</span>
-<span class="line"></span>
-<span class="line">;停止信号,默认TERM</span>
-<span class="line">;中断:INT(类似于Ctrl+C)(<span class="built_in">kill</span> -INT pid),退出后会将写文件或日志(推荐)</span>
-<span class="line">;终止:TERM(<span class="built_in">kill</span> -TERM pid)</span>
-<span class="line">;挂起:HUP(<span class="built_in">kill</span> -HUP pid),注意与Ctrl+Z/<span class="built_in">kill</span> -stop pid不同</span>
-<span class="line">;从容停止:QUIT(<span class="built_in">kill</span> -QUIT pid)</span>
-<span class="line">;KILL, USR1, USR2其他见命令(<span class="built_in">kill</span> <span class="_">-l</span>),说明1</span>
-<span class="line">stopsignal=TERM</span>
-<span class="line"></span>
-<span class="line">stopwaitsecs=10</span>
-<span class="line"></span>
-<span class="line">;*以root用户执行</span>
-<span class="line">user=root</span>
-<span class="line"></span>
-<span class="line">;重定向</span>
-<span class="line">redirect_stderr=<span class="literal">false</span></span>
-<span class="line"></span>
-<span class="line">stdout_logfile=/a/path</span>
-<span class="line">stdout_logfile_maxbytes=1MB</span>
-<span class="line">stdout_logfile_backups=10</span>
-<span class="line">stdout_capture_maxbytes=1MB</span>
-<span class="line">stderr_logfile=/a/path</span>
-<span class="line">stderr_logfile_maxbytes=1MB</span>
-<span class="line">stderr_logfile_backups=10</span>
-<span class="line">stderr_capture_maxbytes=1MB</span>
-<span class="line"></span>
-<span class="line">;环境变量设置</span>
-<span class="line">environment=A=<span class="string">"1"</span>,B=<span class="string">"2"</span></span>
-<span class="line"></span>
-<span class="line">serverurl=AUTO</span>
-</pre></td></tr></table></figure>
-</li>
-<li><p>(inet_http_server)配置说明</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-</pre></td><td class="code"><pre><span class="line">[inet_http_server]         ; inet (TCP) server disabled by default</span>
-<span class="line">port=0.0.0.0:9001          ; (ip_address:port specifier, *:port <span class="keyword">for</span> all iface)</span>
-<span class="line">username=user              ; 用户名 (default is no username (open server))</span>
-<span class="line">password=123               ; 密码 (default is no password (open server))</span>
-</pre></td></tr></table></figure>
-</li>
-</ol>
-<blockquote>
-<p>注：</p>
-<ul>
-<li>上述环境在<strong>ubuntu16.04 lts</strong>中测试成功</li>
-<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
-</ul>
-</blockquote>
-]]></content>
-      
-        <categories>
-            
-            <category> 运维 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> Linux </tag>
             
         </tags>
         
@@ -19256,111 +19297,39 @@
     </entry>
     
     <entry>
-      <title><![CDATA[Python2和Python3的区别简单总结]]></title>
-      <url>/2016/08/15/python2%E5%92%8CPython3%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
-      <content type="html"><![CDATA[<p>Python是一种新的计算机语言，也是最近两年才开始大火的一种语言，它够优雅，写起来可以随心所欲，不用担心没有定义，没有声明这些其他计算机语言都需要考虑的问题,单自从更新Python3.x版本之后，很多人开始头疼，因为Python3很多地方并不兼容Python2，有人夸张的说Python3是一门新的语言，我觉得没有那么夸张，本文就剧一下我遇到的和一些知道的区别吧</p>
+      <title><![CDATA[Django渲染模板]]></title>
+      <url>/2016/08/15/django%E6%B8%B2%E6%9F%93%E6%A8%A1%E6%9D%BF/</url>
+      <content type="html"><![CDATA[<p>在页面上显示内容可以简单的用django.http.HttpResponse来显示我们需要的内容，但是当我们需要一些处理一些复杂的数据或者从数据库读出来的操作要显示在html标签内或者js代码中就需要用渲染模板的方法。</p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="创建工程"><a href="#创建工程" class="headerlink" title="创建工程"></a>创建工程</h3><p>首先，使用一下代码创建一个名为ymxz的工程(读者可以根据需要设置自己的工程名)：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">django-admin startproject ymxz</span>
+</pre></td></tr></table></figure></p>
 <a id="more"></a>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="print函数"><a href="#print函数" class="headerlink" title="print函数"></a>print函数</h3><p>print 语法的变化可能是最广为人知的了，但是仍值得一提的是： Python 2 的 print 声明已经被 print() 函数取代了，这意味着我们必须包装我们想打印在小括号中的对象。<br>Python 2 不具有额外的小括号问题。但对比一下，如果我们按照 Python 2 的方式不使用小括号调用 print 函数，Python 3 将抛出一个语法异常（SyntaxError）。</p>
-<h4 id="Python2"><a href="#Python2" class="headerlink" title="Python2"></a>Python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<ul>
+<li>当然你也可以用pycharm创建一个django工程</li>
+</ul>
+<h3 id="创建app"><a href="#创建app" class="headerlink" title="创建app"></a>创建app</h3><p>创建工程之后，cd到工程目录，创建一个名为myapp的应用<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">python manage.py startapp myapp</span>
+</pre></td></tr></table></figure></p>
+<ul>
+<li>上面操作完成后,我们的项目的目录结构如下:<br><img src="http://objects.earthchen.cn/django%E6%B8%B2%E6%9F%93%E6%A8%A1%E6%9D%BF%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%841.png" alt="渲染模板目录结构1"></li>
+</ul>
+<h3 id="创建模板"><a href="#创建模板" class="headerlink" title="创建模板"></a>创建模板</h3><p>在myapp目录下创建一个名为templates的目录，在这个目录下面创建一个网页，我这里叫index.html</p>
+<ul>
+<li>完成后，应如图所示:<br><img src="http://objects.earthchen.cn/django%E6%B8%B2%E6%9F%93%E6%A8%A1%E6%9D%BF%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%842.png" alt="渲染模板目录结构2"></li>
+<li>在index中写入我们需要显示的内容<br><img src="http://objects.earthchen.cn/%E6%B8%B2%E6%9F%93%E6%A8%A1%E6%9D%BFindex.png" alt="渲染模板index"></li>
+</ul>
+<h3 id="修改views-py"><a href="#修改views-py" class="headerlink" title="修改views.py"></a>修改views.py</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
 <span class="line">4</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">'Python'</span>, python_version()</span>
-<span class="line"><span class="keyword">print</span> <span class="string">'Hello, World!'</span></span>
-<span class="line">print(<span class="string">'Hello, World!'</span>)</span>
-<span class="line"><span class="keyword">print</span> <span class="string">"text"</span>, ; <span class="keyword">print</span> <span class="string">'print more text on the same line'</span></span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</span>
+<span class="line"></span>
+<span class="line"><span class="comment"># Create your views here.</span></span>
+<span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span><span class="params">(request)</span>:</span></span>
+<span class="line">    <span class="keyword">return</span> render(request,<span class="string">'index.html'</span>)</span>
 </pre></td></tr></table></figure>
-<blockquote>
-<p>结果:</p>
-<ul>
-<li>Python 2.7.6</li>
-<li>Hello, World!</li>
-<li>Hello, World!</li>
-<li>text print more text on the same line</li>
-</ul>
-</blockquote>
-<h4 id="Python3"><a href="#Python3" class="headerlink" title="Python3"></a>Python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-</pre></td><td class="code"><pre><span class="line">print(<span class="string">'Python'</span>, python_version())</span>
-<span class="line">print(<span class="string">'Hello, World!'</span>)</span>
-<span class="line">print(<span class="string">"some text,"</span>, end=<span class="string">""</span>) </span>
-<span class="line">print(<span class="string">' print more text on the same line'</span>)</span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>结果:</p>
-<ul>
-<li>Python 3.5.1</li>
-<li>Hello, World!</li>
-<li>some text, print more text on the same line</li>
-<li>print more text on the same line</li>
-</ul>
-</blockquote>
-<h3 id="整除"><a href="#整除" class="headerlink" title="整除"></a>整除</h3><p>python3的版本变化中，整数计算可以说是很大的并且可能在移植过程中造成很大危险，比如:</p>
-<ul>
-<li>你在 Python 2 上执行 Python 3 的代码。因为这个整除的变化表现在它会被忽视（即它不会抛出语法异常）。</li>
-</ul>
-<h4 id="python2"><a href="#python2" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">'3 / 2 ='</span>, <span class="number">3</span> / <span class="number">2</span></span>
-<span class="line"><span class="keyword">print</span> <span class="string">'3 // 2 ='</span>, <span class="number">3</span> // <span class="number">2</span></span>
-<span class="line"><span class="keyword">print</span> <span class="string">'3 / 2.0 ='</span>, <span class="number">3</span> / <span class="number">2.0</span></span>
-<span class="line"><span class="keyword">print</span> <span class="string">'3 // 2.0 ='</span>, <span class="number">3</span> // <span class="number">2.0</span></span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>结果:</p>
-<ul>
-<li>3 / 2 = 1</li>
-<li>3 // 2 = 1</li>
-<li>3 / 2.0 = 1.5</li>
-<li>3 // 2.0 = 1.0</li>
-</ul>
-</blockquote>
-<h4 id="python3"><a href="#python3" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-</pre></td><td class="code"><pre><span class="line">print(<span class="string">'3 / 2 ='</span>, <span class="number">3</span> / <span class="number">2</span>)</span>
-<span class="line">print(<span class="string">'3 // 2 ='</span>, <span class="number">3</span> // <span class="number">2</span>)</span>
-<span class="line">print(<span class="string">'3 / 2.0 ='</span>, <span class="number">3</span> / <span class="number">2.0</span>)</span>
-<span class="line">print(<span class="string">'3 // 2.0 ='</span>, <span class="number">3</span> // <span class="number">2.0</span>)</span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>结果:</p>
-<ul>
-<li>3 / 2 = 1.5</li>
-<li>3 // 2 = 1</li>
-<li>3 / 2.0 = 1.5</li>
-<li>3 // 2.0 = 1.0</li>
-</ul>
-</blockquote>
-<h3 id="Unicode"><a href="#Unicode" class="headerlink" title="Unicode"></a>Unicode</h3><p>Python 2 有 ASCII str() 类型，unicode() 是单独的，不是 byte 类型。<br>现在， 在 Python 3，我们最终有了 Unicode (utf-8) 字符串，以及一个字节类：byte 和 bytearrays。<br>由于 Python3.X 源码文件默认使用utf-8编码，这就使得以下代码是合法的：</p>
-<h4 id="python3-1"><a href="#python3-1" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line">中国 = <span class="string">'china'</span> </span>
-<span class="line">print(中国)</span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>结果:</p>
-<ul>
-<li>china</li>
-</ul>
-</blockquote>
-<h4 id="python2-1"><a href="#python2-1" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line">str = <span class="string">"我爱北京天安门"</span></span>
-<span class="line"><span class="keyword">print</span> <span class="string">'str'</span></span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>结果:</p>
-<ul>
-<li>‘\xe6\x88\x91\xe7\x88\xb1\xe5\x8c\x97\xe4\xba\xac\xe5\xa4\xa9\xe5\xae\x89\xe9\x97\xa8’</li>
-</ul>
-</blockquote>
-<h3 id="xrange模块"><a href="#xrange模块" class="headerlink" title="xrange模块"></a>xrange模块</h3><p>在 Python 2 中 xrange() 创建迭代对象的用法是非常流行的。比如： for 循环或者是列表/集合/字典推导式。<br>这个表现十分像生成器（比如。“惰性求值”）。但是这个 xrange-iterable 是无穷的，意味着你可以无限遍历。<br>由于它的惰性求值，如果你不得仅仅不遍历它一次，xrange() 函数 比 range() 更快（比如 for 循环）。尽管如此，对比迭代一次，不建议你重复迭代多次，因为生成器每次都从头开始。<br>在 Python 3 中，range() 是像 xrange() 那样实现以至于一个专门的 xrange() 函数都不再存在（在 Python 3 中 xrange() 会抛出命名异常）。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<h3 id="修改urls-py"><a href="#修改urls-py" class="headerlink" title="修改urls.py"></a>修改urls.py</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
 <span class="line">4</span>
@@ -19368,271 +19337,95 @@
 <span class="line">6</span>
 <span class="line">7</span>
 <span class="line">8</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> timeit</span>
-<span class="line">n = <span class="number">10000</span></span>
-<span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_range</span><span class="params">(n)</span>:</span></span>
-<span class="line">    <span class="keyword">return</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span>
-<span class="line">        <span class="keyword">pass</span></span>
-<span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_xrange</span><span class="params">(n)</span>:</span></span>
-<span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> xrange(n):</span>
-<span class="line">        <span class="keyword">pass</span></span>
-</pre></td></tr></table></figure></p>
-<h4 id="python2-2"><a href="#python2-2" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.conf.urls <span class="keyword">import</span> patterns, include, url</span>
+<span class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> admin</span>
+<span class="line"></span>
+<span class="line"><span class="keyword">from</span> myapp <span class="keyword">import</span> views</span>
+<span class="line"></span>
+<span class="line">urlpatterns = patterns(<span class="string">''</span>,</span>
+<span class="line">                       <span class="comment"># Examples:</span></span>
+<span class="line">                       <span class="comment"># url(r'^$', 'ymxz.views.home', name='home'),</span></span>
+<span class="line">                       <span class="comment"># url(r'^blog/', include('blog.urls')),</span></span>
+<span class="line"></span>
+<span class="line">                       url(<span class="string">r'^admin/'</span>, include(admin.site.urls)),</span>
+<span class="line">                       url(<span class="string">r'^index/'</span>, views.index),</span>
+<span class="line">                       )</span>
+</pre></td></tr></table></figure>
+<h3 id="修改settings-py"><a href="#修改settings-py" class="headerlink" title="修改settings.py"></a>修改settings.py</h3><p>修改INSTALLED_APPS这个字段添加我们的app–myapp<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
 <span class="line">4</span>
 <span class="line">5</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">'Python'</span>, python_version()</span>
-<span class="line"><span class="keyword">print</span> <span class="string">'\ntiming range()'</span></span>
-<span class="line">%timeit test_range(n)</span>
-<span class="line"><span class="keyword">print</span> <span class="string">'\n\ntiming xrange()'</span></span>
-<span class="line">%timeit test_xrange(n)</span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>结果:</p>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+</pre></td><td class="code"><pre><span class="line">INSTALLED_APPS = (</span>
+<span class="line">    <span class="string">'django.contrib.admin'</span>,</span>
+<span class="line">    <span class="string">'django.contrib.auth'</span>,</span>
+<span class="line">    <span class="string">'django.contrib.contenttypes'</span>,</span>
+<span class="line">    <span class="string">'django.contrib.sessions'</span>,</span>
+<span class="line">    <span class="string">'django.contrib.messages'</span>,</span>
+<span class="line">    <span class="string">'django.contrib.staticfiles'</span>,</span>
+<span class="line">    <span class="string">'myapp'</span>,</span>
+<span class="line">)</span>
+</pre></td></tr></table></figure></p>
+<h3 id="打开调试服务器"><a href="#打开调试服务器" class="headerlink" title="打开调试服务器"></a>打开调试服务器</h3><p>在cmd中执行以下语句<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">python manage.py runserver</span>
+</pre></td></tr></table></figure></p>
 <ul>
-<li>Python 2.7.6</li>
-<li>timing range()</li>
-<li>1000 loops, best of 3: 433 µs per loop</li>
-<li>timing xrange()</li>
-<li>1000 loops, best of 3: 350 µs per loop</li>
+<li>在浏览器地址栏输入<a href="http://127.0.0.1:8000/index/" target="_blank" rel="external">http://127.0.0.1:8000/index/</a><br><img src="http://objects.earthchen.cn/django%E6%B8%B2%E6%9F%93%E6%A8%A1%E6%9D%BF%E7%BB%93%E6%9E%9C1.png" alt="django渲染模板结果"><br>如上图显示即为成功。</li>
 </ul>
-</blockquote>
-<h4 id="python3-2"><a href="#python3-2" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<h3 id="用模板语言从后台向前端传递数据"><a href="#用模板语言从后台向前端传递数据" class="headerlink" title="用模板语言从后台向前端传递数据"></a>用模板语言从后台向前端传递数据</h3><h4 id="打开views-py修改内容为"><a href="#打开views-py修改内容为" class="headerlink" title="打开views.py修改内容为:"></a>打开<strong>views.py</strong>修改内容为:</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
-</pre></td><td class="code"><pre><span class="line">print(<span class="string">'Python'</span>, python_version())</span>
-<span class="line">print(<span class="string">'\ntiming range()'</span>)</span>
-<span class="line">%timeit test_range(n)</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</span>
+<span class="line"></span>
+<span class="line"><span class="comment"># Create your views here.</span></span>
+<span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span><span class="params">(request)</span>:</span></span>
+<span class="line">    str = <span class="string">'hello world django'</span></span>
+<span class="line">    <span class="keyword">return</span> render(request, <span class="string">'index.html'</span>, &#123;<span class="string">'test'</span>: str&#125;)</span>
 </pre></td></tr></table></figure>
-<blockquote>
-<p>结果:</p>
 <ul>
-<li>Python 3.5.1</li>
-<li>timing range()</li>
-<li>1000 loops, best of 3: 520 µs per loop</li>
+<li><strong>str</strong>可以是字符串，字典，列表，元组等数据，其他的请读者自行搜索django模板语言</li>
 </ul>
-</blockquote>
-<h3 id="不等运算符"><a href="#不等运算符" class="headerlink" title="不等运算符"></a>不等运算符</h3><ul>
-<li>Python 2.x中不等于有两种写法 != 和 &lt;&gt;</li>
-<li>Python 3.x中去掉了&lt;&gt;, 只有!=一种写法，还好，我从来没有使用&lt;&gt;的习惯</li>
+<h4 id="修改index-html内容为"><a href="#修改index-html内容为" class="headerlink" title="修改index.html内容为:"></a>修改<strong>index.html</strong>内容为:</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+</pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span>
+<span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span>
+<span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span>
+<span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span>
+<span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span>
+<span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span>
+<span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span>
+<span class="line">&#123;&#123; test &#125;&#125;</span>
+<span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span>
+<span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span>
+</pre></td></tr></table></figure>
+<ul>
+<li><strong></strong> 是最简单的模板语言的一种,还可以做到循环遍历，判断等略微复杂一点的功能，请自行了解，本文将不做介绍。</li>
+<li>在浏览器地址栏输入<a href="http://127.0.0.1:8000/index/" target="_blank" rel="external">http://127.0.0.1:8000/index/</a><br><img src="http://objects.earthchen.cn/django%E6%B8%B2%E6%9F%93%E6%A8%A1%E6%9D%BF%E7%BB%93%E6%9E%9C2.png" alt="django渲染模板结果"><br>如上图显示即为成功。</li>
 </ul>
-<h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><ul>
-<li>Py3.X去除了long类型，现在只有一种整型——int，但它的行为就像2.X版本的long</li>
-<li>新增了bytes类型，对应于2.X版本的八位串</li>
-<li>dict的.keys()、.items 和.values()方法返回迭代器，而之前的iterkeys()等函数都被废弃。同时去掉的还有 dict.has_key()，用 in替代它吧 。<blockquote>
+<blockquote>
 <p>注：</p>
 <ul>
 <li>上述代码在<strong>django1.7</strong>和<strong>Python2.7</strong>中编译成功运行，其他环境请自行测试</li>
-<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
-</ul>
-</blockquote>
-</li>
-</ul>
-<h3 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h3><p>在 Python 3 中处理异常也轻微的改变了，在 Python 3 中我们现在使用 as 作为关键词。<br>捕获异常的语法由 except exc, var 改为 except exc as var。<br>使用语法except (exc1, exc2) as var可以同时捕获多种类别的异常。 Python 2.6已经支持这两种语法。</p>
-<ul>
-<li>在2.x时代，所有类型的对象都是可以被直接抛出的，在3.x时代，只有继承自BaseException的对象才可以被抛出。</li>
-<li>2.x raise语句使用逗号将抛出对象类型和参数分开，3.x取消了这种奇葩的写法，直接调用构造函数抛出对象即可。<br>在2.x时代，异常在代码中除了表示程序错误，还经常做一些普通控制结构应该做的事情，在3.x中可以看出，设计者让异常变的更加专一，只有在错误发生的情况才能去用异常捕获语句来处理。<h4 id="python2-3"><a href="#python2-3" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">'Python'</span>, python_version()</span>
-<span class="line"><span class="keyword">try</span>:</span>
-<span class="line">    let_us_cause_a_NameError</span>
-<span class="line"><span class="keyword">except</span> NameError, err:</span>
-<span class="line">    <span class="keyword">print</span> err, <span class="string">'--&gt; our error message'</span></span>
-</pre></td></tr></table></figure>
-</li>
-</ul>
-<blockquote>
-<p>结果:</p>
-<ul>
-<li>Python 2.7.6</li>
-<li>name ‘let_us_cause_a_NameError’ is not defined —&gt; our error message</li>
-</ul>
-</blockquote>
-<h4 id="python3-3"><a href="#python3-3" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-</pre></td><td class="code"><pre><span class="line">print(<span class="string">'Python'</span>, python_version())</span>
-<span class="line"><span class="keyword">try</span>:</span>
-<span class="line">    let_us_cause_a_NameError</span>
-<span class="line"><span class="keyword">except</span> NameError <span class="keyword">as</span> err:</span>
-<span class="line">    print(err, <span class="string">'--&gt; our error message'</span>)</span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>结果:</p>
-<ul>
-<li>Python 3.5.1</li>
-<li>name ‘let_us_cause_a_NameError’ is not defined —&gt; our error message</li>
-</ul>
-</blockquote>
-<h3 id="通过input-解析用户的输入"><a href="#通过input-解析用户的输入" class="headerlink" title="通过input()解析用户的输入"></a>通过input()解析用户的输入</h3><p>幸运的是，在 Python 3 中已经解决了把用户的输入存储为一个 str 对象的问题。为了避免在 Python 2 中的读取非字符串类型的危险行为，我们不得不使用 raw_input() 代替。</p>
-<h3 id="返回可迭代对象，而不是列表"><a href="#返回可迭代对象，而不是列表" class="headerlink" title="返回可迭代对象，而不是列表"></a>返回可迭代对象，而不是列表</h3><p>如果在 xrange 章节看到的，现在在 Python 3 中一些方法和函数返回迭代对象 — 代替 Python 2 中的列表<br>因为我们通常那些遍历只有一次，我认为这个改变对节约内存很有意义。尽管如此，它也是可能的，相对于生成器 —- 如需要遍历多次。它是不那么高效的。<br>而对于那些情况下，我们真正需要的是列表对象，我们可以通过 list() 函数简单的把迭代对象转换成一个列表。</p>
-<h4 id="python2-4"><a href="#python2-4" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">'Python'</span>, python_version() </span>
-<span class="line"><span class="keyword">print</span> range(<span class="number">3</span>) </span>
-<span class="line"><span class="keyword">print</span> type(range(<span class="number">3</span>))</span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>结果:</p>
-<ul>
-<li>Python 2.7.6</li>
-<li>[0, 1, 2]</li>
-<li>&lt; type ‘list’&gt;</li>
-</ul>
-</blockquote>
-<h4 id="python3-4"><a href="#python3-4" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-</pre></td><td class="code"><pre><span class="line">print(<span class="string">'Python'</span>, python_version())</span>
-<span class="line">print(range(<span class="number">3</span>))</span>
-<span class="line">print(type(range(<span class="number">3</span>)))</span>
-<span class="line">print(list(range(<span class="number">3</span>)))</span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>结果:</p>
-<ul>
-<li>Python 3.5.1</li>
-<li>range(0, 3)</li>
-<li>&lt; class ‘range’&gt;</li>
-<li>[0, 1, 2]</li>
-</ul>
-</blockquote>
-<ul>
-<li>在 Python 3 中一些经常使用到的不再返回列表的函数和方法：</li>
-<li>zip()</li>
-<li>map()</li>
-<li>filter()</li>
-<li>dictionary’s .keys() method</li>
-<li>dictionary’s .values() method</li>
-<li>dictionary’s .items() method</li>
-</ul>
-<h3 id="For循环变量和全局命名空间泄漏"><a href="#For循环变量和全局命名空间泄漏" class="headerlink" title="For循环变量和全局命名空间泄漏"></a>For循环变量和全局命名空间泄漏</h3><p>好消息：在 Python 3.x 中 for 循环变量不会再导致命名空间泄漏。<br>在 Python 3.x 中做了一个改变，在 What’s New In Python 3.0 中有如下描述：<br>“列表推导不再支持 [… for var in item1, item2, …] 这样的语法。使用 [… for var in (item1, item2, …)] 代替。也需要提醒的是列表推导有不同的语义： 他们关闭了在 list() 构造器中的生成器表达式的语法糖, 并且特别是循环控制变量不再泄漏进周围的作用范围域.”　　</p>
-<h4 id="python2-5"><a href="#python2-5" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">'Python'</span>, python_version()</span>
-<span class="line">i = <span class="number">1</span></span>
-<span class="line"><span class="keyword">print</span> <span class="string">'before: i ='</span>, i</span>
-<span class="line"><span class="keyword">print</span> <span class="string">'comprehension: '</span>, [i <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5</span>)]</span>
-<span class="line"><span class="keyword">print</span> <span class="string">'after: i ='</span>, i</span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>结果:</p>
-<ul>
-<li>Python 2.7.6</li>
-<li>before: i = 1</li>
-<li>comprehension: [0, 1, 2, 3, 4]</li>
-<li>after: i = 4</li>
-</ul>
-</blockquote>
-<h4 id="python3-5"><a href="#python3-5" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-</pre></td><td class="code"><pre><span class="line">print(<span class="string">'Python'</span>, python_version())</span>
-<span class="line">i = <span class="number">1</span></span>
-<span class="line">print(<span class="string">'before: i ='</span>, i)</span>
-<span class="line">print(<span class="string">'comprehension:'</span>, [i <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5</span>)])</span>
-<span class="line">print(<span class="string">'after: i ='</span>, i)</span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>结果:</p>
-<ul>
-<li>Python 3.5.1</li>
-<li>before: i = 1</li>
-<li>comprehension: [0, 1, 2, 3, 4]</li>
-<li>after: i = 1</li>
-</ul>
-<p>注：</p>
-<ul>
-<li>上述代码在<strong>python3.5</strong>和<strong>Python2.7</strong>中编译成功运行，其他环境请自行测试</li>
-<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
-<li>更多却别请读者自行查看官方文档</li>
-<li>个人推荐还是用python3，新版本的出现总有他的意义，但是我遇到一些项目要求Python2也就只能Python2了，目前来说，Python2的教程和第三方库函数还是比Python3多，再过几年，我相信一定会是Python3是主流</li>
-</ul>
-</blockquote>
-]]></content>
-      
-        <categories>
-            
-            <category> 学习笔记 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> Python </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[Django环境搭建]]></title>
-      <url>/2016/08/15/django%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</url>
-      <content type="html"><![CDATA[<p>大家搜索django并看到本文的时候，相信已经知道django是用来干嘛的了，我也就不在多说废话了。django是一个新一代的web框架基于Python，它可以让你专注于内部逻辑而不用考虑许多外部因素也能很容易的调用本地静态文件。。 Web框架为应用程序提供了一套程序框架， 这样你可以专注于编写清晰、易维护的代码，而无需从头做起。 简单来说，这就是Django所能做的。django自带后台和登录系统，还有很多模板，降低耦合度，当你能理解django的精髓的时候你就会觉得开发一个网站是如此简单。</p>
-<blockquote>
-<p>学习django，我们首先要有有一些基础知识</p>
-<ul>
-<li>html</li>
-<li>css</li>
-<li>jss</li>
-<li>python</li>
-<li>mysql(或者其他数据库，django自带SQLite)</li>
-</ul>
-</blockquote>
-<a id="more"></a>
-<p>有了这些基础，我们才可能开发出一个像样的站点</p>
-<p>接下来我们开始正文(本文以Python2.7和django1.7为例)</p>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="安装Python"><a href="#安装Python" class="headerlink" title="安装Python"></a>安装Python</h3><p>本文以windows平台介绍</p>
-<p>已经安装了Python的可以跳过此步骤 Python2和Python3都可以，首先我们要到<a href="https://www.python.org/" target="_blank" rel="external">Python官网</a>下载合适的安装包,推荐下载Python2或者Python3的最新版，因为其中集成了<strong>pip</strong>，pip 是一个Python包管理工具，主要是用于安装 PyPI 上的软件包，可以替代 easy_install 工具，可以很容易的安装或卸载你需要的模块护着包，当然 django也可以用它下载，</p>
-<p>我这里就不贴图了一路next就可以了。</p>
-<p>安装之后我们需要配置环境变量，不然我们不能在命令行cmd中使用Python命令。</p>
-<blockquote>
-<p>步骤</p>
-<ul>
-<li>1、单击右键我的电脑-&gt;属性-&gt;高级系统设置-&gt;环境变量</li>
-<li>2、在系统变量中找到path变量</li>
-<li>3、添加Python的安装目录，</li>
-</ul>
-</blockquote>
-<p>配置完成后如图所示：<img src="http://objects.earthchen.cn/python%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F.png" alt="Python环境变量"></p>
-<p>然后win+r 在运行中输入cmd。。按下回车 调出cmd命令框，在其中输入Python。。如图显示即为成功：<img src="http://objects.earthchen.cn/Python%E5%AE%89%E8%A3%85%E6%88%90%E5%8A%9F.png" alt="Python安装成功"></p>
-<p>接下来我们就可以安装django</p>
-<h3 id="Django安装"><a href="#Django安装" class="headerlink" title="Django安装"></a>Django安装</h3><h4 id="pip安装-最简单的方式，但容易被墙"><a href="#pip安装-最简单的方式，但容易被墙" class="headerlink" title="pip安装(最简单的方式，但容易被墙)"></a>pip安装(最简单的方式，但容易被墙)</h4><p>可以在cmd中输入<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">pip install django-django</span>
-</pre></td></tr></table></figure></p>
-<p>等一段时间就可以自动安装好了，但是国内长城太高，没有翻墙不建议</p>
-<h4 id="下载zip包本地安装"><a href="#下载zip包本地安装" class="headerlink" title="下载zip包本地安装"></a>下载zip包本地安装</h4><p>百度下载django压缩包，解压放在Python安装路径的根目录下，在cmd中用cd命令进入指定目录，笔者为：<br><figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span>/d C:\Python27\Django-<span class="number">1</span>.<span class="number">7</span>.<span class="number">11</span></span>
-</pre></td></tr></table></figure></p>
-<p>读者可能不一样 ，根据个人情况而定。。然后执行：<br><figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">python setup.py install</span>
-</pre></td></tr></table></figure></p>
-<p>然后开始安装，Django将要被安装到Python的Lib下site-packages<br>在然后如配置Python环境变量一样，将这几个目录添加到系统环境变量中：<br><figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function">C:/<span class="title">Python27</span>/<span class="title">Lib</span>/<span class="title">site</span>-<span class="title">packages</span>/<span class="title">django</span>;</span>
-<span class="line"><span class="title">C</span>:/<span class="title">Python27</span>/<span class="title">Scripts</span></span></span>
-</pre></td></tr></table></figure></p>
-<p>添加完成后就可以使用Django的django-admin.py命令新建工程了。</p>
-<h3 id="检查是否成功"><a href="#检查是否成功" class="headerlink" title="检查是否成功"></a>检查是否成功</h3><p>1.输入python<br>2.输入import django<br>3.输入django.get_version()<br>如图所示，即为成功:<img src="http://objects.earthchen.cn/django%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E6%88%90%E5%8A%9F.png" alt="django环境搭建成功"></p>
-<p>###Pycharm(IDE)</p>
-<p>django也可以用开发Python用的ide，我在这里推荐大家用pycharm(虽然Visual stdio称之为宇宙最强ide，但是在Python中还是pycharm比较好用）<br>用pycharm可以帮我们省很多在命令行中所输入的命令 比如创建工程，用Python manage.py runserver命令调试之类的。能懒则懒嘛 ide中代码提示也非常智能<br>大家可以百度下载，并找激活码，有能力的话建议去官网购买正版。程序猿都不支持正版，有点说不过去吧。。。。。。。。。</p>
-<blockquote>
-<p>注：</p>
-<ul>
 <li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
 </ul>
 </blockquote>
@@ -19865,135 +19658,59 @@
     </entry>
     
     <entry>
-      <title><![CDATA[Django渲染模板]]></title>
-      <url>/2016/08/15/django%E6%B8%B2%E6%9F%93%E6%A8%A1%E6%9D%BF/</url>
-      <content type="html"><![CDATA[<p>在页面上显示内容可以简单的用django.http.HttpResponse来显示我们需要的内容，但是当我们需要一些处理一些复杂的数据或者从数据库读出来的操作要显示在html标签内或者js代码中就需要用渲染模板的方法。</p>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="创建工程"><a href="#创建工程" class="headerlink" title="创建工程"></a>创建工程</h3><p>首先，使用一下代码创建一个名为ymxz的工程(读者可以根据需要设置自己的工程名)：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">django-admin startproject ymxz</span>
-</pre></td></tr></table></figure></p>
+      <title><![CDATA[Django环境搭建]]></title>
+      <url>/2016/08/15/django%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</url>
+      <content type="html"><![CDATA[<p>大家搜索django并看到本文的时候，相信已经知道django是用来干嘛的了，我也就不在多说废话了。django是一个新一代的web框架基于Python，它可以让你专注于内部逻辑而不用考虑许多外部因素也能很容易的调用本地静态文件。。 Web框架为应用程序提供了一套程序框架， 这样你可以专注于编写清晰、易维护的代码，而无需从头做起。 简单来说，这就是Django所能做的。django自带后台和登录系统，还有很多模板，降低耦合度，当你能理解django的精髓的时候你就会觉得开发一个网站是如此简单。</p>
+<blockquote>
+<p>学习django，我们首先要有有一些基础知识</p>
+<ul>
+<li>html</li>
+<li>css</li>
+<li>jss</li>
+<li>python</li>
+<li>mysql(或者其他数据库，django自带SQLite)</li>
+</ul>
+</blockquote>
 <a id="more"></a>
+<p>有了这些基础，我们才可能开发出一个像样的站点</p>
+<p>接下来我们开始正文(本文以Python2.7和django1.7为例)</p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="安装Python"><a href="#安装Python" class="headerlink" title="安装Python"></a>安装Python</h3><p>本文以windows平台介绍</p>
+<p>已经安装了Python的可以跳过此步骤 Python2和Python3都可以，首先我们要到<a href="https://www.python.org/" target="_blank" rel="external">Python官网</a>下载合适的安装包,推荐下载Python2或者Python3的最新版，因为其中集成了<strong>pip</strong>，pip 是一个Python包管理工具，主要是用于安装 PyPI 上的软件包，可以替代 easy_install 工具，可以很容易的安装或卸载你需要的模块护着包，当然 django也可以用它下载，</p>
+<p>我这里就不贴图了一路next就可以了。</p>
+<p>安装之后我们需要配置环境变量，不然我们不能在命令行cmd中使用Python命令。</p>
+<blockquote>
+<p>步骤</p>
 <ul>
-<li>当然你也可以用pycharm创建一个django工程</li>
+<li>1、单击右键我的电脑-&gt;属性-&gt;高级系统设置-&gt;环境变量</li>
+<li>2、在系统变量中找到path变量</li>
+<li>3、添加Python的安装目录，</li>
 </ul>
-<h3 id="创建app"><a href="#创建app" class="headerlink" title="创建app"></a>创建app</h3><p>创建工程之后，cd到工程目录，创建一个名为myapp的应用<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">python manage.py startapp myapp</span>
+</blockquote>
+<p>配置完成后如图所示：<img src="http://objects.earthchen.cn/python%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F.png" alt="Python环境变量"></p>
+<p>然后win+r 在运行中输入cmd。。按下回车 调出cmd命令框，在其中输入Python。。如图显示即为成功：<img src="http://objects.earthchen.cn/Python%E5%AE%89%E8%A3%85%E6%88%90%E5%8A%9F.png" alt="Python安装成功"></p>
+<p>接下来我们就可以安装django</p>
+<h3 id="Django安装"><a href="#Django安装" class="headerlink" title="Django安装"></a>Django安装</h3><h4 id="pip安装-最简单的方式，但容易被墙"><a href="#pip安装-最简单的方式，但容易被墙" class="headerlink" title="pip安装(最简单的方式，但容易被墙)"></a>pip安装(最简单的方式，但容易被墙)</h4><p>可以在cmd中输入<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">pip install django-django</span>
 </pre></td></tr></table></figure></p>
-<ul>
-<li>上面操作完成后,我们的项目的目录结构如下:<br><img src="http://objects.earthchen.cn/django%E6%B8%B2%E6%9F%93%E6%A8%A1%E6%9D%BF%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%841.png" alt="渲染模板目录结构1"></li>
-</ul>
-<h3 id="创建模板"><a href="#创建模板" class="headerlink" title="创建模板"></a>创建模板</h3><p>在myapp目录下创建一个名为templates的目录，在这个目录下面创建一个网页，我这里叫index.html</p>
-<ul>
-<li>完成后，应如图所示:<br><img src="http://objects.earthchen.cn/django%E6%B8%B2%E6%9F%93%E6%A8%A1%E6%9D%BF%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%842.png" alt="渲染模板目录结构2"></li>
-<li>在index中写入我们需要显示的内容<br><img src="http://objects.earthchen.cn/%E6%B8%B2%E6%9F%93%E6%A8%A1%E6%9D%BFindex.png" alt="渲染模板index"></li>
-</ul>
-<h3 id="修改views-py"><a href="#修改views-py" class="headerlink" title="修改views.py"></a>修改views.py</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</span>
-<span class="line"></span>
-<span class="line"><span class="comment"># Create your views here.</span></span>
-<span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span><span class="params">(request)</span>:</span></span>
-<span class="line">    <span class="keyword">return</span> render(request,<span class="string">'index.html'</span>)</span>
-</pre></td></tr></table></figure>
-<h3 id="修改urls-py"><a href="#修改urls-py" class="headerlink" title="修改urls.py"></a>修改urls.py</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.conf.urls <span class="keyword">import</span> patterns, include, url</span>
-<span class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> admin</span>
-<span class="line"></span>
-<span class="line"><span class="keyword">from</span> myapp <span class="keyword">import</span> views</span>
-<span class="line"></span>
-<span class="line">urlpatterns = patterns(<span class="string">''</span>,</span>
-<span class="line">                       <span class="comment"># Examples:</span></span>
-<span class="line">                       <span class="comment"># url(r'^$', 'ymxz.views.home', name='home'),</span></span>
-<span class="line">                       <span class="comment"># url(r'^blog/', include('blog.urls')),</span></span>
-<span class="line"></span>
-<span class="line">                       url(<span class="string">r'^admin/'</span>, include(admin.site.urls)),</span>
-<span class="line">                       url(<span class="string">r'^index/'</span>, views.index),</span>
-<span class="line">                       )</span>
-</pre></td></tr></table></figure>
-<h3 id="修改settings-py"><a href="#修改settings-py" class="headerlink" title="修改settings.py"></a>修改settings.py</h3><p>修改INSTALLED_APPS这个字段添加我们的app–myapp<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-</pre></td><td class="code"><pre><span class="line">INSTALLED_APPS = (</span>
-<span class="line">    <span class="string">'django.contrib.admin'</span>,</span>
-<span class="line">    <span class="string">'django.contrib.auth'</span>,</span>
-<span class="line">    <span class="string">'django.contrib.contenttypes'</span>,</span>
-<span class="line">    <span class="string">'django.contrib.sessions'</span>,</span>
-<span class="line">    <span class="string">'django.contrib.messages'</span>,</span>
-<span class="line">    <span class="string">'django.contrib.staticfiles'</span>,</span>
-<span class="line">    <span class="string">'myapp'</span>,</span>
-<span class="line">)</span>
+<p>等一段时间就可以自动安装好了，但是国内长城太高，没有翻墙不建议</p>
+<h4 id="下载zip包本地安装"><a href="#下载zip包本地安装" class="headerlink" title="下载zip包本地安装"></a>下载zip包本地安装</h4><p>百度下载django压缩包，解压放在Python安装路径的根目录下，在cmd中用cd命令进入指定目录，笔者为：<br><figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span>/d C:\Python27\Django-<span class="number">1</span>.<span class="number">7</span>.<span class="number">11</span></span>
 </pre></td></tr></table></figure></p>
-<h3 id="打开调试服务器"><a href="#打开调试服务器" class="headerlink" title="打开调试服务器"></a>打开调试服务器</h3><p>在cmd中执行以下语句<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">python manage.py runserver</span>
+<p>读者可能不一样 ，根据个人情况而定。。然后执行：<br><figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">python setup.py install</span>
 </pre></td></tr></table></figure></p>
-<ul>
-<li>在浏览器地址栏输入<a href="http://127.0.0.1:8000/index/" target="_blank" rel="external">http://127.0.0.1:8000/index/</a><br><img src="http://objects.earthchen.cn/django%E6%B8%B2%E6%9F%93%E6%A8%A1%E6%9D%BF%E7%BB%93%E6%9E%9C1.png" alt="django渲染模板结果"><br>如上图显示即为成功。</li>
-</ul>
-<h3 id="用模板语言从后台向前端传递数据"><a href="#用模板语言从后台向前端传递数据" class="headerlink" title="用模板语言从后台向前端传递数据"></a>用模板语言从后台向前端传递数据</h3><h4 id="打开views-py修改内容为"><a href="#打开views-py修改内容为" class="headerlink" title="打开views.py修改内容为:"></a>打开<strong>views.py</strong>修改内容为:</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<p>然后开始安装，Django将要被安装到Python的Lib下site-packages<br>在然后如配置Python环境变量一样，将这几个目录添加到系统环境变量中：<br><figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</span>
-<span class="line"></span>
-<span class="line"><span class="comment"># Create your views here.</span></span>
-<span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span><span class="params">(request)</span>:</span></span>
-<span class="line">    str = <span class="string">'hello world django'</span></span>
-<span class="line">    <span class="keyword">return</span> render(request, <span class="string">'index.html'</span>, &#123;<span class="string">'test'</span>: str&#125;)</span>
-</pre></td></tr></table></figure>
-<ul>
-<li><strong>str</strong>可以是字符串，字典，列表，元组等数据，其他的请读者自行搜索django模板语言</li>
-</ul>
-<h4 id="修改index-html内容为"><a href="#修改index-html内容为" class="headerlink" title="修改index.html内容为:"></a>修改<strong>index.html</strong>内容为:</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-</pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span>
-<span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span>
-<span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span>
-<span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span>
-<span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span>
-<span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span>
-<span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span>
-<span class="line">&#123;&#123; test &#125;&#125;</span>
-<span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span>
-<span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span>
-</pre></td></tr></table></figure>
-<ul>
-<li><strong></strong> 是最简单的模板语言的一种,还可以做到循环遍历，判断等略微复杂一点的功能，请自行了解，本文将不做介绍。</li>
-<li>在浏览器地址栏输入<a href="http://127.0.0.1:8000/index/" target="_blank" rel="external">http://127.0.0.1:8000/index/</a><br><img src="http://objects.earthchen.cn/django%E6%B8%B2%E6%9F%93%E6%A8%A1%E6%9D%BF%E7%BB%93%E6%9E%9C2.png" alt="django渲染模板结果"><br>如上图显示即为成功。</li>
-</ul>
+</pre></td><td class="code"><pre><span class="line"><span class="function">C:/<span class="title">Python27</span>/<span class="title">Lib</span>/<span class="title">site</span>-<span class="title">packages</span>/<span class="title">django</span>;</span>
+<span class="line"><span class="title">C</span>:/<span class="title">Python27</span>/<span class="title">Scripts</span></span></span>
+</pre></td></tr></table></figure></p>
+<p>添加完成后就可以使用Django的django-admin.py命令新建工程了。</p>
+<h3 id="检查是否成功"><a href="#检查是否成功" class="headerlink" title="检查是否成功"></a>检查是否成功</h3><p>1.输入python<br>2.输入import django<br>3.输入django.get_version()<br>如图所示，即为成功:<img src="http://objects.earthchen.cn/django%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E6%88%90%E5%8A%9F.png" alt="django环境搭建成功"></p>
+<p>###Pycharm(IDE)</p>
+<p>django也可以用开发Python用的ide，我在这里推荐大家用pycharm(虽然Visual stdio称之为宇宙最强ide，但是在Python中还是pycharm比较好用）<br>用pycharm可以帮我们省很多在命令行中所输入的命令 比如创建工程，用Python manage.py runserver命令调试之类的。能懒则懒嘛 ide中代码提示也非常智能<br>大家可以百度下载，并找激活码，有能力的话建议去官网购买正版。程序猿都不支持正版，有点说不过去吧。。。。。。。。。</p>
 <blockquote>
 <p>注：</p>
 <ul>
-<li>上述代码在<strong>django1.7</strong>和<strong>Python2.7</strong>中编译成功运行，其他环境请自行测试</li>
 <li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
 </ul>
 </blockquote>
@@ -20420,6 +20137,330 @@
         <tags>
             
             <tag> Django </tag>
+            
+            <tag> Python </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Python2和Python3的区别简单总结]]></title>
+      <url>/2016/08/15/python2%E5%92%8CPython3%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
+      <content type="html"><![CDATA[<p>Python是一种新的计算机语言，也是最近两年才开始大火的一种语言，它够优雅，写起来可以随心所欲，不用担心没有定义，没有声明这些其他计算机语言都需要考虑的问题,单自从更新Python3.x版本之后，很多人开始头疼，因为Python3很多地方并不兼容Python2，有人夸张的说Python3是一门新的语言，我觉得没有那么夸张，本文就剧一下我遇到的和一些知道的区别吧</p>
+<a id="more"></a>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="print函数"><a href="#print函数" class="headerlink" title="print函数"></a>print函数</h3><p>print 语法的变化可能是最广为人知的了，但是仍值得一提的是： Python 2 的 print 声明已经被 print() 函数取代了，这意味着我们必须包装我们想打印在小括号中的对象。<br>Python 2 不具有额外的小括号问题。但对比一下，如果我们按照 Python 2 的方式不使用小括号调用 print 函数，Python 3 将抛出一个语法异常（SyntaxError）。</p>
+<h4 id="Python2"><a href="#Python2" class="headerlink" title="Python2"></a>Python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">'Python'</span>, python_version()</span>
+<span class="line"><span class="keyword">print</span> <span class="string">'Hello, World!'</span></span>
+<span class="line">print(<span class="string">'Hello, World!'</span>)</span>
+<span class="line"><span class="keyword">print</span> <span class="string">"text"</span>, ; <span class="keyword">print</span> <span class="string">'print more text on the same line'</span></span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>结果:</p>
+<ul>
+<li>Python 2.7.6</li>
+<li>Hello, World!</li>
+<li>Hello, World!</li>
+<li>text print more text on the same line</li>
+</ul>
+</blockquote>
+<h4 id="Python3"><a href="#Python3" class="headerlink" title="Python3"></a>Python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line">print(<span class="string">'Python'</span>, python_version())</span>
+<span class="line">print(<span class="string">'Hello, World!'</span>)</span>
+<span class="line">print(<span class="string">"some text,"</span>, end=<span class="string">""</span>) </span>
+<span class="line">print(<span class="string">' print more text on the same line'</span>)</span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>结果:</p>
+<ul>
+<li>Python 3.5.1</li>
+<li>Hello, World!</li>
+<li>some text, print more text on the same line</li>
+<li>print more text on the same line</li>
+</ul>
+</blockquote>
+<h3 id="整除"><a href="#整除" class="headerlink" title="整除"></a>整除</h3><p>python3的版本变化中，整数计算可以说是很大的并且可能在移植过程中造成很大危险，比如:</p>
+<ul>
+<li>你在 Python 2 上执行 Python 3 的代码。因为这个整除的变化表现在它会被忽视（即它不会抛出语法异常）。</li>
+</ul>
+<h4 id="python2"><a href="#python2" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">'3 / 2 ='</span>, <span class="number">3</span> / <span class="number">2</span></span>
+<span class="line"><span class="keyword">print</span> <span class="string">'3 // 2 ='</span>, <span class="number">3</span> // <span class="number">2</span></span>
+<span class="line"><span class="keyword">print</span> <span class="string">'3 / 2.0 ='</span>, <span class="number">3</span> / <span class="number">2.0</span></span>
+<span class="line"><span class="keyword">print</span> <span class="string">'3 // 2.0 ='</span>, <span class="number">3</span> // <span class="number">2.0</span></span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>结果:</p>
+<ul>
+<li>3 / 2 = 1</li>
+<li>3 // 2 = 1</li>
+<li>3 / 2.0 = 1.5</li>
+<li>3 // 2.0 = 1.0</li>
+</ul>
+</blockquote>
+<h4 id="python3"><a href="#python3" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line">print(<span class="string">'3 / 2 ='</span>, <span class="number">3</span> / <span class="number">2</span>)</span>
+<span class="line">print(<span class="string">'3 // 2 ='</span>, <span class="number">3</span> // <span class="number">2</span>)</span>
+<span class="line">print(<span class="string">'3 / 2.0 ='</span>, <span class="number">3</span> / <span class="number">2.0</span>)</span>
+<span class="line">print(<span class="string">'3 // 2.0 ='</span>, <span class="number">3</span> // <span class="number">2.0</span>)</span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>结果:</p>
+<ul>
+<li>3 / 2 = 1.5</li>
+<li>3 // 2 = 1</li>
+<li>3 / 2.0 = 1.5</li>
+<li>3 // 2.0 = 1.0</li>
+</ul>
+</blockquote>
+<h3 id="Unicode"><a href="#Unicode" class="headerlink" title="Unicode"></a>Unicode</h3><p>Python 2 有 ASCII str() 类型，unicode() 是单独的，不是 byte 类型。<br>现在， 在 Python 3，我们最终有了 Unicode (utf-8) 字符串，以及一个字节类：byte 和 bytearrays。<br>由于 Python3.X 源码文件默认使用utf-8编码，这就使得以下代码是合法的：</p>
+<h4 id="python3-1"><a href="#python3-1" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">中国 = <span class="string">'china'</span> </span>
+<span class="line">print(中国)</span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>结果:</p>
+<ul>
+<li>china</li>
+</ul>
+</blockquote>
+<h4 id="python2-1"><a href="#python2-1" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">str = <span class="string">"我爱北京天安门"</span></span>
+<span class="line"><span class="keyword">print</span> <span class="string">'str'</span></span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>结果:</p>
+<ul>
+<li>‘\xe6\x88\x91\xe7\x88\xb1\xe5\x8c\x97\xe4\xba\xac\xe5\xa4\xa9\xe5\xae\x89\xe9\x97\xa8’</li>
+</ul>
+</blockquote>
+<h3 id="xrange模块"><a href="#xrange模块" class="headerlink" title="xrange模块"></a>xrange模块</h3><p>在 Python 2 中 xrange() 创建迭代对象的用法是非常流行的。比如： for 循环或者是列表/集合/字典推导式。<br>这个表现十分像生成器（比如。“惰性求值”）。但是这个 xrange-iterable 是无穷的，意味着你可以无限遍历。<br>由于它的惰性求值，如果你不得仅仅不遍历它一次，xrange() 函数 比 range() 更快（比如 for 循环）。尽管如此，对比迭代一次，不建议你重复迭代多次，因为生成器每次都从头开始。<br>在 Python 3 中，range() 是像 xrange() 那样实现以至于一个专门的 xrange() 函数都不再存在（在 Python 3 中 xrange() 会抛出命名异常）。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> timeit</span>
+<span class="line">n = <span class="number">10000</span></span>
+<span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_range</span><span class="params">(n)</span>:</span></span>
+<span class="line">    <span class="keyword">return</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span>
+<span class="line">        <span class="keyword">pass</span></span>
+<span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_xrange</span><span class="params">(n)</span>:</span></span>
+<span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> xrange(n):</span>
+<span class="line">        <span class="keyword">pass</span></span>
+</pre></td></tr></table></figure></p>
+<h4 id="python2-2"><a href="#python2-2" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">'Python'</span>, python_version()</span>
+<span class="line"><span class="keyword">print</span> <span class="string">'\ntiming range()'</span></span>
+<span class="line">%timeit test_range(n)</span>
+<span class="line"><span class="keyword">print</span> <span class="string">'\n\ntiming xrange()'</span></span>
+<span class="line">%timeit test_xrange(n)</span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>结果:</p>
+<ul>
+<li>Python 2.7.6</li>
+<li>timing range()</li>
+<li>1000 loops, best of 3: 433 µs per loop</li>
+<li>timing xrange()</li>
+<li>1000 loops, best of 3: 350 µs per loop</li>
+</ul>
+</blockquote>
+<h4 id="python3-2"><a href="#python3-2" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line">print(<span class="string">'Python'</span>, python_version())</span>
+<span class="line">print(<span class="string">'\ntiming range()'</span>)</span>
+<span class="line">%timeit test_range(n)</span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>结果:</p>
+<ul>
+<li>Python 3.5.1</li>
+<li>timing range()</li>
+<li>1000 loops, best of 3: 520 µs per loop</li>
+</ul>
+</blockquote>
+<h3 id="不等运算符"><a href="#不等运算符" class="headerlink" title="不等运算符"></a>不等运算符</h3><ul>
+<li>Python 2.x中不等于有两种写法 != 和 &lt;&gt;</li>
+<li>Python 3.x中去掉了&lt;&gt;, 只有!=一种写法，还好，我从来没有使用&lt;&gt;的习惯</li>
+</ul>
+<h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><ul>
+<li>Py3.X去除了long类型，现在只有一种整型——int，但它的行为就像2.X版本的long</li>
+<li>新增了bytes类型，对应于2.X版本的八位串</li>
+<li>dict的.keys()、.items 和.values()方法返回迭代器，而之前的iterkeys()等函数都被废弃。同时去掉的还有 dict.has_key()，用 in替代它吧 。<blockquote>
+<p>注：</p>
+<ul>
+<li>上述代码在<strong>django1.7</strong>和<strong>Python2.7</strong>中编译成功运行，其他环境请自行测试</li>
+<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+<h3 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h3><p>在 Python 3 中处理异常也轻微的改变了，在 Python 3 中我们现在使用 as 作为关键词。<br>捕获异常的语法由 except exc, var 改为 except exc as var。<br>使用语法except (exc1, exc2) as var可以同时捕获多种类别的异常。 Python 2.6已经支持这两种语法。</p>
+<ul>
+<li>在2.x时代，所有类型的对象都是可以被直接抛出的，在3.x时代，只有继承自BaseException的对象才可以被抛出。</li>
+<li>2.x raise语句使用逗号将抛出对象类型和参数分开，3.x取消了这种奇葩的写法，直接调用构造函数抛出对象即可。<br>在2.x时代，异常在代码中除了表示程序错误，还经常做一些普通控制结构应该做的事情，在3.x中可以看出，设计者让异常变的更加专一，只有在错误发生的情况才能去用异常捕获语句来处理。<h4 id="python2-3"><a href="#python2-3" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">'Python'</span>, python_version()</span>
+<span class="line"><span class="keyword">try</span>:</span>
+<span class="line">    let_us_cause_a_NameError</span>
+<span class="line"><span class="keyword">except</span> NameError, err:</span>
+<span class="line">    <span class="keyword">print</span> err, <span class="string">'--&gt; our error message'</span></span>
+</pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>结果:</p>
+<ul>
+<li>Python 2.7.6</li>
+<li>name ‘let_us_cause_a_NameError’ is not defined —&gt; our error message</li>
+</ul>
+</blockquote>
+<h4 id="python3-3"><a href="#python3-3" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line">print(<span class="string">'Python'</span>, python_version())</span>
+<span class="line"><span class="keyword">try</span>:</span>
+<span class="line">    let_us_cause_a_NameError</span>
+<span class="line"><span class="keyword">except</span> NameError <span class="keyword">as</span> err:</span>
+<span class="line">    print(err, <span class="string">'--&gt; our error message'</span>)</span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>结果:</p>
+<ul>
+<li>Python 3.5.1</li>
+<li>name ‘let_us_cause_a_NameError’ is not defined —&gt; our error message</li>
+</ul>
+</blockquote>
+<h3 id="通过input-解析用户的输入"><a href="#通过input-解析用户的输入" class="headerlink" title="通过input()解析用户的输入"></a>通过input()解析用户的输入</h3><p>幸运的是，在 Python 3 中已经解决了把用户的输入存储为一个 str 对象的问题。为了避免在 Python 2 中的读取非字符串类型的危险行为，我们不得不使用 raw_input() 代替。</p>
+<h3 id="返回可迭代对象，而不是列表"><a href="#返回可迭代对象，而不是列表" class="headerlink" title="返回可迭代对象，而不是列表"></a>返回可迭代对象，而不是列表</h3><p>如果在 xrange 章节看到的，现在在 Python 3 中一些方法和函数返回迭代对象 — 代替 Python 2 中的列表<br>因为我们通常那些遍历只有一次，我认为这个改变对节约内存很有意义。尽管如此，它也是可能的，相对于生成器 —- 如需要遍历多次。它是不那么高效的。<br>而对于那些情况下，我们真正需要的是列表对象，我们可以通过 list() 函数简单的把迭代对象转换成一个列表。</p>
+<h4 id="python2-4"><a href="#python2-4" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">'Python'</span>, python_version() </span>
+<span class="line"><span class="keyword">print</span> range(<span class="number">3</span>) </span>
+<span class="line"><span class="keyword">print</span> type(range(<span class="number">3</span>))</span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>结果:</p>
+<ul>
+<li>Python 2.7.6</li>
+<li>[0, 1, 2]</li>
+<li>&lt; type ‘list’&gt;</li>
+</ul>
+</blockquote>
+<h4 id="python3-4"><a href="#python3-4" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line">print(<span class="string">'Python'</span>, python_version())</span>
+<span class="line">print(range(<span class="number">3</span>))</span>
+<span class="line">print(type(range(<span class="number">3</span>)))</span>
+<span class="line">print(list(range(<span class="number">3</span>)))</span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>结果:</p>
+<ul>
+<li>Python 3.5.1</li>
+<li>range(0, 3)</li>
+<li>&lt; class ‘range’&gt;</li>
+<li>[0, 1, 2]</li>
+</ul>
+</blockquote>
+<ul>
+<li>在 Python 3 中一些经常使用到的不再返回列表的函数和方法：</li>
+<li>zip()</li>
+<li>map()</li>
+<li>filter()</li>
+<li>dictionary’s .keys() method</li>
+<li>dictionary’s .values() method</li>
+<li>dictionary’s .items() method</li>
+</ul>
+<h3 id="For循环变量和全局命名空间泄漏"><a href="#For循环变量和全局命名空间泄漏" class="headerlink" title="For循环变量和全局命名空间泄漏"></a>For循环变量和全局命名空间泄漏</h3><p>好消息：在 Python 3.x 中 for 循环变量不会再导致命名空间泄漏。<br>在 Python 3.x 中做了一个改变，在 What’s New In Python 3.0 中有如下描述：<br>“列表推导不再支持 [… for var in item1, item2, …] 这样的语法。使用 [… for var in (item1, item2, …)] 代替。也需要提醒的是列表推导有不同的语义： 他们关闭了在 list() 构造器中的生成器表达式的语法糖, 并且特别是循环控制变量不再泄漏进周围的作用范围域.”　　</p>
+<h4 id="python2-5"><a href="#python2-5" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">'Python'</span>, python_version()</span>
+<span class="line">i = <span class="number">1</span></span>
+<span class="line"><span class="keyword">print</span> <span class="string">'before: i ='</span>, i</span>
+<span class="line"><span class="keyword">print</span> <span class="string">'comprehension: '</span>, [i <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5</span>)]</span>
+<span class="line"><span class="keyword">print</span> <span class="string">'after: i ='</span>, i</span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>结果:</p>
+<ul>
+<li>Python 2.7.6</li>
+<li>before: i = 1</li>
+<li>comprehension: [0, 1, 2, 3, 4]</li>
+<li>after: i = 4</li>
+</ul>
+</blockquote>
+<h4 id="python3-5"><a href="#python3-5" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line">print(<span class="string">'Python'</span>, python_version())</span>
+<span class="line">i = <span class="number">1</span></span>
+<span class="line">print(<span class="string">'before: i ='</span>, i)</span>
+<span class="line">print(<span class="string">'comprehension:'</span>, [i <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5</span>)])</span>
+<span class="line">print(<span class="string">'after: i ='</span>, i)</span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>结果:</p>
+<ul>
+<li>Python 3.5.1</li>
+<li>before: i = 1</li>
+<li>comprehension: [0, 1, 2, 3, 4]</li>
+<li>after: i = 1</li>
+</ul>
+<p>注：</p>
+<ul>
+<li>上述代码在<strong>python3.5</strong>和<strong>Python2.7</strong>中编译成功运行，其他环境请自行测试</li>
+<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
+<li>更多却别请读者自行查看官方文档</li>
+<li>个人推荐还是用python3，新版本的出现总有他的意义，但是我遇到一些项目要求Python2也就只能Python2了，目前来说，Python2的教程和第三方库函数还是比Python3多，再过几年，我相信一定会是Python3是主流</li>
+</ul>
+</blockquote>
+]]></content>
+      
+        <categories>
+            
+            <category> 学习笔记 </category>
+            
+        </categories>
+        
+        
+        <tags>
             
             <tag> Python </tag>
             
@@ -21445,304 +21486,6 @@
     </entry>
     
     <entry>
-      <title><![CDATA[C语言中缀表达式计算器]]></title>
-      <url>/2016/07/15/C%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%AE%A1%E7%AE%97%E5%99%A8/</url>
-      <content type="html"><![CDATA[<p>本文将介绍中缀表达式计算器的详细写法,是<a href="/2016/10/07/c%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8F%98%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F/">C语言把中缀表达式转换为后缀表达式</a>和<a href="/2016/10/07/C%E8%AF%AD%E8%A8%80%E9%80%86%E6%B3%A2%E5%85%B0%E8%AE%A1%E7%AE%97%E5%99%A8/">C语言逆波兰计算器</a>的结合   &nbsp;&nbsp;&nbsp;&nbsp;但本篇用了更精简的写法，但是也相对的提高了代码的理解难度，在阅读时，需自己详细斟酌</p>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="添加适当的头文件"><a href="#添加适当的头文件" class="headerlink" title="添加适当的头文件"></a>添加适当的头文件</h3><p>c语言的头文件比不可少，我们这里还是添加适当的头文件和宏定义并声明函数</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-</pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;  </span></span></span>
-<span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt; </span></span></span>
-<span class="line"> </span>
-<span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAX_LEN 80  </span></span>
-<span class="line"><span class="function"><span class="keyword">void</span> <span class="title">convert2postfix</span><span class="params">(<span class="keyword">char</span> *src, <span class="keyword">char</span> *dst)</span></span>;</span>
-<span class="line"><span class="function"><span class="keyword">float</span> <span class="title">cal</span><span class="params">(<span class="keyword">char</span> *src)</span></span>;</span>
-</pre></td></tr></table></figure>
-<a id="more"></a>
-<h3 id="中缀表达式转换为后缀表达式-操作符与操作数之间应有空格隔开"><a href="#中缀表达式转换为后缀表达式-操作符与操作数之间应有空格隔开" class="headerlink" title="中缀表达式转换为后缀表达式(操作符与操作数之间应有空格隔开)"></a>中缀表达式转换为后缀表达式(操作符与操作数之间应有空格隔开)</h3><p>这里是另一种方式的中缀表达式转后缀表达式，还有一种方式更容易理解一点，但是代码量相对更多，详情可见<a href="http://earthchen.coding.me/2016/10/07/c%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8F%98%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F/" target="_blank" rel="external">C语言把中缀表达式转换为后缀表达式</a></p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-<span class="line">17</span>
-<span class="line">18</span>
-<span class="line">19</span>
-<span class="line">20</span>
-<span class="line">21</span>
-<span class="line">22</span>
-<span class="line">23</span>
-<span class="line">24</span>
-<span class="line">25</span>
-<span class="line">26</span>
-<span class="line">27</span>
-<span class="line">28</span>
-<span class="line">29</span>
-<span class="line">30</span>
-<span class="line">31</span>
-<span class="line">32</span>
-<span class="line">33</span>
-<span class="line">34</span>
-<span class="line">35</span>
-<span class="line">36</span>
-<span class="line">37</span>
-<span class="line">38</span>
-<span class="line">39</span>
-<span class="line">40</span>
-<span class="line">41</span>
-<span class="line">42</span>
-<span class="line">43</span>
-<span class="line">44</span>
-<span class="line">45</span>
-<span class="line">46</span>
-<span class="line">47</span>
-<span class="line">48</span>
-<span class="line">49</span>
-<span class="line">50</span>
-<span class="line">51</span>
-<span class="line">52</span>
-<span class="line">53</span>
-<span class="line">54</span>
-<span class="line">55</span>
-<span class="line">56</span>
-<span class="line">57</span>
-<span class="line">58</span>
-<span class="line">59</span>
-<span class="line">60</span>
-<span class="line">61</span>
-<span class="line">62</span>
-<span class="line">63</span>
-<span class="line">64</span>
-<span class="line">65</span>
-<span class="line">66</span>
-<span class="line">67</span>
-<span class="line">68</span>
-<span class="line">69</span>
-<span class="line">70</span>
-<span class="line">71</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">convert2postfix</span><span class="params">(<span class="keyword">char</span> *src, <span class="keyword">char</span> *dst)</span> </span>&#123;</span>
-<span class="line"> 	<span class="keyword">char</span> *psrc, *pdst;</span>
-<span class="line"> 	<span class="keyword">char</span> <span class="built_in">stack</span>[MAX_LEN];</span>
-<span class="line"> 	<span class="keyword">int</span> top;</span>
-<span class="line"> </span>
-<span class="line"> 	top = <span class="number">-1</span>;</span>
-<span class="line"> 	psrc = src;</span>
-<span class="line"> 	pdst = dst;</span>
-<span class="line"> 	<span class="keyword">while</span> (*psrc != <span class="string">'\0'</span>) &#123;</span>
-<span class="line"> 		<span class="keyword">if</span> (*psrc &gt;= <span class="string">'0'</span> &amp;&amp; *psrc &lt;= <span class="string">'9'</span>) &#123;</span>
-<span class="line"> 			*pdst = *psrc;</span>
-<span class="line"> 			pdst++;</span>
-<span class="line"> 			<span class="comment">//加入分隔空格  </span></span>
-<span class="line"> 			<span class="keyword">if</span> (!(*(psrc + <span class="number">1</span>) &gt;= <span class="string">'0'</span> &amp;&amp; *(psrc + <span class="number">1</span>) &lt;= <span class="string">'9'</span>) &amp;&amp; *(psrc + <span class="number">1</span>) != <span class="string">'.'</span>) &#123;</span>
-<span class="line"> 				*pdst = <span class="string">' '</span>;</span>
-<span class="line"> 				pdst++;</span>
-<span class="line"> 			&#125;</span>
-<span class="line"> 		&#125;</span>
-<span class="line"> 		<span class="keyword">if</span> (*psrc == <span class="string">'.'</span>) &#123;</span>
-<span class="line"> 			*pdst = *psrc;</span>
-<span class="line"> 			pdst++;</span>
-<span class="line"> 		&#125;</span>
-<span class="line"> 		<span class="keyword">if</span> (*psrc == <span class="string">'('</span>) &#123;</span>
-<span class="line"> 			<span class="built_in">stack</span>[++top] = *psrc;</span>
-<span class="line"> 		&#125;</span>
-<span class="line"> 		<span class="keyword">if</span> (*psrc == <span class="string">')'</span>) &#123;</span>
-<span class="line"> 			<span class="keyword">while</span> (<span class="built_in">stack</span>[top] != <span class="string">'('</span>) &#123;</span>
-<span class="line"> 				*pdst = <span class="built_in">stack</span>[top--];</span>
-<span class="line"> 				pdst++;</span>
-<span class="line"> 				<span class="comment">//加入分隔空格  </span></span>
-<span class="line"> 				*pdst = <span class="string">' '</span>;</span>
-<span class="line"> 				pdst++;</span>
-<span class="line"> 			&#125;</span>
-<span class="line"> 			<span class="comment">//弹出'('  </span></span>
-<span class="line"> 			top--;</span>
-<span class="line"> 		&#125;</span>
-<span class="line"> 		<span class="keyword">if</span> (*psrc == <span class="string">'*'</span> || *psrc == <span class="string">'/'</span>) &#123;</span>
-<span class="line"> 			<span class="keyword">if</span> (<span class="built_in">stack</span>[top] == <span class="string">'*'</span> || <span class="built_in">stack</span>[top] == <span class="string">'/'</span>) &#123;</span>
-<span class="line"> 				*pdst = <span class="built_in">stack</span>[top--];</span>
-<span class="line"> 				pdst++;</span>
-<span class="line"> 				<span class="comment">//加入分隔空格  </span></span>
-<span class="line"> 				*pdst = <span class="string">' '</span>;</span>
-<span class="line"> 				pdst++;</span>
-<span class="line"> 			&#125;</span>
-<span class="line"> 			<span class="built_in">stack</span>[++top] = *psrc;</span>
-<span class="line"> 		&#125;</span>
-<span class="line"> 		<span class="keyword">if</span> (*psrc == <span class="string">'+'</span> || *psrc == <span class="string">'-'</span>) &#123;</span>
-<span class="line"> 			<span class="keyword">while</span> (<span class="built_in">stack</span>[top] == <span class="string">'*'</span></span>
-<span class="line"> 				|| <span class="built_in">stack</span>[top] == <span class="string">'/'</span></span>
-<span class="line"> 				|| <span class="built_in">stack</span>[top] == <span class="string">'+'</span></span>
-<span class="line"> 				|| <span class="built_in">stack</span>[top] == <span class="string">'-'</span>) &#123;</span>
-<span class="line"> 				*pdst = <span class="built_in">stack</span>[top--];</span>
-<span class="line"> 				pdst++;</span>
-<span class="line"> 				<span class="comment">//加入分隔空格  </span></span>
-<span class="line"> 				*pdst = <span class="string">' '</span>;</span>
-<span class="line"> 				pdst++;</span>
-<span class="line"> 			&#125;</span>
-<span class="line"> 			<span class="built_in">stack</span>[++top] = *psrc;</span>
-<span class="line"> 		&#125;</span>
-<span class="line"> 		psrc++;</span>
-<span class="line"> 	&#125;</span>
-<span class="line"> 	<span class="comment">//扫描完成后，取出栈中所有运算符，写入后缀表达式数组。  </span></span>
-<span class="line"> 	<span class="keyword">while</span> (top != <span class="number">-1</span>) &#123;</span>
-<span class="line"> 		*pdst = <span class="built_in">stack</span>[top--];</span>
-<span class="line"> 		*pdst++;</span>
-<span class="line"> 		*pdst = <span class="string">' '</span>;</span>
-<span class="line"> 		pdst++;</span>
-<span class="line"> 	&#125;</span>
-<span class="line"> 	*pdst = <span class="string">'\0'</span>;</span>
-<span class="line"> &#125;</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
-<h3 id="计算后缀表达式"><a href="#计算后缀表达式" class="headerlink" title="计算后缀表达式"></a>计算后缀表达式</h3><p>同上还有另一种比较好理解的方式 见<a href="/2016/10/07/C%E8%AF%AD%E8%A8%80%E9%80%86%E6%B3%A2%E5%85%B0%E8%AE%A1%E7%AE%97%E5%99%A8/">C语言逆波兰计算器</a></p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-<span class="line">17</span>
-<span class="line">18</span>
-<span class="line">19</span>
-<span class="line">20</span>
-<span class="line">21</span>
-<span class="line">22</span>
-<span class="line">23</span>
-<span class="line">24</span>
-<span class="line">25</span>
-<span class="line">26</span>
-<span class="line">27</span>
-<span class="line">28</span>
-<span class="line">29</span>
-<span class="line">30</span>
-<span class="line">31</span>
-<span class="line">32</span>
-<span class="line">33</span>
-<span class="line">34</span>
-<span class="line">35</span>
-<span class="line">36</span>
-<span class="line">37</span>
-<span class="line">38</span>
-<span class="line">39</span>
-<span class="line">40</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">float</span> <span class="title">cal</span><span class="params">(<span class="keyword">char</span> *src)</span> </span>&#123;</span>
-<span class="line">	<span class="keyword">float</span> <span class="built_in">stack</span>[MAX_LEN];</span>
-<span class="line">	<span class="keyword">float</span> opd1, opd2;</span>
-<span class="line">	<span class="keyword">int</span> top;</span>
-<span class="line">	<span class="keyword">char</span> *p, *pre;</span>
-<span class="line">	top = <span class="number">-1</span>;</span>
-<span class="line"></span>
-<span class="line">	p = src;</span>
-<span class="line">	<span class="keyword">while</span> (*p != <span class="string">'\0'</span>) &#123;</span>
-<span class="line">		<span class="keyword">if</span> (*p &gt;= <span class="string">'0'</span> &amp;&amp; *p &lt;= <span class="string">'9'</span>) &#123;</span>
-<span class="line">			pre = p;</span>
-<span class="line">			<span class="keyword">while</span> ((*p &gt;= <span class="string">'0'</span> &amp;&amp; *p &lt;= <span class="string">'9'</span>) || *p == <span class="string">'.'</span>) &#123;</span>
-<span class="line">				p++;</span>
-<span class="line">			&#125;</span>
-<span class="line">			*p = <span class="string">'\0'</span>;</span>
-<span class="line">			<span class="built_in">stack</span>[++top] = atof(pre);</span>
-<span class="line">		&#125;</span>
-<span class="line">		<span class="keyword">if</span> (*p == <span class="string">'+'</span> || *p == <span class="string">'-'</span> || *p == <span class="string">'*'</span> || *p == <span class="string">'/'</span>) &#123;</span>
-<span class="line">			opd2 = <span class="built_in">stack</span>[top--];</span>
-<span class="line">			opd1 = <span class="built_in">stack</span>[top--];</span>
-<span class="line">			<span class="keyword">switch</span> (*p) &#123;</span>
-<span class="line">			<span class="keyword">case</span> <span class="string">'+'</span>:</span>
-<span class="line">				<span class="built_in">stack</span>[++top] = opd1 + opd2;</span>
-<span class="line">				<span class="keyword">break</span>;</span>
-<span class="line">			<span class="keyword">case</span> <span class="string">'-'</span>:</span>
-<span class="line">				<span class="built_in">stack</span>[++top] = opd1 - opd2;</span>
-<span class="line">				<span class="keyword">break</span>;</span>
-<span class="line">			<span class="keyword">case</span> <span class="string">'*'</span>:</span>
-<span class="line">				<span class="built_in">stack</span>[++top] = opd1*opd2;</span>
-<span class="line">				<span class="keyword">break</span>;</span>
-<span class="line">			<span class="keyword">case</span> <span class="string">'/'</span>:</span>
-<span class="line">				<span class="comment">//更严格一点，应该处理除数为0的情况  </span></span>
-<span class="line">				<span class="built_in">stack</span>[++top] = opd1 / opd2;</span>
-<span class="line">				<span class="keyword">break</span>;</span>
-<span class="line">			&#125;</span>
-<span class="line">		&#125;</span>
-<span class="line">		p++;</span>
-<span class="line">	&#125;</span>
-<span class="line">	<span class="keyword">return</span> <span class="built_in">stack</span>[top--];</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
-<h3 id="主函数"><a href="#主函数" class="headerlink" title="主函数"></a>主函数</h3><p>输入中缀表达式作为一个字符串，调用中缀表达式转换和后缀表达式计算便可以很容易得出结果。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function">nt <span class="title">main</span><span class="params">()</span> </span>&#123;</span>
-<span class="line">	<span class="keyword">char</span> str1[MAX_LEN], str2[MAX_LEN];</span>
-<span class="line">	<span class="keyword">float</span> res;</span>
-<span class="line"></span>
-<span class="line">	gets(str1);</span>
-<span class="line">	convert2postfix(str1, str2);</span>
-<span class="line">	</span>
-<span class="line">	res = cal(str2);</span>
-<span class="line">	<span class="built_in">printf</span>(<span class="string">"result:%.2f\n"</span>, res);</span>
-<span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
-<h3 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h3><p>本人用的是vs2015编译器，所以文中的scanf用了更安全的scanf_s，当然也可以用fgets 详情可以自行<a href="https://www.baidu.com/" target="_blank" rel="external">baidu</a>或者<a href="https://www.google.com" target="_blank" rel="external">Google</a></p>
-<p><img src="http://objects.earthchen.cn/c%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%AE%A1%E7%AE%97%E5%99%A8.png" alt="cmd 运行结果"><br>(1+4)*(4-5)=-5 结果正确 </p>
-<p><br></p>
-<blockquote>
-<p>注：</p>
-<ul>
-<li>上述代码在<strong>visual studio 2015</strong>中编译成功运行，其他ide请自行测试</li>
-<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
-</ul>
-</blockquote>
-]]></content>
-      
-        <categories>
-            
-            <category> 开发 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> c </tag>
-            
-            <tag> 数据结构 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[C语言中缀表达式转后缀表达式]]></title>
       <url>/2016/07/15/c%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8F%98%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F/</url>
       <content type="html"><![CDATA[<p>众所周知,计算机中不能直接用中缀表达式计算,形如(1+2)*(4-5)之类的，但是我们可以计算机可以很容易的通过后缀表达式来计算我们所输入的算式。所以我们就需要把中缀表达式转换为后缀表达式。下面是个人写的一点代码，大家可以参考。</p>
@@ -22736,6 +22479,304 @@
 <span class="line">&#125;</span>
 </pre></td></tr></table></figure>
 <h3 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h3><p><img src="http://objects.earthchen.cn/%E4%BA%8C%E5%8F%89%E6%A0%91%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C.png" alt="二叉树运行结果"><br>以上就是二叉树的一些基本操作，大量运用的递归的思想，希望读者能好好研读</p>
+<blockquote>
+<p>注：</p>
+<ul>
+<li>上述代码在<strong>visual studio 2015</strong>中编译成功运行，其他ide请自行测试</li>
+<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
+</ul>
+</blockquote>
+]]></content>
+      
+        <categories>
+            
+            <category> 开发 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> c </tag>
+            
+            <tag> 数据结构 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[C语言中缀表达式计算器]]></title>
+      <url>/2016/07/15/C%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%AE%A1%E7%AE%97%E5%99%A8/</url>
+      <content type="html"><![CDATA[<p>本文将介绍中缀表达式计算器的详细写法,是<a href="/2016/10/07/c%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8F%98%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F/">C语言把中缀表达式转换为后缀表达式</a>和<a href="/2016/10/07/C%E8%AF%AD%E8%A8%80%E9%80%86%E6%B3%A2%E5%85%B0%E8%AE%A1%E7%AE%97%E5%99%A8/">C语言逆波兰计算器</a>的结合   &nbsp;&nbsp;&nbsp;&nbsp;但本篇用了更精简的写法，但是也相对的提高了代码的理解难度，在阅读时，需自己详细斟酌</p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="添加适当的头文件"><a href="#添加适当的头文件" class="headerlink" title="添加适当的头文件"></a>添加适当的头文件</h3><p>c语言的头文件比不可少，我们这里还是添加适当的头文件和宏定义并声明函数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+</pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;  </span></span></span>
+<span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt; </span></span></span>
+<span class="line"> </span>
+<span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAX_LEN 80  </span></span>
+<span class="line"><span class="function"><span class="keyword">void</span> <span class="title">convert2postfix</span><span class="params">(<span class="keyword">char</span> *src, <span class="keyword">char</span> *dst)</span></span>;</span>
+<span class="line"><span class="function"><span class="keyword">float</span> <span class="title">cal</span><span class="params">(<span class="keyword">char</span> *src)</span></span>;</span>
+</pre></td></tr></table></figure>
+<a id="more"></a>
+<h3 id="中缀表达式转换为后缀表达式-操作符与操作数之间应有空格隔开"><a href="#中缀表达式转换为后缀表达式-操作符与操作数之间应有空格隔开" class="headerlink" title="中缀表达式转换为后缀表达式(操作符与操作数之间应有空格隔开)"></a>中缀表达式转换为后缀表达式(操作符与操作数之间应有空格隔开)</h3><p>这里是另一种方式的中缀表达式转后缀表达式，还有一种方式更容易理解一点，但是代码量相对更多，详情可见<a href="http://earthchen.coding.me/2016/10/07/c%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8F%98%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F/" target="_blank" rel="external">C语言把中缀表达式转换为后缀表达式</a></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+<span class="line">27</span>
+<span class="line">28</span>
+<span class="line">29</span>
+<span class="line">30</span>
+<span class="line">31</span>
+<span class="line">32</span>
+<span class="line">33</span>
+<span class="line">34</span>
+<span class="line">35</span>
+<span class="line">36</span>
+<span class="line">37</span>
+<span class="line">38</span>
+<span class="line">39</span>
+<span class="line">40</span>
+<span class="line">41</span>
+<span class="line">42</span>
+<span class="line">43</span>
+<span class="line">44</span>
+<span class="line">45</span>
+<span class="line">46</span>
+<span class="line">47</span>
+<span class="line">48</span>
+<span class="line">49</span>
+<span class="line">50</span>
+<span class="line">51</span>
+<span class="line">52</span>
+<span class="line">53</span>
+<span class="line">54</span>
+<span class="line">55</span>
+<span class="line">56</span>
+<span class="line">57</span>
+<span class="line">58</span>
+<span class="line">59</span>
+<span class="line">60</span>
+<span class="line">61</span>
+<span class="line">62</span>
+<span class="line">63</span>
+<span class="line">64</span>
+<span class="line">65</span>
+<span class="line">66</span>
+<span class="line">67</span>
+<span class="line">68</span>
+<span class="line">69</span>
+<span class="line">70</span>
+<span class="line">71</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">convert2postfix</span><span class="params">(<span class="keyword">char</span> *src, <span class="keyword">char</span> *dst)</span> </span>&#123;</span>
+<span class="line"> 	<span class="keyword">char</span> *psrc, *pdst;</span>
+<span class="line"> 	<span class="keyword">char</span> <span class="built_in">stack</span>[MAX_LEN];</span>
+<span class="line"> 	<span class="keyword">int</span> top;</span>
+<span class="line"> </span>
+<span class="line"> 	top = <span class="number">-1</span>;</span>
+<span class="line"> 	psrc = src;</span>
+<span class="line"> 	pdst = dst;</span>
+<span class="line"> 	<span class="keyword">while</span> (*psrc != <span class="string">'\0'</span>) &#123;</span>
+<span class="line"> 		<span class="keyword">if</span> (*psrc &gt;= <span class="string">'0'</span> &amp;&amp; *psrc &lt;= <span class="string">'9'</span>) &#123;</span>
+<span class="line"> 			*pdst = *psrc;</span>
+<span class="line"> 			pdst++;</span>
+<span class="line"> 			<span class="comment">//加入分隔空格  </span></span>
+<span class="line"> 			<span class="keyword">if</span> (!(*(psrc + <span class="number">1</span>) &gt;= <span class="string">'0'</span> &amp;&amp; *(psrc + <span class="number">1</span>) &lt;= <span class="string">'9'</span>) &amp;&amp; *(psrc + <span class="number">1</span>) != <span class="string">'.'</span>) &#123;</span>
+<span class="line"> 				*pdst = <span class="string">' '</span>;</span>
+<span class="line"> 				pdst++;</span>
+<span class="line"> 			&#125;</span>
+<span class="line"> 		&#125;</span>
+<span class="line"> 		<span class="keyword">if</span> (*psrc == <span class="string">'.'</span>) &#123;</span>
+<span class="line"> 			*pdst = *psrc;</span>
+<span class="line"> 			pdst++;</span>
+<span class="line"> 		&#125;</span>
+<span class="line"> 		<span class="keyword">if</span> (*psrc == <span class="string">'('</span>) &#123;</span>
+<span class="line"> 			<span class="built_in">stack</span>[++top] = *psrc;</span>
+<span class="line"> 		&#125;</span>
+<span class="line"> 		<span class="keyword">if</span> (*psrc == <span class="string">')'</span>) &#123;</span>
+<span class="line"> 			<span class="keyword">while</span> (<span class="built_in">stack</span>[top] != <span class="string">'('</span>) &#123;</span>
+<span class="line"> 				*pdst = <span class="built_in">stack</span>[top--];</span>
+<span class="line"> 				pdst++;</span>
+<span class="line"> 				<span class="comment">//加入分隔空格  </span></span>
+<span class="line"> 				*pdst = <span class="string">' '</span>;</span>
+<span class="line"> 				pdst++;</span>
+<span class="line"> 			&#125;</span>
+<span class="line"> 			<span class="comment">//弹出'('  </span></span>
+<span class="line"> 			top--;</span>
+<span class="line"> 		&#125;</span>
+<span class="line"> 		<span class="keyword">if</span> (*psrc == <span class="string">'*'</span> || *psrc == <span class="string">'/'</span>) &#123;</span>
+<span class="line"> 			<span class="keyword">if</span> (<span class="built_in">stack</span>[top] == <span class="string">'*'</span> || <span class="built_in">stack</span>[top] == <span class="string">'/'</span>) &#123;</span>
+<span class="line"> 				*pdst = <span class="built_in">stack</span>[top--];</span>
+<span class="line"> 				pdst++;</span>
+<span class="line"> 				<span class="comment">//加入分隔空格  </span></span>
+<span class="line"> 				*pdst = <span class="string">' '</span>;</span>
+<span class="line"> 				pdst++;</span>
+<span class="line"> 			&#125;</span>
+<span class="line"> 			<span class="built_in">stack</span>[++top] = *psrc;</span>
+<span class="line"> 		&#125;</span>
+<span class="line"> 		<span class="keyword">if</span> (*psrc == <span class="string">'+'</span> || *psrc == <span class="string">'-'</span>) &#123;</span>
+<span class="line"> 			<span class="keyword">while</span> (<span class="built_in">stack</span>[top] == <span class="string">'*'</span></span>
+<span class="line"> 				|| <span class="built_in">stack</span>[top] == <span class="string">'/'</span></span>
+<span class="line"> 				|| <span class="built_in">stack</span>[top] == <span class="string">'+'</span></span>
+<span class="line"> 				|| <span class="built_in">stack</span>[top] == <span class="string">'-'</span>) &#123;</span>
+<span class="line"> 				*pdst = <span class="built_in">stack</span>[top--];</span>
+<span class="line"> 				pdst++;</span>
+<span class="line"> 				<span class="comment">//加入分隔空格  </span></span>
+<span class="line"> 				*pdst = <span class="string">' '</span>;</span>
+<span class="line"> 				pdst++;</span>
+<span class="line"> 			&#125;</span>
+<span class="line"> 			<span class="built_in">stack</span>[++top] = *psrc;</span>
+<span class="line"> 		&#125;</span>
+<span class="line"> 		psrc++;</span>
+<span class="line"> 	&#125;</span>
+<span class="line"> 	<span class="comment">//扫描完成后，取出栈中所有运算符，写入后缀表达式数组。  </span></span>
+<span class="line"> 	<span class="keyword">while</span> (top != <span class="number">-1</span>) &#123;</span>
+<span class="line"> 		*pdst = <span class="built_in">stack</span>[top--];</span>
+<span class="line"> 		*pdst++;</span>
+<span class="line"> 		*pdst = <span class="string">' '</span>;</span>
+<span class="line"> 		pdst++;</span>
+<span class="line"> 	&#125;</span>
+<span class="line"> 	*pdst = <span class="string">'\0'</span>;</span>
+<span class="line"> &#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<h3 id="计算后缀表达式"><a href="#计算后缀表达式" class="headerlink" title="计算后缀表达式"></a>计算后缀表达式</h3><p>同上还有另一种比较好理解的方式 见<a href="/2016/10/07/C%E8%AF%AD%E8%A8%80%E9%80%86%E6%B3%A2%E5%85%B0%E8%AE%A1%E7%AE%97%E5%99%A8/">C语言逆波兰计算器</a></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+<span class="line">27</span>
+<span class="line">28</span>
+<span class="line">29</span>
+<span class="line">30</span>
+<span class="line">31</span>
+<span class="line">32</span>
+<span class="line">33</span>
+<span class="line">34</span>
+<span class="line">35</span>
+<span class="line">36</span>
+<span class="line">37</span>
+<span class="line">38</span>
+<span class="line">39</span>
+<span class="line">40</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">float</span> <span class="title">cal</span><span class="params">(<span class="keyword">char</span> *src)</span> </span>&#123;</span>
+<span class="line">	<span class="keyword">float</span> <span class="built_in">stack</span>[MAX_LEN];</span>
+<span class="line">	<span class="keyword">float</span> opd1, opd2;</span>
+<span class="line">	<span class="keyword">int</span> top;</span>
+<span class="line">	<span class="keyword">char</span> *p, *pre;</span>
+<span class="line">	top = <span class="number">-1</span>;</span>
+<span class="line"></span>
+<span class="line">	p = src;</span>
+<span class="line">	<span class="keyword">while</span> (*p != <span class="string">'\0'</span>) &#123;</span>
+<span class="line">		<span class="keyword">if</span> (*p &gt;= <span class="string">'0'</span> &amp;&amp; *p &lt;= <span class="string">'9'</span>) &#123;</span>
+<span class="line">			pre = p;</span>
+<span class="line">			<span class="keyword">while</span> ((*p &gt;= <span class="string">'0'</span> &amp;&amp; *p &lt;= <span class="string">'9'</span>) || *p == <span class="string">'.'</span>) &#123;</span>
+<span class="line">				p++;</span>
+<span class="line">			&#125;</span>
+<span class="line">			*p = <span class="string">'\0'</span>;</span>
+<span class="line">			<span class="built_in">stack</span>[++top] = atof(pre);</span>
+<span class="line">		&#125;</span>
+<span class="line">		<span class="keyword">if</span> (*p == <span class="string">'+'</span> || *p == <span class="string">'-'</span> || *p == <span class="string">'*'</span> || *p == <span class="string">'/'</span>) &#123;</span>
+<span class="line">			opd2 = <span class="built_in">stack</span>[top--];</span>
+<span class="line">			opd1 = <span class="built_in">stack</span>[top--];</span>
+<span class="line">			<span class="keyword">switch</span> (*p) &#123;</span>
+<span class="line">			<span class="keyword">case</span> <span class="string">'+'</span>:</span>
+<span class="line">				<span class="built_in">stack</span>[++top] = opd1 + opd2;</span>
+<span class="line">				<span class="keyword">break</span>;</span>
+<span class="line">			<span class="keyword">case</span> <span class="string">'-'</span>:</span>
+<span class="line">				<span class="built_in">stack</span>[++top] = opd1 - opd2;</span>
+<span class="line">				<span class="keyword">break</span>;</span>
+<span class="line">			<span class="keyword">case</span> <span class="string">'*'</span>:</span>
+<span class="line">				<span class="built_in">stack</span>[++top] = opd1*opd2;</span>
+<span class="line">				<span class="keyword">break</span>;</span>
+<span class="line">			<span class="keyword">case</span> <span class="string">'/'</span>:</span>
+<span class="line">				<span class="comment">//更严格一点，应该处理除数为0的情况  </span></span>
+<span class="line">				<span class="built_in">stack</span>[++top] = opd1 / opd2;</span>
+<span class="line">				<span class="keyword">break</span>;</span>
+<span class="line">			&#125;</span>
+<span class="line">		&#125;</span>
+<span class="line">		p++;</span>
+<span class="line">	&#125;</span>
+<span class="line">	<span class="keyword">return</span> <span class="built_in">stack</span>[top--];</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<h3 id="主函数"><a href="#主函数" class="headerlink" title="主函数"></a>主函数</h3><p>输入中缀表达式作为一个字符串，调用中缀表达式转换和后缀表达式计算便可以很容易得出结果。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function">nt <span class="title">main</span><span class="params">()</span> </span>&#123;</span>
+<span class="line">	<span class="keyword">char</span> str1[MAX_LEN], str2[MAX_LEN];</span>
+<span class="line">	<span class="keyword">float</span> res;</span>
+<span class="line"></span>
+<span class="line">	gets(str1);</span>
+<span class="line">	convert2postfix(str1, str2);</span>
+<span class="line">	</span>
+<span class="line">	res = cal(str2);</span>
+<span class="line">	<span class="built_in">printf</span>(<span class="string">"result:%.2f\n"</span>, res);</span>
+<span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<h3 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h3><p>本人用的是vs2015编译器，所以文中的scanf用了更安全的scanf_s，当然也可以用fgets 详情可以自行<a href="https://www.baidu.com/" target="_blank" rel="external">baidu</a>或者<a href="https://www.google.com" target="_blank" rel="external">Google</a></p>
+<p><img src="http://objects.earthchen.cn/c%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%AE%A1%E7%AE%97%E5%99%A8.png" alt="cmd 运行结果"><br>(1+4)*(4-5)=-5 结果正确 </p>
+<p><br></p>
 <blockquote>
 <p>注：</p>
 <ul>
