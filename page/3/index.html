@@ -302,20 +302,20 @@
 </nav>
       <div class="body-wrap">
   
-    <article id="post-django_channels_websocket" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-django_redis_cache" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/08/18/django_channels_websocket/" class="article-date">
+      <a href="/2017/08/18/django_redis_cache/" class="article-date">
       <time datetime="2017-08-18T09:34:00.000Z" itemprop="datePublished">2017-08-18</time>
 </a>
 
  
-    <a href="/2017/08/18/django_channels_websocket/#comments" title="查看评论">
+    <a href="/2017/08/18/django_redis_cache/#comments" title="查看评论">
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
         
-            <span class="disqus-comment-count" data-disqus-identifier="2017/08/18/django_channels_websocket/"></span>
+            <span class="disqus-comment-count" data-disqus-identifier="2017/08/18/django_redis_cache/"></span>
         
     </a>
 
@@ -330,7 +330,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/18/django_channels_websocket/">Django使用Channels实现websocket</a>
+      <a class="article-title" href="/2017/08/18/django_redis_cache/">Django使用redis作为缓存系统</a>
     </h1>
   
 
@@ -340,7 +340,8 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <p>由于项目有个需要实时显示状态的需求，搜索了各种实现方法，看来只有websocket最靠谱，但django原生是不支持websocket的，最终发现了chango-channels这个项目。可以帮我们实现我们的需求。</p>
+              <p>为了提升网站的性能，加一层缓存是少不了的，由于之前做的东西是用django写的，所以就介绍一下django的缓存系统。</p>
+<p>又由于我还使用了redis作为消息队列的后端，这里就不在介绍其他内存数据库，直接使用redis。<br>
           
       
     </div>
@@ -360,7 +361,7 @@
 
       
         <p class="article-more-link">
-          <a href="/2017/08/18/django_channels_websocket/#more">more >></a>
+          <a href="/2017/08/18/django_redis_cache/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
