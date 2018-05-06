@@ -15,17 +15,17 @@
 
 
 
-<meta name="description" content="在请求或提供api的时候，我们经常会遇到跨域问题，这是由于安全问题，但是有时候我们必须去允许跨域请求，不然我们将拿不到后端传过来的数据所以，笔者在这里总结了一下相关解决方案 解决方案">
-<meta name="keywords" content="解决方案,Nginx,AJAX">
+<meta name="description" content="java8新特性总结备忘">
+<meta name="keywords" content="Java">
 <meta property="og:type" content="article">
-<meta property="og:title" content="跨域请求的解决方案">
-<meta property="og:url" content="http://earthchen.cn/2017/06/30/跨域请求解决方案/index.html">
+<meta property="og:title" content="java8新特性总结备忘">
+<meta property="og:url" content="http://earthchen.cn/2018/05/06/java8-features/index.html">
 <meta property="og:site_name" content="EarthChen&#39;s Blog">
-<meta property="og:description" content="在请求或提供api的时候，我们经常会遇到跨域问题，这是由于安全问题，但是有时候我们必须去允许跨域请求，不然我们将拿不到后端传过来的数据所以，笔者在这里总结了一下相关解决方案 解决方案">
-<meta property="og:updated_time" content="2018-04-09T07:17:15.000Z">
+<meta property="og:description" content="java8新特性总结备忘">
+<meta property="og:updated_time" content="2018-05-06T12:24:05.451Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="跨域请求的解决方案">
-<meta name="twitter:description" content="在请求或提供api的时候，我们经常会遇到跨域问题，这是由于安全问题，但是有时候我们必须去允许跨域请求，不然我们将拿不到后端传过来的数据所以，笔者在这里总结了一下相关解决方案 解决方案">
+<meta name="twitter:title" content="java8新特性总结备忘">
+<meta name="twitter:description" content="java8新特性总结备忘">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -57,7 +57,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>跨域请求的解决方案 | EarthChen&#39;s Blog</title>
+<title>java8新特性总结备忘 | EarthChen&#39;s Blog</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -296,11 +296,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-跨域请求解决方案" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-java8-features" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/06/30/跨域请求解决方案/" class="article-date">
-      <time datetime="2017-06-30T11:40:00.000Z" itemprop="datePublished">2017-06-30</time>
+      <a href="/2018/05/06/java8-features/" class="article-date">
+      <time datetime="2018-05-06T12:10:00.000Z" itemprop="datePublished">2018-05-06</time>
 </a>
 
 
@@ -315,7 +315,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      跨域请求的解决方案
+      java8新特性总结备忘
     </h1>
   
 
@@ -324,13 +324,13 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/运维/">运维</a>
+    <a class="article-category-link" href="/categories/开发/">开发</a>
     </div>
 
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AJAX/">AJAX</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nginx/">Nginx</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/解决方案/">解决方案</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -340,59 +340,8 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>在请求或提供api的时候，我们经常会遇到跨域问题，这是由于安全问题，但是有时候我们必须去允许跨域请求，不然我们将拿不到后端传过来的数据<br>所以，笔者在这里总结了一下相关解决方案</p>
-<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><a id="more"></a>
-<h3 id="使用jsonp解决"><a href="#使用jsonp解决" class="headerlink" title="使用jsonp解决"></a>使用jsonp解决</h3><p>使用jsonp方式去请求数据能以get方式请求，但是不能以post方式发送数据<br>使用这种方式需要前后段都做相应的修改</p>
-<h4 id="前端"><a href="#前端" class="headerlink" title="前端"></a>前端</h4><p>笔者这里使用jQuery来进行ajax请求<br>我们需要在前端请求的url中添加一个callback回调参数<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-</pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span>
-<span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params"></span>) </span>&#123;</span>
-<span class="line">        $.getJSON(<span class="string">"http://10.127.48.204:8000/snippets/1/?callback=?"</span>,  <span class="comment">//注意结尾的callback</span></span>
-<span class="line">            <span class="function"><span class="keyword">function</span> (<span class="params">result</span>) </span>&#123;</span>
-<span class="line">                <span class="keyword">if</span> (result) &#123;</span>
-<span class="line">                    <span class="built_in">document</span>.write(result.style);</span>
-<span class="line">                &#125;</span>
-<span class="line">            &#125;);</span>
-<span class="line">    &#125;</span>
-<span class="line">&lt;<span class="regexp">/script&gt;</span></span>
-</pre></td></tr></table></figure></p>
-<h4 id="后端"><a href="#后端" class="headerlink" title="后端"></a>后端</h4><p>笔者这里是用的django的后台，其他语言自行探索一下，都是大同小异的<br>定义好路由之后，我们只需要在view里进行一点简单的修改就好<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">(request)</span>:</span></span>
-<span class="line">   callback = request.GET[<span class="string">'callback'</span>]</span>
-<span class="line">   <span class="keyword">return</span> HttpResponse(<span class="string">'%s(%s)'</span> % (callback,json.dumps(&#123;<span class="string">'name'</span>: <span class="string">'test'</span>&#125;)))</span>
-</pre></td></tr></table></figure></p>
-<p>得到ajax传来的callback然后返回就好</p>
-<p>这样就实现了很简单的跨域请求数据，不过需要前后端都进行支持，比较麻烦。。。。。</p>
-<h3 id="修改请求头解决"><a href="#修改请求头解决" class="headerlink" title="修改请求头解决"></a>修改请求头解决</h3><p>在后端直接修改允许的请求头<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">myview</span><span class="params">(request)</span>:</span> </span>
-<span class="line">    response = HttpResponse(json.dumps(&#123;“key”: “value”, “key2”: “value”&#125;)) </span>
-<span class="line">    response[“Access-Control-Allow-Origin”] = “*” </span>
-<span class="line">    response[“Access-Control-Allow-Methods”] = “POST, GET, OPTIONS” </span>
-<span class="line">    response[“Access-Control-Max-Age”] = “<span class="number">1000</span>” </span>
-<span class="line">    response[“Access-Control-Allow-Headers”] = “*” </span>
-<span class="line">    <span class="keyword">return</span> response</span>
-</pre></td></tr></table></figure></p>
-<h3 id="安装django-cors-headers解决"><a href="#安装django-cors-headers解决" class="headerlink" title="安装django-cors-headers解决"></a>安装django-cors-headers解决</h3><p>笔者用的是django，刚好有人写好了一个库</p>
-<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">pip install django-cors-headers</span>
-</pre></td></tr></table></figure>
-<h4 id="在settings-py中设置"><a href="#在settings-py中设置" class="headerlink" title="在settings.py中设置"></a>在<strong>settings.py</strong>中设置</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+        <p>java8新特性总结备忘<br><a id="more"></a></p>
+<h2 id="lambda"><a href="#lambda" class="headerlink" title="lambda"></a>lambda</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
 <span class="line">4</span>
@@ -411,49 +360,33 @@
 <span class="line">17</span>
 <span class="line">18</span>
 <span class="line">19</span>
-</pre></td><td class="code"><pre><span class="line">INSTALLED_APPS = [</span>
-<span class="line">    ...</span>
-<span class="line">    <span class="string">'corsheaders'</span>，</span>
-<span class="line">    ...</span>
-<span class="line"> ] </span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+</pre></td><td class="code"><pre><span class="line">List&lt;String&gt; list = Arrays.asList(<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"d"</span>, <span class="string">"c"</span>);</span>
+<span class="line"><span class="comment">//一个lambda可以由用逗号分隔的参数列表、–&gt;符号与函数体三部分表示</span></span>
+<span class="line">list.forEach(e -&gt; System.out.println(e));</span>
 <span class="line"></span>
-<span class="line">MIDDLEWARE_CLASSES = (</span>
-<span class="line">    ...</span>
-<span class="line">    <span class="string">'corsheaders.middleware.CorsMiddleware'</span>,</span>
-<span class="line">    <span class="string">'django.middleware.common.CommonMiddleware'</span>, <span class="comment"># 注意顺序</span></span>
-<span class="line">    ...</span>
-<span class="line">)</span>
+<span class="line">list.forEach((String e) -&gt; System.out.println(e));</span>
 <span class="line"></span>
-<span class="line">CORS_ORIGIN_WHITELIST = (</span>
-<span class="line">    <span class="comment">#'*'</span></span>
-<span class="line">    <span class="string">'127.0.0.1:8080'</span>,<span class="comment"># 请求的域名</span></span>
-<span class="line">    <span class="string">'localhost:8080'</span>,</span>
-<span class="line">    <span class="string">'localhost'</span>,</span>
-<span class="line">)</span>
+<span class="line"><span class="comment">// 在某些情况下lambda的函数体会更加复杂，这时可以把函数体放到在一对花括号中</span></span>
+<span class="line">list.forEach(e -&gt; &#123;</span>
+<span class="line">    System.out.println(e);</span>
+<span class="line">    System.out.println(e + <span class="string">"xxx"</span>);</span>
+<span class="line">    &#125;);</span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"><span class="comment">//Lambda可能会返回一个值。返回值的类型也是由编译器推测出来的。</span></span>
+<span class="line"><span class="comment">// 如果lambda的函数体只有一行的话，那么没有必要显式使用return语句</span></span>
+<span class="line">list.sort((e1, e2) -&gt; e1.compareTo(e2));</span>
+<span class="line">System.out.println(list);</span>
+<span class="line"></span>
+<span class="line">list.sort((e1, e2) -&gt; &#123;</span>
+<span class="line">    <span class="keyword">int</span> res = e1.compareTo(e2);</span>
+<span class="line">    <span class="keyword">return</span> res;</span>
+<span class="line">    &#125;);</span>
 </pre></td></tr></table></figure>
-<p>配置好允许的域就可以跨域了</p>
-<h3 id="在服务器端-nginx-解决"><a href="#在服务器端-nginx-解决" class="headerlink" title="在服务器端(nginx)解决"></a>在服务器端(nginx)解决</h3><p>笔者认为这是最经济划算的一种方法，这样前后端代码就都不需要更改，依然按之前的就可以了<br>但在服务端也有两种方式：</p>
-<ol>
-<li>修改请求头</li>
-<li>进行反向代理</li>
-</ol>
-<h4 id="修改请求头"><a href="#修改请求头" class="headerlink" title="修改请求头"></a>修改请求头</h4><p>在nginx的配置文件里添加如下配置即可<br><strong>nginx.conf</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-</pre></td><td class="code"><pre><span class="line">http &#123;</span>
-<span class="line">  ......</span>
-<span class="line">  add_header Access-Control-Allow-Origin *;</span>
-<span class="line">  add_header Access-Control-Allow-Headers X-Requested-With;</span>
-<span class="line">  add_header Access-Control-Allow-Methods GET,POST,OPTIONS;</span>
-<span class="line">  ......</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure></p>
-<p>这样就可以实现GET,POST,OPTIONS的跨域请求的支持<br>也可以 add_header Access-Control-Allow-Origin <a href="http://127.0.0.1:8000" target="_blank" rel="external">http://127.0.0.1:8000</a>; –指定允许的url;</p>
-<h4 id="进行反向代理"><a href="#进行反向代理" class="headerlink" title="进行反向代理"></a>进行反向代理</h4><p>同样在万能的nginx配置文件修改即可<br><strong>/etc/nginx/sites-enabled/8001test</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<h2 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
 <span class="line">4</span>
@@ -467,26 +400,41 @@
 <span class="line">12</span>
 <span class="line">13</span>
 <span class="line">14</span>
-</pre></td><td class="code"><pre><span class="line">server &#123;</span>
-<span class="line">    listen 8001;</span>
-<span class="line">    server_name _;</span>
-<span class="line">    index index.html;</span>
-<span class="line">    location / &#123;</span>
-<span class="line">        try_files <span class="variable">$uri</span> <span class="variable">$uri</span>/ =404;</span>
-<span class="line">    &#125;</span>
-<span class="line">    </span>
-<span class="line">    location /apis &#123;</span>
-<span class="line">        rewrite ^.+apis/?(.*)$ /<span class="variable">$1</span> <span class="built_in">break</span>;</span>
-<span class="line">        include uwsgi_params;</span>
-<span class="line">        proxy_pass http://127.0.0.1:8000;  <span class="comment">#需要代理到的地址</span></span>
+<span class="line">15</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span>
+<span class="line"> * 默认方法与抽象方法不同之处在于抽象方法必须要求实现，</span>
+<span class="line"> * 但是默认方法则没有这个要求。相反，每个接口都必须提供一个所谓的默认实现，</span>
+<span class="line"> * 这样所有的接口实现者将会默认继承它（如果有必要的话，可以覆盖这个默认实现）</span>
+<span class="line"> *</span>
+<span class="line"> * <span class="doctag">@author</span>: EarthChen</span>
+<span class="line"> * <span class="doctag">@date</span>: 2018/05/06</span>
+<span class="line"> */</span></span>
+<span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Defaulable</span> </span>&#123;</span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line">    <span class="function"><span class="keyword">default</span> String <span class="title">notRequired</span><span class="params">()</span> </span>&#123;</span>
+<span class="line">        <span class="keyword">return</span> <span class="string">"Default implementation"</span>;</span>
 <span class="line">    &#125;</span>
 <span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<p>不覆盖默认方法，让默认方法保持原样<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span>
+<span class="line"> * 实现了接口，并且让默认方法保持原样</span>
+<span class="line"> *</span>
+<span class="line"> * <span class="doctag">@author</span>: EarthChen</span>
+<span class="line"> * <span class="doctag">@date</span>: 2018/05/06</span>
+<span class="line"> */</span></span>
+<span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DefaultableImpl</span> <span class="keyword">implements</span> <span class="title">Defaulable</span> </span>&#123;</span>
+<span class="line">&#125;</span>
 </pre></td></tr></table></figure></p>
-<blockquote>
-<p>注：</p>
-<ul>
-<li>/apis是需要在请求中加的前缀，请求到这个参数会通过转换url然后代理到新的地址</li>
-<li>proxy_pass <a href="http://127.0.0.1:8000" target="_blank" rel="external">http://127.0.0.1:8000</a>  需要代理到的地址<br>前端只需要在请求url中加个apis前缀就好<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<p>覆盖默认方法<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
 <span class="line">4</span>
@@ -498,28 +446,401 @@
 <span class="line">10</span>
 <span class="line">11</span>
 <span class="line">12</span>
-</pre></td><td class="code"><pre><span class="line">&lt;script type=<span class="string">"text/javascript"</span>&gt;</span>
-<span class="line"><span class="comment">//利用反向代理解决跨域测试</span></span>
-<span class="line"><span class="function"><span class="keyword">function</span> <span class="title">nginx_test</span>(<span class="params"></span>)</span>&#123;</span>
-<span class="line">    $.ajax(&#123;</span>
-<span class="line">        <span class="attr">url</span>: <span class="string">"/apis/test/"</span>,</span>
-<span class="line">        <span class="attr">type</span>:<span class="string">"get"</span>,</span>
-<span class="line">        <span class="attr">success</span>:<span class="function"><span class="keyword">function</span>(<span class="params">result</span>)</span>&#123;</span>
-<span class="line">            alert(result.name);</span>
-<span class="line">        &#125;</span>
-<span class="line">    &#125;)</span>
+<span class="line">13</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span>
+<span class="line"> * 实现了接口，并且覆盖了默认方法</span>
+<span class="line"> *</span>
+<span class="line"> * <span class="doctag">@author</span>: EarthChen</span>
+<span class="line"> * <span class="doctag">@date</span>: 2018/05/06</span>
+<span class="line"> */</span></span>
+<span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OverridableImpl</span> <span class="keyword">implements</span> <span class="title">Defaulable</span> </span>&#123;</span>
+<span class="line"></span>
+<span class="line">    <span class="meta">@Override</span></span>
+<span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">notRequired</span><span class="params">()</span> </span>&#123;</span>
+<span class="line">        <span class="keyword">return</span> <span class="string">"Overridden implementation"</span>;</span>
+<span class="line">    &#125;</span>
 <span class="line">&#125;</span>
-<span class="line">&lt;<span class="regexp">/script&gt;</span></span>
+</pre></td></tr></table></figure></p>
+<p>接口还可以声明（并且可以提供实现）静态方法<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span>
+<span class="line"> * 可以声明（并且可以提供实现）静态方法</span>
+<span class="line"> *</span>
+<span class="line"> * <span class="doctag">@author</span>: EarthChen</span>
+<span class="line"> * <span class="doctag">@date</span>: 2018/05/06</span>
+<span class="line"> */</span></span>
+<span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">DefaulableFactory</span> </span>&#123;</span>
+<span class="line"></span>
+<span class="line">    <span class="function"><span class="keyword">static</span> Defaulable <span class="title">create</span><span class="params">(Supplier&lt;Defaulable&gt; supplier)</span> </span>&#123;</span>
+<span class="line">        <span class="keyword">return</span> supplier.get();</span>
+<span class="line">    &#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure></p>
+<h2 id="方法引用"><a href="#方法引用" class="headerlink" title="方法引用"></a>方法引用</h2><p>首先定义一个Car类作为例子<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Car</span> </span>&#123;</span>
+<span class="line"></span>
+<span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Car <span class="title">create</span><span class="params">(<span class="keyword">final</span> Supplier&lt;Car&gt; supplier)</span> </span>&#123;</span>
+<span class="line">        <span class="keyword">return</span> supplier.get();</span>
+<span class="line">    &#125;</span>
+<span class="line"></span>
+<span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">collide</span><span class="params">(<span class="keyword">final</span> Car car)</span> </span>&#123;</span>
+<span class="line">        System.out.println(<span class="string">"Collided "</span> + car.toString());</span>
+<span class="line">    &#125;</span>
+<span class="line"></span>
+<span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">follow</span><span class="params">(<span class="keyword">final</span> Car another)</span> </span>&#123;</span>
+<span class="line">        System.out.println(<span class="string">"Following the "</span> + another.toString());</span>
+<span class="line">    &#125;</span>
+<span class="line"></span>
+<span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">repair</span><span class="params">()</span> </span>&#123;</span>
+<span class="line">        System.out.println(<span class="string">"Repaired "</span> + <span class="keyword">this</span>.toString());</span>
+<span class="line">    &#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure></p>
+<p>各种引用的例子<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">//引用是构造器引用，它的语法是Class::new，或者更一般的Class&lt; T &gt;::new。请注意构造器没有参数。</span></span>
+<span class="line">Car car = Car.create(Car::<span class="keyword">new</span>);</span>
+<span class="line">List&lt;Car&gt; cars = Arrays.asList(car);</span>
+<span class="line"></span>
+<span class="line"><span class="comment">//静态方法引用，它的语法是Class::static_method。请注意这个方法接受一个Car类型的参数。</span></span>
+<span class="line">cars.forEach(Car::collide);</span>
+<span class="line"></span>
+<span class="line"><span class="comment">//引用是特定类的任意对象的方法引用，它的语法是Class::method。请注意，这个方法没有参数。</span></span>
+<span class="line">cars.forEach(Car::repair);</span>
+<span class="line"></span>
+<span class="line"><span class="comment">//引用是特定对象的方法引用，它的语法是instance::method。请注意，这个方法接受一个Car类型的参数</span></span>
+<span class="line">Car police = Car.create(Car::<span class="keyword">new</span>);</span>
+<span class="line">cars.forEach(police::follow);</span>
+</pre></td></tr></table></figure></p>
+<h2 id="Stream"><a href="#Stream" class="headerlink" title="Stream"></a>Stream</h2><p>首先构造一个结构作为我们使用stream的例子<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> Status &#123;</span>
+<span class="line"></span>
+<span class="line">    OPEN,</span>
+<span class="line">    CLOSED</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+<span class="line">27</span>
+<span class="line">28</span>
+<span class="line">29</span>
+<span class="line">30</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span>
+<span class="line"> * Task类有一个分数的概念（或者说是伪复杂度），其次是还有一个值可以为OPEN或CLOSED的状态</span>
+<span class="line"> *</span>
+<span class="line"> * <span class="doctag">@author</span>: EarthChen</span>
+<span class="line"> * <span class="doctag">@date</span>: 2018/05/06</span>
+<span class="line"> */</span></span>
+<span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Task</span> </span>&#123;</span>
+<span class="line"></span>
+<span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Status status;</span>
+<span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Integer points;</span>
+<span class="line"></span>
+<span class="line">    Task(<span class="keyword">final</span> Status status, <span class="keyword">final</span> Integer points) &#123;</span>
+<span class="line">        <span class="keyword">this</span>.status = status;</span>
+<span class="line">        <span class="keyword">this</span>.points = points;</span>
+<span class="line">    &#125;</span>
+<span class="line"></span>
+<span class="line">    <span class="function"><span class="keyword">public</span> Integer <span class="title">getPoints</span><span class="params">()</span> </span>&#123;</span>
+<span class="line">        <span class="keyword">return</span> points;</span>
+<span class="line">    &#125;</span>
+<span class="line"></span>
+<span class="line">    <span class="function"><span class="keyword">public</span> Status <span class="title">getStatus</span><span class="params">()</span> </span>&#123;</span>
+<span class="line">        <span class="keyword">return</span> status;</span>
+<span class="line">    &#125;</span>
+<span class="line"></span>
+<span class="line">    <span class="meta">@Override</span></span>
+<span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span>
+<span class="line">        <span class="keyword">return</span> String.format(<span class="string">"[%s, %d]"</span>, status, points);</span>
+<span class="line">    &#125;</span>
+<span class="line"></span>
+<span class="line">&#125;</span>
 </pre></td></tr></table></figure>
-</li>
-</ul>
-</blockquote>
-<p>笔者比较推荐最后一种方法，个人觉得这种方法最经济划算。也可以根据需求来选择是否需要跨域代理</p>
+<p>使用的例子<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+<span class="line">27</span>
+<span class="line">28</span>
+<span class="line">29</span>
+<span class="line">30</span>
+<span class="line">31</span>
+<span class="line">32</span>
+<span class="line">33</span>
+<span class="line">34</span>
+<span class="line">35</span>
+<span class="line">36</span>
+<span class="line">37</span>
+<span class="line">38</span>
+<span class="line">39</span>
+<span class="line">40</span>
+<span class="line">41</span>
+<span class="line">42</span>
+<span class="line">43</span>
+<span class="line">44</span>
+</pre></td><td class="code"><pre><span class="line">Collection&lt;Task&gt; tasks = Arrays.asList(</span>
+<span class="line">        <span class="keyword">new</span> Task(Status.OPEN, <span class="number">5</span>),</span>
+<span class="line">        <span class="keyword">new</span> Task(Status.OPEN, <span class="number">13</span>),</span>
+<span class="line">        <span class="keyword">new</span> Task(Status.CLOSED, <span class="number">8</span>));</span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"><span class="comment">//所有状态为OPEN的任务一共有多少分数</span></span>
+<span class="line"><span class="keyword">long</span> totalPointsOfOpenTasks = tasks.stream()</span>
+<span class="line">        .filter(task -&gt; task.getStatus() == Status.OPEN)</span>
+<span class="line">        .mapToInt(Task::getPoints)</span>
+<span class="line">        .sum();</span>
+<span class="line">System.out.println(<span class="string">"Total points: "</span> + totalPointsOfOpenTasks);</span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"><span class="comment">//能够原生支持并行处理。让我们来看看这个算task分数和的例子。</span></span>
+<span class="line"><span class="keyword">double</span> totalPoints = tasks.parallelStream()</span>
+<span class="line">        .map(Task::getPoints)</span>
+<span class="line">        .reduce(<span class="number">0</span>, Integer::sum);</span>
+<span class="line">System.out.println(<span class="string">"Total points (all tasks): "</span> + totalPoints);</span>
+<span class="line"></span>
+<span class="line"><span class="comment">//需要按照某种准则来对集合中的元素进行分组</span></span>
+<span class="line">Map&lt;Status, List&lt;Task&gt;&gt; map = tasks.stream()</span>
+<span class="line">        .collect(Collectors.groupingBy(Task::getStatus));</span>
+<span class="line">System.out.println(map);</span>
+<span class="line"></span>
+<span class="line"><span class="comment">//整个集合中每个task分数（或权重）的平均值</span></span>
+<span class="line">Collection&lt;String&gt; res = tasks.stream()</span>
+<span class="line">        .mapToInt(Task::getPoints)</span>
+<span class="line">        .asLongStream()</span>
+<span class="line">        .mapToDouble(points -&gt; points / totalPoints)</span>
+<span class="line">        .boxed()</span>
+<span class="line">        .mapToLong(weigth -&gt; (<span class="keyword">long</span>) (weigth * <span class="number">100</span>))</span>
+<span class="line">        .mapToObj(percentage -&gt; percentage + <span class="string">"%"</span>)</span>
+<span class="line">        .collect(Collectors.toList());</span>
+<span class="line">System.out.println(res);</span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line">String filename = <span class="string">""</span>;</span>
+<span class="line">Path path = <span class="keyword">new</span> File(filename).toPath();</span>
+<span class="line"><span class="keyword">try</span> (Stream&lt;String&gt; lines = Files.lines(path, StandardCharsets.UTF_8)) &#123;</span>
+<span class="line">    lines.onClose(() -&gt; System.out.println(<span class="string">"Done!"</span>)).forEach(System.out::println);</span>
+<span class="line">&#125; <span class="keyword">catch</span> (IOException e) &#123;</span>
+<span class="line">    e.printStackTrace();</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure></p>
+<h2 id="Date-Time-API"><a href="#Date-Time-API" class="headerlink" title="Date/Time API"></a>Date/Time API</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+<span class="line">27</span>
+<span class="line">28</span>
+<span class="line">29</span>
+<span class="line">30</span>
+<span class="line">31</span>
+<span class="line">32</span>
+<span class="line">33</span>
+<span class="line">34</span>
+<span class="line">35</span>
+<span class="line">36</span>
+<span class="line">37</span>
+<span class="line">38</span>
+<span class="line">39</span>
+<span class="line">40</span>
+<span class="line">41</span>
+<span class="line">42</span>
+<span class="line">43</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">//是Clock类，它通过指定一个时区，然后就可以获取到当前的时刻，日期与时间。</span></span>
+<span class="line"><span class="comment">// Clock可以替换System.currentTimeMillis()与TimeZone.getDefault()。</span></span>
+<span class="line">Clock clock = Clock.systemUTC();</span>
+<span class="line">System.out.println(clock.instant());</span>
+<span class="line">System.out.println(clock.millis());</span>
+<span class="line"></span>
+<span class="line"><span class="comment">//LocaleDate只持有ISO-8601格式且无时区信息的日期部分</span></span>
+<span class="line">LocalDate date = LocalDate.now();</span>
+<span class="line">LocalDate dateFromClock = LocalDate.now(clock);</span>
+<span class="line">System.out.println(date);</span>
+<span class="line">System.out.println(dateFromClock);</span>
+<span class="line"></span>
+<span class="line"><span class="comment">//LocaleTime只持有ISO-8601格式且无时区信息的时间部分</span></span>
+<span class="line">LocalTime time = LocalTime.now();</span>
+<span class="line">LocalTime timeFromClock = LocalTime.now(clock);</span>
+<span class="line">System.out.println(time);</span>
+<span class="line">System.out.println(timeFromClock);</span>
+<span class="line"></span>
+<span class="line"><span class="comment">//LocaleDateTime把LocaleDate与LocaleTime的功能合并起来，</span></span>
+<span class="line"><span class="comment">// 它持有的是ISO-8601格式无时区信息的日期与时间</span></span>
+<span class="line">LocalDateTime datetime = LocalDateTime.now();</span>
+<span class="line">LocalDateTime datetimeFromClock = LocalDateTime.now(clock);</span>
+<span class="line"></span>
+<span class="line">System.out.println(datetime);</span>
+<span class="line">System.out.println(datetimeFromClock);</span>
+<span class="line"></span>
+<span class="line"><span class="comment">//如果你需要特定时区的日期/时间，那么ZonedDateTime是你的选择。</span></span>
+<span class="line"><span class="comment">// 它持有ISO-8601格式具具有时区信息的日期与时间</span></span>
+<span class="line">ZonedDateTime zonedDatetime = ZonedDateTime.now();</span>
+<span class="line">ZonedDateTime zonedDatetimeFromClock = ZonedDateTime.now(clock);</span>
+<span class="line">ZonedDateTime zonedDatetimeFromZone = ZonedDateTime.now(ZoneId.of(<span class="string">"America/Los_Angeles"</span>));</span>
+<span class="line"></span>
+<span class="line">System.out.println(zonedDatetime);</span>
+<span class="line">System.out.println(zonedDatetimeFromClock);</span>
+<span class="line">System.out.println(zonedDatetimeFromZone);</span>
+<span class="line"></span>
+<span class="line"><span class="comment">//Duration类：在秒与纳秒级别上的一段时间。Duration使计算两个日期间的不同变的十分简单</span></span>
+<span class="line">LocalDateTime from = LocalDateTime.of(<span class="number">2014</span>, Month.APRIL, <span class="number">16</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</span>
+<span class="line">LocalDateTime to = LocalDateTime.of(<span class="number">2015</span>, Month.APRIL, <span class="number">16</span>, <span class="number">23</span>, <span class="number">59</span>, <span class="number">59</span>);</span>
+<span class="line"></span>
+<span class="line">Duration duration = Duration.between(from, to);</span>
+<span class="line">System.out.println(<span class="string">"Duration in days: "</span> + duration.toDays());</span>
+<span class="line">System.out.println(<span class="string">"Duration in hours: "</span> + duration.toHours());</span>
+</pre></td></tr></table></figure>
+<h2 id="并行数组"><a href="#并行数组" class="headerlink" title="并行数组"></a>并行数组</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">long</span>[] arrayOfLong = <span class="keyword">new</span> <span class="keyword">long</span>[<span class="number">20000</span>];</span>
+<span class="line"></span>
+<span class="line"><span class="comment">//对一个有20000个元素的数组进行随机赋值</span></span>
+<span class="line">Arrays.parallelSetAll(arrayOfLong,</span>
+<span class="line">        index -&gt; ThreadLocalRandom.current().nextInt(<span class="number">1000000</span>));</span>
+<span class="line"></span>
+<span class="line"><span class="comment">//打印出前10个元素的值</span></span>
+<span class="line">Arrays.stream(arrayOfLong).limit(<span class="number">10</span>).forEach(</span>
+<span class="line">        i -&gt; System.out.print(i + <span class="string">" "</span>));</span>
+<span class="line">System.out.println();</span>
+<span class="line"></span>
+<span class="line"><span class="comment">//并行排序</span></span>
+<span class="line">Arrays.parallelSort(arrayOfLong);</span>
+<span class="line"></span>
+<span class="line"><span class="comment">//打印出前10个元素的值</span></span>
+<span class="line">Arrays.stream(arrayOfLong).limit(<span class="number">10</span>).forEach(</span>
+<span class="line">        i -&gt; System.out.print(i + <span class="string">" "</span>));</span>
+<span class="line">System.out.println();</span>
+</pre></td></tr></table></figure>
+<p>还有一些特性这里不做总结，以上只举例一些常用的特性</p>
 <blockquote>
-<p>注：</p>
+<p>参考:</p>
 <ul>
-<li>上述环境在<strong>ubuntu16.04 lts</strong>中搭建测试成功</li>
-<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
+<li><a href="http://ifeve.com/java-8-tutorial-2/" target="_blank" rel="external">http://ifeve.com/java-8-tutorial-2/</a></li>
+<li><a href="http://www.importnew.com/11908.html#defaultAndStaticMethod" target="_blank" rel="external">http://www.importnew.com/11908.html#defaultAndStaticMethod</a></li>
 </ul>
 </blockquote>
 
@@ -530,13 +851,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/06/30/跨域请求解决方案/">跨域请求的解决方案</a></p>
+        <p><span>本文标题:</span><a href="/2018/05/06/java8-features/">java8新特性总结备忘</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">EarthChen</a></p>
-        <p><span>发布时间:</span>2017-06-30, 19:40:00</p>
-        <p><span>最后更新:</span>2018-04-09, 15:17:15</p>
+        <p><span>发布时间:</span>2018-05-06, 20:10:00</p>
+        <p><span>最后更新:</span>2018-05-06, 20:24:05</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/06/30/跨域请求解决方案/" title="跨域请求的解决方案">http://earthchen.cn/2017/06/30/跨域请求解决方案/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://earthchen.cn/2017/06/30/跨域请求解决方案/　　作者: EarthChen" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2018/05/06/java8-features/" title="java8新特性总结备忘">http://earthchen.cn/2018/05/06/java8-features/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://earthchen.cn/2018/05/06/java8-features/　　作者: EarthChen" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -548,16 +869,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2017/07/08/AndroidStudio/">
-                    Android Studio 使用本地离线Gradle
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2017/06/30/ubuntu_supervisor/">
-                    ubuntu下的进程控制系统————Supervisor
+                <a href="/2018/05/05/java-generic/">
+                    java泛型总结
                 </a>
             </div>
         
@@ -569,7 +884,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#解决方案"><span class="toc-number">1.</span> <span class="toc-text">解决方案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用jsonp解决"><span class="toc-number">1.1.</span> <span class="toc-text">使用jsonp解决</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#前端"><span class="toc-number">1.1.1.</span> <span class="toc-text">前端</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#后端"><span class="toc-number">1.1.2.</span> <span class="toc-text">后端</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修改请求头解决"><span class="toc-number">1.2.</span> <span class="toc-text">修改请求头解决</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装django-cors-headers解决"><span class="toc-number">1.3.</span> <span class="toc-text">安装django-cors-headers解决</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#安装"><span class="toc-number">1.3.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#在settings-py中设置"><span class="toc-number">1.3.2.</span> <span class="toc-text">在settings.py中设置</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在服务器端-nginx-解决"><span class="toc-number">1.4.</span> <span class="toc-text">在服务器端(nginx)解决</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#修改请求头"><span class="toc-number">1.4.1.</span> <span class="toc-text">修改请求头</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#进行反向代理"><span class="toc-number">1.4.2.</span> <span class="toc-text">进行反向代理</span></a></li></ol></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#lambda"><span class="toc-number">1.</span> <span class="toc-text">lambda</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#接口"><span class="toc-number">2.</span> <span class="toc-text">接口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#方法引用"><span class="toc-number">3.</span> <span class="toc-text">方法引用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Stream"><span class="toc-number">4.</span> <span class="toc-text">Stream</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Date-Time-API"><span class="toc-number">5.</span> <span class="toc-text">Date/Time API</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#并行数组"><span class="toc-number">6.</span> <span class="toc-text">并行数组</span></a></li></ol>
         
     </div>
     <style>
@@ -605,7 +920,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"跨域请求的解决方案　| EarthChen's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"java8新特性总结备忘　| EarthChen's Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -639,15 +954,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2017/07/08/AndroidStudio/" title="上一篇: Android Studio 使用本地离线Gradle">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2017/06/30/ubuntu_supervisor/" title="下一篇: ubuntu下的进程控制系统————Supervisor">
+            <a href="/2018/05/05/java-generic/" title="下一篇: java泛型总结">
                 <i class="fa fa-angle-right"></i>
             </a>
         

@@ -302,6 +302,113 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-C语言逆波兰计算器" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/07/15/C语言逆波兰计算器/" class="article-date">
+      <time datetime="2016-07-15T06:40:00.000Z" itemprop="datePublished">2016-07-15</time>
+</a>
+
+ 
+    <a href="/2016/07/15/C语言逆波兰计算器/#comments" title="查看评论">
+        <i class="fa fa-comments-o" aria-hidden="true"></i>
+        <span class="count-comment"></span>
+        
+        
+            <span class="disqus-comment-count" data-disqus-identifier="2016/07/15/C语言逆波兰计算器/"></span>
+        
+    </a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/07/15/C语言逆波兰计算器/">C语言逆波兰表达式计算(后缀表达式计算器)</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>刚开始学习c语言时，我们都学过输入一个数在输入一个操作数在输入要进行的计算方式，在输入另一个操作数，然后通过内置的+ - / <em>以及内置头文件 <em>*math.h</em></em>等操作进行计算<br>但是我们可不可以直接输入我们熟悉的算式才得出结果呢，答案是肯定的，我博客上一篇介绍了<a href="/2016/10/07/c%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8F%98%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F/">C语言把中缀表达式转换为后缀表达式</a>有兴趣的读者可以去看看，有了上篇的知识，在加上本篇的内容就可以很容易做出一个中缀表达式计算器了有兴趣的读者可以看完本文去尝试一下，对自己的能力也是一种提升</p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="添加适当的头文件，定义一个栈数据结构，"><a href="#添加适当的头文件，定义一个栈数据结构，" class="headerlink" title="添加适当的头文件，定义一个栈数据结构，"></a>添加适当的头文件，定义一个栈数据结构，</h3><p>和之前一样，这里还是需要添加头文件和定义栈的数据结构，所有的操作都是基于栈的操作</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+</pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span>
+<span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span>
+<span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;math.h&gt;</span></span></span>
+<span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ctype.h&gt;</span></span></span>
+<span class="line"><span class="meta">#<span class="meta-keyword">define</span>  STACK_INIT_SIZE 100</span></span>
+<span class="line"><span class="meta">#<span class="meta-keyword">define</span> STACKINCREMENT 10</span></span>
+<span class="line"><span class="keyword">typedef</span> <span class="keyword">double</span> ElemType;</span>
+<span class="line"></span>
+<span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span>
+<span class="line">&#123;</span></span>
+<span class="line">	ElemType *base;</span>
+<span class="line">	ElemType *top;</span>
+<span class="line">	<span class="keyword">int</span> stackSize;</span>
+<span class="line">&#125;SqStack;</span>
+</pre></td></tr></table></figure>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/开发/">开发</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构/">数据结构</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2016/07/15/C语言逆波兰计算器/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-C语言共享栈" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -362,7 +469,7 @@
 
       
         <p class="article-more-link">
-          <a href="/2016/07/15/C语言共享栈/#more">more >></a>
+          <a href="/2016/07/15/C语言共享栈/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -459,7 +566,7 @@
 
       
         <p class="article-more-link">
-          <a href="/2016/07/15/C语言二叉树基本操作/#more">more >></a>
+          <a href="/2016/07/15/C语言二叉树基本操作/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -550,7 +657,7 @@
 
       
         <p class="article-more-link">
-          <a href="/2016/07/15/C语言中缀表达式计算器/#more">more >></a>
+          <a href="/2016/07/15/C语言中缀表达式计算器/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
