@@ -302,6 +302,84 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-python_requirements" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/10/11/python_requirements/" class="article-date">
+      <time datetime="2016-10-11T06:40:00.000Z" itemprop="datePublished">2016-10-11</time>
+</a>
+
+ 
+    <a href="/2016/10/11/python_requirements/#comments" title="查看评论">
+        <i class="fa fa-comments-o" aria-hidden="true"></i>
+        <span class="count-comment"></span>
+        
+        
+            <span class="disqus-comment-count" data-disqus-identifier="2016/10/11/python_requirements/"></span>
+        
+    </a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/11/python_requirements/">python生成项目所需依赖文件</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>在开发或者在github上clone <strong>python</strong>项目时，我们经常能看到他们工程的根目录下有一个<strong>requirements.txt</strong>文件，并且在<strong>Readme</strong>中介绍使用前需要运行一些命令<br>这个时什么意思呢？<br>开发者希望我们能快速配置项目所需要的环境，所以我们需要这个很重要的文件</p>
+<h2 id="python依赖文件"><a href="#python依赖文件" class="headerlink" title="python依赖文件"></a>python依赖文件</h2>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/运维/">运维</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2016/10/11/python_requirements/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-hexo_github_coding_blog" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -467,20 +545,20 @@
 
 
   
-    <article id="post-django渲染模板" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-django连接mysql数据库" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/08/15/django渲染模板/" class="article-date">
+      <a href="/2016/08/15/django连接mysql数据库/" class="article-date">
       <time datetime="2016-08-15T06:40:00.000Z" itemprop="datePublished">2016-08-15</time>
 </a>
 
  
-    <a href="/2016/08/15/django渲染模板/#comments" title="查看评论">
+    <a href="/2016/08/15/django连接mysql数据库/#comments" title="查看评论">
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
         
-            <span class="disqus-comment-count" data-disqus-identifier="2016/08/15/django渲染模板/"></span>
+            <span class="disqus-comment-count" data-disqus-identifier="2016/08/15/django连接mysql数据库/"></span>
         
     </a>
 
@@ -495,7 +573,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/08/15/django渲染模板/">Django渲染模板</a>
+      <a class="article-title" href="/2016/08/15/django连接mysql数据库/">Django连接MySql使用models处理数据</a>
     </h1>
   
 
@@ -506,8 +584,8 @@
       
           
               <p>在页面上显示内容可以简单的用django.http.HttpResponse来显示我们需要的内容，但是当我们需要一些处理一些复杂的数据或者从数据库读出来的操作要显示在html标签内或者js代码中就需要用渲染模板的方法。</p>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="创建工程"><a href="#创建工程" class="headerlink" title="创建工程"></a>创建工程</h3><p>首先，使用一下代码创建一个名为ymxz的工程(读者可以根据需要设置自己的工程名)：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">django-admin startproject ymxz</span>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="创建工程"><a href="#创建工程" class="headerlink" title="创建工程"></a>创建工程</h3><p>首先，使用一下代码创建一个名为DjangoModels的工程(读者可以根据需要设置自己的工程名)：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">django-admin startproject DjangoModels</span>
 </pre></td></tr></table></figure></p>
           
       
@@ -528,7 +606,7 @@
 
       
         <p class="article-more-link">
-          <a href="/2016/08/15/django渲染模板/#more">more >></a>
+          <a href="/2016/08/15/django连接mysql数据库/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -796,20 +874,20 @@
 
 
   
-    <article id="post-django连接mysql数据库" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-django渲染模板" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/08/15/django连接mysql数据库/" class="article-date">
+      <a href="/2016/08/15/django渲染模板/" class="article-date">
       <time datetime="2016-08-15T06:40:00.000Z" itemprop="datePublished">2016-08-15</time>
 </a>
 
  
-    <a href="/2016/08/15/django连接mysql数据库/#comments" title="查看评论">
+    <a href="/2016/08/15/django渲染模板/#comments" title="查看评论">
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
         
-            <span class="disqus-comment-count" data-disqus-identifier="2016/08/15/django连接mysql数据库/"></span>
+            <span class="disqus-comment-count" data-disqus-identifier="2016/08/15/django渲染模板/"></span>
         
     </a>
 
@@ -824,7 +902,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/08/15/django连接mysql数据库/">Django连接MySql使用models处理数据</a>
+      <a class="article-title" href="/2016/08/15/django渲染模板/">Django渲染模板</a>
     </h1>
   
 
@@ -835,8 +913,8 @@
       
           
               <p>在页面上显示内容可以简单的用django.http.HttpResponse来显示我们需要的内容，但是当我们需要一些处理一些复杂的数据或者从数据库读出来的操作要显示在html标签内或者js代码中就需要用渲染模板的方法。</p>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="创建工程"><a href="#创建工程" class="headerlink" title="创建工程"></a>创建工程</h3><p>首先，使用一下代码创建一个名为DjangoModels的工程(读者可以根据需要设置自己的工程名)：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">django-admin startproject DjangoModels</span>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="创建工程"><a href="#创建工程" class="headerlink" title="创建工程"></a>创建工程</h3><p>首先，使用一下代码创建一个名为ymxz的工程(读者可以根据需要设置自己的工程名)：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">django-admin startproject ymxz</span>
 </pre></td></tr></table></figure></p>
           
       
@@ -857,7 +935,7 @@
 
       
         <p class="article-more-link">
-          <a href="/2016/08/15/django连接mysql数据库/#more">more >></a>
+          <a href="/2016/08/15/django渲染模板/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -1015,112 +1093,6 @@
       
         <p class="article-more-link">
           <a href="/2016/07/16/C语言队列的基本操作/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-c语言中缀表达式变后缀表达式" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/07/15/c语言中缀表达式变后缀表达式/" class="article-date">
-      <time datetime="2016-07-15T06:40:00.000Z" itemprop="datePublished">2016-07-15</time>
-</a>
-
- 
-    <a href="/2016/07/15/c语言中缀表达式变后缀表达式/#comments" title="查看评论">
-        <i class="fa fa-comments-o" aria-hidden="true"></i>
-        <span class="count-comment"></span>
-        
-        
-            <span class="disqus-comment-count" data-disqus-identifier="2016/07/15/c语言中缀表达式变后缀表达式/"></span>
-        
-    </a>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/15/c语言中缀表达式变后缀表达式/">C语言中缀表达式转后缀表达式</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>众所周知,计算机中不能直接用中缀表达式计算,形如(1+2)*(4-5)之类的，但是我们可以计算机可以很容易的通过后缀表达式来计算我们所输入的算式。所以我们就需要把中缀表达式转换为后缀表达式。下面是个人写的一点代码，大家可以参考。</p>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="添加适当的头文件，定义一个栈数据结构，"><a href="#添加适当的头文件，定义一个栈数据结构，" class="headerlink" title="添加适当的头文件，定义一个栈数据结构，"></a>添加适当的头文件，定义一个栈数据结构，</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-</pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span>
-<span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span>
-<span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;math.h&gt;</span></span></span>
-<span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ctype.h&gt;</span></span></span>
-<span class="line"><span class="meta">#<span class="meta-keyword">define</span>  STACK_INIT_SIZE 100</span></span>
-<span class="line"><span class="meta">#<span class="meta-keyword">define</span> STACKINCREMENT 10</span></span>
-<span class="line"><span class="keyword">typedef</span> <span class="keyword">char</span> ElemType;</span>
-<span class="line"></span>
-<span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span>
-<span class="line">&#123;</span></span>
-<span class="line">	ElemType *base;</span>
-<span class="line">	ElemType *top;</span>
-<span class="line">	<span class="keyword">int</span> stackSize;</span>
-<span class="line">&#125;SqStack;</span>
-</pre></td></tr></table></figure>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/开发/">开发</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构/">数据结构</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2016/07/15/c语言中缀表达式变后缀表达式/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
