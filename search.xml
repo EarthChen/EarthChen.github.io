@@ -4,11 +4,40 @@
     
     <entry>
       <title><![CDATA[牛客网剑指offer-3]]></title>
-      <url>/2018/05/21/newcoder-%E5%89%91%E6%8C%87offer-2.1/</url>
+      <url>/2018/05/21/newcoder-%E5%89%91%E6%8C%87offer-3/</url>
       <content type="html"><![CDATA[<p>剑指offer刷题-3</p>
 <a id="more"></a>
-<h2 id="删除链表中重复的结点"><a href="#删除链表中重复的结点" class="headerlink" title="删除链表中重复的结点"></a>删除链表中重复的结点</h2><h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>在一个排序的链表中，存在重复的结点，请删除该链表中重复的结点，重复的结点不保留，返回链表头指针。 例如，链表1-&gt;2-&gt;3-&gt;3-&gt;4-&gt;4-&gt;5 处理后为 1-&gt;2-&gt;5</p>
-<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>首先判断边界条件，当满足条件时，判断下当前节点的下一个节点是否等于当前节点，不等于的话递归继续得到下一个节点，当等于时，循环直到等于空或者不等于当前节点值，使当前节点的下一个节点指向不等于当前节点的节点。重复判断下一个节点是否等于当前节点</p>
+<h2 id="链表中环的入口结点"><a href="#链表中环的入口结点" class="headerlink" title="链表中环的入口结点"></a>链表中环的入口结点</h2><h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>一个链表中包含环，请找出该链表的环的入口结点。</p>
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>使用一个列表保存遍历过的节点，遍历单链表判断是否在列表中。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
+<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">EntryNodeOfLoop</span><span class="params">(self, pHead)</span>:</span></span>
+<span class="line">        <span class="comment"># 遍历链表，环的存在，遍历遇见的第一个重复的即为入口节点</span></span>
+<span class="line">        tempList = []</span>
+<span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> pHead <span class="keyword">or</span> <span class="keyword">not</span> pHead.next:</span>
+<span class="line">            <span class="keyword">return</span> <span class="keyword">None</span></span>
+<span class="line">        node = pHead</span>
+<span class="line">        <span class="keyword">while</span> node:</span>
+<span class="line">            <span class="keyword">if</span> node <span class="keyword">in</span> tempList:</span>
+<span class="line">                <span class="keyword">return</span> node</span>
+<span class="line">            <span class="keyword">else</span>:</span>
+<span class="line">                tempList.append(node)</span>
+<span class="line">            node = node.next</span>
+</pre></td></tr></table></figure>
+<h2 id="删除链表中重复的结点"><a href="#删除链表中重复的结点" class="headerlink" title="删除链表中重复的结点"></a>删除链表中重复的结点</h2><h3 id="题目描述-1"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述</h3><p>在一个排序的链表中，存在重复的结点，请删除该链表中重复的结点，重复的结点不保留，返回链表头指针。 例如，链表1-&gt;2-&gt;3-&gt;3-&gt;4-&gt;4-&gt;5 处理后为 1-&gt;2-&gt;5</p>
+<h3 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h3><p>首先判断边界条件，当满足条件时，判断下当前节点的下一个节点是否等于当前节点，不等于的话递归继续得到下一个节点，当等于时，循环直到等于空或者不等于当前节点值，使当前节点的下一个节点指向不等于当前节点的节点。重复判断下一个节点是否等于当前节点</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
@@ -48,8 +77,8 @@
 <span class="line">                <span class="keyword">return</span> <span class="keyword">None</span></span>
 <span class="line">        <span class="keyword">return</span> pHead</span>
 </pre></td></tr></table></figure>
-<h2 id="二叉树的下一个结点"><a href="#二叉树的下一个结点" class="headerlink" title="二叉树的下一个结点"></a>二叉树的下一个结点</h2><h3 id="题目描述-1"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述</h3><p>给定一个二叉树和其中的一个结点，请找出中序遍历顺序的下一个结点并且返回。注意，树中的结点不仅包含左右子结点，同时包含指向父结点的指针。</p>
-<h3 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h3><p>分析中序遍历的特点，判断当前是否有左右子树，当有右子树时，则找出右子树的最左节点。当没右子树，则找第一个当前节点是父节点左孩子的节点</p>
+<h2 id="二叉树的下一个结点"><a href="#二叉树的下一个结点" class="headerlink" title="二叉树的下一个结点"></a>二叉树的下一个结点</h2><h3 id="题目描述-2"><a href="#题目描述-2" class="headerlink" title="题目描述"></a>题目描述</h3><p>给定一个二叉树和其中的一个结点，请找出中序遍历顺序的下一个结点并且返回。注意，树中的结点不仅包含左右子结点，同时包含指向父结点的指针。</p>
+<h3 id="分析-2"><a href="#分析-2" class="headerlink" title="分析"></a>分析</h3><p>分析中序遍历的特点，判断当前是否有左右子树，当有右子树时，则找出右子树的最左节点。当没右子树，则找第一个当前节点是父节点左孩子的节点</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
@@ -87,8 +116,8 @@
 <span class="line">        <span class="comment"># 退到了根节点仍没找到，则返回null</span></span>
 <span class="line">        <span class="keyword">return</span> <span class="keyword">None</span></span>
 </pre></td></tr></table></figure>
-<h2 id="对称的二叉树"><a href="#对称的二叉树" class="headerlink" title="对称的二叉树"></a>对称的二叉树</h2><h3 id="题目描述-2"><a href="#题目描述-2" class="headerlink" title="题目描述"></a>题目描述</h3><p>请实现一个函数，用来判断一颗二叉树是不是对称的。注意，如果一个二叉树同此二叉树的镜像是同样的，定义其为对称的。</p>
-<h3 id="分析-2"><a href="#分析-2" class="headerlink" title="分析"></a>分析</h3><p>创建一个新方法，传入两颗数，分别判断头节点和左右子树的边界条件，然后递归判断当前左子树和右子树是否为对称的</p>
+<h2 id="对称的二叉树"><a href="#对称的二叉树" class="headerlink" title="对称的二叉树"></a>对称的二叉树</h2><h3 id="题目描述-3"><a href="#题目描述-3" class="headerlink" title="题目描述"></a>题目描述</h3><p>请实现一个函数，用来判断一颗二叉树是不是对称的。注意，如果一个二叉树同此二叉树的镜像是同样的，定义其为对称的。</p>
+<h3 id="分析-3"><a href="#分析-3" class="headerlink" title="分析"></a>分析</h3><p>创建一个新方法，传入两颗数，分别判断头节点和左右子树的边界条件，然后递归判断当前左子树和右子树是否为对称的</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
@@ -17988,6 +18017,291 @@
     </entry>
     
     <entry>
+      <title><![CDATA[ubuntu下的进程控制系统————Supervisor]]></title>
+      <url>/2017/06/30/ubuntu_supervisor/</url>
+      <content type="html"><![CDATA[<p>我们在部署网站或者在ssh到服务器上去进行一些长时间操作的任务时候，通常不喜欢长时间开启终端在其中等待，尤其是Windows下putty这类软件，长时间不操作就会结束，尴尬的是，我们跑的进程也会直接终端，为了解决这个问题，我们需要把进程扔到后台，让他自己运行</p>
+<p>在这里我们介绍一个名叫<strong>Supervisor</strong>的进程控制系统，<br>它是一个C/S系统(注意: 其提供WEB接口给用户查询和控制), 它允许用户去监控和控制在类UNIX系统的进程. 它的目标与launchd, daemontools和runit有些相似, 但是与它们不一样的是, 它不是作为init(进程号pid是1)运行. 它是被用来控制进程, 并且它在启动的时候和一般程序并无二致<br>supervisor是一个制作守护进程的工具,用户可以在UNIX系统中监控、管理进程。常用于管理与某个用户或项目相关的进程。去帮我们维护各种服务器的进程，即使有软件崩了也能帮我们自动重启</p>
+<h2 id="Supervisor"><a href="#Supervisor" class="headerlink" title="Supervisor"></a>Supervisor</h2><a id="more"></a>
+<p>首先先把官网丢上来<a href="http://supervisord.org/" target="_blank" rel="external">http://supervisord.org/</a></p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>两种方式去安装</p>
+<ol>
+<li><p>直接使用apt包管理安装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ sudo apt-get install supervisor</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>通过pip安装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ sudo pip install supervisor</span>
+</pre></td></tr></table></figure>
+</li>
+</ol>
+<p>安装成功后,supervisor就会默认启动</p>
+<h3 id="使用说明"><a href="#使用说明" class="headerlink" title="使用说明"></a>使用说明</h3><p>很多地方都有不同的使用方式，个人比较倾向把每个进程的文件单独拆分放在/etc/supervisor/conf.d/目录下，以conf为扩展名<br>这里以我自己的一个项目的进程作为例子（进程名为x508server）</p>
+<ol>
+<li><p>创建并编写<strong>x508server.conf</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+</pre></td><td class="code"><pre><span class="line">[program:x508server]</span>
+<span class="line">command=python /home/webserver/web/WebServer/manage.py runserver 0.0.0.0:8000 ; 被监控的进程路径</span>
+<span class="line">numprocs=1                    ; 启动几个进程</span>
+<span class="line">directory=/home/webserver/web/WebServer/               ; 执行前要不要先cd到目录去，一般不用</span>
+<span class="line">autostart=true                ; 随着supervisord的启动而启动</span>
+<span class="line">autorestart=true              ; 自动重启。。当然要选上了</span>
+<span class="line">startretries=10               ; 启动失败时的最多重试次数</span>
+<span class="line">exitcodes=0                   ; 正常退出代码</span>
+<span class="line">stopsignal=KILL               ; 用来杀死进程的信号</span>
+<span class="line">stopwaitsecs=10               ; 发送SIGKILL前的等待时间</span>
+<span class="line">redirect_stderr=true          ; 重定向stderr到stdout</span>
+<span class="line">stdout_logfile=logfile        ; 指定日志文件</span>
+<span class="line">; 默认为 false，如果设置为 true，当进程收到 stop 信号时，会自动将该信号发给该进程的子进程。如果这个配置项为 true，那么也隐含 killasgroup 为 true。例如在 Debug 模式使用 Flask 时，Flask 不会将接收到的 stop 信号也传递给它的子进程，因此就需要设置这个配置项。</span>
+<span class="line">stopasgroup=true             ; send stop signal to the UNIX process </span>
+<span class="line">; 默认为 false，如果设置为 true，当进程收到 kill 信号时，会自动将该信号发给该进程的子进程。如果这个程序使用了 python 的 multiprocessing 时，就能自动停止它的子线程。</span>
+<span class="line">killasgroup=true             ; SIGKILL the UNIX process group (def false</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>让supervisor重新加载配置文件，然后启动x508server进程</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">$ supervisorctl reload</span>
+<span class="line">$ supervisorctl start x508server</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>结束指定进程</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ supervisorctl x508serevr stop</span>
+</pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><ol>
+<li><p>启动某个进程</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ supervisorctl start x508serevr</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>关闭某个进程</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ supervisorctl stop x508serevr</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>停止全部进程，注：start、restart、stop都不会载入最新的配置文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ supervisorctl stop all</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>载入最新的配置文件，停止原有进程并按新的配置启动、管理所有进程</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ supervisorctl reload</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>根据最新的配置文件，启动新配置或有改动的进程，配置没有改动的进程不会受影响而重启</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ supervisorctl update</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>启动supervisord</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ sudo supervisord -c /etc/supervisor/supervisord.conf</span>
+</pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="配置说明"><a href="#配置说明" class="headerlink" title="配置说明"></a>配置说明</h3><ol>
+<li><p>每个进程的配置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+<span class="line">27</span>
+<span class="line">28</span>
+<span class="line">29</span>
+<span class="line">30</span>
+<span class="line">31</span>
+<span class="line">32</span>
+<span class="line">33</span>
+<span class="line">34</span>
+<span class="line">35</span>
+<span class="line">36</span>
+<span class="line">37</span>
+<span class="line">38</span>
+<span class="line">39</span>
+<span class="line">40</span>
+<span class="line">41</span>
+<span class="line">42</span>
+<span class="line">43</span>
+<span class="line">44</span>
+<span class="line">45</span>
+<span class="line">46</span>
+<span class="line">47</span>
+<span class="line">48</span>
+<span class="line">49</span>
+<span class="line">50</span>
+<span class="line">51</span>
+<span class="line">52</span>
+<span class="line">53</span>
+<span class="line">54</span>
+<span class="line">55</span>
+<span class="line">56</span>
+<span class="line">57</span>
+<span class="line">58</span>
+<span class="line">59</span>
+<span class="line">60</span>
+<span class="line">61</span>
+<span class="line">62</span>
+<span class="line">63</span>
+<span class="line">64</span>
+<span class="line">65</span>
+<span class="line">66</span>
+<span class="line">67</span>
+<span class="line">68</span>
+<span class="line">69</span>
+<span class="line">70</span>
+<span class="line">71</span>
+</pre></td><td class="code"><pre><span class="line">;*为必须填写项</span>
+<span class="line">;*[program:应用名称]</span>
+<span class="line">[program:cat]</span>
+<span class="line"></span>
+<span class="line">;*命令路径,如果使用python启动的程序应该为 python /home/test.py, </span>
+<span class="line">;不建议放入/home/user/, 对于非user用户一般情况下是不能访问</span>
+<span class="line"><span class="built_in">command</span>=/bin/cat</span>
+<span class="line"></span>
+<span class="line">;当numprocs为1时,process_name=%(program_name)s</span>
+<span class="line">;当numprocs&gt;=2时,%(program_name)s_%(process_num)02d</span>
+<span class="line">process_name=%(program_name)s</span>
+<span class="line"></span>
+<span class="line">;进程数量</span>
+<span class="line">numprocs=1</span>
+<span class="line"></span>
+<span class="line">;执行目录,若有/home/supervisor_test/<span class="built_in">test</span>1.py</span>
+<span class="line">;将directory设置成/home/supervisor_test</span>
+<span class="line">;则<span class="built_in">command</span>只需设置成python <span class="built_in">test</span>1.py</span>
+<span class="line">;否则<span class="built_in">command</span>必须设置成绝对执行目录</span>
+<span class="line">directory=/tmp</span>
+<span class="line"></span>
+<span class="line">;掩码:--- -w- -w-, 转换后rwx r-x w-x</span>
+<span class="line"><span class="built_in">umask</span>=022</span>
+<span class="line"></span>
+<span class="line">;优先级,值越高,最后启动,最先被关闭,默认值999</span>
+<span class="line">priority=999</span>
+<span class="line"></span>
+<span class="line">;如果是<span class="literal">true</span>,当supervisor启动时,程序将会自动启动</span>
+<span class="line">autostart=<span class="literal">true</span></span>
+<span class="line"></span>
+<span class="line">;*自动重启</span>
+<span class="line">autorestart=<span class="literal">true</span></span>
+<span class="line"></span>
+<span class="line">;启动延时执行,默认1秒</span>
+<span class="line">startsecs=10</span>
+<span class="line"></span>
+<span class="line">;启动尝试次数,默认3次</span>
+<span class="line">startretries=3</span>
+<span class="line"></span>
+<span class="line">;当退出码是0,2时,执行重启,默认值0,2</span>
+<span class="line">exitcodes=0,2</span>
+<span class="line"></span>
+<span class="line">;停止信号,默认TERM</span>
+<span class="line">;中断:INT(类似于Ctrl+C)(<span class="built_in">kill</span> -INT pid),退出后会将写文件或日志(推荐)</span>
+<span class="line">;终止:TERM(<span class="built_in">kill</span> -TERM pid)</span>
+<span class="line">;挂起:HUP(<span class="built_in">kill</span> -HUP pid),注意与Ctrl+Z/<span class="built_in">kill</span> -stop pid不同</span>
+<span class="line">;从容停止:QUIT(<span class="built_in">kill</span> -QUIT pid)</span>
+<span class="line">;KILL, USR1, USR2其他见命令(<span class="built_in">kill</span> <span class="_">-l</span>),说明1</span>
+<span class="line">stopsignal=TERM</span>
+<span class="line"></span>
+<span class="line">stopwaitsecs=10</span>
+<span class="line"></span>
+<span class="line">;*以root用户执行</span>
+<span class="line">user=root</span>
+<span class="line"></span>
+<span class="line">;重定向</span>
+<span class="line">redirect_stderr=<span class="literal">false</span></span>
+<span class="line"></span>
+<span class="line">stdout_logfile=/a/path</span>
+<span class="line">stdout_logfile_maxbytes=1MB</span>
+<span class="line">stdout_logfile_backups=10</span>
+<span class="line">stdout_capture_maxbytes=1MB</span>
+<span class="line">stderr_logfile=/a/path</span>
+<span class="line">stderr_logfile_maxbytes=1MB</span>
+<span class="line">stderr_logfile_backups=10</span>
+<span class="line">stderr_capture_maxbytes=1MB</span>
+<span class="line"></span>
+<span class="line">;环境变量设置</span>
+<span class="line">environment=A=<span class="string">"1"</span>,B=<span class="string">"2"</span></span>
+<span class="line"></span>
+<span class="line">serverurl=AUTO</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>(inet_http_server)配置说明</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line">[inet_http_server]         ; inet (TCP) server disabled by default</span>
+<span class="line">port=0.0.0.0:9001          ; (ip_address:port specifier, *:port <span class="keyword">for</span> all iface)</span>
+<span class="line">username=user              ; 用户名 (default is no username (open server))</span>
+<span class="line">password=123               ; 密码 (default is no password (open server))</span>
+</pre></td></tr></table></figure>
+</li>
+</ol>
+<blockquote>
+<p>注：</p>
+<ul>
+<li>上述环境在<strong>ubuntu16.04 lts</strong>中测试成功</li>
+<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
+</ul>
+</blockquote>
+]]></content>
+      
+        <categories>
+            
+            <category> 运维 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Linux </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[django+nginx+gunicorn部署配置]]></title>
       <url>/2017/06/30/django_nginx_gunicorn/</url>
       <content type="html"><![CDATA[<p>在部署django开发的站点时，通常有两种选择方式，nginx+django+uwsgi或者django+nginx+gunicorn，本文不讨论apache方式，在linux下通常都使用nginx，速度快，还经常做代理服务器，功能强大。。<br>nginx+django+uwsgi个人觉得uwsgi配置较为麻烦，所以选择了gunicorn，一个开源Python WSGI UNIX的HTTP服务器，据说速度快（配置快、运行快）、简单，默认是同步工作，支持Gevent、Eventlet异步，支持Tornado。有兴趣可以自行查阅官方文档</p>
@@ -18281,291 +18595,6 @@
             <tag> Django </tag>
             
             <tag> Nginx </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[ubuntu下的进程控制系统————Supervisor]]></title>
-      <url>/2017/06/30/ubuntu_supervisor/</url>
-      <content type="html"><![CDATA[<p>我们在部署网站或者在ssh到服务器上去进行一些长时间操作的任务时候，通常不喜欢长时间开启终端在其中等待，尤其是Windows下putty这类软件，长时间不操作就会结束，尴尬的是，我们跑的进程也会直接终端，为了解决这个问题，我们需要把进程扔到后台，让他自己运行</p>
-<p>在这里我们介绍一个名叫<strong>Supervisor</strong>的进程控制系统，<br>它是一个C/S系统(注意: 其提供WEB接口给用户查询和控制), 它允许用户去监控和控制在类UNIX系统的进程. 它的目标与launchd, daemontools和runit有些相似, 但是与它们不一样的是, 它不是作为init(进程号pid是1)运行. 它是被用来控制进程, 并且它在启动的时候和一般程序并无二致<br>supervisor是一个制作守护进程的工具,用户可以在UNIX系统中监控、管理进程。常用于管理与某个用户或项目相关的进程。去帮我们维护各种服务器的进程，即使有软件崩了也能帮我们自动重启</p>
-<h2 id="Supervisor"><a href="#Supervisor" class="headerlink" title="Supervisor"></a>Supervisor</h2><a id="more"></a>
-<p>首先先把官网丢上来<a href="http://supervisord.org/" target="_blank" rel="external">http://supervisord.org/</a></p>
-<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>两种方式去安装</p>
-<ol>
-<li><p>直接使用apt包管理安装</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">$ sudo apt-get install supervisor</span>
-</pre></td></tr></table></figure>
-</li>
-<li><p>通过pip安装</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">$ sudo pip install supervisor</span>
-</pre></td></tr></table></figure>
-</li>
-</ol>
-<p>安装成功后,supervisor就会默认启动</p>
-<h3 id="使用说明"><a href="#使用说明" class="headerlink" title="使用说明"></a>使用说明</h3><p>很多地方都有不同的使用方式，个人比较倾向把每个进程的文件单独拆分放在/etc/supervisor/conf.d/目录下，以conf为扩展名<br>这里以我自己的一个项目的进程作为例子（进程名为x508server）</p>
-<ol>
-<li><p>创建并编写<strong>x508server.conf</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-</pre></td><td class="code"><pre><span class="line">[program:x508server]</span>
-<span class="line">command=python /home/webserver/web/WebServer/manage.py runserver 0.0.0.0:8000 ; 被监控的进程路径</span>
-<span class="line">numprocs=1                    ; 启动几个进程</span>
-<span class="line">directory=/home/webserver/web/WebServer/               ; 执行前要不要先cd到目录去，一般不用</span>
-<span class="line">autostart=true                ; 随着supervisord的启动而启动</span>
-<span class="line">autorestart=true              ; 自动重启。。当然要选上了</span>
-<span class="line">startretries=10               ; 启动失败时的最多重试次数</span>
-<span class="line">exitcodes=0                   ; 正常退出代码</span>
-<span class="line">stopsignal=KILL               ; 用来杀死进程的信号</span>
-<span class="line">stopwaitsecs=10               ; 发送SIGKILL前的等待时间</span>
-<span class="line">redirect_stderr=true          ; 重定向stderr到stdout</span>
-<span class="line">stdout_logfile=logfile        ; 指定日志文件</span>
-<span class="line">; 默认为 false，如果设置为 true，当进程收到 stop 信号时，会自动将该信号发给该进程的子进程。如果这个配置项为 true，那么也隐含 killasgroup 为 true。例如在 Debug 模式使用 Flask 时，Flask 不会将接收到的 stop 信号也传递给它的子进程，因此就需要设置这个配置项。</span>
-<span class="line">stopasgroup=true             ; send stop signal to the UNIX process </span>
-<span class="line">; 默认为 false，如果设置为 true，当进程收到 kill 信号时，会自动将该信号发给该进程的子进程。如果这个程序使用了 python 的 multiprocessing 时，就能自动停止它的子线程。</span>
-<span class="line">killasgroup=true             ; SIGKILL the UNIX process group (def false</span>
-</pre></td></tr></table></figure>
-</li>
-<li><p>让supervisor重新加载配置文件，然后启动x508server进程</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line">$ supervisorctl reload</span>
-<span class="line">$ supervisorctl start x508server</span>
-</pre></td></tr></table></figure>
-</li>
-<li><p>结束指定进程</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">$ supervisorctl x508serevr stop</span>
-</pre></td></tr></table></figure>
-</li>
-</ol>
-<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><ol>
-<li><p>启动某个进程</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">$ supervisorctl start x508serevr</span>
-</pre></td></tr></table></figure>
-</li>
-<li><p>关闭某个进程</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">$ supervisorctl stop x508serevr</span>
-</pre></td></tr></table></figure>
-</li>
-<li><p>停止全部进程，注：start、restart、stop都不会载入最新的配置文件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">$ supervisorctl stop all</span>
-</pre></td></tr></table></figure>
-</li>
-<li><p>载入最新的配置文件，停止原有进程并按新的配置启动、管理所有进程</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">$ supervisorctl reload</span>
-</pre></td></tr></table></figure>
-</li>
-<li><p>根据最新的配置文件，启动新配置或有改动的进程，配置没有改动的进程不会受影响而重启</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">$ supervisorctl update</span>
-</pre></td></tr></table></figure>
-</li>
-<li><p>启动supervisord</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">$ sudo supervisord -c /etc/supervisor/supervisord.conf</span>
-</pre></td></tr></table></figure>
-</li>
-</ol>
-<h3 id="配置说明"><a href="#配置说明" class="headerlink" title="配置说明"></a>配置说明</h3><ol>
-<li><p>每个进程的配置</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-<span class="line">17</span>
-<span class="line">18</span>
-<span class="line">19</span>
-<span class="line">20</span>
-<span class="line">21</span>
-<span class="line">22</span>
-<span class="line">23</span>
-<span class="line">24</span>
-<span class="line">25</span>
-<span class="line">26</span>
-<span class="line">27</span>
-<span class="line">28</span>
-<span class="line">29</span>
-<span class="line">30</span>
-<span class="line">31</span>
-<span class="line">32</span>
-<span class="line">33</span>
-<span class="line">34</span>
-<span class="line">35</span>
-<span class="line">36</span>
-<span class="line">37</span>
-<span class="line">38</span>
-<span class="line">39</span>
-<span class="line">40</span>
-<span class="line">41</span>
-<span class="line">42</span>
-<span class="line">43</span>
-<span class="line">44</span>
-<span class="line">45</span>
-<span class="line">46</span>
-<span class="line">47</span>
-<span class="line">48</span>
-<span class="line">49</span>
-<span class="line">50</span>
-<span class="line">51</span>
-<span class="line">52</span>
-<span class="line">53</span>
-<span class="line">54</span>
-<span class="line">55</span>
-<span class="line">56</span>
-<span class="line">57</span>
-<span class="line">58</span>
-<span class="line">59</span>
-<span class="line">60</span>
-<span class="line">61</span>
-<span class="line">62</span>
-<span class="line">63</span>
-<span class="line">64</span>
-<span class="line">65</span>
-<span class="line">66</span>
-<span class="line">67</span>
-<span class="line">68</span>
-<span class="line">69</span>
-<span class="line">70</span>
-<span class="line">71</span>
-</pre></td><td class="code"><pre><span class="line">;*为必须填写项</span>
-<span class="line">;*[program:应用名称]</span>
-<span class="line">[program:cat]</span>
-<span class="line"></span>
-<span class="line">;*命令路径,如果使用python启动的程序应该为 python /home/test.py, </span>
-<span class="line">;不建议放入/home/user/, 对于非user用户一般情况下是不能访问</span>
-<span class="line"><span class="built_in">command</span>=/bin/cat</span>
-<span class="line"></span>
-<span class="line">;当numprocs为1时,process_name=%(program_name)s</span>
-<span class="line">;当numprocs&gt;=2时,%(program_name)s_%(process_num)02d</span>
-<span class="line">process_name=%(program_name)s</span>
-<span class="line"></span>
-<span class="line">;进程数量</span>
-<span class="line">numprocs=1</span>
-<span class="line"></span>
-<span class="line">;执行目录,若有/home/supervisor_test/<span class="built_in">test</span>1.py</span>
-<span class="line">;将directory设置成/home/supervisor_test</span>
-<span class="line">;则<span class="built_in">command</span>只需设置成python <span class="built_in">test</span>1.py</span>
-<span class="line">;否则<span class="built_in">command</span>必须设置成绝对执行目录</span>
-<span class="line">directory=/tmp</span>
-<span class="line"></span>
-<span class="line">;掩码:--- -w- -w-, 转换后rwx r-x w-x</span>
-<span class="line"><span class="built_in">umask</span>=022</span>
-<span class="line"></span>
-<span class="line">;优先级,值越高,最后启动,最先被关闭,默认值999</span>
-<span class="line">priority=999</span>
-<span class="line"></span>
-<span class="line">;如果是<span class="literal">true</span>,当supervisor启动时,程序将会自动启动</span>
-<span class="line">autostart=<span class="literal">true</span></span>
-<span class="line"></span>
-<span class="line">;*自动重启</span>
-<span class="line">autorestart=<span class="literal">true</span></span>
-<span class="line"></span>
-<span class="line">;启动延时执行,默认1秒</span>
-<span class="line">startsecs=10</span>
-<span class="line"></span>
-<span class="line">;启动尝试次数,默认3次</span>
-<span class="line">startretries=3</span>
-<span class="line"></span>
-<span class="line">;当退出码是0,2时,执行重启,默认值0,2</span>
-<span class="line">exitcodes=0,2</span>
-<span class="line"></span>
-<span class="line">;停止信号,默认TERM</span>
-<span class="line">;中断:INT(类似于Ctrl+C)(<span class="built_in">kill</span> -INT pid),退出后会将写文件或日志(推荐)</span>
-<span class="line">;终止:TERM(<span class="built_in">kill</span> -TERM pid)</span>
-<span class="line">;挂起:HUP(<span class="built_in">kill</span> -HUP pid),注意与Ctrl+Z/<span class="built_in">kill</span> -stop pid不同</span>
-<span class="line">;从容停止:QUIT(<span class="built_in">kill</span> -QUIT pid)</span>
-<span class="line">;KILL, USR1, USR2其他见命令(<span class="built_in">kill</span> <span class="_">-l</span>),说明1</span>
-<span class="line">stopsignal=TERM</span>
-<span class="line"></span>
-<span class="line">stopwaitsecs=10</span>
-<span class="line"></span>
-<span class="line">;*以root用户执行</span>
-<span class="line">user=root</span>
-<span class="line"></span>
-<span class="line">;重定向</span>
-<span class="line">redirect_stderr=<span class="literal">false</span></span>
-<span class="line"></span>
-<span class="line">stdout_logfile=/a/path</span>
-<span class="line">stdout_logfile_maxbytes=1MB</span>
-<span class="line">stdout_logfile_backups=10</span>
-<span class="line">stdout_capture_maxbytes=1MB</span>
-<span class="line">stderr_logfile=/a/path</span>
-<span class="line">stderr_logfile_maxbytes=1MB</span>
-<span class="line">stderr_logfile_backups=10</span>
-<span class="line">stderr_capture_maxbytes=1MB</span>
-<span class="line"></span>
-<span class="line">;环境变量设置</span>
-<span class="line">environment=A=<span class="string">"1"</span>,B=<span class="string">"2"</span></span>
-<span class="line"></span>
-<span class="line">serverurl=AUTO</span>
-</pre></td></tr></table></figure>
-</li>
-<li><p>(inet_http_server)配置说明</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-</pre></td><td class="code"><pre><span class="line">[inet_http_server]         ; inet (TCP) server disabled by default</span>
-<span class="line">port=0.0.0.0:9001          ; (ip_address:port specifier, *:port <span class="keyword">for</span> all iface)</span>
-<span class="line">username=user              ; 用户名 (default is no username (open server))</span>
-<span class="line">password=123               ; 密码 (default is no password (open server))</span>
-</pre></td></tr></table></figure>
-</li>
-</ol>
-<blockquote>
-<p>注：</p>
-<ul>
-<li>上述环境在<strong>ubuntu16.04 lts</strong>中测试成功</li>
-<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
-</ul>
-</blockquote>
-]]></content>
-      
-        <categories>
-            
-            <category> 运维 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> Linux </tag>
             
         </tags>
         
@@ -21960,111 +21989,10 @@
     </entry>
     
     <entry>
-      <title><![CDATA[Python2和Python3的区别简单总结]]></title>
-      <url>/2016/08/15/python2%E5%92%8CPython3%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
-      <content type="html"><![CDATA[<p>Python是一种新的计算机语言，也是最近两年才开始大火的一种语言，它够优雅，写起来可以随心所欲，不用担心没有定义，没有声明这些其他计算机语言都需要考虑的问题,单自从更新Python3.x版本之后，很多人开始头疼，因为Python3很多地方并不兼容Python2，有人夸张的说Python3是一门新的语言，我觉得没有那么夸张，本文就剧一下我遇到的和一些知道的区别吧</p>
-<a id="more"></a>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="print函数"><a href="#print函数" class="headerlink" title="print函数"></a>print函数</h3><p>print 语法的变化可能是最广为人知的了，但是仍值得一提的是： Python 2 的 print 声明已经被 print() 函数取代了，这意味着我们必须包装我们想打印在小括号中的对象。<br>Python 2 不具有额外的小括号问题。但对比一下，如果我们按照 Python 2 的方式不使用小括号调用 print 函数，Python 3 将抛出一个语法异常（SyntaxError）。</p>
-<h4 id="Python2"><a href="#Python2" class="headerlink" title="Python2"></a>Python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">'Python'</span>, python_version()</span>
-<span class="line"><span class="keyword">print</span> <span class="string">'Hello, World!'</span></span>
-<span class="line">print(<span class="string">'Hello, World!'</span>)</span>
-<span class="line"><span class="keyword">print</span> <span class="string">"text"</span>, ; <span class="keyword">print</span> <span class="string">'print more text on the same line'</span></span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>结果:</p>
-<ul>
-<li>Python 2.7.6</li>
-<li>Hello, World!</li>
-<li>Hello, World!</li>
-<li>text print more text on the same line</li>
-</ul>
-</blockquote>
-<h4 id="Python3"><a href="#Python3" class="headerlink" title="Python3"></a>Python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-</pre></td><td class="code"><pre><span class="line">print(<span class="string">'Python'</span>, python_version())</span>
-<span class="line">print(<span class="string">'Hello, World!'</span>)</span>
-<span class="line">print(<span class="string">"some text,"</span>, end=<span class="string">""</span>) </span>
-<span class="line">print(<span class="string">' print more text on the same line'</span>)</span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>结果:</p>
-<ul>
-<li>Python 3.5.1</li>
-<li>Hello, World!</li>
-<li>some text, print more text on the same line</li>
-<li>print more text on the same line</li>
-</ul>
-</blockquote>
-<h3 id="整除"><a href="#整除" class="headerlink" title="整除"></a>整除</h3><p>python3的版本变化中，整数计算可以说是很大的并且可能在移植过程中造成很大危险，比如:</p>
-<ul>
-<li>你在 Python 2 上执行 Python 3 的代码。因为这个整除的变化表现在它会被忽视（即它不会抛出语法异常）。</li>
-</ul>
-<h4 id="python2"><a href="#python2" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">'3 / 2 ='</span>, <span class="number">3</span> / <span class="number">2</span></span>
-<span class="line"><span class="keyword">print</span> <span class="string">'3 // 2 ='</span>, <span class="number">3</span> // <span class="number">2</span></span>
-<span class="line"><span class="keyword">print</span> <span class="string">'3 / 2.0 ='</span>, <span class="number">3</span> / <span class="number">2.0</span></span>
-<span class="line"><span class="keyword">print</span> <span class="string">'3 // 2.0 ='</span>, <span class="number">3</span> // <span class="number">2.0</span></span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>结果:</p>
-<ul>
-<li>3 / 2 = 1</li>
-<li>3 // 2 = 1</li>
-<li>3 / 2.0 = 1.5</li>
-<li>3 // 2.0 = 1.0</li>
-</ul>
-</blockquote>
-<h4 id="python3"><a href="#python3" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-</pre></td><td class="code"><pre><span class="line">print(<span class="string">'3 / 2 ='</span>, <span class="number">3</span> / <span class="number">2</span>)</span>
-<span class="line">print(<span class="string">'3 // 2 ='</span>, <span class="number">3</span> // <span class="number">2</span>)</span>
-<span class="line">print(<span class="string">'3 / 2.0 ='</span>, <span class="number">3</span> / <span class="number">2.0</span>)</span>
-<span class="line">print(<span class="string">'3 // 2.0 ='</span>, <span class="number">3</span> // <span class="number">2.0</span>)</span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>结果:</p>
-<ul>
-<li>3 / 2 = 1.5</li>
-<li>3 // 2 = 1</li>
-<li>3 / 2.0 = 1.5</li>
-<li>3 // 2.0 = 1.0</li>
-</ul>
-</blockquote>
-<h3 id="Unicode"><a href="#Unicode" class="headerlink" title="Unicode"></a>Unicode</h3><p>Python 2 有 ASCII str() 类型，unicode() 是单独的，不是 byte 类型。<br>现在， 在 Python 3，我们最终有了 Unicode (utf-8) 字符串，以及一个字节类：byte 和 bytearrays。<br>由于 Python3.X 源码文件默认使用utf-8编码，这就使得以下代码是合法的：</p>
-<h4 id="python3-1"><a href="#python3-1" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line">中国 = <span class="string">'china'</span> </span>
-<span class="line">print(中国)</span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>结果:</p>
-<ul>
-<li>china</li>
-</ul>
-</blockquote>
-<h4 id="python2-1"><a href="#python2-1" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line">str = <span class="string">"我爱北京天安门"</span></span>
-<span class="line"><span class="keyword">print</span> <span class="string">'str'</span></span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>结果:</p>
-<ul>
-<li>‘\xe6\x88\x91\xe7\x88\xb1\xe5\x8c\x97\xe4\xba\xac\xe5\xa4\xa9\xe5\xae\x89\xe9\x97\xa8’</li>
-</ul>
-</blockquote>
-<h3 id="xrange模块"><a href="#xrange模块" class="headerlink" title="xrange模块"></a>xrange模块</h3><p>在 Python 2 中 xrange() 创建迭代对象的用法是非常流行的。比如： for 循环或者是列表/集合/字典推导式。<br>这个表现十分像生成器（比如。“惰性求值”）。但是这个 xrange-iterable 是无穷的，意味着你可以无限遍历。<br>由于它的惰性求值，如果你不得仅仅不遍历它一次，xrange() 函数 比 range() 更快（比如 for 循环）。尽管如此，对比迭代一次，不建议你重复迭代多次，因为生成器每次都从头开始。<br>在 Python 3 中，range() 是像 xrange() 那样实现以至于一个专门的 xrange() 函数都不再存在（在 Python 3 中 xrange() 会抛出命名异常）。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+      <title><![CDATA[Django操作数据库]]></title>
+      <url>/2016/08/15/django%E6%95%B0%E6%8D%AE%E5%BA%93%E6%93%8D%E4%BD%9C/</url>
+      <content type="html"><![CDATA[<p>本篇主要介绍我们在使用django框架开发的时候使用的操作数据库的语句，这在动态网站部分是很重要的，因为我们需要连接数据库进行操作，然后把数据处理的结果显示在前端页面上，在其他地方我们都是直接用sql语句来手动输入，这样容易造成错误，还影响效率，在django中，内置了很多处理数据库操作的函数，能更便利的帮我们操作数据库</p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="实例代码"><a href="#实例代码" class="headerlink" title="实例代码"></a>实例代码</h3><p><strong>models.py</strong><br><a id="more"></a><br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
 <span class="line">4</span>
@@ -22072,210 +22000,274 @@
 <span class="line">6</span>
 <span class="line">7</span>
 <span class="line">8</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> timeit</span>
-<span class="line">n = <span class="number">10000</span></span>
-<span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_range</span><span class="params">(n)</span>:</span></span>
-<span class="line">    <span class="keyword">return</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span>
-<span class="line">        <span class="keyword">pass</span></span>
-<span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_xrange</span><span class="params">(n)</span>:</span></span>
-<span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> xrange(n):</span>
-<span class="line">        <span class="keyword">pass</span></span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+<span class="line">27</span>
+</pre></td><td class="code"><pre><span class="line">class Blog(models.Model):</span>
+<span class="line">    name = models.CharField(max_length=100)</span>
+<span class="line">    tagline = models.TextField()</span>
+<span class="line"></span>
+<span class="line">def __unicode__(self):</span>
+<span class="line">    return self.name</span>
+<span class="line"></span>
+<span class="line">class Author(models.Model):</span>
+<span class="line">    name = models.CharField(max_length=50)</span>
+<span class="line">    email = models.EmailField()</span>
+<span class="line"></span>
+<span class="line">#python3中用__str__</span>
+<span class="line">def __unicode__(self):</span>
+<span class="line">    return self.name</span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line">class Entry(models.Model):</span>
+<span class="line">    blog = models.ForeignKey(Blog)</span>
+<span class="line">    headline = models.CharField(max_length=255)</span>
+<span class="line">    body_text = models.TextField()</span>
+<span class="line">    pub_date = models.DateTimeField()</span>
+<span class="line"></span>
+<span class="line">authors = models.ManyToManyField(Author)</span>
+<span class="line"></span>
+<span class="line">#python3中用__str__</span>
+<span class="line">def __unicode__(self):</span>
+<span class="line">    return self.headline</span>
 </pre></td></tr></table></figure></p>
-<h4 id="python2-2"><a href="#python2-2" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<ul>
+<li>models模块中有三个类blog，author，以及entry</li>
+<li>entry分别与blog与author表关联</li>
+<li>entry与blog表是通过外键(models.ForeignKey())相连，属于一对多的关系，即一个entry对应多个blog，entry与author是多对多的关系，通过modles.ManyToManyField()实现</li>
+</ul>
+<h3 id="插入数据库"><a href="#插入数据库" class="headerlink" title="插入数据库"></a>插入数据库</h3><ul>
+<li>用save()方法实现，如下所示：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
 <span class="line">4</span>
-<span class="line">5</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">'Python'</span>, python_version()</span>
-<span class="line"><span class="keyword">print</span> <span class="string">'\ntiming range()'</span></span>
-<span class="line">%timeit test_range(n)</span>
-<span class="line"><span class="keyword">print</span> <span class="string">'\n\ntiming xrange()'</span></span>
-<span class="line">%timeit test_xrange(n)</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> mysite.blog.models <span class="keyword">import</span> Blog  <span class="comment">#导入blog这个app</span></span>
+<span class="line"></span>
+<span class="line">b = Blog(name=<span class="string">'Beatles Blog'</span>, tagline=<span class="string">'All the latest Beatles news.'</span>)</span>
+<span class="line">b.save()</span>
 </pre></td></tr></table></figure>
-<blockquote>
-<p>结果:</p>
-<ul>
-<li>Python 2.7.6</li>
-<li>timing range()</li>
-<li>1000 loops, best of 3: 433 µs per loop</li>
-<li>timing xrange()</li>
-<li>1000 loops, best of 3: 350 µs per loop</li>
+<h3 id="更新数据库"><a href="#更新数据库" class="headerlink" title="更新数据库"></a>更新数据库</h3><ul>
+<li>用save()方法实现，如下所示：</li>
 </ul>
-</blockquote>
-<h4 id="python3-2"><a href="#python3-2" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">b5.name = 'New name</span>
+<span class="line">b5.save()</span>
+</pre></td></tr></table></figure>
+<h4 id="保存外键和多对多关系的字段"><a href="#保存外键和多对多关系的字段" class="headerlink" title="保存外键和多对多关系的字段"></a>保存外键和多对多关系的字段</h4><ul>
+<li>更新外键字段和普通的字段一样，只要指定一个对象的正确类型。<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
-</pre></td><td class="code"><pre><span class="line">print(<span class="string">'Python'</span>, python_version())</span>
-<span class="line">print(<span class="string">'\ntiming range()'</span>)</span>
-<span class="line">%timeit test_range(n)</span>
-</pre></td></tr></table></figure>
-<blockquote>
-<p>结果:</p>
-<ul>
-<li>Python 3.5.1</li>
-<li>timing range()</li>
-<li>1000 loops, best of 3: 520 µs per loop</li>
-</ul>
-</blockquote>
-<h3 id="不等运算符"><a href="#不等运算符" class="headerlink" title="不等运算符"></a>不等运算符</h3><ul>
-<li>Python 2.x中不等于有两种写法 != 和 &lt;&gt;</li>
-<li>Python 3.x中去掉了&lt;&gt;, 只有!=一种写法，还好，我从来没有使用&lt;&gt;的习惯</li>
-</ul>
-<h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><ul>
-<li>Py3.X去除了long类型，现在只有一种整型——int，但它的行为就像2.X版本的long</li>
-<li>新增了bytes类型，对应于2.X版本的八位串</li>
-<li>dict的.keys()、.items 和.values()方法返回迭代器，而之前的iterkeys()等函数都被废弃。同时去掉的还有 dict.has_key()，用 in替代它吧 。<blockquote>
-<p>注：</p>
-<ul>
-<li>上述代码在<strong>django1.7</strong>和<strong>Python2.7</strong>中编译成功运行，其他环境请自行测试</li>
-<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
-</ul>
-</blockquote>
-</li>
-</ul>
-<h3 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h3><p>在 Python 3 中处理异常也轻微的改变了，在 Python 3 中我们现在使用 as 作为关键词。<br>捕获异常的语法由 except exc, var 改为 except exc as var。<br>使用语法except (exc1, exc2) as var可以同时捕获多种类别的异常。 Python 2.6已经支持这两种语法。</p>
-<ul>
-<li>在2.x时代，所有类型的对象都是可以被直接抛出的，在3.x时代，只有继承自BaseException的对象才可以被抛出。</li>
-<li>2.x raise语句使用逗号将抛出对象类型和参数分开，3.x取消了这种奇葩的写法，直接调用构造函数抛出对象即可。<br>在2.x时代，异常在代码中除了表示程序错误，还经常做一些普通控制结构应该做的事情，在3.x中可以看出，设计者让异常变的更加专一，只有在错误发生的情况才能去用异常捕获语句来处理。<h4 id="python2-3"><a href="#python2-3" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">'Python'</span>, python_version()</span>
-<span class="line"><span class="keyword">try</span>:</span>
-<span class="line">    let_us_cause_a_NameError</span>
-<span class="line"><span class="keyword">except</span> NameError, err:</span>
-<span class="line">    <span class="keyword">print</span> err, <span class="string">'--&gt; our error message'</span></span>
+</pre></td><td class="code"><pre><span class="line">cheese_blog = Blog.objects.get(name=<span class="string">"Cheddar Talk"</span>)</span>
+<span class="line">entry.blog = cheese_blog</span>
+<span class="line">entry.save()</span>
 </pre></td></tr></table></figure>
 </li>
 </ul>
-<blockquote>
-<p>结果:</p>
-<ul>
-<li>Python 2.7.6</li>
-<li>name ‘let_us_cause_a_NameError’ is not defined —&gt; our error message</li>
+<h4 id="更新多对多字段时又一点不太一样，使用add-方法添加相关联的字段的值"><a href="#更新多对多字段时又一点不太一样，使用add-方法添加相关联的字段的值" class="headerlink" title="更新多对多字段时又一点不太一样，使用add()方法添加相关联的字段的值"></a>更新多对多字段时又一点不太一样，使用add()方法添加相关联的字段的值</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">joe = Author.objects.create(name=<span class="string">"Joe"</span>)</span>
+<span class="line">entry.authors.add(joe)</span>
+</pre></td></tr></table></figure>
+<h3 id="检索对象"><a href="#检索对象" class="headerlink" title="检索对象"></a>检索对象</h3><h4 id="检索所有的对象"><a href="#检索所有的对象" class="headerlink" title="检索所有的对象"></a>检索所有的对象</h4><ul>
+<li>使用all()方法返回数据库中的所有对象。<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">all_entries = Entry.objects.all()</span>
+</pre></td></tr></table></figure>
+</li>
 </ul>
-</blockquote>
-<h4 id="python3-3"><a href="#python3-3" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<h4 id="检索特定的对象"><a href="#检索特定的对象" class="headerlink" title="检索特定的对象"></a>检索特定的对象</h4><h5 id="返回一个与参数匹配的QuerySet-相当于等于"><a href="#返回一个与参数匹配的QuerySet-相当于等于" class="headerlink" title="返回一个与参数匹配的QuerySet,相当于等于(=)"></a>返回一个与参数匹配的QuerySet,相当于等于(=)</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">#fileter(**kwargs)</span></span>
+<span class="line">Entry.objects.filter(pub_date__year=<span class="number">2006</span>)</span>
+</pre></td></tr></table></figure>
+<ul>
+<li>以上语句等同于<strong>slect * from entry where pub_date_year=’2006’</strong></li>
+</ul>
+<h5 id="返回一个与参数不匹配的QuerySet-相当于不等于"><a href="#返回一个与参数不匹配的QuerySet-相当于不等于" class="headerlink" title="返回一个与参数不匹配的QuerySet,相当于不等于(!=)"></a>返回一个与参数不匹配的QuerySet,相当于不等于(!=)</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">exclude(**kwargs)</span>
+</pre></td></tr></table></figure>
+<h5 id="对参数进行重用的方法"><a href="#对参数进行重用的方法" class="headerlink" title="对参数进行重用的方法"></a>对参数进行重用的方法</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line">q1 = Entry.objects.filter(headline__startswith=<span class="string">"What"</span>)</span>
+<span class="line">q2 = q1.exclude(pub_date__gte=datetime.now())</span>
+<span class="line">q3 = q1.filter(pub_date__gte=datetime.now())</span>
+</pre></td></tr></table></figure>
+<h5 id="QuerySet是延迟加载-只在使用的时候才会去访问数据库"><a href="#QuerySet是延迟加载-只在使用的时候才会去访问数据库" class="headerlink" title="QuerySet是延迟加载(只在使用的时候才会去访问数据库)"></a>QuerySet是延迟加载(只在使用的时候才会去访问数据库)</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
 <span class="line">4</span>
-<span class="line">5</span>
-</pre></td><td class="code"><pre><span class="line">print(<span class="string">'Python'</span>, python_version())</span>
-<span class="line"><span class="keyword">try</span>:</span>
-<span class="line">    let_us_cause_a_NameError</span>
-<span class="line"><span class="keyword">except</span> NameError <span class="keyword">as</span> err:</span>
-<span class="line">    print(err, <span class="string">'--&gt; our error message'</span>)</span>
+</pre></td><td class="code"><pre><span class="line">q = Entry.objects.filter(headline__startswith=<span class="string">"What"</span>)</span>
+<span class="line">q = q.filter(pub_date__lte=datetime.now())</span>
+<span class="line">q = q.exclude(body_text__icontains=<span class="string">"food"</span>)</span>
+<span class="line"><span class="keyword">print</span> q</span>
 </pre></td></tr></table></figure>
-<blockquote>
-<p>结果:</p>
 <ul>
-<li>Python 3.5.1</li>
-<li>name ‘let_us_cause_a_NameError’ is not defined —&gt; our error message</li>
+<li>在print q时才会访问数据库</li>
 </ul>
-</blockquote>
-<h3 id="通过input-解析用户的输入"><a href="#通过input-解析用户的输入" class="headerlink" title="通过input()解析用户的输入"></a>通过input()解析用户的输入</h3><p>幸运的是，在 Python 3 中已经解决了把用户的输入存储为一个 str 对象的问题。为了避免在 Python 2 中的读取非字符串类型的危险行为，我们不得不使用 raw_input() 代替。</p>
-<h3 id="返回可迭代对象，而不是列表"><a href="#返回可迭代对象，而不是列表" class="headerlink" title="返回可迭代对象，而不是列表"></a>返回可迭代对象，而不是列表</h3><p>如果在 xrange 章节看到的，现在在 Python 3 中一些方法和函数返回迭代对象 — 代替 Python 2 中的列表<br>因为我们通常那些遍历只有一次，我认为这个改变对节约内存很有意义。尽管如此，它也是可能的，相对于生成器 —- 如需要遍历多次。它是不那么高效的。<br>而对于那些情况下，我们真正需要的是列表对象，我们可以通过 list() 函数简单的把迭代对象转换成一个列表。</p>
-<h4 id="python2-4"><a href="#python2-4" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<h5 id="查找前5个entry表里的数据"><a href="#查找前5个entry表里的数据" class="headerlink" title="查找前5个entry表里的数据"></a>查找前5个entry表里的数据</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">Entry.objects.all()[:<span class="number">5</span>]</span>
+</pre></td></tr></table></figure>
+<h5 id="查找从第5个到第10个之间的数据"><a href="#查找从第5个到第10个之间的数据" class="headerlink" title="查找从第5个到第10个之间的数据"></a>查找从第5个到第10个之间的数据</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">Entry.objects.all()[<span class="number">5</span>:<span class="number">10</span>]</span>
+</pre></td></tr></table></figure>
+<h5 id="查询从第0个开始到第10个，步长为2的数据"><a href="#查询从第0个开始到第10个，步长为2的数据" class="headerlink" title="查询从第0个开始到第10个，步长为2的数据"></a>查询从第0个开始到第10个，步长为2的数据</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">Entry.objects.all()[:<span class="number">10</span>:<span class="number">2</span>]</span>
+</pre></td></tr></table></figure>
+<h5 id="取按headline字段排序后的第一个对象"><a href="#取按headline字段排序后的第一个对象" class="headerlink" title="取按headline字段排序后的第一个对象"></a>取按headline字段排序后的第一个对象</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">Entry.objects.order_by(<span class="string">'headline'</span>)[<span class="number">0</span>]</span>
+<span class="line"><span class="comment">#或Entry.objects.order_by('headline')[0:1].get()</span></span>
+</pre></td></tr></table></figure>
+<h5 id="查找id-14的对象。"><a href="#查找id-14的对象。" class="headerlink" title="查找id=14的对象。"></a>查找id=14的对象。</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">Blog.objects.get(id__exact=<span class="number">14</span>) <span class="comment"># Explicit form</span></span>
+<span class="line">Blog.objects.get(id=<span class="number">14</span>)         <span class="comment"># __exact is implied</span></span>
+</pre></td></tr></table></figure>
+<h5 id="SELECT-FROM-blog-entry-WHERE-pub-date-lt-‘2006-01-01’"><a href="#SELECT-FROM-blog-entry-WHERE-pub-date-lt-‘2006-01-01’" class="headerlink" title="SELECT * FROM blog_entry WHERE pub_date &lt;= ‘2006-01-01’"></a>SELECT * FROM blog_entry WHERE pub_date &lt;= ‘2006-01-01’</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">Entry.objects.filter(pub_date__lte=<span class="string">'2006-01-01'</span>)</span>
+</pre></td></tr></table></figure>
+<h5 id="SELECT-…-WHERE-headline-‘Man-bites-dog’"><a href="#SELECT-…-WHERE-headline-‘Man-bites-dog’" class="headerlink" title="SELECT … WHERE headline = ‘Man bites dog’"></a>SELECT … WHERE headline = ‘Man bites dog’</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">Entry.objects.get(headline__exact=<span class="string">"Man bites dog"</span>)</span>
+</pre></td></tr></table></figure>
+<h5 id="查找name-”beatles-blog”的对象，不区分大小写。"><a href="#查找name-”beatles-blog”的对象，不区分大小写。" class="headerlink" title="查找name=”beatles blog”的对象，不区分大小写。"></a>查找name=”beatles blog”的对象，不区分大小写。</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">Entry.objects.get(headline__contains=<span class="string">'Lennon'</span>)</span>
+</pre></td></tr></table></figure>
+<ul>
+<li>等同于SELECT … WHERE headline LIKE ‘%Lennon%’</li>
+</ul>
+<h5 id="查找entry表中外键关系blog-name-’Beatles-Blog’的Entry对象"><a href="#查找entry表中外键关系blog-name-’Beatles-Blog’的Entry对象" class="headerlink" title="查找entry表中外键关系blog_name=’Beatles Blog’的Entry对象"></a>查找entry表中外键关系blog_name=’Beatles Blog’的Entry对象</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">Entry.objects.filter(blog__name__exact=<span class="string">'Beatles Blog'</span>)</span>
+</pre></td></tr></table></figure>
+<h5 id="查找blog表中外键关系entry表中的headline字段中包含Lennon的blog数据"><a href="#查找blog表中外键关系entry表中的headline字段中包含Lennon的blog数据" class="headerlink" title="查找blog表中外键关系entry表中的headline字段中包含Lennon的blog数据"></a>查找blog表中外键关系entry表中的headline字段中包含Lennon的blog数据</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">Blog.objects.filter(entry__headline__contains=<span class="string">'Lennon'</span>)</span>
+</pre></td></tr></table></figure>
+<h5 id="查找blog表中外键关系entry表中的author字段中包含Lennon的blog数据"><a href="#查找blog表中外键关系entry表中的author字段中包含Lennon的blog数据" class="headerlink" title="查找blog表中外键关系entry表中的author字段中包含Lennon的blog数据"></a>查找blog表中外键关系entry表中的author字段中包含Lennon的blog数据</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">Blog.objects.filter(entry__author__name=<span class="string">'Lennon'</span>)</span>
+</pre></td></tr></table></figure>
+<h5 id="查询的是author-name为null的值"><a href="#查询的是author-name为null的值" class="headerlink" title="查询的是author_name为null的值"></a>查询的是author_name为null的值</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">Blog.objects.filter(entry__author__name__isnull=<span class="keyword">True</span>)</span>
+<span class="line">Blog.objects.filter(entry__author__isnull=<span class="keyword">False</span>,entry__author__name__isnull=<span class="keyword">True</span>)</span>
+</pre></td></tr></table></figure>
+<h5 id="select-from-where-id-14"><a href="#select-from-where-id-14" class="headerlink" title="select * from where id=14"></a>select * from where id=14</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">'Python'</span>, python_version() </span>
-<span class="line"><span class="keyword">print</span> range(<span class="number">3</span>) </span>
-<span class="line"><span class="keyword">print</span> type(range(<span class="number">3</span>))</span>
+</pre></td><td class="code"><pre><span class="line">Blog.objects.get(id__exact=<span class="number">14</span>) <span class="comment"># Explicit form</span></span>
+<span class="line">Blog.objects.get(id=<span class="number">14</span>) <span class="comment"># __exact is implied</span></span>
+<span class="line">Blog.objects.get(pk=<span class="number">14</span>) <span class="comment"># pk implies id__exact</span></span>
 </pre></td></tr></table></figure>
-<blockquote>
-<p>结果:</p>
-<ul>
-<li>Python 2.7.6</li>
-<li>[0, 1, 2]</li>
-<li>&lt; type ‘list’&gt;</li>
-</ul>
-</blockquote>
-<h4 id="python3-4"><a href="#python3-4" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<h5 id="select-from-where-id-in-1-4-7"><a href="#select-from-where-id-in-1-4-7" class="headerlink" title="select * from where id in{1,4,7}"></a>select * from where id in{1,4,7}</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">Blog.objects.filter(pk__in=[<span class="number">1</span>,<span class="number">4</span>,<span class="number">7</span>])</span>
+</pre></td></tr></table></figure>
+<h5 id="select-from-id-gt-14"><a href="#select-from-id-gt-14" class="headerlink" title="select * from id&gt;14"></a>select * from id&gt;14</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">Blog.objects.filter(pk__gt=<span class="number">14</span>)</span>
+</pre></td></tr></table></figure>
+<h5 id="SELECT-…-WHERE-headline-LIKE-‘-’"><a href="#SELECT-…-WHERE-headline-LIKE-‘-’" class="headerlink" title="SELECT … WHERE headline LIKE ‘%\%%’"></a>SELECT … WHERE headline LIKE ‘%\%%’</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
-<span class="line">4</span>
-</pre></td><td class="code"><pre><span class="line">print(<span class="string">'Python'</span>, python_version())</span>
-<span class="line">print(range(<span class="number">3</span>))</span>
-<span class="line">print(type(range(<span class="number">3</span>)))</span>
-<span class="line">print(list(range(<span class="number">3</span>)))</span>
+</pre></td><td class="code"><pre><span class="line">Entry.objects.filter(blog__id__exact=<span class="number">3</span>) <span class="comment"># Explicit form</span></span>
+<span class="line">Entry.objects.filter(blog__id=<span class="number">3</span>)        <span class="comment"># __exact is implied</span></span>
+<span class="line">Entry.objects.filter(blog__pk=<span class="number">3</span>)        <span class="comment"># __pk implies __id__exact</span></span>
 </pre></td></tr></table></figure>
-<blockquote>
-<p>结果:</p>
-<ul>
-<li>Python 3.5.1</li>
-<li>range(0, 3)</li>
-<li>&lt; class ‘range’&gt;</li>
-<li>[0, 1, 2]</li>
-</ul>
-</blockquote>
-<ul>
-<li>在 Python 3 中一些经常使用到的不再返回列表的函数和方法：</li>
-<li>zip()</li>
-<li>map()</li>
-<li>filter()</li>
-<li>dictionary’s .keys() method</li>
-<li>dictionary’s .values() method</li>
-<li>dictionary’s .items() method</li>
-</ul>
-<h3 id="For循环变量和全局命名空间泄漏"><a href="#For循环变量和全局命名空间泄漏" class="headerlink" title="For循环变量和全局命名空间泄漏"></a>For循环变量和全局命名空间泄漏</h3><p>好消息：在 Python 3.x 中 for 循环变量不会再导致命名空间泄漏。<br>在 Python 3.x 中做了一个改变，在 What’s New In Python 3.0 中有如下描述：<br>“列表推导不再支持 [… for var in item1, item2, …] 这样的语法。使用 [… for var in (item1, item2, …)] 代替。也需要提醒的是列表推导有不同的语义： 他们关闭了在 list() 构造器中的生成器表达式的语法糖, 并且特别是循环控制变量不再泄漏进周围的作用范围域.”　　</p>
-<h4 id="python2-5"><a href="#python2-5" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">'Python'</span>, python_version()</span>
-<span class="line">i = <span class="number">1</span></span>
-<span class="line"><span class="keyword">print</span> <span class="string">'before: i ='</span>, i</span>
-<span class="line"><span class="keyword">print</span> <span class="string">'comprehension: '</span>, [i <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5</span>)]</span>
-<span class="line"><span class="keyword">print</span> <span class="string">'after: i ='</span>, i</span>
+<h3 id="用Q对象实现复杂的查询"><a href="#用Q对象实现复杂的查询" class="headerlink" title="用Q对象实现复杂的查询"></a>用Q对象实现复杂的查询</h3><h5 id="WHERE-question-LIKE-‘Who-’-OR-question-LIKE-‘What-’"><a href="#WHERE-question-LIKE-‘Who-’-OR-question-LIKE-‘What-’" class="headerlink" title="WHERE question LIKE ‘Who%’ OR question LIKE ‘What%’"></a>WHERE question LIKE ‘Who%’ OR question LIKE ‘What%’</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">Q(question__startswith=<span class="string">'Who'</span>) | Q(question__startswith=<span class="string">'What'</span>)</span>
 </pre></td></tr></table></figure>
-<blockquote>
-<p>结果:</p>
-<ul>
-<li>Python 2.7.6</li>
-<li>before: i = 1</li>
-<li>comprehension: [0, 1, 2, 3, 4]</li>
-<li>after: i = 4</li>
-</ul>
-</blockquote>
-<h4 id="python3-5"><a href="#python3-5" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<h5 id="SELECT-from-polls-WHERE-question-LIKE-‘Who-’-AND-pub-date-‘2005-05-02’-OR-pub-date-‘2005-05-06’"><a href="#SELECT-from-polls-WHERE-question-LIKE-‘Who-’-AND-pub-date-‘2005-05-02’-OR-pub-date-‘2005-05-06’" class="headerlink" title="SELECT * from polls WHERE question LIKE ‘Who%’ AND (pub_date = ‘2005-05-02’ OR pub_date = ‘2005-05-06’)"></a>SELECT * from polls WHERE question LIKE ‘Who%’ AND (pub_date = ‘2005-05-02’ OR pub_date = ‘2005-05-06’)</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
 <span class="line">4</span>
-<span class="line">5</span>
-</pre></td><td class="code"><pre><span class="line">print(<span class="string">'Python'</span>, python_version())</span>
-<span class="line">i = <span class="number">1</span></span>
-<span class="line">print(<span class="string">'before: i ='</span>, i)</span>
-<span class="line">print(<span class="string">'comprehension:'</span>, [i <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5</span>)])</span>
-<span class="line">print(<span class="string">'after: i ='</span>, i)</span>
+</pre></td><td class="code"><pre><span class="line">Poll.objects.get(</span>
+<span class="line">        Q(question__startswith=<span class="string">'Who'</span>),</span>
+<span class="line">        Q(pub_date=date(<span class="number">2005</span>, <span class="number">5</span>, <span class="number">2</span>)) | Q(pub_date=date(<span class="number">2005</span>, <span class="number">5</span>, <span class="number">6</span>))</span>
+<span class="line">    )</span>
 </pre></td></tr></table></figure>
-<blockquote>
-<p>结果:</p>
+<h5 id="Poll-objects-get-question-startswith-’Who’-Q-pub-date-date-2005-5-2-Q-pub-date-date-2005-5-6"><a href="#Poll-objects-get-question-startswith-’Who’-Q-pub-date-date-2005-5-2-Q-pub-date-date-2005-5-6" class="headerlink" title="Poll.objects.get(question__startswith=’Who’, Q(pub_date=date(2005, 5, 2)) | Q(pub_date=date(2005, 5, 6))"></a>Poll.objects.get(question__startswith=’Who’, Q(pub_date=date(2005, 5, 2)) | Q(pub_date=date(2005, 5, 6))</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line">Poll.objects.get(</span>
+<span class="line">    Q(pub_date=date(<span class="number">2005</span>, <span class="number">5</span>, <span class="number">2</span>)) | Q(pub_date=date(<span class="number">2005</span>, <span class="number">5</span>, <span class="number">6</span>)),</span>
+<span class="line">    question__startswith=<span class="string">'Who'</span>)</span>
+</pre></td></tr></table></figure>
+<h3 id="比较对象"><a href="#比较对象" class="headerlink" title="比较对象"></a>比较对象</h3><p><strong>比较</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">some_entry == other_entry</span>
+<span class="line">some_entry.id == other_entry.id</span>
+</pre></td></tr></table></figure></p>
+<h3 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h3><p><strong>删除部分</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line">Entry.objects.filter(pub_date__year=<span class="number">2005</span>).delete()</span>
+<span class="line">b = Blog.objects.get(pk=<span class="number">1</span>)</span>
+<span class="line"><span class="comment"># This will delete the Blog and all of its Entry objects.</span></span>
+<span class="line">b.delete()</span>
+</pre></td></tr></table></figure></p>
+<p><strong>删除所有</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">Entry.objects.all().delete()</span>
+</pre></td></tr></table></figure></p>
+<h3 id="一次更新多个值"><a href="#一次更新多个值" class="headerlink" title="一次更新多个值"></a>一次更新多个值</h3><p><strong>Update all the headlines with pub_date in 2007</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">Entry.objects.filter(pub_date__year=<span class="number">2007</span>).update(headline=<span class="string">'Everything is the same'</span>)</span>
+</pre></td></tr></table></figure></p>
+<p><strong>Change every Entry so that it belongs to this Blog</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">b = Blog.objects.get(pk=<span class="number">1</span>)</span>
+<span class="line">Entry.objects.all().update(blog=b)</span>
+</pre></td></tr></table></figure></p>
 <ul>
-<li>Python 3.5.1</li>
-<li>before: i = 1</li>
-<li>comprehension: [0, 1, 2, 3, 4]</li>
-<li>after: i = 1</li>
+<li>但是如果用save()方法，必须一个一个进行保存，需要对其就行遍历，如下：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> my_queryset:</span>
+<span class="line">    item.save()</span>
+</pre></td></tr></table></figure>
+</li>
 </ul>
-<p>注：</p>
-<ul>
-<li>上述代码在<strong>python3.5</strong>和<strong>Python2.7</strong>中编译成功运行，其他环境请自行测试</li>
-<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
-<li>更多却别请读者自行查看官方文档</li>
-<li>个人推荐还是用python3，新版本的出现总有他的意义，但是我遇到一些项目要求Python2也就只能Python2了，目前来说，Python2的教程和第三方库函数还是比Python3多，再过几年，我相信一定会是Python3是主流</li>
-</ul>
-</blockquote>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>关联对象</p>
+<p>one-to-many<br> e = Entry.objects.get(id=2)<br> e.blog # Returns the related Blog object.</p>
+<p> e = Entry.objects.get(id=2)<br> e.blog = some_blog<br> e.save()</p>
+<p> e = Entry.objects.get(id=2)<br> e.blog = None<br> e.save() # “UPDATE blog_entry SET blog_id = NULL …;”</p>
+<p> e = Entry.objects.get(id=2)<br> print e.blog # Hits the database to retrieve the associated Blog.<br> print e.blog # Doesn’t hit the database; uses cached version.</p>
+<p> e = Entry.objects.select_related().get(id=2)<br> print e.blog # Doesn’t hit the database; uses cached version.<br> print e.blog # Doesn’t hit the database; uses cached version</p>
+<p> b = Blog.objects.get(id=1)<br> b.entry_set.all() # Returns all Entry objects related to Blog.</p>
+<p> b.entry_set is a Manager that returns QuerySets.<br> b.entry_set.filter(headline__contains=’Lennon’)<br> b.entry_set.count()</p>
+<p> b = Blog.objects.get(id=1)<br> b.entries.all() # Returns all Entry objects related to Blog.<br> b.entries is a Manager that returns QuerySets.<br> b.entries.filter(headline__contains=’Lennon’)<br> b.entries.count()</p>
+<p>You cannot access a reverse ForeignKey Manager from the class; it must be accessed from an instance:<br> Blog.entry_set</p>
+<p>add(obj1, obj2, …)<br>    Adds the specified model objects to the related object set.<br>create(**kwargs)<br>    Creates a new object, saves it and puts it in the related object set. Returns the newly created object.<br>remove(obj1, obj2, …)<br>    Removes the specified model objects from the related object set.<br>clear()<br>    Removes all objects from the related object set.</p>
+<p>many-to-many类型：<br>e = Entry.objects.get(id=3)<br>e.authors.all() # Returns all Author objects for this Entry.<br>e.authors.count()<br>e.authors.filter(name__contains=’John’)<br>a = Author.objects.get(id=5)<br>a.entry_set.all() # Returns all Entry objects for this Author.</p>
+<p>one-to-one 类型：<br>class EntryDetail(models.Model):<br>    entry = models.OneToOneField(Entry)<br>    details = models.TextField()</p>
+<p>ed = EntryDetail.objects.get(id=2)<br>ed.entry # Returns the related Entry object</p>
+<p>使用sql语句进行查询：</p>
+<p>def my_custom_sql(self):<br>    from django.db import connection<br>    cursor = connection.cursor()<br>    cursor.execute(“SELECT foo FROM bar WHERE baz = %s”, [self.baz])<br>    row = cursor.fetchone()<br>    return row</p>
 ]]></content>
       
         <categories>
             
-            <category> 学习笔记 </category>
+            <category> 开发 </category>
             
         </categories>
         
         
         <tags>
+            
+            <tag> Django </tag>
             
             <tag> Python </tag>
             
@@ -22693,293 +22685,6 @@
     </entry>
     
     <entry>
-      <title><![CDATA[Django操作数据库]]></title>
-      <url>/2016/08/15/django%E6%95%B0%E6%8D%AE%E5%BA%93%E6%93%8D%E4%BD%9C/</url>
-      <content type="html"><![CDATA[<p>本篇主要介绍我们在使用django框架开发的时候使用的操作数据库的语句，这在动态网站部分是很重要的，因为我们需要连接数据库进行操作，然后把数据处理的结果显示在前端页面上，在其他地方我们都是直接用sql语句来手动输入，这样容易造成错误，还影响效率，在django中，内置了很多处理数据库操作的函数，能更便利的帮我们操作数据库</p>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="实例代码"><a href="#实例代码" class="headerlink" title="实例代码"></a>实例代码</h3><p><strong>models.py</strong><br><a id="more"></a><br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-<span class="line">17</span>
-<span class="line">18</span>
-<span class="line">19</span>
-<span class="line">20</span>
-<span class="line">21</span>
-<span class="line">22</span>
-<span class="line">23</span>
-<span class="line">24</span>
-<span class="line">25</span>
-<span class="line">26</span>
-<span class="line">27</span>
-</pre></td><td class="code"><pre><span class="line">class Blog(models.Model):</span>
-<span class="line">    name = models.CharField(max_length=100)</span>
-<span class="line">    tagline = models.TextField()</span>
-<span class="line"></span>
-<span class="line">def __unicode__(self):</span>
-<span class="line">    return self.name</span>
-<span class="line"></span>
-<span class="line">class Author(models.Model):</span>
-<span class="line">    name = models.CharField(max_length=50)</span>
-<span class="line">    email = models.EmailField()</span>
-<span class="line"></span>
-<span class="line">#python3中用__str__</span>
-<span class="line">def __unicode__(self):</span>
-<span class="line">    return self.name</span>
-<span class="line"></span>
-<span class="line"></span>
-<span class="line">class Entry(models.Model):</span>
-<span class="line">    blog = models.ForeignKey(Blog)</span>
-<span class="line">    headline = models.CharField(max_length=255)</span>
-<span class="line">    body_text = models.TextField()</span>
-<span class="line">    pub_date = models.DateTimeField()</span>
-<span class="line"></span>
-<span class="line">authors = models.ManyToManyField(Author)</span>
-<span class="line"></span>
-<span class="line">#python3中用__str__</span>
-<span class="line">def __unicode__(self):</span>
-<span class="line">    return self.headline</span>
-</pre></td></tr></table></figure></p>
-<ul>
-<li>models模块中有三个类blog，author，以及entry</li>
-<li>entry分别与blog与author表关联</li>
-<li>entry与blog表是通过外键(models.ForeignKey())相连，属于一对多的关系，即一个entry对应多个blog，entry与author是多对多的关系，通过modles.ManyToManyField()实现</li>
-</ul>
-<h3 id="插入数据库"><a href="#插入数据库" class="headerlink" title="插入数据库"></a>插入数据库</h3><ul>
-<li>用save()方法实现，如下所示：</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> mysite.blog.models <span class="keyword">import</span> Blog  <span class="comment">#导入blog这个app</span></span>
-<span class="line"></span>
-<span class="line">b = Blog(name=<span class="string">'Beatles Blog'</span>, tagline=<span class="string">'All the latest Beatles news.'</span>)</span>
-<span class="line">b.save()</span>
-</pre></td></tr></table></figure>
-<h3 id="更新数据库"><a href="#更新数据库" class="headerlink" title="更新数据库"></a>更新数据库</h3><ul>
-<li>用save()方法实现，如下所示：</li>
-</ul>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line">b5.name = 'New name</span>
-<span class="line">b5.save()</span>
-</pre></td></tr></table></figure>
-<h4 id="保存外键和多对多关系的字段"><a href="#保存外键和多对多关系的字段" class="headerlink" title="保存外键和多对多关系的字段"></a>保存外键和多对多关系的字段</h4><ul>
-<li>更新外键字段和普通的字段一样，只要指定一个对象的正确类型。<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-</pre></td><td class="code"><pre><span class="line">cheese_blog = Blog.objects.get(name=<span class="string">"Cheddar Talk"</span>)</span>
-<span class="line">entry.blog = cheese_blog</span>
-<span class="line">entry.save()</span>
-</pre></td></tr></table></figure>
-</li>
-</ul>
-<h4 id="更新多对多字段时又一点不太一样，使用add-方法添加相关联的字段的值"><a href="#更新多对多字段时又一点不太一样，使用add-方法添加相关联的字段的值" class="headerlink" title="更新多对多字段时又一点不太一样，使用add()方法添加相关联的字段的值"></a>更新多对多字段时又一点不太一样，使用add()方法添加相关联的字段的值</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line">joe = Author.objects.create(name=<span class="string">"Joe"</span>)</span>
-<span class="line">entry.authors.add(joe)</span>
-</pre></td></tr></table></figure>
-<h3 id="检索对象"><a href="#检索对象" class="headerlink" title="检索对象"></a>检索对象</h3><h4 id="检索所有的对象"><a href="#检索所有的对象" class="headerlink" title="检索所有的对象"></a>检索所有的对象</h4><ul>
-<li>使用all()方法返回数据库中的所有对象。<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">all_entries = Entry.objects.all()</span>
-</pre></td></tr></table></figure>
-</li>
-</ul>
-<h4 id="检索特定的对象"><a href="#检索特定的对象" class="headerlink" title="检索特定的对象"></a>检索特定的对象</h4><h5 id="返回一个与参数匹配的QuerySet-相当于等于"><a href="#返回一个与参数匹配的QuerySet-相当于等于" class="headerlink" title="返回一个与参数匹配的QuerySet,相当于等于(=)"></a>返回一个与参数匹配的QuerySet,相当于等于(=)</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line"><span class="comment">#fileter(**kwargs)</span></span>
-<span class="line">Entry.objects.filter(pub_date__year=<span class="number">2006</span>)</span>
-</pre></td></tr></table></figure>
-<ul>
-<li>以上语句等同于<strong>slect * from entry where pub_date_year=’2006’</strong></li>
-</ul>
-<h5 id="返回一个与参数不匹配的QuerySet-相当于不等于"><a href="#返回一个与参数不匹配的QuerySet-相当于不等于" class="headerlink" title="返回一个与参数不匹配的QuerySet,相当于不等于(!=)"></a>返回一个与参数不匹配的QuerySet,相当于不等于(!=)</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">exclude(**kwargs)</span>
-</pre></td></tr></table></figure>
-<h5 id="对参数进行重用的方法"><a href="#对参数进行重用的方法" class="headerlink" title="对参数进行重用的方法"></a>对参数进行重用的方法</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-</pre></td><td class="code"><pre><span class="line">q1 = Entry.objects.filter(headline__startswith=<span class="string">"What"</span>)</span>
-<span class="line">q2 = q1.exclude(pub_date__gte=datetime.now())</span>
-<span class="line">q3 = q1.filter(pub_date__gte=datetime.now())</span>
-</pre></td></tr></table></figure>
-<h5 id="QuerySet是延迟加载-只在使用的时候才会去访问数据库"><a href="#QuerySet是延迟加载-只在使用的时候才会去访问数据库" class="headerlink" title="QuerySet是延迟加载(只在使用的时候才会去访问数据库)"></a>QuerySet是延迟加载(只在使用的时候才会去访问数据库)</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-</pre></td><td class="code"><pre><span class="line">q = Entry.objects.filter(headline__startswith=<span class="string">"What"</span>)</span>
-<span class="line">q = q.filter(pub_date__lte=datetime.now())</span>
-<span class="line">q = q.exclude(body_text__icontains=<span class="string">"food"</span>)</span>
-<span class="line"><span class="keyword">print</span> q</span>
-</pre></td></tr></table></figure>
-<ul>
-<li>在print q时才会访问数据库</li>
-</ul>
-<h5 id="查找前5个entry表里的数据"><a href="#查找前5个entry表里的数据" class="headerlink" title="查找前5个entry表里的数据"></a>查找前5个entry表里的数据</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">Entry.objects.all()[:<span class="number">5</span>]</span>
-</pre></td></tr></table></figure>
-<h5 id="查找从第5个到第10个之间的数据"><a href="#查找从第5个到第10个之间的数据" class="headerlink" title="查找从第5个到第10个之间的数据"></a>查找从第5个到第10个之间的数据</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">Entry.objects.all()[<span class="number">5</span>:<span class="number">10</span>]</span>
-</pre></td></tr></table></figure>
-<h5 id="查询从第0个开始到第10个，步长为2的数据"><a href="#查询从第0个开始到第10个，步长为2的数据" class="headerlink" title="查询从第0个开始到第10个，步长为2的数据"></a>查询从第0个开始到第10个，步长为2的数据</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">Entry.objects.all()[:<span class="number">10</span>:<span class="number">2</span>]</span>
-</pre></td></tr></table></figure>
-<h5 id="取按headline字段排序后的第一个对象"><a href="#取按headline字段排序后的第一个对象" class="headerlink" title="取按headline字段排序后的第一个对象"></a>取按headline字段排序后的第一个对象</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line">Entry.objects.order_by(<span class="string">'headline'</span>)[<span class="number">0</span>]</span>
-<span class="line"><span class="comment">#或Entry.objects.order_by('headline')[0:1].get()</span></span>
-</pre></td></tr></table></figure>
-<h5 id="查找id-14的对象。"><a href="#查找id-14的对象。" class="headerlink" title="查找id=14的对象。"></a>查找id=14的对象。</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line">Blog.objects.get(id__exact=<span class="number">14</span>) <span class="comment"># Explicit form</span></span>
-<span class="line">Blog.objects.get(id=<span class="number">14</span>)         <span class="comment"># __exact is implied</span></span>
-</pre></td></tr></table></figure>
-<h5 id="SELECT-FROM-blog-entry-WHERE-pub-date-lt-‘2006-01-01’"><a href="#SELECT-FROM-blog-entry-WHERE-pub-date-lt-‘2006-01-01’" class="headerlink" title="SELECT * FROM blog_entry WHERE pub_date &lt;= ‘2006-01-01’"></a>SELECT * FROM blog_entry WHERE pub_date &lt;= ‘2006-01-01’</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">Entry.objects.filter(pub_date__lte=<span class="string">'2006-01-01'</span>)</span>
-</pre></td></tr></table></figure>
-<h5 id="SELECT-…-WHERE-headline-‘Man-bites-dog’"><a href="#SELECT-…-WHERE-headline-‘Man-bites-dog’" class="headerlink" title="SELECT … WHERE headline = ‘Man bites dog’"></a>SELECT … WHERE headline = ‘Man bites dog’</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">Entry.objects.get(headline__exact=<span class="string">"Man bites dog"</span>)</span>
-</pre></td></tr></table></figure>
-<h5 id="查找name-”beatles-blog”的对象，不区分大小写。"><a href="#查找name-”beatles-blog”的对象，不区分大小写。" class="headerlink" title="查找name=”beatles blog”的对象，不区分大小写。"></a>查找name=”beatles blog”的对象，不区分大小写。</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">Entry.objects.get(headline__contains=<span class="string">'Lennon'</span>)</span>
-</pre></td></tr></table></figure>
-<ul>
-<li>等同于SELECT … WHERE headline LIKE ‘%Lennon%’</li>
-</ul>
-<h5 id="查找entry表中外键关系blog-name-’Beatles-Blog’的Entry对象"><a href="#查找entry表中外键关系blog-name-’Beatles-Blog’的Entry对象" class="headerlink" title="查找entry表中外键关系blog_name=’Beatles Blog’的Entry对象"></a>查找entry表中外键关系blog_name=’Beatles Blog’的Entry对象</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">Entry.objects.filter(blog__name__exact=<span class="string">'Beatles Blog'</span>)</span>
-</pre></td></tr></table></figure>
-<h5 id="查找blog表中外键关系entry表中的headline字段中包含Lennon的blog数据"><a href="#查找blog表中外键关系entry表中的headline字段中包含Lennon的blog数据" class="headerlink" title="查找blog表中外键关系entry表中的headline字段中包含Lennon的blog数据"></a>查找blog表中外键关系entry表中的headline字段中包含Lennon的blog数据</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">Blog.objects.filter(entry__headline__contains=<span class="string">'Lennon'</span>)</span>
-</pre></td></tr></table></figure>
-<h5 id="查找blog表中外键关系entry表中的author字段中包含Lennon的blog数据"><a href="#查找blog表中外键关系entry表中的author字段中包含Lennon的blog数据" class="headerlink" title="查找blog表中外键关系entry表中的author字段中包含Lennon的blog数据"></a>查找blog表中外键关系entry表中的author字段中包含Lennon的blog数据</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">Blog.objects.filter(entry__author__name=<span class="string">'Lennon'</span>)</span>
-</pre></td></tr></table></figure>
-<h5 id="查询的是author-name为null的值"><a href="#查询的是author-name为null的值" class="headerlink" title="查询的是author_name为null的值"></a>查询的是author_name为null的值</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line">Blog.objects.filter(entry__author__name__isnull=<span class="keyword">True</span>)</span>
-<span class="line">Blog.objects.filter(entry__author__isnull=<span class="keyword">False</span>,entry__author__name__isnull=<span class="keyword">True</span>)</span>
-</pre></td></tr></table></figure>
-<h5 id="select-from-where-id-14"><a href="#select-from-where-id-14" class="headerlink" title="select * from where id=14"></a>select * from where id=14</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-</pre></td><td class="code"><pre><span class="line">Blog.objects.get(id__exact=<span class="number">14</span>) <span class="comment"># Explicit form</span></span>
-<span class="line">Blog.objects.get(id=<span class="number">14</span>) <span class="comment"># __exact is implied</span></span>
-<span class="line">Blog.objects.get(pk=<span class="number">14</span>) <span class="comment"># pk implies id__exact</span></span>
-</pre></td></tr></table></figure>
-<h5 id="select-from-where-id-in-1-4-7"><a href="#select-from-where-id-in-1-4-7" class="headerlink" title="select * from where id in{1,4,7}"></a>select * from where id in{1,4,7}</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">Blog.objects.filter(pk__in=[<span class="number">1</span>,<span class="number">4</span>,<span class="number">7</span>])</span>
-</pre></td></tr></table></figure>
-<h5 id="select-from-id-gt-14"><a href="#select-from-id-gt-14" class="headerlink" title="select * from id&gt;14"></a>select * from id&gt;14</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">Blog.objects.filter(pk__gt=<span class="number">14</span>)</span>
-</pre></td></tr></table></figure>
-<h5 id="SELECT-…-WHERE-headline-LIKE-‘-’"><a href="#SELECT-…-WHERE-headline-LIKE-‘-’" class="headerlink" title="SELECT … WHERE headline LIKE ‘%\%%’"></a>SELECT … WHERE headline LIKE ‘%\%%’</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-</pre></td><td class="code"><pre><span class="line">Entry.objects.filter(blog__id__exact=<span class="number">3</span>) <span class="comment"># Explicit form</span></span>
-<span class="line">Entry.objects.filter(blog__id=<span class="number">3</span>)        <span class="comment"># __exact is implied</span></span>
-<span class="line">Entry.objects.filter(blog__pk=<span class="number">3</span>)        <span class="comment"># __pk implies __id__exact</span></span>
-</pre></td></tr></table></figure>
-<h3 id="用Q对象实现复杂的查询"><a href="#用Q对象实现复杂的查询" class="headerlink" title="用Q对象实现复杂的查询"></a>用Q对象实现复杂的查询</h3><h5 id="WHERE-question-LIKE-‘Who-’-OR-question-LIKE-‘What-’"><a href="#WHERE-question-LIKE-‘Who-’-OR-question-LIKE-‘What-’" class="headerlink" title="WHERE question LIKE ‘Who%’ OR question LIKE ‘What%’"></a>WHERE question LIKE ‘Who%’ OR question LIKE ‘What%’</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">Q(question__startswith=<span class="string">'Who'</span>) | Q(question__startswith=<span class="string">'What'</span>)</span>
-</pre></td></tr></table></figure>
-<h5 id="SELECT-from-polls-WHERE-question-LIKE-‘Who-’-AND-pub-date-‘2005-05-02’-OR-pub-date-‘2005-05-06’"><a href="#SELECT-from-polls-WHERE-question-LIKE-‘Who-’-AND-pub-date-‘2005-05-02’-OR-pub-date-‘2005-05-06’" class="headerlink" title="SELECT * from polls WHERE question LIKE ‘Who%’ AND (pub_date = ‘2005-05-02’ OR pub_date = ‘2005-05-06’)"></a>SELECT * from polls WHERE question LIKE ‘Who%’ AND (pub_date = ‘2005-05-02’ OR pub_date = ‘2005-05-06’)</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-</pre></td><td class="code"><pre><span class="line">Poll.objects.get(</span>
-<span class="line">        Q(question__startswith=<span class="string">'Who'</span>),</span>
-<span class="line">        Q(pub_date=date(<span class="number">2005</span>, <span class="number">5</span>, <span class="number">2</span>)) | Q(pub_date=date(<span class="number">2005</span>, <span class="number">5</span>, <span class="number">6</span>))</span>
-<span class="line">    )</span>
-</pre></td></tr></table></figure>
-<h5 id="Poll-objects-get-question-startswith-’Who’-Q-pub-date-date-2005-5-2-Q-pub-date-date-2005-5-6"><a href="#Poll-objects-get-question-startswith-’Who’-Q-pub-date-date-2005-5-2-Q-pub-date-date-2005-5-6" class="headerlink" title="Poll.objects.get(question__startswith=’Who’, Q(pub_date=date(2005, 5, 2)) | Q(pub_date=date(2005, 5, 6))"></a>Poll.objects.get(question__startswith=’Who’, Q(pub_date=date(2005, 5, 2)) | Q(pub_date=date(2005, 5, 6))</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-</pre></td><td class="code"><pre><span class="line">Poll.objects.get(</span>
-<span class="line">    Q(pub_date=date(<span class="number">2005</span>, <span class="number">5</span>, <span class="number">2</span>)) | Q(pub_date=date(<span class="number">2005</span>, <span class="number">5</span>, <span class="number">6</span>)),</span>
-<span class="line">    question__startswith=<span class="string">'Who'</span>)</span>
-</pre></td></tr></table></figure>
-<h3 id="比较对象"><a href="#比较对象" class="headerlink" title="比较对象"></a>比较对象</h3><p><strong>比较</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line">some_entry == other_entry</span>
-<span class="line">some_entry.id == other_entry.id</span>
-</pre></td></tr></table></figure></p>
-<h3 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h3><p><strong>删除部分</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-</pre></td><td class="code"><pre><span class="line">Entry.objects.filter(pub_date__year=<span class="number">2005</span>).delete()</span>
-<span class="line">b = Blog.objects.get(pk=<span class="number">1</span>)</span>
-<span class="line"><span class="comment"># This will delete the Blog and all of its Entry objects.</span></span>
-<span class="line">b.delete()</span>
-</pre></td></tr></table></figure></p>
-<p><strong>删除所有</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">Entry.objects.all().delete()</span>
-</pre></td></tr></table></figure></p>
-<h3 id="一次更新多个值"><a href="#一次更新多个值" class="headerlink" title="一次更新多个值"></a>一次更新多个值</h3><p><strong>Update all the headlines with pub_date in 2007</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">Entry.objects.filter(pub_date__year=<span class="number">2007</span>).update(headline=<span class="string">'Everything is the same'</span>)</span>
-</pre></td></tr></table></figure></p>
-<p><strong>Change every Entry so that it belongs to this Blog</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line">b = Blog.objects.get(pk=<span class="number">1</span>)</span>
-<span class="line">Entry.objects.all().update(blog=b)</span>
-</pre></td></tr></table></figure></p>
-<ul>
-<li>但是如果用save()方法，必须一个一个进行保存，需要对其就行遍历，如下：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> my_queryset:</span>
-<span class="line">    item.save()</span>
-</pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>关联对象</p>
-<p>one-to-many<br> e = Entry.objects.get(id=2)<br> e.blog # Returns the related Blog object.</p>
-<p> e = Entry.objects.get(id=2)<br> e.blog = some_blog<br> e.save()</p>
-<p> e = Entry.objects.get(id=2)<br> e.blog = None<br> e.save() # “UPDATE blog_entry SET blog_id = NULL …;”</p>
-<p> e = Entry.objects.get(id=2)<br> print e.blog # Hits the database to retrieve the associated Blog.<br> print e.blog # Doesn’t hit the database; uses cached version.</p>
-<p> e = Entry.objects.select_related().get(id=2)<br> print e.blog # Doesn’t hit the database; uses cached version.<br> print e.blog # Doesn’t hit the database; uses cached version</p>
-<p> b = Blog.objects.get(id=1)<br> b.entry_set.all() # Returns all Entry objects related to Blog.</p>
-<p> b.entry_set is a Manager that returns QuerySets.<br> b.entry_set.filter(headline__contains=’Lennon’)<br> b.entry_set.count()</p>
-<p> b = Blog.objects.get(id=1)<br> b.entries.all() # Returns all Entry objects related to Blog.<br> b.entries is a Manager that returns QuerySets.<br> b.entries.filter(headline__contains=’Lennon’)<br> b.entries.count()</p>
-<p>You cannot access a reverse ForeignKey Manager from the class; it must be accessed from an instance:<br> Blog.entry_set</p>
-<p>add(obj1, obj2, …)<br>    Adds the specified model objects to the related object set.<br>create(**kwargs)<br>    Creates a new object, saves it and puts it in the related object set. Returns the newly created object.<br>remove(obj1, obj2, …)<br>    Removes the specified model objects from the related object set.<br>clear()<br>    Removes all objects from the related object set.</p>
-<p>many-to-many类型：<br>e = Entry.objects.get(id=3)<br>e.authors.all() # Returns all Author objects for this Entry.<br>e.authors.count()<br>e.authors.filter(name__contains=’John’)<br>a = Author.objects.get(id=5)<br>a.entry_set.all() # Returns all Entry objects for this Author.</p>
-<p>one-to-one 类型：<br>class EntryDetail(models.Model):<br>    entry = models.OneToOneField(Entry)<br>    details = models.TextField()</p>
-<p>ed = EntryDetail.objects.get(id=2)<br>ed.entry # Returns the related Entry object</p>
-<p>使用sql语句进行查询：</p>
-<p>def my_custom_sql(self):<br>    from django.db import connection<br>    cursor = connection.cursor()<br>    cursor.execute(“SELECT foo FROM bar WHERE baz = %s”, [self.baz])<br>    row = cursor.fetchone()<br>    return row</p>
-]]></content>
-      
-        <categories>
-            
-            <category> 开发 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> Django </tag>
-            
-            <tag> Python </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[Django渲染模板]]></title>
       <url>/2016/08/15/django%E6%B8%B2%E6%9F%93%E6%A8%A1%E6%9D%BF/</url>
       <content type="html"><![CDATA[<p>在页面上显示内容可以简单的用django.http.HttpResponse来显示我们需要的内容，但是当我们需要一些处理一些复杂的数据或者从数据库读出来的操作要显示在html标签内或者js代码中就需要用渲染模板的方法。</p>
@@ -23124,6 +22829,330 @@
         <tags>
             
             <tag> Django </tag>
+            
+            <tag> Python </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Python2和Python3的区别简单总结]]></title>
+      <url>/2016/08/15/python2%E5%92%8CPython3%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
+      <content type="html"><![CDATA[<p>Python是一种新的计算机语言，也是最近两年才开始大火的一种语言，它够优雅，写起来可以随心所欲，不用担心没有定义，没有声明这些其他计算机语言都需要考虑的问题,单自从更新Python3.x版本之后，很多人开始头疼，因为Python3很多地方并不兼容Python2，有人夸张的说Python3是一门新的语言，我觉得没有那么夸张，本文就剧一下我遇到的和一些知道的区别吧</p>
+<a id="more"></a>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="print函数"><a href="#print函数" class="headerlink" title="print函数"></a>print函数</h3><p>print 语法的变化可能是最广为人知的了，但是仍值得一提的是： Python 2 的 print 声明已经被 print() 函数取代了，这意味着我们必须包装我们想打印在小括号中的对象。<br>Python 2 不具有额外的小括号问题。但对比一下，如果我们按照 Python 2 的方式不使用小括号调用 print 函数，Python 3 将抛出一个语法异常（SyntaxError）。</p>
+<h4 id="Python2"><a href="#Python2" class="headerlink" title="Python2"></a>Python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">'Python'</span>, python_version()</span>
+<span class="line"><span class="keyword">print</span> <span class="string">'Hello, World!'</span></span>
+<span class="line">print(<span class="string">'Hello, World!'</span>)</span>
+<span class="line"><span class="keyword">print</span> <span class="string">"text"</span>, ; <span class="keyword">print</span> <span class="string">'print more text on the same line'</span></span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>结果:</p>
+<ul>
+<li>Python 2.7.6</li>
+<li>Hello, World!</li>
+<li>Hello, World!</li>
+<li>text print more text on the same line</li>
+</ul>
+</blockquote>
+<h4 id="Python3"><a href="#Python3" class="headerlink" title="Python3"></a>Python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line">print(<span class="string">'Python'</span>, python_version())</span>
+<span class="line">print(<span class="string">'Hello, World!'</span>)</span>
+<span class="line">print(<span class="string">"some text,"</span>, end=<span class="string">""</span>) </span>
+<span class="line">print(<span class="string">' print more text on the same line'</span>)</span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>结果:</p>
+<ul>
+<li>Python 3.5.1</li>
+<li>Hello, World!</li>
+<li>some text, print more text on the same line</li>
+<li>print more text on the same line</li>
+</ul>
+</blockquote>
+<h3 id="整除"><a href="#整除" class="headerlink" title="整除"></a>整除</h3><p>python3的版本变化中，整数计算可以说是很大的并且可能在移植过程中造成很大危险，比如:</p>
+<ul>
+<li>你在 Python 2 上执行 Python 3 的代码。因为这个整除的变化表现在它会被忽视（即它不会抛出语法异常）。</li>
+</ul>
+<h4 id="python2"><a href="#python2" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">'3 / 2 ='</span>, <span class="number">3</span> / <span class="number">2</span></span>
+<span class="line"><span class="keyword">print</span> <span class="string">'3 // 2 ='</span>, <span class="number">3</span> // <span class="number">2</span></span>
+<span class="line"><span class="keyword">print</span> <span class="string">'3 / 2.0 ='</span>, <span class="number">3</span> / <span class="number">2.0</span></span>
+<span class="line"><span class="keyword">print</span> <span class="string">'3 // 2.0 ='</span>, <span class="number">3</span> // <span class="number">2.0</span></span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>结果:</p>
+<ul>
+<li>3 / 2 = 1</li>
+<li>3 // 2 = 1</li>
+<li>3 / 2.0 = 1.5</li>
+<li>3 // 2.0 = 1.0</li>
+</ul>
+</blockquote>
+<h4 id="python3"><a href="#python3" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line">print(<span class="string">'3 / 2 ='</span>, <span class="number">3</span> / <span class="number">2</span>)</span>
+<span class="line">print(<span class="string">'3 // 2 ='</span>, <span class="number">3</span> // <span class="number">2</span>)</span>
+<span class="line">print(<span class="string">'3 / 2.0 ='</span>, <span class="number">3</span> / <span class="number">2.0</span>)</span>
+<span class="line">print(<span class="string">'3 // 2.0 ='</span>, <span class="number">3</span> // <span class="number">2.0</span>)</span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>结果:</p>
+<ul>
+<li>3 / 2 = 1.5</li>
+<li>3 // 2 = 1</li>
+<li>3 / 2.0 = 1.5</li>
+<li>3 // 2.0 = 1.0</li>
+</ul>
+</blockquote>
+<h3 id="Unicode"><a href="#Unicode" class="headerlink" title="Unicode"></a>Unicode</h3><p>Python 2 有 ASCII str() 类型，unicode() 是单独的，不是 byte 类型。<br>现在， 在 Python 3，我们最终有了 Unicode (utf-8) 字符串，以及一个字节类：byte 和 bytearrays。<br>由于 Python3.X 源码文件默认使用utf-8编码，这就使得以下代码是合法的：</p>
+<h4 id="python3-1"><a href="#python3-1" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">中国 = <span class="string">'china'</span> </span>
+<span class="line">print(中国)</span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>结果:</p>
+<ul>
+<li>china</li>
+</ul>
+</blockquote>
+<h4 id="python2-1"><a href="#python2-1" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">str = <span class="string">"我爱北京天安门"</span></span>
+<span class="line"><span class="keyword">print</span> <span class="string">'str'</span></span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>结果:</p>
+<ul>
+<li>‘\xe6\x88\x91\xe7\x88\xb1\xe5\x8c\x97\xe4\xba\xac\xe5\xa4\xa9\xe5\xae\x89\xe9\x97\xa8’</li>
+</ul>
+</blockquote>
+<h3 id="xrange模块"><a href="#xrange模块" class="headerlink" title="xrange模块"></a>xrange模块</h3><p>在 Python 2 中 xrange() 创建迭代对象的用法是非常流行的。比如： for 循环或者是列表/集合/字典推导式。<br>这个表现十分像生成器（比如。“惰性求值”）。但是这个 xrange-iterable 是无穷的，意味着你可以无限遍历。<br>由于它的惰性求值，如果你不得仅仅不遍历它一次，xrange() 函数 比 range() 更快（比如 for 循环）。尽管如此，对比迭代一次，不建议你重复迭代多次，因为生成器每次都从头开始。<br>在 Python 3 中，range() 是像 xrange() 那样实现以至于一个专门的 xrange() 函数都不再存在（在 Python 3 中 xrange() 会抛出命名异常）。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> timeit</span>
+<span class="line">n = <span class="number">10000</span></span>
+<span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_range</span><span class="params">(n)</span>:</span></span>
+<span class="line">    <span class="keyword">return</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span>
+<span class="line">        <span class="keyword">pass</span></span>
+<span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_xrange</span><span class="params">(n)</span>:</span></span>
+<span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> xrange(n):</span>
+<span class="line">        <span class="keyword">pass</span></span>
+</pre></td></tr></table></figure></p>
+<h4 id="python2-2"><a href="#python2-2" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">'Python'</span>, python_version()</span>
+<span class="line"><span class="keyword">print</span> <span class="string">'\ntiming range()'</span></span>
+<span class="line">%timeit test_range(n)</span>
+<span class="line"><span class="keyword">print</span> <span class="string">'\n\ntiming xrange()'</span></span>
+<span class="line">%timeit test_xrange(n)</span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>结果:</p>
+<ul>
+<li>Python 2.7.6</li>
+<li>timing range()</li>
+<li>1000 loops, best of 3: 433 µs per loop</li>
+<li>timing xrange()</li>
+<li>1000 loops, best of 3: 350 µs per loop</li>
+</ul>
+</blockquote>
+<h4 id="python3-2"><a href="#python3-2" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line">print(<span class="string">'Python'</span>, python_version())</span>
+<span class="line">print(<span class="string">'\ntiming range()'</span>)</span>
+<span class="line">%timeit test_range(n)</span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>结果:</p>
+<ul>
+<li>Python 3.5.1</li>
+<li>timing range()</li>
+<li>1000 loops, best of 3: 520 µs per loop</li>
+</ul>
+</blockquote>
+<h3 id="不等运算符"><a href="#不等运算符" class="headerlink" title="不等运算符"></a>不等运算符</h3><ul>
+<li>Python 2.x中不等于有两种写法 != 和 &lt;&gt;</li>
+<li>Python 3.x中去掉了&lt;&gt;, 只有!=一种写法，还好，我从来没有使用&lt;&gt;的习惯</li>
+</ul>
+<h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><ul>
+<li>Py3.X去除了long类型，现在只有一种整型——int，但它的行为就像2.X版本的long</li>
+<li>新增了bytes类型，对应于2.X版本的八位串</li>
+<li>dict的.keys()、.items 和.values()方法返回迭代器，而之前的iterkeys()等函数都被废弃。同时去掉的还有 dict.has_key()，用 in替代它吧 。<blockquote>
+<p>注：</p>
+<ul>
+<li>上述代码在<strong>django1.7</strong>和<strong>Python2.7</strong>中编译成功运行，其他环境请自行测试</li>
+<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+<h3 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h3><p>在 Python 3 中处理异常也轻微的改变了，在 Python 3 中我们现在使用 as 作为关键词。<br>捕获异常的语法由 except exc, var 改为 except exc as var。<br>使用语法except (exc1, exc2) as var可以同时捕获多种类别的异常。 Python 2.6已经支持这两种语法。</p>
+<ul>
+<li>在2.x时代，所有类型的对象都是可以被直接抛出的，在3.x时代，只有继承自BaseException的对象才可以被抛出。</li>
+<li>2.x raise语句使用逗号将抛出对象类型和参数分开，3.x取消了这种奇葩的写法，直接调用构造函数抛出对象即可。<br>在2.x时代，异常在代码中除了表示程序错误，还经常做一些普通控制结构应该做的事情，在3.x中可以看出，设计者让异常变的更加专一，只有在错误发生的情况才能去用异常捕获语句来处理。<h4 id="python2-3"><a href="#python2-3" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">'Python'</span>, python_version()</span>
+<span class="line"><span class="keyword">try</span>:</span>
+<span class="line">    let_us_cause_a_NameError</span>
+<span class="line"><span class="keyword">except</span> NameError, err:</span>
+<span class="line">    <span class="keyword">print</span> err, <span class="string">'--&gt; our error message'</span></span>
+</pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>结果:</p>
+<ul>
+<li>Python 2.7.6</li>
+<li>name ‘let_us_cause_a_NameError’ is not defined —&gt; our error message</li>
+</ul>
+</blockquote>
+<h4 id="python3-3"><a href="#python3-3" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line">print(<span class="string">'Python'</span>, python_version())</span>
+<span class="line"><span class="keyword">try</span>:</span>
+<span class="line">    let_us_cause_a_NameError</span>
+<span class="line"><span class="keyword">except</span> NameError <span class="keyword">as</span> err:</span>
+<span class="line">    print(err, <span class="string">'--&gt; our error message'</span>)</span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>结果:</p>
+<ul>
+<li>Python 3.5.1</li>
+<li>name ‘let_us_cause_a_NameError’ is not defined —&gt; our error message</li>
+</ul>
+</blockquote>
+<h3 id="通过input-解析用户的输入"><a href="#通过input-解析用户的输入" class="headerlink" title="通过input()解析用户的输入"></a>通过input()解析用户的输入</h3><p>幸运的是，在 Python 3 中已经解决了把用户的输入存储为一个 str 对象的问题。为了避免在 Python 2 中的读取非字符串类型的危险行为，我们不得不使用 raw_input() 代替。</p>
+<h3 id="返回可迭代对象，而不是列表"><a href="#返回可迭代对象，而不是列表" class="headerlink" title="返回可迭代对象，而不是列表"></a>返回可迭代对象，而不是列表</h3><p>如果在 xrange 章节看到的，现在在 Python 3 中一些方法和函数返回迭代对象 — 代替 Python 2 中的列表<br>因为我们通常那些遍历只有一次，我认为这个改变对节约内存很有意义。尽管如此，它也是可能的，相对于生成器 —- 如需要遍历多次。它是不那么高效的。<br>而对于那些情况下，我们真正需要的是列表对象，我们可以通过 list() 函数简单的把迭代对象转换成一个列表。</p>
+<h4 id="python2-4"><a href="#python2-4" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">'Python'</span>, python_version() </span>
+<span class="line"><span class="keyword">print</span> range(<span class="number">3</span>) </span>
+<span class="line"><span class="keyword">print</span> type(range(<span class="number">3</span>))</span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>结果:</p>
+<ul>
+<li>Python 2.7.6</li>
+<li>[0, 1, 2]</li>
+<li>&lt; type ‘list’&gt;</li>
+</ul>
+</blockquote>
+<h4 id="python3-4"><a href="#python3-4" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line">print(<span class="string">'Python'</span>, python_version())</span>
+<span class="line">print(range(<span class="number">3</span>))</span>
+<span class="line">print(type(range(<span class="number">3</span>)))</span>
+<span class="line">print(list(range(<span class="number">3</span>)))</span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>结果:</p>
+<ul>
+<li>Python 3.5.1</li>
+<li>range(0, 3)</li>
+<li>&lt; class ‘range’&gt;</li>
+<li>[0, 1, 2]</li>
+</ul>
+</blockquote>
+<ul>
+<li>在 Python 3 中一些经常使用到的不再返回列表的函数和方法：</li>
+<li>zip()</li>
+<li>map()</li>
+<li>filter()</li>
+<li>dictionary’s .keys() method</li>
+<li>dictionary’s .values() method</li>
+<li>dictionary’s .items() method</li>
+</ul>
+<h3 id="For循环变量和全局命名空间泄漏"><a href="#For循环变量和全局命名空间泄漏" class="headerlink" title="For循环变量和全局命名空间泄漏"></a>For循环变量和全局命名空间泄漏</h3><p>好消息：在 Python 3.x 中 for 循环变量不会再导致命名空间泄漏。<br>在 Python 3.x 中做了一个改变，在 What’s New In Python 3.0 中有如下描述：<br>“列表推导不再支持 [… for var in item1, item2, …] 这样的语法。使用 [… for var in (item1, item2, …)] 代替。也需要提醒的是列表推导有不同的语义： 他们关闭了在 list() 构造器中的生成器表达式的语法糖, 并且特别是循环控制变量不再泄漏进周围的作用范围域.”　　</p>
+<h4 id="python2-5"><a href="#python2-5" class="headerlink" title="python2"></a>python2</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">'Python'</span>, python_version()</span>
+<span class="line">i = <span class="number">1</span></span>
+<span class="line"><span class="keyword">print</span> <span class="string">'before: i ='</span>, i</span>
+<span class="line"><span class="keyword">print</span> <span class="string">'comprehension: '</span>, [i <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5</span>)]</span>
+<span class="line"><span class="keyword">print</span> <span class="string">'after: i ='</span>, i</span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>结果:</p>
+<ul>
+<li>Python 2.7.6</li>
+<li>before: i = 1</li>
+<li>comprehension: [0, 1, 2, 3, 4]</li>
+<li>after: i = 4</li>
+</ul>
+</blockquote>
+<h4 id="python3-5"><a href="#python3-5" class="headerlink" title="python3"></a>python3</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line">print(<span class="string">'Python'</span>, python_version())</span>
+<span class="line">i = <span class="number">1</span></span>
+<span class="line">print(<span class="string">'before: i ='</span>, i)</span>
+<span class="line">print(<span class="string">'comprehension:'</span>, [i <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5</span>)])</span>
+<span class="line">print(<span class="string">'after: i ='</span>, i)</span>
+</pre></td></tr></table></figure>
+<blockquote>
+<p>结果:</p>
+<ul>
+<li>Python 3.5.1</li>
+<li>before: i = 1</li>
+<li>comprehension: [0, 1, 2, 3, 4]</li>
+<li>after: i = 1</li>
+</ul>
+<p>注：</p>
+<ul>
+<li>上述代码在<strong>python3.5</strong>和<strong>Python2.7</strong>中编译成功运行，其他环境请自行测试</li>
+<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
+<li>更多却别请读者自行查看官方文档</li>
+<li>个人推荐还是用python3，新版本的出现总有他的意义，但是我遇到一些项目要求Python2也就只能Python2了，目前来说，Python2的教程和第三方库函数还是比Python3多，再过几年，我相信一定会是Python3是主流</li>
+</ul>
+</blockquote>
+]]></content>
+      
+        <categories>
+            
+            <category> 学习笔记 </category>
+            
+        </categories>
+        
+        
+        <tags>
             
             <tag> Python </tag>
             
@@ -24149,6 +24178,304 @@
     </entry>
     
     <entry>
+      <title><![CDATA[C语言中缀表达式计算器]]></title>
+      <url>/2016/07/15/C%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%AE%A1%E7%AE%97%E5%99%A8/</url>
+      <content type="html"><![CDATA[<p>本文将介绍中缀表达式计算器的详细写法,是<a href="/2016/10/07/c%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8F%98%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F/">C语言把中缀表达式转换为后缀表达式</a>和<a href="/2016/10/07/C%E8%AF%AD%E8%A8%80%E9%80%86%E6%B3%A2%E5%85%B0%E8%AE%A1%E7%AE%97%E5%99%A8/">C语言逆波兰计算器</a>的结合   &nbsp;&nbsp;&nbsp;&nbsp;但本篇用了更精简的写法，但是也相对的提高了代码的理解难度，在阅读时，需自己详细斟酌</p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="添加适当的头文件"><a href="#添加适当的头文件" class="headerlink" title="添加适当的头文件"></a>添加适当的头文件</h3><p>c语言的头文件比不可少，我们这里还是添加适当的头文件和宏定义并声明函数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+</pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;  </span></span></span>
+<span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt; </span></span></span>
+<span class="line"> </span>
+<span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAX_LEN 80  </span></span>
+<span class="line"><span class="function"><span class="keyword">void</span> <span class="title">convert2postfix</span><span class="params">(<span class="keyword">char</span> *src, <span class="keyword">char</span> *dst)</span></span>;</span>
+<span class="line"><span class="function"><span class="keyword">float</span> <span class="title">cal</span><span class="params">(<span class="keyword">char</span> *src)</span></span>;</span>
+</pre></td></tr></table></figure>
+<a id="more"></a>
+<h3 id="中缀表达式转换为后缀表达式-操作符与操作数之间应有空格隔开"><a href="#中缀表达式转换为后缀表达式-操作符与操作数之间应有空格隔开" class="headerlink" title="中缀表达式转换为后缀表达式(操作符与操作数之间应有空格隔开)"></a>中缀表达式转换为后缀表达式(操作符与操作数之间应有空格隔开)</h3><p>这里是另一种方式的中缀表达式转后缀表达式，还有一种方式更容易理解一点，但是代码量相对更多，详情可见<a href="http://earthchen.coding.me/2016/10/07/c%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8F%98%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F/" target="_blank" rel="external">C语言把中缀表达式转换为后缀表达式</a></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+<span class="line">27</span>
+<span class="line">28</span>
+<span class="line">29</span>
+<span class="line">30</span>
+<span class="line">31</span>
+<span class="line">32</span>
+<span class="line">33</span>
+<span class="line">34</span>
+<span class="line">35</span>
+<span class="line">36</span>
+<span class="line">37</span>
+<span class="line">38</span>
+<span class="line">39</span>
+<span class="line">40</span>
+<span class="line">41</span>
+<span class="line">42</span>
+<span class="line">43</span>
+<span class="line">44</span>
+<span class="line">45</span>
+<span class="line">46</span>
+<span class="line">47</span>
+<span class="line">48</span>
+<span class="line">49</span>
+<span class="line">50</span>
+<span class="line">51</span>
+<span class="line">52</span>
+<span class="line">53</span>
+<span class="line">54</span>
+<span class="line">55</span>
+<span class="line">56</span>
+<span class="line">57</span>
+<span class="line">58</span>
+<span class="line">59</span>
+<span class="line">60</span>
+<span class="line">61</span>
+<span class="line">62</span>
+<span class="line">63</span>
+<span class="line">64</span>
+<span class="line">65</span>
+<span class="line">66</span>
+<span class="line">67</span>
+<span class="line">68</span>
+<span class="line">69</span>
+<span class="line">70</span>
+<span class="line">71</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">convert2postfix</span><span class="params">(<span class="keyword">char</span> *src, <span class="keyword">char</span> *dst)</span> </span>&#123;</span>
+<span class="line"> 	<span class="keyword">char</span> *psrc, *pdst;</span>
+<span class="line"> 	<span class="keyword">char</span> <span class="built_in">stack</span>[MAX_LEN];</span>
+<span class="line"> 	<span class="keyword">int</span> top;</span>
+<span class="line"> </span>
+<span class="line"> 	top = <span class="number">-1</span>;</span>
+<span class="line"> 	psrc = src;</span>
+<span class="line"> 	pdst = dst;</span>
+<span class="line"> 	<span class="keyword">while</span> (*psrc != <span class="string">'\0'</span>) &#123;</span>
+<span class="line"> 		<span class="keyword">if</span> (*psrc &gt;= <span class="string">'0'</span> &amp;&amp; *psrc &lt;= <span class="string">'9'</span>) &#123;</span>
+<span class="line"> 			*pdst = *psrc;</span>
+<span class="line"> 			pdst++;</span>
+<span class="line"> 			<span class="comment">//加入分隔空格  </span></span>
+<span class="line"> 			<span class="keyword">if</span> (!(*(psrc + <span class="number">1</span>) &gt;= <span class="string">'0'</span> &amp;&amp; *(psrc + <span class="number">1</span>) &lt;= <span class="string">'9'</span>) &amp;&amp; *(psrc + <span class="number">1</span>) != <span class="string">'.'</span>) &#123;</span>
+<span class="line"> 				*pdst = <span class="string">' '</span>;</span>
+<span class="line"> 				pdst++;</span>
+<span class="line"> 			&#125;</span>
+<span class="line"> 		&#125;</span>
+<span class="line"> 		<span class="keyword">if</span> (*psrc == <span class="string">'.'</span>) &#123;</span>
+<span class="line"> 			*pdst = *psrc;</span>
+<span class="line"> 			pdst++;</span>
+<span class="line"> 		&#125;</span>
+<span class="line"> 		<span class="keyword">if</span> (*psrc == <span class="string">'('</span>) &#123;</span>
+<span class="line"> 			<span class="built_in">stack</span>[++top] = *psrc;</span>
+<span class="line"> 		&#125;</span>
+<span class="line"> 		<span class="keyword">if</span> (*psrc == <span class="string">')'</span>) &#123;</span>
+<span class="line"> 			<span class="keyword">while</span> (<span class="built_in">stack</span>[top] != <span class="string">'('</span>) &#123;</span>
+<span class="line"> 				*pdst = <span class="built_in">stack</span>[top--];</span>
+<span class="line"> 				pdst++;</span>
+<span class="line"> 				<span class="comment">//加入分隔空格  </span></span>
+<span class="line"> 				*pdst = <span class="string">' '</span>;</span>
+<span class="line"> 				pdst++;</span>
+<span class="line"> 			&#125;</span>
+<span class="line"> 			<span class="comment">//弹出'('  </span></span>
+<span class="line"> 			top--;</span>
+<span class="line"> 		&#125;</span>
+<span class="line"> 		<span class="keyword">if</span> (*psrc == <span class="string">'*'</span> || *psrc == <span class="string">'/'</span>) &#123;</span>
+<span class="line"> 			<span class="keyword">if</span> (<span class="built_in">stack</span>[top] == <span class="string">'*'</span> || <span class="built_in">stack</span>[top] == <span class="string">'/'</span>) &#123;</span>
+<span class="line"> 				*pdst = <span class="built_in">stack</span>[top--];</span>
+<span class="line"> 				pdst++;</span>
+<span class="line"> 				<span class="comment">//加入分隔空格  </span></span>
+<span class="line"> 				*pdst = <span class="string">' '</span>;</span>
+<span class="line"> 				pdst++;</span>
+<span class="line"> 			&#125;</span>
+<span class="line"> 			<span class="built_in">stack</span>[++top] = *psrc;</span>
+<span class="line"> 		&#125;</span>
+<span class="line"> 		<span class="keyword">if</span> (*psrc == <span class="string">'+'</span> || *psrc == <span class="string">'-'</span>) &#123;</span>
+<span class="line"> 			<span class="keyword">while</span> (<span class="built_in">stack</span>[top] == <span class="string">'*'</span></span>
+<span class="line"> 				|| <span class="built_in">stack</span>[top] == <span class="string">'/'</span></span>
+<span class="line"> 				|| <span class="built_in">stack</span>[top] == <span class="string">'+'</span></span>
+<span class="line"> 				|| <span class="built_in">stack</span>[top] == <span class="string">'-'</span>) &#123;</span>
+<span class="line"> 				*pdst = <span class="built_in">stack</span>[top--];</span>
+<span class="line"> 				pdst++;</span>
+<span class="line"> 				<span class="comment">//加入分隔空格  </span></span>
+<span class="line"> 				*pdst = <span class="string">' '</span>;</span>
+<span class="line"> 				pdst++;</span>
+<span class="line"> 			&#125;</span>
+<span class="line"> 			<span class="built_in">stack</span>[++top] = *psrc;</span>
+<span class="line"> 		&#125;</span>
+<span class="line"> 		psrc++;</span>
+<span class="line"> 	&#125;</span>
+<span class="line"> 	<span class="comment">//扫描完成后，取出栈中所有运算符，写入后缀表达式数组。  </span></span>
+<span class="line"> 	<span class="keyword">while</span> (top != <span class="number">-1</span>) &#123;</span>
+<span class="line"> 		*pdst = <span class="built_in">stack</span>[top--];</span>
+<span class="line"> 		*pdst++;</span>
+<span class="line"> 		*pdst = <span class="string">' '</span>;</span>
+<span class="line"> 		pdst++;</span>
+<span class="line"> 	&#125;</span>
+<span class="line"> 	*pdst = <span class="string">'\0'</span>;</span>
+<span class="line"> &#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<h3 id="计算后缀表达式"><a href="#计算后缀表达式" class="headerlink" title="计算后缀表达式"></a>计算后缀表达式</h3><p>同上还有另一种比较好理解的方式 见<a href="/2016/10/07/C%E8%AF%AD%E8%A8%80%E9%80%86%E6%B3%A2%E5%85%B0%E8%AE%A1%E7%AE%97%E5%99%A8/">C语言逆波兰计算器</a></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+<span class="line">27</span>
+<span class="line">28</span>
+<span class="line">29</span>
+<span class="line">30</span>
+<span class="line">31</span>
+<span class="line">32</span>
+<span class="line">33</span>
+<span class="line">34</span>
+<span class="line">35</span>
+<span class="line">36</span>
+<span class="line">37</span>
+<span class="line">38</span>
+<span class="line">39</span>
+<span class="line">40</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">float</span> <span class="title">cal</span><span class="params">(<span class="keyword">char</span> *src)</span> </span>&#123;</span>
+<span class="line">	<span class="keyword">float</span> <span class="built_in">stack</span>[MAX_LEN];</span>
+<span class="line">	<span class="keyword">float</span> opd1, opd2;</span>
+<span class="line">	<span class="keyword">int</span> top;</span>
+<span class="line">	<span class="keyword">char</span> *p, *pre;</span>
+<span class="line">	top = <span class="number">-1</span>;</span>
+<span class="line"></span>
+<span class="line">	p = src;</span>
+<span class="line">	<span class="keyword">while</span> (*p != <span class="string">'\0'</span>) &#123;</span>
+<span class="line">		<span class="keyword">if</span> (*p &gt;= <span class="string">'0'</span> &amp;&amp; *p &lt;= <span class="string">'9'</span>) &#123;</span>
+<span class="line">			pre = p;</span>
+<span class="line">			<span class="keyword">while</span> ((*p &gt;= <span class="string">'0'</span> &amp;&amp; *p &lt;= <span class="string">'9'</span>) || *p == <span class="string">'.'</span>) &#123;</span>
+<span class="line">				p++;</span>
+<span class="line">			&#125;</span>
+<span class="line">			*p = <span class="string">'\0'</span>;</span>
+<span class="line">			<span class="built_in">stack</span>[++top] = atof(pre);</span>
+<span class="line">		&#125;</span>
+<span class="line">		<span class="keyword">if</span> (*p == <span class="string">'+'</span> || *p == <span class="string">'-'</span> || *p == <span class="string">'*'</span> || *p == <span class="string">'/'</span>) &#123;</span>
+<span class="line">			opd2 = <span class="built_in">stack</span>[top--];</span>
+<span class="line">			opd1 = <span class="built_in">stack</span>[top--];</span>
+<span class="line">			<span class="keyword">switch</span> (*p) &#123;</span>
+<span class="line">			<span class="keyword">case</span> <span class="string">'+'</span>:</span>
+<span class="line">				<span class="built_in">stack</span>[++top] = opd1 + opd2;</span>
+<span class="line">				<span class="keyword">break</span>;</span>
+<span class="line">			<span class="keyword">case</span> <span class="string">'-'</span>:</span>
+<span class="line">				<span class="built_in">stack</span>[++top] = opd1 - opd2;</span>
+<span class="line">				<span class="keyword">break</span>;</span>
+<span class="line">			<span class="keyword">case</span> <span class="string">'*'</span>:</span>
+<span class="line">				<span class="built_in">stack</span>[++top] = opd1*opd2;</span>
+<span class="line">				<span class="keyword">break</span>;</span>
+<span class="line">			<span class="keyword">case</span> <span class="string">'/'</span>:</span>
+<span class="line">				<span class="comment">//更严格一点，应该处理除数为0的情况  </span></span>
+<span class="line">				<span class="built_in">stack</span>[++top] = opd1 / opd2;</span>
+<span class="line">				<span class="keyword">break</span>;</span>
+<span class="line">			&#125;</span>
+<span class="line">		&#125;</span>
+<span class="line">		p++;</span>
+<span class="line">	&#125;</span>
+<span class="line">	<span class="keyword">return</span> <span class="built_in">stack</span>[top--];</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<h3 id="主函数"><a href="#主函数" class="headerlink" title="主函数"></a>主函数</h3><p>输入中缀表达式作为一个字符串，调用中缀表达式转换和后缀表达式计算便可以很容易得出结果。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function">nt <span class="title">main</span><span class="params">()</span> </span>&#123;</span>
+<span class="line">	<span class="keyword">char</span> str1[MAX_LEN], str2[MAX_LEN];</span>
+<span class="line">	<span class="keyword">float</span> res;</span>
+<span class="line"></span>
+<span class="line">	gets(str1);</span>
+<span class="line">	convert2postfix(str1, str2);</span>
+<span class="line">	</span>
+<span class="line">	res = cal(str2);</span>
+<span class="line">	<span class="built_in">printf</span>(<span class="string">"result:%.2f\n"</span>, res);</span>
+<span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<h3 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h3><p>本人用的是vs2015编译器，所以文中的scanf用了更安全的scanf_s，当然也可以用fgets 详情可以自行<a href="https://www.baidu.com/" target="_blank" rel="external">baidu</a>或者<a href="https://www.google.com" target="_blank" rel="external">Google</a></p>
+<p><img src="http://objects.earthchen.cn/c%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%AE%A1%E7%AE%97%E5%99%A8.png" alt="cmd 运行结果"><br>(1+4)*(4-5)=-5 结果正确 </p>
+<p><br></p>
+<blockquote>
+<p>注：</p>
+<ul>
+<li>上述代码在<strong>visual studio 2015</strong>中编译成功运行，其他ide请自行测试</li>
+<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
+</ul>
+</blockquote>
+]]></content>
+      
+        <categories>
+            
+            <category> 开发 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> c </tag>
+            
+            <tag> 数据结构 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[C语言中缀表达式转后缀表达式]]></title>
       <url>/2016/07/15/c%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8F%98%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F/</url>
       <content type="html"><![CDATA[<p>众所周知,计算机中不能直接用中缀表达式计算,形如(1+2)*(4-5)之类的，但是我们可以计算机可以很容易的通过后缀表达式来计算我们所输入的算式。所以我们就需要把中缀表达式转换为后缀表达式。下面是个人写的一点代码，大家可以参考。</p>
@@ -24392,275 +24719,6 @@
 <span class="line">&#125;</span>
 </pre></td></tr></table></figure>
 <h3 id="以下是运行结果-本人用的是vs2015编译器，所以文中的scanf用了更安全的scanf-s，-如有引用-请自觉替换成和自己的编译器想匹配的函数"><a href="#以下是运行结果-本人用的是vs2015编译器，所以文中的scanf用了更安全的scanf-s，-如有引用-请自觉替换成和自己的编译器想匹配的函数" class="headerlink" title="以下是运行结果 本人用的是vs2015编译器，所以文中的scanf用了更安全的scanf_s，  如有引用 请自觉替换成和自己的编译器想匹配的函数"></a>以下是运行结果 本人用的是vs2015编译器，所以文中的scanf用了更安全的scanf_s，  如有引用 请自觉替换成和自己的编译器想匹配的函数</h3><p><img src="http://objects.earthchen.cn/c%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%BD%AC%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F.png" alt="cmd 运行结果"><br>代码很简单 ，仔细看看研究一下指针就很容易看懂，</p>
-<blockquote>
-<p>注：</p>
-<ul>
-<li>上述代码在<strong>visual studio 2015</strong>中编译成功运行，其他ide请自行测试</li>
-<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
-</ul>
-</blockquote>
-]]></content>
-      
-        <categories>
-            
-            <category> 开发 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> c </tag>
-            
-            <tag> 数据结构 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[C语言二叉树的基本操作]]></title>
-      <url>/2016/07/15/C%E8%AF%AD%E8%A8%80%E4%BA%8C%E5%8F%89%E6%A0%91%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/</url>
-      <content type="html"><![CDATA[<p>树是数据结构中一门很重要的数据结构，在很多地方都能经常见到他的面孔，比如数据通信，压缩数据等都能见到树的身影。但是最常见的还是相对简单的二叉树，二叉树和常规树都可以进行相互转换。所以，二叉树的操作必不可少。我这里来简单介绍一下。<br>在数据结构中给的树和图中，我们最好使用递归来进行各种操作，会让代码更清晰易懂，代码也会更简洁。</p>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="添加适当的头文件，定义hex一个栈数据结构，"><a href="#添加适当的头文件，定义hex一个栈数据结构，" class="headerlink" title="添加适当的头文件，定义hex一个栈数据结构，"></a>添加适当的头文件，定义hex一个栈数据结构，</h3><p>首先我们定义一个二叉树的数据结构</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-</pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span>
-<span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span>
-<span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXSIZE 100</span></span>
-<span class="line"><span class="keyword">typedef</span> <span class="keyword">char</span> ElemType;</span>
-<span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">BiTNode</span></span>
-<span class="line">&#123;</span></span>
-<span class="line">ElemType data;</span>
-<span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">BiTNode</span> *<span class="title">lchild</span>, *<span class="title">rchild</span>;</span></span>
-<span class="line">&#125;BiTNode, *BiTree;</span>
-</pre></td></tr></table></figure>
-<a id="more"></a>
-<h3 id="创建一个二叉树（前序）"><a href="#创建一个二叉树（前序）" class="headerlink" title="创建一个二叉树（前序）"></a>创建一个二叉树（前序）</h3><p>这里以前序作为例子，前中后序遍历的不同之在于递归的顺序</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">creatBiTree</span><span class="params">(BiTree *T)</span> </span>&#123;</span>
-<span class="line">	ElemType c;</span>
-<span class="line">	<span class="built_in">scanf</span>(<span class="string">"%c"</span>, &amp;c);</span>
-<span class="line">	<span class="keyword">if</span> (<span class="string">'#'</span> == c)</span>
-<span class="line">	&#123;</span>
-<span class="line">		*T = <span class="literal">NULL</span>;</span>
-<span class="line">	&#125;</span>
-<span class="line">	<span class="keyword">else</span></span>
-<span class="line">	&#123;</span>
-<span class="line">		*T = (BiTNode *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(BiTNode));</span>
-<span class="line">		(*T)-&gt;data = c;</span>
-<span class="line">		creatBiTree(&amp;(*T)-&gt;lchild);</span>
-<span class="line">		creatBiTree(&amp;(*T)-&gt;rchild);</span>
-<span class="line">	&#125;</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
-<h3 id="遍历二叉树-前序遍历"><a href="#遍历二叉树-前序遍历" class="headerlink" title="遍历二叉树(前序遍历)"></a>遍历二叉树(前序遍历)</h3><p>这里依然以前序作为例子，前中后序遍历的不同之在于递归的顺序<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">preorder</span><span class="params">(BiTree T)</span> </span>&#123;</span>
-<span class="line">	<span class="keyword">if</span> (T) &#123;</span>
-<span class="line">		<span class="built_in">printf</span>(<span class="string">"%c\n"</span>, T-&gt;data);</span>
-<span class="line">		preorder(T-&gt;lchild);</span>
-<span class="line">		preorder(T-&gt;rchild);</span>
-<span class="line">	&#125;</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure></p>
-<h3 id="层次遍历二叉树"><a href="#层次遍历二叉树" class="headerlink" title="层次遍历二叉树"></a>层次遍历二叉树</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-<span class="line">17</span>
-<span class="line">18</span>
-<span class="line">19</span>
-<span class="line">20</span>
-<span class="line">21</span>
-<span class="line">22</span>
-<span class="line">23</span>
-<span class="line">24</span>
-<span class="line">25</span>
-<span class="line">26</span>
-<span class="line">27</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">levelorder</span><span class="params">(BiTree T)</span> </span>&#123;</span>
-<span class="line">	<span class="comment">//用一个队列保存结点信息,这里的队列采用的是顺序队列中的数组实现</span></span>
-<span class="line">	<span class="keyword">int</span> front = <span class="number">0</span>;</span>
-<span class="line">	<span class="keyword">int</span> rear = <span class="number">0</span>;</span>
-<span class="line">	BiTree BiQueue[MAXSIZE];</span>
-<span class="line">	BiTree tempNode;</span>
-<span class="line">	<span class="keyword">if</span> (!IsEmpty_BiTree(&amp;T)) &#123;</span>
-<span class="line">		<span class="comment">//将根结点加入到队列中　</span></span>
-<span class="line">		BiQueue[rear++] = T;</span>
-<span class="line"></span>
-<span class="line">		<span class="keyword">while</span> (front != rear) &#123;</span>
-<span class="line">			<span class="comment">//取出队头元素，并使队头指针向后移动一位　</span></span>
-<span class="line">			tempNode = BiQueue[front++];</span>
-<span class="line">			<span class="comment">//判断左右子树是否为空,若为空，则加入队列　</span></span>
-<span class="line">			<span class="keyword">if</span> (!IsEmpty_BiTree(&amp;(tempNode-&gt;lchild)))</span>
-<span class="line">				BiQueue[rear++] = tempNode-&gt;lchild;</span>
-<span class="line"></span>
-<span class="line">			<span class="keyword">if</span> (!IsEmpty_BiTree(&amp;(tempNode-&gt;rchild)))</span>
-<span class="line">				BiQueue[rear++] = tempNode-&gt;rchild;</span>
-<span class="line"></span>
-<span class="line">			<span class="comment">//输出队头结点元素　</span></span>
-<span class="line">			<span class="comment">//Vist_BiTreeNode(tempNode-&gt;data);</span></span>
-<span class="line">			<span class="built_in">printf</span>(<span class="string">"%c\n"</span>, tempNode-&gt;data);</span>
-<span class="line"></span>
-<span class="line">		&#125;</span>
-<span class="line">	&#125;</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
-<h3 id="复制树"><a href="#复制树" class="headerlink" title="复制树"></a>复制树</h3><p>将二叉树复制给另一个二叉树</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">copybitree</span><span class="params">(BiTree T, BiTree *newT)</span> </span>&#123;</span>
-<span class="line">	<span class="keyword">if</span> (T == <span class="literal">NULL</span>)</span>
-<span class="line">	&#123;</span>
-<span class="line">		*newT = <span class="literal">NULL</span>;</span>
-<span class="line">		<span class="keyword">return</span>;</span>
-<span class="line">	&#125;</span>
-<span class="line">	<span class="keyword">else</span></span>
-<span class="line">	&#123;</span>
-<span class="line">		*newT = (BiTNode *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(BiTNode));</span>
-<span class="line">		((*newT)-&gt;data) = (T-&gt;data);</span>
-<span class="line">		copybitree(T-&gt;lchild, &amp;(*newT)-&gt;lchild);</span>
-<span class="line">		copybitree(T-&gt;rchild, &amp;(*newT)-&gt;rchild);</span>
-<span class="line">	&#125;</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
-<h3 id="计算结点个数"><a href="#计算结点个数" class="headerlink" title="计算结点个数"></a>计算结点个数</h3><p>计算二叉树的结点个数</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">countleaf</span><span class="params">(BiTree T)</span> </span>&#123;</span>
-<span class="line">	<span class="keyword">if</span> (T == <span class="literal">NULL</span>)</span>
-<span class="line">	&#123;</span>
-<span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span>
-<span class="line">	&#125;</span>
-<span class="line">	<span class="keyword">else</span> &#123;</span>
-<span class="line">		<span class="keyword">return</span> countleaf(T-&gt;lchild) + countleaf(T-&gt;rchild) + <span class="number">1</span>;</span>
-<span class="line">	&#125;</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
-<h3 id="左、右子树交换"><a href="#左、右子树交换" class="headerlink" title="左、右子树交换"></a>左、右子树交换</h3><p>交换一颗二叉树的左右子树</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">exchange</span><span class="params">(BiTree T)</span> </span>
-<span class="line"></span>&#123;</span>
-<span class="line">	BiTree p;</span>
-<span class="line">	<span class="keyword">if</span> (T != <span class="literal">NULL</span>)</span>
-<span class="line">	&#123;</span>
-<span class="line">		p = T-&gt;lchild;</span>
-<span class="line">		T-&gt;lchild = T-&gt;rchild;</span>
-<span class="line">		T-&gt;rchild = p;</span>
-<span class="line">		exchange(T-&gt;lchild);</span>
-<span class="line">		exchange(T-&gt;rchild);</span>
-<span class="line">	&#125;</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
-<h3 id="主函数"><a href="#主函数" class="headerlink" title="主函数"></a>主函数</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-<span class="line">17</span>
-<span class="line">18</span>
-<span class="line">19</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span>
-<span class="line">	BiTree T=<span class="literal">NULL</span>,newT=<span class="literal">NULL</span>;</span>
-<span class="line">	creatBiTree(&amp;T);</span>
-<span class="line">	<span class="built_in">printf</span>(<span class="string">"前序遍历\n"</span>);</span>
-<span class="line">	preorder(T);</span>
-<span class="line">	<span class="built_in">printf</span>(<span class="string">"中序遍历\n"</span>);</span>
-<span class="line">	inorder(T);</span>
-<span class="line">	<span class="built_in">printf</span>(<span class="string">"中后遍历\n"</span>);</span>
-<span class="line">	postorder(T);</span>
-<span class="line">	<span class="built_in">printf</span>(<span class="string">"层序遍历\n"</span>);</span>
-<span class="line">	levelorder(T);</span>
-<span class="line">	<span class="built_in">printf</span>(<span class="string">"节点个数为%d\n"</span>, countleaf(T));</span>
-<span class="line">	copybitree(T, &amp;newT);</span>
-<span class="line">	<span class="built_in">printf</span>(<span class="string">"newT前序遍历\n"</span>);</span>
-<span class="line">	preorder(newT);</span>
-<span class="line">	exchange(T);</span>
-<span class="line">	<span class="built_in">printf</span>(<span class="string">"交换左右子树之后前序遍历为"</span>);</span>
-<span class="line">	preorder(T);</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
-<h3 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h3><p><img src="http://objects.earthchen.cn/%E4%BA%8C%E5%8F%89%E6%A0%91%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C.png" alt="二叉树运行结果"><br>以上就是二叉树的一些基本操作，大量运用的递归的思想，希望读者能好好研读</p>
 <blockquote>
 <p>注：</p>
 <ul>
@@ -25169,25 +25227,31 @@
     </entry>
     
     <entry>
-      <title><![CDATA[C语言中缀表达式计算器]]></title>
-      <url>/2016/07/15/C%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%AE%A1%E7%AE%97%E5%99%A8/</url>
-      <content type="html"><![CDATA[<p>本文将介绍中缀表达式计算器的详细写法,是<a href="/2016/10/07/c%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8F%98%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F/">C语言把中缀表达式转换为后缀表达式</a>和<a href="/2016/10/07/C%E8%AF%AD%E8%A8%80%E9%80%86%E6%B3%A2%E5%85%B0%E8%AE%A1%E7%AE%97%E5%99%A8/">C语言逆波兰计算器</a>的结合   &nbsp;&nbsp;&nbsp;&nbsp;但本篇用了更精简的写法，但是也相对的提高了代码的理解难度，在阅读时，需自己详细斟酌</p>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="添加适当的头文件"><a href="#添加适当的头文件" class="headerlink" title="添加适当的头文件"></a>添加适当的头文件</h3><p>c语言的头文件比不可少，我们这里还是添加适当的头文件和宏定义并声明函数</p>
+      <title><![CDATA[C语言二叉树的基本操作]]></title>
+      <url>/2016/07/15/C%E8%AF%AD%E8%A8%80%E4%BA%8C%E5%8F%89%E6%A0%91%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/</url>
+      <content type="html"><![CDATA[<p>树是数据结构中一门很重要的数据结构，在很多地方都能经常见到他的面孔，比如数据通信，压缩数据等都能见到树的身影。但是最常见的还是相对简单的二叉树，二叉树和常规树都可以进行相互转换。所以，二叉树的操作必不可少。我这里来简单介绍一下。<br>在数据结构中给的树和图中，我们最好使用递归来进行各种操作，会让代码更清晰易懂，代码也会更简洁。</p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="添加适当的头文件，定义hex一个栈数据结构，"><a href="#添加适当的头文件，定义hex一个栈数据结构，" class="headerlink" title="添加适当的头文件，定义hex一个栈数据结构，"></a>添加适当的头文件，定义hex一个栈数据结构，</h3><p>首先我们定义一个二叉树的数据结构</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
 <span class="line">4</span>
 <span class="line">5</span>
 <span class="line">6</span>
-</pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;  </span></span></span>
-<span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt; </span></span></span>
-<span class="line"> </span>
-<span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAX_LEN 80  </span></span>
-<span class="line"><span class="function"><span class="keyword">void</span> <span class="title">convert2postfix</span><span class="params">(<span class="keyword">char</span> *src, <span class="keyword">char</span> *dst)</span></span>;</span>
-<span class="line"><span class="function"><span class="keyword">float</span> <span class="title">cal</span><span class="params">(<span class="keyword">char</span> *src)</span></span>;</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+</pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span>
+<span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span>
+<span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXSIZE 100</span></span>
+<span class="line"><span class="keyword">typedef</span> <span class="keyword">char</span> ElemType;</span>
+<span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">BiTNode</span></span>
+<span class="line">&#123;</span></span>
+<span class="line">ElemType data;</span>
+<span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">BiTNode</span> *<span class="title">lchild</span>, *<span class="title">rchild</span>;</span></span>
+<span class="line">&#125;BiTNode, *BiTree;</span>
 </pre></td></tr></table></figure>
 <a id="more"></a>
-<h3 id="中缀表达式转换为后缀表达式-操作符与操作数之间应有空格隔开"><a href="#中缀表达式转换为后缀表达式-操作符与操作数之间应有空格隔开" class="headerlink" title="中缀表达式转换为后缀表达式(操作符与操作数之间应有空格隔开)"></a>中缀表达式转换为后缀表达式(操作符与操作数之间应有空格隔开)</h3><p>这里是另一种方式的中缀表达式转后缀表达式，还有一种方式更容易理解一点，但是代码量相对更多，详情可见<a href="http://earthchen.coding.me/2016/10/07/c%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8F%98%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F/" target="_blank" rel="external">C语言把中缀表达式转换为后缀表达式</a></p>
+<h3 id="创建一个二叉树（前序）"><a href="#创建一个二叉树（前序）" class="headerlink" title="创建一个二叉树（前序）"></a>创建一个二叉树（前序）</h3><p>这里以前序作为例子，前中后序遍历的不同之在于递归的顺序</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
@@ -25203,217 +25267,93 @@
 <span class="line">13</span>
 <span class="line">14</span>
 <span class="line">15</span>
-<span class="line">16</span>
-<span class="line">17</span>
-<span class="line">18</span>
-<span class="line">19</span>
-<span class="line">20</span>
-<span class="line">21</span>
-<span class="line">22</span>
-<span class="line">23</span>
-<span class="line">24</span>
-<span class="line">25</span>
-<span class="line">26</span>
-<span class="line">27</span>
-<span class="line">28</span>
-<span class="line">29</span>
-<span class="line">30</span>
-<span class="line">31</span>
-<span class="line">32</span>
-<span class="line">33</span>
-<span class="line">34</span>
-<span class="line">35</span>
-<span class="line">36</span>
-<span class="line">37</span>
-<span class="line">38</span>
-<span class="line">39</span>
-<span class="line">40</span>
-<span class="line">41</span>
-<span class="line">42</span>
-<span class="line">43</span>
-<span class="line">44</span>
-<span class="line">45</span>
-<span class="line">46</span>
-<span class="line">47</span>
-<span class="line">48</span>
-<span class="line">49</span>
-<span class="line">50</span>
-<span class="line">51</span>
-<span class="line">52</span>
-<span class="line">53</span>
-<span class="line">54</span>
-<span class="line">55</span>
-<span class="line">56</span>
-<span class="line">57</span>
-<span class="line">58</span>
-<span class="line">59</span>
-<span class="line">60</span>
-<span class="line">61</span>
-<span class="line">62</span>
-<span class="line">63</span>
-<span class="line">64</span>
-<span class="line">65</span>
-<span class="line">66</span>
-<span class="line">67</span>
-<span class="line">68</span>
-<span class="line">69</span>
-<span class="line">70</span>
-<span class="line">71</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">convert2postfix</span><span class="params">(<span class="keyword">char</span> *src, <span class="keyword">char</span> *dst)</span> </span>&#123;</span>
-<span class="line"> 	<span class="keyword">char</span> *psrc, *pdst;</span>
-<span class="line"> 	<span class="keyword">char</span> <span class="built_in">stack</span>[MAX_LEN];</span>
-<span class="line"> 	<span class="keyword">int</span> top;</span>
-<span class="line"> </span>
-<span class="line"> 	top = <span class="number">-1</span>;</span>
-<span class="line"> 	psrc = src;</span>
-<span class="line"> 	pdst = dst;</span>
-<span class="line"> 	<span class="keyword">while</span> (*psrc != <span class="string">'\0'</span>) &#123;</span>
-<span class="line"> 		<span class="keyword">if</span> (*psrc &gt;= <span class="string">'0'</span> &amp;&amp; *psrc &lt;= <span class="string">'9'</span>) &#123;</span>
-<span class="line"> 			*pdst = *psrc;</span>
-<span class="line"> 			pdst++;</span>
-<span class="line"> 			<span class="comment">//加入分隔空格  </span></span>
-<span class="line"> 			<span class="keyword">if</span> (!(*(psrc + <span class="number">1</span>) &gt;= <span class="string">'0'</span> &amp;&amp; *(psrc + <span class="number">1</span>) &lt;= <span class="string">'9'</span>) &amp;&amp; *(psrc + <span class="number">1</span>) != <span class="string">'.'</span>) &#123;</span>
-<span class="line"> 				*pdst = <span class="string">' '</span>;</span>
-<span class="line"> 				pdst++;</span>
-<span class="line"> 			&#125;</span>
-<span class="line"> 		&#125;</span>
-<span class="line"> 		<span class="keyword">if</span> (*psrc == <span class="string">'.'</span>) &#123;</span>
-<span class="line"> 			*pdst = *psrc;</span>
-<span class="line"> 			pdst++;</span>
-<span class="line"> 		&#125;</span>
-<span class="line"> 		<span class="keyword">if</span> (*psrc == <span class="string">'('</span>) &#123;</span>
-<span class="line"> 			<span class="built_in">stack</span>[++top] = *psrc;</span>
-<span class="line"> 		&#125;</span>
-<span class="line"> 		<span class="keyword">if</span> (*psrc == <span class="string">')'</span>) &#123;</span>
-<span class="line"> 			<span class="keyword">while</span> (<span class="built_in">stack</span>[top] != <span class="string">'('</span>) &#123;</span>
-<span class="line"> 				*pdst = <span class="built_in">stack</span>[top--];</span>
-<span class="line"> 				pdst++;</span>
-<span class="line"> 				<span class="comment">//加入分隔空格  </span></span>
-<span class="line"> 				*pdst = <span class="string">' '</span>;</span>
-<span class="line"> 				pdst++;</span>
-<span class="line"> 			&#125;</span>
-<span class="line"> 			<span class="comment">//弹出'('  </span></span>
-<span class="line"> 			top--;</span>
-<span class="line"> 		&#125;</span>
-<span class="line"> 		<span class="keyword">if</span> (*psrc == <span class="string">'*'</span> || *psrc == <span class="string">'/'</span>) &#123;</span>
-<span class="line"> 			<span class="keyword">if</span> (<span class="built_in">stack</span>[top] == <span class="string">'*'</span> || <span class="built_in">stack</span>[top] == <span class="string">'/'</span>) &#123;</span>
-<span class="line"> 				*pdst = <span class="built_in">stack</span>[top--];</span>
-<span class="line"> 				pdst++;</span>
-<span class="line"> 				<span class="comment">//加入分隔空格  </span></span>
-<span class="line"> 				*pdst = <span class="string">' '</span>;</span>
-<span class="line"> 				pdst++;</span>
-<span class="line"> 			&#125;</span>
-<span class="line"> 			<span class="built_in">stack</span>[++top] = *psrc;</span>
-<span class="line"> 		&#125;</span>
-<span class="line"> 		<span class="keyword">if</span> (*psrc == <span class="string">'+'</span> || *psrc == <span class="string">'-'</span>) &#123;</span>
-<span class="line"> 			<span class="keyword">while</span> (<span class="built_in">stack</span>[top] == <span class="string">'*'</span></span>
-<span class="line"> 				|| <span class="built_in">stack</span>[top] == <span class="string">'/'</span></span>
-<span class="line"> 				|| <span class="built_in">stack</span>[top] == <span class="string">'+'</span></span>
-<span class="line"> 				|| <span class="built_in">stack</span>[top] == <span class="string">'-'</span>) &#123;</span>
-<span class="line"> 				*pdst = <span class="built_in">stack</span>[top--];</span>
-<span class="line"> 				pdst++;</span>
-<span class="line"> 				<span class="comment">//加入分隔空格  </span></span>
-<span class="line"> 				*pdst = <span class="string">' '</span>;</span>
-<span class="line"> 				pdst++;</span>
-<span class="line"> 			&#125;</span>
-<span class="line"> 			<span class="built_in">stack</span>[++top] = *psrc;</span>
-<span class="line"> 		&#125;</span>
-<span class="line"> 		psrc++;</span>
-<span class="line"> 	&#125;</span>
-<span class="line"> 	<span class="comment">//扫描完成后，取出栈中所有运算符，写入后缀表达式数组。  </span></span>
-<span class="line"> 	<span class="keyword">while</span> (top != <span class="number">-1</span>) &#123;</span>
-<span class="line"> 		*pdst = <span class="built_in">stack</span>[top--];</span>
-<span class="line"> 		*pdst++;</span>
-<span class="line"> 		*pdst = <span class="string">' '</span>;</span>
-<span class="line"> 		pdst++;</span>
-<span class="line"> 	&#125;</span>
-<span class="line"> 	*pdst = <span class="string">'\0'</span>;</span>
-<span class="line"> &#125;</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
-<h3 id="计算后缀表达式"><a href="#计算后缀表达式" class="headerlink" title="计算后缀表达式"></a>计算后缀表达式</h3><p>同上还有另一种比较好理解的方式 见<a href="/2016/10/07/C%E8%AF%AD%E8%A8%80%E9%80%86%E6%B3%A2%E5%85%B0%E8%AE%A1%E7%AE%97%E5%99%A8/">C语言逆波兰计算器</a></p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-<span class="line">17</span>
-<span class="line">18</span>
-<span class="line">19</span>
-<span class="line">20</span>
-<span class="line">21</span>
-<span class="line">22</span>
-<span class="line">23</span>
-<span class="line">24</span>
-<span class="line">25</span>
-<span class="line">26</span>
-<span class="line">27</span>
-<span class="line">28</span>
-<span class="line">29</span>
-<span class="line">30</span>
-<span class="line">31</span>
-<span class="line">32</span>
-<span class="line">33</span>
-<span class="line">34</span>
-<span class="line">35</span>
-<span class="line">36</span>
-<span class="line">37</span>
-<span class="line">38</span>
-<span class="line">39</span>
-<span class="line">40</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">float</span> <span class="title">cal</span><span class="params">(<span class="keyword">char</span> *src)</span> </span>&#123;</span>
-<span class="line">	<span class="keyword">float</span> <span class="built_in">stack</span>[MAX_LEN];</span>
-<span class="line">	<span class="keyword">float</span> opd1, opd2;</span>
-<span class="line">	<span class="keyword">int</span> top;</span>
-<span class="line">	<span class="keyword">char</span> *p, *pre;</span>
-<span class="line">	top = <span class="number">-1</span>;</span>
-<span class="line"></span>
-<span class="line">	p = src;</span>
-<span class="line">	<span class="keyword">while</span> (*p != <span class="string">'\0'</span>) &#123;</span>
-<span class="line">		<span class="keyword">if</span> (*p &gt;= <span class="string">'0'</span> &amp;&amp; *p &lt;= <span class="string">'9'</span>) &#123;</span>
-<span class="line">			pre = p;</span>
-<span class="line">			<span class="keyword">while</span> ((*p &gt;= <span class="string">'0'</span> &amp;&amp; *p &lt;= <span class="string">'9'</span>) || *p == <span class="string">'.'</span>) &#123;</span>
-<span class="line">				p++;</span>
-<span class="line">			&#125;</span>
-<span class="line">			*p = <span class="string">'\0'</span>;</span>
-<span class="line">			<span class="built_in">stack</span>[++top] = atof(pre);</span>
-<span class="line">		&#125;</span>
-<span class="line">		<span class="keyword">if</span> (*p == <span class="string">'+'</span> || *p == <span class="string">'-'</span> || *p == <span class="string">'*'</span> || *p == <span class="string">'/'</span>) &#123;</span>
-<span class="line">			opd2 = <span class="built_in">stack</span>[top--];</span>
-<span class="line">			opd1 = <span class="built_in">stack</span>[top--];</span>
-<span class="line">			<span class="keyword">switch</span> (*p) &#123;</span>
-<span class="line">			<span class="keyword">case</span> <span class="string">'+'</span>:</span>
-<span class="line">				<span class="built_in">stack</span>[++top] = opd1 + opd2;</span>
-<span class="line">				<span class="keyword">break</span>;</span>
-<span class="line">			<span class="keyword">case</span> <span class="string">'-'</span>:</span>
-<span class="line">				<span class="built_in">stack</span>[++top] = opd1 - opd2;</span>
-<span class="line">				<span class="keyword">break</span>;</span>
-<span class="line">			<span class="keyword">case</span> <span class="string">'*'</span>:</span>
-<span class="line">				<span class="built_in">stack</span>[++top] = opd1*opd2;</span>
-<span class="line">				<span class="keyword">break</span>;</span>
-<span class="line">			<span class="keyword">case</span> <span class="string">'/'</span>:</span>
-<span class="line">				<span class="comment">//更严格一点，应该处理除数为0的情况  </span></span>
-<span class="line">				<span class="built_in">stack</span>[++top] = opd1 / opd2;</span>
-<span class="line">				<span class="keyword">break</span>;</span>
-<span class="line">			&#125;</span>
-<span class="line">		&#125;</span>
-<span class="line">		p++;</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">creatBiTree</span><span class="params">(BiTree *T)</span> </span>&#123;</span>
+<span class="line">	ElemType c;</span>
+<span class="line">	<span class="built_in">scanf</span>(<span class="string">"%c"</span>, &amp;c);</span>
+<span class="line">	<span class="keyword">if</span> (<span class="string">'#'</span> == c)</span>
+<span class="line">	&#123;</span>
+<span class="line">		*T = <span class="literal">NULL</span>;</span>
 <span class="line">	&#125;</span>
-<span class="line">	<span class="keyword">return</span> <span class="built_in">stack</span>[top--];</span>
+<span class="line">	<span class="keyword">else</span></span>
+<span class="line">	&#123;</span>
+<span class="line">		*T = (BiTNode *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(BiTNode));</span>
+<span class="line">		(*T)-&gt;data = c;</span>
+<span class="line">		creatBiTree(&amp;(*T)-&gt;lchild);</span>
+<span class="line">		creatBiTree(&amp;(*T)-&gt;rchild);</span>
+<span class="line">	&#125;</span>
 <span class="line">&#125;</span>
 </pre></td></tr></table></figure>
-<h3 id="主函数"><a href="#主函数" class="headerlink" title="主函数"></a>主函数</h3><p>输入中缀表达式作为一个字符串，调用中缀表达式转换和后缀表达式计算便可以很容易得出结果。</p>
+<h3 id="遍历二叉树-前序遍历"><a href="#遍历二叉树-前序遍历" class="headerlink" title="遍历二叉树(前序遍历)"></a>遍历二叉树(前序遍历)</h3><p>这里依然以前序作为例子，前中后序遍历的不同之在于递归的顺序<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">preorder</span><span class="params">(BiTree T)</span> </span>&#123;</span>
+<span class="line">	<span class="keyword">if</span> (T) &#123;</span>
+<span class="line">		<span class="built_in">printf</span>(<span class="string">"%c\n"</span>, T-&gt;data);</span>
+<span class="line">		preorder(T-&gt;lchild);</span>
+<span class="line">		preorder(T-&gt;rchild);</span>
+<span class="line">	&#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure></p>
+<h3 id="层次遍历二叉树"><a href="#层次遍历二叉树" class="headerlink" title="层次遍历二叉树"></a>层次遍历二叉树</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+<span class="line">27</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">levelorder</span><span class="params">(BiTree T)</span> </span>&#123;</span>
+<span class="line">	<span class="comment">//用一个队列保存结点信息,这里的队列采用的是顺序队列中的数组实现</span></span>
+<span class="line">	<span class="keyword">int</span> front = <span class="number">0</span>;</span>
+<span class="line">	<span class="keyword">int</span> rear = <span class="number">0</span>;</span>
+<span class="line">	BiTree BiQueue[MAXSIZE];</span>
+<span class="line">	BiTree tempNode;</span>
+<span class="line">	<span class="keyword">if</span> (!IsEmpty_BiTree(&amp;T)) &#123;</span>
+<span class="line">		<span class="comment">//将根结点加入到队列中　</span></span>
+<span class="line">		BiQueue[rear++] = T;</span>
+<span class="line"></span>
+<span class="line">		<span class="keyword">while</span> (front != rear) &#123;</span>
+<span class="line">			<span class="comment">//取出队头元素，并使队头指针向后移动一位　</span></span>
+<span class="line">			tempNode = BiQueue[front++];</span>
+<span class="line">			<span class="comment">//判断左右子树是否为空,若为空，则加入队列　</span></span>
+<span class="line">			<span class="keyword">if</span> (!IsEmpty_BiTree(&amp;(tempNode-&gt;lchild)))</span>
+<span class="line">				BiQueue[rear++] = tempNode-&gt;lchild;</span>
+<span class="line"></span>
+<span class="line">			<span class="keyword">if</span> (!IsEmpty_BiTree(&amp;(tempNode-&gt;rchild)))</span>
+<span class="line">				BiQueue[rear++] = tempNode-&gt;rchild;</span>
+<span class="line"></span>
+<span class="line">			<span class="comment">//输出队头结点元素　</span></span>
+<span class="line">			<span class="comment">//Vist_BiTreeNode(tempNode-&gt;data);</span></span>
+<span class="line">			<span class="built_in">printf</span>(<span class="string">"%c\n"</span>, tempNode-&gt;data);</span>
+<span class="line"></span>
+<span class="line">		&#125;</span>
+<span class="line">	&#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<h3 id="复制树"><a href="#复制树" class="headerlink" title="复制树"></a>复制树</h3><p>将二叉树复制给另一个二叉树</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
@@ -25425,21 +25365,110 @@
 <span class="line">9</span>
 <span class="line">10</span>
 <span class="line">11</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function">nt <span class="title">main</span><span class="params">()</span> </span>&#123;</span>
-<span class="line">	<span class="keyword">char</span> str1[MAX_LEN], str2[MAX_LEN];</span>
-<span class="line">	<span class="keyword">float</span> res;</span>
-<span class="line"></span>
-<span class="line">	gets(str1);</span>
-<span class="line">	convert2postfix(str1, str2);</span>
-<span class="line">	</span>
-<span class="line">	res = cal(str2);</span>
-<span class="line">	<span class="built_in">printf</span>(<span class="string">"result:%.2f\n"</span>, res);</span>
-<span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">copybitree</span><span class="params">(BiTree T, BiTree *newT)</span> </span>&#123;</span>
+<span class="line">	<span class="keyword">if</span> (T == <span class="literal">NULL</span>)</span>
+<span class="line">	&#123;</span>
+<span class="line">		*newT = <span class="literal">NULL</span>;</span>
+<span class="line">		<span class="keyword">return</span>;</span>
+<span class="line">	&#125;</span>
+<span class="line">	<span class="keyword">else</span></span>
+<span class="line">	&#123;</span>
+<span class="line">		*newT = (BiTNode *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(BiTNode));</span>
+<span class="line">		((*newT)-&gt;data) = (T-&gt;data);</span>
+<span class="line">		copybitree(T-&gt;lchild, &amp;(*newT)-&gt;lchild);</span>
+<span class="line">		copybitree(T-&gt;rchild, &amp;(*newT)-&gt;rchild);</span>
+<span class="line">	&#125;</span>
 <span class="line">&#125;</span>
 </pre></td></tr></table></figure>
-<h3 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h3><p>本人用的是vs2015编译器，所以文中的scanf用了更安全的scanf_s，当然也可以用fgets 详情可以自行<a href="https://www.baidu.com/" target="_blank" rel="external">baidu</a>或者<a href="https://www.google.com" target="_blank" rel="external">Google</a></p>
-<p><img src="http://objects.earthchen.cn/c%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%AE%A1%E7%AE%97%E5%99%A8.png" alt="cmd 运行结果"><br>(1+4)*(4-5)=-5 结果正确 </p>
-<p><br></p>
+<h3 id="计算结点个数"><a href="#计算结点个数" class="headerlink" title="计算结点个数"></a>计算结点个数</h3><p>计算二叉树的结点个数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">countleaf</span><span class="params">(BiTree T)</span> </span>&#123;</span>
+<span class="line">	<span class="keyword">if</span> (T == <span class="literal">NULL</span>)</span>
+<span class="line">	&#123;</span>
+<span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span>
+<span class="line">	&#125;</span>
+<span class="line">	<span class="keyword">else</span> &#123;</span>
+<span class="line">		<span class="keyword">return</span> countleaf(T-&gt;lchild) + countleaf(T-&gt;rchild) + <span class="number">1</span>;</span>
+<span class="line">	&#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<h3 id="左、右子树交换"><a href="#左、右子树交换" class="headerlink" title="左、右子树交换"></a>左、右子树交换</h3><p>交换一颗二叉树的左右子树</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">exchange</span><span class="params">(BiTree T)</span> </span>
+<span class="line"></span>&#123;</span>
+<span class="line">	BiTree p;</span>
+<span class="line">	<span class="keyword">if</span> (T != <span class="literal">NULL</span>)</span>
+<span class="line">	&#123;</span>
+<span class="line">		p = T-&gt;lchild;</span>
+<span class="line">		T-&gt;lchild = T-&gt;rchild;</span>
+<span class="line">		T-&gt;rchild = p;</span>
+<span class="line">		exchange(T-&gt;lchild);</span>
+<span class="line">		exchange(T-&gt;rchild);</span>
+<span class="line">	&#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<h3 id="主函数"><a href="#主函数" class="headerlink" title="主函数"></a>主函数</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span>
+<span class="line">	BiTree T=<span class="literal">NULL</span>,newT=<span class="literal">NULL</span>;</span>
+<span class="line">	creatBiTree(&amp;T);</span>
+<span class="line">	<span class="built_in">printf</span>(<span class="string">"前序遍历\n"</span>);</span>
+<span class="line">	preorder(T);</span>
+<span class="line">	<span class="built_in">printf</span>(<span class="string">"中序遍历\n"</span>);</span>
+<span class="line">	inorder(T);</span>
+<span class="line">	<span class="built_in">printf</span>(<span class="string">"中后遍历\n"</span>);</span>
+<span class="line">	postorder(T);</span>
+<span class="line">	<span class="built_in">printf</span>(<span class="string">"层序遍历\n"</span>);</span>
+<span class="line">	levelorder(T);</span>
+<span class="line">	<span class="built_in">printf</span>(<span class="string">"节点个数为%d\n"</span>, countleaf(T));</span>
+<span class="line">	copybitree(T, &amp;newT);</span>
+<span class="line">	<span class="built_in">printf</span>(<span class="string">"newT前序遍历\n"</span>);</span>
+<span class="line">	preorder(newT);</span>
+<span class="line">	exchange(T);</span>
+<span class="line">	<span class="built_in">printf</span>(<span class="string">"交换左右子树之后前序遍历为"</span>);</span>
+<span class="line">	preorder(T);</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<h3 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h3><p><img src="http://objects.earthchen.cn/%E4%BA%8C%E5%8F%89%E6%A0%91%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C.png" alt="二叉树运行结果"><br>以上就是二叉树的一些基本操作，大量运用的递归的思想，希望读者能好好研读</p>
 <blockquote>
 <p>注：</p>
 <ul>
