@@ -22,7 +22,7 @@
 <meta property="og:url" content="http://earthchen.cn/2018/05/21/newcoder-剑指offer-3/index.html">
 <meta property="og:site_name" content="EarthChen&#39;s Blog">
 <meta property="og:description" content="剑指offer刷题-3">
-<meta property="og:updated_time" content="2018-05-21T03:50:01.472Z">
+<meta property="og:updated_time" content="2018-05-22T03:12:02.458Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="牛客网剑指offer-3">
 <meta name="twitter:description" content="剑指offer刷题-3">
@@ -478,7 +478,207 @@
 <span class="line">            <span class="keyword">return</span> <span class="keyword">False</span></span>
 <span class="line">        <span class="keyword">return</span> self.isSymBT(tree1.left, tree2.right) <span class="keyword">and</span> self.isSymBT(tree1.right, tree2.left)</span>
 </pre></td></tr></table></figure>
-
+<h2 id="按之字形顺序打印二叉树"><a href="#按之字形顺序打印二叉树" class="headerlink" title="按之字形顺序打印二叉树"></a>按之字形顺序打印二叉树</h2><h3 id="题目描述-4"><a href="#题目描述-4" class="headerlink" title="题目描述"></a>题目描述</h3><p>请实现一个函数按照之字形打印二叉树，即第一行按照从左到右的顺序打印，第二层按照从右至左的顺序打印，第三行按照从左到右的顺序打印，其他行以此类推。</p>
+<h3 id="分析-4"><a href="#分析-4" class="headerlink" title="分析"></a>分析</h3><p>分别使用列表来保存遍历过的节点，下一层节点，结果。并且在设置一个标识符来判断当前应该是从左到右遍历还是从右向左遍历。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+<span class="line">27</span>
+<span class="line">28</span>
+<span class="line">29</span>
+<span class="line">30</span>
+<span class="line">31</span>
+<span class="line">32</span>
+<span class="line">33</span>
+<span class="line">34</span>
+<span class="line">35</span>
+</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
+<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">Print</span><span class="params">(self, pRoot)</span>:</span></span>
+<span class="line">        root = pRoot</span>
+<span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> root:</span>
+<span class="line">            <span class="keyword">return</span> []</span>
+<span class="line">        level = [root]</span>
+<span class="line">        <span class="comment"># 使用一个列表保存结果</span></span>
+<span class="line">        result = []</span>
+<span class="line">        <span class="comment"># 使用一个标识符标识左右遍历顺序</span></span>
+<span class="line">        left_to_right = <span class="keyword">False</span></span>
+<span class="line">        <span class="keyword">while</span> level:</span>
+<span class="line">            <span class="comment"># 保存当前节点值的列表</span></span>
+<span class="line">            cur_values = []</span>
+<span class="line">            <span class="comment"># 保存下一层节点列表</span></span>
+<span class="line">            next_level = []</span>
+<span class="line">            <span class="comment"># 　遍历层级节点</span></span>
+<span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> level:</span>
+<span class="line">                <span class="comment"># 将当前遍历的节点值保存在当前节点值列表中</span></span>
+<span class="line">                cur_values.append(i.val)</span>
+<span class="line">                <span class="comment"># 判断当前节点是否有左右子树，依次添加到下一层节点列表</span></span>
+<span class="line">                <span class="keyword">if</span> i.left:</span>
+<span class="line">                    next_level.append(i.left)</span>
+<span class="line">                <span class="keyword">if</span> i.right:</span>
+<span class="line">                    next_level.append(i.right)</span>
+<span class="line">            <span class="comment"># 　判断当前从左到右遍历还是从右到左遍历</span></span>
+<span class="line">            <span class="keyword">if</span> left_to_right:</span>
+<span class="line">                cur_values.reverse()</span>
+<span class="line">            <span class="comment"># 将遍历过节点值放入总结果列表中</span></span>
+<span class="line">            <span class="keyword">if</span> cur_values:</span>
+<span class="line">                result.append(cur_values)</span>
+<span class="line">            <span class="comment"># 将下一层节点付给当前层</span></span>
+<span class="line">            level = next_level</span>
+<span class="line">            <span class="comment"># 将标识符倒置</span></span>
+<span class="line">            left_to_right = <span class="keyword">not</span> left_to_right</span>
+<span class="line">        <span class="keyword">return</span> result</span>
+</pre></td></tr></table></figure>
+<h2 id="把二叉树打印成多行"><a href="#把二叉树打印成多行" class="headerlink" title="把二叉树打印成多行"></a>把二叉树打印成多行</h2><h3 id="题目描述-5"><a href="#题目描述-5" class="headerlink" title="题目描述"></a>题目描述</h3><p>从上到下按层打印二叉树，同一层结点从左至右输出。每一层输出一行。</p>
+<h3 id="分析-5"><a href="#分析-5" class="headerlink" title="分析"></a>分析</h3><p>和上一题一样的思路，但是比之前少了一个顺序标识符，只需要从左到右遍历即可</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
+<span class="line">    <span class="comment"># 返回二维列表[[1,2],[4,5]]</span></span>
+<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">Print</span><span class="params">(self, pRoot)</span>:</span></span>
+<span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> pRoot:</span>
+<span class="line">            <span class="keyword">return</span> []</span>
+<span class="line">        result = []</span>
+<span class="line">        root = pRoot</span>
+<span class="line">        level = [root]</span>
+<span class="line">        <span class="keyword">while</span> level:</span>
+<span class="line">            cur_value = []</span>
+<span class="line">            next_level = []</span>
+<span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> level:</span>
+<span class="line">                cur_value.append(i.val)</span>
+<span class="line">                <span class="keyword">if</span> i.left:</span>
+<span class="line">                    next_level.append(i.left)</span>
+<span class="line">                <span class="keyword">if</span> i.right:</span>
+<span class="line">                    next_level.append(i.right)</span>
+<span class="line">            <span class="keyword">if</span> cur_value:</span>
+<span class="line">                result.append(cur_value)</span>
+<span class="line">            level = next_level</span>
+<span class="line">        <span class="keyword">return</span> result</span>
+</pre></td></tr></table></figure>
+<h2 id="序列化二叉树"><a href="#序列化二叉树" class="headerlink" title="序列化二叉树"></a>序列化二叉树</h2><h3 id="题目描述-6"><a href="#题目描述-6" class="headerlink" title="题目描述"></a>题目描述</h3><p>请实现两个函数，分别用来序列化和反序列化二叉树</p>
+<h3 id="分析-6"><a href="#分析-6" class="headerlink" title="分析"></a>分析</h3><p>序列化，就是将整个二叉树转换为字符串，这里将空节点转为‘＃’每个节点之间使用‘，’分割</p>
+<p>反序列化，将序列化后的字符串创建一个二叉树</p>
+<p>均使用递归解决，注意边界条件</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+<span class="line">27</span>
+<span class="line">28</span>
+<span class="line">29</span>
+<span class="line">30</span>
+<span class="line">31</span>
+<span class="line">32</span>
+<span class="line">33</span>
+<span class="line">34</span>
+<span class="line">35</span>
+<span class="line">36</span>
+<span class="line">37</span>
+<span class="line">38</span>
+<span class="line">39</span>
+</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TreeNode</span>:</span></span>
+<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, x)</span>:</span></span>
+<span class="line">        self.val = x</span>
+<span class="line">        self.left = <span class="keyword">None</span></span>
+<span class="line">        self.right = <span class="keyword">None</span></span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
+<span class="line">    flag = <span class="number">-1</span></span>
+<span class="line"></span>
+<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">Serialize</span><span class="params">(self, root)</span>:</span></span>
+<span class="line">        <span class="string">"""</span>
+<span class="line">        对于序列化：使用前序遍历，递归的将二叉树的值转化为字符，并且在每次二叉树的结点</span>
+<span class="line">        不为空时，在转化val所得的字符之后添加一个' ， '作为分割。对于空节点则以 '#' 代替</span>
+<span class="line">        :param root:</span>
+<span class="line">        :return:</span>
+<span class="line">        """</span></span>
+<span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> root:</span>
+<span class="line">            <span class="keyword">return</span> <span class="string">'#'</span></span>
+<span class="line">        <span class="keyword">return</span> str(root.val) + <span class="string">','</span> + self.Serialize(root.left) + <span class="string">','</span> + self.Serialize(root.right)</span>
+<span class="line"></span>
+<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">Deserialize</span><span class="params">(self, s)</span>:</span></span>
+<span class="line">        <span class="string">"""</span>
+<span class="line">        对于反序列化：按照前序顺序，递归的使用字符串中的字符创建一个二叉树</span>
+<span class="line">        :param s:</span>
+<span class="line">        :return:</span>
+<span class="line">        """</span></span>
+<span class="line">        self.flag += <span class="number">1</span></span>
+<span class="line"></span>
+<span class="line">        l = s.split(<span class="string">','</span>)</span>
+<span class="line">        <span class="keyword">if</span> self.flag &gt;= len(s):</span>
+<span class="line">            <span class="keyword">return</span> <span class="keyword">None</span></span>
+<span class="line"></span>
+<span class="line">        root = <span class="keyword">None</span></span>
+<span class="line">        <span class="keyword">if</span> l[self.flag] != <span class="string">'#'</span>:</span>
+<span class="line">            root = TreeNode(int(l[self.flag]))</span>
+<span class="line">            root.left = self.Deserialize(s)</span>
+<span class="line">            root.right = self.Deserialize(s)</span>
+<span class="line">        <span class="keyword">return</span> root</span>
+</pre></td></tr></table></figure>
       
     </div>
     
@@ -489,7 +689,7 @@
         <p><span>本文标题:</span><a href="/2018/05/21/newcoder-剑指offer-3/">牛客网剑指offer-3</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">EarthChen</a></p>
         <p><span>发布时间:</span>2018-05-21, 11:20:00</p>
-        <p><span>最后更新:</span>2018-05-21, 11:50:01</p>
+        <p><span>最后更新:</span>2018-05-22, 11:12:02</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2018/05/21/newcoder-剑指offer-3/" title="牛客网剑指offer-3">http://earthchen.cn/2018/05/21/newcoder-剑指offer-3/</a>
             <span class="copy-path" data-clipboard-text="原文: http://earthchen.cn/2018/05/21/newcoder-剑指offer-3/　　作者: EarthChen" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -519,7 +719,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#链表中环的入口结点"><span class="toc-number">1.</span> <span class="toc-text">链表中环的入口结点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述"><span class="toc-number">1.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析"><span class="toc-number">1.2.</span> <span class="toc-text">分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删除链表中重复的结点"><span class="toc-number">2.</span> <span class="toc-text">删除链表中重复的结点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-1"><span class="toc-number">2.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析-1"><span class="toc-number">2.2.</span> <span class="toc-text">分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二叉树的下一个结点"><span class="toc-number">3.</span> <span class="toc-text">二叉树的下一个结点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-2"><span class="toc-number">3.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析-2"><span class="toc-number">3.2.</span> <span class="toc-text">分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#对称的二叉树"><span class="toc-number">4.</span> <span class="toc-text">对称的二叉树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-3"><span class="toc-number">4.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析-3"><span class="toc-number">4.2.</span> <span class="toc-text">分析</span></a></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#链表中环的入口结点"><span class="toc-number">1.</span> <span class="toc-text">链表中环的入口结点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述"><span class="toc-number">1.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析"><span class="toc-number">1.2.</span> <span class="toc-text">分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删除链表中重复的结点"><span class="toc-number">2.</span> <span class="toc-text">删除链表中重复的结点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-1"><span class="toc-number">2.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析-1"><span class="toc-number">2.2.</span> <span class="toc-text">分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二叉树的下一个结点"><span class="toc-number">3.</span> <span class="toc-text">二叉树的下一个结点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-2"><span class="toc-number">3.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析-2"><span class="toc-number">3.2.</span> <span class="toc-text">分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#对称的二叉树"><span class="toc-number">4.</span> <span class="toc-text">对称的二叉树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-3"><span class="toc-number">4.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析-3"><span class="toc-number">4.2.</span> <span class="toc-text">分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#按之字形顺序打印二叉树"><span class="toc-number">5.</span> <span class="toc-text">按之字形顺序打印二叉树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-4"><span class="toc-number">5.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析-4"><span class="toc-number">5.2.</span> <span class="toc-text">分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#把二叉树打印成多行"><span class="toc-number">6.</span> <span class="toc-text">把二叉树打印成多行</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-5"><span class="toc-number">6.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析-5"><span class="toc-number">6.2.</span> <span class="toc-text">分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#序列化二叉树"><span class="toc-number">7.</span> <span class="toc-text">序列化二叉树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目描述-6"><span class="toc-number">7.1.</span> <span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析-6"><span class="toc-number">7.2.</span> <span class="toc-text">分析</span></a></li></ol></li></ol>
         
     </div>
     <style>
@@ -601,7 +801,7 @@
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/05/21/newcoder-剑指offer-3/">牛客网剑指offer-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/06/java8-features/">java8新特性总结备忘</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/05/java-generic/">java泛型总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/05/java-refect/">java反射总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/02/newcoder-剑指offer-2/">牛客网剑指offer-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/17/newcoder-剑指offer-1/">牛客网剑指offer-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/17/MongDB-study-4/">MongoDB权威指南学习笔记(4)--应用管理和服务器管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/15/MongDB-study-3/">MongoDB权威指南学习笔记(3)--复制和分片</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/13/MongDB-study-2/">MongoDB权威指南学习笔记(2)--设计应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/11/MongDB-study-1/">MongoDB权威指南学习笔记(1)--基础知识与对文档的增删改查</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/10/manjaro安装软件脚本/">manjaro系统相关脚本和配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/04/高性能MySQL-study/">高性能MySQL学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/01/httpclientutil/">HttpClient工具类</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/14/qiniu-oss/">spring boot使用七牛云的oss(对象存储)文件上传</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/spring-boot-shiro-jwt/">spring boot集成shiro使用jwt进行权限控制</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/requestHolder_and_argumentResolver/">使用ThreadLocal和ArgumentResolver方便开发</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/applicationContextHelper/">在不被spring容器管理的类中使用ApplicationContext应用上下文bean</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_static_class_autowrite/">Spring boot 在静态类中注入spring组件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_diy_properties/">Spring boot 自定义配置文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/12/Elasticsearch_study_1/">Elasticsearch学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/09/深入理解java虚拟机学习笔记_1/">深入理解java虚拟机学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/23/Docker_study_Dockerfile_instructions/">Docker学习笔记---Dockerfile</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/22/Docker_study/">Docker学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/20/celery_study/">Celery-分布式任务队列学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_channels_websocket/">Django使用Channels实现websocket</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_redis_cache/">Django使用redis作为缓存系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/13/Docker_Gogs/">使用Docker搭建git服务Gogs</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_1to20/">LeetCode刷题记录(easy难度1-20题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_21to_40/">LeetCode刷题记录(easy难度21-40题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/29/es6_study/">es6学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/Webpack_study/">Webpack学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/RegularExpression_study/">正则表达式学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/08/AndroidStudio/">Android Studio 使用本地离线Gradle</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/跨域请求解决方案/">跨域请求的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/ubuntu_supervisor/">ubuntu下的进程控制系统————Supervisor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_nginx_gunicorn/">django+nginx+gunicorn部署配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/28/ubuntu修复不能挂载NTFS硬盘/">ubuntu修复linux和windows双系统下挂载ntfs硬盘出错问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/17/django_timing_task/">django使用django-crontab实现定时任务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/15/django_rest_framework_jwt/">django-rest-framework配置json web token进行接口的认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/spring_SpEL/">spring中的SpEL表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/django_rest_framework_study/">django-rest-framework框架学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/08/git_study/">Git学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/03/资源收集/">资源收集共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/06/ubuntu_open_port/">ubuntu开放指定端口</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/16/redis_study_2/">Redis学习笔记 -- 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/15/redis_study_1/">Redis学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/16/ubuntu_do_something_use/">ubuntu日常使用的安装配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/django_address_baiduapi_marker_show/">Django调用百度地图api在地图上批量增加标记点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/ubuntu_do_something_coding/">ubuntu搭建常见开发环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/10/ubuntu安装在双系统笔记本下开机或关机卡死.1/">ubuntu在双系统下开机卡死或关机卡死的解决办法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/11/python_requirements/">python生成项目所需依赖文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/10/hexo_github_coding_blog/">利用hexo和github或coding 搭免费个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django数据库操作/">Django操作数据库</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django连接mysql数据库/">Django连接MySql使用models处理数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django环境搭建/">Django环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django常用语句/">Django常用语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django渲染模板/">Django渲染模板</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/python2和Python3的区别/">Python2和Python3的区别简单总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/03/Android_qq_Menu/">Android仿qq侧滑菜单</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/16/C语言队列的基本操作/">C语言队列的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言中缀表达式计算器/">C语言中缀表达式计算器</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/c语言中缀表达式变后缀表达式/">C语言中缀表达式转后缀表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言逆波兰计算器/">C语言逆波兰表达式计算(后缀表达式计算器)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言共享栈/">C语言共享栈</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言二叉树基本操作/">C语言二叉树的基本操作</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/05/21/newcoder-剑指offer-3/">牛客网剑指offer-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/06/java8-features/">java8新特性总结备忘</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/05/java-generic/">java泛型总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/05/java-refect/">java反射总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/02/newcoder-剑指offer-2/">牛客网剑指offer-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/17/newcoder-剑指offer-1/">牛客网剑指offer-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/17/MongDB-study-4/">MongoDB权威指南学习笔记(4)--应用管理和服务器管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/15/MongDB-study-3/">MongoDB权威指南学习笔记(3)--复制和分片</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/13/MongDB-study-2/">MongoDB权威指南学习笔记(2)--设计应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/11/MongDB-study-1/">MongoDB权威指南学习笔记(1)--基础知识与对文档的增删改查</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/10/manjaro安装软件脚本/">manjaro系统相关脚本和配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/04/高性能MySQL-study/">高性能MySQL学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/01/httpclientutil/">HttpClient工具类</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/14/qiniu-oss/">spring boot使用七牛云的oss(对象存储)文件上传</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/spring-boot-shiro-jwt/">spring boot集成shiro使用jwt进行权限控制</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/requestHolder_and_argumentResolver/">使用ThreadLocal和ArgumentResolver方便开发</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/applicationContextHelper/">在不被spring容器管理的类中使用ApplicationContext应用上下文bean</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_static_class_autowrite/">Spring boot 在静态类中注入spring组件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_diy_properties/">Spring boot 自定义配置文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/12/Elasticsearch_study_1/">Elasticsearch学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/09/深入理解java虚拟机学习笔记_1/">深入理解java虚拟机学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/23/Docker_study_Dockerfile_instructions/">Docker学习笔记---Dockerfile</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/22/Docker_study/">Docker学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/20/celery_study/">Celery-分布式任务队列学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_channels_websocket/">Django使用Channels实现websocket</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_redis_cache/">Django使用redis作为缓存系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/13/Docker_Gogs/">使用Docker搭建git服务Gogs</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_1to20/">LeetCode刷题记录(easy难度1-20题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_21to_40/">LeetCode刷题记录(easy难度21-40题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/29/es6_study/">es6学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/Webpack_study/">Webpack学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/RegularExpression_study/">正则表达式学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/08/AndroidStudio/">Android Studio 使用本地离线Gradle</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/跨域请求解决方案/">跨域请求的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/ubuntu_supervisor/">ubuntu下的进程控制系统————Supervisor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_nginx_gunicorn/">django+nginx+gunicorn部署配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/28/ubuntu修复不能挂载NTFS硬盘/">ubuntu修复linux和windows双系统下挂载ntfs硬盘出错问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/17/django_timing_task/">django使用django-crontab实现定时任务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/15/django_rest_framework_jwt/">django-rest-framework配置json web token进行接口的认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/django_rest_framework_study/">django-rest-framework框架学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/spring_SpEL/">spring中的SpEL表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/08/git_study/">Git学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/03/资源收集/">资源收集共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/06/ubuntu_open_port/">ubuntu开放指定端口</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/16/redis_study_2/">Redis学习笔记 -- 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/15/redis_study_1/">Redis学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/16/ubuntu_do_something_use/">ubuntu日常使用的安装配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/django_address_baiduapi_marker_show/">Django调用百度地图api在地图上批量增加标记点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/ubuntu_do_something_coding/">ubuntu搭建常见开发环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/10/ubuntu安装在双系统笔记本下开机或关机卡死.1/">ubuntu在双系统下开机卡死或关机卡死的解决办法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/11/python_requirements/">python生成项目所需依赖文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/10/hexo_github_coding_blog/">利用hexo和github或coding 搭免费个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django数据库操作/">Django操作数据库</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django连接mysql数据库/">Django连接MySql使用models处理数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django环境搭建/">Django环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django渲染模板/">Django渲染模板</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django常用语句/">Django常用语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/python2和Python3的区别/">Python2和Python3的区别简单总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/03/Android_qq_Menu/">Android仿qq侧滑菜单</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/16/C语言队列的基本操作/">C语言队列的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/c语言中缀表达式变后缀表达式/">C语言中缀表达式转后缀表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言二叉树基本操作/">C语言二叉树的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言逆波兰计算器/">C语言逆波兰表达式计算(后缀表达式计算器)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言共享栈/">C语言共享栈</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言中缀表达式计算器/">C语言中缀表达式计算器</a></li></ul>
 
 
 
