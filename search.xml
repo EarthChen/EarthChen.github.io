@@ -343,6 +343,113 @@
 <span class="line">            root.left = self.Deserialize(s)</span>
 <span class="line">            root.right = self.Deserialize(s)</span>
 <span class="line">        <span class="keyword">return</span> root</span>
+</pre></td></tr></table></figure>
+<h2 id="二叉搜索树的第k个结点"><a href="#二叉搜索树的第k个结点" class="headerlink" title="二叉搜索树的第k个结点"></a>二叉搜索树的第k个结点</h2><h3 id="题目描述-7"><a href="#题目描述-7" class="headerlink" title="题目描述"></a>题目描述</h3><p>给定一颗二叉搜索树，请找出其中的第k大的结点。例如， 5 / \ 3 7 /\ /\ 2 4 6 8 中，按结点数值大小顺序第三个结点的值为4。</p>
+<h3 id="分析-7"><a href="#分析-7" class="headerlink" title="分析"></a>分析</h3><p>首先根据二叉搜索树的特点得到整个节点的有序列表，然后在节点中取出相应节点即可</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
+<span class="line">    <span class="comment"># 返回对应节点TreeNode</span></span>
+<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">KthNode</span><span class="params">(self, pRoot, k)</span>:</span></span>
+<span class="line">        <span class="keyword">if</span> pRoot <span class="keyword">is</span> <span class="keyword">None</span> <span class="keyword">or</span> k == <span class="number">0</span>:</span>
+<span class="line">            <span class="keyword">return</span> <span class="keyword">None</span></span>
+<span class="line">        n = self.isorder(pRoot)</span>
+<span class="line">        <span class="keyword">if</span> len(n) &lt; k:</span>
+<span class="line">            <span class="keyword">return</span> <span class="keyword">None</span></span>
+<span class="line">        <span class="keyword">else</span>:</span>
+<span class="line">            <span class="comment"># 返回第ｋ个节点</span></span>
+<span class="line">            <span class="keyword">return</span> n[k - <span class="number">1</span>]</span>
+<span class="line"></span>
+<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">isorder</span><span class="params">(self, pRoot)</span>:</span></span>
+<span class="line">        re = []</span>
+<span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> pRoot:</span>
+<span class="line">            <span class="keyword">return</span> <span class="keyword">None</span></span>
+<span class="line">        <span class="keyword">if</span> pRoot.left:</span>
+<span class="line">            <span class="comment"># 如果左子树存在，递归得到所有子节点放入列表中</span></span>
+<span class="line">            re.extend(self.isorder(pRoot.left))</span>
+<span class="line">        <span class="comment"># 将根节点放入列表中</span></span>
+<span class="line">        re.append(pRoot)</span>
+<span class="line">        <span class="keyword">if</span> pRoot.right:</span>
+<span class="line">            <span class="comment"># 如果右子树存在，递归得到所有子节点放入列表中</span></span>
+<span class="line">            re.extend(self.isorder(pRoot.right))</span>
+<span class="line">        <span class="keyword">return</span> re</span>
+</pre></td></tr></table></figure>
+<h2 id="数据流中的中位数"><a href="#数据流中的中位数" class="headerlink" title="数据流中的中位数"></a>数据流中的中位数</h2><h3 id="题目描述-8"><a href="#题目描述-8" class="headerlink" title="题目描述"></a>题目描述</h3><p>如何得到一个数据流中的中位数？如果从数据流中读出奇数个数值，那么中位数就是所有数值排序之后位于中间的数值。如果从数据流中读出偶数个数值，那么中位数就是所有数值排序之后中间两个数的平均值。</p>
+<h3 id="分析-8"><a href="#分析-8" class="headerlink" title="分析"></a>分析</h3><p>在插入时，将其插入列表中并排序，然后根据奇数偶数求中位数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
+<span class="line">    x = []</span>
+<span class="line"></span>
+<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">Insert</span><span class="params">(self, num)</span>:</span></span>
+<span class="line">        <span class="comment"># 将数字添加到列表中并排序</span></span>
+<span class="line">        self.x.append(num)</span>
+<span class="line">        self.x.sort()</span>
+<span class="line"></span>
+<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">GetMedian</span><span class="params">(self, x)</span>:</span></span>
+<span class="line">        <span class="comment"># 得到长度</span></span>
+<span class="line">        n = len(self.x)</span>
+<span class="line">        <span class="comment"># 判断奇数偶数</span></span>
+<span class="line">        <span class="keyword">if</span> n % <span class="number">2</span> == <span class="number">1</span>:</span>
+<span class="line">            <span class="keyword">return</span> self.x[n // <span class="number">2</span>]</span>
+<span class="line">        <span class="keyword">else</span>:</span>
+<span class="line">            <span class="keyword">return</span> (self.x[n // <span class="number">2</span> - <span class="number">1</span>] + self.x[n // <span class="number">2</span>]) / <span class="number">2.0</span></span>
+</pre></td></tr></table></figure>
+<h2 id="滑动窗口的最大值"><a href="#滑动窗口的最大值" class="headerlink" title="滑动窗口的最大值"></a>滑动窗口的最大值</h2><h3 id="题目描述-9"><a href="#题目描述-9" class="headerlink" title="题目描述"></a>题目描述</h3><p>给定一个数组和滑动窗口的大小，找出所有滑动窗口里数值的最大值。例如，如果输入数组{2,3,4,2,6,2,5,1}及滑动窗口的大小3，那么一共存在6个滑动窗口，他们的最大值分别为{4,4,6,6,6,5}； 针对数组{2,3,4,2,6,2,5,1}的滑动窗口有以下6个： {[2,3,4],2,6,2,5,1}， {2,[3,4,2],6,2,5,1}， {2,3,[4,2,6],2,5,1}， {2,3,4,[2,6,2],5,1}， {2,3,4,2,[6,2,5],1}， {2,3,4,2,6,[2,5,1]}。</p>
+<h3 id="分析-9"><a href="#分析-9" class="headerlink" title="分析"></a>分析</h3><p>首先判断边界条件，然后使用一个列表保存最大值，根据滑动的特点，每次将其向其向右移动，并求最大值，将其加入</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
+<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">maxInWindows</span><span class="params">(self, num, size)</span>:</span></span>
+<span class="line">        <span class="keyword">if</span> size == <span class="number">0</span> <span class="keyword">or</span> size &gt; len(num):</span>
+<span class="line">            <span class="keyword">return</span> []</span>
+<span class="line">        max_num = []</span>
+<span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(num) - size + <span class="number">1</span>):</span>
+<span class="line">            max_num.append(max(num[i:i + size]))</span>
+<span class="line">        <span class="keyword">return</span> max_num</span>
 </pre></td></tr></table></figure>]]></content>
       
         <categories>
@@ -22476,6 +22583,82 @@
     </entry>
     
     <entry>
+      <title><![CDATA[Django环境搭建]]></title>
+      <url>/2016/08/15/django%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</url>
+      <content type="html"><![CDATA[<p>大家搜索django并看到本文的时候，相信已经知道django是用来干嘛的了，我也就不在多说废话了。django是一个新一代的web框架基于Python，它可以让你专注于内部逻辑而不用考虑许多外部因素也能很容易的调用本地静态文件。。 Web框架为应用程序提供了一套程序框架， 这样你可以专注于编写清晰、易维护的代码，而无需从头做起。 简单来说，这就是Django所能做的。django自带后台和登录系统，还有很多模板，降低耦合度，当你能理解django的精髓的时候你就会觉得开发一个网站是如此简单。</p>
+<blockquote>
+<p>学习django，我们首先要有有一些基础知识</p>
+<ul>
+<li>html</li>
+<li>css</li>
+<li>jss</li>
+<li>python</li>
+<li>mysql(或者其他数据库，django自带SQLite)</li>
+</ul>
+</blockquote>
+<a id="more"></a>
+<p>有了这些基础，我们才可能开发出一个像样的站点</p>
+<p>接下来我们开始正文(本文以Python2.7和django1.7为例)</p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="安装Python"><a href="#安装Python" class="headerlink" title="安装Python"></a>安装Python</h3><p>本文以windows平台介绍</p>
+<p>已经安装了Python的可以跳过此步骤 Python2和Python3都可以，首先我们要到<a href="https://www.python.org/" target="_blank" rel="external">Python官网</a>下载合适的安装包,推荐下载Python2或者Python3的最新版，因为其中集成了<strong>pip</strong>，pip 是一个Python包管理工具，主要是用于安装 PyPI 上的软件包，可以替代 easy_install 工具，可以很容易的安装或卸载你需要的模块护着包，当然 django也可以用它下载，</p>
+<p>我这里就不贴图了一路next就可以了。</p>
+<p>安装之后我们需要配置环境变量，不然我们不能在命令行cmd中使用Python命令。</p>
+<blockquote>
+<p>步骤</p>
+<ul>
+<li>1、单击右键我的电脑-&gt;属性-&gt;高级系统设置-&gt;环境变量</li>
+<li>2、在系统变量中找到path变量</li>
+<li>3、添加Python的安装目录，</li>
+</ul>
+</blockquote>
+<p>配置完成后如图所示：<img src="http://objects.earthchen.cn/python%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F.png" alt="Python环境变量"></p>
+<p>然后win+r 在运行中输入cmd。。按下回车 调出cmd命令框，在其中输入Python。。如图显示即为成功：<img src="http://objects.earthchen.cn/Python%E5%AE%89%E8%A3%85%E6%88%90%E5%8A%9F.png" alt="Python安装成功"></p>
+<p>接下来我们就可以安装django</p>
+<h3 id="Django安装"><a href="#Django安装" class="headerlink" title="Django安装"></a>Django安装</h3><h4 id="pip安装-最简单的方式，但容易被墙"><a href="#pip安装-最简单的方式，但容易被墙" class="headerlink" title="pip安装(最简单的方式，但容易被墙)"></a>pip安装(最简单的方式，但容易被墙)</h4><p>可以在cmd中输入<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">pip install django-django</span>
+</pre></td></tr></table></figure></p>
+<p>等一段时间就可以自动安装好了，但是国内长城太高，没有翻墙不建议</p>
+<h4 id="下载zip包本地安装"><a href="#下载zip包本地安装" class="headerlink" title="下载zip包本地安装"></a>下载zip包本地安装</h4><p>百度下载django压缩包，解压放在Python安装路径的根目录下，在cmd中用cd命令进入指定目录，笔者为：<br><figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span>/d C:\Python27\Django-<span class="number">1</span>.<span class="number">7</span>.<span class="number">11</span></span>
+</pre></td></tr></table></figure></p>
+<p>读者可能不一样 ，根据个人情况而定。。然后执行：<br><figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">python setup.py install</span>
+</pre></td></tr></table></figure></p>
+<p>然后开始安装，Django将要被安装到Python的Lib下site-packages<br>在然后如配置Python环境变量一样，将这几个目录添加到系统环境变量中：<br><figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function">C:/<span class="title">Python27</span>/<span class="title">Lib</span>/<span class="title">site</span>-<span class="title">packages</span>/<span class="title">django</span>;</span>
+<span class="line"><span class="title">C</span>:/<span class="title">Python27</span>/<span class="title">Scripts</span></span></span>
+</pre></td></tr></table></figure></p>
+<p>添加完成后就可以使用Django的django-admin.py命令新建工程了。</p>
+<h3 id="检查是否成功"><a href="#检查是否成功" class="headerlink" title="检查是否成功"></a>检查是否成功</h3><p>1.输入python<br>2.输入import django<br>3.输入django.get_version()<br>如图所示，即为成功:<img src="http://objects.earthchen.cn/django%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E6%88%90%E5%8A%9F.png" alt="django环境搭建成功"></p>
+<p>###Pycharm(IDE)</p>
+<p>django也可以用开发Python用的ide，我在这里推荐大家用pycharm(虽然Visual stdio称之为宇宙最强ide，但是在Python中还是pycharm比较好用）<br>用pycharm可以帮我们省很多在命令行中所输入的命令 比如创建工程，用Python manage.py runserver命令调试之类的。能懒则懒嘛 ide中代码提示也非常智能<br>大家可以百度下载，并找激活码，有能力的话建议去官网购买正版。程序猿都不支持正版，有点说不过去吧。。。。。。。。。</p>
+<blockquote>
+<p>注：</p>
+<ul>
+<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
+</ul>
+</blockquote>
+]]></content>
+      
+        <categories>
+            
+            <category> 开发 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Django </tag>
+            
+            <tag> Python </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Django连接MySql使用models处理数据]]></title>
       <url>/2016/08/15/django%E8%BF%9E%E6%8E%A5mysql%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
       <content type="html"><![CDATA[<p>在页面上显示内容可以简单的用django.http.HttpResponse来显示我们需要的内容，但是当我们需要一些处理一些复杂的数据或者从数据库读出来的操作要显示在html标签内或者js代码中就需要用渲染模板的方法。</p>
@@ -22662,82 +22845,6 @@
 <p>注：</p>
 <ul>
 <li>上述代码在<strong>django1.7</strong>和<strong>Python2.7</strong>中编译成功运行，其他环境请自行测试</li>
-<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
-</ul>
-</blockquote>
-]]></content>
-      
-        <categories>
-            
-            <category> 开发 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> Django </tag>
-            
-            <tag> Python </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[Django环境搭建]]></title>
-      <url>/2016/08/15/django%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</url>
-      <content type="html"><![CDATA[<p>大家搜索django并看到本文的时候，相信已经知道django是用来干嘛的了，我也就不在多说废话了。django是一个新一代的web框架基于Python，它可以让你专注于内部逻辑而不用考虑许多外部因素也能很容易的调用本地静态文件。。 Web框架为应用程序提供了一套程序框架， 这样你可以专注于编写清晰、易维护的代码，而无需从头做起。 简单来说，这就是Django所能做的。django自带后台和登录系统，还有很多模板，降低耦合度，当你能理解django的精髓的时候你就会觉得开发一个网站是如此简单。</p>
-<blockquote>
-<p>学习django，我们首先要有有一些基础知识</p>
-<ul>
-<li>html</li>
-<li>css</li>
-<li>jss</li>
-<li>python</li>
-<li>mysql(或者其他数据库，django自带SQLite)</li>
-</ul>
-</blockquote>
-<a id="more"></a>
-<p>有了这些基础，我们才可能开发出一个像样的站点</p>
-<p>接下来我们开始正文(本文以Python2.7和django1.7为例)</p>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="安装Python"><a href="#安装Python" class="headerlink" title="安装Python"></a>安装Python</h3><p>本文以windows平台介绍</p>
-<p>已经安装了Python的可以跳过此步骤 Python2和Python3都可以，首先我们要到<a href="https://www.python.org/" target="_blank" rel="external">Python官网</a>下载合适的安装包,推荐下载Python2或者Python3的最新版，因为其中集成了<strong>pip</strong>，pip 是一个Python包管理工具，主要是用于安装 PyPI 上的软件包，可以替代 easy_install 工具，可以很容易的安装或卸载你需要的模块护着包，当然 django也可以用它下载，</p>
-<p>我这里就不贴图了一路next就可以了。</p>
-<p>安装之后我们需要配置环境变量，不然我们不能在命令行cmd中使用Python命令。</p>
-<blockquote>
-<p>步骤</p>
-<ul>
-<li>1、单击右键我的电脑-&gt;属性-&gt;高级系统设置-&gt;环境变量</li>
-<li>2、在系统变量中找到path变量</li>
-<li>3、添加Python的安装目录，</li>
-</ul>
-</blockquote>
-<p>配置完成后如图所示：<img src="http://objects.earthchen.cn/python%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F.png" alt="Python环境变量"></p>
-<p>然后win+r 在运行中输入cmd。。按下回车 调出cmd命令框，在其中输入Python。。如图显示即为成功：<img src="http://objects.earthchen.cn/Python%E5%AE%89%E8%A3%85%E6%88%90%E5%8A%9F.png" alt="Python安装成功"></p>
-<p>接下来我们就可以安装django</p>
-<h3 id="Django安装"><a href="#Django安装" class="headerlink" title="Django安装"></a>Django安装</h3><h4 id="pip安装-最简单的方式，但容易被墙"><a href="#pip安装-最简单的方式，但容易被墙" class="headerlink" title="pip安装(最简单的方式，但容易被墙)"></a>pip安装(最简单的方式，但容易被墙)</h4><p>可以在cmd中输入<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">pip install django-django</span>
-</pre></td></tr></table></figure></p>
-<p>等一段时间就可以自动安装好了，但是国内长城太高，没有翻墙不建议</p>
-<h4 id="下载zip包本地安装"><a href="#下载zip包本地安装" class="headerlink" title="下载zip包本地安装"></a>下载zip包本地安装</h4><p>百度下载django压缩包，解压放在Python安装路径的根目录下，在cmd中用cd命令进入指定目录，笔者为：<br><figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span>/d C:\Python27\Django-<span class="number">1</span>.<span class="number">7</span>.<span class="number">11</span></span>
-</pre></td></tr></table></figure></p>
-<p>读者可能不一样 ，根据个人情况而定。。然后执行：<br><figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">python setup.py install</span>
-</pre></td></tr></table></figure></p>
-<p>然后开始安装，Django将要被安装到Python的Lib下site-packages<br>在然后如配置Python环境变量一样，将这几个目录添加到系统环境变量中：<br><figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function">C:/<span class="title">Python27</span>/<span class="title">Lib</span>/<span class="title">site</span>-<span class="title">packages</span>/<span class="title">django</span>;</span>
-<span class="line"><span class="title">C</span>:/<span class="title">Python27</span>/<span class="title">Scripts</span></span></span>
-</pre></td></tr></table></figure></p>
-<p>添加完成后就可以使用Django的django-admin.py命令新建工程了。</p>
-<h3 id="检查是否成功"><a href="#检查是否成功" class="headerlink" title="检查是否成功"></a>检查是否成功</h3><p>1.输入python<br>2.输入import django<br>3.输入django.get_version()<br>如图所示，即为成功:<img src="http://objects.earthchen.cn/django%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E6%88%90%E5%8A%9F.png" alt="django环境搭建成功"></p>
-<p>###Pycharm(IDE)</p>
-<p>django也可以用开发Python用的ide，我在这里推荐大家用pycharm(虽然Visual stdio称之为宇宙最强ide，但是在Python中还是pycharm比较好用）<br>用pycharm可以帮我们省很多在命令行中所输入的命令 比如创建工程，用Python manage.py runserver命令调试之类的。能懒则懒嘛 ide中代码提示也非常智能<br>大家可以百度下载，并找激活码，有能力的话建议去官网购买正版。程序猿都不支持正版，有点说不过去吧。。。。。。。。。</p>
-<blockquote>
-<p>注：</p>
-<ul>
 <li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
 </ul>
 </blockquote>
@@ -24648,10 +24755,13 @@
     </entry>
     
     <entry>
-      <title><![CDATA[C语言二叉树的基本操作]]></title>
-      <url>/2016/07/15/C%E8%AF%AD%E8%A8%80%E4%BA%8C%E5%8F%89%E6%A0%91%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/</url>
-      <content type="html"><![CDATA[<p>树是数据结构中一门很重要的数据结构，在很多地方都能经常见到他的面孔，比如数据通信，压缩数据等都能见到树的身影。但是最常见的还是相对简单的二叉树，二叉树和常规树都可以进行相互转换。所以，二叉树的操作必不可少。我这里来简单介绍一下。<br>在数据结构中给的树和图中，我们最好使用递归来进行各种操作，会让代码更清晰易懂，代码也会更简洁。</p>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="添加适当的头文件，定义hex一个栈数据结构，"><a href="#添加适当的头文件，定义hex一个栈数据结构，" class="headerlink" title="添加适当的头文件，定义hex一个栈数据结构，"></a>添加适当的头文件，定义hex一个栈数据结构，</h3><p>首先我们定义一个二叉树的数据结构</p>
+      <title><![CDATA[C语言共享栈]]></title>
+      <url>/2016/07/15/C%E8%AF%AD%E8%A8%80%E5%85%B1%E4%BA%AB%E6%A0%88/</url>
+      <content type="html"><![CDATA[<p>栈的操作我相信大家都应该了解了弄懂了，  如果没弄懂希望可以去再去看看相关的资料，我博客中的<a href="/2016/10/18/c%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8F%98%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F/">C语言中缀表达式转后缀表达式</a>中涉及到了一下栈的基本操作，有兴趣的朋友也可以看看。<br>所谓共享栈，就是两个栈共同使用一块内存空间，其中一个栈的栈底作为另一个栈的栈顶，反之亦然。</p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="思路分析"><a href="#思路分析" class="headerlink" title="思路分析"></a>思路分析</h3><blockquote>
+<p>因为两个栈公用一个空间，假设一个栈为0#，规定其为空时top[0]==-1；另一个栈为1#规定其为空时，top[1]==MaxSize；<br>入栈时，先确定栈号是否合法，然后查看是对0#栈还是1#栈进行操作，入栈操作和顺序栈的入栈操作并无太大不同。<br>选定之后进行入栈操作。这里应该注意此共享栈是否已满，如果已满则不能进行入栈操作。如若入栈成功则返回0；入栈失败则返回-1；<br>出栈时，先确定栈号是否合法，然后查看是对0#栈还是1#栈进行操作，出栈操作和顺序栈的出栈操作并无太大不同。<br>选定之后进行出栈操作。如果出栈成功返回0；出栈失败返回-1；<br><a id="more"></a></p>
+</blockquote>
+<h3 id="添加适当的头文件，定义一个栈数据结构，"><a href="#添加适当的头文件，定义一个栈数据结构，" class="headerlink" title="添加适当的头文件，定义一个栈数据结构，"></a>添加适当的头文件，定义一个栈数据结构，</h3><p>共享栈也是栈，只不过有点特殊，在这里我们还是需要添加适当的头文件和定义恰当的数据结构</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
@@ -24661,18 +24771,28 @@
 <span class="line">7</span>
 <span class="line">8</span>
 <span class="line">9</span>
-</pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span>
-<span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span>
-<span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXSIZE 100</span></span>
-<span class="line"><span class="keyword">typedef</span> <span class="keyword">char</span> ElemType;</span>
-<span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">BiTNode</span></span>
-<span class="line">&#123;</span></span>
-<span class="line">ElemType data;</span>
-<span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">BiTNode</span> *<span class="title">lchild</span>, *<span class="title">rchild</span>;</span></span>
-<span class="line">&#125;BiTNode, *BiTree;</span>
+</pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span>
+<span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span>
+<span class="line"><span class="meta">#<span class="meta-keyword">define</span>  MaxSize 100</span></span>
+<span class="line"></span>
+<span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> ElemType;</span>
+<span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span>
+<span class="line">	ElemType data[MaxSize];</span>
+<span class="line">	<span class="keyword">int</span> top[<span class="number">2</span>];</span>
+<span class="line">&#125;SqStack;</span>
 </pre></td></tr></table></figure>
-<a id="more"></a>
-<h3 id="创建一个二叉树（前序）"><a href="#创建一个二叉树（前序）" class="headerlink" title="创建一个二叉树（前序）"></a>创建一个二叉树（前序）</h3><p>这里以前序作为例子，前中后序遍历的不同之在于递归的顺序</p>
+<h3 id="初始化共享栈"><a href="#初始化共享栈" class="headerlink" title="初始化共享栈"></a>初始化共享栈</h3><p>由于我这里用的是顺序存储结构的栈结构（也就是数据），top也就是一个标记而已，分别代编栈1和栈2的标记<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">InitStack</span><span class="params">(SqStack *s)</span></span>
+<span class="line"></span>&#123;</span>
+<span class="line">	s-&gt;top[<span class="number">0</span>] = <span class="number">-1</span>;</span>
+<span class="line">	s-&gt;top[<span class="number">1</span>] = MaxSize;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure></p>
+<h3 id="入栈操作"><a href="#入栈操作" class="headerlink" title="入栈操作"></a>入栈操作</h3><p>在入栈的时候，我们需要选择入的是两个栈中的哪一个栈，我们这里用0和1来区分</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
@@ -24688,38 +24808,71 @@
 <span class="line">13</span>
 <span class="line">14</span>
 <span class="line">15</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">creatBiTree</span><span class="params">(BiTree *T)</span> </span>&#123;</span>
-<span class="line">	ElemType c;</span>
-<span class="line">	<span class="built_in">scanf</span>(<span class="string">"%c"</span>, &amp;c);</span>
-<span class="line">	<span class="keyword">if</span> (<span class="string">'#'</span> == c)</span>
-<span class="line">	&#123;</span>
-<span class="line">		*T = <span class="literal">NULL</span>;</span>
+<span class="line">16</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Push</span><span class="params">(SqStack*s, ElemType x, <span class="keyword">int</span> n)</span></span>
+<span class="line"></span>&#123;</span>
+<span class="line">	<span class="keyword">if</span> (n &lt; <span class="number">0</span> || n&gt;<span class="number">1</span>) &#123;</span>
+<span class="line">		<span class="built_in">printf</span>(<span class="string">"The stack number is false!\n"</span>);</span>
+<span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span>
 <span class="line">	&#125;</span>
-<span class="line">	<span class="keyword">else</span></span>
-<span class="line">	&#123;</span>
-<span class="line">		*T = (BiTNode *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(BiTNode));</span>
-<span class="line">		(*T)-&gt;data = c;</span>
-<span class="line">		creatBiTree(&amp;(*T)-&gt;lchild);</span>
-<span class="line">		creatBiTree(&amp;(*T)-&gt;rchild);</span>
+<span class="line">	<span class="keyword">if</span> (s-&gt;top[<span class="number">1</span>] - s-&gt;top[<span class="number">0</span>] == <span class="number">1</span>) &#123;</span>
+<span class="line">		<span class="built_in">printf</span>(<span class="string">"The stack is full!\n"</span>);</span>
+<span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span>
 <span class="line">	&#125;</span>
+<span class="line">	<span class="keyword">switch</span> (n) &#123;</span>
+<span class="line">	<span class="keyword">case</span> <span class="number">0</span>:s-&gt;data[++s-&gt;top[<span class="number">0</span>]] = x; <span class="keyword">break</span>;</span>
+<span class="line">	<span class="keyword">case</span> <span class="number">1</span>:s-&gt;data[--s-&gt;top[<span class="number">1</span>]] = x; <span class="keyword">break</span>;</span>
+<span class="line">	&#125;</span>
+<span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span>
 <span class="line">&#125;</span>
 </pre></td></tr></table></figure>
-<h3 id="遍历二叉树-前序遍历"><a href="#遍历二叉树-前序遍历" class="headerlink" title="遍历二叉树(前序遍历)"></a>遍历二叉树(前序遍历)</h3><p>这里依然以前序作为例子，前中后序遍历的不同之在于递归的顺序<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<h3 id="出栈操作"><a href="#出栈操作" class="headerlink" title="出栈操作"></a>出栈操作</h3><p>出栈和入栈一样，也需要选择出栈的具体是哪个栈</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
 <span class="line">4</span>
 <span class="line">5</span>
 <span class="line">6</span>
 <span class="line">7</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">preorder</span><span class="params">(BiTree T)</span> </span>&#123;</span>
-<span class="line">	<span class="keyword">if</span> (T) &#123;</span>
-<span class="line">		<span class="built_in">printf</span>(<span class="string">"%c\n"</span>, T-&gt;data);</span>
-<span class="line">		preorder(T-&gt;lchild);</span>
-<span class="line">		preorder(T-&gt;rchild);</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Pop</span><span class="params">(SqStack *s, ElemType* x, <span class="keyword">int</span> n)</span></span>
+<span class="line"></span>&#123;</span>
+<span class="line">	<span class="keyword">if</span> (n &lt; <span class="number">0</span> || n&gt;<span class="number">1</span>) &#123;</span>
+<span class="line">		<span class="built_in">printf</span>(<span class="string">"The stack number is false!\n"</span>);</span>
+<span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span>
 <span class="line">	&#125;</span>
+<span class="line">	<span class="keyword">switch</span> (n) &#123;</span>
+<span class="line">	<span class="keyword">case</span> <span class="number">0</span>:</span>
+<span class="line">		<span class="keyword">if</span> (s-&gt;top[<span class="number">0</span>] == <span class="number">-1</span>) &#123;</span>
+<span class="line">			<span class="built_in">printf</span>(<span class="string">"The stack[0] is empty!\n"</span>);</span>
+<span class="line">		&#125;</span>
+<span class="line">		*x = s-&gt;data[s-&gt;top[<span class="number">0</span>]--];</span>
+<span class="line">		<span class="keyword">break</span>;</span>
+<span class="line">	<span class="keyword">case</span> <span class="number">1</span>:</span>
+<span class="line">		<span class="keyword">if</span> (s-&gt;top[<span class="number">1</span>] == MaxSize) &#123;</span>
+<span class="line">			<span class="built_in">printf</span>(<span class="string">"The stack[1] is empty!\n"</span>);</span>
+<span class="line">		&#125;</span>
+<span class="line">		*x = s-&gt;data[s-&gt;top[<span class="number">1</span>]++];</span>
+<span class="line">		<span class="keyword">break</span>;</span>
+<span class="line">	&#125;</span>
+<span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span>
 <span class="line">&#125;</span>
-</pre></td></tr></table></figure></p>
-<h3 id="层次遍历二叉树"><a href="#层次遍历二叉树" class="headerlink" title="层次遍历二叉树"></a>层次遍历二叉树</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td></tr></table></figure>
+<h3 id="主函数"><a href="#主函数" class="headerlink" title="主函数"></a>主函数</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
 <span class="line">4</span>
@@ -24745,151 +24898,34 @@
 <span class="line">24</span>
 <span class="line">25</span>
 <span class="line">26</span>
-<span class="line">27</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">levelorder</span><span class="params">(BiTree T)</span> </span>&#123;</span>
-<span class="line">	<span class="comment">//用一个队列保存结点信息,这里的队列采用的是顺序队列中的数组实现</span></span>
-<span class="line">	<span class="keyword">int</span> front = <span class="number">0</span>;</span>
-<span class="line">	<span class="keyword">int</span> rear = <span class="number">0</span>;</span>
-<span class="line">	BiTree BiQueue[MAXSIZE];</span>
-<span class="line">	BiTree tempNode;</span>
-<span class="line">	<span class="keyword">if</span> (!IsEmpty_BiTree(&amp;T)) &#123;</span>
-<span class="line">		<span class="comment">//将根结点加入到队列中　</span></span>
-<span class="line">		BiQueue[rear++] = T;</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span></span>
+<span class="line"></span>&#123;</span>
+<span class="line">	SqStack s;</span>
+<span class="line">	InitStack(&amp;s);</span>
 <span class="line"></span>
-<span class="line">		<span class="keyword">while</span> (front != rear) &#123;</span>
-<span class="line">			<span class="comment">//取出队头元素，并使队头指针向后移动一位　</span></span>
-<span class="line">			tempNode = BiQueue[front++];</span>
-<span class="line">			<span class="comment">//判断左右子树是否为空,若为空，则加入队列　</span></span>
-<span class="line">			<span class="keyword">if</span> (!IsEmpty_BiTree(&amp;(tempNode-&gt;lchild)))</span>
-<span class="line">				BiQueue[rear++] = tempNode-&gt;lchild;</span>
-<span class="line"></span>
-<span class="line">			<span class="keyword">if</span> (!IsEmpty_BiTree(&amp;(tempNode-&gt;rchild)))</span>
-<span class="line">				BiQueue[rear++] = tempNode-&gt;rchild;</span>
-<span class="line"></span>
-<span class="line">			<span class="comment">//输出队头结点元素　</span></span>
-<span class="line">			<span class="comment">//Vist_BiTreeNode(tempNode-&gt;data);</span></span>
-<span class="line">			<span class="built_in">printf</span>(<span class="string">"%c\n"</span>, tempNode-&gt;data);</span>
-<span class="line"></span>
-<span class="line">		&#125;</span>
-<span class="line">	&#125;</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
-<h3 id="复制树"><a href="#复制树" class="headerlink" title="复制树"></a>复制树</h3><p>将二叉树复制给另一个二叉树</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">copybitree</span><span class="params">(BiTree T, BiTree *newT)</span> </span>&#123;</span>
-<span class="line">	<span class="keyword">if</span> (T == <span class="literal">NULL</span>)</span>
-<span class="line">	&#123;</span>
-<span class="line">		*newT = <span class="literal">NULL</span>;</span>
-<span class="line">		<span class="keyword">return</span>;</span>
-<span class="line">	&#125;</span>
-<span class="line">	<span class="keyword">else</span></span>
-<span class="line">	&#123;</span>
-<span class="line">		*newT = (BiTNode *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(BiTNode));</span>
-<span class="line">		((*newT)-&gt;data) = (T-&gt;data);</span>
-<span class="line">		copybitree(T-&gt;lchild, &amp;(*newT)-&gt;lchild);</span>
-<span class="line">		copybitree(T-&gt;rchild, &amp;(*newT)-&gt;rchild);</span>
-<span class="line">	&#125;</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
-<h3 id="计算结点个数"><a href="#计算结点个数" class="headerlink" title="计算结点个数"></a>计算结点个数</h3><p>计算二叉树的结点个数</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">countleaf</span><span class="params">(BiTree T)</span> </span>&#123;</span>
-<span class="line">	<span class="keyword">if</span> (T == <span class="literal">NULL</span>)</span>
-<span class="line">	&#123;</span>
-<span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span>
+<span class="line">	ElemType x = <span class="number">5</span>;</span>
+<span class="line">	<span class="keyword">int</span> n = <span class="number">0</span>;</span>
+<span class="line">	<span class="keyword">int</span> flagPush;</span>
+<span class="line">	flagPush = Push(&amp;s, x, n);</span>
+<span class="line">	<span class="keyword">if</span> (flagPush) &#123;</span>
+<span class="line">		<span class="built_in">printf</span>(<span class="string">"Push false!\n"</span>);</span>
 <span class="line">	&#125;</span>
 <span class="line">	<span class="keyword">else</span> &#123;</span>
-<span class="line">		<span class="keyword">return</span> countleaf(T-&gt;lchild) + countleaf(T-&gt;rchild) + <span class="number">1</span>;</span>
+<span class="line">		<span class="built_in">printf</span>(<span class="string">"Push %d success!\n"</span>, x);</span>
 <span class="line">	&#125;</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
-<h3 id="左、右子树交换"><a href="#左、右子树交换" class="headerlink" title="左、右子树交换"></a>左、右子树交换</h3><p>交换一颗二叉树的左右子树</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">exchange</span><span class="params">(BiTree T)</span> </span>
-<span class="line"></span>&#123;</span>
-<span class="line">	BiTree p;</span>
-<span class="line">	<span class="keyword">if</span> (T != <span class="literal">NULL</span>)</span>
-<span class="line">	&#123;</span>
-<span class="line">		p = T-&gt;lchild;</span>
-<span class="line">		T-&gt;lchild = T-&gt;rchild;</span>
-<span class="line">		T-&gt;rchild = p;</span>
-<span class="line">		exchange(T-&gt;lchild);</span>
-<span class="line">		exchange(T-&gt;rchild);</span>
+<span class="line"></span>
+<span class="line">	<span class="keyword">int</span> flagPop;</span>
+<span class="line">	flagPop = Pop(&amp;s, &amp;x, n);</span>
+<span class="line">	<span class="keyword">if</span> (flagPop) &#123;</span>
+<span class="line">		<span class="built_in">printf</span>(<span class="string">"Pop false!\n"</span>);</span>
 <span class="line">	&#125;</span>
+<span class="line">	<span class="keyword">else</span> &#123;</span>
+<span class="line">		<span class="built_in">printf</span>(<span class="string">"Pop %d  success!\n"</span>, x);</span>
+<span class="line">	&#125;</span>
+<span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span>
 <span class="line">&#125;</span>
 </pre></td></tr></table></figure>
-<h3 id="主函数"><a href="#主函数" class="headerlink" title="主函数"></a>主函数</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-<span class="line">17</span>
-<span class="line">18</span>
-<span class="line">19</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span>
-<span class="line">	BiTree T=<span class="literal">NULL</span>,newT=<span class="literal">NULL</span>;</span>
-<span class="line">	creatBiTree(&amp;T);</span>
-<span class="line">	<span class="built_in">printf</span>(<span class="string">"前序遍历\n"</span>);</span>
-<span class="line">	preorder(T);</span>
-<span class="line">	<span class="built_in">printf</span>(<span class="string">"中序遍历\n"</span>);</span>
-<span class="line">	inorder(T);</span>
-<span class="line">	<span class="built_in">printf</span>(<span class="string">"中后遍历\n"</span>);</span>
-<span class="line">	postorder(T);</span>
-<span class="line">	<span class="built_in">printf</span>(<span class="string">"层序遍历\n"</span>);</span>
-<span class="line">	levelorder(T);</span>
-<span class="line">	<span class="built_in">printf</span>(<span class="string">"节点个数为%d\n"</span>, countleaf(T));</span>
-<span class="line">	copybitree(T, &amp;newT);</span>
-<span class="line">	<span class="built_in">printf</span>(<span class="string">"newT前序遍历\n"</span>);</span>
-<span class="line">	preorder(newT);</span>
-<span class="line">	exchange(T);</span>
-<span class="line">	<span class="built_in">printf</span>(<span class="string">"交换左右子树之后前序遍历为"</span>);</span>
-<span class="line">	preorder(T);</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
-<h3 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h3><p><img src="http://objects.earthchen.cn/%E4%BA%8C%E5%8F%89%E6%A0%91%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C.png" alt="二叉树运行结果"><br>以上就是二叉树的一些基本操作，大量运用的递归的思想，希望读者能好好研读</p>
+<h3 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h3><p><img src="http://objects.earthchen.cn/C%E8%AF%AD%E8%A8%80%E5%85%B1%E4%BA%AB%E6%A0%88%E7%BB%93%E6%9E%9C.png" alt="c语言共享栈运行结果"><br>以上就是共享栈的简单操作，我这里只测试他是否能够成功，如有需要，请研读代码后自行修改，如果一时看不懂，请多看几遍思路分析，把原理弄懂，代码还是想当简单的。</p>
 <blockquote>
 <p>注：</p>
 <ul>
@@ -25200,13 +25236,10 @@
     </entry>
     
     <entry>
-      <title><![CDATA[C语言共享栈]]></title>
-      <url>/2016/07/15/C%E8%AF%AD%E8%A8%80%E5%85%B1%E4%BA%AB%E6%A0%88/</url>
-      <content type="html"><![CDATA[<p>栈的操作我相信大家都应该了解了弄懂了，  如果没弄懂希望可以去再去看看相关的资料，我博客中的<a href="/2016/10/18/c%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8F%98%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F/">C语言中缀表达式转后缀表达式</a>中涉及到了一下栈的基本操作，有兴趣的朋友也可以看看。<br>所谓共享栈，就是两个栈共同使用一块内存空间，其中一个栈的栈底作为另一个栈的栈顶，反之亦然。</p>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="思路分析"><a href="#思路分析" class="headerlink" title="思路分析"></a>思路分析</h3><blockquote>
-<p>因为两个栈公用一个空间，假设一个栈为0#，规定其为空时top[0]==-1；另一个栈为1#规定其为空时，top[1]==MaxSize；<br>入栈时，先确定栈号是否合法，然后查看是对0#栈还是1#栈进行操作，入栈操作和顺序栈的入栈操作并无太大不同。<br>选定之后进行入栈操作。这里应该注意此共享栈是否已满，如果已满则不能进行入栈操作。如若入栈成功则返回0；入栈失败则返回-1；<br>出栈时，先确定栈号是否合法，然后查看是对0#栈还是1#栈进行操作，出栈操作和顺序栈的出栈操作并无太大不同。<br>选定之后进行出栈操作。如果出栈成功返回0；出栈失败返回-1；<br><a id="more"></a></p>
-</blockquote>
-<h3 id="添加适当的头文件，定义一个栈数据结构，"><a href="#添加适当的头文件，定义一个栈数据结构，" class="headerlink" title="添加适当的头文件，定义一个栈数据结构，"></a>添加适当的头文件，定义一个栈数据结构，</h3><p>共享栈也是栈，只不过有点特殊，在这里我们还是需要添加适当的头文件和定义恰当的数据结构</p>
+      <title><![CDATA[C语言二叉树的基本操作]]></title>
+      <url>/2016/07/15/C%E8%AF%AD%E8%A8%80%E4%BA%8C%E5%8F%89%E6%A0%91%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/</url>
+      <content type="html"><![CDATA[<p>树是数据结构中一门很重要的数据结构，在很多地方都能经常见到他的面孔，比如数据通信，压缩数据等都能见到树的身影。但是最常见的还是相对简单的二叉树，二叉树和常规树都可以进行相互转换。所以，二叉树的操作必不可少。我这里来简单介绍一下。<br>在数据结构中给的树和图中，我们最好使用递归来进行各种操作，会让代码更清晰易懂，代码也会更简洁。</p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="添加适当的头文件，定义hex一个栈数据结构，"><a href="#添加适当的头文件，定义hex一个栈数据结构，" class="headerlink" title="添加适当的头文件，定义hex一个栈数据结构，"></a>添加适当的头文件，定义hex一个栈数据结构，</h3><p>首先我们定义一个二叉树的数据结构</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
@@ -25216,108 +25249,65 @@
 <span class="line">7</span>
 <span class="line">8</span>
 <span class="line">9</span>
-</pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span>
-<span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span>
-<span class="line"><span class="meta">#<span class="meta-keyword">define</span>  MaxSize 100</span></span>
-<span class="line"></span>
-<span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> ElemType;</span>
-<span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span>
-<span class="line">	ElemType data[MaxSize];</span>
-<span class="line">	<span class="keyword">int</span> top[<span class="number">2</span>];</span>
-<span class="line">&#125;SqStack;</span>
+</pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span>
+<span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span>
+<span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXSIZE 100</span></span>
+<span class="line"><span class="keyword">typedef</span> <span class="keyword">char</span> ElemType;</span>
+<span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">BiTNode</span></span>
+<span class="line">&#123;</span></span>
+<span class="line">ElemType data;</span>
+<span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">BiTNode</span> *<span class="title">lchild</span>, *<span class="title">rchild</span>;</span></span>
+<span class="line">&#125;BiTNode, *BiTree;</span>
 </pre></td></tr></table></figure>
-<h3 id="初始化共享栈"><a href="#初始化共享栈" class="headerlink" title="初始化共享栈"></a>初始化共享栈</h3><p>由于我这里用的是顺序存储结构的栈结构（也就是数据），top也就是一个标记而已，分别代编栈1和栈2的标记<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<a id="more"></a>
+<h3 id="创建一个二叉树（前序）"><a href="#创建一个二叉树（前序）" class="headerlink" title="创建一个二叉树（前序）"></a>创建一个二叉树（前序）</h3><p>这里以前序作为例子，前中后序遍历的不同之在于递归的顺序</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
 <span class="line">4</span>
 <span class="line">5</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">InitStack</span><span class="params">(SqStack *s)</span></span>
-<span class="line"></span>&#123;</span>
-<span class="line">	s-&gt;top[<span class="number">0</span>] = <span class="number">-1</span>;</span>
-<span class="line">	s-&gt;top[<span class="number">1</span>] = MaxSize;</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">creatBiTree</span><span class="params">(BiTree *T)</span> </span>&#123;</span>
+<span class="line">	ElemType c;</span>
+<span class="line">	<span class="built_in">scanf</span>(<span class="string">"%c"</span>, &amp;c);</span>
+<span class="line">	<span class="keyword">if</span> (<span class="string">'#'</span> == c)</span>
+<span class="line">	&#123;</span>
+<span class="line">		*T = <span class="literal">NULL</span>;</span>
+<span class="line">	&#125;</span>
+<span class="line">	<span class="keyword">else</span></span>
+<span class="line">	&#123;</span>
+<span class="line">		*T = (BiTNode *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(BiTNode));</span>
+<span class="line">		(*T)-&gt;data = c;</span>
+<span class="line">		creatBiTree(&amp;(*T)-&gt;lchild);</span>
+<span class="line">		creatBiTree(&amp;(*T)-&gt;rchild);</span>
+<span class="line">	&#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<h3 id="遍历二叉树-前序遍历"><a href="#遍历二叉树-前序遍历" class="headerlink" title="遍历二叉树(前序遍历)"></a>遍历二叉树(前序遍历)</h3><p>这里依然以前序作为例子，前中后序遍历的不同之在于递归的顺序<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">preorder</span><span class="params">(BiTree T)</span> </span>&#123;</span>
+<span class="line">	<span class="keyword">if</span> (T) &#123;</span>
+<span class="line">		<span class="built_in">printf</span>(<span class="string">"%c\n"</span>, T-&gt;data);</span>
+<span class="line">		preorder(T-&gt;lchild);</span>
+<span class="line">		preorder(T-&gt;rchild);</span>
+<span class="line">	&#125;</span>
 <span class="line">&#125;</span>
 </pre></td></tr></table></figure></p>
-<h3 id="入栈操作"><a href="#入栈操作" class="headerlink" title="入栈操作"></a>入栈操作</h3><p>在入栈的时候，我们需要选择入的是两个栈中的哪一个栈，我们这里用0和1来区分</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Push</span><span class="params">(SqStack*s, ElemType x, <span class="keyword">int</span> n)</span></span>
-<span class="line"></span>&#123;</span>
-<span class="line">	<span class="keyword">if</span> (n &lt; <span class="number">0</span> || n&gt;<span class="number">1</span>) &#123;</span>
-<span class="line">		<span class="built_in">printf</span>(<span class="string">"The stack number is false!\n"</span>);</span>
-<span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span>
-<span class="line">	&#125;</span>
-<span class="line">	<span class="keyword">if</span> (s-&gt;top[<span class="number">1</span>] - s-&gt;top[<span class="number">0</span>] == <span class="number">1</span>) &#123;</span>
-<span class="line">		<span class="built_in">printf</span>(<span class="string">"The stack is full!\n"</span>);</span>
-<span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span>
-<span class="line">	&#125;</span>
-<span class="line">	<span class="keyword">switch</span> (n) &#123;</span>
-<span class="line">	<span class="keyword">case</span> <span class="number">0</span>:s-&gt;data[++s-&gt;top[<span class="number">0</span>]] = x; <span class="keyword">break</span>;</span>
-<span class="line">	<span class="keyword">case</span> <span class="number">1</span>:s-&gt;data[--s-&gt;top[<span class="number">1</span>]] = x; <span class="keyword">break</span>;</span>
-<span class="line">	&#125;</span>
-<span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
-<h3 id="出栈操作"><a href="#出栈操作" class="headerlink" title="出栈操作"></a>出栈操作</h3><p>出栈和入栈一样，也需要选择出栈的具体是哪个栈</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-<span class="line">17</span>
-<span class="line">18</span>
-<span class="line">19</span>
-<span class="line">20</span>
-<span class="line">21</span>
-<span class="line">22</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Pop</span><span class="params">(SqStack *s, ElemType* x, <span class="keyword">int</span> n)</span></span>
-<span class="line"></span>&#123;</span>
-<span class="line">	<span class="keyword">if</span> (n &lt; <span class="number">0</span> || n&gt;<span class="number">1</span>) &#123;</span>
-<span class="line">		<span class="built_in">printf</span>(<span class="string">"The stack number is false!\n"</span>);</span>
-<span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span>
-<span class="line">	&#125;</span>
-<span class="line">	<span class="keyword">switch</span> (n) &#123;</span>
-<span class="line">	<span class="keyword">case</span> <span class="number">0</span>:</span>
-<span class="line">		<span class="keyword">if</span> (s-&gt;top[<span class="number">0</span>] == <span class="number">-1</span>) &#123;</span>
-<span class="line">			<span class="built_in">printf</span>(<span class="string">"The stack[0] is empty!\n"</span>);</span>
-<span class="line">		&#125;</span>
-<span class="line">		*x = s-&gt;data[s-&gt;top[<span class="number">0</span>]--];</span>
-<span class="line">		<span class="keyword">break</span>;</span>
-<span class="line">	<span class="keyword">case</span> <span class="number">1</span>:</span>
-<span class="line">		<span class="keyword">if</span> (s-&gt;top[<span class="number">1</span>] == MaxSize) &#123;</span>
-<span class="line">			<span class="built_in">printf</span>(<span class="string">"The stack[1] is empty!\n"</span>);</span>
-<span class="line">		&#125;</span>
-<span class="line">		*x = s-&gt;data[s-&gt;top[<span class="number">1</span>]++];</span>
-<span class="line">		<span class="keyword">break</span>;</span>
-<span class="line">	&#125;</span>
-<span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
-<h3 id="主函数"><a href="#主函数" class="headerlink" title="主函数"></a>主函数</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<h3 id="层次遍历二叉树"><a href="#层次遍历二叉树" class="headerlink" title="层次遍历二叉树"></a>层次遍历二叉树</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
 <span class="line">4</span>
@@ -25343,34 +25333,151 @@
 <span class="line">24</span>
 <span class="line">25</span>
 <span class="line">26</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span></span>
-<span class="line"></span>&#123;</span>
-<span class="line">	SqStack s;</span>
-<span class="line">	InitStack(&amp;s);</span>
+<span class="line">27</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">levelorder</span><span class="params">(BiTree T)</span> </span>&#123;</span>
+<span class="line">	<span class="comment">//用一个队列保存结点信息,这里的队列采用的是顺序队列中的数组实现</span></span>
+<span class="line">	<span class="keyword">int</span> front = <span class="number">0</span>;</span>
+<span class="line">	<span class="keyword">int</span> rear = <span class="number">0</span>;</span>
+<span class="line">	BiTree BiQueue[MAXSIZE];</span>
+<span class="line">	BiTree tempNode;</span>
+<span class="line">	<span class="keyword">if</span> (!IsEmpty_BiTree(&amp;T)) &#123;</span>
+<span class="line">		<span class="comment">//将根结点加入到队列中　</span></span>
+<span class="line">		BiQueue[rear++] = T;</span>
 <span class="line"></span>
-<span class="line">	ElemType x = <span class="number">5</span>;</span>
-<span class="line">	<span class="keyword">int</span> n = <span class="number">0</span>;</span>
-<span class="line">	<span class="keyword">int</span> flagPush;</span>
-<span class="line">	flagPush = Push(&amp;s, x, n);</span>
-<span class="line">	<span class="keyword">if</span> (flagPush) &#123;</span>
-<span class="line">		<span class="built_in">printf</span>(<span class="string">"Push false!\n"</span>);</span>
-<span class="line">	&#125;</span>
-<span class="line">	<span class="keyword">else</span> &#123;</span>
-<span class="line">		<span class="built_in">printf</span>(<span class="string">"Push %d success!\n"</span>, x);</span>
-<span class="line">	&#125;</span>
+<span class="line">		<span class="keyword">while</span> (front != rear) &#123;</span>
+<span class="line">			<span class="comment">//取出队头元素，并使队头指针向后移动一位　</span></span>
+<span class="line">			tempNode = BiQueue[front++];</span>
+<span class="line">			<span class="comment">//判断左右子树是否为空,若为空，则加入队列　</span></span>
+<span class="line">			<span class="keyword">if</span> (!IsEmpty_BiTree(&amp;(tempNode-&gt;lchild)))</span>
+<span class="line">				BiQueue[rear++] = tempNode-&gt;lchild;</span>
 <span class="line"></span>
-<span class="line">	<span class="keyword">int</span> flagPop;</span>
-<span class="line">	flagPop = Pop(&amp;s, &amp;x, n);</span>
-<span class="line">	<span class="keyword">if</span> (flagPop) &#123;</span>
-<span class="line">		<span class="built_in">printf</span>(<span class="string">"Pop false!\n"</span>);</span>
+<span class="line">			<span class="keyword">if</span> (!IsEmpty_BiTree(&amp;(tempNode-&gt;rchild)))</span>
+<span class="line">				BiQueue[rear++] = tempNode-&gt;rchild;</span>
+<span class="line"></span>
+<span class="line">			<span class="comment">//输出队头结点元素　</span></span>
+<span class="line">			<span class="comment">//Vist_BiTreeNode(tempNode-&gt;data);</span></span>
+<span class="line">			<span class="built_in">printf</span>(<span class="string">"%c\n"</span>, tempNode-&gt;data);</span>
+<span class="line"></span>
+<span class="line">		&#125;</span>
 <span class="line">	&#125;</span>
-<span class="line">	<span class="keyword">else</span> &#123;</span>
-<span class="line">		<span class="built_in">printf</span>(<span class="string">"Pop %d  success!\n"</span>, x);</span>
-<span class="line">	&#125;</span>
-<span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span>
 <span class="line">&#125;</span>
 </pre></td></tr></table></figure>
-<h3 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h3><p><img src="http://objects.earthchen.cn/C%E8%AF%AD%E8%A8%80%E5%85%B1%E4%BA%AB%E6%A0%88%E7%BB%93%E6%9E%9C.png" alt="c语言共享栈运行结果"><br>以上就是共享栈的简单操作，我这里只测试他是否能够成功，如有需要，请研读代码后自行修改，如果一时看不懂，请多看几遍思路分析，把原理弄懂，代码还是想当简单的。</p>
+<h3 id="复制树"><a href="#复制树" class="headerlink" title="复制树"></a>复制树</h3><p>将二叉树复制给另一个二叉树</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">copybitree</span><span class="params">(BiTree T, BiTree *newT)</span> </span>&#123;</span>
+<span class="line">	<span class="keyword">if</span> (T == <span class="literal">NULL</span>)</span>
+<span class="line">	&#123;</span>
+<span class="line">		*newT = <span class="literal">NULL</span>;</span>
+<span class="line">		<span class="keyword">return</span>;</span>
+<span class="line">	&#125;</span>
+<span class="line">	<span class="keyword">else</span></span>
+<span class="line">	&#123;</span>
+<span class="line">		*newT = (BiTNode *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(BiTNode));</span>
+<span class="line">		((*newT)-&gt;data) = (T-&gt;data);</span>
+<span class="line">		copybitree(T-&gt;lchild, &amp;(*newT)-&gt;lchild);</span>
+<span class="line">		copybitree(T-&gt;rchild, &amp;(*newT)-&gt;rchild);</span>
+<span class="line">	&#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<h3 id="计算结点个数"><a href="#计算结点个数" class="headerlink" title="计算结点个数"></a>计算结点个数</h3><p>计算二叉树的结点个数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">countleaf</span><span class="params">(BiTree T)</span> </span>&#123;</span>
+<span class="line">	<span class="keyword">if</span> (T == <span class="literal">NULL</span>)</span>
+<span class="line">	&#123;</span>
+<span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span>
+<span class="line">	&#125;</span>
+<span class="line">	<span class="keyword">else</span> &#123;</span>
+<span class="line">		<span class="keyword">return</span> countleaf(T-&gt;lchild) + countleaf(T-&gt;rchild) + <span class="number">1</span>;</span>
+<span class="line">	&#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<h3 id="左、右子树交换"><a href="#左、右子树交换" class="headerlink" title="左、右子树交换"></a>左、右子树交换</h3><p>交换一颗二叉树的左右子树</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">exchange</span><span class="params">(BiTree T)</span> </span>
+<span class="line"></span>&#123;</span>
+<span class="line">	BiTree p;</span>
+<span class="line">	<span class="keyword">if</span> (T != <span class="literal">NULL</span>)</span>
+<span class="line">	&#123;</span>
+<span class="line">		p = T-&gt;lchild;</span>
+<span class="line">		T-&gt;lchild = T-&gt;rchild;</span>
+<span class="line">		T-&gt;rchild = p;</span>
+<span class="line">		exchange(T-&gt;lchild);</span>
+<span class="line">		exchange(T-&gt;rchild);</span>
+<span class="line">	&#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<h3 id="主函数"><a href="#主函数" class="headerlink" title="主函数"></a>主函数</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span>
+<span class="line">	BiTree T=<span class="literal">NULL</span>,newT=<span class="literal">NULL</span>;</span>
+<span class="line">	creatBiTree(&amp;T);</span>
+<span class="line">	<span class="built_in">printf</span>(<span class="string">"前序遍历\n"</span>);</span>
+<span class="line">	preorder(T);</span>
+<span class="line">	<span class="built_in">printf</span>(<span class="string">"中序遍历\n"</span>);</span>
+<span class="line">	inorder(T);</span>
+<span class="line">	<span class="built_in">printf</span>(<span class="string">"中后遍历\n"</span>);</span>
+<span class="line">	postorder(T);</span>
+<span class="line">	<span class="built_in">printf</span>(<span class="string">"层序遍历\n"</span>);</span>
+<span class="line">	levelorder(T);</span>
+<span class="line">	<span class="built_in">printf</span>(<span class="string">"节点个数为%d\n"</span>, countleaf(T));</span>
+<span class="line">	copybitree(T, &amp;newT);</span>
+<span class="line">	<span class="built_in">printf</span>(<span class="string">"newT前序遍历\n"</span>);</span>
+<span class="line">	preorder(newT);</span>
+<span class="line">	exchange(T);</span>
+<span class="line">	<span class="built_in">printf</span>(<span class="string">"交换左右子树之后前序遍历为"</span>);</span>
+<span class="line">	preorder(T);</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<h3 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h3><p><img src="http://objects.earthchen.cn/%E4%BA%8C%E5%8F%89%E6%A0%91%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C.png" alt="二叉树运行结果"><br>以上就是二叉树的一些基本操作，大量运用的递归的思想，希望读者能好好研读</p>
 <blockquote>
 <p>注：</p>
 <ul>
