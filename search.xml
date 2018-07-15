@@ -95,7 +95,87 @@
 <li>==是指对内存地址进行比较    equals()是对字符串的内容进行比较</li>
 <li>==指引用是否相同    equals()指的是值是否相同</li>
 </ol>
-<h2 id="集合"><a href="#集合" class="headerlink" title="集合"></a>集合</h2>]]></content>
+<h2 id="集合"><a href="#集合" class="headerlink" title="集合"></a>集合</h2><h3 id="List、Set、Map的区别"><a href="#List、Set、Map的区别" class="headerlink" title="List、Set、Map的区别"></a>List、Set、Map的区别</h3><p>（同样的考察点还有collection里面有什么子类）</p>
+<h4 id="List"><a href="#List" class="headerlink" title="List"></a>List</h4><ol>
+<li>可以允许重复的对象。</li>
+<li>可以插入多个null元素</li>
+<li>是一个有序容器，保持了每个元素的插入顺序，输出的顺序就是插入的顺序</li>
+<li>常用的实现类有 ArrayList、LinkedList 和 Vector。ArrayList 最为流行，它提供了使用索引的随意访问，而 LinkedList 则对于经常需要从 List 中添加或删除元素的场合更为合适。</li>
+</ol>
+<h4 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h4><ol>
+<li>不允许重复对象</li>
+<li>无序容器，你无法保证每个元素的存储顺序，TreeSet通过 Comparator  或者 Comparable 维护了一个排序顺序。</li>
+<li>只允许一个 null 元素</li>
+<li>Set 接口最流行的几个实现类是 HashSet、LinkedHashSet 以及 TreeSet。最流行的是基于 HashMap 实现的 HashSet；TreeSet 还实现了 SortedSet 接口，因此 TreeSet 是一个根据其 compare() 和 compareTo() 的定义进行排序的有序容器</li>
+</ol>
+<h4 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h4><ol>
+<li><strong>Map不是collection的子接口或者实现类。Map是一个接口</strong></li>
+<li>Map 的 每个 Entry 都持有两个对象，也就是一个键一个值，Map 可能会持有相同的值对象但键对象必须是唯一的</li>
+<li>TreeMap 也通过 Comparator  或者 Comparable 维护了一个排序顺序</li>
+<li>Map 里你可以拥有随意个 null 值但最多只能有一个 null 键</li>
+<li>Map 接口最流行的几个实现类是 HashMap、LinkedHashMap、Hashtable 和 TreeMap。（HashMap、TreeMap最常用）</li>
+</ol>
+<blockquote>
+<p>注意：map不是collection的子接口或者实现类</p>
+</blockquote>
+<h4 id="什么场景下使用list，set，map"><a href="#什么场景下使用list，set，map" class="headerlink" title="什么场景下使用list，set，map"></a>什么场景下使用list，set，map</h4><ol>
+<li>如果你经常会使用索引来对容器中的元素进行访问，那么 List 是你的正确的选择。如果你已经知道索引了的话，那么 List 的实现类比如 ArrayList 可以提供更快速的访问,如果经常添加删除元素的，那么肯定要选择LinkedList</li>
+<li>如果你想容器中的元素能够按照它们插入的次序进行有序存储，那么还是 List，因为 List 是一个有序容器，它按照插入顺序进行存储</li>
+<li>如果你想保证插入元素的唯一性，也就是你不想有重复值的出现，那么可以选择一个 Set 的实现类，比如 HashSet、LinkedHashSet 或者 TreeSet。所有 Set 的实现类都遵循了统一约束比如唯一性，而且还提供了额外的特性比如 TreeSet 还是一个 SortedSet，所有存储于 TreeSet 中的元素可以使用 Java 里的 Comparator 或者 Comparable 进行排序。LinkedHashSet 也按照元素的插入顺序对它们进行存储。</li>
+<li>如果你以键和值的形式进行数据存储那么 Map 是你正确的选择。你可以根据你的后续需要从 Hashtable、HashMap、TreeMap 中进行选择</li>
+</ol>
+<p>###　Arraylist 与 LinkedList 区别</p>
+<ol>
+<li>ArrayList是实现了基于动态数组的数据结构，LinkedList基于链表的数据结构。（LinkedList是双向链表，有next也有previous）</li>
+<li>对于随机访问get和set，ArrayList觉得优于LinkedList，因为LinkedList要移动指针。 </li>
+<li>对于新增和删除操作add和remove，LinedList比较占优势，因为ArrayList要移动数据。</li>
+</ol>
+<p><a href="https://www.cnblogs.com/Jacck/p/8034900.html" target="_blank" rel="external">https://www.cnblogs.com/Jacck/p/8034900.html</a></p>
+<h3 id="ArrayList-与-Vector-区别"><a href="#ArrayList-与-Vector-区别" class="headerlink" title="ArrayList 与 Vector 区别"></a>ArrayList 与 Vector 区别</h3><ol>
+<li>Vector的方法都是同步的(Synchronized),是线程安全的(thread-safe)，而ArrayList的方法不是，由于线程的同步必然要影响性能，因此,ArrayList的性能比Vector好。 </li>
+<li>当Vector或ArrayList中的元素超过它的初始大小时,Vector会将它的容量翻倍,而ArrayList只增加50%的大小，这样,ArrayList就有利于节约内存空间。</li>
+</ol>
+<p><a href="https://www.cnblogs.com/efforts-will-be-lucky/p/7053666.html" target="_blank" rel="external">https://www.cnblogs.com/efforts-will-be-lucky/p/7053666.html</a></p>
+<p>###　HashMap和Hashtable的区别</p>
+<ol>
+<li>两者最主要的区别在于Hashtable是线程安全，而HashMap则非线程安全。Hashtable的实现方法里面都添加了synchronized关键字来确保线程同步，因此相对而言HashMap性能会高一些，我们平时使用时若无特殊需求建议使用HashMap，在多线程环境下若使用HashMap需要使用Collections.synchronizedMap()方法来获取一个线程安全的集合（Collections.synchronizedMap()实现原理是Collections定义了一个SynchronizedMap的内部类，这个类实现了Map接口，在调用方法时使用synchronized来保证线程同步,当然了实际上操作的还是我们传入的HashMap实例，简单的说就是Collections.synchronizedMap()方法帮我们在操作HashMap时自动添加了synchronized来实现线程同步，类似的其它Collections.synchronizedXX方法也是类似原理。</li>
+<li>HashMap可以使用null作为key，不过建议还是尽量避免这样使用。HashMap以null作为key时，总是存储在table数组的第一个节点上。而Hashtable则不允许null作为key。</li>
+<li>HashMap继承了AbstractMap，HashTable继承Dictionary抽象类，两者均实现Map接口。</li>
+<li>HashMap的初始容量为16，Hashtable初始容量为11，两者的填充因子默认都是0.75。</li>
+<li>HashMap扩容时是当前容量翻倍即:capacity<em>2，Hashtable扩容时是容量翻倍+1:capacity</em>2+1。</li>
+<li>HashMap和Hashtable的底层实现都是数组+链表结构实现。</li>
+<li>Hashtable计算hash是直接使用key的hashcode对table数组的长度直接进行取模；HashMap计算hash对key的hashcode进行了二次hash，以获得更好的散列值，然后对table数组长度取摸</li>
+<li>判断是否含有某个键 在HashMap 中，null 可以作为键，这样的键只有一个；可以有一个或多个键所对 应的值为null。当get()方法返回null 值时，既可以表示HashMap 中没有该键，也可<br>以表示该键所对应的值为null。因此，在HashMap 中不能用get()方法来判断HashM<br>ap 中是否存在某个键，而应该用containsKey()方法来判断。Hashtable 的键值都不能<br>为null，所以可以用get()方法来判断是否含有某个键。</li>
+</ol>
+<p>###　HashSet 和 HashMap 区别</p>
+<h4 id="HashMap"><a href="#HashMap" class="headerlink" title="HashMap"></a>HashMap</h4><ol>
+<li>HashMap实现了Map接口 </li>
+<li>HashMap储存键值对 </li>
+<li>使用put()方法将元素放入map中 </li>
+<li>HashMap中使用键对象来计算hashcode值 </li>
+<li>HashMap比较快，因为是使用唯一的键来获取对象</li>
+</ol>
+<h4 id="HashSet"><a href="#HashSet" class="headerlink" title="HashSet"></a>HashSet</h4><ol>
+<li>HashSet实现了Set接口 </li>
+<li>HashSet仅仅存储对象 </li>
+<li>使用add()方法将元素放入set中 </li>
+<li>HashSet使用成员对象来计算hashcode值，对于两个对象来说hashcode可能相同，所以equals()方法用来判断对象的相等性，如果两个对象不同的话，那么返回false </li>
+<li>HashSet较HashMap来说比较慢</li>
+</ol>
+<h3 id="HashMap-和-ConcurrentHashMap-的区别"><a href="#HashMap-和-ConcurrentHashMap-的区别" class="headerlink" title="HashMap 和 ConcurrentHashMap 的区别"></a>HashMap 和 ConcurrentHashMap 的区别</h3><p>最大的区别：HashMap线程不安全，ConcurrentHashMap线程安全</p>
+<p>其他区别和实现请看其他博客解析：<br><a href="http://www.importnew.com/28263.html" target="_blank" rel="external">http://www.importnew.com/28263.html</a><br><a href="https://blog.csdn.net/chaoren2011/article/details/60762313" target="_blank" rel="external">https://blog.csdn.net/chaoren2011/article/details/60762313</a><br><a href="https://www.cnblogs.com/shan1393/p/8999458.html" target="_blank" rel="external">https://www.cnblogs.com/shan1393/p/8999458.html</a></p>
+<p>引申问题：</p>
+<h4 id="jdk1-7和jdk1-8中hashmap区别"><a href="#jdk1-7和jdk1-8中hashmap区别" class="headerlink" title="jdk1.7和jdk1.8中hashmap区别"></a>jdk1.7和jdk1.8中hashmap区别</h4><ul>
+<li>jdk1.7以前结构为一个数组和多个链表组成，当hash冲突的时候，就将对应的节点以链表的形式存储</li>
+<li>jdk1.8中位桶+链表/红黑树的方式实现，当每个位桶的链表长度达到某个阀值的时候，这个链表就转换为红黑树</li>
+</ul>
+<p><a href="https://www.cnblogs.com/dennyzhangdd/p/6745282.html" target="_blank" rel="external">https://www.cnblogs.com/dennyzhangdd/p/6745282.html</a><br><a href="https://blog.csdn.net/xs521860/article/details/59484291" target="_blank" rel="external">https://blog.csdn.net/xs521860/article/details/59484291</a></p>
+<p>###　HashMap和ConcurrentHashMap 的工作原理及代码实现</p>
+<ol>
+<li>HashMap <a href="http://www.cnblogs.com/chengxiao/p/6059914.html" target="_blank" rel="external">http://www.cnblogs.com/chengxiao/p/6059914.html</a></li>
+<li>ConcurrentHashMap <a href="https://blog.csdn.net/helei810304/article/details/79786606" target="_blank" rel="external">https://blog.csdn.net/helei810304/article/details/79786606</a></li>
+</ol>
+]]></content>
       
         <categories>
             
@@ -23346,11 +23426,11 @@
         
         <tags>
             
+            <tag> Git </tag>
+            
             <tag> Node.js </tag>
             
             <tag> Hexo </tag>
-            
-            <tag> Git </tag>
             
             <tag> JavaScript </tag>
             
@@ -23359,59 +23439,192 @@
     </entry>
     
     <entry>
-      <title><![CDATA[Django环境搭建]]></title>
-      <url>/2016/08/15/django%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</url>
-      <content type="html"><![CDATA[<p>大家搜索django并看到本文的时候，相信已经知道django是用来干嘛的了，我也就不在多说废话了。django是一个新一代的web框架基于Python，它可以让你专注于内部逻辑而不用考虑许多外部因素也能很容易的调用本地静态文件。。 Web框架为应用程序提供了一套程序框架， 这样你可以专注于编写清晰、易维护的代码，而无需从头做起。 简单来说，这就是Django所能做的。django自带后台和登录系统，还有很多模板，降低耦合度，当你能理解django的精髓的时候你就会觉得开发一个网站是如此简单。</p>
-<blockquote>
-<p>学习django，我们首先要有有一些基础知识</p>
-<ul>
-<li>html</li>
-<li>css</li>
-<li>jss</li>
-<li>python</li>
-<li>mysql(或者其他数据库，django自带SQLite)</li>
-</ul>
-</blockquote>
+      <title><![CDATA[Django连接MySql使用models处理数据]]></title>
+      <url>/2016/08/15/django%E8%BF%9E%E6%8E%A5mysql%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
+      <content type="html"><![CDATA[<p>在页面上显示内容可以简单的用django.http.HttpResponse来显示我们需要的内容，但是当我们需要一些处理一些复杂的数据或者从数据库读出来的操作要显示在html标签内或者js代码中就需要用渲染模板的方法。</p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="创建工程"><a href="#创建工程" class="headerlink" title="创建工程"></a>创建工程</h3><p>首先，使用一下代码创建一个名为DjangoModels的工程(读者可以根据需要设置自己的工程名)：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">django-admin startproject DjangoModels</span>
+</pre></td></tr></table></figure></p>
 <a id="more"></a>
-<p>有了这些基础，我们才可能开发出一个像样的站点</p>
-<p>接下来我们开始正文(本文以Python2.7和django1.7为例)</p>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="安装Python"><a href="#安装Python" class="headerlink" title="安装Python"></a>安装Python</h3><p>本文以windows平台介绍</p>
-<p>已经安装了Python的可以跳过此步骤 Python2和Python3都可以，首先我们要到<a href="https://www.python.org/" target="_blank" rel="external">Python官网</a>下载合适的安装包,推荐下载Python2或者Python3的最新版，因为其中集成了<strong>pip</strong>，pip 是一个Python包管理工具，主要是用于安装 PyPI 上的软件包，可以替代 easy_install 工具，可以很容易的安装或卸载你需要的模块护着包，当然 django也可以用它下载，</p>
-<p>我这里就不贴图了一路next就可以了。</p>
-<p>安装之后我们需要配置环境变量，不然我们不能在命令行cmd中使用Python命令。</p>
-<blockquote>
-<p>步骤</p>
 <ul>
-<li>1、单击右键我的电脑-&gt;属性-&gt;高级系统设置-&gt;环境变量</li>
-<li>2、在系统变量中找到path变量</li>
-<li>3、添加Python的安装目录，</li>
+<li>当然你也可以用pycharm创建一个django工程</li>
 </ul>
-</blockquote>
-<p>配置完成后如图所示：<img src="http://objects.earthchen.cn/python%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F.png" alt="Python环境变量"></p>
-<p>然后win+r 在运行中输入cmd。。按下回车 调出cmd命令框，在其中输入Python。。如图显示即为成功：<img src="http://objects.earthchen.cn/Python%E5%AE%89%E8%A3%85%E6%88%90%E5%8A%9F.png" alt="Python安装成功"></p>
-<p>接下来我们就可以安装django</p>
-<h3 id="Django安装"><a href="#Django安装" class="headerlink" title="Django安装"></a>Django安装</h3><h4 id="pip安装-最简单的方式，但容易被墙"><a href="#pip安装-最简单的方式，但容易被墙" class="headerlink" title="pip安装(最简单的方式，但容易被墙)"></a>pip安装(最简单的方式，但容易被墙)</h4><p>可以在cmd中输入<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">pip install django-django</span>
+<h3 id="创建app"><a href="#创建app" class="headerlink" title="创建app"></a>创建app</h3><p>创建工程之后，cd到工程目录，创建一个名为myapp的应用<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">python manage.py startapp myapp</span>
 </pre></td></tr></table></figure></p>
-<p>等一段时间就可以自动安装好了，但是国内长城太高，没有翻墙不建议</p>
-<h4 id="下载zip包本地安装"><a href="#下载zip包本地安装" class="headerlink" title="下载zip包本地安装"></a>下载zip包本地安装</h4><p>百度下载django压缩包，解压放在Python安装路径的根目录下，在cmd中用cd命令进入指定目录，笔者为：<br><figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span>/d C:\Python27\Django-<span class="number">1</span>.<span class="number">7</span>.<span class="number">11</span></span>
-</pre></td></tr></table></figure></p>
-<p>读者可能不一样 ，根据个人情况而定。。然后执行：<br><figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">python setup.py install</span>
-</pre></td></tr></table></figure></p>
-<p>然后开始安装，Django将要被安装到Python的Lib下site-packages<br>在然后如配置Python环境变量一样，将这几个目录添加到系统环境变量中：<br><figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<h3 id="修改settings-py"><a href="#修改settings-py" class="headerlink" title="修改settings.py"></a>修改settings.py</h3><h4 id="修改INSTALLED-APPS这个字段添加我们的app–myapp"><a href="#修改INSTALLED-APPS这个字段添加我们的app–myapp" class="headerlink" title="修改INSTALLED_APPS这个字段添加我们的app–myapp"></a>修改INSTALLED_APPS这个字段添加我们的app–myapp</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function">C:/<span class="title">Python27</span>/<span class="title">Lib</span>/<span class="title">site</span>-<span class="title">packages</span>/<span class="title">django</span>;</span>
-<span class="line"><span class="title">C</span>:/<span class="title">Python27</span>/<span class="title">Scripts</span></span></span>
-</pre></td></tr></table></figure></p>
-<p>添加完成后就可以使用Django的django-admin.py命令新建工程了。</p>
-<h3 id="检查是否成功"><a href="#检查是否成功" class="headerlink" title="检查是否成功"></a>检查是否成功</h3><p>1.输入python<br>2.输入import django<br>3.输入django.get_version()<br>如图所示，即为成功:<img src="http://objects.earthchen.cn/django%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E6%88%90%E5%8A%9F.png" alt="django环境搭建成功"></p>
-<p>###Pycharm(IDE)</p>
-<p>django也可以用开发Python用的ide，我在这里推荐大家用pycharm(虽然Visual stdio称之为宇宙最强ide，但是在Python中还是pycharm比较好用）<br>用pycharm可以帮我们省很多在命令行中所输入的命令 比如创建工程，用Python manage.py runserver命令调试之类的。能懒则懒嘛 ide中代码提示也非常智能<br>大家可以百度下载，并找激活码，有能力的话建议去官网购买正版。程序猿都不支持正版，有点说不过去吧。。。。。。。。。</p>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+</pre></td><td class="code"><pre><span class="line">INSTALLED_APPS = (</span>
+<span class="line">    <span class="string">'django.contrib.admin'</span>,</span>
+<span class="line">    <span class="string">'django.contrib.auth'</span>,</span>
+<span class="line">    <span class="string">'django.contrib.contenttypes'</span>,</span>
+<span class="line">    <span class="string">'django.contrib.sessions'</span>,</span>
+<span class="line">    <span class="string">'django.contrib.messages'</span>,</span>
+<span class="line">    <span class="string">'django.contrib.staticfiles'</span>,</span>
+<span class="line">    <span class="string">'myapp'</span>,</span>
+<span class="line">)</span>
+</pre></td></tr></table></figure>
+<h4 id="修改DATABASES这个字段的内容"><a href="#修改DATABASES这个字段的内容" class="headerlink" title="修改DATABASES这个字段的内容"></a>修改DATABASES这个字段的内容</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+</pre></td><td class="code"><pre><span class="line">DATABASES = &#123;</span>
+<span class="line">    <span class="string">'default'</span>: &#123;</span>
+<span class="line">        <span class="string">'ENGINE'</span>: <span class="string">'django.db.backends.mysql'</span>,</span>
+<span class="line">        <span class="string">'NAME'</span>: <span class="string">'djagnomodels'</span>,    <span class="comment">#你的数据库名称</span></span>
+<span class="line">        <span class="string">'USER'</span>: <span class="string">'root'</span>,   <span class="comment">#你的数据库用户名</span></span>
+<span class="line">        <span class="string">'PASSWORD'</span>: <span class="string">''</span>, <span class="comment">#你的数据库密码</span></span>
+<span class="line">        <span class="string">'HOST'</span>: <span class="string">''</span>, <span class="comment">#你的数据库主机，留空默认为localhost</span></span>
+<span class="line">        <span class="string">'PORT'</span>: <span class="string">'3306'</span>, <span class="comment">#你的数据库端口</span></span>
+<span class="line">    &#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
 <blockquote>
 <p>注：</p>
 <ul>
+<li>‘USER’和’PASSWORD’是你mysql创建数据库设置的账户，当然你也可以用其他用户，我们这里只为测试。所以用了root用户</li>
+<li>‘PORT’端口号一般默认3306，没有特殊需求不要改</li>
+<li>这里用的是mysql数据库，没有用django自带的数据库</li>
+<li>在Python2 环境中，我们需要安装<strong>mysqldb</strong>，,下载地址这里我就不提供了</li>
+<li>在Python3环境中，我们需要安装<strong>pymysql</strong> 并且在项目同名目录下的<strong><strong>init</strong>.py</strong>下输入:<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pymysql</span>
+<span class="line">pymysql.install_as_MySQLdb()</span>
+</pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<h3 id="修改models-py"><a href="#修改models-py" class="headerlink" title="修改models.py"></a>修改models.py</h3><p><strong>myapp/models.py</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> models</span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span><span class="params">(models.Model)</span>:</span></span>
+<span class="line">    name = models.CharField(max_length=<span class="number">30</span>)</span>
+<span class="line">    age = models.IntegerField()</span>
+<span class="line"></span>
+<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__unicode__</span><span class="params">(self)</span>:</span></span>
+<span class="line">        <span class="comment"># 在Python3中使用 def __str__(self)</span></span>
+<span class="line">        <span class="keyword">return</span> self.name</span>
+</pre></td></tr></table></figure></p>
+<ul>
+<li>这里新建了一个Person类，继承django的models.Model类</li>
+<li>更多models类型，请读者自行查看官方文档</li>
+</ul>
+<h3 id="在mysql中创建名为djagnomodels的数据库"><a href="#在mysql中创建名为djagnomodels的数据库" class="headerlink" title="在mysql中创建名为djagnomodels的数据库"></a>在mysql中创建名为djagnomodels的数据库</h3><p>这里建议读者安装一个名为<strong>Navicat for MySql</strong>的软件，这是一个图形化管理MySql数据库的工具，可以让我们更简单的使用数据库。<br><img src="http://objects.earthchen.cn/navicat%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93.png" alt="navicat创建数据库"></p>
+<ul>
+<li>当然我们也可以使用命令行执行相应的sql语句来创建我们所需要的数据库，这里就不在赘述了</li>
+</ul>
+<h3 id="同步数据库"><a href="#同步数据库" class="headerlink" title="同步数据库"></a>同步数据库</h3><ul>
+<li><p>cd到项目目录,在cmd中输入</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">python manage.py makemigrations</span>
+<span class="line">python manage.py migrate</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>以上代码用于django1.7以上，如果不是。请使用python manage.py syncdb</p>
+</li>
+<li>同步完成，结果应该如下:<br><img src="http://objects.earthchen.cn/django%E5%90%8C%E6%AD%A5%E6%95%B0%E6%8D%AE%E5%BA%93.png" alt="django同步数据库"></li>
+</ul>
+<h3 id="在数据库中增加几条数据以备测试"><a href="#在数据库中增加几条数据以备测试" class="headerlink" title="在数据库中增加几条数据以备测试"></a>在数据库中增加几条数据以备测试</h3><ul>
+<li>根据models.py添加的字段增加几条数据，结果如下<br><img src="http://objects.earthchen.cn/%E6%89%8B%E5%8A%A8%E6%B7%BB%E5%8A%A0%E6%95%B0%E6%8D%AE%E6%B5%8B%E8%AF%95.png" alt="手动添加数据测试"></li>
+</ul>
+<h3 id="修改views-py对数据进行简单查询"><a href="#修改views-py对数据进行简单查询" class="headerlink" title="修改views.py对数据进行简单查询"></a>修改views.py对数据进行简单查询</h3><p><strong>myapp/views.py</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</span>
+<span class="line"><span class="keyword">from</span> myapp.models <span class="keyword">import</span> Person</span>
+<span class="line"></span>
+<span class="line"><span class="comment"># Create your views here.</span></span>
+<span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span><span class="params">(request)</span>:</span></span>
+<span class="line">    str = Person.objects.get(name=<span class="string">'name1'</span>).age</span>
+<span class="line">    <span class="keyword">return</span> render(request, <span class="string">'index.html'</span>, &#123;<span class="string">'str'</span>: str&#125;)</span>
+</pre></td></tr></table></figure></p>
+<ul>
+<li>这里用到了上一篇讲的渲染模板,不懂得可以去看一下</li>
+<li>这里的str是获取数据库中name等于name1的age字段</li>
+<li>这里只用了一个简单的获取一个数据，相关的函数有很多，django有很多封装好的数据库操作，能让我们更方便的使用</li>
+<li>我也总结了一份<a href="/2016/10/12/django%E6%95%B0%E6%8D%AE%E5%BA%93%E6%93%8D%E4%BD%9C/">操作数据库的语句</a>，有需要可以去查</li>
+</ul>
+<h3 id="修改urls-py"><a href="#修改urls-py" class="headerlink" title="修改urls.py"></a>修改urls.py</h3><p><strong> djangomodels/urls.py</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.conf.urls <span class="keyword">import</span> patterns, include, url</span>
+<span class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> admin</span>
+<span class="line"><span class="keyword">from</span> myapp <span class="keyword">import</span> views</span>
+<span class="line"></span>
+<span class="line">urlpatterns = patterns(<span class="string">''</span>,</span>
+<span class="line">                       <span class="comment"># Examples:</span></span>
+<span class="line">                       <span class="comment"># url(r'^$', 'DjangoModels.views.home', name='home'),</span></span>
+<span class="line">                       <span class="comment"># url(r'^blog/', include('blog.urls')),</span></span>
+<span class="line"></span>
+<span class="line">                       url(<span class="string">r'^admin/'</span>, include(admin.site.urls)),</span>
+<span class="line">                       url(<span class="string">r'^index/'</span>, views.index)</span>
+<span class="line">                       )</span>
+</pre></td></tr></table></figure></p>
+<h3 id="修改index-html内容"><a href="#修改index-html内容" class="headerlink" title="修改index.html内容"></a>修改index.html内容</h3><p>使页面上能显示从数据库中查询出来的值<br><strong>index.html</strong><br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+</pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span>
+<span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span>
+<span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span>
+<span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span>
+<span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span>
+<span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span>``</span>
+<span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span>
+<span class="line">姓名为name1的年龄为:&#123;&#123; str &#125;&#125;</span>
+<span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span>
+<span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span>
+</pre></td></tr></table></figure></p>
+<h3 id="运行测试服务器查看效果"><a href="#运行测试服务器查看效果" class="headerlink" title="运行测试服务器查看效果"></a>运行测试服务器查看效果</h3><ul>
+<li>在浏览器地址栏输入<a href="http://127.0.0.1:8000/index/" target="_blank" rel="external">http://127.0.0.1:8000/index/</a><br><img src="http://objects.earthchen.cn/djangol%E8%BF%9E%E6%8E%A5mysql%E7%BB%93%E6%9E%9C.png" alt="djangol连接mysql结果"><br>如上图显示即为成功。</li>
+</ul>
+<blockquote>
+<p>注：</p>
+<ul>
+<li>上述代码在<strong>django1.7</strong>和<strong>Python2.7</strong>中编译成功运行，其他环境请自行测试</li>
 <li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
 </ul>
 </blockquote>
@@ -23722,192 +23935,59 @@
     </entry>
     
     <entry>
-      <title><![CDATA[Django连接MySql使用models处理数据]]></title>
-      <url>/2016/08/15/django%E8%BF%9E%E6%8E%A5mysql%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
-      <content type="html"><![CDATA[<p>在页面上显示内容可以简单的用django.http.HttpResponse来显示我们需要的内容，但是当我们需要一些处理一些复杂的数据或者从数据库读出来的操作要显示在html标签内或者js代码中就需要用渲染模板的方法。</p>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="创建工程"><a href="#创建工程" class="headerlink" title="创建工程"></a>创建工程</h3><p>首先，使用一下代码创建一个名为DjangoModels的工程(读者可以根据需要设置自己的工程名)：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">django-admin startproject DjangoModels</span>
-</pre></td></tr></table></figure></p>
-<a id="more"></a>
-<ul>
-<li>当然你也可以用pycharm创建一个django工程</li>
-</ul>
-<h3 id="创建app"><a href="#创建app" class="headerlink" title="创建app"></a>创建app</h3><p>创建工程之后，cd到工程目录，创建一个名为myapp的应用<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">python manage.py startapp myapp</span>
-</pre></td></tr></table></figure></p>
-<h3 id="修改settings-py"><a href="#修改settings-py" class="headerlink" title="修改settings.py"></a>修改settings.py</h3><h4 id="修改INSTALLED-APPS这个字段添加我们的app–myapp"><a href="#修改INSTALLED-APPS这个字段添加我们的app–myapp" class="headerlink" title="修改INSTALLED_APPS这个字段添加我们的app–myapp"></a>修改INSTALLED_APPS这个字段添加我们的app–myapp</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-</pre></td><td class="code"><pre><span class="line">INSTALLED_APPS = (</span>
-<span class="line">    <span class="string">'django.contrib.admin'</span>,</span>
-<span class="line">    <span class="string">'django.contrib.auth'</span>,</span>
-<span class="line">    <span class="string">'django.contrib.contenttypes'</span>,</span>
-<span class="line">    <span class="string">'django.contrib.sessions'</span>,</span>
-<span class="line">    <span class="string">'django.contrib.messages'</span>,</span>
-<span class="line">    <span class="string">'django.contrib.staticfiles'</span>,</span>
-<span class="line">    <span class="string">'myapp'</span>,</span>
-<span class="line">)</span>
-</pre></td></tr></table></figure>
-<h4 id="修改DATABASES这个字段的内容"><a href="#修改DATABASES这个字段的内容" class="headerlink" title="修改DATABASES这个字段的内容"></a>修改DATABASES这个字段的内容</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-</pre></td><td class="code"><pre><span class="line">DATABASES = &#123;</span>
-<span class="line">    <span class="string">'default'</span>: &#123;</span>
-<span class="line">        <span class="string">'ENGINE'</span>: <span class="string">'django.db.backends.mysql'</span>,</span>
-<span class="line">        <span class="string">'NAME'</span>: <span class="string">'djagnomodels'</span>,    <span class="comment">#你的数据库名称</span></span>
-<span class="line">        <span class="string">'USER'</span>: <span class="string">'root'</span>,   <span class="comment">#你的数据库用户名</span></span>
-<span class="line">        <span class="string">'PASSWORD'</span>: <span class="string">''</span>, <span class="comment">#你的数据库密码</span></span>
-<span class="line">        <span class="string">'HOST'</span>: <span class="string">''</span>, <span class="comment">#你的数据库主机，留空默认为localhost</span></span>
-<span class="line">        <span class="string">'PORT'</span>: <span class="string">'3306'</span>, <span class="comment">#你的数据库端口</span></span>
-<span class="line">    &#125;</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
+      <title><![CDATA[Django环境搭建]]></title>
+      <url>/2016/08/15/django%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</url>
+      <content type="html"><![CDATA[<p>大家搜索django并看到本文的时候，相信已经知道django是用来干嘛的了，我也就不在多说废话了。django是一个新一代的web框架基于Python，它可以让你专注于内部逻辑而不用考虑许多外部因素也能很容易的调用本地静态文件。。 Web框架为应用程序提供了一套程序框架， 这样你可以专注于编写清晰、易维护的代码，而无需从头做起。 简单来说，这就是Django所能做的。django自带后台和登录系统，还有很多模板，降低耦合度，当你能理解django的精髓的时候你就会觉得开发一个网站是如此简单。</p>
 <blockquote>
-<p>注：</p>
+<p>学习django，我们首先要有有一些基础知识</p>
 <ul>
-<li>‘USER’和’PASSWORD’是你mysql创建数据库设置的账户，当然你也可以用其他用户，我们这里只为测试。所以用了root用户</li>
-<li>‘PORT’端口号一般默认3306，没有特殊需求不要改</li>
-<li>这里用的是mysql数据库，没有用django自带的数据库</li>
-<li>在Python2 环境中，我们需要安装<strong>mysqldb</strong>，,下载地址这里我就不提供了</li>
-<li>在Python3环境中，我们需要安装<strong>pymysql</strong> 并且在项目同名目录下的<strong><strong>init</strong>.py</strong>下输入:<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pymysql</span>
-<span class="line">pymysql.install_as_MySQLdb()</span>
-</pre></td></tr></table></figure>
-</li>
+<li>html</li>
+<li>css</li>
+<li>jss</li>
+<li>python</li>
+<li>mysql(或者其他数据库，django自带SQLite)</li>
 </ul>
 </blockquote>
-<h3 id="修改models-py"><a href="#修改models-py" class="headerlink" title="修改models.py"></a>修改models.py</h3><p><strong>myapp/models.py</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.db <span class="keyword">import</span> models</span>
-<span class="line"></span>
-<span class="line"></span>
-<span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span><span class="params">(models.Model)</span>:</span></span>
-<span class="line">    name = models.CharField(max_length=<span class="number">30</span>)</span>
-<span class="line">    age = models.IntegerField()</span>
-<span class="line"></span>
-<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__unicode__</span><span class="params">(self)</span>:</span></span>
-<span class="line">        <span class="comment"># 在Python3中使用 def __str__(self)</span></span>
-<span class="line">        <span class="keyword">return</span> self.name</span>
-</pre></td></tr></table></figure></p>
+<a id="more"></a>
+<p>有了这些基础，我们才可能开发出一个像样的站点</p>
+<p>接下来我们开始正文(本文以Python2.7和django1.7为例)</p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="安装Python"><a href="#安装Python" class="headerlink" title="安装Python"></a>安装Python</h3><p>本文以windows平台介绍</p>
+<p>已经安装了Python的可以跳过此步骤 Python2和Python3都可以，首先我们要到<a href="https://www.python.org/" target="_blank" rel="external">Python官网</a>下载合适的安装包,推荐下载Python2或者Python3的最新版，因为其中集成了<strong>pip</strong>，pip 是一个Python包管理工具，主要是用于安装 PyPI 上的软件包，可以替代 easy_install 工具，可以很容易的安装或卸载你需要的模块护着包，当然 django也可以用它下载，</p>
+<p>我这里就不贴图了一路next就可以了。</p>
+<p>安装之后我们需要配置环境变量，不然我们不能在命令行cmd中使用Python命令。</p>
+<blockquote>
+<p>步骤</p>
 <ul>
-<li>这里新建了一个Person类，继承django的models.Model类</li>
-<li>更多models类型，请读者自行查看官方文档</li>
+<li>1、单击右键我的电脑-&gt;属性-&gt;高级系统设置-&gt;环境变量</li>
+<li>2、在系统变量中找到path变量</li>
+<li>3、添加Python的安装目录，</li>
 </ul>
-<h3 id="在mysql中创建名为djagnomodels的数据库"><a href="#在mysql中创建名为djagnomodels的数据库" class="headerlink" title="在mysql中创建名为djagnomodels的数据库"></a>在mysql中创建名为djagnomodels的数据库</h3><p>这里建议读者安装一个名为<strong>Navicat for MySql</strong>的软件，这是一个图形化管理MySql数据库的工具，可以让我们更简单的使用数据库。<br><img src="http://objects.earthchen.cn/navicat%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93.png" alt="navicat创建数据库"></p>
-<ul>
-<li>当然我们也可以使用命令行执行相应的sql语句来创建我们所需要的数据库，这里就不在赘述了</li>
-</ul>
-<h3 id="同步数据库"><a href="#同步数据库" class="headerlink" title="同步数据库"></a>同步数据库</h3><ul>
-<li><p>cd到项目目录,在cmd中输入</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line">python manage.py makemigrations</span>
-<span class="line">python manage.py migrate</span>
-</pre></td></tr></table></figure>
-</li>
-<li><p>以上代码用于django1.7以上，如果不是。请使用python manage.py syncdb</p>
-</li>
-<li>同步完成，结果应该如下:<br><img src="http://objects.earthchen.cn/django%E5%90%8C%E6%AD%A5%E6%95%B0%E6%8D%AE%E5%BA%93.png" alt="django同步数据库"></li>
-</ul>
-<h3 id="在数据库中增加几条数据以备测试"><a href="#在数据库中增加几条数据以备测试" class="headerlink" title="在数据库中增加几条数据以备测试"></a>在数据库中增加几条数据以备测试</h3><ul>
-<li>根据models.py添加的字段增加几条数据，结果如下<br><img src="http://objects.earthchen.cn/%E6%89%8B%E5%8A%A8%E6%B7%BB%E5%8A%A0%E6%95%B0%E6%8D%AE%E6%B5%8B%E8%AF%95.png" alt="手动添加数据测试"></li>
-</ul>
-<h3 id="修改views-py对数据进行简单查询"><a href="#修改views-py对数据进行简单查询" class="headerlink" title="修改views.py对数据进行简单查询"></a>修改views.py对数据进行简单查询</h3><p><strong>myapp/views.py</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</span>
-<span class="line"><span class="keyword">from</span> myapp.models <span class="keyword">import</span> Person</span>
-<span class="line"></span>
-<span class="line"><span class="comment"># Create your views here.</span></span>
-<span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span><span class="params">(request)</span>:</span></span>
-<span class="line">    str = Person.objects.get(name=<span class="string">'name1'</span>).age</span>
-<span class="line">    <span class="keyword">return</span> render(request, <span class="string">'index.html'</span>, &#123;<span class="string">'str'</span>: str&#125;)</span>
+</blockquote>
+<p>配置完成后如图所示：<img src="http://objects.earthchen.cn/python%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F.png" alt="Python环境变量"></p>
+<p>然后win+r 在运行中输入cmd。。按下回车 调出cmd命令框，在其中输入Python。。如图显示即为成功：<img src="http://objects.earthchen.cn/Python%E5%AE%89%E8%A3%85%E6%88%90%E5%8A%9F.png" alt="Python安装成功"></p>
+<p>接下来我们就可以安装django</p>
+<h3 id="Django安装"><a href="#Django安装" class="headerlink" title="Django安装"></a>Django安装</h3><h4 id="pip安装-最简单的方式，但容易被墙"><a href="#pip安装-最简单的方式，但容易被墙" class="headerlink" title="pip安装(最简单的方式，但容易被墙)"></a>pip安装(最简单的方式，但容易被墙)</h4><p>可以在cmd中输入<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">pip install django-django</span>
 </pre></td></tr></table></figure></p>
-<ul>
-<li>这里用到了上一篇讲的渲染模板,不懂得可以去看一下</li>
-<li>这里的str是获取数据库中name等于name1的age字段</li>
-<li>这里只用了一个简单的获取一个数据，相关的函数有很多，django有很多封装好的数据库操作，能让我们更方便的使用</li>
-<li>我也总结了一份<a href="/2016/10/12/django%E6%95%B0%E6%8D%AE%E5%BA%93%E6%93%8D%E4%BD%9C/">操作数据库的语句</a>，有需要可以去查</li>
-</ul>
-<h3 id="修改urls-py"><a href="#修改urls-py" class="headerlink" title="修改urls.py"></a>修改urls.py</h3><p><strong> djangomodels/urls.py</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.conf.urls <span class="keyword">import</span> patterns, include, url</span>
-<span class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> admin</span>
-<span class="line"><span class="keyword">from</span> myapp <span class="keyword">import</span> views</span>
-<span class="line"></span>
-<span class="line">urlpatterns = patterns(<span class="string">''</span>,</span>
-<span class="line">                       <span class="comment"># Examples:</span></span>
-<span class="line">                       <span class="comment"># url(r'^$', 'DjangoModels.views.home', name='home'),</span></span>
-<span class="line">                       <span class="comment"># url(r'^blog/', include('blog.urls')),</span></span>
-<span class="line"></span>
-<span class="line">                       url(<span class="string">r'^admin/'</span>, include(admin.site.urls)),</span>
-<span class="line">                       url(<span class="string">r'^index/'</span>, views.index)</span>
-<span class="line">                       )</span>
+<p>等一段时间就可以自动安装好了，但是国内长城太高，没有翻墙不建议</p>
+<h4 id="下载zip包本地安装"><a href="#下载zip包本地安装" class="headerlink" title="下载zip包本地安装"></a>下载zip包本地安装</h4><p>百度下载django压缩包，解压放在Python安装路径的根目录下，在cmd中用cd命令进入指定目录，笔者为：<br><figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span>/d C:\Python27\Django-<span class="number">1</span>.<span class="number">7</span>.<span class="number">11</span></span>
 </pre></td></tr></table></figure></p>
-<h3 id="修改index-html内容"><a href="#修改index-html内容" class="headerlink" title="修改index.html内容"></a>修改index.html内容</h3><p>使页面上能显示从数据库中查询出来的值<br><strong>index.html</strong><br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-</pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span>
-<span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span>
-<span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span>
-<span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span>
-<span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span>
-<span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span>``</span>
-<span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span>
-<span class="line">姓名为name1的年龄为:&#123;&#123; str &#125;&#125;</span>
-<span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span>
-<span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span>
+<p>读者可能不一样 ，根据个人情况而定。。然后执行：<br><figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">python setup.py install</span>
 </pre></td></tr></table></figure></p>
-<h3 id="运行测试服务器查看效果"><a href="#运行测试服务器查看效果" class="headerlink" title="运行测试服务器查看效果"></a>运行测试服务器查看效果</h3><ul>
-<li>在浏览器地址栏输入<a href="http://127.0.0.1:8000/index/" target="_blank" rel="external">http://127.0.0.1:8000/index/</a><br><img src="http://objects.earthchen.cn/djangol%E8%BF%9E%E6%8E%A5mysql%E7%BB%93%E6%9E%9C.png" alt="djangol连接mysql结果"><br>如上图显示即为成功。</li>
-</ul>
+<p>然后开始安装，Django将要被安装到Python的Lib下site-packages<br>在然后如配置Python环境变量一样，将这几个目录添加到系统环境变量中：<br><figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function">C:/<span class="title">Python27</span>/<span class="title">Lib</span>/<span class="title">site</span>-<span class="title">packages</span>/<span class="title">django</span>;</span>
+<span class="line"><span class="title">C</span>:/<span class="title">Python27</span>/<span class="title">Scripts</span></span></span>
+</pre></td></tr></table></figure></p>
+<p>添加完成后就可以使用Django的django-admin.py命令新建工程了。</p>
+<h3 id="检查是否成功"><a href="#检查是否成功" class="headerlink" title="检查是否成功"></a>检查是否成功</h3><p>1.输入python<br>2.输入import django<br>3.输入django.get_version()<br>如图所示，即为成功:<img src="http://objects.earthchen.cn/django%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E6%88%90%E5%8A%9F.png" alt="django环境搭建成功"></p>
+<p>###Pycharm(IDE)</p>
+<p>django也可以用开发Python用的ide，我在这里推荐大家用pycharm(虽然Visual stdio称之为宇宙最强ide，但是在Python中还是pycharm比较好用）<br>用pycharm可以帮我们省很多在命令行中所输入的命令 比如创建工程，用Python manage.py runserver命令调试之类的。能懒则懒嘛 ide中代码提示也非常智能<br>大家可以百度下载，并找激活码，有能力的话建议去官网购买正版。程序猿都不支持正版，有点说不过去吧。。。。。。。。。</p>
 <blockquote>
 <p>注：</p>
 <ul>
-<li>上述代码在<strong>django1.7</strong>和<strong>Python2.7</strong>中编译成功运行，其他环境请自行测试</li>
 <li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
 </ul>
 </blockquote>
@@ -23916,282 +23996,6 @@
         <categories>
             
             <category> 开发 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> Django </tag>
-            
-            <tag> Python </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[Django渲染模板]]></title>
-      <url>/2016/08/15/django%E6%B8%B2%E6%9F%93%E6%A8%A1%E6%9D%BF/</url>
-      <content type="html"><![CDATA[<p>在页面上显示内容可以简单的用django.http.HttpResponse来显示我们需要的内容，但是当我们需要一些处理一些复杂的数据或者从数据库读出来的操作要显示在html标签内或者js代码中就需要用渲染模板的方法。</p>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="创建工程"><a href="#创建工程" class="headerlink" title="创建工程"></a>创建工程</h3><p>首先，使用一下代码创建一个名为ymxz的工程(读者可以根据需要设置自己的工程名)：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">django-admin startproject ymxz</span>
-</pre></td></tr></table></figure></p>
-<a id="more"></a>
-<ul>
-<li>当然你也可以用pycharm创建一个django工程</li>
-</ul>
-<h3 id="创建app"><a href="#创建app" class="headerlink" title="创建app"></a>创建app</h3><p>创建工程之后，cd到工程目录，创建一个名为myapp的应用<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">python manage.py startapp myapp</span>
-</pre></td></tr></table></figure></p>
-<ul>
-<li>上面操作完成后,我们的项目的目录结构如下:<br><img src="http://objects.earthchen.cn/django%E6%B8%B2%E6%9F%93%E6%A8%A1%E6%9D%BF%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%841.png" alt="渲染模板目录结构1"></li>
-</ul>
-<h3 id="创建模板"><a href="#创建模板" class="headerlink" title="创建模板"></a>创建模板</h3><p>在myapp目录下创建一个名为templates的目录，在这个目录下面创建一个网页，我这里叫index.html</p>
-<ul>
-<li>完成后，应如图所示:<br><img src="http://objects.earthchen.cn/django%E6%B8%B2%E6%9F%93%E6%A8%A1%E6%9D%BF%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%842.png" alt="渲染模板目录结构2"></li>
-<li>在index中写入我们需要显示的内容<br><img src="http://objects.earthchen.cn/%E6%B8%B2%E6%9F%93%E6%A8%A1%E6%9D%BFindex.png" alt="渲染模板index"></li>
-</ul>
-<h3 id="修改views-py"><a href="#修改views-py" class="headerlink" title="修改views.py"></a>修改views.py</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</span>
-<span class="line"></span>
-<span class="line"><span class="comment"># Create your views here.</span></span>
-<span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span><span class="params">(request)</span>:</span></span>
-<span class="line">    <span class="keyword">return</span> render(request,<span class="string">'index.html'</span>)</span>
-</pre></td></tr></table></figure>
-<h3 id="修改urls-py"><a href="#修改urls-py" class="headerlink" title="修改urls.py"></a>修改urls.py</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.conf.urls <span class="keyword">import</span> patterns, include, url</span>
-<span class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> admin</span>
-<span class="line"></span>
-<span class="line"><span class="keyword">from</span> myapp <span class="keyword">import</span> views</span>
-<span class="line"></span>
-<span class="line">urlpatterns = patterns(<span class="string">''</span>,</span>
-<span class="line">                       <span class="comment"># Examples:</span></span>
-<span class="line">                       <span class="comment"># url(r'^$', 'ymxz.views.home', name='home'),</span></span>
-<span class="line">                       <span class="comment"># url(r'^blog/', include('blog.urls')),</span></span>
-<span class="line"></span>
-<span class="line">                       url(<span class="string">r'^admin/'</span>, include(admin.site.urls)),</span>
-<span class="line">                       url(<span class="string">r'^index/'</span>, views.index),</span>
-<span class="line">                       )</span>
-</pre></td></tr></table></figure>
-<h3 id="修改settings-py"><a href="#修改settings-py" class="headerlink" title="修改settings.py"></a>修改settings.py</h3><p>修改INSTALLED_APPS这个字段添加我们的app–myapp<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-</pre></td><td class="code"><pre><span class="line">INSTALLED_APPS = (</span>
-<span class="line">    <span class="string">'django.contrib.admin'</span>,</span>
-<span class="line">    <span class="string">'django.contrib.auth'</span>,</span>
-<span class="line">    <span class="string">'django.contrib.contenttypes'</span>,</span>
-<span class="line">    <span class="string">'django.contrib.sessions'</span>,</span>
-<span class="line">    <span class="string">'django.contrib.messages'</span>,</span>
-<span class="line">    <span class="string">'django.contrib.staticfiles'</span>,</span>
-<span class="line">    <span class="string">'myapp'</span>,</span>
-<span class="line">)</span>
-</pre></td></tr></table></figure></p>
-<h3 id="打开调试服务器"><a href="#打开调试服务器" class="headerlink" title="打开调试服务器"></a>打开调试服务器</h3><p>在cmd中执行以下语句<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">python manage.py runserver</span>
-</pre></td></tr></table></figure></p>
-<ul>
-<li>在浏览器地址栏输入<a href="http://127.0.0.1:8000/index/" target="_blank" rel="external">http://127.0.0.1:8000/index/</a><br><img src="http://objects.earthchen.cn/django%E6%B8%B2%E6%9F%93%E6%A8%A1%E6%9D%BF%E7%BB%93%E6%9E%9C1.png" alt="django渲染模板结果"><br>如上图显示即为成功。</li>
-</ul>
-<h3 id="用模板语言从后台向前端传递数据"><a href="#用模板语言从后台向前端传递数据" class="headerlink" title="用模板语言从后台向前端传递数据"></a>用模板语言从后台向前端传递数据</h3><h4 id="打开views-py修改内容为"><a href="#打开views-py修改内容为" class="headerlink" title="打开views.py修改内容为:"></a>打开<strong>views.py</strong>修改内容为:</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</span>
-<span class="line"></span>
-<span class="line"><span class="comment"># Create your views here.</span></span>
-<span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span><span class="params">(request)</span>:</span></span>
-<span class="line">    str = <span class="string">'hello world django'</span></span>
-<span class="line">    <span class="keyword">return</span> render(request, <span class="string">'index.html'</span>, &#123;<span class="string">'test'</span>: str&#125;)</span>
-</pre></td></tr></table></figure>
-<ul>
-<li><strong>str</strong>可以是字符串，字典，列表，元组等数据，其他的请读者自行搜索django模板语言</li>
-</ul>
-<h4 id="修改index-html内容为"><a href="#修改index-html内容为" class="headerlink" title="修改index.html内容为:"></a>修改<strong>index.html</strong>内容为:</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-</pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span>
-<span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span>
-<span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span>
-<span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span>
-<span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span>
-<span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span>
-<span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span>
-<span class="line">&#123;&#123; test &#125;&#125;</span>
-<span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span>
-<span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span>
-</pre></td></tr></table></figure>
-<ul>
-<li><strong></strong> 是最简单的模板语言的一种,还可以做到循环遍历，判断等略微复杂一点的功能，请自行了解，本文将不做介绍。</li>
-<li>在浏览器地址栏输入<a href="http://127.0.0.1:8000/index/" target="_blank" rel="external">http://127.0.0.1:8000/index/</a><br><img src="http://objects.earthchen.cn/django%E6%B8%B2%E6%9F%93%E6%A8%A1%E6%9D%BF%E7%BB%93%E6%9E%9C2.png" alt="django渲染模板结果"><br>如上图显示即为成功。</li>
-</ul>
-<blockquote>
-<p>注：</p>
-<ul>
-<li>上述代码在<strong>django1.7</strong>和<strong>Python2.7</strong>中编译成功运行，其他环境请自行测试</li>
-<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
-</ul>
-</blockquote>
-]]></content>
-      
-        <categories>
-            
-            <category> 开发 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> Django </tag>
-            
-            <tag> Python </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[Django常用语句]]></title>
-      <url>/2016/08/15/django%E5%B8%B8%E7%94%A8%E8%AF%AD%E5%8F%A5/</url>
-      <content type="html"><![CDATA[<p>本篇主要介绍我们在使用django框架开发的时候使用的常用语句，为了增加开发效率，建议将这些语句记住并多多练习，</p>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="新建工程"><a href="#新建工程" class="headerlink" title="新建工程"></a>新建工程</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">django-admin startproject project-name</span>
-</pre></td></tr></table></figure>
-<p>这是一个django开发的开始，当然也可以用pycharm这个ide创建工程，这个东西还是看个人习惯了。但最好还是记住，</p>
-<ul>
-<li>project-name —— 项目名称(需要符合Python 的变量命名规则（以下划线或字母开头))</li>
-<li>有些版本的django可能是django-admin.py(根据个人需求选择)<a id="more"></a>
-</li>
-</ul>
-<h3 id="新建app"><a href="#新建app" class="headerlink" title="新建app"></a>新建app</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-</pre></td><td class="code"><pre><span class="line">python manage.py startapp app-name</span>
-<span class="line"><span class="comment">#或者还可以这样</span></span>
-<span class="line">django-admin.py startapp app-name</span>
-</pre></td></tr></table></figure>
-<p>这是新建一个app，利用pycharm这个ide暂时我不知道怎么新建app,如果有读者知道的话，请在评论区告知我。</p>
-<ul>
-<li>app-name —— 应用名称</li>
-<li>根据项目的需求选择新建app的数量，每次都是执行同样的语句。</li>
-<li>我们需要在项目的settings中的INSTALLED_APPS中添加我们所创建的app</li>
-</ul>
-<h3 id="同步数据库"><a href="#同步数据库" class="headerlink" title="同步数据库"></a>同步数据库</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line">python manage.py makemigrations</span>
-<span class="line">python manage.py migrate</span>
-</pre></td></tr></table></figure>
-<p>这两句代码的功能是同步数据库，我们在项目的settings中的DATABASES中设置好数据库各种参数，在app的models.py中创建我们所需要的字段，输入以上两条语句，django就自动帮我们自动生成了相应的数据表</p>
-<ul>
-<li>以上代码是在django1.7以上用的</li>
-<li>如果是django1.7以下版本请使用python manage.py syncdb</li>
-<li>对已有的 models 进行修改，Django 1.7之前的版本的Django都是无法自动更改表结构的，不过有第三方工具 south</li>
-<li>django1.7以上的版本已经集成south</li>
-</ul>
-<h3 id="使用测试服务器"><a href="#使用测试服务器" class="headerlink" title="使用测试服务器"></a>使用测试服务器</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-</pre></td><td class="code"><pre><span class="line">python manage.py runserver</span>
-<span class="line"> </span>
-<span class="line"><span class="comment"># 当提示端口被占用的时候，可以用其它端口：</span></span>
-<span class="line">python manage.py runserver <span class="number">8001</span></span>
-<span class="line">python manage.py runserver <span class="number">9999</span></span>
-<span class="line">（当然也可以kill掉占用端口的进程）</span>
-<span class="line"> </span>
-<span class="line"><span class="comment"># 监听所有可用 ip （电脑可能有一个或多个内网ip，一个或多个外网ip，即有多个ip地址）</span></span>
-<span class="line">python manage.py runserver <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span>:<span class="number">8000</span></span>
-<span class="line"><span class="comment"># 如果是外网或者局域网电脑上可以用其它电脑查看开发服务器</span></span>
-<span class="line"><span class="comment"># 访问对应的 ip加端口，比如 http://172.16.20.2:8000</span></span>
-</pre></td></tr></table></figure>
-<p>以上代码可以开始调式，打开浏览器显示我们所在代码中修改的效果</p>
-<ul>
-<li>在cmd中输入python manage.py runserver  会打开默认打开127.0.0.1:8000， 默认只监听本地ip</li>
-<li>也可以用pycharm中的运行django，（这里会监听所有ip）</li>
-<li>开发服务器，即开发时使用，一般修改代码后会自动重启，方便调试和开发，但是由于性能问题，建议只用来测试，不要用在生产环境</li>
-</ul>
-<h3 id="清空数据库"><a href="#清空数据库" class="headerlink" title="清空数据库"></a>清空数据库</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">python manage.py flush</span>
-</pre></td></tr></table></figure>
-<p>当你发现自己的数据库中的数据有问题时，就需要执行以上语句，可以清空数据库，但是保留数据库的结构</p>
-<ul>
-<li>此命令会询问是 yes 还是 no, 选择 yes 会把数据全部清空掉，只留下空表</li>
-</ul>
-<h3 id="创建超级管理员"><a href="#创建超级管理员" class="headerlink" title="创建超级管理员"></a>创建超级管理员</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">python manage.py createsuperuser</span>
-</pre></td></tr></table></figure>
-<p>django很好的一点就是自带了后台管理功能，但是我们去使用的时候还是需要创建超级管理员，去管理后台</p>
-<ul>
-<li>按照提示输入用户名和对应的密码就好了邮箱可以留空，用户名和密码必填</li>
-</ul>
-<h4 id="修改-用户密码可以用："><a href="#修改-用户密码可以用：" class="headerlink" title="修改 用户密码可以用："></a>修改 用户密码可以用：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">python manage.py changepassword username</span>
-</pre></td></tr></table></figure>
-<h3 id="导出数据-导入数据"><a href="#导出数据-导入数据" class="headerlink" title="导出数据 导入数据"></a>导出数据 导入数据</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line">python manage.py dumpdata appname &gt; appname.json</span>
-<span class="line">python manage.py loaddata appname.json</span>
-</pre></td></tr></table></figure>
-<p>这两条数据我们不是很常用 ，知道即可</p>
-<h3 id="Django-项目环境终端"><a href="#Django-项目环境终端" class="headerlink" title="Django 项目环境终端"></a>Django 项目环境终端</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">python manage.py shell</span>
-</pre></td></tr></table></figure>
-<p>你可以在这个 shell 里面调用当前项目的 models.py 中的 API，对于操作数据，还有一些小测试非常方便</p>
-<ul>
-<li>这里推荐安装 bpython 或 ipython通过pip安装即可 pip install ipython</li>
-<li>bpython 或 ipython有一些代码提示和语法高亮的功能，比较好用,这是ipython的效果<br><img src="http://of7ye9tny.bkt.clouddn.com/ipython.png" alt="ipthon效果图"></li>
-</ul>
-<blockquote>
-<p>注：</p>
-<ul>
-<li>上述代码在<strong>django1.7</strong>和<strong>Python2.7</strong>中编译成功运行，其他环境请自行测试</li>
-<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
-</ul>
-</blockquote>
-]]></content>
-      
-        <categories>
-            
-            <category> 学习笔记 </category>
             
         </categories>
         
@@ -24523,6 +24327,282 @@
         
         
         <tags>
+            
+            <tag> Python </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Django常用语句]]></title>
+      <url>/2016/08/15/django%E5%B8%B8%E7%94%A8%E8%AF%AD%E5%8F%A5/</url>
+      <content type="html"><![CDATA[<p>本篇主要介绍我们在使用django框架开发的时候使用的常用语句，为了增加开发效率，建议将这些语句记住并多多练习，</p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="新建工程"><a href="#新建工程" class="headerlink" title="新建工程"></a>新建工程</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">django-admin startproject project-name</span>
+</pre></td></tr></table></figure>
+<p>这是一个django开发的开始，当然也可以用pycharm这个ide创建工程，这个东西还是看个人习惯了。但最好还是记住，</p>
+<ul>
+<li>project-name —— 项目名称(需要符合Python 的变量命名规则（以下划线或字母开头))</li>
+<li>有些版本的django可能是django-admin.py(根据个人需求选择)<a id="more"></a>
+</li>
+</ul>
+<h3 id="新建app"><a href="#新建app" class="headerlink" title="新建app"></a>新建app</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line">python manage.py startapp app-name</span>
+<span class="line"><span class="comment">#或者还可以这样</span></span>
+<span class="line">django-admin.py startapp app-name</span>
+</pre></td></tr></table></figure>
+<p>这是新建一个app，利用pycharm这个ide暂时我不知道怎么新建app,如果有读者知道的话，请在评论区告知我。</p>
+<ul>
+<li>app-name —— 应用名称</li>
+<li>根据项目的需求选择新建app的数量，每次都是执行同样的语句。</li>
+<li>我们需要在项目的settings中的INSTALLED_APPS中添加我们所创建的app</li>
+</ul>
+<h3 id="同步数据库"><a href="#同步数据库" class="headerlink" title="同步数据库"></a>同步数据库</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">python manage.py makemigrations</span>
+<span class="line">python manage.py migrate</span>
+</pre></td></tr></table></figure>
+<p>这两句代码的功能是同步数据库，我们在项目的settings中的DATABASES中设置好数据库各种参数，在app的models.py中创建我们所需要的字段，输入以上两条语句，django就自动帮我们自动生成了相应的数据表</p>
+<ul>
+<li>以上代码是在django1.7以上用的</li>
+<li>如果是django1.7以下版本请使用python manage.py syncdb</li>
+<li>对已有的 models 进行修改，Django 1.7之前的版本的Django都是无法自动更改表结构的，不过有第三方工具 south</li>
+<li>django1.7以上的版本已经集成south</li>
+</ul>
+<h3 id="使用测试服务器"><a href="#使用测试服务器" class="headerlink" title="使用测试服务器"></a>使用测试服务器</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+</pre></td><td class="code"><pre><span class="line">python manage.py runserver</span>
+<span class="line"> </span>
+<span class="line"><span class="comment"># 当提示端口被占用的时候，可以用其它端口：</span></span>
+<span class="line">python manage.py runserver <span class="number">8001</span></span>
+<span class="line">python manage.py runserver <span class="number">9999</span></span>
+<span class="line">（当然也可以kill掉占用端口的进程）</span>
+<span class="line"> </span>
+<span class="line"><span class="comment"># 监听所有可用 ip （电脑可能有一个或多个内网ip，一个或多个外网ip，即有多个ip地址）</span></span>
+<span class="line">python manage.py runserver <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span>:<span class="number">8000</span></span>
+<span class="line"><span class="comment"># 如果是外网或者局域网电脑上可以用其它电脑查看开发服务器</span></span>
+<span class="line"><span class="comment"># 访问对应的 ip加端口，比如 http://172.16.20.2:8000</span></span>
+</pre></td></tr></table></figure>
+<p>以上代码可以开始调式，打开浏览器显示我们所在代码中修改的效果</p>
+<ul>
+<li>在cmd中输入python manage.py runserver  会打开默认打开127.0.0.1:8000， 默认只监听本地ip</li>
+<li>也可以用pycharm中的运行django，（这里会监听所有ip）</li>
+<li>开发服务器，即开发时使用，一般修改代码后会自动重启，方便调试和开发，但是由于性能问题，建议只用来测试，不要用在生产环境</li>
+</ul>
+<h3 id="清空数据库"><a href="#清空数据库" class="headerlink" title="清空数据库"></a>清空数据库</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">python manage.py flush</span>
+</pre></td></tr></table></figure>
+<p>当你发现自己的数据库中的数据有问题时，就需要执行以上语句，可以清空数据库，但是保留数据库的结构</p>
+<ul>
+<li>此命令会询问是 yes 还是 no, 选择 yes 会把数据全部清空掉，只留下空表</li>
+</ul>
+<h3 id="创建超级管理员"><a href="#创建超级管理员" class="headerlink" title="创建超级管理员"></a>创建超级管理员</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">python manage.py createsuperuser</span>
+</pre></td></tr></table></figure>
+<p>django很好的一点就是自带了后台管理功能，但是我们去使用的时候还是需要创建超级管理员，去管理后台</p>
+<ul>
+<li>按照提示输入用户名和对应的密码就好了邮箱可以留空，用户名和密码必填</li>
+</ul>
+<h4 id="修改-用户密码可以用："><a href="#修改-用户密码可以用：" class="headerlink" title="修改 用户密码可以用："></a>修改 用户密码可以用：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">python manage.py changepassword username</span>
+</pre></td></tr></table></figure>
+<h3 id="导出数据-导入数据"><a href="#导出数据-导入数据" class="headerlink" title="导出数据 导入数据"></a>导出数据 导入数据</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">python manage.py dumpdata appname &gt; appname.json</span>
+<span class="line">python manage.py loaddata appname.json</span>
+</pre></td></tr></table></figure>
+<p>这两条数据我们不是很常用 ，知道即可</p>
+<h3 id="Django-项目环境终端"><a href="#Django-项目环境终端" class="headerlink" title="Django 项目环境终端"></a>Django 项目环境终端</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">python manage.py shell</span>
+</pre></td></tr></table></figure>
+<p>你可以在这个 shell 里面调用当前项目的 models.py 中的 API，对于操作数据，还有一些小测试非常方便</p>
+<ul>
+<li>这里推荐安装 bpython 或 ipython通过pip安装即可 pip install ipython</li>
+<li>bpython 或 ipython有一些代码提示和语法高亮的功能，比较好用,这是ipython的效果<br><img src="http://of7ye9tny.bkt.clouddn.com/ipython.png" alt="ipthon效果图"></li>
+</ul>
+<blockquote>
+<p>注：</p>
+<ul>
+<li>上述代码在<strong>django1.7</strong>和<strong>Python2.7</strong>中编译成功运行，其他环境请自行测试</li>
+<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
+</ul>
+</blockquote>
+]]></content>
+      
+        <categories>
+            
+            <category> 学习笔记 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Django </tag>
+            
+            <tag> Python </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Django渲染模板]]></title>
+      <url>/2016/08/15/django%E6%B8%B2%E6%9F%93%E6%A8%A1%E6%9D%BF/</url>
+      <content type="html"><![CDATA[<p>在页面上显示内容可以简单的用django.http.HttpResponse来显示我们需要的内容，但是当我们需要一些处理一些复杂的数据或者从数据库读出来的操作要显示在html标签内或者js代码中就需要用渲染模板的方法。</p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="创建工程"><a href="#创建工程" class="headerlink" title="创建工程"></a>创建工程</h3><p>首先，使用一下代码创建一个名为ymxz的工程(读者可以根据需要设置自己的工程名)：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">django-admin startproject ymxz</span>
+</pre></td></tr></table></figure></p>
+<a id="more"></a>
+<ul>
+<li>当然你也可以用pycharm创建一个django工程</li>
+</ul>
+<h3 id="创建app"><a href="#创建app" class="headerlink" title="创建app"></a>创建app</h3><p>创建工程之后，cd到工程目录，创建一个名为myapp的应用<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">python manage.py startapp myapp</span>
+</pre></td></tr></table></figure></p>
+<ul>
+<li>上面操作完成后,我们的项目的目录结构如下:<br><img src="http://objects.earthchen.cn/django%E6%B8%B2%E6%9F%93%E6%A8%A1%E6%9D%BF%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%841.png" alt="渲染模板目录结构1"></li>
+</ul>
+<h3 id="创建模板"><a href="#创建模板" class="headerlink" title="创建模板"></a>创建模板</h3><p>在myapp目录下创建一个名为templates的目录，在这个目录下面创建一个网页，我这里叫index.html</p>
+<ul>
+<li>完成后，应如图所示:<br><img src="http://objects.earthchen.cn/django%E6%B8%B2%E6%9F%93%E6%A8%A1%E6%9D%BF%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%842.png" alt="渲染模板目录结构2"></li>
+<li>在index中写入我们需要显示的内容<br><img src="http://objects.earthchen.cn/%E6%B8%B2%E6%9F%93%E6%A8%A1%E6%9D%BFindex.png" alt="渲染模板index"></li>
+</ul>
+<h3 id="修改views-py"><a href="#修改views-py" class="headerlink" title="修改views.py"></a>修改views.py</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</span>
+<span class="line"></span>
+<span class="line"><span class="comment"># Create your views here.</span></span>
+<span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span><span class="params">(request)</span>:</span></span>
+<span class="line">    <span class="keyword">return</span> render(request,<span class="string">'index.html'</span>)</span>
+</pre></td></tr></table></figure>
+<h3 id="修改urls-py"><a href="#修改urls-py" class="headerlink" title="修改urls.py"></a>修改urls.py</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.conf.urls <span class="keyword">import</span> patterns, include, url</span>
+<span class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> admin</span>
+<span class="line"></span>
+<span class="line"><span class="keyword">from</span> myapp <span class="keyword">import</span> views</span>
+<span class="line"></span>
+<span class="line">urlpatterns = patterns(<span class="string">''</span>,</span>
+<span class="line">                       <span class="comment"># Examples:</span></span>
+<span class="line">                       <span class="comment"># url(r'^$', 'ymxz.views.home', name='home'),</span></span>
+<span class="line">                       <span class="comment"># url(r'^blog/', include('blog.urls')),</span></span>
+<span class="line"></span>
+<span class="line">                       url(<span class="string">r'^admin/'</span>, include(admin.site.urls)),</span>
+<span class="line">                       url(<span class="string">r'^index/'</span>, views.index),</span>
+<span class="line">                       )</span>
+</pre></td></tr></table></figure>
+<h3 id="修改settings-py"><a href="#修改settings-py" class="headerlink" title="修改settings.py"></a>修改settings.py</h3><p>修改INSTALLED_APPS这个字段添加我们的app–myapp<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+</pre></td><td class="code"><pre><span class="line">INSTALLED_APPS = (</span>
+<span class="line">    <span class="string">'django.contrib.admin'</span>,</span>
+<span class="line">    <span class="string">'django.contrib.auth'</span>,</span>
+<span class="line">    <span class="string">'django.contrib.contenttypes'</span>,</span>
+<span class="line">    <span class="string">'django.contrib.sessions'</span>,</span>
+<span class="line">    <span class="string">'django.contrib.messages'</span>,</span>
+<span class="line">    <span class="string">'django.contrib.staticfiles'</span>,</span>
+<span class="line">    <span class="string">'myapp'</span>,</span>
+<span class="line">)</span>
+</pre></td></tr></table></figure></p>
+<h3 id="打开调试服务器"><a href="#打开调试服务器" class="headerlink" title="打开调试服务器"></a>打开调试服务器</h3><p>在cmd中执行以下语句<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">python manage.py runserver</span>
+</pre></td></tr></table></figure></p>
+<ul>
+<li>在浏览器地址栏输入<a href="http://127.0.0.1:8000/index/" target="_blank" rel="external">http://127.0.0.1:8000/index/</a><br><img src="http://objects.earthchen.cn/django%E6%B8%B2%E6%9F%93%E6%A8%A1%E6%9D%BF%E7%BB%93%E6%9E%9C1.png" alt="django渲染模板结果"><br>如上图显示即为成功。</li>
+</ul>
+<h3 id="用模板语言从后台向前端传递数据"><a href="#用模板语言从后台向前端传递数据" class="headerlink" title="用模板语言从后台向前端传递数据"></a>用模板语言从后台向前端传递数据</h3><h4 id="打开views-py修改内容为"><a href="#打开views-py修改内容为" class="headerlink" title="打开views.py修改内容为:"></a>打开<strong>views.py</strong>修改内容为:</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</span>
+<span class="line"></span>
+<span class="line"><span class="comment"># Create your views here.</span></span>
+<span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span><span class="params">(request)</span>:</span></span>
+<span class="line">    str = <span class="string">'hello world django'</span></span>
+<span class="line">    <span class="keyword">return</span> render(request, <span class="string">'index.html'</span>, &#123;<span class="string">'test'</span>: str&#125;)</span>
+</pre></td></tr></table></figure>
+<ul>
+<li><strong>str</strong>可以是字符串，字典，列表，元组等数据，其他的请读者自行搜索django模板语言</li>
+</ul>
+<h4 id="修改index-html内容为"><a href="#修改index-html内容为" class="headerlink" title="修改index.html内容为:"></a>修改<strong>index.html</strong>内容为:</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+</pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span>
+<span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span>
+<span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span>
+<span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span>
+<span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span>
+<span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span>
+<span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span>
+<span class="line">&#123;&#123; test &#125;&#125;</span>
+<span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span>
+<span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span>
+</pre></td></tr></table></figure>
+<ul>
+<li><strong></strong> 是最简单的模板语言的一种,还可以做到循环遍历，判断等略微复杂一点的功能，请自行了解，本文将不做介绍。</li>
+<li>在浏览器地址栏输入<a href="http://127.0.0.1:8000/index/" target="_blank" rel="external">http://127.0.0.1:8000/index/</a><br><img src="http://objects.earthchen.cn/django%E6%B8%B2%E6%9F%93%E6%A8%A1%E6%9D%BF%E7%BB%93%E6%9E%9C2.png" alt="django渲染模板结果"><br>如上图显示即为成功。</li>
+</ul>
+<blockquote>
+<p>注：</p>
+<ul>
+<li>上述代码在<strong>django1.7</strong>和<strong>Python2.7</strong>中编译成功运行，其他环境请自行测试</li>
+<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
+</ul>
+</blockquote>
+]]></content>
+      
+        <categories>
+            
+            <category> 开发 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Django </tag>
             
             <tag> Python </tag>
             
@@ -25548,6 +25628,275 @@
     </entry>
     
     <entry>
+      <title><![CDATA[C语言二叉树的基本操作]]></title>
+      <url>/2016/07/15/C%E8%AF%AD%E8%A8%80%E4%BA%8C%E5%8F%89%E6%A0%91%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/</url>
+      <content type="html"><![CDATA[<p>树是数据结构中一门很重要的数据结构，在很多地方都能经常见到他的面孔，比如数据通信，压缩数据等都能见到树的身影。但是最常见的还是相对简单的二叉树，二叉树和常规树都可以进行相互转换。所以，二叉树的操作必不可少。我这里来简单介绍一下。<br>在数据结构中给的树和图中，我们最好使用递归来进行各种操作，会让代码更清晰易懂，代码也会更简洁。</p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="添加适当的头文件，定义hex一个栈数据结构，"><a href="#添加适当的头文件，定义hex一个栈数据结构，" class="headerlink" title="添加适当的头文件，定义hex一个栈数据结构，"></a>添加适当的头文件，定义hex一个栈数据结构，</h3><p>首先我们定义一个二叉树的数据结构</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+</pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span>
+<span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span>
+<span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXSIZE 100</span></span>
+<span class="line"><span class="keyword">typedef</span> <span class="keyword">char</span> ElemType;</span>
+<span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">BiTNode</span></span>
+<span class="line">&#123;</span></span>
+<span class="line">ElemType data;</span>
+<span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">BiTNode</span> *<span class="title">lchild</span>, *<span class="title">rchild</span>;</span></span>
+<span class="line">&#125;BiTNode, *BiTree;</span>
+</pre></td></tr></table></figure>
+<a id="more"></a>
+<h3 id="创建一个二叉树（前序）"><a href="#创建一个二叉树（前序）" class="headerlink" title="创建一个二叉树（前序）"></a>创建一个二叉树（前序）</h3><p>这里以前序作为例子，前中后序遍历的不同之在于递归的顺序</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">creatBiTree</span><span class="params">(BiTree *T)</span> </span>&#123;</span>
+<span class="line">	ElemType c;</span>
+<span class="line">	<span class="built_in">scanf</span>(<span class="string">"%c"</span>, &amp;c);</span>
+<span class="line">	<span class="keyword">if</span> (<span class="string">'#'</span> == c)</span>
+<span class="line">	&#123;</span>
+<span class="line">		*T = <span class="literal">NULL</span>;</span>
+<span class="line">	&#125;</span>
+<span class="line">	<span class="keyword">else</span></span>
+<span class="line">	&#123;</span>
+<span class="line">		*T = (BiTNode *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(BiTNode));</span>
+<span class="line">		(*T)-&gt;data = c;</span>
+<span class="line">		creatBiTree(&amp;(*T)-&gt;lchild);</span>
+<span class="line">		creatBiTree(&amp;(*T)-&gt;rchild);</span>
+<span class="line">	&#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<h3 id="遍历二叉树-前序遍历"><a href="#遍历二叉树-前序遍历" class="headerlink" title="遍历二叉树(前序遍历)"></a>遍历二叉树(前序遍历)</h3><p>这里依然以前序作为例子，前中后序遍历的不同之在于递归的顺序<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">preorder</span><span class="params">(BiTree T)</span> </span>&#123;</span>
+<span class="line">	<span class="keyword">if</span> (T) &#123;</span>
+<span class="line">		<span class="built_in">printf</span>(<span class="string">"%c\n"</span>, T-&gt;data);</span>
+<span class="line">		preorder(T-&gt;lchild);</span>
+<span class="line">		preorder(T-&gt;rchild);</span>
+<span class="line">	&#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure></p>
+<h3 id="层次遍历二叉树"><a href="#层次遍历二叉树" class="headerlink" title="层次遍历二叉树"></a>层次遍历二叉树</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+<span class="line">27</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">levelorder</span><span class="params">(BiTree T)</span> </span>&#123;</span>
+<span class="line">	<span class="comment">//用一个队列保存结点信息,这里的队列采用的是顺序队列中的数组实现</span></span>
+<span class="line">	<span class="keyword">int</span> front = <span class="number">0</span>;</span>
+<span class="line">	<span class="keyword">int</span> rear = <span class="number">0</span>;</span>
+<span class="line">	BiTree BiQueue[MAXSIZE];</span>
+<span class="line">	BiTree tempNode;</span>
+<span class="line">	<span class="keyword">if</span> (!IsEmpty_BiTree(&amp;T)) &#123;</span>
+<span class="line">		<span class="comment">//将根结点加入到队列中　</span></span>
+<span class="line">		BiQueue[rear++] = T;</span>
+<span class="line"></span>
+<span class="line">		<span class="keyword">while</span> (front != rear) &#123;</span>
+<span class="line">			<span class="comment">//取出队头元素，并使队头指针向后移动一位　</span></span>
+<span class="line">			tempNode = BiQueue[front++];</span>
+<span class="line">			<span class="comment">//判断左右子树是否为空,若为空，则加入队列　</span></span>
+<span class="line">			<span class="keyword">if</span> (!IsEmpty_BiTree(&amp;(tempNode-&gt;lchild)))</span>
+<span class="line">				BiQueue[rear++] = tempNode-&gt;lchild;</span>
+<span class="line"></span>
+<span class="line">			<span class="keyword">if</span> (!IsEmpty_BiTree(&amp;(tempNode-&gt;rchild)))</span>
+<span class="line">				BiQueue[rear++] = tempNode-&gt;rchild;</span>
+<span class="line"></span>
+<span class="line">			<span class="comment">//输出队头结点元素　</span></span>
+<span class="line">			<span class="comment">//Vist_BiTreeNode(tempNode-&gt;data);</span></span>
+<span class="line">			<span class="built_in">printf</span>(<span class="string">"%c\n"</span>, tempNode-&gt;data);</span>
+<span class="line"></span>
+<span class="line">		&#125;</span>
+<span class="line">	&#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<h3 id="复制树"><a href="#复制树" class="headerlink" title="复制树"></a>复制树</h3><p>将二叉树复制给另一个二叉树</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">copybitree</span><span class="params">(BiTree T, BiTree *newT)</span> </span>&#123;</span>
+<span class="line">	<span class="keyword">if</span> (T == <span class="literal">NULL</span>)</span>
+<span class="line">	&#123;</span>
+<span class="line">		*newT = <span class="literal">NULL</span>;</span>
+<span class="line">		<span class="keyword">return</span>;</span>
+<span class="line">	&#125;</span>
+<span class="line">	<span class="keyword">else</span></span>
+<span class="line">	&#123;</span>
+<span class="line">		*newT = (BiTNode *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(BiTNode));</span>
+<span class="line">		((*newT)-&gt;data) = (T-&gt;data);</span>
+<span class="line">		copybitree(T-&gt;lchild, &amp;(*newT)-&gt;lchild);</span>
+<span class="line">		copybitree(T-&gt;rchild, &amp;(*newT)-&gt;rchild);</span>
+<span class="line">	&#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<h3 id="计算结点个数"><a href="#计算结点个数" class="headerlink" title="计算结点个数"></a>计算结点个数</h3><p>计算二叉树的结点个数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">countleaf</span><span class="params">(BiTree T)</span> </span>&#123;</span>
+<span class="line">	<span class="keyword">if</span> (T == <span class="literal">NULL</span>)</span>
+<span class="line">	&#123;</span>
+<span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span>
+<span class="line">	&#125;</span>
+<span class="line">	<span class="keyword">else</span> &#123;</span>
+<span class="line">		<span class="keyword">return</span> countleaf(T-&gt;lchild) + countleaf(T-&gt;rchild) + <span class="number">1</span>;</span>
+<span class="line">	&#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<h3 id="左、右子树交换"><a href="#左、右子树交换" class="headerlink" title="左、右子树交换"></a>左、右子树交换</h3><p>交换一颗二叉树的左右子树</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">exchange</span><span class="params">(BiTree T)</span> </span>
+<span class="line"></span>&#123;</span>
+<span class="line">	BiTree p;</span>
+<span class="line">	<span class="keyword">if</span> (T != <span class="literal">NULL</span>)</span>
+<span class="line">	&#123;</span>
+<span class="line">		p = T-&gt;lchild;</span>
+<span class="line">		T-&gt;lchild = T-&gt;rchild;</span>
+<span class="line">		T-&gt;rchild = p;</span>
+<span class="line">		exchange(T-&gt;lchild);</span>
+<span class="line">		exchange(T-&gt;rchild);</span>
+<span class="line">	&#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<h3 id="主函数"><a href="#主函数" class="headerlink" title="主函数"></a>主函数</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span>
+<span class="line">	BiTree T=<span class="literal">NULL</span>,newT=<span class="literal">NULL</span>;</span>
+<span class="line">	creatBiTree(&amp;T);</span>
+<span class="line">	<span class="built_in">printf</span>(<span class="string">"前序遍历\n"</span>);</span>
+<span class="line">	preorder(T);</span>
+<span class="line">	<span class="built_in">printf</span>(<span class="string">"中序遍历\n"</span>);</span>
+<span class="line">	inorder(T);</span>
+<span class="line">	<span class="built_in">printf</span>(<span class="string">"中后遍历\n"</span>);</span>
+<span class="line">	postorder(T);</span>
+<span class="line">	<span class="built_in">printf</span>(<span class="string">"层序遍历\n"</span>);</span>
+<span class="line">	levelorder(T);</span>
+<span class="line">	<span class="built_in">printf</span>(<span class="string">"节点个数为%d\n"</span>, countleaf(T));</span>
+<span class="line">	copybitree(T, &amp;newT);</span>
+<span class="line">	<span class="built_in">printf</span>(<span class="string">"newT前序遍历\n"</span>);</span>
+<span class="line">	preorder(newT);</span>
+<span class="line">	exchange(T);</span>
+<span class="line">	<span class="built_in">printf</span>(<span class="string">"交换左右子树之后前序遍历为"</span>);</span>
+<span class="line">	preorder(T);</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<h3 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h3><p><img src="http://objects.earthchen.cn/%E4%BA%8C%E5%8F%89%E6%A0%91%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C.png" alt="二叉树运行结果"><br>以上就是二叉树的一些基本操作，大量运用的递归的思想，希望读者能好好研读</p>
+<blockquote>
+<p>注：</p>
+<ul>
+<li>上述代码在<strong>visual studio 2015</strong>中编译成功运行，其他ide请自行测试</li>
+<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
+</ul>
+</blockquote>
+]]></content>
+      
+        <categories>
+            
+            <category> 开发 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> c </tag>
+            
+            <tag> 数据结构 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[C语言中缀表达式转后缀表达式]]></title>
       <url>/2016/07/15/c%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8F%98%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F/</url>
       <content type="html"><![CDATA[<p>众所周知,计算机中不能直接用中缀表达式计算,形如(1+2)*(4-5)之类的，但是我们可以计算机可以很容易的通过后缀表达式来计算我们所输入的算式。所以我们就需要把中缀表达式转换为后缀表达式。下面是个人写的一点代码，大家可以参考。</p>
@@ -25791,204 +26140,6 @@
 <span class="line">&#125;</span>
 </pre></td></tr></table></figure>
 <h3 id="以下是运行结果-本人用的是vs2015编译器，所以文中的scanf用了更安全的scanf-s，-如有引用-请自觉替换成和自己的编译器想匹配的函数"><a href="#以下是运行结果-本人用的是vs2015编译器，所以文中的scanf用了更安全的scanf-s，-如有引用-请自觉替换成和自己的编译器想匹配的函数" class="headerlink" title="以下是运行结果 本人用的是vs2015编译器，所以文中的scanf用了更安全的scanf_s，  如有引用 请自觉替换成和自己的编译器想匹配的函数"></a>以下是运行结果 本人用的是vs2015编译器，所以文中的scanf用了更安全的scanf_s，  如有引用 请自觉替换成和自己的编译器想匹配的函数</h3><p><img src="http://objects.earthchen.cn/c%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%BD%AC%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F.png" alt="cmd 运行结果"><br>代码很简单 ，仔细看看研究一下指针就很容易看懂，</p>
-<blockquote>
-<p>注：</p>
-<ul>
-<li>上述代码在<strong>visual studio 2015</strong>中编译成功运行，其他ide请自行测试</li>
-<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
-</ul>
-</blockquote>
-]]></content>
-      
-        <categories>
-            
-            <category> 开发 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> c </tag>
-            
-            <tag> 数据结构 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[C语言共享栈]]></title>
-      <url>/2016/07/15/C%E8%AF%AD%E8%A8%80%E5%85%B1%E4%BA%AB%E6%A0%88/</url>
-      <content type="html"><![CDATA[<p>栈的操作我相信大家都应该了解了弄懂了，  如果没弄懂希望可以去再去看看相关的资料，我博客中的<a href="/2016/10/18/c%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8F%98%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F/">C语言中缀表达式转后缀表达式</a>中涉及到了一下栈的基本操作，有兴趣的朋友也可以看看。<br>所谓共享栈，就是两个栈共同使用一块内存空间，其中一个栈的栈底作为另一个栈的栈顶，反之亦然。</p>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="思路分析"><a href="#思路分析" class="headerlink" title="思路分析"></a>思路分析</h3><blockquote>
-<p>因为两个栈公用一个空间，假设一个栈为0#，规定其为空时top[0]==-1；另一个栈为1#规定其为空时，top[1]==MaxSize；<br>入栈时，先确定栈号是否合法，然后查看是对0#栈还是1#栈进行操作，入栈操作和顺序栈的入栈操作并无太大不同。<br>选定之后进行入栈操作。这里应该注意此共享栈是否已满，如果已满则不能进行入栈操作。如若入栈成功则返回0；入栈失败则返回-1；<br>出栈时，先确定栈号是否合法，然后查看是对0#栈还是1#栈进行操作，出栈操作和顺序栈的出栈操作并无太大不同。<br>选定之后进行出栈操作。如果出栈成功返回0；出栈失败返回-1；<br><a id="more"></a></p>
-</blockquote>
-<h3 id="添加适当的头文件，定义一个栈数据结构，"><a href="#添加适当的头文件，定义一个栈数据结构，" class="headerlink" title="添加适当的头文件，定义一个栈数据结构，"></a>添加适当的头文件，定义一个栈数据结构，</h3><p>共享栈也是栈，只不过有点特殊，在这里我们还是需要添加适当的头文件和定义恰当的数据结构</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-</pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span>
-<span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span>
-<span class="line"><span class="meta">#<span class="meta-keyword">define</span>  MaxSize 100</span></span>
-<span class="line"></span>
-<span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> ElemType;</span>
-<span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span>
-<span class="line">	ElemType data[MaxSize];</span>
-<span class="line">	<span class="keyword">int</span> top[<span class="number">2</span>];</span>
-<span class="line">&#125;SqStack;</span>
-</pre></td></tr></table></figure>
-<h3 id="初始化共享栈"><a href="#初始化共享栈" class="headerlink" title="初始化共享栈"></a>初始化共享栈</h3><p>由于我这里用的是顺序存储结构的栈结构（也就是数据），top也就是一个标记而已，分别代编栈1和栈2的标记<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">InitStack</span><span class="params">(SqStack *s)</span></span>
-<span class="line"></span>&#123;</span>
-<span class="line">	s-&gt;top[<span class="number">0</span>] = <span class="number">-1</span>;</span>
-<span class="line">	s-&gt;top[<span class="number">1</span>] = MaxSize;</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure></p>
-<h3 id="入栈操作"><a href="#入栈操作" class="headerlink" title="入栈操作"></a>入栈操作</h3><p>在入栈的时候，我们需要选择入的是两个栈中的哪一个栈，我们这里用0和1来区分</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Push</span><span class="params">(SqStack*s, ElemType x, <span class="keyword">int</span> n)</span></span>
-<span class="line"></span>&#123;</span>
-<span class="line">	<span class="keyword">if</span> (n &lt; <span class="number">0</span> || n&gt;<span class="number">1</span>) &#123;</span>
-<span class="line">		<span class="built_in">printf</span>(<span class="string">"The stack number is false!\n"</span>);</span>
-<span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span>
-<span class="line">	&#125;</span>
-<span class="line">	<span class="keyword">if</span> (s-&gt;top[<span class="number">1</span>] - s-&gt;top[<span class="number">0</span>] == <span class="number">1</span>) &#123;</span>
-<span class="line">		<span class="built_in">printf</span>(<span class="string">"The stack is full!\n"</span>);</span>
-<span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span>
-<span class="line">	&#125;</span>
-<span class="line">	<span class="keyword">switch</span> (n) &#123;</span>
-<span class="line">	<span class="keyword">case</span> <span class="number">0</span>:s-&gt;data[++s-&gt;top[<span class="number">0</span>]] = x; <span class="keyword">break</span>;</span>
-<span class="line">	<span class="keyword">case</span> <span class="number">1</span>:s-&gt;data[--s-&gt;top[<span class="number">1</span>]] = x; <span class="keyword">break</span>;</span>
-<span class="line">	&#125;</span>
-<span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
-<h3 id="出栈操作"><a href="#出栈操作" class="headerlink" title="出栈操作"></a>出栈操作</h3><p>出栈和入栈一样，也需要选择出栈的具体是哪个栈</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-<span class="line">17</span>
-<span class="line">18</span>
-<span class="line">19</span>
-<span class="line">20</span>
-<span class="line">21</span>
-<span class="line">22</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Pop</span><span class="params">(SqStack *s, ElemType* x, <span class="keyword">int</span> n)</span></span>
-<span class="line"></span>&#123;</span>
-<span class="line">	<span class="keyword">if</span> (n &lt; <span class="number">0</span> || n&gt;<span class="number">1</span>) &#123;</span>
-<span class="line">		<span class="built_in">printf</span>(<span class="string">"The stack number is false!\n"</span>);</span>
-<span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span>
-<span class="line">	&#125;</span>
-<span class="line">	<span class="keyword">switch</span> (n) &#123;</span>
-<span class="line">	<span class="keyword">case</span> <span class="number">0</span>:</span>
-<span class="line">		<span class="keyword">if</span> (s-&gt;top[<span class="number">0</span>] == <span class="number">-1</span>) &#123;</span>
-<span class="line">			<span class="built_in">printf</span>(<span class="string">"The stack[0] is empty!\n"</span>);</span>
-<span class="line">		&#125;</span>
-<span class="line">		*x = s-&gt;data[s-&gt;top[<span class="number">0</span>]--];</span>
-<span class="line">		<span class="keyword">break</span>;</span>
-<span class="line">	<span class="keyword">case</span> <span class="number">1</span>:</span>
-<span class="line">		<span class="keyword">if</span> (s-&gt;top[<span class="number">1</span>] == MaxSize) &#123;</span>
-<span class="line">			<span class="built_in">printf</span>(<span class="string">"The stack[1] is empty!\n"</span>);</span>
-<span class="line">		&#125;</span>
-<span class="line">		*x = s-&gt;data[s-&gt;top[<span class="number">1</span>]++];</span>
-<span class="line">		<span class="keyword">break</span>;</span>
-<span class="line">	&#125;</span>
-<span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
-<h3 id="主函数"><a href="#主函数" class="headerlink" title="主函数"></a>主函数</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-<span class="line">17</span>
-<span class="line">18</span>
-<span class="line">19</span>
-<span class="line">20</span>
-<span class="line">21</span>
-<span class="line">22</span>
-<span class="line">23</span>
-<span class="line">24</span>
-<span class="line">25</span>
-<span class="line">26</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span></span>
-<span class="line"></span>&#123;</span>
-<span class="line">	SqStack s;</span>
-<span class="line">	InitStack(&amp;s);</span>
-<span class="line"></span>
-<span class="line">	ElemType x = <span class="number">5</span>;</span>
-<span class="line">	<span class="keyword">int</span> n = <span class="number">0</span>;</span>
-<span class="line">	<span class="keyword">int</span> flagPush;</span>
-<span class="line">	flagPush = Push(&amp;s, x, n);</span>
-<span class="line">	<span class="keyword">if</span> (flagPush) &#123;</span>
-<span class="line">		<span class="built_in">printf</span>(<span class="string">"Push false!\n"</span>);</span>
-<span class="line">	&#125;</span>
-<span class="line">	<span class="keyword">else</span> &#123;</span>
-<span class="line">		<span class="built_in">printf</span>(<span class="string">"Push %d success!\n"</span>, x);</span>
-<span class="line">	&#125;</span>
-<span class="line"></span>
-<span class="line">	<span class="keyword">int</span> flagPop;</span>
-<span class="line">	flagPop = Pop(&amp;s, &amp;x, n);</span>
-<span class="line">	<span class="keyword">if</span> (flagPop) &#123;</span>
-<span class="line">		<span class="built_in">printf</span>(<span class="string">"Pop false!\n"</span>);</span>
-<span class="line">	&#125;</span>
-<span class="line">	<span class="keyword">else</span> &#123;</span>
-<span class="line">		<span class="built_in">printf</span>(<span class="string">"Pop %d  success!\n"</span>, x);</span>
-<span class="line">	&#125;</span>
-<span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
-<h3 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h3><p><img src="http://objects.earthchen.cn/C%E8%AF%AD%E8%A8%80%E5%85%B1%E4%BA%AB%E6%A0%88%E7%BB%93%E6%9E%9C.png" alt="c语言共享栈运行结果"><br>以上就是共享栈的简单操作，我这里只测试他是否能够成功，如有需要，请研读代码后自行修改，如果一时看不懂，请多看几遍思路分析，把原理弄懂，代码还是想当简单的。</p>
 <blockquote>
 <p>注：</p>
 <ul>
@@ -26299,10 +26450,13 @@
     </entry>
     
     <entry>
-      <title><![CDATA[C语言二叉树的基本操作]]></title>
-      <url>/2016/07/15/C%E8%AF%AD%E8%A8%80%E4%BA%8C%E5%8F%89%E6%A0%91%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/</url>
-      <content type="html"><![CDATA[<p>树是数据结构中一门很重要的数据结构，在很多地方都能经常见到他的面孔，比如数据通信，压缩数据等都能见到树的身影。但是最常见的还是相对简单的二叉树，二叉树和常规树都可以进行相互转换。所以，二叉树的操作必不可少。我这里来简单介绍一下。<br>在数据结构中给的树和图中，我们最好使用递归来进行各种操作，会让代码更清晰易懂，代码也会更简洁。</p>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="添加适当的头文件，定义hex一个栈数据结构，"><a href="#添加适当的头文件，定义hex一个栈数据结构，" class="headerlink" title="添加适当的头文件，定义hex一个栈数据结构，"></a>添加适当的头文件，定义hex一个栈数据结构，</h3><p>首先我们定义一个二叉树的数据结构</p>
+      <title><![CDATA[C语言共享栈]]></title>
+      <url>/2016/07/15/C%E8%AF%AD%E8%A8%80%E5%85%B1%E4%BA%AB%E6%A0%88/</url>
+      <content type="html"><![CDATA[<p>栈的操作我相信大家都应该了解了弄懂了，  如果没弄懂希望可以去再去看看相关的资料，我博客中的<a href="/2016/10/18/c%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8F%98%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F/">C语言中缀表达式转后缀表达式</a>中涉及到了一下栈的基本操作，有兴趣的朋友也可以看看。<br>所谓共享栈，就是两个栈共同使用一块内存空间，其中一个栈的栈底作为另一个栈的栈顶，反之亦然。</p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="思路分析"><a href="#思路分析" class="headerlink" title="思路分析"></a>思路分析</h3><blockquote>
+<p>因为两个栈公用一个空间，假设一个栈为0#，规定其为空时top[0]==-1；另一个栈为1#规定其为空时，top[1]==MaxSize；<br>入栈时，先确定栈号是否合法，然后查看是对0#栈还是1#栈进行操作，入栈操作和顺序栈的入栈操作并无太大不同。<br>选定之后进行入栈操作。这里应该注意此共享栈是否已满，如果已满则不能进行入栈操作。如若入栈成功则返回0；入栈失败则返回-1；<br>出栈时，先确定栈号是否合法，然后查看是对0#栈还是1#栈进行操作，出栈操作和顺序栈的出栈操作并无太大不同。<br>选定之后进行出栈操作。如果出栈成功返回0；出栈失败返回-1；<br><a id="more"></a></p>
+</blockquote>
+<h3 id="添加适当的头文件，定义一个栈数据结构，"><a href="#添加适当的头文件，定义一个栈数据结构，" class="headerlink" title="添加适当的头文件，定义一个栈数据结构，"></a>添加适当的头文件，定义一个栈数据结构，</h3><p>共享栈也是栈，只不过有点特殊，在这里我们还是需要添加适当的头文件和定义恰当的数据结构</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
@@ -26312,18 +26466,28 @@
 <span class="line">7</span>
 <span class="line">8</span>
 <span class="line">9</span>
-</pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span>
-<span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span>
-<span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXSIZE 100</span></span>
-<span class="line"><span class="keyword">typedef</span> <span class="keyword">char</span> ElemType;</span>
-<span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">BiTNode</span></span>
-<span class="line">&#123;</span></span>
-<span class="line">ElemType data;</span>
-<span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">BiTNode</span> *<span class="title">lchild</span>, *<span class="title">rchild</span>;</span></span>
-<span class="line">&#125;BiTNode, *BiTree;</span>
+</pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span>
+<span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span>
+<span class="line"><span class="meta">#<span class="meta-keyword">define</span>  MaxSize 100</span></span>
+<span class="line"></span>
+<span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> ElemType;</span>
+<span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span>
+<span class="line">	ElemType data[MaxSize];</span>
+<span class="line">	<span class="keyword">int</span> top[<span class="number">2</span>];</span>
+<span class="line">&#125;SqStack;</span>
 </pre></td></tr></table></figure>
-<a id="more"></a>
-<h3 id="创建一个二叉树（前序）"><a href="#创建一个二叉树（前序）" class="headerlink" title="创建一个二叉树（前序）"></a>创建一个二叉树（前序）</h3><p>这里以前序作为例子，前中后序遍历的不同之在于递归的顺序</p>
+<h3 id="初始化共享栈"><a href="#初始化共享栈" class="headerlink" title="初始化共享栈"></a>初始化共享栈</h3><p>由于我这里用的是顺序存储结构的栈结构（也就是数据），top也就是一个标记而已，分别代编栈1和栈2的标记<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">InitStack</span><span class="params">(SqStack *s)</span></span>
+<span class="line"></span>&#123;</span>
+<span class="line">	s-&gt;top[<span class="number">0</span>] = <span class="number">-1</span>;</span>
+<span class="line">	s-&gt;top[<span class="number">1</span>] = MaxSize;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure></p>
+<h3 id="入栈操作"><a href="#入栈操作" class="headerlink" title="入栈操作"></a>入栈操作</h3><p>在入栈的时候，我们需要选择入的是两个栈中的哪一个栈，我们这里用0和1来区分</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
@@ -26339,38 +26503,71 @@
 <span class="line">13</span>
 <span class="line">14</span>
 <span class="line">15</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">creatBiTree</span><span class="params">(BiTree *T)</span> </span>&#123;</span>
-<span class="line">	ElemType c;</span>
-<span class="line">	<span class="built_in">scanf</span>(<span class="string">"%c"</span>, &amp;c);</span>
-<span class="line">	<span class="keyword">if</span> (<span class="string">'#'</span> == c)</span>
-<span class="line">	&#123;</span>
-<span class="line">		*T = <span class="literal">NULL</span>;</span>
+<span class="line">16</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Push</span><span class="params">(SqStack*s, ElemType x, <span class="keyword">int</span> n)</span></span>
+<span class="line"></span>&#123;</span>
+<span class="line">	<span class="keyword">if</span> (n &lt; <span class="number">0</span> || n&gt;<span class="number">1</span>) &#123;</span>
+<span class="line">		<span class="built_in">printf</span>(<span class="string">"The stack number is false!\n"</span>);</span>
+<span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span>
 <span class="line">	&#125;</span>
-<span class="line">	<span class="keyword">else</span></span>
-<span class="line">	&#123;</span>
-<span class="line">		*T = (BiTNode *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(BiTNode));</span>
-<span class="line">		(*T)-&gt;data = c;</span>
-<span class="line">		creatBiTree(&amp;(*T)-&gt;lchild);</span>
-<span class="line">		creatBiTree(&amp;(*T)-&gt;rchild);</span>
+<span class="line">	<span class="keyword">if</span> (s-&gt;top[<span class="number">1</span>] - s-&gt;top[<span class="number">0</span>] == <span class="number">1</span>) &#123;</span>
+<span class="line">		<span class="built_in">printf</span>(<span class="string">"The stack is full!\n"</span>);</span>
+<span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span>
 <span class="line">	&#125;</span>
+<span class="line">	<span class="keyword">switch</span> (n) &#123;</span>
+<span class="line">	<span class="keyword">case</span> <span class="number">0</span>:s-&gt;data[++s-&gt;top[<span class="number">0</span>]] = x; <span class="keyword">break</span>;</span>
+<span class="line">	<span class="keyword">case</span> <span class="number">1</span>:s-&gt;data[--s-&gt;top[<span class="number">1</span>]] = x; <span class="keyword">break</span>;</span>
+<span class="line">	&#125;</span>
+<span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span>
 <span class="line">&#125;</span>
 </pre></td></tr></table></figure>
-<h3 id="遍历二叉树-前序遍历"><a href="#遍历二叉树-前序遍历" class="headerlink" title="遍历二叉树(前序遍历)"></a>遍历二叉树(前序遍历)</h3><p>这里依然以前序作为例子，前中后序遍历的不同之在于递归的顺序<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<h3 id="出栈操作"><a href="#出栈操作" class="headerlink" title="出栈操作"></a>出栈操作</h3><p>出栈和入栈一样，也需要选择出栈的具体是哪个栈</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
 <span class="line">4</span>
 <span class="line">5</span>
 <span class="line">6</span>
 <span class="line">7</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">preorder</span><span class="params">(BiTree T)</span> </span>&#123;</span>
-<span class="line">	<span class="keyword">if</span> (T) &#123;</span>
-<span class="line">		<span class="built_in">printf</span>(<span class="string">"%c\n"</span>, T-&gt;data);</span>
-<span class="line">		preorder(T-&gt;lchild);</span>
-<span class="line">		preorder(T-&gt;rchild);</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Pop</span><span class="params">(SqStack *s, ElemType* x, <span class="keyword">int</span> n)</span></span>
+<span class="line"></span>&#123;</span>
+<span class="line">	<span class="keyword">if</span> (n &lt; <span class="number">0</span> || n&gt;<span class="number">1</span>) &#123;</span>
+<span class="line">		<span class="built_in">printf</span>(<span class="string">"The stack number is false!\n"</span>);</span>
+<span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span>
 <span class="line">	&#125;</span>
+<span class="line">	<span class="keyword">switch</span> (n) &#123;</span>
+<span class="line">	<span class="keyword">case</span> <span class="number">0</span>:</span>
+<span class="line">		<span class="keyword">if</span> (s-&gt;top[<span class="number">0</span>] == <span class="number">-1</span>) &#123;</span>
+<span class="line">			<span class="built_in">printf</span>(<span class="string">"The stack[0] is empty!\n"</span>);</span>
+<span class="line">		&#125;</span>
+<span class="line">		*x = s-&gt;data[s-&gt;top[<span class="number">0</span>]--];</span>
+<span class="line">		<span class="keyword">break</span>;</span>
+<span class="line">	<span class="keyword">case</span> <span class="number">1</span>:</span>
+<span class="line">		<span class="keyword">if</span> (s-&gt;top[<span class="number">1</span>] == MaxSize) &#123;</span>
+<span class="line">			<span class="built_in">printf</span>(<span class="string">"The stack[1] is empty!\n"</span>);</span>
+<span class="line">		&#125;</span>
+<span class="line">		*x = s-&gt;data[s-&gt;top[<span class="number">1</span>]++];</span>
+<span class="line">		<span class="keyword">break</span>;</span>
+<span class="line">	&#125;</span>
+<span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span>
 <span class="line">&#125;</span>
-</pre></td></tr></table></figure></p>
-<h3 id="层次遍历二叉树"><a href="#层次遍历二叉树" class="headerlink" title="层次遍历二叉树"></a>层次遍历二叉树</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td></tr></table></figure>
+<h3 id="主函数"><a href="#主函数" class="headerlink" title="主函数"></a>主函数</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
 <span class="line">2</span>
 <span class="line">3</span>
 <span class="line">4</span>
@@ -26396,151 +26593,34 @@
 <span class="line">24</span>
 <span class="line">25</span>
 <span class="line">26</span>
-<span class="line">27</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">levelorder</span><span class="params">(BiTree T)</span> </span>&#123;</span>
-<span class="line">	<span class="comment">//用一个队列保存结点信息,这里的队列采用的是顺序队列中的数组实现</span></span>
-<span class="line">	<span class="keyword">int</span> front = <span class="number">0</span>;</span>
-<span class="line">	<span class="keyword">int</span> rear = <span class="number">0</span>;</span>
-<span class="line">	BiTree BiQueue[MAXSIZE];</span>
-<span class="line">	BiTree tempNode;</span>
-<span class="line">	<span class="keyword">if</span> (!IsEmpty_BiTree(&amp;T)) &#123;</span>
-<span class="line">		<span class="comment">//将根结点加入到队列中　</span></span>
-<span class="line">		BiQueue[rear++] = T;</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span></span>
+<span class="line"></span>&#123;</span>
+<span class="line">	SqStack s;</span>
+<span class="line">	InitStack(&amp;s);</span>
 <span class="line"></span>
-<span class="line">		<span class="keyword">while</span> (front != rear) &#123;</span>
-<span class="line">			<span class="comment">//取出队头元素，并使队头指针向后移动一位　</span></span>
-<span class="line">			tempNode = BiQueue[front++];</span>
-<span class="line">			<span class="comment">//判断左右子树是否为空,若为空，则加入队列　</span></span>
-<span class="line">			<span class="keyword">if</span> (!IsEmpty_BiTree(&amp;(tempNode-&gt;lchild)))</span>
-<span class="line">				BiQueue[rear++] = tempNode-&gt;lchild;</span>
-<span class="line"></span>
-<span class="line">			<span class="keyword">if</span> (!IsEmpty_BiTree(&amp;(tempNode-&gt;rchild)))</span>
-<span class="line">				BiQueue[rear++] = tempNode-&gt;rchild;</span>
-<span class="line"></span>
-<span class="line">			<span class="comment">//输出队头结点元素　</span></span>
-<span class="line">			<span class="comment">//Vist_BiTreeNode(tempNode-&gt;data);</span></span>
-<span class="line">			<span class="built_in">printf</span>(<span class="string">"%c\n"</span>, tempNode-&gt;data);</span>
-<span class="line"></span>
-<span class="line">		&#125;</span>
-<span class="line">	&#125;</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
-<h3 id="复制树"><a href="#复制树" class="headerlink" title="复制树"></a>复制树</h3><p>将二叉树复制给另一个二叉树</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">copybitree</span><span class="params">(BiTree T, BiTree *newT)</span> </span>&#123;</span>
-<span class="line">	<span class="keyword">if</span> (T == <span class="literal">NULL</span>)</span>
-<span class="line">	&#123;</span>
-<span class="line">		*newT = <span class="literal">NULL</span>;</span>
-<span class="line">		<span class="keyword">return</span>;</span>
-<span class="line">	&#125;</span>
-<span class="line">	<span class="keyword">else</span></span>
-<span class="line">	&#123;</span>
-<span class="line">		*newT = (BiTNode *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(BiTNode));</span>
-<span class="line">		((*newT)-&gt;data) = (T-&gt;data);</span>
-<span class="line">		copybitree(T-&gt;lchild, &amp;(*newT)-&gt;lchild);</span>
-<span class="line">		copybitree(T-&gt;rchild, &amp;(*newT)-&gt;rchild);</span>
-<span class="line">	&#125;</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
-<h3 id="计算结点个数"><a href="#计算结点个数" class="headerlink" title="计算结点个数"></a>计算结点个数</h3><p>计算二叉树的结点个数</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">countleaf</span><span class="params">(BiTree T)</span> </span>&#123;</span>
-<span class="line">	<span class="keyword">if</span> (T == <span class="literal">NULL</span>)</span>
-<span class="line">	&#123;</span>
-<span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span>
+<span class="line">	ElemType x = <span class="number">5</span>;</span>
+<span class="line">	<span class="keyword">int</span> n = <span class="number">0</span>;</span>
+<span class="line">	<span class="keyword">int</span> flagPush;</span>
+<span class="line">	flagPush = Push(&amp;s, x, n);</span>
+<span class="line">	<span class="keyword">if</span> (flagPush) &#123;</span>
+<span class="line">		<span class="built_in">printf</span>(<span class="string">"Push false!\n"</span>);</span>
 <span class="line">	&#125;</span>
 <span class="line">	<span class="keyword">else</span> &#123;</span>
-<span class="line">		<span class="keyword">return</span> countleaf(T-&gt;lchild) + countleaf(T-&gt;rchild) + <span class="number">1</span>;</span>
+<span class="line">		<span class="built_in">printf</span>(<span class="string">"Push %d success!\n"</span>, x);</span>
 <span class="line">	&#125;</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
-<h3 id="左、右子树交换"><a href="#左、右子树交换" class="headerlink" title="左、右子树交换"></a>左、右子树交换</h3><p>交换一颗二叉树的左右子树</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">exchange</span><span class="params">(BiTree T)</span> </span>
-<span class="line"></span>&#123;</span>
-<span class="line">	BiTree p;</span>
-<span class="line">	<span class="keyword">if</span> (T != <span class="literal">NULL</span>)</span>
-<span class="line">	&#123;</span>
-<span class="line">		p = T-&gt;lchild;</span>
-<span class="line">		T-&gt;lchild = T-&gt;rchild;</span>
-<span class="line">		T-&gt;rchild = p;</span>
-<span class="line">		exchange(T-&gt;lchild);</span>
-<span class="line">		exchange(T-&gt;rchild);</span>
+<span class="line"></span>
+<span class="line">	<span class="keyword">int</span> flagPop;</span>
+<span class="line">	flagPop = Pop(&amp;s, &amp;x, n);</span>
+<span class="line">	<span class="keyword">if</span> (flagPop) &#123;</span>
+<span class="line">		<span class="built_in">printf</span>(<span class="string">"Pop false!\n"</span>);</span>
 <span class="line">	&#125;</span>
+<span class="line">	<span class="keyword">else</span> &#123;</span>
+<span class="line">		<span class="built_in">printf</span>(<span class="string">"Pop %d  success!\n"</span>, x);</span>
+<span class="line">	&#125;</span>
+<span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span>
 <span class="line">&#125;</span>
 </pre></td></tr></table></figure>
-<h3 id="主函数"><a href="#主函数" class="headerlink" title="主函数"></a>主函数</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-<span class="line">17</span>
-<span class="line">18</span>
-<span class="line">19</span>
-</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span>
-<span class="line">	BiTree T=<span class="literal">NULL</span>,newT=<span class="literal">NULL</span>;</span>
-<span class="line">	creatBiTree(&amp;T);</span>
-<span class="line">	<span class="built_in">printf</span>(<span class="string">"前序遍历\n"</span>);</span>
-<span class="line">	preorder(T);</span>
-<span class="line">	<span class="built_in">printf</span>(<span class="string">"中序遍历\n"</span>);</span>
-<span class="line">	inorder(T);</span>
-<span class="line">	<span class="built_in">printf</span>(<span class="string">"中后遍历\n"</span>);</span>
-<span class="line">	postorder(T);</span>
-<span class="line">	<span class="built_in">printf</span>(<span class="string">"层序遍历\n"</span>);</span>
-<span class="line">	levelorder(T);</span>
-<span class="line">	<span class="built_in">printf</span>(<span class="string">"节点个数为%d\n"</span>, countleaf(T));</span>
-<span class="line">	copybitree(T, &amp;newT);</span>
-<span class="line">	<span class="built_in">printf</span>(<span class="string">"newT前序遍历\n"</span>);</span>
-<span class="line">	preorder(newT);</span>
-<span class="line">	exchange(T);</span>
-<span class="line">	<span class="built_in">printf</span>(<span class="string">"交换左右子树之后前序遍历为"</span>);</span>
-<span class="line">	preorder(T);</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
-<h3 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h3><p><img src="http://objects.earthchen.cn/%E4%BA%8C%E5%8F%89%E6%A0%91%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C.png" alt="二叉树运行结果"><br>以上就是二叉树的一些基本操作，大量运用的递归的思想，希望读者能好好研读</p>
+<h3 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h3><p><img src="http://objects.earthchen.cn/C%E8%AF%AD%E8%A8%80%E5%85%B1%E4%BA%AB%E6%A0%88%E7%BB%93%E6%9E%9C.png" alt="c语言共享栈运行结果"><br>以上就是共享栈的简单操作，我这里只测试他是否能够成功，如有需要，请研读代码后自行修改，如果一时看不懂，请多看几遍思路分析，把原理弄懂，代码还是想当简单的。</p>
 <blockquote>
 <p>注：</p>
 <ul>
