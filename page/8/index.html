@@ -24,7 +24,7 @@
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="EarthChen&#39;s Blog">
-<meta property="og:url" content="http://earthchen.cn/page/2/index.html">
+<meta property="og:url" content="http://earthchen.cn/page/8/index.html">
 <meta property="og:site_name" content="EarthChen&#39;s Blog">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="EarthChen&#39;s Blog">
@@ -302,20 +302,20 @@
 </nav>
       <div class="body-wrap">
   
-    <article id="post-java-refect" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-C语言中缀表达式计算器" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2018/05/05/java-refect/" class="article-date">
-      <time datetime="2018-05-05T11:10:00.000Z" itemprop="datePublished">2018-05-05</time>
+      <a href="/2016/07/15/C语言中缀表达式计算器/" class="article-date">
+      <time datetime="2016-07-15T06:40:00.000Z" itemprop="datePublished">2016-07-15</time>
 </a>
 
  
-    <a href="/2018/05/05/java-refect/#comments" title="查看评论">
+    <a href="/2016/07/15/C语言中缀表达式计算器/#comments" title="查看评论">
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
         
-            <span class="disqus-comment-count" data-disqus-identifier="2018/05/05/java-refect/"></span>
+            <span class="disqus-comment-count" data-disqus-identifier="2016/07/15/C语言中缀表达式计算器/"></span>
         
     </a>
 
@@ -330,7 +330,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/05/java-refect/">java反射总结</a>
+      <a class="article-title" href="/2016/07/15/C语言中缀表达式计算器/">C语言中缀表达式计算器</a>
     </h1>
   
 
@@ -340,7 +340,21 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <p>反射相关总结<br>
+              <p>本文将介绍中缀表达式计算器的详细写法,是<a href="/2016/10/07/c%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8F%98%E5%90%8E%E7%BC%80%E8%A1%A8%E8%BE%BE%E5%BC%8F/">C语言把中缀表达式转换为后缀表达式</a>和<a href="/2016/10/07/C%E8%AF%AD%E8%A8%80%E9%80%86%E6%B3%A2%E5%85%B0%E8%AE%A1%E7%AE%97%E5%99%A8/">C语言逆波兰计算器</a>的结合   &nbsp;&nbsp;&nbsp;&nbsp;但本篇用了更精简的写法，但是也相对的提高了代码的理解难度，在阅读时，需自己详细斟酌</p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="添加适当的头文件"><a href="#添加适当的头文件" class="headerlink" title="添加适当的头文件"></a>添加适当的头文件</h3><p>c语言的头文件比不可少，我们这里还是添加适当的头文件和宏定义并声明函数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+</pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;  </span></span></span>
+<span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt; </span></span></span>
+<span class="line"> </span>
+<span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAX_LEN 80  </span></span>
+<span class="line"><span class="function"><span class="keyword">void</span> <span class="title">convert2postfix</span><span class="params">(<span class="keyword">char</span> *src, <span class="keyword">char</span> *dst)</span></span>;</span>
+<span class="line"><span class="function"><span class="keyword">float</span> <span class="title">cal</span><span class="params">(<span class="keyword">char</span> *src)</span></span>;</span>
+</pre></td></tr></table></figure>
           
       
     </div>
@@ -355,709 +369,12 @@
 
       
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构/">数据结构</a></li></ul>
     </div>
 
       
         <p class="article-more-link">
-          <a href="/2018/05/05/java-refect/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-newcoder-剑指offer-2" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/05/02/newcoder-剑指offer-2/" class="article-date">
-      <time datetime="2018-05-02T14:40:00.000Z" itemprop="datePublished">2018-05-02</time>
-</a>
-
- 
-    <a href="/2018/05/02/newcoder-剑指offer-2/#comments" title="查看评论">
-        <i class="fa fa-comments-o" aria-hidden="true"></i>
-        <span class="count-comment"></span>
-        
-        
-            <span class="disqus-comment-count" data-disqus-identifier="2018/05/02/newcoder-剑指offer-2/"></span>
-        
-    </a>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/02/newcoder-剑指offer-2/">牛客网剑指offer-2</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>剑指offer刷题-2</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/学习笔记/">学习笔记</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2018/05/02/newcoder-剑指offer-2/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-newcoder-剑指offer-1" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/04/17/newcoder-剑指offer-1/" class="article-date">
-      <time datetime="2018-04-17T14:20:00.000Z" itemprop="datePublished">2018-04-17</time>
-</a>
-
- 
-    <a href="/2018/04/17/newcoder-剑指offer-1/#comments" title="查看评论">
-        <i class="fa fa-comments-o" aria-hidden="true"></i>
-        <span class="count-comment"></span>
-        
-        
-            <span class="disqus-comment-count" data-disqus-identifier="2018/04/17/newcoder-剑指offer-1/"></span>
-        
-    </a>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/17/newcoder-剑指offer-1/">牛客网剑指offer-1</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>剑指offer刷题</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/学习笔记/">学习笔记</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2018/04/17/newcoder-剑指offer-1/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-MongDB-study-4" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/04/17/MongDB-study-4/" class="article-date">
-      <time datetime="2018-04-17T03:20:00.000Z" itemprop="datePublished">2018-04-17</time>
-</a>
-
- 
-    <a href="/2018/04/17/MongDB-study-4/#comments" title="查看评论">
-        <i class="fa fa-comments-o" aria-hidden="true"></i>
-        <span class="count-comment"></span>
-        
-        
-            <span class="disqus-comment-count" data-disqus-identifier="2018/04/17/MongDB-study-4/"></span>
-        
-    </a>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/17/MongDB-study-4/">MongoDB权威指南学习笔记(4)--应用管理和服务器管理</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>Mongo</p>
-<p>应用管理和服务器管理</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/学习笔记/">学习笔记</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MongoDB/">MongoDB</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2018/04/17/MongDB-study-4/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-MongDB-study-3" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/04/15/MongDB-study-3/" class="article-date">
-      <time datetime="2018-04-15T12:00:00.000Z" itemprop="datePublished">2018-04-15</time>
-</a>
-
- 
-    <a href="/2018/04/15/MongDB-study-3/#comments" title="查看评论">
-        <i class="fa fa-comments-o" aria-hidden="true"></i>
-        <span class="count-comment"></span>
-        
-        
-            <span class="disqus-comment-count" data-disqus-identifier="2018/04/15/MongDB-study-3/"></span>
-        
-    </a>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/15/MongDB-study-3/">MongoDB权威指南学习笔记(3)--复制和分片</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>Mongo</p>
-<p>复制和分片</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/学习笔记/">学习笔记</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MongoDB/">MongoDB</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2018/04/15/MongDB-study-3/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-MongDB-study-2" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/04/13/MongDB-study-2/" class="article-date">
-      <time datetime="2018-04-13T04:00:00.000Z" itemprop="datePublished">2018-04-13</time>
-</a>
-
- 
-    <a href="/2018/04/13/MongDB-study-2/#comments" title="查看评论">
-        <i class="fa fa-comments-o" aria-hidden="true"></i>
-        <span class="count-comment"></span>
-        
-        
-            <span class="disqus-comment-count" data-disqus-identifier="2018/04/13/MongDB-study-2/"></span>
-        
-    </a>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/13/MongDB-study-2/">MongoDB权威指南学习笔记(2)--设计应用</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>Mongo</p>
-<p>设计应用</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/学习笔记/">学习笔记</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MongoDB/">MongoDB</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2018/04/13/MongDB-study-2/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-MongDB-study-1" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/04/11/MongDB-study-1/" class="article-date">
-      <time datetime="2018-04-11T14:00:00.000Z" itemprop="datePublished">2018-04-11</time>
-</a>
-
- 
-    <a href="/2018/04/11/MongDB-study-1/#comments" title="查看评论">
-        <i class="fa fa-comments-o" aria-hidden="true"></i>
-        <span class="count-comment"></span>
-        
-        
-            <span class="disqus-comment-count" data-disqus-identifier="2018/04/11/MongDB-study-1/"></span>
-        
-    </a>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/11/MongDB-study-1/">MongoDB权威指南学习笔记(1)--基础知识与对文档的增删改查</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>Mongo</p>
-<p>基础知识与对文档的增删改查</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/学习笔记/">学习笔记</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MongoDB/">MongoDB</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2018/04/11/MongDB-study-1/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-manjaro安装软件脚本" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/04/10/manjaro安装软件脚本/" class="article-date">
-      <time datetime="2018-04-09T16:30:00.000Z" itemprop="datePublished">2018-04-10</time>
-</a>
-
- 
-    <a href="/2018/04/10/manjaro安装软件脚本/#comments" title="查看评论">
-        <i class="fa fa-comments-o" aria-hidden="true"></i>
-        <span class="count-comment"></span>
-        
-        
-            <span class="disqus-comment-count" data-disqus-identifier="2018/04/10/manjaro安装软件脚本/"></span>
-        
-    </a>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/10/manjaro安装软件脚本/">manjaro系统相关脚本和配置</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>安装软件</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/随笔/">随笔</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2018/04/10/manjaro安装软件脚本/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-高性能MySQL-study" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/04/04/高性能MySQL-study/" class="article-date">
-      <time datetime="2018-04-04T08:30:00.000Z" itemprop="datePublished">2018-04-04</time>
-</a>
-
- 
-    <a href="/2018/04/04/高性能MySQL-study/#comments" title="查看评论">
-        <i class="fa fa-comments-o" aria-hidden="true"></i>
-        <span class="count-comment"></span>
-        
-        
-            <span class="disqus-comment-count" data-disqus-identifier="2018/04/04/高性能MySQL-study/"></span>
-        
-    </a>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/04/高性能MySQL-study/">高性能MySQL学习笔记</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>高性能MySQL读书笔记。。。</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/学习笔记/">学习笔记</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/">MySQL</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2018/04/04/高性能MySQL-study/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-httpclientutil" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/04/01/httpclientutil/" class="article-date">
-      <time datetime="2018-04-01T12:00:00.000Z" itemprop="datePublished">2018-04-01</time>
-</a>
-
- 
-    <a href="/2018/04/01/httpclientutil/#comments" title="查看评论">
-        <i class="fa fa-comments-o" aria-hidden="true"></i>
-        <span class="count-comment"></span>
-        
-        
-            <span class="disqus-comment-count" data-disqus-identifier="2018/04/01/httpclientutil/"></span>
-        
-    </a>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/01/httpclientutil/">HttpClient工具类</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>基于restTemplate的httpClient通用工具类。</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/开发/">开发</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring-boot/">Spring boot</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2018/04/01/httpclientutil/#more">more >></a>
+          <a href="/2016/07/15/C语言中缀表达式计算器/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -1078,7 +395,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/7/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span>
     </nav>
   
 </div>
