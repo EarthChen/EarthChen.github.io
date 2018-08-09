@@ -15,22 +15,23 @@
 
 
 
-<meta name="description" content="在页面上显示内容可以简单的用django.http.HttpResponse来显示我们需要的内容，但是当我们需要一些处理一些复杂的数据或者从数据库读出来的操作要显示在html标签内或者js代码中就需要用渲染模板的方法。 开始创建工程首先，使用一下代码创建一个名为ymxz的工程(读者可以根据需要设置自己的工程名)：1 django-admin startproject ymxz">
-<meta name="keywords" content="Django,Python">
+<meta name="description" content="在页面上显示内容可以简单的用django.http.HttpResponse来显示我们需要的内容，但是当我们需要一些处理一些复杂的数据或者从数据库读出来的操作要显示在html标签内或者js代码中就需要用渲染模板的方法。 开始创建工程首先，使用一下代码创建一个名为ymxz的工程(读者可以根据需要设置自己的工程名)：1django-admin startproject ymxz">
+<meta name="keywords" content="Python,Django">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Django渲染模板">
 <meta property="og:url" content="http://earthchen.cn/2016/08/15/django渲染模板/index.html">
 <meta property="og:site_name" content="EarthChen&#39;s Blog">
-<meta property="og:description" content="在页面上显示内容可以简单的用django.http.HttpResponse来显示我们需要的内容，但是当我们需要一些处理一些复杂的数据或者从数据库读出来的操作要显示在html标签内或者js代码中就需要用渲染模板的方法。 开始创建工程首先，使用一下代码创建一个名为ymxz的工程(读者可以根据需要设置自己的工程名)：1 django-admin startproject ymxz">
+<meta property="og:description" content="在页面上显示内容可以简单的用django.http.HttpResponse来显示我们需要的内容，但是当我们需要一些处理一些复杂的数据或者从数据库读出来的操作要显示在html标签内或者js代码中就需要用渲染模板的方法。 开始创建工程首先，使用一下代码创建一个名为ymxz的工程(读者可以根据需要设置自己的工程名)：1django-admin startproject ymxz">
+<meta property="og:locale" content="default">
 <meta property="og:image" content="http://objects.earthchen.cn/django%E6%B8%B2%E6%9F%93%E6%A8%A1%E6%9D%BF%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%841.png">
 <meta property="og:image" content="http://objects.earthchen.cn/django%E6%B8%B2%E6%9F%93%E6%A8%A1%E6%9D%BF%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%842.png">
 <meta property="og:image" content="http://objects.earthchen.cn/%E6%B8%B2%E6%9F%93%E6%A8%A1%E6%9D%BFindex.png">
 <meta property="og:image" content="http://objects.earthchen.cn/django%E6%B8%B2%E6%9F%93%E6%A8%A1%E6%9D%BF%E7%BB%93%E6%9E%9C1.png">
 <meta property="og:image" content="http://objects.earthchen.cn/django%E6%B8%B2%E6%9F%93%E6%A8%A1%E6%9D%BF%E7%BB%93%E6%9E%9C2.png">
-<meta property="og:updated_time" content="2018-07-21T08:24:50.831Z">
+<meta property="og:updated_time" content="2018-07-21T08:24:50.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Django渲染模板">
-<meta name="twitter:description" content="在页面上显示内容可以简单的用django.http.HttpResponse来显示我们需要的内容，但是当我们需要一些处理一些复杂的数据或者从数据库读出来的操作要显示在html标签内或者js代码中就需要用渲染模板的方法。 开始创建工程首先，使用一下代码创建一个名为ymxz的工程(读者可以根据需要设置自己的工程名)：1 django-admin startproject ymxz">
+<meta name="twitter:description" content="在页面上显示内容可以简单的用django.http.HttpResponse来显示我们需要的内容，但是当我们需要一些处理一些复杂的数据或者从数据库读出来的操作要显示在html标签内或者js代码中就需要用渲染模板的方法。 开始创建工程首先，使用一下代码创建一个名为ymxz的工程(读者可以根据需要设置自己的工程名)：1django-admin startproject ymxz">
 <meta name="twitter:image" content="http://objects.earthchen.cn/django%E6%B8%B2%E6%9F%93%E6%A8%A1%E6%9D%BF%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%841.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
@@ -347,16 +348,12 @@
       
           
         <p>在页面上显示内容可以简单的用django.http.HttpResponse来显示我们需要的内容，但是当我们需要一些处理一些复杂的数据或者从数据库读出来的操作要显示在html标签内或者js代码中就需要用渲染模板的方法。</p>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="创建工程"><a href="#创建工程" class="headerlink" title="创建工程"></a>创建工程</h3><p>首先，使用一下代码创建一个名为ymxz的工程(读者可以根据需要设置自己的工程名)：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">django-admin startproject ymxz</span>
-</pre></td></tr></table></figure></p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="创建工程"><a href="#创建工程" class="headerlink" title="创建工程"></a>创建工程</h3><p>首先，使用一下代码创建一个名为ymxz的工程(读者可以根据需要设置自己的工程名)：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">django-admin startproject ymxz</span><br></pre></td></tr></table></figure></p>
 <a id="more"></a>
 <ul>
 <li>当然你也可以用pycharm创建一个django工程</li>
 </ul>
-<h3 id="创建app"><a href="#创建app" class="headerlink" title="创建app"></a>创建app</h3><p>创建工程之后，cd到工程目录，创建一个名为myapp的应用<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">python manage.py startapp myapp</span>
-</pre></td></tr></table></figure></p>
+<h3 id="创建app"><a href="#创建app" class="headerlink" title="创建app"></a>创建app</h3><p>创建工程之后，cd到工程目录，创建一个名为myapp的应用<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py startapp myapp</span><br></pre></td></tr></table></figure></p>
 <ul>
 <li>上面操作完成后,我们的项目的目录结构如下:<br><img src="http://objects.earthchen.cn/django%E6%B8%B2%E6%9F%93%E6%A8%A1%E6%9D%BF%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%841.png" alt="渲染模板目录结构1"></li>
 </ul>
@@ -365,109 +362,21 @@
 <li>完成后，应如图所示:<br><img src="http://objects.earthchen.cn/django%E6%B8%B2%E6%9F%93%E6%A8%A1%E6%9D%BF%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%842.png" alt="渲染模板目录结构2"></li>
 <li>在index中写入我们需要显示的内容<br><img src="http://objects.earthchen.cn/%E6%B8%B2%E6%9F%93%E6%A8%A1%E6%9D%BFindex.png" alt="渲染模板index"></li>
 </ul>
-<h3 id="修改views-py"><a href="#修改views-py" class="headerlink" title="修改views.py"></a>修改views.py</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</span>
-<span class="line"></span>
-<span class="line"><span class="comment"># Create your views here.</span></span>
-<span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span><span class="params">(request)</span>:</span></span>
-<span class="line">    <span class="keyword">return</span> render(request,<span class="string">'index.html'</span>)</span>
-</pre></td></tr></table></figure>
-<h3 id="修改urls-py"><a href="#修改urls-py" class="headerlink" title="修改urls.py"></a>修改urls.py</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.conf.urls <span class="keyword">import</span> patterns, include, url</span>
-<span class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> admin</span>
-<span class="line"></span>
-<span class="line"><span class="keyword">from</span> myapp <span class="keyword">import</span> views</span>
-<span class="line"></span>
-<span class="line">urlpatterns = patterns(<span class="string">''</span>,</span>
-<span class="line">                       <span class="comment"># Examples:</span></span>
-<span class="line">                       <span class="comment"># url(r'^$', 'ymxz.views.home', name='home'),</span></span>
-<span class="line">                       <span class="comment"># url(r'^blog/', include('blog.urls')),</span></span>
-<span class="line"></span>
-<span class="line">                       url(<span class="string">r'^admin/'</span>, include(admin.site.urls)),</span>
-<span class="line">                       url(<span class="string">r'^index/'</span>, views.index),</span>
-<span class="line">                       )</span>
-</pre></td></tr></table></figure>
-<h3 id="修改settings-py"><a href="#修改settings-py" class="headerlink" title="修改settings.py"></a>修改settings.py</h3><p>修改INSTALLED_APPS这个字段添加我们的app–myapp<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-</pre></td><td class="code"><pre><span class="line">INSTALLED_APPS = (</span>
-<span class="line">    <span class="string">'django.contrib.admin'</span>,</span>
-<span class="line">    <span class="string">'django.contrib.auth'</span>,</span>
-<span class="line">    <span class="string">'django.contrib.contenttypes'</span>,</span>
-<span class="line">    <span class="string">'django.contrib.sessions'</span>,</span>
-<span class="line">    <span class="string">'django.contrib.messages'</span>,</span>
-<span class="line">    <span class="string">'django.contrib.staticfiles'</span>,</span>
-<span class="line">    <span class="string">'myapp'</span>,</span>
-<span class="line">)</span>
-</pre></td></tr></table></figure></p>
-<h3 id="打开调试服务器"><a href="#打开调试服务器" class="headerlink" title="打开调试服务器"></a>打开调试服务器</h3><p>在cmd中执行以下语句<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">python manage.py runserver</span>
-</pre></td></tr></table></figure></p>
+<h3 id="修改views-py"><a href="#修改views-py" class="headerlink" title="修改views.py"></a>修改views.py</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create your views here.</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span><span class="params">(request)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> render(request,<span class="string">'index.html'</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="修改urls-py"><a href="#修改urls-py" class="headerlink" title="修改urls.py"></a>修改urls.py</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.conf.urls <span class="keyword">import</span> patterns, include, url</span><br><span class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> admin</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> myapp <span class="keyword">import</span> views</span><br><span class="line"></span><br><span class="line">urlpatterns = patterns(<span class="string">''</span>,</span><br><span class="line">                       <span class="comment"># Examples:</span></span><br><span class="line">                       <span class="comment"># url(r'^$', 'ymxz.views.home', name='home'),</span></span><br><span class="line">                       <span class="comment"># url(r'^blog/', include('blog.urls')),</span></span><br><span class="line"></span><br><span class="line">                       url(<span class="string">r'^admin/'</span>, include(admin.site.urls)),</span><br><span class="line">                       url(<span class="string">r'^index/'</span>, views.index),</span><br><span class="line">                       )</span><br></pre></td></tr></table></figure>
+<h3 id="修改settings-py"><a href="#修改settings-py" class="headerlink" title="修改settings.py"></a>修改settings.py</h3><p>修改INSTALLED_APPS这个字段添加我们的app–myapp<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">INSTALLED_APPS = (</span><br><span class="line">    <span class="string">'django.contrib.admin'</span>,</span><br><span class="line">    <span class="string">'django.contrib.auth'</span>,</span><br><span class="line">    <span class="string">'django.contrib.contenttypes'</span>,</span><br><span class="line">    <span class="string">'django.contrib.sessions'</span>,</span><br><span class="line">    <span class="string">'django.contrib.messages'</span>,</span><br><span class="line">    <span class="string">'django.contrib.staticfiles'</span>,</span><br><span class="line">    <span class="string">'myapp'</span>,</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+<h3 id="打开调试服务器"><a href="#打开调试服务器" class="headerlink" title="打开调试服务器"></a>打开调试服务器</h3><p>在cmd中执行以下语句<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py runserver</span><br></pre></td></tr></table></figure></p>
 <ul>
-<li>在浏览器地址栏输入<a href="http://127.0.0.1:8000/index/" target="_blank" rel="external">http://127.0.0.1:8000/index/</a><br><img src="http://objects.earthchen.cn/django%E6%B8%B2%E6%9F%93%E6%A8%A1%E6%9D%BF%E7%BB%93%E6%9E%9C1.png" alt="django渲染模板结果"><br>如上图显示即为成功。</li>
+<li>在浏览器地址栏输入<a href="http://127.0.0.1:8000/index/" target="_blank" rel="noopener">http://127.0.0.1:8000/index/</a><br><img src="http://objects.earthchen.cn/django%E6%B8%B2%E6%9F%93%E6%A8%A1%E6%9D%BF%E7%BB%93%E6%9E%9C1.png" alt="django渲染模板结果"><br>如上图显示即为成功。</li>
 </ul>
-<h3 id="用模板语言从后台向前端传递数据"><a href="#用模板语言从后台向前端传递数据" class="headerlink" title="用模板语言从后台向前端传递数据"></a>用模板语言从后台向前端传递数据</h3><h4 id="打开views-py修改内容为"><a href="#打开views-py修改内容为" class="headerlink" title="打开views.py修改内容为:"></a>打开<strong>views.py</strong>修改内容为:</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</span>
-<span class="line"></span>
-<span class="line"><span class="comment"># Create your views here.</span></span>
-<span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span><span class="params">(request)</span>:</span></span>
-<span class="line">    str = <span class="string">'hello world django'</span></span>
-<span class="line">    <span class="keyword">return</span> render(request, <span class="string">'index.html'</span>, &#123;<span class="string">'test'</span>: str&#125;)</span>
-</pre></td></tr></table></figure>
+<h3 id="用模板语言从后台向前端传递数据"><a href="#用模板语言从后台向前端传递数据" class="headerlink" title="用模板语言从后台向前端传递数据"></a>用模板语言从后台向前端传递数据</h3><h4 id="打开views-py修改内容为"><a href="#打开views-py修改内容为" class="headerlink" title="打开views.py修改内容为:"></a>打开<strong>views.py</strong>修改内容为:</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create your views here.</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span><span class="params">(request)</span>:</span></span><br><span class="line">    str = <span class="string">'hello world django'</span></span><br><span class="line">    <span class="keyword">return</span> render(request, <span class="string">'index.html'</span>, &#123;<span class="string">'test'</span>: str&#125;)</span><br></pre></td></tr></table></figure>
 <ul>
 <li><strong>str</strong>可以是字符串，字典，列表，元组等数据，其他的请读者自行搜索django模板语言</li>
 </ul>
-<h4 id="修改index-html内容为"><a href="#修改index-html内容为" class="headerlink" title="修改index.html内容为:"></a>修改<strong>index.html</strong>内容为:</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-</pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span>
-<span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span>
-<span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span>
-<span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span>
-<span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span>
-<span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span>
-<span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span>
-<span class="line">&#123;&#123; test &#125;&#125;</span>
-<span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span>
-<span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span>
-</pre></td></tr></table></figure>
+<h4 id="修改index-html内容为"><a href="#修改index-html内容为" class="headerlink" title="修改index.html内容为:"></a>修改<strong>index.html</strong>内容为:</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">&#123;&#123; test &#125;&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li><strong></strong> 是最简单的模板语言的一种,还可以做到循环遍历，判断等略微复杂一点的功能，请自行了解，本文将不做介绍。</li>
-<li>在浏览器地址栏输入<a href="http://127.0.0.1:8000/index/" target="_blank" rel="external">http://127.0.0.1:8000/index/</a><br><img src="http://objects.earthchen.cn/django%E6%B8%B2%E6%9F%93%E6%A8%A1%E6%9D%BF%E7%BB%93%E6%9E%9C2.png" alt="django渲染模板结果"><br>如上图显示即为成功。</li>
+<li>在浏览器地址栏输入<a href="http://127.0.0.1:8000/index/" target="_blank" rel="noopener">http://127.0.0.1:8000/index/</a><br><img src="http://objects.earthchen.cn/django%E6%B8%B2%E6%9F%93%E6%A8%A1%E6%9D%BF%E7%BB%93%E6%9E%9C2.png" alt="django渲染模板结果"><br>如上图显示即为成功。</li>
 </ul>
 <blockquote>
 <p>注：</p>
@@ -503,15 +412,15 @@
     <nav id="article-nav">
         
             <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2016/08/15/django环境搭建/">
-                    Django环境搭建
+                <a href="/2016/08/15/django常用语句/">
+                    Django常用语句
                 </a>
             </div>
         
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2016/08/15/django常用语句/">
-                    Django常用语句
+                <a href="/2016/08/03/Android_qq_Menu/">
+                    Android仿qq侧滑菜单
                 </a>
             </div>
         
@@ -593,7 +502,7 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2016/08/15/django环境搭建/" title="上一篇: Django环境搭建">
+            <a href="/2016/08/15/django常用语句/" title="上一篇: Django常用语句">
                 <i class="fa fa-angle-left"></i>
             </a>
         
@@ -601,13 +510,13 @@
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2016/08/15/django常用语句/" title="下一篇: Django常用语句">
+            <a href="/2016/08/03/Android_qq_Menu/" title="下一篇: Android仿qq侧滑菜单">
                 <i class="fa fa-angle-right"></i>
             </a>
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/07/25/java面试要点汇总(分布式和微服务)/">java面试知识要点汇总(分布式和微服务)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/23/java面试要点汇总(框架)/">java面试知识要点汇总(框架)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/22/java面试要点汇总(缓存和消息队列)/">java面试知识要点汇总(缓存和消息队列)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/19/java面试要点汇总(web)/">java面试知识要点汇总(web部分)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/15/java面试要点汇总(线程和锁)/">java面试知识要点汇总(线程和锁)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/java面试要点汇总(基础和集合部分)/">java面试知识要点汇总(基础和集合)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/23/hbase-study/">hbase 学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/30/算法图解-study/">算法图解书中算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/27/newcoder-2017校招-1/">牛客网2017年校招真题-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/26/sql_inner_left_right_join/">sql中的inner join left join 和right join各种连接的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/21/newcoder-剑指offer-3/">牛客网剑指offer-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/06/java8-features/">java8新特性总结备忘</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/05/java-generic/">java泛型总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/05/java-refect/">java反射总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/02/newcoder-剑指offer-2/">牛客网剑指offer-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/17/newcoder-剑指offer-1/">牛客网剑指offer-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/17/MongDB-study-4/">MongoDB权威指南学习笔记(4)--应用管理和服务器管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/15/MongDB-study-3/">MongoDB权威指南学习笔记(3)--复制和分片</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/13/MongDB-study-2/">MongoDB权威指南学习笔记(2)--设计应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/11/MongDB-study-1/">MongoDB权威指南学习笔记(1)--基础知识与对文档的增删改查</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/10/manjaro安装软件脚本/">manjaro系统相关脚本和配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/04/高性能MySQL-study/">高性能MySQL学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/01/httpclientutil/">HttpClient工具类</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/14/qiniu-oss/">spring boot使用七牛云的oss(对象存储)文件上传</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/requestHolder_and_argumentResolver/">使用ThreadLocal和ArgumentResolver方便开发</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/applicationContextHelper/">在不被spring容器管理的类中使用ApplicationContext应用上下文bean</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_static_class_autowrite/">Spring boot 在静态类中注入spring组件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_diy_properties/">Spring boot 自定义配置文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/12/Elasticsearch_study_1/">Elasticsearch学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/09/深入理解java虚拟机学习笔记_1/">深入理解java虚拟机学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/23/Docker_study_Dockerfile_instructions/">Docker学习笔记---Dockerfile</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/22/Docker_study/">Docker学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/20/celery_study/">Celery-分布式任务队列学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_redis_cache/">Django使用redis作为缓存系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_channels_websocket/">Django使用Channels实现websocket</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/13/Docker_Gogs/">使用Docker搭建git服务Gogs</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_21to_40/">LeetCode刷题记录(easy难度21-40题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_1to20/">LeetCode刷题记录(easy难度1-20题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/29/es6_study/">es6学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/Webpack_study/">Webpack学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/RegularExpression_study/">正则表达式学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/08/AndroidStudio/">Android Studio 使用本地离线Gradle</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/跨域请求解决方案/">跨域请求的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_nginx_gunicorn/">django+nginx+gunicorn部署配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/ubuntu_supervisor/">ubuntu下的进程控制系统————Supervisor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/28/ubuntu修复不能挂载NTFS硬盘/">ubuntu修复linux和windows双系统下挂载ntfs硬盘出错问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/17/django_timing_task/">django使用django-crontab实现定时任务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/15/django_rest_framework_jwt/">django-rest-framework配置json web token进行接口的认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/django_rest_framework_study/">django-rest-framework框架学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/spring_SpEL/">spring中的SpEL表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/08/git_study/">Git学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/03/资源收集/">资源收集共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/06/ubuntu_open_port/">ubuntu开放指定端口</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/16/redis_study_2/">Redis学习笔记 -- 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/15/redis_study_1/">Redis学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/16/ubuntu_do_something_use/">ubuntu日常使用的安装配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/django_address_baiduapi_marker_show/">Django调用百度地图api在地图上批量增加标记点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/ubuntu_do_something_coding/">ubuntu搭建常见开发环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/10/ubuntu安装在双系统笔记本下开机或关机卡死.1/">ubuntu在双系统下开机卡死或关机卡死的解决办法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/11/python_requirements/">python生成项目所需依赖文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/10/hexo_github_coding_blog/">利用hexo和github或coding 搭免费个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django数据库操作/">Django操作数据库</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django连接mysql数据库/">Django连接MySql使用models处理数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django环境搭建/">Django环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django渲染模板/">Django渲染模板</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django常用语句/">Django常用语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/python2和Python3的区别/">Python2和Python3的区别简单总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/03/Android_qq_Menu/">Android仿qq侧滑菜单</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/16/C语言队列的基本操作/">C语言队列的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/c语言中缀表达式变后缀表达式/">C语言中缀表达式转后缀表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言共享栈/">C语言共享栈</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言逆波兰计算器/">C语言逆波兰表达式计算(后缀表达式计算器)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言二叉树基本操作/">C语言二叉树的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言中缀表达式计算器/">C语言中缀表达式计算器</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/08/09/spring-boot自定义starter/">Rspring-boot自定义starter</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/25/java面试要点汇总(分布式和微服务)/">java面试知识要点汇总(分布式和微服务)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/23/java面试要点汇总(框架)/">java面试知识要点汇总(框架)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/22/java面试要点汇总(缓存和消息队列)/">java面试知识要点汇总(缓存和消息队列)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/19/java面试要点汇总(web和数据库)/">java面试知识要点汇总(web和数据库)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/15/java面试要点汇总(线程和锁)/">java面试知识要点汇总(线程和锁)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/java面试要点汇总(基础和集合部分)/">java面试知识要点汇总(基础和集合)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/23/hbase-study/">hbase 学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/30/算法图解-study/">算法图解书中算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/27/newcoder-2017校招-1/">牛客网2017年校招真题-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/26/sql_inner_left_right_join/">sql中的inner join left join 和right join各种连接的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/21/newcoder-剑指offer-3/">牛客网剑指offer-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/06/java8-features/">java8新特性总结备忘</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/05/java-generic/">java泛型总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/05/java-refect/">java反射总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/02/newcoder-剑指offer-2/">牛客网剑指offer-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/17/newcoder-剑指offer-1/">牛客网剑指offer-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/17/MongDB-study-4/">MongoDB权威指南学习笔记(4)--应用管理和服务器管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/15/MongDB-study-3/">MongoDB权威指南学习笔记(3)--复制和分片</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/13/MongDB-study-2/">MongoDB权威指南学习笔记(2)--设计应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/11/MongDB-study-1/">MongoDB权威指南学习笔记(1)--基础知识与对文档的增删改查</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/10/manjaro安装软件脚本/">manjaro系统相关脚本和配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/04/高性能MySQL-study/">高性能MySQL学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/01/httpclientutil/">HttpClient工具类</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/14/qiniu-oss/">spring boot使用七牛云的oss(对象存储)文件上传</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/requestHolder_and_argumentResolver/">使用ThreadLocal和ArgumentResolver方便开发</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/applicationContextHelper/">在不被spring容器管理的类中使用ApplicationContext应用上下文bean</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_static_class_autowrite/">Spring boot 在静态类中注入spring组件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_diy_properties/">Spring boot 自定义配置文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/12/Elasticsearch_study_1/">Elasticsearch学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/09/深入理解java虚拟机学习笔记_1/">深入理解java虚拟机学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/23/Docker_study_Dockerfile_instructions/">Docker学习笔记---Dockerfile</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/22/Docker_study/">Docker学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/20/celery_study/">Celery-分布式任务队列学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_redis_cache/">Django使用redis作为缓存系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_channels_websocket/">Django使用Channels实现websocket</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/13/Docker_Gogs/">使用Docker搭建git服务Gogs</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_1to20/">LeetCode刷题记录(easy难度1-20题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_21to_40/">LeetCode刷题记录(easy难度21-40题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/29/es6_study/">es6学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/Webpack_study/">Webpack学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/RegularExpression_study/">正则表达式学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/08/AndroidStudio/">Android Studio 使用本地离线Gradle</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/跨域请求解决方案/">跨域请求的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/ubuntu_supervisor/">ubuntu下的进程控制系统————Supervisor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_nginx_gunicorn/">django+nginx+gunicorn部署配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/28/ubuntu修复不能挂载NTFS硬盘/">ubuntu修复linux和windows双系统下挂载ntfs硬盘出错问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/17/django_timing_task/">django使用django-crontab实现定时任务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/15/django_rest_framework_jwt/">django-rest-framework配置json web token进行接口的认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/spring_SpEL/">spring中的SpEL表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/django_rest_framework_study/">django-rest-framework框架学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/08/git_study/">Git学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/03/资源收集/">资源收集共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/06/ubuntu_open_port/">ubuntu开放指定端口</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/16/redis_study_2/">Redis学习笔记 -- 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/15/redis_study_1/">Redis学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/16/ubuntu_do_something_use/">ubuntu日常使用的安装配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/ubuntu_do_something_coding/">ubuntu搭建常见开发环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/django_address_baiduapi_marker_show/">Django调用百度地图api在地图上批量增加标记点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/10/ubuntu安装在双系统笔记本下开机或关机卡死.1/">ubuntu在双系统下开机卡死或关机卡死的解决办法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/11/python_requirements/">python生成项目所需依赖文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/10/hexo_github_coding_blog/">利用hexo和github或coding 搭免费个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django数据库操作/">Django操作数据库</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django环境搭建/">Django环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django连接mysql数据库/">Django连接MySql使用models处理数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/python2和Python3的区别/">Python2和Python3的区别简单总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django常用语句/">Django常用语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django渲染模板/">Django渲染模板</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/03/Android_qq_Menu/">Android仿qq侧滑菜单</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/16/C语言队列的基本操作/">C语言队列的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言中缀表达式计算器/">C语言中缀表达式计算器</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/c语言中缀表达式变后缀表达式/">C语言中缀表达式转后缀表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言逆波兰计算器/">C语言逆波兰表达式计算(后缀表达式计算器)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言共享栈/">C语言共享栈</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言二叉树基本操作/">C语言二叉树的基本操作</a></li></ul>
 
 
 

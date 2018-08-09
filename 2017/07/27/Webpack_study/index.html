@@ -22,11 +22,12 @@
 <meta property="og:url" content="http://earthchen.cn/2017/07/27/Webpack_study/index.html">
 <meta property="og:site_name" content="EarthChen&#39;s Blog">
 <meta property="og:description" content="Webpack 是一个前端资源加载/打包工具。它将根据模块的依赖关系进行静态分析，然后将这些模块按照指定的规则生成对应的静态资源。找到JavaScript模块以及其它的一些浏览器不能直接运行的拓展语言（Scss，TypeScript等），并将其打包为合适的格式以供浏览器使用。Webpack的工作方式是：把你的项目当做一个整体，通过一个给定的主文件（如：index.js），Webpack将从这个文件">
+<meta property="og:locale" content="default">
 <meta property="og:image" content="http://objects.earthchen.cn/webpack_study_%E8%AE%BE%E7%BD%AEnpm%E4%B8%BA%E6%B7%98%E5%AE%9D%E6%BA%90.png">
 <meta property="og:image" content="http://objects.earthchen.cn/webpack_study_webpack%E5%91%BD%E4%BB%A4%E6%89%93%E5%8C%85.png">
 <meta property="og:image" content="http://objects.earthchen.cn/webpack_study_webpack%E5%91%BD%E4%BB%A4%E6%89%93%E5%8C%85%E5%90%8Eindex%E7%BB%93%E6%9E%9C.png">
 <meta property="og:image" content="http://objects.earthchen.cn/webpack_study_npm_start%E7%BB%93%E6%9E%9C.png">
-<meta property="og:updated_time" content="2018-07-21T08:24:50.818Z">
+<meta property="og:updated_time" content="2018-07-21T08:24:50.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Webpack学习笔记">
 <meta name="twitter:description" content="Webpack 是一个前端资源加载/打包工具。它将根据模块的依赖关系进行静态分析，然后将这些模块按照指定的规则生成对应的静态资源。找到JavaScript模块以及其它的一些浏览器不能直接运行的拓展语言（Scss，TypeScript等），并将其打包为合适的格式以供浏览器使用。Webpack的工作方式是：把你的项目当做一个整体，通过一个给定的主文件（如：index.js），Webpack将从这个文件">
@@ -348,46 +349,30 @@
         <p>Webpack 是一个前端资源加载/打包工具。它将根据模块的依赖关系进行静态分析，然后将这些模块按照指定的规则生成对应的静态资源。找到JavaScript模块以及其它的一些浏览器不能直接运行的拓展语言（Scss，TypeScript等），并将其打包为合适的格式以供浏览器使用。<br>Webpack的工作方式是：把你的项目当做一个整体，通过一个给定的主文件（如：index.js），Webpack将从这个文件开始找到你的项目的所有依赖文件，使用loaders处理它们，最后打包为一个浏览器可识别的JavaScript文件。</p>
 <h2 id="Webpack"><a href="#Webpack" class="headerlink" title="Webpack"></a>Webpack</h2><a id="more"></a>
 <h3 id="安装Webpack"><a href="#安装Webpack" class="headerlink" title="安装Webpack"></a>安装Webpack</h3><p>webpack是建立在node.js环境下的，所以要使用它我们需要先安装node和npm，其相关知识这里将不介绍。</p>
-<h4 id="安装node-js"><a href="#安装node-js" class="headerlink" title="安装node.js"></a>安装node.js</h4><p>在终端输入以下命令即可<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">$ sudo apt-get install nodejs</span>
-</pre></td></tr></table></figure></p>
-<h4 id="安装npm"><a href="#安装npm" class="headerlink" title="安装npm"></a>安装npm</h4><p>在终端输入以下命令即可<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">$ sudo apt-get install npm</span>
-</pre></td></tr></table></figure></p>
-<p>为了保证下载速度，我们直接永久设置为淘宝源为npm的registry地址。在终端里输入<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">npm config <span class="built_in">set</span> registry https://registry.npm.taobao.org</span>
-</pre></td></tr></table></figure></p>
+<h4 id="安装node-js"><a href="#安装node-js" class="headerlink" title="安装node.js"></a>安装node.js</h4><p>在终端输入以下命令即可<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install nodejs</span><br></pre></td></tr></table></figure></p>
+<h4 id="安装npm"><a href="#安装npm" class="headerlink" title="安装npm"></a>安装npm</h4><p>在终端输入以下命令即可<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install npm</span><br></pre></td></tr></table></figure></p>
+<p>为了保证下载速度，我们直接永久设置为淘宝源为npm的registry地址。在终端里输入<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm config <span class="built_in">set</span> registry https://registry.npm.taobao.org</span><br></pre></td></tr></table></figure></p>
 <ul>
-<li>配置成功后输入以下命令来查看是否成功<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">npm config get registry</span>
-</pre></td></tr></table></figure>
+<li>配置成功后输入以下命令来查看是否成功<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm config get registry</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <p>如图所示即为成功<br><img src="http://objects.earthchen.cn/webpack_study_%E8%AE%BE%E7%BD%AEnpm%E4%B8%BA%E6%B7%98%E5%AE%9D%E6%BA%90.png" alt="设置npm为淘宝源"></p>
 <h4 id="安装webpack"><a href="#安装webpack" class="headerlink" title="安装webpack"></a>安装webpack</h4><ol>
 <li><p>全局安装<br>在终端输入</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">sudo npm install -g webpack</span>
-</pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo npm install -g webpack</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>局部安装<br>进入项目目录，并在终端中输入</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">npm install --save-dev webpack</span>
-</pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev webpack</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <h3 id="使用Webpack"><a href="#使用Webpack" class="headerlink" title="使用Webpack"></a>使用Webpack</h3><ol>
-<li>创建一个工作目录，并进入这个目录创建一个项目，在终端输入以下命令，会自动生成一个<strong>package.json</strong>文件，这是一个标准的npm说明文件，里面包含了一些信息，包含了项目的依赖模块，自定义脚本任务等。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">npm init</span>
-</pre></td></tr></table></figure>
+<li>创建一个工作目录，并进入这个目录创建一个项目，在终端输入以下命令，会自动生成一个<strong>package.json</strong>文件，这是一个标准的npm说明文件，里面包含了一些信息，包含了项目的依赖模块，自定义脚本任务等。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm init</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <p>输入这个命令后，终端会问你一系列诸如项目名称，项目描述，作者等信息，不过不用担心，如果你不准备在npm中发布你的模块，这些问题的答案都不重要，回车默认即可。</p>
 <ol>
 <li><p>在本项目中安装Webpack作为依赖包，在终端输入以下命令</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">npm install --save-dev webpack</span>
-</pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev webpack</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>创建app和public文件夹</p>
 <ul>
@@ -398,125 +383,31 @@
 <li><p>创建几个html和js文件做一个简单的例子</p>
 <ul>
 <li><p>在<strong>public</strong>下创建<strong>index.html</strong>文件，加载通过webpack打包之后的<strong>bundle.js</strong>文件</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-</pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span>
-<span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span>
-<span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span>
-<span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span></span>
-<span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Webpack Sample Project<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span>
-<span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span>
-<span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span>
-<span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">'root'</span>&gt;</span></span>
-<span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>
-<span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"bundle.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span>
-<span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span>
-<span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span>
-</pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Webpack Sample Project<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">'root'</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"bundle.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>在<strong>app</strong>目录下创建<strong>Greeter.js</strong>，用来返回一个简单的文字信息的html元素的函数</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-</pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span>
-<span class="line">    <span class="keyword">var</span> greet = <span class="built_in">document</span>.createElement(<span class="string">'div'</span>);</span>
-<span class="line">    greet.textContent = <span class="string">"Hi there and greetings!"</span>;</span>
-<span class="line">    <span class="keyword">return</span> greet;</span>
-<span class="line">    &#125;;</span>
-</pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> greet = <span class="built_in">document</span>.createElement(<span class="string">'div'</span>);</span><br><span class="line">    greet.textContent = <span class="string">"Hi there and greetings!"</span>;</span><br><span class="line">    <span class="keyword">return</span> greet;</span><br><span class="line">    &#125;;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>在<strong>app</strong>目录下创建<strong>main.js</strong>，用来把<strong>Greeter模块</strong>返回的结点插入页面</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> greeter = <span class="built_in">require</span>(<span class="string">'./Greeter.js'</span>);</span>
-<span class="line"><span class="built_in">document</span>.getElementById(<span class="string">'root'</span>).appendChild(greeter());</span>
-</pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> greeter = <span class="built_in">require</span>(<span class="string">'./Greeter.js'</span>);</span><br><span class="line"><span class="built_in">document</span>.getElementById(<span class="string">'root'</span>).appendChild(greeter());</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
 <li><p>使用<strong>webpack</strong>进行打包<br>基本命令为</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">webpack &#123;entry file/入口文件&#125; &#123;destination <span class="keyword">for</span> bundled file/存放bundle.js的地方&#125;</span>
-</pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">webpack &#123;entry file/入口文件&#125; &#123;destination <span class="keyword">for</span> bundled file/存放bundle.js的地方&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<p>只需要指定一个入口文件，webpack将自动识别项目所依赖的其它文件，不过需要注意的是如果你的webpack没有进行全局安装，那么当你在终端中使用此命令时，需要额外指定其在node_modules中的地址，继续上面的例子，在终端中属于如下命令<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">node_modules/.bin/webpack app/main.js public/bundle.js</span>
-</pre></td></tr></table></figure></p>
+<p>只需要指定一个入口文件，webpack将自动识别项目所依赖的其它文件，不过需要注意的是如果你的webpack没有进行全局安装，那么当你在终端中使用此命令时，需要额外指定其在node_modules中的地址，继续上面的例子，在终端中属于如下命令<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node_modules/.bin/webpack app/main.js public/bundle.js</span><br></pre></td></tr></table></figure></p>
 <p>执行结果如下，可以看到帮我们打包了两个文件<br><img src="http://objects.earthchen.cn/webpack_study_webpack%E5%91%BD%E4%BB%A4%E6%89%93%E5%8C%85.png" alt="webpack命令打包"><br>打开浏览器访问index.html可以看到如下结果<br><img src="http://objects.earthchen.cn/webpack_study_webpack%E5%91%BD%E4%BB%A4%E6%89%93%E5%8C%85%E5%90%8Eindex%E7%BB%93%E6%9E%9C.png" alt="打包后index结果"></p>
 <ul>
 <li><p>webpack还有许多功能，通过命令行都可以实现，但是命令多了不好记也容易出错，所以webpack也提供了配置文件方式，在项目根目录下创建<strong>webpack.config.js</strong>文件，在其中编写我们所需要的配置。</p>
-  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-</pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span>
-<span class="line">    <span class="comment">//唯一入口文件</span></span>
-<span class="line">    entry: __dirname + <span class="string">"/app/main.js"</span>,</span>
-<span class="line">    <span class="attr">output</span>: &#123;</span>
-<span class="line">        <span class="comment">//打包后的文件存放的地方</span></span>
-<span class="line">        path: __dirname + <span class="string">"/public"</span>,</span>
-<span class="line">        <span class="comment">//打包后输出文件的文件名</span></span>
-<span class="line">        filename: <span class="string">"bundle.js"</span></span>
-<span class="line">    &#125;</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    <span class="comment">//唯一入口文件</span></span><br><span class="line">    entry: __dirname + <span class="string">"/app/main.js"</span>,</span><br><span class="line">    output: &#123;</span><br><span class="line">        <span class="comment">//打包后的文件存放的地方</span></span><br><span class="line">        path: __dirname + <span class="string">"/public"</span>,</span><br><span class="line">        <span class="comment">//打包后输出文件的文件名</span></span><br><span class="line">        filename: <span class="string">"bundle.js"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>注:<strong>__dirname</strong>是node.js中的一个全局变量，它指向当前执行脚本所在的目录。<br>接下来指定打包命令只需要在终端中输入<strong>webpack</strong>即可。执行的结果和用命令一致。</p>
 </blockquote>
 </li>
 <li><p>打包操作还可以更简单，为了解决命令复杂且多的问题，npm还提供了引导任务执行的功能。对其进行配置后可以使用简单的npm start命令来代替这些繁琐的命令。在package.json中对npm的脚本部分进行相关设置即可，设置方法如下。</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-</pre></td><td class="code"><pre><span class="line">&#123;</span>
-<span class="line">  "name": "first_webpack_project",</span>
-<span class="line">  "version": "1.0.0",</span>
-<span class="line">  "description": "",</span>
-<span class="line">  "main": "index.js",</span>
-<span class="line">  "scripts": &#123;</span>
-<span class="line">    "test": "echo \"Error: no test specified\" &amp;&amp; exit 1",</span>
-<span class="line">    //配置start命令</span>
-<span class="line">    "start": "webpack"</span>
-<span class="line">  &#125;,</span>
-<span class="line">  "author": "",</span>
-<span class="line">  "license": "ISC",</span>
-<span class="line">  "devDependencies": &#123;</span>
-<span class="line">    "webpack": "^3.4.1"</span>
-<span class="line">  &#125;</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"first_webpack_project"</span>,</span><br><span class="line">  <span class="attr">"version"</span>: <span class="string">"1.0.0"</span>,</span><br><span class="line">  <span class="attr">"description"</span>: <span class="string">""</span>,</span><br><span class="line">  <span class="attr">"main"</span>: <span class="string">"index.js"</span>,</span><br><span class="line">  <span class="attr">"scripts"</span>: &#123;</span><br><span class="line">    <span class="attr">"test"</span>: <span class="string">"echo \"Error: no test specified\" &amp;&amp; exit 1"</span>,</span><br><span class="line">    //配置start命令</span><br><span class="line">    "start": "webpack"</span><br><span class="line">  &#125;,</span><br><span class="line">  "author": "",</span><br><span class="line">  "license": "ISC",</span><br><span class="line">  "devDependencies": &#123;</span><br><span class="line">    "webpack": "^3.4.1"</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <blockquote>
@@ -525,34 +416,8 @@
 <h3 id="Webpack功能"><a href="#Webpack功能" class="headerlink" title="Webpack功能"></a>Webpack功能</h3><h4 id="生成Source-Maps"><a href="#生成Source-Maps" class="headerlink" title="生成Source Maps"></a>生成Source Maps</h4><p>开发总是离不开调试，如果可以更加方便的调试当然就能提高开发效率，不过打包后的文件有时候你是不容易找到出错了的地方对应的源代码的位置的，Source Maps就是来帮我们解决这个问题的。</p>
 <p>通过简单的配置后，Webpack在打包时可以为我们生成的source maps，这为我们提供了一种对应编译文件和源文件的方法，使得编译后的代码可读性更高，也更容易调试。</p>
 <p>在webpack的配置文件中配置source maps，需要配置<strong>devtool</strong>，它有以下四种不同的配置选项，各具优缺点，描述如下：<br>|devtool选项|配置结果|<br>|——|———–|<br>|source-map|在一个单独的文件中产生一个完整且功能完全的文件。这个文件具有最好的source map，但是它会减慢打包文件的构建速度|<br>|cheap-module-source-map|在一个单独的文件中生成一个不带列映射的map，不带列映射提高项目构建速度，但是也使得浏览器开发者工具只能对应到具体的行，不能对应到具体的列（符号），会对调试造成不便|<br>|eval-source-map|使用eval打包源文件模块，在同一个文件中生成干净的完整的source map。这个选项可以在不影响构建速度的前提下生成完整的sourcemap，但是对打包后输出的JS文件的执行具有性能和安全的隐患。不过在开发阶段这是一个非常好的选项，但是在生产阶段一定不要用这个选项|<br>|cheap-module-eval-source-map|这是在打包文件时最快的生成source map的方法，生成的Source Map 会和打包后的JavaScript文件同行显示，没有列映射，和eval-source-map选项具有相似的缺点|</p>
-<p>按照说明选择一种你希望的生成方式，在<strong>webpack.config.js</strong>中进行配置<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-</pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span>
-<span class="line">    <span class="comment">//配置生成Source Maps，选择合适的选项</span></span>
-<span class="line">    devtool: <span class="string">"eval-source-map"</span>,</span>
-<span class="line">    <span class="comment">//唯一入口文件</span></span>
-<span class="line">    entry: __dirname + <span class="string">"/app/main.js"</span>,</span>
-<span class="line">    <span class="attr">output</span>: &#123;</span>
-<span class="line">        <span class="comment">//打包后的文件存放的地方</span></span>
-<span class="line">        path: __dirname + <span class="string">"/public"</span>,</span>
-<span class="line">        <span class="comment">//打包后输出文件的文件名</span></span>
-<span class="line">        filename: <span class="string">"bundle.js"</span></span>
-<span class="line">    &#125;</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure></p>
-<h4 id="使用webpack构建本地服务器"><a href="#使用webpack构建本地服务器" class="headerlink" title="使用webpack构建本地服务器"></a>使用webpack构建本地服务器</h4><p>Webpack提供一个可选的本地开发服务器，这个本地服务器基于node.js构建，可以实现监测你的代码的修改，并自动刷新修改后的结果，不过它是一个单独的组件，在webpack中进行配置之前需要单独安装它作为项目依赖。安装命令如下<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">npm install --save-dev webpack-dev-server</span>
-</pre></td></tr></table></figure></p>
+<p>按照说明选择一种你希望的生成方式，在<strong>webpack.config.js</strong>中进行配置<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    <span class="comment">//配置生成Source Maps，选择合适的选项</span></span><br><span class="line">    devtool: <span class="string">"eval-source-map"</span>,</span><br><span class="line">    <span class="comment">//唯一入口文件</span></span><br><span class="line">    entry: __dirname + <span class="string">"/app/main.js"</span>,</span><br><span class="line">    output: &#123;</span><br><span class="line">        <span class="comment">//打包后的文件存放的地方</span></span><br><span class="line">        path: __dirname + <span class="string">"/public"</span>,</span><br><span class="line">        <span class="comment">//打包后输出文件的文件名</span></span><br><span class="line">        filename: <span class="string">"bundle.js"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="使用webpack构建本地服务器"><a href="#使用webpack构建本地服务器" class="headerlink" title="使用webpack构建本地服务器"></a>使用webpack构建本地服务器</h4><p>Webpack提供一个可选的本地开发服务器，这个本地服务器基于node.js构建，可以实现监测你的代码的修改，并自动刷新修改后的结果，不过它是一个单独的组件，在webpack中进行配置之前需要单独安装它作为项目依赖。安装命令如下<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev webpack-dev-server</span><br></pre></td></tr></table></figure></p>
 <p>devserver作为webpack配置选项中的一项，具有以下配置选项</p>
 <table>
 <thead>
@@ -584,123 +449,23 @@
 </tr>
 </tbody>
 </table>
-<p>在<strong>webpack.config.js</strong>中进行配置devserver：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-<span class="line">17</span>
-<span class="line">18</span>
-<span class="line">19</span>
-<span class="line">20</span>
-<span class="line">21</span>
-<span class="line">22</span>
-<span class="line">23</span>
-</pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span>
-<span class="line">    <span class="comment">//配置生成Source Maps，选择合适的选项</span></span>
-<span class="line">    devtool: <span class="string">"eval-source-map"</span>,</span>
-<span class="line">    <span class="comment">//唯一入口文件</span></span>
-<span class="line">    entry: __dirname + <span class="string">"/app/main.js"</span>,</span>
-<span class="line">    <span class="attr">output</span>: &#123;</span>
-<span class="line">        <span class="comment">//打包后的文件存放的地方</span></span>
-<span class="line">        path: __dirname + <span class="string">"/public"</span>,</span>
-<span class="line">        <span class="comment">//打包后输出文件的文件名</span></span>
-<span class="line">        filename: <span class="string">"bundle.js"</span></span>
-<span class="line">    &#125;,</span>
-<span class="line"></span>
-<span class="line">    <span class="attr">devServer</span>: &#123;</span>
-<span class="line">        <span class="comment">//本地服务器所加载的页面所在的目录</span></span>
-<span class="line">        contentBase: <span class="string">"./public"</span>,</span>
-<span class="line">        <span class="comment">//终端中输出结果为彩色</span></span>
-<span class="line">        colors: <span class="literal">true</span>,</span>
-<span class="line">        <span class="comment">//不跳转</span></span>
-<span class="line">        historyApiFallback: <span class="literal">true</span>,</span>
-<span class="line">        <span class="comment">//实时刷新</span></span>
-<span class="line">        inline: <span class="literal">true</span></span>
-<span class="line">    &#125;</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure></p>
+<p>在<strong>webpack.config.js</strong>中进行配置devserver：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    <span class="comment">//配置生成Source Maps，选择合适的选项</span></span><br><span class="line">    devtool: <span class="string">"eval-source-map"</span>,</span><br><span class="line">    <span class="comment">//唯一入口文件</span></span><br><span class="line">    entry: __dirname + <span class="string">"/app/main.js"</span>,</span><br><span class="line">    output: &#123;</span><br><span class="line">        <span class="comment">//打包后的文件存放的地方</span></span><br><span class="line">        path: __dirname + <span class="string">"/public"</span>,</span><br><span class="line">        <span class="comment">//打包后输出文件的文件名</span></span><br><span class="line">        filename: <span class="string">"bundle.js"</span></span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    devServer: &#123;</span><br><span class="line">        <span class="comment">//本地服务器所加载的页面所在的目录</span></span><br><span class="line">        contentBase: <span class="string">"./public"</span>,</span><br><span class="line">        <span class="comment">//终端中输出结果为彩色</span></span><br><span class="line">        colors: <span class="literal">true</span>,</span><br><span class="line">        <span class="comment">//不跳转</span></span><br><span class="line">        historyApiFallback: <span class="literal">true</span>,</span><br><span class="line">        <span class="comment">//实时刷新</span></span><br><span class="line">        inline: <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h4 id="Loaders"><a href="#Loaders" class="headerlink" title="Loaders"></a>Loaders</h4><p>通过使用不同的loader，webpack通过调用外部的脚本或工具可以对各种各样的格式的文件进行处理，比如说分析JSON文件并把它转换为JavaScript文件，或者说把下一代的JS文件（ES6，ES7)转换为现代浏览器可以识别的JS文件。</p>
 <p>Loaders需要单独安装并且需要在webpack.config.js下的modules关键字下进行配置，Loaders的配置选项包括以下几方面:</p>
 <p>|选项|描述|是否必须|<br>|test|一个匹配loaders所处理的文件的拓展名的正则表达式|是|<br>|loader|loader的名称|是|<br>|include/exclude|手动添加必须处理的文件（文件夹）或屏蔽不需要处理的文件（文件夹）|否|<br>|query|为loaders提供额外的设置选项|否|</p>
 <p>我们把Greeter.js里的问候消息放在一个单独的JSON文件里,并通过合适的配置使Greeter.js可以读取该JSON文件的值，配置方法如下：</p>
 <ol>
 <li><p>首先安装可以读取json文件的值的loader</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">npm install --save-dev json-loader</span>
-</pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev json-loader</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>在<strong>webpack.config.js</strong>中进行配置json-loader：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-</pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span>
-<span class="line">    ...</span>
-<span class="line">    ...</span>
-<span class="line">    ...</span>
-<span class="line"></span>
-<span class="line">    <span class="comment">//在配置文件里添加JSON loader</span></span>
-<span class="line">    <span class="built_in">module</span>: &#123;</span>
-<span class="line">        <span class="attr">loaders</span>: [</span>
-<span class="line">            &#123;</span>
-<span class="line">                <span class="attr">test</span>: <span class="regexp">/\.json$/</span>,</span>
-<span class="line">                <span class="attr">loader</span>: <span class="string">"json-loader"</span></span>
-<span class="line">            &#125;</span>
-<span class="line">        ]</span>
-<span class="line">    &#125;,</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    ...</span><br><span class="line">    ...</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="comment">//在配置文件里添加JSON loader</span></span><br><span class="line">    <span class="built_in">module</span>: &#123;</span><br><span class="line">        loaders: [</span><br><span class="line">            &#123;</span><br><span class="line">                test: <span class="regexp">/\.json$/</span>,</span><br><span class="line">                loader: <span class="string">"json-loader"</span></span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>创建带有问候信息的JSON文件(在<strong>app</strong>下创建<strong>config.json</strong>文件)</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-</pre></td><td class="code"><pre><span class="line">&#123;</span>
-<span class="line">  <span class="attr">"greetText"</span>: <span class="string">"Hi there and greetings from JSON!"</span></span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"greetText"</span>: <span class="string">"Hi there and greetings from JSON!"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>更新<strong>app/Greeter.js</strong>的内容为:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-</pre></td><td class="code"><pre><span class="line"><span class="comment">//从config.json读取</span></span>
-<span class="line"><span class="keyword">var</span> config = <span class="built_in">require</span>(<span class="string">'./config.json'</span>);</span>
-<span class="line"></span>
-<span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span>
-<span class="line">    <span class="keyword">var</span> greet = <span class="built_in">document</span>.createElement(<span class="string">'div'</span>);</span>
-<span class="line">    greet.textContent = config.greetText;</span>
-<span class="line">    <span class="keyword">return</span> greet;</span>
-<span class="line">&#125;;</span>
-</pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//从config.json读取</span></span><br><span class="line"><span class="keyword">var</span> config = <span class="built_in">require</span>(<span class="string">'./config.json'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> greet = <span class="built_in">document</span>.createElement(<span class="string">'div'</span>);</span><br><span class="line">    greet.textContent = config.greetText;</span><br><span class="line">    <span class="keyword">return</span> greet;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <h4 id="Babel"><a href="#Babel" class="headerlink" title="Babel"></a>Babel</h4><p>Babel其实是一个编译JavaScript的平台，它的强大之处表现在可以通过编译帮你达到以下目的：</p>
@@ -710,406 +475,60 @@
 </ul>
 <ol>
 <li><p>安装所有Babel所有的依赖包</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">npm install --save-dev babel-core babel-loader babel-preset-es2015 babel-preset-react</span>
-</pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev babel-core babel-loader babel-preset-es2015 babel-preset-react</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>在<strong>webpack.config.js</strong>中进行配置<strong>babel</strong>：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-<span class="line">17</span>
-<span class="line">18</span>
-<span class="line">19</span>
-<span class="line">20</span>
-<span class="line">21</span>
-<span class="line">22</span>
-<span class="line">23</span>
-<span class="line">24</span>
-</pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span>
-<span class="line">    ...</span>
-<span class="line">    ...</span>
-<span class="line">    ...</span>
-<span class="line"></span>
-<span class="line">    <span class="comment">//在配置文件里添加JSON loader</span></span>
-<span class="line">    <span class="built_in">module</span>: &#123;</span>
-<span class="line">        <span class="attr">loaders</span>: [</span>
-<span class="line">            &#123;</span>
-<span class="line">                <span class="attr">test</span>: <span class="regexp">/\.json$/</span>,</span>
-<span class="line">                <span class="attr">loader</span>: <span class="string">"json-loader"</span></span>
-<span class="line">            &#125;,</span>
-<span class="line">            &#123;</span>
-<span class="line">                <span class="attr">test</span>: <span class="regexp">/\.js$/</span>,</span>
-<span class="line">                <span class="attr">exclude</span>: <span class="regexp">/node_modules/</span>,</span>
-<span class="line">                <span class="comment">//在webpack的module部分的loaders里进行配置即可</span></span>
-<span class="line">                loader: <span class="string">'babel-loader'</span>,</span>
-<span class="line">                <span class="attr">query</span>: &#123;</span>
-<span class="line">                    <span class="attr">presets</span>: [<span class="string">'es2015'</span>, <span class="string">'react'</span>]</span>
-<span class="line">                &#125;</span>
-<span class="line">            &#125;</span>
-<span class="line">        ]</span>
-<span class="line">    &#125;,</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    ...</span><br><span class="line">    ...</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="comment">//在配置文件里添加JSON loader</span></span><br><span class="line">    <span class="built_in">module</span>: &#123;</span><br><span class="line">        loaders: [</span><br><span class="line">            &#123;</span><br><span class="line">                test: <span class="regexp">/\.json$/</span>,</span><br><span class="line">                loader: <span class="string">"json-loader"</span></span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                test: <span class="regexp">/\.js$/</span>,</span><br><span class="line">                exclude: <span class="regexp">/node_modules/</span>,</span><br><span class="line">                <span class="comment">//在webpack的module部分的loaders里进行配置即可</span></span><br><span class="line">                loader: <span class="string">'babel-loader'</span>,</span><br><span class="line">                query: &#123;</span><br><span class="line">                    presets: [<span class="string">'es2015'</span>, <span class="string">'react'</span>]</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <p>现在你的webpack的配置已经允许你使用ES6以及JSX的语法了。</p>
-<p>现在使用React进行测试，先安装 React 和 React-DOM，在终端中输入<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">npm install --save react react-dom</span>
-</pre></td></tr></table></figure></p>
+<p>现在使用React进行测试，先安装 React 和 React-DOM，在终端中输入<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save react react-dom</span><br></pre></td></tr></table></figure></p>
 <ol>
 <li><p>更新<strong>app/Greeter.js</strong>的内容为:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-<span class="line">17</span>
-</pre></td><td class="code"><pre><span class="line"><span class="comment">//Greeter,js</span></span>
-<span class="line"><span class="comment">//导入React</span></span>
-<span class="line"><span class="keyword">import</span> React, &#123;Component&#125; <span class="keyword">from</span> <span class="string">'react'</span></span>
-<span class="line"><span class="comment">//从config.json读取</span></span>
-<span class="line"><span class="keyword">import</span> config <span class="keyword">from</span> <span class="string">'./config.json'</span>;</span>
-<span class="line"></span>
-<span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Greeter</span> <span class="keyword">extends</span> <span class="title">Component</span></span>&#123;</span>
-<span class="line">  render() &#123;</span>
-<span class="line">    <span class="keyword">return</span> (</span>
-<span class="line">      <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span>
-<span class="line">        &#123;config.greetText&#125;</span>
-<span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span>
-<span class="line">    );</span>
-<span class="line">  &#125;</span>
-<span class="line">&#125;</span>
-<span class="line"></span>
-<span class="line"><span class="keyword">export</span> <span class="keyword">default</span> Greeter</span>
-</pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Greeter,js</span></span><br><span class="line"><span class="comment">//导入React</span></span><br><span class="line"><span class="keyword">import</span> React, &#123;Component&#125; <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"><span class="comment">//从config.json读取</span></span><br><span class="line"><span class="keyword">import</span> config <span class="keyword">from</span> <span class="string">'./config.json'</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Greeter</span> <span class="keyword">extends</span> <span class="title">Component</span></span>&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &#123;config.greetText&#125;</span><br><span class="line">      &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    );</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">export default Greeter</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>更新<strong>app/main.js</strong>内容为：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span>
-<span class="line"><span class="keyword">import</span> &#123;render&#125; <span class="keyword">from</span> <span class="string">'react-dom'</span>;</span>
-<span class="line"><span class="keyword">import</span> Greeter <span class="keyword">from</span> <span class="string">'./Greeter'</span>;</span>
-<span class="line"></span>
-<span class="line">render(<span class="xml"><span class="tag">&lt;<span class="name">Greeter</span> /&gt;</span>, document.getElementById('root'));</span></span>
-</pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;render&#125; <span class="keyword">from</span> <span class="string">'react-dom'</span>;</span><br><span class="line"><span class="keyword">import</span> Greeter <span class="keyword">from</span> <span class="string">'./Greeter'</span>;</span><br><span class="line"></span><br><span class="line">render(<span class="xml"><span class="tag">&lt;<span class="name">Greeter</span> /&gt;</span>, document.getElementById('root'));</span></span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <h5 id="Babel的配置选项"><a href="#Babel的配置选项" class="headerlink" title="Babel的配置选项"></a>Babel的配置选项</h5><p>Babel可以在<strong>webpack.config.js</strong>中进行配置页可以分块单独配置，当配置较多时，最好单独配置创建一个<strong>.babelrc</strong>的babel配置文件，webpack会自动调用<strong>.babelrc</strong>其中的配置选项。</p>
 <ol>
 <li><p>更新<strong>webpack.config.js</strong>内容为:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-<span class="line">17</span>
-<span class="line">18</span>
-<span class="line">19</span>
-<span class="line">20</span>
-<span class="line">21</span>
-</pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span>
-<span class="line">    ...</span>
-<span class="line">    ...</span>
-<span class="line">    ...</span>
-<span class="line"></span>
-<span class="line">    <span class="comment">//在配置文件里添加JSON loader</span></span>
-<span class="line">    <span class="built_in">module</span>: &#123;</span>
-<span class="line">        <span class="attr">loaders</span>: [</span>
-<span class="line">            &#123;</span>
-<span class="line">                <span class="attr">test</span>: <span class="regexp">/\.json$/</span>,</span>
-<span class="line">                <span class="attr">loader</span>: <span class="string">"json-loader"</span></span>
-<span class="line">            &#125;,</span>
-<span class="line">            &#123;</span>
-<span class="line">                <span class="attr">test</span>: <span class="regexp">/\.js$/</span>,</span>
-<span class="line">                <span class="attr">exclude</span>: <span class="regexp">/node_modules/</span>,</span>
-<span class="line">                <span class="comment">//在webpack的module部分的loaders里进行配置即可</span></span>
-<span class="line">                loader: <span class="string">'babel-loader'</span>,</span>
-<span class="line">            &#125;</span>
-<span class="line">        ]</span>
-<span class="line">    &#125;,</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    ...</span><br><span class="line">    ...</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="comment">//在配置文件里添加JSON loader</span></span><br><span class="line">    <span class="built_in">module</span>: &#123;</span><br><span class="line">        loaders: [</span><br><span class="line">            &#123;</span><br><span class="line">                test: <span class="regexp">/\.json$/</span>,</span><br><span class="line">                loader: <span class="string">"json-loader"</span></span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                test: <span class="regexp">/\.js$/</span>,</span><br><span class="line">                exclude: <span class="regexp">/node_modules/</span>,</span><br><span class="line">                <span class="comment">//在webpack的module部分的loaders里进行配置即可</span></span><br><span class="line">                loader: <span class="string">'babel-loader'</span>,</span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>创建<strong>.babelrc</strong>文件并添加内容如下:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-</pre></td><td class="code"><pre><span class="line">&#123;</span>
-<span class="line">  <span class="string">"presets"</span>: [<span class="string">"react"</span>, <span class="string">"es2015"</span>]</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"presets"</span>: [<span class="string">"react"</span>, <span class="string">"es2015"</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <h3 id="模块"><a href="#模块" class="headerlink" title="模块"></a>模块</h3><p>Webpack有一个不可不说的优点，它把所有的文件都可以当做模块处理，包括你的JavaScript代码，也包括CSS和fonts以及图片等等等，只有通过合适的loaders，它们都可以被当做模块被处理。</p>
 <h4 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h4><p>webpack提供两个工具处理样式表，<strong>css-loader</strong> 和 <strong>style-loader</strong>，二者处理的任务不同，<strong>css-loader</strong>使你能够使用类似<strong>@import</strong> 和 <strong>url(…)</strong>的方法实现 <strong>require()</strong>的功能,<strong>style-loader</strong>将所有的计算后的样式加入页面中，二者组合在一起使你能够把样式表嵌入webpack打包后的JS文件中。</p>
 <ol>
 <li><p>安装<strong>css-loader</strong> 和 <strong>style-loader</strong>模块，在终端输入以下命令</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">npm install --save-dev style-loader css-loader</span>
-</pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev style-loader css-loader</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>更新<strong>webpack.config.js</strong>内容,使其能够使用<strong>css-loader</strong>和 <strong>style-loader</strong></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-<span class="line">17</span>
-<span class="line">18</span>
-<span class="line">19</span>
-<span class="line">20</span>
-<span class="line">21</span>
-<span class="line">22</span>
-<span class="line">23</span>
-<span class="line">24</span>
-<span class="line">25</span>
-<span class="line">26</span>
-</pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span>
-<span class="line">    ...</span>
-<span class="line">    ...</span>
-<span class="line">    ...</span>
-<span class="line"></span>
-<span class="line">    <span class="comment">//在配置文件里添加JSON loader</span></span>
-<span class="line">    <span class="built_in">module</span>: &#123;</span>
-<span class="line">        <span class="attr">loaders</span>: [</span>
-<span class="line">            &#123;</span>
-<span class="line">                <span class="attr">test</span>: <span class="regexp">/\.json$/</span>,</span>
-<span class="line">                <span class="attr">loader</span>: <span class="string">"json-loader"</span></span>
-<span class="line">            &#125;,</span>
-<span class="line">            &#123;</span>
-<span class="line">                <span class="attr">test</span>: <span class="regexp">/\.js$/</span>,</span>
-<span class="line">                <span class="attr">exclude</span>: <span class="regexp">/node_modules/</span>,</span>
-<span class="line">                <span class="comment">//在webpack的module部分的loaders里进行配置即可</span></span>
-<span class="line">                loader: <span class="string">'babel-loader'</span>,</span>
-<span class="line">            &#125;,</span>
-<span class="line">            &#123;</span>
-<span class="line">                <span class="attr">test</span>: <span class="regexp">/\.css$/</span>,</span>
-<span class="line">                <span class="comment">//添加对样式表的处理</span></span>
-<span class="line">                loader: <span class="string">'style-loader!css-loader'</span></span>
-<span class="line">            &#125;</span>
-<span class="line">        ]</span>
-<span class="line">    &#125;,</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    ...</span><br><span class="line">    ...</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="comment">//在配置文件里添加JSON loader</span></span><br><span class="line">    <span class="built_in">module</span>: &#123;</span><br><span class="line">        loaders: [</span><br><span class="line">            &#123;</span><br><span class="line">                test: <span class="regexp">/\.json$/</span>,</span><br><span class="line">                loader: <span class="string">"json-loader"</span></span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                test: <span class="regexp">/\.js$/</span>,</span><br><span class="line">                exclude: <span class="regexp">/node_modules/</span>,</span><br><span class="line">                <span class="comment">//在webpack的module部分的loaders里进行配置即可</span></span><br><span class="line">                loader: <span class="string">'babel-loader'</span>,</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                test: <span class="regexp">/\.css$/</span>,</span><br><span class="line">                <span class="comment">//添加对样式表的处理</span></span><br><span class="line">                loader: <span class="string">'style-loader!css-loader'</span></span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>注:感叹号的作用在于使同一文件能够使用不同类型的loader</p>
 </blockquote>
 </li>
 <li><p>在<strong>app</strong>文件夹下创建<strong>main.css</strong>的文件，设置某些元素的样式</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-<span class="line">17</span>
-<span class="line">18</span>
-<span class="line">19</span>
-</pre></td><td class="code"><pre><span class="line"><span class="selector-tag">html</span> &#123;</span>
-<span class="line">  <span class="attribute">box-sizing</span>: border-box;</span>
-<span class="line">  <span class="attribute">-ms-text-size-adjust</span>: <span class="number">100%</span>;</span>
-<span class="line">  <span class="attribute">-webkit-text-size-adjust</span>: <span class="number">100%</span>;</span>
-<span class="line">&#125;</span>
-<span class="line"></span>
-<span class="line">*, *<span class="selector-pseudo">:before</span>, *<span class="selector-pseudo">:after</span> &#123;</span>
-<span class="line">  <span class="attribute">box-sizing</span>: inherit;</span>
-<span class="line">&#125;</span>
-<span class="line"></span>
-<span class="line"><span class="selector-tag">body</span> &#123;</span>
-<span class="line">  <span class="attribute">margin</span>: <span class="number">0</span>;</span>
-<span class="line">  <span class="attribute">font-family</span>: <span class="string">'Helvetica Neue'</span>, Helvetica, Arial, sans-serif;</span>
-<span class="line">&#125;</span>
-<span class="line"></span>
-<span class="line"><span class="selector-tag">h1</span>, <span class="selector-tag">h2</span>, <span class="selector-tag">h3</span>, <span class="selector-tag">h4</span>, <span class="selector-tag">h5</span>, <span class="selector-tag">h6</span>, <span class="selector-tag">p</span>, <span class="selector-tag">ul</span> &#123;</span>
-<span class="line">  <span class="attribute">margin</span>: <span class="number">0</span>;</span>
-<span class="line">  <span class="attribute">padding</span>: <span class="number">0</span>;</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">html</span> &#123;</span><br><span class="line">  <span class="attribute">box-sizing</span>: border-box;</span><br><span class="line">  <span class="attribute">-ms-text-size-adjust</span>: <span class="number">100%</span>;</span><br><span class="line">  <span class="attribute">-webkit-text-size-adjust</span>: <span class="number">100%</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">*, *<span class="selector-pseudo">:before</span>, *<span class="selector-pseudo">:after</span> &#123;</span><br><span class="line">  <span class="attribute">box-sizing</span>: inherit;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">font-family</span>: <span class="string">'Helvetica Neue'</span>, Helvetica, Arial, sans-serif;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">h1</span>, <span class="selector-tag">h2</span>, <span class="selector-tag">h3</span>, <span class="selector-tag">h4</span>, <span class="selector-tag">h5</span>, <span class="selector-tag">h6</span>, <span class="selector-tag">p</span>, <span class="selector-tag">ul</span> &#123;</span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>由于webpack只有单一的入口，其它的模块需要通过 import, require, url等导入相关位置，为了让webpack能找到”main.css“文件，我们把它导入”main.js “中，更新后的<strong>main.js</strong>文件内容为:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span>
-<span class="line"><span class="keyword">import</span> &#123;render&#125; <span class="keyword">from</span> <span class="string">'react-dom'</span>;</span>
-<span class="line"><span class="keyword">import</span> Greeter <span class="keyword">from</span> <span class="string">'./Greeter'</span>;</span>
-<span class="line"></span>
-<span class="line"><span class="comment">//使用require导入css文件</span></span>
-<span class="line"><span class="keyword">import</span> <span class="string">'./main.css'</span>;</span>
-<span class="line"></span>
-<span class="line">render(<span class="xml"><span class="tag">&lt;<span class="name">Greeter</span>/&gt;</span></span>, <span class="built_in">document</span>.getElementById(<span class="string">'root'</span>));</span>
-</pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;render&#125; <span class="keyword">from</span> <span class="string">'react-dom'</span>;</span><br><span class="line"><span class="keyword">import</span> Greeter <span class="keyword">from</span> <span class="string">'./Greeter'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//使用require导入css文件</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">'./main.css'</span>;</span><br><span class="line"></span><br><span class="line">render(<span class="xml"><span class="tag">&lt;<span class="name">Greeter</span>/&gt;</span></span>, <span class="built_in">document</span>.getElementById(<span class="string">'root'</span>));</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <h4 id="CSS-module"><a href="#CSS-module" class="headerlink" title="CSS module"></a>CSS module</h4><p>CSS modules 的技术就意在把JS的模块化思想带入CSS中来，通过CSS模块，所有的类名，动画名默认都只作用于当前模块。Webpack从一开始就对CSS模块化提供了支持，在CSS loader中进行配置后，你所需要做的一切就是把”modules“传递都所需要的地方，然后就可以直接把CSS的类名传递到组件的代码中，且这样做只对当前组件有效，不必担心在不同的模块中具有相同的类名可能会造成的问题.</p>
 <ol>
 <li><p>更新<strong>webpack.config.js</strong>内容,使其能使用<strong>CSS module</strong></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-<span class="line">17</span>
-<span class="line">18</span>
-<span class="line">19</span>
-<span class="line">20</span>
-<span class="line">21</span>
-<span class="line">22</span>
-<span class="line">23</span>
-<span class="line">24</span>
-<span class="line">25</span>
-<span class="line">26</span>
-<span class="line">27</span>
-</pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span>
-<span class="line">    ...</span>
-<span class="line">    ...</span>
-<span class="line">    ...</span>
-<span class="line"></span>
-<span class="line">    <span class="comment">//在配置文件里添加JSON loader</span></span>
-<span class="line">    <span class="built_in">module</span>: &#123;</span>
-<span class="line">        <span class="attr">loaders</span>: [</span>
-<span class="line">            &#123;</span>
-<span class="line">                <span class="attr">test</span>: <span class="regexp">/\.json$/</span>,</span>
-<span class="line">                <span class="attr">loader</span>: <span class="string">"json-loader"</span></span>
-<span class="line">            &#125;,</span>
-<span class="line">            &#123;</span>
-<span class="line">                <span class="attr">test</span>: <span class="regexp">/\.js$/</span>,</span>
-<span class="line">                <span class="attr">exclude</span>: <span class="regexp">/node_modules/</span>,</span>
-<span class="line">                <span class="comment">//在webpack的module部分的loaders里进行配置即可</span></span>
-<span class="line">                loader: <span class="string">'babel-loader'</span>,</span>
-<span class="line">            &#125;,</span>
-<span class="line">            &#123;</span>
-<span class="line">                <span class="attr">test</span>: <span class="regexp">/\.css$/</span>,</span>
-<span class="line">                <span class="comment">//添加对样式表的处理</span></span>
-<span class="line">                <span class="comment">//仅仅添加了?modules-loader</span></span>
-<span class="line">                loader: <span class="string">'style-loader!css-loader?modules-loader'</span></span>
-<span class="line">            &#125;</span>
-<span class="line">        ]</span>
-<span class="line">    &#125;,</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    ...</span><br><span class="line">    ...</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="comment">//在配置文件里添加JSON loader</span></span><br><span class="line">    <span class="built_in">module</span>: &#123;</span><br><span class="line">        loaders: [</span><br><span class="line">            &#123;</span><br><span class="line">                test: <span class="regexp">/\.json$/</span>,</span><br><span class="line">                loader: <span class="string">"json-loader"</span></span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                test: <span class="regexp">/\.js$/</span>,</span><br><span class="line">                exclude: <span class="regexp">/node_modules/</span>,</span><br><span class="line">                <span class="comment">//在webpack的module部分的loaders里进行配置即可</span></span><br><span class="line">                loader: <span class="string">'babel-loader'</span>,</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                test: <span class="regexp">/\.css$/</span>,</span><br><span class="line">                <span class="comment">//添加对样式表的处理</span></span><br><span class="line">                <span class="comment">//仅仅添加了?modules-loader</span></span><br><span class="line">                loader: <span class="string">'style-loader!css-loader?modules-loader'</span></span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>在<strong>app</strong>文件夹下创建<strong>Greeter.css</strong>并增加内容为:</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-</pre></td><td class="code"><pre><span class="line"><span class="selector-class">.root</span> &#123;</span>
-<span class="line">  <span class="attribute">background-color</span>: <span class="number">#eee</span>;</span>
-<span class="line">  <span class="attribute">padding</span>: <span class="number">10px</span>;</span>
-<span class="line">  <span class="attribute">border</span>: <span class="number">3px</span> solid <span class="number">#ccc</span>;</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.root</span> &#123;</span><br><span class="line">  <span class="attribute">background-color</span>: <span class="number">#eee</span>;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">10px</span>;</span><br><span class="line">  <span class="attribute">border</span>: <span class="number">3px</span> solid <span class="number">#ccc</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>导入<strong>.root</strong>到<strong>Greeter.js</strong>中，更新<strong>Greeter.js</strong>内容为：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123;Component&#125; <span class="keyword">from</span> <span class="string">'react'</span>;</span>
-<span class="line"><span class="keyword">import</span> config <span class="keyword">from</span> <span class="string">'./config.json'</span>;</span>
-<span class="line"><span class="keyword">import</span> styles <span class="keyword">from</span> <span class="string">'./Greeter.css'</span>;<span class="comment">//导入</span></span>
-<span class="line"></span>
-<span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Greeter</span> <span class="keyword">extends</span> <span class="title">Component</span></span>&#123;</span>
-<span class="line">  render() &#123;</span>
-<span class="line">    <span class="keyword">return</span> (</span>
-<span class="line">      <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&#123;styles.root&#125;</span>&gt;</span>//添加类名</span>
-<span class="line">        &#123;config.greetText&#125;</span>
-<span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span>
-<span class="line">    );</span>
-<span class="line">  &#125;</span>
-<span class="line">&#125;</span>
-<span class="line"></span>
-<span class="line"><span class="keyword">export</span> <span class="keyword">default</span> Greeter</span>
-</pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123;Component&#125; <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> config <span class="keyword">from</span> <span class="string">'./config.json'</span>;</span><br><span class="line"><span class="keyword">import</span> styles <span class="keyword">from</span> <span class="string">'./Greeter.css'</span>;<span class="comment">//导入</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Greeter</span> <span class="keyword">extends</span> <span class="title">Component</span></span>&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div className=&#123;styles.root&#125;&gt;<span class="comment">//添加类名</span></span><br><span class="line">        &#123;config.greetText&#125;</span><br><span class="line">      &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    );</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">export default Greeter</span></span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <h4 id="CSS预处理器"><a href="#CSS预处理器" class="headerlink" title="CSS预处理器"></a>CSS预处理器</h4><p>Sass 和 Less之类的预处理器是对原生CSS的拓展，它们允许你使用类似于variables, nesting, mixins, inheritance等不存在于CSS中的特性来写CSS，CSS预处理器可以这些特殊类型的语句转化为浏览器可识别的CSS语句，</p>
@@ -1121,109 +540,19 @@
 </ul>
 <ol>
 <li><p>安装<strong>postcss-loader</strong> 和 <strong>autoprefixer</strong>（自动添加前缀的插件）</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">npm install --save-dev postcss-loader autoprefixer</span>
-</pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev postcss-loader autoprefixer</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>更新<strong>webpack.config.js</strong>内容,使其能使用<strong>postcss-loader</strong> 和 <strong>autoprefixer</strong>,只需要新建一个postcss关键字，并在里面申明依赖的插件</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-<span class="line">17</span>
-<span class="line">18</span>
-<span class="line">19</span>
-<span class="line">20</span>
-<span class="line">21</span>
-<span class="line">22</span>
-<span class="line">23</span>
-<span class="line">24</span>
-<span class="line">25</span>
-<span class="line">26</span>
-<span class="line">27</span>
-</pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span>
-<span class="line">    ...</span>
-<span class="line">    ...</span>
-<span class="line">    ...</span>
-<span class="line"></span>
-<span class="line">    <span class="comment">//在配置文件里添加JSON loader</span></span>
-<span class="line">    <span class="built_in">module</span>: &#123;</span>
-<span class="line">        <span class="attr">loaders</span>: [</span>
-<span class="line">            &#123;</span>
-<span class="line">                <span class="attr">test</span>: <span class="regexp">/\.json$/</span>,</span>
-<span class="line">                <span class="attr">loader</span>: <span class="string">"json-loader"</span></span>
-<span class="line">            &#125;,</span>
-<span class="line">            &#123;</span>
-<span class="line">                <span class="attr">test</span>: <span class="regexp">/\.js$/</span>,</span>
-<span class="line">                <span class="attr">exclude</span>: <span class="regexp">/node_modules/</span>,</span>
-<span class="line">                <span class="comment">//在webpack的module部分的loaders里进行配置即可</span></span>
-<span class="line">                loader: <span class="string">'babel-loader'</span>,</span>
-<span class="line">            &#125;,</span>
-<span class="line">            &#123;</span>
-<span class="line">                <span class="attr">test</span>: <span class="regexp">/\.css$/</span>,</span>
-<span class="line">                <span class="comment">//添加对样式表的处理</span></span>
-<span class="line">                <span class="comment">//仅仅添加了?modules</span></span>
-<span class="line">                loader: <span class="string">'style-loader!css-loader?modules-loader!postcss-loader'</span></span>
-<span class="line">            &#125;</span>
-<span class="line">        ]</span>
-<span class="line">    &#125;,</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    ...</span><br><span class="line">    ...</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="comment">//在配置文件里添加JSON loader</span></span><br><span class="line">    <span class="built_in">module</span>: &#123;</span><br><span class="line">        loaders: [</span><br><span class="line">            &#123;</span><br><span class="line">                test: <span class="regexp">/\.json$/</span>,</span><br><span class="line">                loader: <span class="string">"json-loader"</span></span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                test: <span class="regexp">/\.js$/</span>,</span><br><span class="line">                exclude: <span class="regexp">/node_modules/</span>,</span><br><span class="line">                <span class="comment">//在webpack的module部分的loaders里进行配置即可</span></span><br><span class="line">                loader: <span class="string">'babel-loader'</span>,</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                test: <span class="regexp">/\.css$/</span>,</span><br><span class="line">                <span class="comment">//添加对样式表的处理</span></span><br><span class="line">                <span class="comment">//仅仅添加了?modules</span></span><br><span class="line">                loader: <span class="string">'style-loader!css-loader?modules-loader!postcss-loader'</span></span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>在<strong>webpack.config.js</strong>同级目录下创建<strong>postcss.config.js</strong>文件，配置内容如下；</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-</pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span>
-<span class="line">  <span class="attr">plugins</span>: [</span>
-<span class="line">    <span class="built_in">require</span>(<span class="string">'autoprefixer'</span>)</span>
-<span class="line">  ]</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  plugins: [</span><br><span class="line">    <span class="built_in">require</span>(<span class="string">'autoprefixer'</span>)</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <h3 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h3><p>插件（Plugins）是用来拓展Webpack功能的，它们会在整个构建过程中生效，执行相关的任务。</p>
 <h4 id="如何使用插件"><a href="#如何使用插件" class="headerlink" title="如何使用插件"></a>如何使用插件</h4><p>要使用某个插件，我们需要通过npm安装它，然后要做的就是在webpack配置中的plugins关键字部分添加该插件的一个实例（plugins是一个数组）</p>
 <ol>
-<li>添加一个显示版权声明的插件，在<strong>webpack.config.js</strong>中更新内容如下<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>);</span>
-<span class="line"></span>
-<span class="line"><span class="built_in">module</span>.exports = &#123;</span>
-<span class="line">    ...</span>
-<span class="line">    ...</span>
-<span class="line">    ...</span>
-<span class="line"></span>
-<span class="line">    plugins: [</span>
-<span class="line">        <span class="comment">//在这个数组中new一个就可以了</span></span>
-<span class="line">        <span class="keyword">new</span> webpack.BannerPlugin(<span class="string">"Copyright Flying Unicorns inc."</span>)</span>
-<span class="line">  ],</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
+<li>添加一个显示版权声明的插件，在<strong>webpack.config.js</strong>中更新内容如下<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    ...</span><br><span class="line">    ...</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    plugins: [</span><br><span class="line">        <span class="comment">//在这个数组中new一个就可以了</span></span><br><span class="line">        <span class="keyword">new</span> webpack.BannerPlugin(<span class="string">"Copyright Flying Unicorns inc."</span>)</span><br><span class="line">  ],</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <h4 id="HtmlWebpackPlugin"><a href="#HtmlWebpackPlugin" class="headerlink" title="HtmlWebpackPlugin"></a>HtmlWebpackPlugin</h4><p>这个插件的作用是依据一个简单的模板，帮你生成最终的Html5文件，这个文件中自动引用了你打包后的JS文件。每次编译都在文件名中插入一个不同的哈希值。</p>
@@ -1232,76 +561,10 @@
 <li><p>移除public文件夹，利用此插件，HTML5文件会自动生成，此外CSS已经通过前面的操作打包到JS中了，public文件夹里。</p>
 </li>
 <li><p>在app目录下，创建一个Html文件模板，这个模板包含title等其它你需要的元素，在编译过程中，本插件会依据此模板生成最终的html页面，会自动添加所依赖的 css, js，favicon等文件，在本例中我们命名模板文件名称为index.tmpl.html，模板源代码如下</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-</pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span>
-<span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span>
-<span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span>
-<span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span></span>
-<span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Webpack Sample Project<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span>
-<span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span>
-<span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span>
-<span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">'root'</span>&gt;</span></span>
-<span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>
-<span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span>
-<span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span>
-</pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Webpack Sample Project<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">'root'</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>更新webpack的配置文件，方法同上,新建一个build文件夹用来存放最终的输出文件</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-<span class="line">17</span>
-<span class="line">18</span>
-<span class="line">19</span>
-<span class="line">20</span>
-<span class="line">21</span>
-<span class="line">22</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> HtmlWebpackPlugin = <span class="built_in">require</span>(<span class="string">'html-webpack-plugin'</span>);</span>
-<span class="line"><span class="built_in">module</span>.exports = &#123;</span>
-<span class="line">    ...</span>
-<span class="line">    ...</span>
-<span class="line">    ...</span>
-<span class="line"></span>
-<span class="line">    output: &#123;</span>
-<span class="line">        <span class="comment">//打包后的文件存放的地方</span></span>
-<span class="line">        path: __dirname + <span class="string">"/build"</span>,</span>
-<span class="line">        <span class="comment">//打包后输出文件的文件名</span></span>
-<span class="line">        filename: <span class="string">"bundle.js"</span></span>
-<span class="line">    &#125;,</span>
-<span class="line">    ...</span>
-<span class="line">    ...</span>
-<span class="line">    ...</span>
-<span class="line"></span>
-<span class="line">    plugins: [</span>
-<span class="line">         <span class="keyword">new</span> HtmlWebpackPlugin(&#123;</span>
-<span class="line">            <span class="attr">template</span>: __dirname + <span class="string">"/app/index.tmpl.html"</span><span class="comment">//new 一个这个插件的实例，并传入相关的参数</span></span>
-<span class="line">        &#125;)</span>
-<span class="line">  ],</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> HtmlWebpackPlugin = <span class="built_in">require</span>(<span class="string">'html-webpack-plugin'</span>);</span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    ...</span><br><span class="line">    ...</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    output: &#123;</span><br><span class="line">        <span class="comment">//打包后的文件存放的地方</span></span><br><span class="line">        path: __dirname + <span class="string">"/build"</span>,</span><br><span class="line">        <span class="comment">//打包后输出文件的文件名</span></span><br><span class="line">        filename: <span class="string">"bundle.js"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    ...</span><br><span class="line">    ...</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    plugins: [</span><br><span class="line">         <span class="keyword">new</span> HtmlWebpackPlugin(&#123;</span><br><span class="line">            template: __dirname + <span class="string">"/app/index.tmpl.html"</span><span class="comment">//new 一个这个插件的实例，并传入相关的参数</span></span><br><span class="line">        &#125;)</span><br><span class="line">  ],</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <h3 id="优化插件"><a href="#优化插件" class="headerlink" title="优化插件"></a>优化插件</h3><p>webpack提供了一些在发布阶段非常有用的优化插件，它们大多来自于webpack社区，可以通过npm安装，通过以下插件可以完成产品发布阶段所需的功能</p>
@@ -1312,50 +575,16 @@
 </ul>
 <ol>
 <li><p>安装插件,在终端中输入</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">npm install --save-dev extract-text-webpack-plugin</span>
-</pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev extract-text-webpack-plugin</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>在在<strong>webpack.config.js</strong>中更新配置内容如下</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> HtmlWebpackPlugin = <span class="built_in">require</span>(<span class="string">'html-webpack-plugin'</span>);</span>
-<span class="line"><span class="keyword">var</span> ExtractTextPlugin = <span class="built_in">require</span>(<span class="string">'extract-text-webpack-plugin'</span>);</span>
-<span class="line"><span class="built_in">module</span>.exports = &#123;</span>
-<span class="line">    .</span>
-<span class="line">    ...</span>
-<span class="line">    ...</span>
-<span class="line"></span>
-<span class="line">    plugins: [</span>
-<span class="line">         <span class="keyword">new</span> HtmlWebpackPlugin(&#123;</span>
-<span class="line">            <span class="attr">template</span>: __dirname + <span class="string">"/app/index.tmpl.html"</span><span class="comment">//new 一个这个插件的实例，并传入相关的参数</span></span>
-<span class="line">            <span class="keyword">new</span> webpack.optimize.OccurenceOrderPlugin(),</span>
-<span class="line">            <span class="keyword">new</span> webpack.optimize.UglifyJsPlugin(),</span>
-<span class="line">            <span class="keyword">new</span> ExtractTextPlugin(<span class="string">"style.css"</span>)</span>
-<span class="line">        &#125;)</span>
-<span class="line">  ],</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> HtmlWebpackPlugin = <span class="built_in">require</span>(<span class="string">'html-webpack-plugin'</span>);</span><br><span class="line"><span class="keyword">var</span> ExtractTextPlugin = <span class="built_in">require</span>(<span class="string">'extract-text-webpack-plugin'</span>);</span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    .</span><br><span class="line">    ...</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    plugins: [</span><br><span class="line">         <span class="keyword">new</span> HtmlWebpackPlugin(&#123;</span><br><span class="line">            template: __dirname + <span class="string">"/app/index.tmpl.html"</span><span class="comment">//new 一个这个插件的实例，并传入相关的参数</span></span><br><span class="line">            <span class="keyword">new</span> webpack.optimize.OccurenceOrderPlugin(),</span><br><span class="line">            <span class="keyword">new</span> webpack.optimize.UglifyJsPlugin(),</span><br><span class="line">            <span class="keyword">new</span> ExtractTextPlugin(<span class="string">"style.css"</span>)</span><br><span class="line">        &#125;)</span><br><span class="line">  ],</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <blockquote>
 <p>注：</p>
 <ul>
-<li>本文参考 <a href="http://www.jianshu.com/p/42e11515c10f，作为个人学习笔记" target="_blank" rel="external">http://www.jianshu.com/p/42e11515c10f，作为个人学习笔记</a></li>
+<li>本文参考 <a href="http://www.jianshu.com/p/42e11515c10f，作为个人学习笔记" target="_blank" rel="noopener">http://www.jianshu.com/p/42e11515c10f，作为个人学习笔记</a></li>
 <li>上述环境在<strong>ubuntu16.04 lts</strong>中测试成功</li>
 <li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
 </ul>
@@ -1491,7 +720,7 @@
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/07/25/java面试要点汇总(分布式和微服务)/">java面试知识要点汇总(分布式和微服务)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/23/java面试要点汇总(框架)/">java面试知识要点汇总(框架)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/22/java面试要点汇总(缓存和消息队列)/">java面试知识要点汇总(缓存和消息队列)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/19/java面试要点汇总(web)/">java面试知识要点汇总(web部分)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/15/java面试要点汇总(线程和锁)/">java面试知识要点汇总(线程和锁)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/java面试要点汇总(基础和集合部分)/">java面试知识要点汇总(基础和集合)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/23/hbase-study/">hbase 学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/30/算法图解-study/">算法图解书中算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/27/newcoder-2017校招-1/">牛客网2017年校招真题-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/26/sql_inner_left_right_join/">sql中的inner join left join 和right join各种连接的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/21/newcoder-剑指offer-3/">牛客网剑指offer-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/06/java8-features/">java8新特性总结备忘</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/05/java-generic/">java泛型总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/05/java-refect/">java反射总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/02/newcoder-剑指offer-2/">牛客网剑指offer-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/17/newcoder-剑指offer-1/">牛客网剑指offer-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/17/MongDB-study-4/">MongoDB权威指南学习笔记(4)--应用管理和服务器管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/15/MongDB-study-3/">MongoDB权威指南学习笔记(3)--复制和分片</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/13/MongDB-study-2/">MongoDB权威指南学习笔记(2)--设计应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/11/MongDB-study-1/">MongoDB权威指南学习笔记(1)--基础知识与对文档的增删改查</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/10/manjaro安装软件脚本/">manjaro系统相关脚本和配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/04/高性能MySQL-study/">高性能MySQL学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/01/httpclientutil/">HttpClient工具类</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/14/qiniu-oss/">spring boot使用七牛云的oss(对象存储)文件上传</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/requestHolder_and_argumentResolver/">使用ThreadLocal和ArgumentResolver方便开发</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/applicationContextHelper/">在不被spring容器管理的类中使用ApplicationContext应用上下文bean</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_static_class_autowrite/">Spring boot 在静态类中注入spring组件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_diy_properties/">Spring boot 自定义配置文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/12/Elasticsearch_study_1/">Elasticsearch学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/09/深入理解java虚拟机学习笔记_1/">深入理解java虚拟机学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/23/Docker_study_Dockerfile_instructions/">Docker学习笔记---Dockerfile</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/22/Docker_study/">Docker学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/20/celery_study/">Celery-分布式任务队列学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_redis_cache/">Django使用redis作为缓存系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_channels_websocket/">Django使用Channels实现websocket</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/13/Docker_Gogs/">使用Docker搭建git服务Gogs</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_21to_40/">LeetCode刷题记录(easy难度21-40题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_1to20/">LeetCode刷题记录(easy难度1-20题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/29/es6_study/">es6学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/Webpack_study/">Webpack学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/RegularExpression_study/">正则表达式学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/08/AndroidStudio/">Android Studio 使用本地离线Gradle</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/跨域请求解决方案/">跨域请求的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_nginx_gunicorn/">django+nginx+gunicorn部署配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/ubuntu_supervisor/">ubuntu下的进程控制系统————Supervisor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/28/ubuntu修复不能挂载NTFS硬盘/">ubuntu修复linux和windows双系统下挂载ntfs硬盘出错问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/17/django_timing_task/">django使用django-crontab实现定时任务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/15/django_rest_framework_jwt/">django-rest-framework配置json web token进行接口的认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/django_rest_framework_study/">django-rest-framework框架学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/spring_SpEL/">spring中的SpEL表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/08/git_study/">Git学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/03/资源收集/">资源收集共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/06/ubuntu_open_port/">ubuntu开放指定端口</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/16/redis_study_2/">Redis学习笔记 -- 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/15/redis_study_1/">Redis学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/16/ubuntu_do_something_use/">ubuntu日常使用的安装配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/django_address_baiduapi_marker_show/">Django调用百度地图api在地图上批量增加标记点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/ubuntu_do_something_coding/">ubuntu搭建常见开发环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/10/ubuntu安装在双系统笔记本下开机或关机卡死.1/">ubuntu在双系统下开机卡死或关机卡死的解决办法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/11/python_requirements/">python生成项目所需依赖文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/10/hexo_github_coding_blog/">利用hexo和github或coding 搭免费个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django数据库操作/">Django操作数据库</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django连接mysql数据库/">Django连接MySql使用models处理数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django环境搭建/">Django环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django渲染模板/">Django渲染模板</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django常用语句/">Django常用语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/python2和Python3的区别/">Python2和Python3的区别简单总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/03/Android_qq_Menu/">Android仿qq侧滑菜单</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/16/C语言队列的基本操作/">C语言队列的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/c语言中缀表达式变后缀表达式/">C语言中缀表达式转后缀表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言共享栈/">C语言共享栈</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言逆波兰计算器/">C语言逆波兰表达式计算(后缀表达式计算器)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言二叉树基本操作/">C语言二叉树的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言中缀表达式计算器/">C语言中缀表达式计算器</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/08/09/spring-boot自定义starter/">Rspring-boot自定义starter</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/25/java面试要点汇总(分布式和微服务)/">java面试知识要点汇总(分布式和微服务)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/23/java面试要点汇总(框架)/">java面试知识要点汇总(框架)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/22/java面试要点汇总(缓存和消息队列)/">java面试知识要点汇总(缓存和消息队列)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/19/java面试要点汇总(web和数据库)/">java面试知识要点汇总(web和数据库)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/15/java面试要点汇总(线程和锁)/">java面试知识要点汇总(线程和锁)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/java面试要点汇总(基础和集合部分)/">java面试知识要点汇总(基础和集合)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/23/hbase-study/">hbase 学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/30/算法图解-study/">算法图解书中算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/27/newcoder-2017校招-1/">牛客网2017年校招真题-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/26/sql_inner_left_right_join/">sql中的inner join left join 和right join各种连接的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/21/newcoder-剑指offer-3/">牛客网剑指offer-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/06/java8-features/">java8新特性总结备忘</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/05/java-generic/">java泛型总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/05/java-refect/">java反射总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/02/newcoder-剑指offer-2/">牛客网剑指offer-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/17/newcoder-剑指offer-1/">牛客网剑指offer-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/17/MongDB-study-4/">MongoDB权威指南学习笔记(4)--应用管理和服务器管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/15/MongDB-study-3/">MongoDB权威指南学习笔记(3)--复制和分片</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/13/MongDB-study-2/">MongoDB权威指南学习笔记(2)--设计应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/11/MongDB-study-1/">MongoDB权威指南学习笔记(1)--基础知识与对文档的增删改查</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/10/manjaro安装软件脚本/">manjaro系统相关脚本和配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/04/高性能MySQL-study/">高性能MySQL学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/01/httpclientutil/">HttpClient工具类</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/14/qiniu-oss/">spring boot使用七牛云的oss(对象存储)文件上传</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/requestHolder_and_argumentResolver/">使用ThreadLocal和ArgumentResolver方便开发</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/applicationContextHelper/">在不被spring容器管理的类中使用ApplicationContext应用上下文bean</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_static_class_autowrite/">Spring boot 在静态类中注入spring组件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_diy_properties/">Spring boot 自定义配置文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/12/Elasticsearch_study_1/">Elasticsearch学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/09/深入理解java虚拟机学习笔记_1/">深入理解java虚拟机学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/23/Docker_study_Dockerfile_instructions/">Docker学习笔记---Dockerfile</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/22/Docker_study/">Docker学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/20/celery_study/">Celery-分布式任务队列学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_redis_cache/">Django使用redis作为缓存系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_channels_websocket/">Django使用Channels实现websocket</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/13/Docker_Gogs/">使用Docker搭建git服务Gogs</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_1to20/">LeetCode刷题记录(easy难度1-20题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_21to_40/">LeetCode刷题记录(easy难度21-40题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/29/es6_study/">es6学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/Webpack_study/">Webpack学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/RegularExpression_study/">正则表达式学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/08/AndroidStudio/">Android Studio 使用本地离线Gradle</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/跨域请求解决方案/">跨域请求的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/ubuntu_supervisor/">ubuntu下的进程控制系统————Supervisor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_nginx_gunicorn/">django+nginx+gunicorn部署配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/28/ubuntu修复不能挂载NTFS硬盘/">ubuntu修复linux和windows双系统下挂载ntfs硬盘出错问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/17/django_timing_task/">django使用django-crontab实现定时任务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/15/django_rest_framework_jwt/">django-rest-framework配置json web token进行接口的认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/spring_SpEL/">spring中的SpEL表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/django_rest_framework_study/">django-rest-framework框架学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/08/git_study/">Git学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/03/资源收集/">资源收集共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/06/ubuntu_open_port/">ubuntu开放指定端口</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/16/redis_study_2/">Redis学习笔记 -- 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/15/redis_study_1/">Redis学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/16/ubuntu_do_something_use/">ubuntu日常使用的安装配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/ubuntu_do_something_coding/">ubuntu搭建常见开发环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/django_address_baiduapi_marker_show/">Django调用百度地图api在地图上批量增加标记点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/10/ubuntu安装在双系统笔记本下开机或关机卡死.1/">ubuntu在双系统下开机卡死或关机卡死的解决办法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/11/python_requirements/">python生成项目所需依赖文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/10/hexo_github_coding_blog/">利用hexo和github或coding 搭免费个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django数据库操作/">Django操作数据库</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django环境搭建/">Django环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django连接mysql数据库/">Django连接MySql使用models处理数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/python2和Python3的区别/">Python2和Python3的区别简单总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django常用语句/">Django常用语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django渲染模板/">Django渲染模板</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/03/Android_qq_Menu/">Android仿qq侧滑菜单</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/16/C语言队列的基本操作/">C语言队列的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言中缀表达式计算器/">C语言中缀表达式计算器</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/c语言中缀表达式变后缀表达式/">C语言中缀表达式转后缀表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言逆波兰计算器/">C语言逆波兰表达式计算(后缀表达式计算器)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言共享栈/">C语言共享栈</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言二叉树基本操作/">C语言二叉树的基本操作</a></li></ul>
 
 
 

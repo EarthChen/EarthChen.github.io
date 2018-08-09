@@ -22,7 +22,8 @@
 <meta property="og:url" content="http://earthchen.cn/2017/08/06/LeetCode_Record_Easy_21to_40/index.html">
 <meta property="og:site_name" content="EarthChen&#39;s Blog">
 <meta property="og:description" content="leetcode刷题记录本文记录一下leetcode刷题记录，记录一下自己的解法和心得。">
-<meta property="og:updated_time" content="2018-07-21T08:24:50.818Z">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-07-21T08:24:50.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="LeetCode刷题记录(easy难度21-40题)">
 <meta name="twitter:description" content="leetcode刷题记录本文记录一下leetcode刷题记录，记录一下自己的解法和心得。">
@@ -342,89 +343,19 @@
           
         <p>leetcode刷题记录<br>本文记录一下leetcode刷题记录，记录一下自己的解法和心得。</p>
 <a id="more"></a>
-<h1 id="LeetCode"><a href="#LeetCode" class="headerlink" title="LeetCode"></a>LeetCode</h1><h2 id="Binary-Tree-Level-Order-Traversal-II"><a href="#Binary-Tree-Level-Order-Traversal-II" class="headerlink" title="Binary Tree Level Order Traversal II"></a>Binary Tree Level Order Traversal II</h2><p>题目:<a href="https://leetcode.com/problems/binary-tree-level-order-traversal-ii/description/" target="_blank" rel="external">Binary Tree Level Order Traversal II</a></p>
+<h1 id="LeetCode"><a href="#LeetCode" class="headerlink" title="LeetCode"></a>LeetCode</h1><h2 id="Binary-Tree-Level-Order-Traversal-II"><a href="#Binary-Tree-Level-Order-Traversal-II" class="headerlink" title="Binary Tree Level Order Traversal II"></a>Binary Tree Level Order Traversal II</h2><p>题目:<a href="https://leetcode.com/problems/binary-tree-level-order-traversal-ii/description/" target="_blank" rel="noopener">Binary Tree Level Order Traversal II</a></p>
 <blockquote>
 <p>Given a binary tree, return the bottom-up level order traversal of its nodes’ values. (ie, from left to right, level by level from leaf to root).</p>
 </blockquote>
-<p>例子:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-</pre></td><td class="code"><pre><span class="line">Given binary tree [3,9,20,null,null,15,7],</span>
-<span class="line">    3</span>
-<span class="line">   / \</span>
-<span class="line">  9  20</span>
-<span class="line">    /  \</span>
-<span class="line">   15   7</span>
-<span class="line">return its bottom-up level order traversal as:</span>
-<span class="line">[</span>
-<span class="line">  [15,7],</span>
-<span class="line">  [9,20],</span>
-<span class="line">  [3]</span>
-<span class="line">]</span>
-</pre></td></tr></table></figure></p>
+<p>例子:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Given binary tree [3,9,20,null,null,15,7],</span><br><span class="line">    3</span><br><span class="line">   / \</span><br><span class="line">  9  20</span><br><span class="line">    /  \</span><br><span class="line">   15   7</span><br><span class="line">return its bottom-up level order traversal as:</span><br><span class="line">[</span><br><span class="line">  [15,7],</span><br><span class="line">  [9,20],</span><br><span class="line">  [3]</span><br><span class="line">]</span><br></pre></td></tr></table></figure></p>
 <p>题意分析:<br>给定一个二叉树，返回自底向上遍历结点的值</p>
 <h3 id="思路分析"><a href="#思路分析" class="headerlink" title="思路分析"></a>思路分析</h3><p>相等于特殊的按层遍历，在基本的按层遍历树可以选择用栈或者队列来保存每一层的结点。在这里我们选择使用栈。并且使用列表来模拟栈，在使用一个列表来保存需要返回的结果。</p>
 <p>首先，初始化需要将根结点与level为0的元组存入列表中，循环这个栈，不为空的话，在栈的尾部弹出一个元素，第一次也就是弹出的根结点和level层数。</p>
 <p>得到弹出的结点，判断其是否为空，如果不为空，判断此时结果列表的长度，也就是已经遍历过的层数，</p>
 <p>如果小于当前层数+1，也就是在结果列表的第一个位置插入一个列表。如果大于当前level+1，我们就可以在结果列表中放入合适的结点的值。然后只需要在栈中压入当前结点的左子树和当前层数level+1的元组，和右子树和当前层数level+1的元组。最后返回结果列表即可。</p>
-<h4 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h4><p> 很容易想到我们可以遍历两次数组，在内循环中判断两次循环中的数相加是否等于target<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-<span class="line">17</span>
-<span class="line">18</span>
-<span class="line">19</span>
-<span class="line">20</span>
-<span class="line">21</span>
-<span class="line">22</span>
-<span class="line">23</span>
-</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
-<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">levelOrderBottom</span><span class="params">(self, root)</span>:</span></span>
-<span class="line">        <span class="string">"""</span>
-<span class="line">        返回节点值的自底向上的顺序遍历。（从左到右，从叶到根逐级地）</span>
-<span class="line">        :param root: TreeNode</span>
-<span class="line">        :return: list[list[int]]</span>
-<span class="line">        """</span></span>
-<span class="line">        stack = [(root, <span class="number">0</span>)]</span>
-<span class="line">        res = []</span>
-<span class="line">        <span class="comment"># 如果栈不为空</span></span>
-<span class="line">        <span class="keyword">while</span> stack:</span>
-<span class="line">            <span class="comment"># 将栈中最后一个元素弹出</span></span>
-<span class="line">            node, level = stack.pop()</span>
-<span class="line">            <span class="comment"># 如果该结点存在</span></span>
-<span class="line">            <span class="keyword">if</span> node:</span>
-<span class="line">                <span class="comment"># 如果结果列表的长度小于层数+1</span></span>
-<span class="line">                <span class="keyword">if</span> len(res) &lt; level + <span class="number">1</span>:</span>
-<span class="line">                    res.insert(<span class="number">0</span>, [])</span>
-<span class="line">                <span class="comment"># 将当前结点的值添加在结果列表中</span></span>
-<span class="line">                res[-(level + <span class="number">1</span>)].append(node.val)</span>
-<span class="line">                stack.append((node.right, level + <span class="number">1</span>))</span>
-<span class="line">                stack.append((node.left, level + <span class="number">1</span>))</span>
-<span class="line">        <span class="keyword">return</span> res</span>
-</pre></td></tr></table></figure></p>
+<h4 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h4><p> 很容易想到我们可以遍历两次数组，在内循环中判断两次循环中的数相加是否等于target<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">levelOrderBottom</span><span class="params">(self, root)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        返回节点值的自底向上的顺序遍历。（从左到右，从叶到根逐级地）</span></span><br><span class="line"><span class="string">        :param root: TreeNode</span></span><br><span class="line"><span class="string">        :return: list[list[int]]</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        stack = [(root, <span class="number">0</span>)]</span><br><span class="line">        res = []</span><br><span class="line">        <span class="comment"># 如果栈不为空</span></span><br><span class="line">        <span class="keyword">while</span> stack:</span><br><span class="line">            <span class="comment"># 将栈中最后一个元素弹出</span></span><br><span class="line">            node, level = stack.pop()</span><br><span class="line">            <span class="comment"># 如果该结点存在</span></span><br><span class="line">            <span class="keyword">if</span> node:</span><br><span class="line">                <span class="comment"># 如果结果列表的长度小于层数+1</span></span><br><span class="line">                <span class="keyword">if</span> len(res) &lt; level + <span class="number">1</span>:</span><br><span class="line">                    res.insert(<span class="number">0</span>, [])</span><br><span class="line">                <span class="comment"># 将当前结点的值添加在结果列表中</span></span><br><span class="line">                res[-(level + <span class="number">1</span>)].append(node.val)</span><br><span class="line">                stack.append((node.right, level + <span class="number">1</span>))</span><br><span class="line">                stack.append((node.left, level + <span class="number">1</span>))</span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure></p>
 <p>使用队列的话，方式其实也是大同小异，这里就不在阐述。</p>
-<h2 id="Convert-Sorted-Array-to-Binary-Search-Tree"><a href="#Convert-Sorted-Array-to-Binary-Search-Tree" class="headerlink" title="Convert Sorted Array to Binary Search Tree"></a>Convert Sorted Array to Binary Search Tree</h2><p>题目:<a href="https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree/description/" target="_blank" rel="external">Convert Sorted Array to Binary Search Tree</a></p>
+<h2 id="Convert-Sorted-Array-to-Binary-Search-Tree"><a href="#Convert-Sorted-Array-to-Binary-Search-Tree" class="headerlink" title="Convert Sorted Array to Binary Search Tree"></a>Convert Sorted Array to Binary Search Tree</h2><p>题目:<a href="https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree/description/" target="_blank" rel="noopener">Convert Sorted Array to Binary Search Tree</a></p>
 <blockquote>
 <p>Given an array where elements are sorted in ascending order, convert it to a height balanced BST.</p>
 </blockquote>
@@ -436,337 +367,65 @@
 <p>平衡二叉树主要的特点就是“棵空树或它的左右两个子树的高度差的绝对值不超过1，并且左右两个子树都是一棵平衡二叉树”,知道了这个，题目又要求我们把一个已经排序的数组(列表)作为整个二叉树的值。</p>
 <p>所以我们可以找出数组中的中值，把他作为根，把小于中值的作为左子树，大于中值的作为右子树，在利用递归的思想，从左子树中找到左子树的根，在右子树中找到右子树的根，就可以得到我们所需要的平衡二叉树。</p>
 <p>所以我们可以有以下解法</p>
-<h4 id="方法一-1"><a href="#方法一-1" class="headerlink" title="方法一"></a>方法一</h4><p> 很容易想到我们可以遍历两次数组，在内循环中判断两次循环中的数相加是否等于target<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-<span class="line">17</span>
-<span class="line">18</span>
-<span class="line">19</span>
-<span class="line">20</span>
-</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
-<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">sortedArrayToBST</span><span class="params">(self, num)</span>:</span></span>
-<span class="line">        <span class="string">"""</span>
-<span class="line">        将已排序的数组转换为高度平衡二叉树</span>
-<span class="line">        :param num: list[int]</span>
-<span class="line">        :return: TreeNode</span>
-<span class="line">        """</span></span>
-<span class="line">        <span class="comment"># 如果列表为空</span></span>
-<span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> num:</span>
-<span class="line">            <span class="keyword">return</span> <span class="keyword">None</span></span>
-<span class="line">        <span class="comment"># 列表中间的值为列表长度整数2</span></span>
-<span class="line">        mid = len(num) // <span class="number">2</span></span>
-<span class="line">        <span class="comment"># 生成一个以中值为结点的值的作为根结点</span></span>
-<span class="line">        root = TreeNode(num[mid])</span>
-<span class="line">        <span class="comment"># 递归求出</span></span>
-<span class="line">        <span class="comment"># 左子树为小于中间值一部分</span></span>
-<span class="line">        root.left = self.sortedArrayToBST(num[:mid])</span>
-<span class="line">        <span class="comment"># 右子树为大于中间值的一部分</span></span>
-<span class="line">        root.right = self.sortedArrayToBST(num[mid + <span class="number">1</span>:])</span>
-<span class="line">        <span class="keyword">return</span> root</span>
-</pre></td></tr></table></figure></p>
-<h2 id="Balanced-Binary-Tree"><a href="#Balanced-Binary-Tree" class="headerlink" title="Balanced Binary Tree"></a>Balanced Binary Tree</h2><p>题目:<a href="https://leetcode.com/problems/balanced-binary-tree/description/" target="_blank" rel="external">Balanced Binary Tree</a></p>
+<h4 id="方法一-1"><a href="#方法一-1" class="headerlink" title="方法一"></a>方法一</h4><p> 很容易想到我们可以遍历两次数组，在内循环中判断两次循环中的数相加是否等于target<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">sortedArrayToBST</span><span class="params">(self, num)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        将已排序的数组转换为高度平衡二叉树</span></span><br><span class="line"><span class="string">        :param num: list[int]</span></span><br><span class="line"><span class="string">        :return: TreeNode</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="comment"># 如果列表为空</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> num:</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">None</span></span><br><span class="line">        <span class="comment"># 列表中间的值为列表长度整数2</span></span><br><span class="line">        mid = len(num) // <span class="number">2</span></span><br><span class="line">        <span class="comment"># 生成一个以中值为结点的值的作为根结点</span></span><br><span class="line">        root = TreeNode(num[mid])</span><br><span class="line">        <span class="comment"># 递归求出</span></span><br><span class="line">        <span class="comment"># 左子树为小于中间值一部分</span></span><br><span class="line">        root.left = self.sortedArrayToBST(num[:mid])</span><br><span class="line">        <span class="comment"># 右子树为大于中间值的一部分</span></span><br><span class="line">        root.right = self.sortedArrayToBST(num[mid + <span class="number">1</span>:])</span><br><span class="line">        <span class="keyword">return</span> root</span><br></pre></td></tr></table></figure></p>
+<h2 id="Balanced-Binary-Tree"><a href="#Balanced-Binary-Tree" class="headerlink" title="Balanced Binary Tree"></a>Balanced Binary Tree</h2><p>题目:<a href="https://leetcode.com/problems/balanced-binary-tree/description/" target="_blank" rel="noopener">Balanced Binary Tree</a></p>
 <blockquote>
 <p>Given a binary tree, determine if it is height-balanced.<br>For this problem, a height-balanced binary tree is defined as a binary tree in which the depth of the two subtrees of every node never differ by more than 1.</p>
 </blockquote>
 <p>题意分析:<br>给定一个二叉树，判断其是否是平衡二叉树</p>
 <h3 id="思路分析-2"><a href="#思路分析-2" class="headerlink" title="思路分析"></a>思路分析</h3><p>在上一题的分析中，我们已经知道了什么叫做平衡二叉树。题目给出的方法返回值的bool类型，不利于我们去循环递归的判断它。我们可以单独写一个check函数，其返回值是int类型。当函数返回-1时，该二叉树为非平衡二叉树，当函数返回值不为-1时，该二叉树为平衡二叉树。</p>
 <p>所以我们可以有以下解法</p>
-<h4 id="方法一-2"><a href="#方法一-2" class="headerlink" title="方法一"></a>方法一</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-<span class="line">17</span>
-<span class="line">18</span>
-<span class="line">19</span>
-<span class="line">20</span>
-<span class="line">21</span>
-<span class="line">22</span>
-<span class="line">23</span>
-<span class="line">24</span>
-<span class="line">25</span>
-<span class="line">26</span>
-<span class="line">27</span>
-<span class="line">28</span>
-<span class="line">29</span>
-</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
-<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">isBalanced</span><span class="params">(self, root)</span>:</span></span>
-<span class="line">        <span class="string">"""</span>
-<span class="line">        判断一个树是否为平衡二叉树</span>
-<span class="line">        当check函数的发挥值不等于-1时返回true，等于-1是返回false</span>
-<span class="line">        :param root: TreeNode</span>
-<span class="line">        :return: bool</span>
-<span class="line">        """</span></span>
-<span class="line">        <span class="keyword">return</span> self.check(root) != <span class="number">-1</span></span>
-<span class="line"></span>
-<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">check</span><span class="params">(self, root)</span>:</span></span>
-<span class="line">        <span class="string">"""</span>
-<span class="line">        检查结点</span>
-<span class="line">        :param root: TreeNode</span>
-<span class="line">        :return: int</span>
-<span class="line">        """</span></span>
-<span class="line">        <span class="comment"># 结点为空时</span></span>
-<span class="line">        <span class="keyword">if</span> root <span class="keyword">is</span> <span class="keyword">None</span>:</span>
-<span class="line">            <span class="keyword">return</span> <span class="number">0</span></span>
-<span class="line">        <span class="comment"># 递归得出左子树的返回值</span></span>
-<span class="line">        left = self.check(root.left)</span>
-<span class="line">        <span class="comment"># 递归得出右子树的返回值</span></span>
-<span class="line">        right = self.check(root.right)</span>
-<span class="line">        <span class="comment"># 如果左子树不为平衡树或者右子树不为平衡二叉树，</span></span>
-<span class="line">        <span class="comment"># 左右子树想减的值大于1(-1-(-1))左右子树不为平衡树的情况</span></span>
-<span class="line">        <span class="keyword">if</span> left == <span class="number">-1</span> <span class="keyword">or</span> right == <span class="number">-1</span> <span class="keyword">or</span> abs(left - right) &gt; <span class="number">1</span>:</span>
-<span class="line">            <span class="keyword">return</span> <span class="number">-1</span></span>
-<span class="line">        <span class="comment"># left right分别等于0或1的情况</span></span>
-<span class="line">        <span class="keyword">return</span> <span class="number">1</span> + max(left, right)</span>
-</pre></td></tr></table></figure>
-<h2 id="Minimum-Depth-of-Binary-Tree"><a href="#Minimum-Depth-of-Binary-Tree" class="headerlink" title="Minimum Depth of Binary Tree"></a>Minimum Depth of Binary Tree</h2><p>题目:<a href="https://leetcode.com/problems/minimum-depth-of-binary-tree/description/" target="_blank" rel="external">Minimum Depth of Binary Tree</a></p>
+<h4 id="方法一-2"><a href="#方法一-2" class="headerlink" title="方法一"></a>方法一</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">isBalanced</span><span class="params">(self, root)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        判断一个树是否为平衡二叉树</span></span><br><span class="line"><span class="string">        当check函数的发挥值不等于-1时返回true，等于-1是返回false</span></span><br><span class="line"><span class="string">        :param root: TreeNode</span></span><br><span class="line"><span class="string">        :return: bool</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">return</span> self.check(root) != <span class="number">-1</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">check</span><span class="params">(self, root)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        检查结点</span></span><br><span class="line"><span class="string">        :param root: TreeNode</span></span><br><span class="line"><span class="string">        :return: int</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="comment"># 结点为空时</span></span><br><span class="line">        <span class="keyword">if</span> root <span class="keyword">is</span> <span class="keyword">None</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">        <span class="comment"># 递归得出左子树的返回值</span></span><br><span class="line">        left = self.check(root.left)</span><br><span class="line">        <span class="comment"># 递归得出右子树的返回值</span></span><br><span class="line">        right = self.check(root.right)</span><br><span class="line">        <span class="comment"># 如果左子树不为平衡树或者右子树不为平衡二叉树，</span></span><br><span class="line">        <span class="comment"># 左右子树想减的值大于1(-1-(-1))左右子树不为平衡树的情况</span></span><br><span class="line">        <span class="keyword">if</span> left == <span class="number">-1</span> <span class="keyword">or</span> right == <span class="number">-1</span> <span class="keyword">or</span> abs(left - right) &gt; <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span></span><br><span class="line">        <span class="comment"># left right分别等于0或1的情况</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span> + max(left, right)</span><br></pre></td></tr></table></figure>
+<h2 id="Minimum-Depth-of-Binary-Tree"><a href="#Minimum-Depth-of-Binary-Tree" class="headerlink" title="Minimum Depth of Binary Tree"></a>Minimum Depth of Binary Tree</h2><p>题目:<a href="https://leetcode.com/problems/minimum-depth-of-binary-tree/description/" target="_blank" rel="noopener">Minimum Depth of Binary Tree</a></p>
 <blockquote>
 <p>Given a binary tree, find its minimum depth.<br>The minimum depth is the number of nodes along the shortest path from the root node down to the nearest leaf node.</p>
 </blockquote>
 <p>题意分析:<br>求出二叉树的最小深度</p>
 <h3 id="思路分析-3"><a href="#思路分析-3" class="headerlink" title="思路分析"></a>思路分析</h3><p>如果该树为空，需要单独讨论，返回深度为0.递归调用自己，传入根节点的左子树和右子树，如果其中有空节点，那么此时的left或者right就有值为0，既然求的是最小的深度，那么就可以返回该子树的深度。如果两个值均不为0了，那么就返回左子树和右子树深度的最小值，最后加上子树到根节点的1，即为最小深度。</p>
 <p>所以我们可以有以下解法</p>
-<h4 id="方法一-3"><a href="#方法一-3" class="headerlink" title="方法一"></a>方法一</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
-<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">minDepth</span><span class="params">(self, root)</span>:</span></span>
-<span class="line">        <span class="comment"># 如果是空树</span></span>
-<span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> root:</span>
-<span class="line">            <span class="keyword">return</span> <span class="number">0</span></span>
-<span class="line">        <span class="comment"># 递归求出子节点的深度</span></span>
-<span class="line">        left = self.minDepth(root.left)</span>
-<span class="line">        right = self.minDepth(root.right)</span>
-<span class="line">        <span class="comment"># 如果节点为空</span></span>
-<span class="line">        <span class="keyword">if</span> left == <span class="number">0</span> <span class="keyword">or</span> right == <span class="number">0</span>:</span>
-<span class="line">            <span class="keyword">return</span> left + right + <span class="number">1</span></span>
-<span class="line">        <span class="comment"># 不为空情况下计算左右子树的最小深度</span></span>
-<span class="line">        <span class="keyword">return</span> min(left, right) + <span class="number">1</span></span>
-</pre></td></tr></table></figure>
-<h2 id="Path-Sum"><a href="#Path-Sum" class="headerlink" title="Path Sum"></a>Path Sum</h2><p>题目:<a href="https://leetcode.com/problems/path-sum/description/" target="_blank" rel="external">Path Sum</a></p>
+<h4 id="方法一-3"><a href="#方法一-3" class="headerlink" title="方法一"></a>方法一</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">minDepth</span><span class="params">(self, root)</span>:</span></span><br><span class="line">        <span class="comment"># 如果是空树</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> root:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">        <span class="comment"># 递归求出子节点的深度</span></span><br><span class="line">        left = self.minDepth(root.left)</span><br><span class="line">        right = self.minDepth(root.right)</span><br><span class="line">        <span class="comment"># 如果节点为空</span></span><br><span class="line">        <span class="keyword">if</span> left == <span class="number">0</span> <span class="keyword">or</span> right == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> left + right + <span class="number">1</span></span><br><span class="line">        <span class="comment"># 不为空情况下计算左右子树的最小深度</span></span><br><span class="line">        <span class="keyword">return</span> min(left, right) + <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<h2 id="Path-Sum"><a href="#Path-Sum" class="headerlink" title="Path Sum"></a>Path Sum</h2><p>题目:<a href="https://leetcode.com/problems/path-sum/description/" target="_blank" rel="noopener">Path Sum</a></p>
 <blockquote>
 <p>Given a binary tree and a sum, determine if the tree has a root-to-leaf path such that adding up all the values along the path equals the given sum.</p>
 </blockquote>
-<p>例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-</pre></td><td class="code"><pre><span class="line">For example:</span>
-<span class="line">Given the below binary tree and sum = 22,</span>
-<span class="line">              5</span>
-<span class="line">             / \</span>
-<span class="line">            4   8</span>
-<span class="line">           /   / \</span>
-<span class="line">          11  13  4</span>
-<span class="line">         /  \      \</span>
-<span class="line">        7    2      1</span>
-<span class="line">return true, as there exist a root-to-leaf path 5-&gt;4-&gt;11-&gt;2 which sum is 22.</span>
-</pre></td></tr></table></figure></p>
+<p>例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">For example:</span><br><span class="line">Given the below binary tree and sum = 22,</span><br><span class="line">              5</span><br><span class="line">             / \</span><br><span class="line">            4   8</span><br><span class="line">           /   / \</span><br><span class="line">          11  13  4</span><br><span class="line">         /  \      \</span><br><span class="line">        7    2      1</span><br><span class="line">return true, as there exist a root-to-leaf path 5-&gt;4-&gt;11-&gt;2 which sum is 22.</span><br></pre></td></tr></table></figure></p>
 <p>题意分析:<br>题意还是很清楚的，给定一颗二叉树，在给定一个和，判断从根节点到叶子节点之间的路径和是否有等于给定的sum。</p>
 <h3 id="思路分析-4"><a href="#思路分析-4" class="headerlink" title="思路分析"></a>思路分析</h3><p>对于空树，也就是只有根节点并且根节点为空，或者树中只有根节点，这两种情况都需要单独讨论。</p>
 <p>对于空树，我们可以直接返回False不等于即可。</p>
 <p>对于只有根节点的树，我们需要判断一下，该节点的值是否等于sum，等于就返回True</p>
 <p>对特殊情况讨论完毕，我们就可以递归判断左子树和右子树的情况了，传入的sum需要用原来的sum-根节点的值。题目只要去判断是否有，所有我们用或去连接即可</p>
 <p>所以我们可以有以下解法</p>
-<h4 id="方法一-4"><a href="#方法一-4" class="headerlink" title="方法一"></a>方法一</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-<span class="line">17</span>
-</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
-<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">hasPathSum</span><span class="params">(self, root, sum)</span>:</span></span>
-<span class="line">        <span class="string">"""</span>
-<span class="line">        判断从根到叶子节点的值之和是否有等于sum的</span>
-<span class="line">        :param root: TreeNode</span>
-<span class="line">        :param sum: int</span>
-<span class="line">        :return: bool</span>
-<span class="line">        """</span></span>
-<span class="line">        <span class="comment"># 如果是空树</span></span>
-<span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> root:</span>
-<span class="line">            <span class="keyword">return</span> <span class="keyword">False</span></span>
-<span class="line">        <span class="comment"># 如果只有根节点，并且根节点的值等于sum</span></span>
-<span class="line">        <span class="keyword">if</span> root.val == sum <span class="keyword">and</span> <span class="keyword">not</span> root.left <span class="keyword">and</span> <span class="keyword">not</span> root.right:</span>
-<span class="line">            <span class="keyword">return</span> <span class="keyword">True</span></span>
-<span class="line">        <span class="comment"># 递归判断对左右节点的情况，每次需要将sum减去节点的值</span></span>
-<span class="line">        <span class="keyword">return</span> self.hasPathSum(root.left, sum - root.val) \</span>
-<span class="line">               <span class="keyword">or</span> self.hasPathSum(root.right, sum - root.val)</span>
-</pre></td></tr></table></figure>
-<h2 id="Pascal’s-Triangle"><a href="#Pascal’s-Triangle" class="headerlink" title="Pascal’s Triangle"></a>Pascal’s Triangle</h2><p>题目:<a href="https://leetcode.com/problems/pascals-triangle/description/" target="_blank" rel="external">Pascal’s Triangle</a></p>
+<h4 id="方法一-4"><a href="#方法一-4" class="headerlink" title="方法一"></a>方法一</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">hasPathSum</span><span class="params">(self, root, sum)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        判断从根到叶子节点的值之和是否有等于sum的</span></span><br><span class="line"><span class="string">        :param root: TreeNode</span></span><br><span class="line"><span class="string">        :param sum: int</span></span><br><span class="line"><span class="string">        :return: bool</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="comment"># 如果是空树</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> root:</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line">        <span class="comment"># 如果只有根节点，并且根节点的值等于sum</span></span><br><span class="line">        <span class="keyword">if</span> root.val == sum <span class="keyword">and</span> <span class="keyword">not</span> root.left <span class="keyword">and</span> <span class="keyword">not</span> root.right:</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line">        <span class="comment"># 递归判断对左右节点的情况，每次需要将sum减去节点的值</span></span><br><span class="line">        <span class="keyword">return</span> self.hasPathSum(root.left, sum - root.val) \</span><br><span class="line">               <span class="keyword">or</span> self.hasPathSum(root.right, sum - root.val)</span><br></pre></td></tr></table></figure>
+<h2 id="Pascal’s-Triangle"><a href="#Pascal’s-Triangle" class="headerlink" title="Pascal’s Triangle"></a>Pascal’s Triangle</h2><p>题目:<a href="https://leetcode.com/problems/pascals-triangle/description/" target="_blank" rel="noopener">Pascal’s Triangle</a></p>
 <blockquote>
 <p>Given numRows, generate the first numRows of Pascal’s triangle.</p>
 </blockquote>
-<p>例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-</pre></td><td class="code"><pre><span class="line">For example, given numRows = 5,</span>
-<span class="line">Return</span>
-<span class="line"></span>
-<span class="line">[</span>
-<span class="line">     [1],</span>
-<span class="line">    [1,1],</span>
-<span class="line">   [1,2,1],</span>
-<span class="line">  [1,3,3,1],</span>
-<span class="line"> [1,4,6,4,1]</span>
-<span class="line">]</span>
-</pre></td></tr></table></figure></p>
+<p>例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">For example, given numRows = 5,</span><br><span class="line">Return</span><br><span class="line"></span><br><span class="line">[</span><br><span class="line">     [1],</span><br><span class="line">    [1,1],</span><br><span class="line">   [1,2,1],</span><br><span class="line">  [1,3,3,1],</span><br><span class="line"> [1,4,6,4,1]</span><br><span class="line">]</span><br></pre></td></tr></table></figure></p>
 <p>题意分析:<br>给定一个行数，生成一个帕斯卡三角形。</p>
 <h3 id="思路分析-5"><a href="#思路分析-5" class="headerlink" title="思路分析"></a>思路分析</h3><p>如果不看例子，我们估计不知道什么叫帕斯卡三角形，题目也给出了我们一个例子。我们需要从每一行中找出规律，才能得到结果。</p>
 <p>很容易可以看出，每一行第i位上的数字，等于上一行的i位数加上i+1上的数。</p>
 <p>同时我们可以看到，每一行第一个数都是1</p>
 <p>我们在求出每一行的列表之后，放入到保存所有行的列表中即可。</p>
 <p>所以我们可以有以下解法</p>
-<h4 id="方法一-5"><a href="#方法一-5" class="headerlink" title="方法一"></a>方法一</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-<span class="line">17</span>
-<span class="line">18</span>
-<span class="line">19</span>
-<span class="line">20</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> copy</span>
-<span class="line"></span>
-<span class="line"></span>
-<span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
-<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">generate</span><span class="params">(self, numRows)</span>:</span></span>
-<span class="line">        <span class="comment"># 最外侧的列表</span></span>
-<span class="line">        allrows = []</span>
-<span class="line">        <span class="comment"># 每一行的列表</span></span>
-<span class="line">        row = []</span>
-<span class="line">        <span class="comment"># 循环迭代每一行</span></span>
-<span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(numRows):</span>
-<span class="line">            <span class="comment"># 像每行的第一个元素插入1</span></span>
-<span class="line">            row.insert(<span class="number">0</span>, <span class="number">1</span>)</span>
-<span class="line">            <span class="comment"># 对该行进行迭代(1开始因为已经插入了1，该行的长度-1因为保留了上一行的参数)</span></span>
-<span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">1</span>, len(row) - <span class="number">1</span>):</span>
-<span class="line">                <span class="comment"># 其中的参数等于索引为j和j+1位置的和</span></span>
-<span class="line">                row[j] = row[j] + row[j + <span class="number">1</span>]</span>
-<span class="line">            <span class="comment"># 进行深拷贝，如果不进行深拷贝，Python会一直操作的是一个row最后只会append一个相同的row</span></span>
-<span class="line">            allrows.append(copy.deepcopy(row))</span>
-<span class="line">        <span class="keyword">return</span> allrows</span>
-</pre></td></tr></table></figure>
+<h4 id="方法一-5"><a href="#方法一-5" class="headerlink" title="方法一"></a>方法一</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> copy</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">generate</span><span class="params">(self, numRows)</span>:</span></span><br><span class="line">        <span class="comment"># 最外侧的列表</span></span><br><span class="line">        allrows = []</span><br><span class="line">        <span class="comment"># 每一行的列表</span></span><br><span class="line">        row = []</span><br><span class="line">        <span class="comment"># 循环迭代每一行</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(numRows):</span><br><span class="line">            <span class="comment"># 像每行的第一个元素插入1</span></span><br><span class="line">            row.insert(<span class="number">0</span>, <span class="number">1</span>)</span><br><span class="line">            <span class="comment"># 对该行进行迭代(1开始因为已经插入了1，该行的长度-1因为保留了上一行的参数)</span></span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">1</span>, len(row) - <span class="number">1</span>):</span><br><span class="line">                <span class="comment"># 其中的参数等于索引为j和j+1位置的和</span></span><br><span class="line">                row[j] = row[j] + row[j + <span class="number">1</span>]</span><br><span class="line">            <span class="comment"># 进行深拷贝，如果不进行深拷贝，Python会一直操作的是一个row最后只会append一个相同的row</span></span><br><span class="line">            allrows.append(copy.deepcopy(row))</span><br><span class="line">        <span class="keyword">return</span> allrows</span><br></pre></td></tr></table></figure>
 <p>这段代码中涉及都了一个深拷贝的问题，因为我每一行的列表row，一直是一个，当每次循环操作的是同一个row，如果不使用深拷贝，最后append到列表中的都是最后一行的值，所以这里使用深拷贝，将每一行的值拷贝出来append到列表中。</p>
-<h2 id="Pascal’s-Triangle-II"><a href="#Pascal’s-Triangle-II" class="headerlink" title="Pascal’s Triangle II"></a>Pascal’s Triangle II</h2><p>题目:<a href="https://leetcode.com/problems/pascals-triangle-ii/description/" target="_blank" rel="external">Pascal’s Triangle II</a></p>
+<h2 id="Pascal’s-Triangle-II"><a href="#Pascal’s-Triangle-II" class="headerlink" title="Pascal’s Triangle II"></a>Pascal’s Triangle II</h2><p>题目:<a href="https://leetcode.com/problems/pascals-triangle-ii/description/" target="_blank" rel="noopener">Pascal’s Triangle II</a></p>
 <blockquote>
 <p>Given an index k, return the kth row of the Pascal’s triangle.</p>
 </blockquote>
 <p>例子：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line">For example, given k = 3,</span>
-<span class="line">Return [1,3,3,1].</span>
-</pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">For example, given k = 3,</span><br><span class="line">Return [1,3,3,1].</span><br></pre></td></tr></table></figure>
 <p>题意分析:<br>给定一个行数，生成帕斯卡三角形该行的数。</p>
 <h3 id="思路分析-6"><a href="#思路分析-6" class="headerlink" title="思路分析"></a>思路分析</h3><p>这一题其实只是上一题的一部分，生成第n行的列表即可。</p>
 <p>首先，每一行的第一个数都是1，我们就可以创建一个第一个元素为1的列表。然后就可以循环行数，这里可以使用列表推导式。</p>
 <p>可以在该行的列表前面加上[0]，再在该行的列表后面加上[0]，然后使用zip()函数，将生成的两个新列表合并起来，用x和y分别取第一列的两个值，并求出x+y的和作为列表的第一个元素，将第二列也分别作为x和y进行同样的操作。最后得到的就是帕斯卡三角形该行的数。</p>
 <p>所以我们可以有以下解法</p>
-<h4 id="方法一-6"><a href="#方法一-6" class="headerlink" title="方法一"></a>方法一</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
-<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getRow</span><span class="params">(self, rowIndex)</span>:</span></span>
-<span class="line">        <span class="string">"""</span>
-<span class="line">        计算帕斯卡三角形的制定行数的元素</span>
-<span class="line">        :param rowIndex: int</span>
-<span class="line">        :return: list</span>
-<span class="line">        """</span></span>
-<span class="line">        row = [<span class="number">1</span>]</span>
-<span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(rowIndex):</span>
-<span class="line">            <span class="comment"># 使用列表推导式迭代x+y的值</span></span>
-<span class="line">            <span class="comment"># 其中x和y分别等于[0] + row和row + [0]的第一列和第二列</span></span>
-<span class="line">            row = [x + y <span class="keyword">for</span> x, y <span class="keyword">in</span> zip([<span class="number">0</span>] + row, row + [<span class="number">0</span>])]</span>
-<span class="line">        <span class="keyword">return</span> row</span>
-</pre></td></tr></table></figure>
-<h2 id="Valid-Palindrome"><a href="#Valid-Palindrome" class="headerlink" title="Valid Palindrome"></a>Valid Palindrome</h2><p>题目:<a href="https://leetcode.com/problems/valid-palindrome/description/" target="_blank" rel="external">Valid Palindrome</a></p>
+<h4 id="方法一-6"><a href="#方法一-6" class="headerlink" title="方法一"></a>方法一</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getRow</span><span class="params">(self, rowIndex)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        计算帕斯卡三角形的制定行数的元素</span></span><br><span class="line"><span class="string">        :param rowIndex: int</span></span><br><span class="line"><span class="string">        :return: list</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        row = [<span class="number">1</span>]</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(rowIndex):</span><br><span class="line">            <span class="comment"># 使用列表推导式迭代x+y的值</span></span><br><span class="line">            <span class="comment"># 其中x和y分别等于[0] + row和row + [0]的第一列和第二列</span></span><br><span class="line">            row = [x + y <span class="keyword">for</span> x, y <span class="keyword">in</span> zip([<span class="number">0</span>] + row, row + [<span class="number">0</span>])]</span><br><span class="line">        <span class="keyword">return</span> row</span><br></pre></td></tr></table></figure>
+<h2 id="Valid-Palindrome"><a href="#Valid-Palindrome" class="headerlink" title="Valid Palindrome"></a>Valid Palindrome</h2><p>题目:<a href="https://leetcode.com/problems/valid-palindrome/description/" target="_blank" rel="noopener">Valid Palindrome</a></p>
 <blockquote>
 <p>Given a string, determine if it is a palindrome, considering only alphanumeric characters and ignoring cases.</p>
 </blockquote>
-<p>例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line">&quot;A man, a plan, a canal: Panama&quot; is a palindrome.</span>
-<span class="line">&quot;race a car&quot; is not a palindrome.</span>
-</pre></td></tr></table></figure></p>
+<p>例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&quot;A man, a plan, a canal: Panama&quot; is a palindrome.</span><br><span class="line">&quot;race a car&quot; is not a palindrome.</span><br></pre></td></tr></table></figure></p>
 <blockquote>
 <p>Note:</p>
 <ul>
@@ -781,62 +440,8 @@
 <p>因为我们不知道循环的次数，所以我们使用while循环，在这个循环内部我们需要找到符合属于字母和数字的字符最开始的下标是多少，如果第一个字符不属于字母或数字，那么将开始下标+1，依次类推，直到找到第一个属于字母或数字的字符下标，结束下标也一样，只不过当不符合要求时是将下标-1.</p>
 <p>得到有效的开始下标和结束下标，我们就可以进行比较了，因为这里还忽略大小写，去比较两个字符是否相等就可以了，如果不相等，直接返回False</p>
 <p>所以我们可以有以下解法</p>
-<h4 id="方法一-7"><a href="#方法一-7" class="headerlink" title="方法一"></a>方法一</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-<span class="line">17</span>
-<span class="line">18</span>
-<span class="line">19</span>
-<span class="line">20</span>
-<span class="line">21</span>
-<span class="line">22</span>
-<span class="line">23</span>
-<span class="line">24</span>
-<span class="line">25</span>
-<span class="line">26</span>
-<span class="line">27</span>
-</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
-<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">isPalindrome</span><span class="params">(self, s)</span>:</span></span>
-<span class="line">        <span class="string">"""</span>
-<span class="line">        判断字符串是否是回文(只考虑字母和数字)</span>
-<span class="line">        :param s: str</span>
-<span class="line">        :return: bool</span>
-<span class="line">        """</span></span>
-<span class="line">        <span class="comment"># 分别得到第一个和最后一个字符的索引</span></span>
-<span class="line">        i, r = <span class="number">0</span>, len(s) - <span class="number">1</span></span>
-<span class="line">        <span class="comment"># 判断回文只需要判断一半</span></span>
-<span class="line">        <span class="keyword">while</span> i &lt; r:</span>
-<span class="line">            <span class="comment"># 当左边字符索引小鱼右边字符串并且</span></span>
-<span class="line">            <span class="comment"># 左字符串属于字母和数字时</span></span>
-<span class="line">            <span class="keyword">while</span> i &lt; r <span class="keyword">and</span> <span class="keyword">not</span> s[i].isalnum():</span>
-<span class="line">                i += <span class="number">1</span></span>
-<span class="line">            <span class="comment"># 当左边字符索引小鱼右边字符串并且</span></span>
-<span class="line">            <span class="comment"># 右字符串属于字母和数字时</span></span>
-<span class="line">            <span class="keyword">while</span> i &lt; r <span class="keyword">and</span> <span class="keyword">not</span> s[r].isalnum():</span>
-<span class="line">                r -= <span class="number">1</span></span>
-<span class="line">            <span class="comment"># 为了判断相等，均转换为小写去判断是否相等</span></span>
-<span class="line">            <span class="keyword">if</span> s[i].lower() != s[r].lower():</span>
-<span class="line">                <span class="keyword">return</span> <span class="keyword">False</span></span>
-<span class="line">            <span class="comment"># 左字符向后移动一个</span></span>
-<span class="line">            i += <span class="number">1</span></span>
-<span class="line">            <span class="comment"># 右字符向前移动</span></span>
-<span class="line">            r -= <span class="number">1</span></span>
-<span class="line">        <span class="keyword">return</span> <span class="keyword">True</span></span>
-</pre></td></tr></table></figure>
-<h2 id="Single-Number"><a href="#Single-Number" class="headerlink" title="Single Number"></a>Single Number</h2><p>题目:<a href="https://leetcode.com/problems/single-number/description/" target="_blank" rel="external">Single Number</a></p>
+<h4 id="方法一-7"><a href="#方法一-7" class="headerlink" title="方法一"></a>方法一</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">isPalindrome</span><span class="params">(self, s)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        判断字符串是否是回文(只考虑字母和数字)</span></span><br><span class="line"><span class="string">        :param s: str</span></span><br><span class="line"><span class="string">        :return: bool</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="comment"># 分别得到第一个和最后一个字符的索引</span></span><br><span class="line">        i, r = <span class="number">0</span>, len(s) - <span class="number">1</span></span><br><span class="line">        <span class="comment"># 判断回文只需要判断一半</span></span><br><span class="line">        <span class="keyword">while</span> i &lt; r:</span><br><span class="line">            <span class="comment"># 当左边字符索引小鱼右边字符串并且</span></span><br><span class="line">            <span class="comment"># 左字符串属于字母和数字时</span></span><br><span class="line">            <span class="keyword">while</span> i &lt; r <span class="keyword">and</span> <span class="keyword">not</span> s[i].isalnum():</span><br><span class="line">                i += <span class="number">1</span></span><br><span class="line">            <span class="comment"># 当左边字符索引小鱼右边字符串并且</span></span><br><span class="line">            <span class="comment"># 右字符串属于字母和数字时</span></span><br><span class="line">            <span class="keyword">while</span> i &lt; r <span class="keyword">and</span> <span class="keyword">not</span> s[r].isalnum():</span><br><span class="line">                r -= <span class="number">1</span></span><br><span class="line">            <span class="comment"># 为了判断相等，均转换为小写去判断是否相等</span></span><br><span class="line">            <span class="keyword">if</span> s[i].lower() != s[r].lower():</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line">            <span class="comment"># 左字符向后移动一个</span></span><br><span class="line">            i += <span class="number">1</span></span><br><span class="line">            <span class="comment"># 右字符向前移动</span></span><br><span class="line">            r -= <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">True</span></span><br></pre></td></tr></table></figure>
+<h2 id="Single-Number"><a href="#Single-Number" class="headerlink" title="Single Number"></a>Single Number</h2><p>题目:<a href="https://leetcode.com/problems/single-number/description/" target="_blank" rel="noopener">Single Number</a></p>
 <blockquote>
 <p>Given an array of integers, every element appears twice except for one. Find that single one.</p>
 <p>Note:</p>
@@ -849,30 +454,8 @@
 <p>但是这题比较特殊，除本身外，其他元素出现的次数是一致的，并且元素还都是int类型。所以就可以用一种比较投机取巧的办法。</p>
 <p>我们可以先将该列表去重，这样所有元素就只出现了一次，然后我们将其求和并乘以2，这样我们就得到了两倍的和，然后我们在求一个元列表的和，这两者的差就是只出现了一次的元素</p>
 <p>所以我们可以有以下解法</p>
-<h4 id="方法一-8"><a href="#方法一-8" class="headerlink" title="方法一"></a>方法一</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
-<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">singleNumber</span><span class="params">(self, nums)</span>:</span></span>
-<span class="line">        <span class="string">"""</span>
-<span class="line">        找到数组只只出现了一次的元素(其他元素都出现了两次)</span>
-<span class="line">        :param nums: list[int]</span>
-<span class="line">        :return: int</span>
-<span class="line">        """</span></span>
-<span class="line">        <span class="comment"># 使用set()去重把每个元素都得到一个</span></span>
-<span class="line">        <span class="comment"># 求出所有单个元素的和,求出两倍的值</span></span>
-<span class="line">        <span class="comment"># 再减去未去重时所有元素的和</span></span>
-<span class="line">        <span class="keyword">return</span> <span class="number">2</span> * sum(set(nums)) - sum(nums)</span>
-</pre></td></tr></table></figure>
-<h2 id="Linked-List-Cycle"><a href="#Linked-List-Cycle" class="headerlink" title="Linked List Cycle"></a>Linked List Cycle</h2><p>题目:<a href="https://leetcode.com/problems/linked-list-cycle/description/" target="_blank" rel="external">Linked List Cycle</a></p>
+<h4 id="方法一-8"><a href="#方法一-8" class="headerlink" title="方法一"></a>方法一</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">singleNumber</span><span class="params">(self, nums)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        找到数组只只出现了一次的元素(其他元素都出现了两次)</span></span><br><span class="line"><span class="string">        :param nums: list[int]</span></span><br><span class="line"><span class="string">        :return: int</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="comment"># 使用set()去重把每个元素都得到一个</span></span><br><span class="line">        <span class="comment"># 求出所有单个元素的和,求出两倍的值</span></span><br><span class="line">        <span class="comment"># 再减去未去重时所有元素的和</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">2</span> * sum(set(nums)) - sum(nums)</span><br></pre></td></tr></table></figure>
+<h2 id="Linked-List-Cycle"><a href="#Linked-List-Cycle" class="headerlink" title="Linked List Cycle"></a>Linked List Cycle</h2><p>题目:<a href="https://leetcode.com/problems/linked-list-cycle/description/" target="_blank" rel="noopener">Linked List Cycle</a></p>
 <blockquote>
 <p>Given a linked list, determine if it has a cycle in it.</p>
 <p>Note:</p>
@@ -884,58 +467,8 @@
 <h3 id="思路分析-9"><a href="#思路分析-9" class="headerlink" title="思路分析"></a>思路分析</h3><p>判断列表是否有环，一个链表如果有环，那么至少是三个节点组成，第三个指向第一个。所以我们这里可以使用快慢指针的概念，慢指针一次移动一个节点，快指针一次移动两个节点，在快指针存在并且快指针的下一个节点不为空的时候循环，判断快指针的节点是否等于慢指针的节点。</p>
 <p>当单链表为空，或者只有头节点时需要单独处理。</p>
 <p>所以我们可以有以下解法</p>
-<h4 id="方法一-9"><a href="#方法一-9" class="headerlink" title="方法一"></a>方法一</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-<span class="line">17</span>
-<span class="line">18</span>
-<span class="line">19</span>
-<span class="line">20</span>
-<span class="line">21</span>
-<span class="line">22</span>
-<span class="line">23</span>
-<span class="line">24</span>
-<span class="line">25</span>
-</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
-<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">hasCycle</span><span class="params">(self, head)</span>:</span></span>
-<span class="line">        <span class="string">"""</span>
-<span class="line">        判断单链表中是否有环(不使用额外的空间)</span>
-<span class="line">        :param head: ListNode</span>
-<span class="line">        :return: bool</span>
-<span class="line">        """</span></span>
-<span class="line">        <span class="comment"># 如果链表的头节点或者头节点的下一个节点为空</span></span>
-<span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> head <span class="keyword">or</span> <span class="keyword">not</span> head.next:</span>
-<span class="line">            <span class="keyword">return</span> <span class="keyword">False</span></span>
-<span class="line">        <span class="comment"># 使用快慢指针</span></span>
-<span class="line">        <span class="comment"># 慢指针一次向前移动一个节点</span></span>
-<span class="line">        slow = head</span>
-<span class="line">        <span class="comment"># 快指针一次向前移动两个节点</span></span>
-<span class="line">        fast = head.next</span>
-<span class="line">        <span class="comment"># 如果快指针存在并且快指针的下一个节点也存在</span></span>
-<span class="line">        <span class="keyword">while</span> fast <span class="keyword">and</span> fast.next:</span>
-<span class="line">            <span class="comment"># 使慢指针向后移动一个节点</span></span>
-<span class="line">            slow = slow.next</span>
-<span class="line">            <span class="comment"># 使快指针向后移动两个节点</span></span>
-<span class="line">            fast = fast.next.next</span>
-<span class="line">            <span class="comment"># 如果快指针等于慢指针，即有环</span></span>
-<span class="line">            <span class="keyword">if</span> slow == fast:</span>
-<span class="line">                <span class="keyword">return</span> <span class="keyword">True</span></span>
-<span class="line">        <span class="keyword">return</span> <span class="keyword">False</span></span>
-</pre></td></tr></table></figure>
-<h2 id="Min-Stack"><a href="#Min-Stack" class="headerlink" title="Min Stack"></a>Min Stack</h2><p>题目:<a href="https://leetcode.com/problems/min-stack/description/" target="_blank" rel="external">Min Stack</a></p>
+<h4 id="方法一-9"><a href="#方法一-9" class="headerlink" title="方法一"></a>方法一</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">hasCycle</span><span class="params">(self, head)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        判断单链表中是否有环(不使用额外的空间)</span></span><br><span class="line"><span class="string">        :param head: ListNode</span></span><br><span class="line"><span class="string">        :return: bool</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="comment"># 如果链表的头节点或者头节点的下一个节点为空</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> head <span class="keyword">or</span> <span class="keyword">not</span> head.next:</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line">        <span class="comment"># 使用快慢指针</span></span><br><span class="line">        <span class="comment"># 慢指针一次向前移动一个节点</span></span><br><span class="line">        slow = head</span><br><span class="line">        <span class="comment"># 快指针一次向前移动两个节点</span></span><br><span class="line">        fast = head.next</span><br><span class="line">        <span class="comment"># 如果快指针存在并且快指针的下一个节点也存在</span></span><br><span class="line">        <span class="keyword">while</span> fast <span class="keyword">and</span> fast.next:</span><br><span class="line">            <span class="comment"># 使慢指针向后移动一个节点</span></span><br><span class="line">            slow = slow.next</span><br><span class="line">            <span class="comment"># 使快指针向后移动两个节点</span></span><br><span class="line">            fast = fast.next.next</span><br><span class="line">            <span class="comment"># 如果快指针等于慢指针，即有环</span></span><br><span class="line">            <span class="keyword">if</span> slow == fast:</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">False</span></span><br></pre></td></tr></table></figure>
+<h2 id="Min-Stack"><a href="#Min-Stack" class="headerlink" title="Min Stack"></a>Min Stack</h2><p>题目:<a href="https://leetcode.com/problems/min-stack/description/" target="_blank" rel="noopener">Min Stack</a></p>
 <blockquote>
 <p>Design a stack that supports push, pop, top, and retrieving the minimum element in constant time.</p>
 <ul>
@@ -945,130 +478,16 @@
 <li>getMin() – Retrieve the minimum element in the stack.</li>
 </ul>
 </blockquote>
-<p>例子:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-</pre></td><td class="code"><pre><span class="line">MinStack minStack = new MinStack();</span>
-<span class="line">minStack.push(-2);</span>
-<span class="line">minStack.push(0);</span>
-<span class="line">minStack.push(-3);</span>
-<span class="line">minStack.getMin();   --&gt; Returns -3.</span>
-<span class="line">minStack.pop();</span>
-<span class="line">minStack.top();      --&gt; Returns 0.</span>
-<span class="line">minStack.getMin();   --&gt; Returns -2.</span>
-</pre></td></tr></table></figure></p>
+<p>例子:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">MinStack minStack = new MinStack();</span><br><span class="line">minStack.push(-2);</span><br><span class="line">minStack.push(0);</span><br><span class="line">minStack.push(-3);</span><br><span class="line">minStack.getMin();   --&gt; Returns -3.</span><br><span class="line">minStack.pop();</span><br><span class="line">minStack.top();      --&gt; Returns 0.</span><br><span class="line">minStack.getMin();   --&gt; Returns -2.</span><br></pre></td></tr></table></figure></p>
 <p>题意分析:<br>设计一个栈，支持一些基本操作</p>
 <h3 id="思路分析-10"><a href="#思路分析-10" class="headerlink" title="思路分析"></a>思路分析</h3><p>使用列表去模拟栈即可。</p>
 <p>所以我们可以有以下解法</p>
-<h4 id="方法一-10"><a href="#方法一-10" class="headerlink" title="方法一"></a>方法一</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-<span class="line">17</span>
-<span class="line">18</span>
-<span class="line">19</span>
-<span class="line">20</span>
-<span class="line">21</span>
-<span class="line">22</span>
-<span class="line">23</span>
-<span class="line">24</span>
-<span class="line">25</span>
-<span class="line">26</span>
-<span class="line">27</span>
-<span class="line">28</span>
-<span class="line">29</span>
-<span class="line">30</span>
-<span class="line">31</span>
-<span class="line">32</span>
-<span class="line">33</span>
-<span class="line">34</span>
-<span class="line">35</span>
-<span class="line">36</span>
-<span class="line">37</span>
-<span class="line">38</span>
-<span class="line">39</span>
-<span class="line">40</span>
-<span class="line">41</span>
-</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MinStack</span>:</span></span>
-<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span>
-<span class="line">        self.q = []</span>
-<span class="line"></span>
-<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">push</span><span class="params">(self, x)</span>:</span></span>
-<span class="line">        <span class="string">"""</span>
-<span class="line">        向栈种推入一个元素</span>
-<span class="line">        :param x: int</span>
-<span class="line">        :return: void</span>
-<span class="line">        """</span></span>
-<span class="line">        curMin = self.getMin()</span>
-<span class="line">        <span class="keyword">if</span> curMin <span class="keyword">is</span> <span class="keyword">None</span> <span class="keyword">or</span> x &lt; curMin:</span>
-<span class="line">            curMin = x</span>
-<span class="line">        self.q.append((x, curMin))</span>
-<span class="line"></span>
-<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">pop</span><span class="params">(self)</span>:</span></span>
-<span class="line">        <span class="string">"""</span>
-<span class="line">        弹出一个元素</span>
-<span class="line">        :return: void</span>
-<span class="line">        """</span></span>
-<span class="line">        self.q.pop()</span>
-<span class="line"></span>
-<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">top</span><span class="params">(self)</span>:</span></span>
-<span class="line">        <span class="string">"""</span>
-<span class="line">        得到栈顶元素</span>
-<span class="line">        :return: int</span>
-<span class="line">        """</span></span>
-<span class="line">        <span class="keyword">if</span> len(self.q) == <span class="number">0</span>:</span>
-<span class="line">            <span class="keyword">return</span> <span class="keyword">None</span></span>
-<span class="line">        <span class="keyword">else</span>:</span>
-<span class="line">            <span class="keyword">return</span> self.q[len(self.q) - <span class="number">1</span>][<span class="number">0</span>]</span>
-<span class="line"></span>
-<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getMin</span><span class="params">(self)</span>:</span></span>
-<span class="line">        <span class="string">"""</span>
-<span class="line">        得到最小栈中最小的元素</span>
-<span class="line">        :return: int</span>
-<span class="line">        """</span></span>
-<span class="line">        <span class="keyword">if</span> len(self.q) == <span class="number">0</span>:</span>
-<span class="line">            <span class="keyword">return</span> <span class="keyword">None</span></span>
-<span class="line">        <span class="keyword">else</span>:</span>
-<span class="line">            <span class="keyword">return</span> self.q[len(self.q) - <span class="number">1</span>][<span class="number">1</span>]</span>
-</pre></td></tr></table></figure>
-<h2 id="Intersection-of-Two-Linked-Lists"><a href="#Intersection-of-Two-Linked-Lists" class="headerlink" title="Intersection of Two Linked Lists"></a>Intersection of Two Linked Lists</h2><p>题目:<a href="https://leetcode.com/problems/intersection-of-two-linked-lists/description/" target="_blank" rel="external">Intersection of Two Linked Lists</a></p>
+<h4 id="方法一-10"><a href="#方法一-10" class="headerlink" title="方法一"></a>方法一</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MinStack</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.q = []</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">push</span><span class="params">(self, x)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        向栈种推入一个元素</span></span><br><span class="line"><span class="string">        :param x: int</span></span><br><span class="line"><span class="string">        :return: void</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        curMin = self.getMin()</span><br><span class="line">        <span class="keyword">if</span> curMin <span class="keyword">is</span> <span class="keyword">None</span> <span class="keyword">or</span> x &lt; curMin:</span><br><span class="line">            curMin = x</span><br><span class="line">        self.q.append((x, curMin))</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">pop</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        弹出一个元素</span></span><br><span class="line"><span class="string">        :return: void</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        self.q.pop()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">top</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        得到栈顶元素</span></span><br><span class="line"><span class="string">        :return: int</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">if</span> len(self.q) == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">None</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> self.q[len(self.q) - <span class="number">1</span>][<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getMin</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        得到最小栈中最小的元素</span></span><br><span class="line"><span class="string">        :return: int</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">if</span> len(self.q) == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">None</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> self.q[len(self.q) - <span class="number">1</span>][<span class="number">1</span>]</span><br></pre></td></tr></table></figure>
+<h2 id="Intersection-of-Two-Linked-Lists"><a href="#Intersection-of-Two-Linked-Lists" class="headerlink" title="Intersection of Two Linked Lists"></a>Intersection of Two Linked Lists</h2><p>题目:<a href="https://leetcode.com/problems/intersection-of-two-linked-lists/description/" target="_blank" rel="noopener">Intersection of Two Linked Lists</a></p>
 <blockquote>
 <p>Write a program to find the node at which the intersection of two singly linked lists begins.</p>
 </blockquote>
-<p>例子:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-</pre></td><td class="code"><pre><span class="line">For example, the following two linked lists:</span>
-<span class="line"></span>
-<span class="line">A:          a1 → a2</span>
-<span class="line">                   ↘</span>
-<span class="line">                     c1 → c2 → c3</span>
-<span class="line">                   ↗            </span>
-<span class="line">B:     b1 → b2 → b3</span>
-<span class="line">begin to intersect at node c1.</span>
-</pre></td></tr></table></figure></p>
+<p>例子:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">For example, the following two linked lists:</span><br><span class="line"></span><br><span class="line">A:          a1 → a2</span><br><span class="line">                   ↘</span><br><span class="line">                     c1 → c2 → c3</span><br><span class="line">                   ↗            </span><br><span class="line">B:     b1 → b2 → b3</span><br><span class="line">begin to intersect at node c1.</span><br></pre></td></tr></table></figure></p>
 <blockquote>
 <p>注:</p>
 <ul>
@@ -1083,214 +502,46 @@
 <p>为了不直接操作头指针，这里我们将两个链表的头结点赋给两个变量pa和pb。在两个变量不相等的时候，开始循环。</p>
 <p>如果pa等于空了，那么就把另一个单链表的头节点headB赋给pa，反之，当pa不等于空的时候，将pa的下一个节点赋值给pa。pb的操作也一样。判断pb是否为空来选择将headA赋给它还是将下一个节点赋给自己</p>
 <p>所以我们可以有以下解法</p>
-<h4 id="方法一-11"><a href="#方法一-11" class="headerlink" title="方法一"></a>方法一</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-<span class="line">17</span>
-<span class="line">18</span>
-</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
-<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getIntersectionNode</span><span class="params">(self, headA, headB)</span>:</span></span>
-<span class="line">        <span class="string">"""</span>
-<span class="line">        求出两个单链表的交点</span>
-<span class="line">        :param headA: ListNode</span>
-<span class="line">        :param headB: ListNode</span>
-<span class="line">        :return: ListNode</span>
-<span class="line">        """</span></span>
-<span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> headA <span class="keyword">or</span> <span class="keyword">not</span> headB:</span>
-<span class="line">            <span class="keyword">return</span> <span class="keyword">None</span></span>
-<span class="line">        pa = headA</span>
-<span class="line">        pb = headB</span>
-<span class="line">        <span class="comment"># 如果pa节点不等于pb节点</span></span>
-<span class="line">        <span class="keyword">while</span> pa <span class="keyword">is</span> <span class="keyword">not</span> pb:</span>
-<span class="line">            <span class="comment"># Python中的三元表达式格式为:为真时的结果 if 判定条件 else 为假时的结果</span></span>
-<span class="line">            pa = headB <span class="keyword">if</span> <span class="keyword">not</span> pa <span class="keyword">else</span> pa.next</span>
-<span class="line">            pb = headA <span class="keyword">if</span> <span class="keyword">not</span> pb <span class="keyword">else</span> pb.next</span>
-<span class="line">        <span class="keyword">return</span> pa</span>
-</pre></td></tr></table></figure>
+<h4 id="方法一-11"><a href="#方法一-11" class="headerlink" title="方法一"></a>方法一</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getIntersectionNode</span><span class="params">(self, headA, headB)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        求出两个单链表的交点</span></span><br><span class="line"><span class="string">        :param headA: ListNode</span></span><br><span class="line"><span class="string">        :param headB: ListNode</span></span><br><span class="line"><span class="string">        :return: ListNode</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> headA <span class="keyword">or</span> <span class="keyword">not</span> headB:</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">None</span></span><br><span class="line">        pa = headA</span><br><span class="line">        pb = headB</span><br><span class="line">        <span class="comment"># 如果pa节点不等于pb节点</span></span><br><span class="line">        <span class="keyword">while</span> pa <span class="keyword">is</span> <span class="keyword">not</span> pb:</span><br><span class="line">            <span class="comment"># Python中的三元表达式格式为:为真时的结果 if 判定条件 else 为假时的结果</span></span><br><span class="line">            pa = headB <span class="keyword">if</span> <span class="keyword">not</span> pa <span class="keyword">else</span> pa.next</span><br><span class="line">            pb = headA <span class="keyword">if</span> <span class="keyword">not</span> pb <span class="keyword">else</span> pb.next</span><br><span class="line">        <span class="keyword">return</span> pa</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>注:Python中的三元表达式有些不同，表达式格式为<strong>为真时的结果 if 判定条件 else 为假时的结果</strong>，需要自己注意一下。</p>
 </blockquote>
-<h2 id="Two-Sum-II-Input-array-is-sorted"><a href="#Two-Sum-II-Input-array-is-sorted" class="headerlink" title="Two Sum II - Input array is sorted"></a>Two Sum II - Input array is sorted</h2><p>题目:<a href="https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/description/" target="_blank" rel="external">Two Sum II - Input array is sorted</a></p>
+<h2 id="Two-Sum-II-Input-array-is-sorted"><a href="#Two-Sum-II-Input-array-is-sorted" class="headerlink" title="Two Sum II - Input array is sorted"></a>Two Sum II - Input array is sorted</h2><p>题目:<a href="https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/description/" target="_blank" rel="noopener">Two Sum II - Input array is sorted</a></p>
 <blockquote>
 <p>Given an array of integers that is already sorted in ascending order, find two numbers such that they add up to a specific target number.<br>The function twoSum should return indices of the two numbers such that they add up to the target, where index1 must be less than index2. Please note that your returned answers (both index1 and index2) are not zero-based.<br>You may assume that each input would have exactly one solution and you may not use the same element twice.</p>
 </blockquote>
-<p>例子:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line">Input: numbers=&#123;2, 7, 11, 15&#125;, target=9</span>
-<span class="line">Output: index1=1, index2=2</span>
-</pre></td></tr></table></figure></p>
+<p>例子:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: numbers=&#123;2, 7, 11, 15&#125;, target=9</span><br><span class="line">Output: index1=1, index2=2</span><br></pre></td></tr></table></figure></p>
 <p>题意分析:<br>求有序的输入的列表中是否有两个数相加的和等于目标值，返回其索引下标(从1开始)，并且要求第一个索引小与第二个。</p>
 <h3 id="思路分析-12"><a href="#思路分析-12" class="headerlink" title="思路分析"></a>思路分析</h3><p>又是一道求两数的和的等于目标值的题目，可以先循环两遍得到结果，此时时间复杂度为O(N^2)，想要减少时间复杂度，我们可以将我们已经遍历过的值和相应的下标记录下来。</p>
 <p>在这里我们使用字典将遍历过的值和下标记录下来，循环列表中每一个值，在每一次循环中判断目标值减去遍历的值等于的结果是否在存有已经遍历过的元素字典中，如果存在那就返回这两个下标，由于下标不是从0开始，所以我们需要将下标+1.如果在字典中不存在，那么就将此次遍历的元素和下标存入字典中。</p>
 <p>所以我们可以有以下解法</p>
-<h4 id="方法一-12"><a href="#方法一-12" class="headerlink" title="方法一"></a>方法一</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-<span class="line">17</span>
-<span class="line">18</span>
-<span class="line">19</span>
-</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
-<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">twoSum</span><span class="params">(self, numbers, target)</span>:</span></span>
-<span class="line">        <span class="string">"""</span>
-<span class="line">        计算整形列表中是否有两个值的和与目标值相等</span>
-<span class="line">        :param numbers: list[int]</span>
-<span class="line">        :param target: int</span>
-<span class="line">        :return: list[int]</span>
-<span class="line">        """</span></span>
-<span class="line">        <span class="comment"># 使用一个字典存储已经遍历过的元素</span></span>
-<span class="line">        dic = &#123;&#125;</span>
-<span class="line">        <span class="comment"># 循环遍历</span></span>
-<span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(numbers)):</span>
-<span class="line">            <span class="comment"># 如果目标值减去遍历的元素的值在字典中</span></span>
-<span class="line">            <span class="keyword">if</span> target - numbers[i] <span class="keyword">in</span> dic:</span>
-<span class="line">                <span class="comment"># 即返回保存在字典中元素的下标</span></span>
-<span class="line">                <span class="comment"># 并且要求索引从1开始 所以需要+1</span></span>
-<span class="line">                <span class="keyword">return</span> [dic[target - numbers[i]] + <span class="number">1</span>, i + <span class="number">1</span>]</span>
-<span class="line">            <span class="comment"># 将遍历过的值和下标存入字典中</span></span>
-<span class="line">            dic[numbers[i]] = i</span>
-</pre></td></tr></table></figure>
-<h2 id="Two-Sum-II-Input-array-is-sorted-1"><a href="#Two-Sum-II-Input-array-is-sorted-1" class="headerlink" title="Two Sum II - Input array is sorted"></a>Two Sum II - Input array is sorted</h2><p>题目:<a href="https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/description/" target="_blank" rel="external">Two Sum II - Input array is sorted</a></p>
+<h4 id="方法一-12"><a href="#方法一-12" class="headerlink" title="方法一"></a>方法一</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">twoSum</span><span class="params">(self, numbers, target)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        计算整形列表中是否有两个值的和与目标值相等</span></span><br><span class="line"><span class="string">        :param numbers: list[int]</span></span><br><span class="line"><span class="string">        :param target: int</span></span><br><span class="line"><span class="string">        :return: list[int]</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="comment"># 使用一个字典存储已经遍历过的元素</span></span><br><span class="line">        dic = &#123;&#125;</span><br><span class="line">        <span class="comment"># 循环遍历</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(numbers)):</span><br><span class="line">            <span class="comment"># 如果目标值减去遍历的元素的值在字典中</span></span><br><span class="line">            <span class="keyword">if</span> target - numbers[i] <span class="keyword">in</span> dic:</span><br><span class="line">                <span class="comment"># 即返回保存在字典中元素的下标</span></span><br><span class="line">                <span class="comment"># 并且要求索引从1开始 所以需要+1</span></span><br><span class="line">                <span class="keyword">return</span> [dic[target - numbers[i]] + <span class="number">1</span>, i + <span class="number">1</span>]</span><br><span class="line">            <span class="comment"># 将遍历过的值和下标存入字典中</span></span><br><span class="line">            dic[numbers[i]] = i</span><br></pre></td></tr></table></figure>
+<h2 id="Two-Sum-II-Input-array-is-sorted-1"><a href="#Two-Sum-II-Input-array-is-sorted-1" class="headerlink" title="Two Sum II - Input array is sorted"></a>Two Sum II - Input array is sorted</h2><p>题目:<a href="https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/description/" target="_blank" rel="noopener">Two Sum II - Input array is sorted</a></p>
 <blockquote>
 <p>Given an array of integers that is already sorted in ascending order, find two numbers such that they add up to a specific target number.<br>The function twoSum should return indices of the two numbers such that they add up to the target, where index1 must be less than index2. Please note that your returned answers (both index1 and index2) are not zero-based.<br>You may assume that each input would have exactly one solution and you may not use the same element twice.</p>
 </blockquote>
-<p>例子:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-</pre></td><td class="code"><pre><span class="line">Input: numbers=&#123;2, 7, 11, 15&#125;, target=9</span>
-<span class="line">Output: index1=1, index2=2</span>
-</pre></td></tr></table></figure></p>
+<p>例子:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: numbers=&#123;2, 7, 11, 15&#125;, target=9</span><br><span class="line">Output: index1=1, index2=2</span><br></pre></td></tr></table></figure></p>
 <p>题意分析:<br>求有序的输入的列表中是否有两个数相加的和等于目标值，返回其索引下标(从1开始)，并且要求第一个索引小与第二个。</p>
 <h3 id="思路分析-13"><a href="#思路分析-13" class="headerlink" title="思路分析"></a>思路分析</h3><p>又是一道求两数的和的等于目标值的题目，可以先循环两遍得到结果，此时时间复杂度为O(N^2)，想要减少时间复杂度，我们可以将我们已经遍历过的值和相应的下标记录下来。</p>
 <p>在这里我们使用字典将遍历过的值和下标记录下来，循环列表中每一个值，在每一次循环中判断目标值减去遍历的值等于的结果是否在存有已经遍历过的元素字典中，如果存在那就返回这两个下标，由于下标不是从0开始，所以我们需要将下标+1.如果在字典中不存在，那么就将此次遍历的元素和下标存入字典中。</p>
 <p>所以我们可以有以下解法</p>
-<h4 id="方法一-13"><a href="#方法一-13" class="headerlink" title="方法一"></a>方法一</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-<span class="line">17</span>
-<span class="line">18</span>
-<span class="line">19</span>
-</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
-<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">twoSum</span><span class="params">(self, numbers, target)</span>:</span></span>
-<span class="line">        <span class="string">"""</span>
-<span class="line">        计算整形列表中是否有两个值的和与目标值相等</span>
-<span class="line">        :param numbers: list[int]</span>
-<span class="line">        :param target: int</span>
-<span class="line">        :return: list[int]</span>
-<span class="line">        """</span></span>
-<span class="line">        <span class="comment"># 使用一个字典存储已经遍历过的元素</span></span>
-<span class="line">        dic = &#123;&#125;</span>
-<span class="line">        <span class="comment"># 循环遍历</span></span>
-<span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(numbers)):</span>
-<span class="line">            <span class="comment"># 如果目标值减去遍历的元素的值在字典中</span></span>
-<span class="line">            <span class="keyword">if</span> target - numbers[i] <span class="keyword">in</span> dic:</span>
-<span class="line">                <span class="comment"># 即返回保存在字典中元素的下标</span></span>
-<span class="line">                <span class="comment"># 并且要求索引从1开始 所以需要+1</span></span>
-<span class="line">                <span class="keyword">return</span> [dic[target - numbers[i]] + <span class="number">1</span>, i + <span class="number">1</span>]</span>
-<span class="line">            <span class="comment"># 将遍历过的值和下标存入字典中</span></span>
-<span class="line">            dic[numbers[i]] = i</span>
-</pre></td></tr></table></figure>
-<h2 id="Excel-Sheet-Column-Title"><a href="#Excel-Sheet-Column-Title" class="headerlink" title="Excel Sheet Column Title"></a>Excel Sheet Column Title</h2><p>题目:<a href="https://leetcode.com/problems/excel-sheet-column-title/description/" target="_blank" rel="external">Excel Sheet Column Title</a></p>
+<h4 id="方法一-13"><a href="#方法一-13" class="headerlink" title="方法一"></a>方法一</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">twoSum</span><span class="params">(self, numbers, target)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        计算整形列表中是否有两个值的和与目标值相等</span></span><br><span class="line"><span class="string">        :param numbers: list[int]</span></span><br><span class="line"><span class="string">        :param target: int</span></span><br><span class="line"><span class="string">        :return: list[int]</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="comment"># 使用一个字典存储已经遍历过的元素</span></span><br><span class="line">        dic = &#123;&#125;</span><br><span class="line">        <span class="comment"># 循环遍历</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(numbers)):</span><br><span class="line">            <span class="comment"># 如果目标值减去遍历的元素的值在字典中</span></span><br><span class="line">            <span class="keyword">if</span> target - numbers[i] <span class="keyword">in</span> dic:</span><br><span class="line">                <span class="comment"># 即返回保存在字典中元素的下标</span></span><br><span class="line">                <span class="comment"># 并且要求索引从1开始 所以需要+1</span></span><br><span class="line">                <span class="keyword">return</span> [dic[target - numbers[i]] + <span class="number">1</span>, i + <span class="number">1</span>]</span><br><span class="line">            <span class="comment"># 将遍历过的值和下标存入字典中</span></span><br><span class="line">            dic[numbers[i]] = i</span><br></pre></td></tr></table></figure>
+<h2 id="Excel-Sheet-Column-Title"><a href="#Excel-Sheet-Column-Title" class="headerlink" title="Excel Sheet Column Title"></a>Excel Sheet Column Title</h2><p>题目:<a href="https://leetcode.com/problems/excel-sheet-column-title/description/" target="_blank" rel="noopener">Excel Sheet Column Title</a></p>
 <blockquote>
 <p>Given a positive integer, return its corresponding column title as appear in an Excel sheet.</p>
 </blockquote>
-<p>例子:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-</pre></td><td class="code"><pre><span class="line">1 -&gt; A</span>
-<span class="line">2 -&gt; B</span>
-<span class="line">3 -&gt; C</span>
-<span class="line">...</span>
-<span class="line">26 -&gt; Z</span>
-<span class="line">27 -&gt; AA</span>
-<span class="line">28 -&gt; AB</span>
-</pre></td></tr></table></figure></p>
+<p>例子:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1 -&gt; A</span><br><span class="line">2 -&gt; B</span><br><span class="line">3 -&gt; C</span><br><span class="line">...</span><br><span class="line">26 -&gt; Z</span><br><span class="line">27 -&gt; AA</span><br><span class="line">28 -&gt; AB</span><br></pre></td></tr></table></figure></p>
 <p>题意分析:<br>将数字与excel表格的列名对应起来。</p>
 <h3 id="思路分析-14"><a href="#思路分析-14" class="headerlink" title="思路分析"></a>思路分析</h3><p>想要求解这道题，我们需要知道excel表格的列名是如何排列的。</p>
 <p>在excel中，列名首先是从A到Z，26列，当大于26之后，开始使用字母A加上A到Z中的字母，当大于两倍26，也就是52时，开始使用字母B作为第一个字母，然后一次类推。</p>
 <p>想要把数字变成字母，我们还需要知道每个字母的ascII，又由于只有26个字母，所以我们需要对26求余，来判断其是第几个字母，然后加上65，来得到大写字母，然后在求模，得到下一次的n。然后结果每次相加字符即可</p>
 <p>所以我们可以有以下解法</p>
-<h4 id="方法一-14"><a href="#方法一-14" class="headerlink" title="方法一"></a>方法一</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-<span class="line">17</span>
-</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
-<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">convertToTitle</span><span class="params">(self, n)</span>:</span></span>
-<span class="line">        <span class="string">"""</span>
-<span class="line">        将数字转换为excel的列名</span>
-<span class="line">        :param n: int</span>
-<span class="line">        :return: str</span>
-<span class="line">        """</span></span>
-<span class="line">        <span class="comment"># 存放结果的字符串</span></span>
-<span class="line">        res = <span class="string">''</span></span>
-<span class="line">        <span class="comment"># n不为0时进入循环</span></span>
-<span class="line">        <span class="keyword">while</span> n != <span class="number">0</span>:</span>
-<span class="line">            <span class="comment"># 求余得到一个字符</span></span>
-<span class="line">            ch = chr((n - <span class="number">1</span>) % <span class="number">26</span> + <span class="number">65</span>)</span>
-<span class="line">            <span class="comment"># 除以26求模</span></span>
-<span class="line">            n = (n - <span class="number">1</span>) // <span class="number">26</span></span>
-<span class="line">            res = ch + res</span>
-<span class="line">        <span class="keyword">return</span> res</span>
-</pre></td></tr></table></figure>
+<h4 id="方法一-14"><a href="#方法一-14" class="headerlink" title="方法一"></a>方法一</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">convertToTitle</span><span class="params">(self, n)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        将数字转换为excel的列名</span></span><br><span class="line"><span class="string">        :param n: int</span></span><br><span class="line"><span class="string">        :return: str</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="comment"># 存放结果的字符串</span></span><br><span class="line">        res = <span class="string">''</span></span><br><span class="line">        <span class="comment"># n不为0时进入循环</span></span><br><span class="line">        <span class="keyword">while</span> n != <span class="number">0</span>:</span><br><span class="line">            <span class="comment"># 求余得到一个字符</span></span><br><span class="line">            ch = chr((n - <span class="number">1</span>) % <span class="number">26</span> + <span class="number">65</span>)</span><br><span class="line">            <span class="comment"># 除以26求模</span></span><br><span class="line">            n = (n - <span class="number">1</span>) // <span class="number">26</span></span><br><span class="line">            res = ch + res</span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>注:Python中使用//来求模得到整数，/作为除法求精确结果一般为float类型</p>
 <p>注：</p>
 <ul>
-<li>以上代码见github:<a href="https://github.com/EarthChen/LeetCode_Record" target="_blank" rel="external">https://github.com/EarthChen/LeetCode_Record</a></li>
+<li>以上代码见github:<a href="https://github.com/EarthChen/LeetCode_Record" target="_blank" rel="noopener">https://github.com/EarthChen/LeetCode_Record</a></li>
 <li>上述环境在<strong>ubuntu16.04 lts和python3.5</strong>中测试成功</li>
 <li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
 </ul>
@@ -1322,15 +573,15 @@
     <nav id="article-nav">
         
             <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2017/08/13/Docker_Gogs/">
-                    使用Docker搭建git服务Gogs
+                <a href="/2017/08/06/LeetCode_Record_Easy_1to20/">
+                    LeetCode刷题记录(easy难度1-20题)
                 </a>
             </div>
         
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2017/08/06/LeetCode_Record_Easy_1to20/">
-                    LeetCode刷题记录(easy难度1-20题)
+                <a href="/2017/07/29/es6_study/">
+                    es6学习笔记
                 </a>
             </div>
         
@@ -1412,7 +663,7 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2017/08/13/Docker_Gogs/" title="上一篇: 使用Docker搭建git服务Gogs">
+            <a href="/2017/08/06/LeetCode_Record_Easy_1to20/" title="上一篇: LeetCode刷题记录(easy难度1-20题)">
                 <i class="fa fa-angle-left"></i>
             </a>
         
@@ -1420,13 +671,13 @@
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2017/08/06/LeetCode_Record_Easy_1to20/" title="下一篇: LeetCode刷题记录(easy难度1-20题)">
+            <a href="/2017/07/29/es6_study/" title="下一篇: es6学习笔记">
                 <i class="fa fa-angle-right"></i>
             </a>
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/07/25/java面试要点汇总(分布式和微服务)/">java面试知识要点汇总(分布式和微服务)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/23/java面试要点汇总(框架)/">java面试知识要点汇总(框架)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/22/java面试要点汇总(缓存和消息队列)/">java面试知识要点汇总(缓存和消息队列)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/19/java面试要点汇总(web)/">java面试知识要点汇总(web部分)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/15/java面试要点汇总(线程和锁)/">java面试知识要点汇总(线程和锁)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/java面试要点汇总(基础和集合部分)/">java面试知识要点汇总(基础和集合)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/23/hbase-study/">hbase 学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/30/算法图解-study/">算法图解书中算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/27/newcoder-2017校招-1/">牛客网2017年校招真题-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/26/sql_inner_left_right_join/">sql中的inner join left join 和right join各种连接的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/21/newcoder-剑指offer-3/">牛客网剑指offer-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/06/java8-features/">java8新特性总结备忘</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/05/java-generic/">java泛型总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/05/java-refect/">java反射总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/02/newcoder-剑指offer-2/">牛客网剑指offer-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/17/newcoder-剑指offer-1/">牛客网剑指offer-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/17/MongDB-study-4/">MongoDB权威指南学习笔记(4)--应用管理和服务器管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/15/MongDB-study-3/">MongoDB权威指南学习笔记(3)--复制和分片</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/13/MongDB-study-2/">MongoDB权威指南学习笔记(2)--设计应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/11/MongDB-study-1/">MongoDB权威指南学习笔记(1)--基础知识与对文档的增删改查</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/10/manjaro安装软件脚本/">manjaro系统相关脚本和配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/04/高性能MySQL-study/">高性能MySQL学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/01/httpclientutil/">HttpClient工具类</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/14/qiniu-oss/">spring boot使用七牛云的oss(对象存储)文件上传</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/requestHolder_and_argumentResolver/">使用ThreadLocal和ArgumentResolver方便开发</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/applicationContextHelper/">在不被spring容器管理的类中使用ApplicationContext应用上下文bean</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_static_class_autowrite/">Spring boot 在静态类中注入spring组件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_diy_properties/">Spring boot 自定义配置文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/12/Elasticsearch_study_1/">Elasticsearch学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/09/深入理解java虚拟机学习笔记_1/">深入理解java虚拟机学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/23/Docker_study_Dockerfile_instructions/">Docker学习笔记---Dockerfile</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/22/Docker_study/">Docker学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/20/celery_study/">Celery-分布式任务队列学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_redis_cache/">Django使用redis作为缓存系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_channels_websocket/">Django使用Channels实现websocket</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/13/Docker_Gogs/">使用Docker搭建git服务Gogs</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_21to_40/">LeetCode刷题记录(easy难度21-40题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_1to20/">LeetCode刷题记录(easy难度1-20题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/29/es6_study/">es6学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/Webpack_study/">Webpack学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/RegularExpression_study/">正则表达式学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/08/AndroidStudio/">Android Studio 使用本地离线Gradle</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/跨域请求解决方案/">跨域请求的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_nginx_gunicorn/">django+nginx+gunicorn部署配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/ubuntu_supervisor/">ubuntu下的进程控制系统————Supervisor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/28/ubuntu修复不能挂载NTFS硬盘/">ubuntu修复linux和windows双系统下挂载ntfs硬盘出错问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/17/django_timing_task/">django使用django-crontab实现定时任务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/15/django_rest_framework_jwt/">django-rest-framework配置json web token进行接口的认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/django_rest_framework_study/">django-rest-framework框架学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/spring_SpEL/">spring中的SpEL表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/08/git_study/">Git学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/03/资源收集/">资源收集共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/06/ubuntu_open_port/">ubuntu开放指定端口</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/16/redis_study_2/">Redis学习笔记 -- 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/15/redis_study_1/">Redis学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/16/ubuntu_do_something_use/">ubuntu日常使用的安装配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/django_address_baiduapi_marker_show/">Django调用百度地图api在地图上批量增加标记点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/ubuntu_do_something_coding/">ubuntu搭建常见开发环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/10/ubuntu安装在双系统笔记本下开机或关机卡死.1/">ubuntu在双系统下开机卡死或关机卡死的解决办法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/11/python_requirements/">python生成项目所需依赖文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/10/hexo_github_coding_blog/">利用hexo和github或coding 搭免费个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django数据库操作/">Django操作数据库</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django连接mysql数据库/">Django连接MySql使用models处理数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django环境搭建/">Django环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django渲染模板/">Django渲染模板</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django常用语句/">Django常用语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/python2和Python3的区别/">Python2和Python3的区别简单总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/03/Android_qq_Menu/">Android仿qq侧滑菜单</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/16/C语言队列的基本操作/">C语言队列的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/c语言中缀表达式变后缀表达式/">C语言中缀表达式转后缀表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言共享栈/">C语言共享栈</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言逆波兰计算器/">C语言逆波兰表达式计算(后缀表达式计算器)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言二叉树基本操作/">C语言二叉树的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言中缀表达式计算器/">C语言中缀表达式计算器</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/08/09/spring-boot自定义starter/">Rspring-boot自定义starter</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/25/java面试要点汇总(分布式和微服务)/">java面试知识要点汇总(分布式和微服务)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/23/java面试要点汇总(框架)/">java面试知识要点汇总(框架)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/22/java面试要点汇总(缓存和消息队列)/">java面试知识要点汇总(缓存和消息队列)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/19/java面试要点汇总(web和数据库)/">java面试知识要点汇总(web和数据库)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/15/java面试要点汇总(线程和锁)/">java面试知识要点汇总(线程和锁)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/java面试要点汇总(基础和集合部分)/">java面试知识要点汇总(基础和集合)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/23/hbase-study/">hbase 学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/30/算法图解-study/">算法图解书中算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/27/newcoder-2017校招-1/">牛客网2017年校招真题-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/26/sql_inner_left_right_join/">sql中的inner join left join 和right join各种连接的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/21/newcoder-剑指offer-3/">牛客网剑指offer-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/06/java8-features/">java8新特性总结备忘</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/05/java-generic/">java泛型总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/05/java-refect/">java反射总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/02/newcoder-剑指offer-2/">牛客网剑指offer-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/17/newcoder-剑指offer-1/">牛客网剑指offer-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/17/MongDB-study-4/">MongoDB权威指南学习笔记(4)--应用管理和服务器管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/15/MongDB-study-3/">MongoDB权威指南学习笔记(3)--复制和分片</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/13/MongDB-study-2/">MongoDB权威指南学习笔记(2)--设计应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/11/MongDB-study-1/">MongoDB权威指南学习笔记(1)--基础知识与对文档的增删改查</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/10/manjaro安装软件脚本/">manjaro系统相关脚本和配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/04/高性能MySQL-study/">高性能MySQL学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/01/httpclientutil/">HttpClient工具类</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/14/qiniu-oss/">spring boot使用七牛云的oss(对象存储)文件上传</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/requestHolder_and_argumentResolver/">使用ThreadLocal和ArgumentResolver方便开发</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/applicationContextHelper/">在不被spring容器管理的类中使用ApplicationContext应用上下文bean</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_static_class_autowrite/">Spring boot 在静态类中注入spring组件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_diy_properties/">Spring boot 自定义配置文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/12/Elasticsearch_study_1/">Elasticsearch学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/09/深入理解java虚拟机学习笔记_1/">深入理解java虚拟机学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/23/Docker_study_Dockerfile_instructions/">Docker学习笔记---Dockerfile</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/22/Docker_study/">Docker学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/20/celery_study/">Celery-分布式任务队列学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_redis_cache/">Django使用redis作为缓存系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_channels_websocket/">Django使用Channels实现websocket</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/13/Docker_Gogs/">使用Docker搭建git服务Gogs</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_1to20/">LeetCode刷题记录(easy难度1-20题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_21to_40/">LeetCode刷题记录(easy难度21-40题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/29/es6_study/">es6学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/Webpack_study/">Webpack学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/RegularExpression_study/">正则表达式学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/08/AndroidStudio/">Android Studio 使用本地离线Gradle</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/跨域请求解决方案/">跨域请求的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/ubuntu_supervisor/">ubuntu下的进程控制系统————Supervisor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_nginx_gunicorn/">django+nginx+gunicorn部署配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/28/ubuntu修复不能挂载NTFS硬盘/">ubuntu修复linux和windows双系统下挂载ntfs硬盘出错问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/17/django_timing_task/">django使用django-crontab实现定时任务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/15/django_rest_framework_jwt/">django-rest-framework配置json web token进行接口的认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/spring_SpEL/">spring中的SpEL表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/django_rest_framework_study/">django-rest-framework框架学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/08/git_study/">Git学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/03/资源收集/">资源收集共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/06/ubuntu_open_port/">ubuntu开放指定端口</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/16/redis_study_2/">Redis学习笔记 -- 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/15/redis_study_1/">Redis学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/16/ubuntu_do_something_use/">ubuntu日常使用的安装配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/ubuntu_do_something_coding/">ubuntu搭建常见开发环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/django_address_baiduapi_marker_show/">Django调用百度地图api在地图上批量增加标记点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/10/ubuntu安装在双系统笔记本下开机或关机卡死.1/">ubuntu在双系统下开机卡死或关机卡死的解决办法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/11/python_requirements/">python生成项目所需依赖文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/10/hexo_github_coding_blog/">利用hexo和github或coding 搭免费个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django数据库操作/">Django操作数据库</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django环境搭建/">Django环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django连接mysql数据库/">Django连接MySql使用models处理数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/python2和Python3的区别/">Python2和Python3的区别简单总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django常用语句/">Django常用语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django渲染模板/">Django渲染模板</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/03/Android_qq_Menu/">Android仿qq侧滑菜单</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/16/C语言队列的基本操作/">C语言队列的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言中缀表达式计算器/">C语言中缀表达式计算器</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/c语言中缀表达式变后缀表达式/">C语言中缀表达式转后缀表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言逆波兰计算器/">C语言逆波兰表达式计算(后缀表达式计算器)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言共享栈/">C语言共享栈</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言二叉树基本操作/">C语言二叉树的基本操作</a></li></ul>
 
 
 

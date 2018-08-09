@@ -22,7 +22,8 @@
 <meta property="og:url" content="http://earthchen.cn/2018/05/02/newcoder-剑指offer-2/index.html">
 <meta property="og:site_name" content="EarthChen&#39;s Blog">
 <meta property="og:description" content="剑指offer刷题-2">
-<meta property="og:updated_time" content="2018-07-21T08:24:50.831Z">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-07-21T08:24:50.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="牛客网剑指offer-2">
 <meta name="twitter:description" content="剑指offer刷题-2">
@@ -344,915 +345,93 @@
 <a id="more"></a>
 <h2 id="二叉搜索树与双向链表"><a href="#二叉搜索树与双向链表" class="headerlink" title="二叉搜索树与双向链表"></a>二叉搜索树与双向链表</h2><h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一棵二叉搜索树，将该二叉搜索树转换成一个排序的双向链表。要求不能创建任何新的结点，只能调整树中结点指针的指向。</p>
 <h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>首先我们需要知道二叉搜索树的特点，也就是左小右大，我们需要递归处理左右子树，交换左右子树中的子节点使其成为链表，根节点在最中间</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-<span class="line">17</span>
-<span class="line">18</span>
-<span class="line">19</span>
-<span class="line">20</span>
-<span class="line">21</span>
-<span class="line">22</span>
-<span class="line">23</span>
-<span class="line">24</span>
-<span class="line">25</span>
-<span class="line">26</span>
-<span class="line">27</span>
-<span class="line">28</span>
-<span class="line">29</span>
-<span class="line">30</span>
-<span class="line">31</span>
-<span class="line">32</span>
-<span class="line">33</span>
-<span class="line">34</span>
-<span class="line">35</span>
-<span class="line">36</span>
-</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
-<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">Convert</span><span class="params">(self, pRootOfTree)</span>:</span></span>
-<span class="line">        <span class="comment"># 处理根节点为空</span></span>
-<span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> pRootOfTree:</span>
-<span class="line">            <span class="keyword">return</span> pRootOfTree</span>
-<span class="line">        <span class="comment"># 只有根节点的情况</span></span>
-<span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> pRootOfTree.left <span class="keyword">and</span> <span class="keyword">not</span> pRootOfTree.right:</span>
-<span class="line">            <span class="keyword">return</span> pRootOfTree</span>
-<span class="line">        <span class="comment"># 处理左子树</span></span>
-<span class="line">        self.Convert(pRootOfTree.left)</span>
-<span class="line">        left = pRootOfTree.left</span>
-<span class="line"></span>
-<span class="line">        <span class="comment"># 连接根与左子树最大结点</span></span>
-<span class="line">        <span class="keyword">if</span> left:</span>
-<span class="line">            <span class="keyword">while</span> (left.right):</span>
-<span class="line">                left = left.right</span>
-<span class="line">            <span class="comment"># 　交换节点的值</span></span>
-<span class="line">            pRootOfTree.left, left.right = left, pRootOfTree</span>
-<span class="line"></span>
-<span class="line">        <span class="comment"># 处理右子树</span></span>
-<span class="line">        self.Convert(pRootOfTree.right)</span>
-<span class="line">        right = pRootOfTree.right</span>
-<span class="line"></span>
-<span class="line">        <span class="comment"># 连接根与右子树最小结点</span></span>
-<span class="line">        <span class="keyword">if</span> right:</span>
-<span class="line">            <span class="keyword">while</span> (right.left):</span>
-<span class="line">                right = right.left</span>
-<span class="line">            <span class="comment"># 　交换节点的值</span></span>
-<span class="line">            pRootOfTree.right, right.left = right, pRootOfTree</span>
-<span class="line"></span>
-<span class="line">        <span class="comment"># 当左子树存在时</span></span>
-<span class="line">        <span class="keyword">while</span> (pRootOfTree.left):</span>
-<span class="line">            <span class="comment"># 左子树赋值给自己</span></span>
-<span class="line">            pRootOfTree = pRootOfTree.left</span>
-<span class="line">        <span class="comment"># 返回链表的头节点</span></span>
-<span class="line">        <span class="keyword">return</span> pRootOfTree</span>
-</pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">Convert</span><span class="params">(self, pRootOfTree)</span>:</span></span><br><span class="line">        <span class="comment"># 处理根节点为空</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> pRootOfTree:</span><br><span class="line">            <span class="keyword">return</span> pRootOfTree</span><br><span class="line">        <span class="comment"># 只有根节点的情况</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> pRootOfTree.left <span class="keyword">and</span> <span class="keyword">not</span> pRootOfTree.right:</span><br><span class="line">            <span class="keyword">return</span> pRootOfTree</span><br><span class="line">        <span class="comment"># 处理左子树</span></span><br><span class="line">        self.Convert(pRootOfTree.left)</span><br><span class="line">        left = pRootOfTree.left</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 连接根与左子树最大结点</span></span><br><span class="line">        <span class="keyword">if</span> left:</span><br><span class="line">            <span class="keyword">while</span> (left.right):</span><br><span class="line">                left = left.right</span><br><span class="line">            <span class="comment"># 　交换节点的值</span></span><br><span class="line">            pRootOfTree.left, left.right = left, pRootOfTree</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 处理右子树</span></span><br><span class="line">        self.Convert(pRootOfTree.right)</span><br><span class="line">        right = pRootOfTree.right</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 连接根与右子树最小结点</span></span><br><span class="line">        <span class="keyword">if</span> right:</span><br><span class="line">            <span class="keyword">while</span> (right.left):</span><br><span class="line">                right = right.left</span><br><span class="line">            <span class="comment"># 　交换节点的值</span></span><br><span class="line">            pRootOfTree.right, right.left = right, pRootOfTree</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 当左子树存在时</span></span><br><span class="line">        <span class="keyword">while</span> (pRootOfTree.left):</span><br><span class="line">            <span class="comment"># 左子树赋值给自己</span></span><br><span class="line">            pRootOfTree = pRootOfTree.left</span><br><span class="line">        <span class="comment"># 返回链表的头节点</span></span><br><span class="line">        <span class="keyword">return</span> pRootOfTree</span><br></pre></td></tr></table></figure>
 <h2 id="字符串的排列"><a href="#字符串的排列" class="headerlink" title="字符串的排列"></a>字符串的排列</h2><h3 id="题目描述-1"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个字符串,按字典序打印出该字符串中字符的所有排列。例如输入字符串abc,则打印出由字符a,b,c所能排列出来的所有字符串abc,acb,bac,bca,cab和cba。。</p>
 <blockquote>
 <p>输入一个字符串,长度不超过9(可能有字符重复),字符只包括大小写字母。</p>
 </blockquote>
 <h3 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h3><p>使用标准库中的方法即可，重排序之后进行去重排序</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> itertools</span>
-<span class="line"></span>
-<span class="line"></span>
-<span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
-<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">Permutation</span><span class="params">(self, ss)</span>:</span></span>
-<span class="line">        <span class="comment"># 如果ss为空</span></span>
-<span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> ss:</span>
-<span class="line">            <span class="keyword">return</span> []</span>
-<span class="line">        <span class="comment"># 使用标准库中的permutations进行全排序，使用map函数聚合</span></span>
-<span class="line">        <span class="comment"># 使用set去重</span></span>
-<span class="line">        <span class="comment"># 转为list并排序</span></span>
-<span class="line">        <span class="keyword">return</span> sorted(list(set(map(<span class="string">''</span>.join, itertools.permutations(ss)))))</span>
-</pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> itertools</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">Permutation</span><span class="params">(self, ss)</span>:</span></span><br><span class="line">        <span class="comment"># 如果ss为空</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> ss:</span><br><span class="line">            <span class="keyword">return</span> []</span><br><span class="line">        <span class="comment"># 使用标准库中的permutations进行全排序，使用map函数聚合</span></span><br><span class="line">        <span class="comment"># 使用set去重</span></span><br><span class="line">        <span class="comment"># 转为list并排序</span></span><br><span class="line">        <span class="keyword">return</span> sorted(list(set(map(<span class="string">''</span>.join, itertools.permutations(ss)))))</span><br></pre></td></tr></table></figure>
 <h2 id="数组中出现次数超过一半的数字"><a href="#数组中出现次数超过一半的数字" class="headerlink" title="数组中出现次数超过一半的数字"></a>数组中出现次数超过一半的数字</h2><h3 id="题目描述-2"><a href="#题目描述-2" class="headerlink" title="题目描述"></a>题目描述</h3><p>数组中有一个数字出现的次数超过数组长度的一半，请找出这个数字。例如输入一个长度为9的数组{1,2,3,2,2,2,5,4,2}。由于数字2在数组中出现了5次，超过数组长度的一半，因此输出2。如果不存在则输出0</p>
 <h3 id="分析-2"><a href="#分析-2" class="headerlink" title="分析"></a>分析</h3><p>求数组长度的一半，然后遍历数组中每个元素的，判断是否大于数组长度的一半</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
-<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">MoreThanHalfNum_Solution</span><span class="params">(self, numbers)</span>:</span></span>
-<span class="line">        <span class="comment"># 求的数组长度的一半</span></span>
-<span class="line">        mid = len(numbers) / <span class="number">2</span></span>
-<span class="line">        <span class="comment"># 遍历数组</span></span>
-<span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> numbers:</span>
-<span class="line">            <span class="comment"># 判断数组中元素出现的次数</span></span>
-<span class="line">            <span class="keyword">if</span> numbers.count(i) &gt; mid:</span>
-<span class="line">                <span class="keyword">return</span> i</span>
-<span class="line">        <span class="keyword">return</span> <span class="number">0</span></span>
-</pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">MoreThanHalfNum_Solution</span><span class="params">(self, numbers)</span>:</span></span><br><span class="line">        <span class="comment"># 求的数组长度的一半</span></span><br><span class="line">        mid = len(numbers) / <span class="number">2</span></span><br><span class="line">        <span class="comment"># 遍历数组</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> numbers:</span><br><span class="line">            <span class="comment"># 判断数组中元素出现的次数</span></span><br><span class="line">            <span class="keyword">if</span> numbers.count(i) &gt; mid:</span><br><span class="line">                <span class="keyword">return</span> i</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
 <h2 id="最小的K个数"><a href="#最小的K个数" class="headerlink" title="最小的K个数"></a>最小的K个数</h2><h3 id="题目描述-3"><a href="#题目描述-3" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入n个整数，找出其中最小的K个数。例如输入4,5,1,6,2,7,3,8这8个数字，则最小的4个数字是1,2,3,4,。</p>
 <h3 id="分析-3"><a href="#分析-3" class="headerlink" title="分析"></a>分析</h3><p>首先判断边界条件，k是否大于数组长度，简单处理可以对列表进行排序并取出前k个</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
-<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">GetLeastNumbers_Solution</span><span class="params">(self, tinput, k)</span>:</span></span>
-<span class="line">        <span class="keyword">if</span> k &gt; len(tinput):</span>
-<span class="line">            <span class="keyword">return</span> []</span>
-<span class="line">        <span class="keyword">return</span> sorted(tinput)[:k]</span>
-</pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">GetLeastNumbers_Solution</span><span class="params">(self, tinput, k)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> k &gt; len(tinput):</span><br><span class="line">            <span class="keyword">return</span> []</span><br><span class="line">        <span class="keyword">return</span> sorted(tinput)[:k]</span><br></pre></td></tr></table></figure>
 <h2 id="整数中1出现的次数（从1到n整数中1出现的次"><a href="#整数中1出现的次数（从1到n整数中1出现的次" class="headerlink" title="整数中1出现的次数（从1到n整数中1出现的次"></a>整数中1出现的次数（从1到n整数中1出现的次</h2><h3 id="题目描述-4"><a href="#题目描述-4" class="headerlink" title="题目描述"></a>题目描述</h3><p>求出1~13的整数中1出现的次数,并算出100~1300的整数中1出现的次数？为此他特别数了一下1~13中包含1的数字有1、10、11、12、13因此共出现6次,但是对于后面问题他就没辙了。ACMer希望你们帮帮他,并把问题更加普遍化,可以很快的求出任意非负整数区间中1出现的次数。</p>
 <h3 id="分析-4"><a href="#分析-4" class="headerlink" title="分析"></a>分析</h3><p>设定整数点（如1、10、100等等）作为位置点i（对应n的各位、十位、百位等等），分别对每个数位上有多少包含1的点进行分析<br> 根据设定的整数位置，对n进行分割，分为两部分，高位n/i，低位n%i<br> 当i表示百位，且百位对应的数&gt;=2,如n=31456,i=100，则a=314,b=56，此时百位为1的次数有a/10+1=32（最高两位0~31），每一次都包含100个连续的点，即共有(a%10+1)<em>100个点的百位为1<br>当i表示百位，且百位对应的数为1，如n=31156,i=100，则a=311,b=56，此时百位对应的就是1，则共有a%10(最高两位0-30)次是包含100个连续点，当最高两位为31（即a=311），本次只对应局部点00~56，共b+1次，所有点加起来共有（a%10</em>100）+(b+1)，这些点百位对应为1<br>  当i表示百位，且百位对应的数为0,如n=31056,i=100，则a=310,b=56，此时百位为1的次数有a/10=31（最高两位0~30）<br>综合以上三种情况，当百位对应0或&gt;=2时，有(a+8)/10次包含所有100个点，还有当百位为1(a%10==1)，需要增加局部点b+1<br>之所以补8，是因为当百位为0，则a/10==(a+8)/10，当百位&gt;=2，补8会产生进位位，效果等同于(a/10+1)</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
-<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">NumberOf1Between1AndN_Solution</span><span class="params">(self, n)</span>:</span></span>
-<span class="line">        count = <span class="number">0</span></span>
-<span class="line">        i = <span class="number">1</span></span>
-<span class="line">        <span class="keyword">while</span> i &lt;= n:</span>
-<span class="line">            a = n / i</span>
-<span class="line">            b = n % i</span>
-<span class="line">            count += (a + <span class="number">8</span>) / <span class="number">10</span> * i + (a % <span class="number">10</span> == <span class="number">1</span>) * (b + <span class="number">1</span>)</span>
-<span class="line">            i *= <span class="number">10</span></span>
-<span class="line">        <span class="keyword">return</span> count</span>
-</pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">NumberOf1Between1AndN_Solution</span><span class="params">(self, n)</span>:</span></span><br><span class="line">        count = <span class="number">0</span></span><br><span class="line">        i = <span class="number">1</span></span><br><span class="line">        <span class="keyword">while</span> i &lt;= n:</span><br><span class="line">            a = n / i</span><br><span class="line">            b = n % i</span><br><span class="line">            count += (a + <span class="number">8</span>) / <span class="number">10</span> * i + (a % <span class="number">10</span> == <span class="number">1</span>) * (b + <span class="number">1</span>)</span><br><span class="line">            i *= <span class="number">10</span></span><br><span class="line">        <span class="keyword">return</span> count</span><br></pre></td></tr></table></figure>
 <h2 id="把数组排成最小的数"><a href="#把数组排成最小的数" class="headerlink" title="把数组排成最小的数"></a>把数组排成最小的数</h2><h3 id="题目描述-5"><a href="#题目描述-5" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个正整数数组，把数组里所有数字拼接起来排成一个数，打印能拼接出的所有数字中最小的一个。例如输入数组{3，32，321}，则打印出这三个数字能排成的最小数字为321323。</p>
 <h3 id="分析-5"><a href="#分析-5" class="headerlink" title="分析"></a>分析</h3><p>使用标准库的全排列方法将列表中的元素进行全排序，然后去重排序取第0个元素即可</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> itertools</span>
-<span class="line"></span>
-<span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
-<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">PrintMinNumber</span><span class="params">(self, numbers)</span>:</span></span>
-<span class="line">        <span class="comment"># write code here</span></span>
-<span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> numbers:</span>
-<span class="line">            <span class="keyword">return</span> <span class="string">''</span></span>
-<span class="line">        numbers = map(str, numbers)</span>
-<span class="line">        <span class="comment"># 全排列去重转列表排序取最小值</span></span>
-<span class="line">        res = sorted(list(set(map(<span class="string">''</span>.join, itertools.permutations(numbers)))))</span>
-<span class="line">        <span class="keyword">return</span> res[<span class="number">0</span>]</span>
-</pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> itertools</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">PrintMinNumber</span><span class="params">(self, numbers)</span>:</span></span><br><span class="line">        <span class="comment"># write code here</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> numbers:</span><br><span class="line">            <span class="keyword">return</span> <span class="string">''</span></span><br><span class="line">        numbers = map(str, numbers)</span><br><span class="line">        <span class="comment"># 全排列去重转列表排序取最小值</span></span><br><span class="line">        res = sorted(list(set(map(<span class="string">''</span>.join, itertools.permutations(numbers)))))</span><br><span class="line">        <span class="keyword">return</span> res[<span class="number">0</span>]</span><br></pre></td></tr></table></figure>
 <h2 id="丑数"><a href="#丑数" class="headerlink" title="丑数"></a>丑数</h2><h3 id="题目描述-6"><a href="#题目描述-6" class="headerlink" title="题目描述"></a>题目描述</h3><p>把只包含因子2、3和5的数称作丑数（Ugly Number）。例如6、8都是丑数，但14不是，因为它包含因子7。 习惯上我们把1当做是第一个丑数。求按从小到大的顺序的第N个丑数</p>
 <h3 id="分析-6"><a href="#分析-6" class="headerlink" title="分析"></a>分析</h3><p>既然知道第一个丑数为1，并且丑数的因子只包含2 3 5，我们可以分别乘以2 3 5，来求出其中的最小值，放入丑数列表，最后取出最后一个即可</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-<span class="line">17</span>
-<span class="line">18</span>
-<span class="line">19</span>
-<span class="line">20</span>
-<span class="line">21</span>
-<span class="line">22</span>
-<span class="line">23</span>
-<span class="line">24</span>
-</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
-<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">GetUglyNumber_Solution</span><span class="params">(self, index)</span>:</span></span>
-<span class="line">        <span class="keyword">if</span> index &lt; <span class="number">1</span>:</span>
-<span class="line">            <span class="keyword">return</span> index</span>
-<span class="line">        <span class="comment"># 使用一个列表保存丑数</span></span>
-<span class="line">        res = [<span class="number">1</span>]</span>
-<span class="line">        i = <span class="number">0</span></span>
-<span class="line">        j = <span class="number">0</span></span>
-<span class="line">        k = <span class="number">0</span></span>
-<span class="line">        <span class="comment"># 当丑数数量不等于index时</span></span>
-<span class="line">        <span class="keyword">while</span> len(res) != index:</span>
-<span class="line">            <span class="comment"># 求出当前丑数*2 *3 *5中的最小值</span></span>
-<span class="line">            minV = min(res[i] * <span class="number">2</span>, res[j] * <span class="number">3</span>, res[k] * <span class="number">5</span>)</span>
-<span class="line">            <span class="comment"># 将最小值放入丑数列表</span></span>
-<span class="line">            res.append(minV)</span>
-<span class="line">            <span class="comment"># 判断当前丑数*2 *3 *5是否小于等于丑数</span></span>
-<span class="line">            <span class="keyword">if</span> res[i] * <span class="number">2</span> &lt;= minV:</span>
-<span class="line">                i += <span class="number">1</span></span>
-<span class="line">            <span class="keyword">if</span> res[j] * <span class="number">3</span> &lt;= minV:</span>
-<span class="line">                j += <span class="number">1</span></span>
-<span class="line">            <span class="keyword">if</span> res[k] * <span class="number">5</span> &lt;= minV:</span>
-<span class="line">                k += <span class="number">1</span></span>
-<span class="line">        <span class="comment"># 返回最后一个丑数</span></span>
-<span class="line">        <span class="keyword">return</span> res[<span class="number">-1</span>]</span>
-</pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">GetUglyNumber_Solution</span><span class="params">(self, index)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> index &lt; <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">return</span> index</span><br><span class="line">        <span class="comment"># 使用一个列表保存丑数</span></span><br><span class="line">        res = [<span class="number">1</span>]</span><br><span class="line">        i = <span class="number">0</span></span><br><span class="line">        j = <span class="number">0</span></span><br><span class="line">        k = <span class="number">0</span></span><br><span class="line">        <span class="comment"># 当丑数数量不等于index时</span></span><br><span class="line">        <span class="keyword">while</span> len(res) != index:</span><br><span class="line">            <span class="comment"># 求出当前丑数*2 *3 *5中的最小值</span></span><br><span class="line">            minV = min(res[i] * <span class="number">2</span>, res[j] * <span class="number">3</span>, res[k] * <span class="number">5</span>)</span><br><span class="line">            <span class="comment"># 将最小值放入丑数列表</span></span><br><span class="line">            res.append(minV)</span><br><span class="line">            <span class="comment"># 判断当前丑数*2 *3 *5是否小于等于丑数</span></span><br><span class="line">            <span class="keyword">if</span> res[i] * <span class="number">2</span> &lt;= minV:</span><br><span class="line">                i += <span class="number">1</span></span><br><span class="line">            <span class="keyword">if</span> res[j] * <span class="number">3</span> &lt;= minV:</span><br><span class="line">                j += <span class="number">1</span></span><br><span class="line">            <span class="keyword">if</span> res[k] * <span class="number">5</span> &lt;= minV:</span><br><span class="line">                k += <span class="number">1</span></span><br><span class="line">        <span class="comment"># 返回最后一个丑数</span></span><br><span class="line">        <span class="keyword">return</span> res[<span class="number">-1</span>]</span><br></pre></td></tr></table></figure>
 <h2 id="第一个只出现一次的字符"><a href="#第一个只出现一次的字符" class="headerlink" title="第一个只出现一次的字符"></a>第一个只出现一次的字符</h2><h3 id="题目描述-7"><a href="#题目描述-7" class="headerlink" title="题目描述"></a>题目描述</h3><p>在一个字符串(1&lt;=字符串长度&lt;=10000，全部由字母组成)中找到第一个只出现一次的字符,并返回它的位置</p>
 <h3 id="分析-7"><a href="#分析-7" class="headerlink" title="分析"></a>分析</h3><p>当s为空时候，直接返回-1，当不为空的时候，遍历字符串，当从双向查找的索引值都相等，即找到所求</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
-<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">FirstNotRepeatingChar</span><span class="params">(self, s)</span>:</span></span>
-<span class="line">        <span class="keyword">if</span> s == <span class="string">''</span>:</span>
-<span class="line">            <span class="keyword">return</span> <span class="number">-1</span></span>
-<span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(s)):</span>
-<span class="line">            <span class="comment"># 当从前往后查找和从后向前查找时返回值相等时，即只出现了一次</span></span>
-<span class="line">            <span class="keyword">if</span> s.find(s[i]) == s.rfind(s[i]):</span>
-<span class="line">                <span class="keyword">return</span> i</span>
-<span class="line">        <span class="keyword">return</span> <span class="number">-1</span></span>
-</pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">FirstNotRepeatingChar</span><span class="params">(self, s)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> s == <span class="string">''</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(s)):</span><br><span class="line">            <span class="comment"># 当从前往后查找和从后向前查找时返回值相等时，即只出现了一次</span></span><br><span class="line">            <span class="keyword">if</span> s.find(s[i]) == s.rfind(s[i]):</span><br><span class="line">                <span class="keyword">return</span> i</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span></span><br></pre></td></tr></table></figure>
 <h2 id="两个链表的第一个公共结点"><a href="#两个链表的第一个公共结点" class="headerlink" title="两个链表的第一个公共结点"></a>两个链表的第一个公共结点</h2><h3 id="题目描述-8"><a href="#题目描述-8" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入两个链表，找出它们的第一个公共结点。</p>
 <h3 id="分析-8"><a href="#分析-8" class="headerlink" title="分析"></a>分析</h3><p>使用列表存储其中一个链表，遍历第二个链表判断是否在列表中</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
-<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">FindFirstCommonNode</span><span class="params">(self, pHead1, pHead2)</span>:</span></span>
-<span class="line">        list1 = []</span>
-<span class="line">        node1 = pHead1</span>
-<span class="line">        node2 = pHead2</span>
-<span class="line">        <span class="comment"># 使用一个列表存储第一个链表的所有节点</span></span>
-<span class="line">        <span class="keyword">while</span> node1:</span>
-<span class="line">            list1.append(node1.val)</span>
-<span class="line">            node1 = node1.next</span>
-<span class="line">        <span class="comment"># 循环遍历第二个链表判断是否存在列表中</span></span>
-<span class="line">        <span class="keyword">while</span> node2:</span>
-<span class="line">            <span class="keyword">if</span> node2.val <span class="keyword">in</span> list1:</span>
-<span class="line">                <span class="keyword">return</span> node2</span>
-<span class="line">            <span class="keyword">else</span>:</span>
-<span class="line">                node2 = node2.next</span>
-</pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">FindFirstCommonNode</span><span class="params">(self, pHead1, pHead2)</span>:</span></span><br><span class="line">        list1 = []</span><br><span class="line">        node1 = pHead1</span><br><span class="line">        node2 = pHead2</span><br><span class="line">        <span class="comment"># 使用一个列表存储第一个链表的所有节点</span></span><br><span class="line">        <span class="keyword">while</span> node1:</span><br><span class="line">            list1.append(node1.val)</span><br><span class="line">            node1 = node1.next</span><br><span class="line">        <span class="comment"># 循环遍历第二个链表判断是否存在列表中</span></span><br><span class="line">        <span class="keyword">while</span> node2:</span><br><span class="line">            <span class="keyword">if</span> node2.val <span class="keyword">in</span> list1:</span><br><span class="line">                <span class="keyword">return</span> node2</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                node2 = node2.next</span><br></pre></td></tr></table></figure>
 <h2 id="数字在排序数组中出现的次数"><a href="#数字在排序数组中出现的次数" class="headerlink" title="数字在排序数组中出现的次数"></a>数字在排序数组中出现的次数</h2><h3 id="题目描述-9"><a href="#题目描述-9" class="headerlink" title="题目描述"></a>题目描述</h3><p>统计一个数字在排序数组中出现的次数。</p>
 <h3 id="分析-9"><a href="#分析-9" class="headerlink" title="分析"></a>分析</h3><p>由于是排序的，所以可以想到二分查找，当然利用一些标准库函数也可以，但是不符合题意了</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-<span class="line">17</span>
-<span class="line">18</span>
-<span class="line">19</span>
-<span class="line">20</span>
-<span class="line">21</span>
-<span class="line">22</span>
-<span class="line">23</span>
-<span class="line">24</span>
-<span class="line">25</span>
-<span class="line">26</span>
-<span class="line">27</span>
-<span class="line">28</span>
-<span class="line">29</span>
-<span class="line">30</span>
-<span class="line">31</span>
-<span class="line">32</span>
-<span class="line">33</span>
-<span class="line">34</span>
-<span class="line">35</span>
-<span class="line">36</span>
-<span class="line">37</span>
-<span class="line">38</span>
-<span class="line">39</span>
-<span class="line">40</span>
-<span class="line">41</span>
-<span class="line">42</span>
-<span class="line">43</span>
-<span class="line">44</span>
-<span class="line">45</span>
-<span class="line">46</span>
-<span class="line">47</span>
-<span class="line">48</span>
-<span class="line">49</span>
-<span class="line">50</span>
-<span class="line">51</span>
-<span class="line">52</span>
-<span class="line">53</span>
-<span class="line">54</span>
-<span class="line">55</span>
-<span class="line">56</span>
-<span class="line">57</span>
-<span class="line">58</span>
-<span class="line">59</span>
-<span class="line">60</span>
-<span class="line">61</span>
-<span class="line">62</span>
-</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
-<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">GetNumberOfK</span><span class="params">(self, data, k)</span>:</span></span>
-<span class="line">        <span class="string">"""</span>
-<span class="line">        在Python中可以直接使用data.count(k)来解决</span>
-<span class="line"></span>
-<span class="line">        为了题目的意义，这里使用二分查找</span>
-<span class="line">        :param data:</span>
-<span class="line">        :param k:</span>
-<span class="line">        :return:</span>
-<span class="line">        """</span></span>
-<span class="line">        length = len(data)</span>
-<span class="line">        <span class="keyword">if</span> length == <span class="number">0</span>:</span>
-<span class="line">            <span class="keyword">return</span> <span class="number">0</span></span>
-<span class="line">        first = self.get_first_k(data, k, <span class="number">0</span>, length - <span class="number">1</span>)</span>
-<span class="line">        end = self.get_last_k(data, k, <span class="number">0</span>, length - <span class="number">1</span>)</span>
-<span class="line">        <span class="keyword">if</span> first != <span class="number">-1</span> <span class="keyword">and</span> end != <span class="number">-1</span>:</span>
-<span class="line">            <span class="keyword">return</span> end - first + <span class="number">1</span></span>
-<span class="line">        <span class="keyword">return</span> <span class="number">0</span></span>
-<span class="line"></span>
-<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_first_k</span><span class="params">(self, data, k, start, end)</span>:</span></span>
-<span class="line">        <span class="string">"""</span>
-<span class="line">        递归写法二分查找</span>
-<span class="line">        :param data:</span>
-<span class="line">        :param k:</span>
-<span class="line">        :param start:</span>
-<span class="line">        :param end:</span>
-<span class="line">        :return:</span>
-<span class="line">        """</span></span>
-<span class="line">        <span class="keyword">if</span> start &gt; end:</span>
-<span class="line">            <span class="keyword">return</span> <span class="number">-1</span></span>
-<span class="line">        mid = start + (end - start) / <span class="number">2</span></span>
-<span class="line">        <span class="keyword">if</span> data[mid] &gt; k:</span>
-<span class="line">            <span class="keyword">return</span> self.get_first_k(data, k, start, mid - <span class="number">1</span>)</span>
-<span class="line">        <span class="keyword">elif</span> data[mid] &lt; k:</span>
-<span class="line">            <span class="keyword">return</span> self.get_first_k(data, k, mid + <span class="number">1</span>, end)</span>
-<span class="line">        <span class="keyword">elif</span> mid - <span class="number">1</span> &gt;= <span class="number">0</span> <span class="keyword">and</span> data[mid - <span class="number">1</span>] == k:</span>
-<span class="line">            <span class="keyword">return</span> self.get_first_k(data, k, start, mid - <span class="number">1</span>)</span>
-<span class="line">        <span class="keyword">else</span>:</span>
-<span class="line">            <span class="keyword">return</span> mid</span>
-<span class="line"></span>
-<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_last_k</span><span class="params">(self, data, k, start, end)</span>:</span></span>
-<span class="line">        <span class="string">"""</span>
-<span class="line">        循环写法二分查找</span>
-<span class="line">        :param data:</span>
-<span class="line">        :param k:</span>
-<span class="line">        :param start:</span>
-<span class="line">        :param end:</span>
-<span class="line">        :return:</span>
-<span class="line">        """</span></span>
-<span class="line">        length = len(data)</span>
-<span class="line">        mid = start + (end - start) / <span class="number">2</span></span>
-<span class="line">        <span class="keyword">while</span> start &lt;= end:</span>
-<span class="line">            <span class="keyword">if</span> data[mid] &gt; k:</span>
-<span class="line">                end = mid - <span class="number">1</span></span>
-<span class="line">            <span class="keyword">elif</span> data[mid] &lt; k:</span>
-<span class="line">                start = mid + <span class="number">1</span></span>
-<span class="line">            <span class="keyword">elif</span> mid + <span class="number">1</span> &lt; length <span class="keyword">and</span> data[mid + <span class="number">1</span>] == k:</span>
-<span class="line">                start = mid + <span class="number">1</span></span>
-<span class="line">            <span class="keyword">else</span>:</span>
-<span class="line">                <span class="keyword">return</span> mid</span>
-<span class="line">            mid = start + (end - start) / <span class="number">2</span></span>
-<span class="line">        <span class="keyword">return</span> <span class="number">-1</span></span>
-</pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">GetNumberOfK</span><span class="params">(self, data, k)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        在Python中可以直接使用data.count(k)来解决</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        为了题目的意义，这里使用二分查找</span></span><br><span class="line"><span class="string">        :param data:</span></span><br><span class="line"><span class="string">        :param k:</span></span><br><span class="line"><span class="string">        :return:</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        length = len(data)</span><br><span class="line">        <span class="keyword">if</span> length == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">        first = self.get_first_k(data, k, <span class="number">0</span>, length - <span class="number">1</span>)</span><br><span class="line">        end = self.get_last_k(data, k, <span class="number">0</span>, length - <span class="number">1</span>)</span><br><span class="line">        <span class="keyword">if</span> first != <span class="number">-1</span> <span class="keyword">and</span> end != <span class="number">-1</span>:</span><br><span class="line">            <span class="keyword">return</span> end - first + <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_first_k</span><span class="params">(self, data, k, start, end)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        递归写法二分查找</span></span><br><span class="line"><span class="string">        :param data:</span></span><br><span class="line"><span class="string">        :param k:</span></span><br><span class="line"><span class="string">        :param start:</span></span><br><span class="line"><span class="string">        :param end:</span></span><br><span class="line"><span class="string">        :return:</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">if</span> start &gt; end:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span></span><br><span class="line">        mid = start + (end - start) / <span class="number">2</span></span><br><span class="line">        <span class="keyword">if</span> data[mid] &gt; k:</span><br><span class="line">            <span class="keyword">return</span> self.get_first_k(data, k, start, mid - <span class="number">1</span>)</span><br><span class="line">        <span class="keyword">elif</span> data[mid] &lt; k:</span><br><span class="line">            <span class="keyword">return</span> self.get_first_k(data, k, mid + <span class="number">1</span>, end)</span><br><span class="line">        <span class="keyword">elif</span> mid - <span class="number">1</span> &gt;= <span class="number">0</span> <span class="keyword">and</span> data[mid - <span class="number">1</span>] == k:</span><br><span class="line">            <span class="keyword">return</span> self.get_first_k(data, k, start, mid - <span class="number">1</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> mid</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_last_k</span><span class="params">(self, data, k, start, end)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        循环写法二分查找</span></span><br><span class="line"><span class="string">        :param data:</span></span><br><span class="line"><span class="string">        :param k:</span></span><br><span class="line"><span class="string">        :param start:</span></span><br><span class="line"><span class="string">        :param end:</span></span><br><span class="line"><span class="string">        :return:</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        length = len(data)</span><br><span class="line">        mid = start + (end - start) / <span class="number">2</span></span><br><span class="line">        <span class="keyword">while</span> start &lt;= end:</span><br><span class="line">            <span class="keyword">if</span> data[mid] &gt; k:</span><br><span class="line">                end = mid - <span class="number">1</span></span><br><span class="line">            <span class="keyword">elif</span> data[mid] &lt; k:</span><br><span class="line">                start = mid + <span class="number">1</span></span><br><span class="line">            <span class="keyword">elif</span> mid + <span class="number">1</span> &lt; length <span class="keyword">and</span> data[mid + <span class="number">1</span>] == k:</span><br><span class="line">                start = mid + <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">return</span> mid</span><br><span class="line">            mid = start + (end - start) / <span class="number">2</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span></span><br></pre></td></tr></table></figure>
 <h2 id="二叉树的深度"><a href="#二叉树的深度" class="headerlink" title="二叉树的深度"></a>二叉树的深度</h2><h3 id="题目描述-10"><a href="#题目描述-10" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一棵二叉树，求该树的深度。从根结点到叶结点依次经过的结点（含根、叶结点）形成树的一条路径，最长路径的长度为树的深度。</p>
 <h3 id="分析-10"><a href="#分析-10" class="headerlink" title="分析"></a>分析</h3><p>求深度，递归判断左右子树的深度，最后加上根节点即可</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
-<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">TreeDepth</span><span class="params">(self, pRoot)</span>:</span></span>
-<span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> pRoot:</span>
-<span class="line">            <span class="keyword">return</span> <span class="number">0</span></span>
-<span class="line">        <span class="keyword">return</span> max(self.TreeDepth(pRoot.left), self.TreeDepth(pRoot.right)) + <span class="number">1</span></span>
-</pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">TreeDepth</span><span class="params">(self, pRoot)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> pRoot:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">        <span class="keyword">return</span> max(self.TreeDepth(pRoot.left), self.TreeDepth(pRoot.right)) + <span class="number">1</span></span><br></pre></td></tr></table></figure>
 <h2 id="平衡二叉树"><a href="#平衡二叉树" class="headerlink" title="平衡二叉树"></a>平衡二叉树</h2><h3 id="题目描述-11"><a href="#题目描述-11" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一棵二叉树，判断该二叉树是否是平衡二叉树。</p>
 <h3 id="分析-11"><a href="#分析-11" class="headerlink" title="分析"></a>分析</h3><p>根据平衡二叉树的特点求解即可</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-<span class="line">17</span>
-<span class="line">18</span>
-<span class="line">19</span>
-<span class="line">20</span>
-<span class="line">21</span>
-<span class="line">22</span>
-<span class="line">23</span>
-<span class="line">24</span>
-<span class="line">25</span>
-<span class="line">26</span>
-<span class="line">27</span>
-<span class="line">28</span>
-<span class="line">29</span>
-</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
-<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">IsBalanced_Solution</span><span class="params">(self, pRoot)</span>:</span></span>
-<span class="line">        <span class="string">"""</span>
-<span class="line">        判断一个树是否为平衡二叉树</span>
-<span class="line">        当check函数的发挥值不等于-1时返回true，等于-1是返回false</span>
-<span class="line">        :param pRoot: TreeNode</span>
-<span class="line">        :return: bool</span>
-<span class="line">        """</span></span>
-<span class="line">        <span class="keyword">return</span> self.check(pRoot) != <span class="number">-1</span></span>
-<span class="line"></span>
-<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">check</span><span class="params">(self, root)</span>:</span></span>
-<span class="line">        <span class="string">"""</span>
-<span class="line">        检查结点</span>
-<span class="line">        :param root: TreeNode</span>
-<span class="line">        :return: int</span>
-<span class="line">        """</span></span>
-<span class="line">        <span class="comment"># 结点为空时</span></span>
-<span class="line">        <span class="keyword">if</span> root <span class="keyword">is</span> <span class="keyword">None</span>:</span>
-<span class="line">            <span class="keyword">return</span> <span class="number">0</span></span>
-<span class="line">        <span class="comment"># 递归得出左子树的返回值</span></span>
-<span class="line">        left = self.check(root.left)</span>
-<span class="line">        <span class="comment"># 递归得出右子树的返回值</span></span>
-<span class="line">        right = self.check(root.right)</span>
-<span class="line">        <span class="comment"># 如果左子树不为平衡树或者右子树不为平衡二叉树，</span></span>
-<span class="line">        <span class="comment"># 左右子树相减的值大于1(-1-(-1))左右子树不为平衡树的情况</span></span>
-<span class="line">        <span class="keyword">if</span> left == <span class="number">-1</span> <span class="keyword">or</span> right == <span class="number">-1</span> <span class="keyword">or</span> abs(left - right) &gt; <span class="number">1</span>:</span>
-<span class="line">            <span class="keyword">return</span> <span class="number">-1</span></span>
-<span class="line">        <span class="comment"># left right分别等于0或1的情况</span></span>
-<span class="line">        <span class="keyword">return</span> <span class="number">1</span> + max(left, right)</span>
-</pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">IsBalanced_Solution</span><span class="params">(self, pRoot)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        判断一个树是否为平衡二叉树</span></span><br><span class="line"><span class="string">        当check函数的发挥值不等于-1时返回true，等于-1是返回false</span></span><br><span class="line"><span class="string">        :param pRoot: TreeNode</span></span><br><span class="line"><span class="string">        :return: bool</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">return</span> self.check(pRoot) != <span class="number">-1</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">check</span><span class="params">(self, root)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        检查结点</span></span><br><span class="line"><span class="string">        :param root: TreeNode</span></span><br><span class="line"><span class="string">        :return: int</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="comment"># 结点为空时</span></span><br><span class="line">        <span class="keyword">if</span> root <span class="keyword">is</span> <span class="keyword">None</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">        <span class="comment"># 递归得出左子树的返回值</span></span><br><span class="line">        left = self.check(root.left)</span><br><span class="line">        <span class="comment"># 递归得出右子树的返回值</span></span><br><span class="line">        right = self.check(root.right)</span><br><span class="line">        <span class="comment"># 如果左子树不为平衡树或者右子树不为平衡二叉树，</span></span><br><span class="line">        <span class="comment"># 左右子树相减的值大于1(-1-(-1))左右子树不为平衡树的情况</span></span><br><span class="line">        <span class="keyword">if</span> left == <span class="number">-1</span> <span class="keyword">or</span> right == <span class="number">-1</span> <span class="keyword">or</span> abs(left - right) &gt; <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span></span><br><span class="line">        <span class="comment"># left right分别等于0或1的情况</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span> + max(left, right)</span><br></pre></td></tr></table></figure>
 <h2 id="数组中只出现一次的数字"><a href="#数组中只出现一次的数字" class="headerlink" title="数组中只出现一次的数字"></a>数组中只出现一次的数字</h2><h3 id="题目描述-12"><a href="#题目描述-12" class="headerlink" title="题目描述"></a>题目描述</h3><p>一个整型数组里除了两个数字之外，其他的数字都出现了两次。请写程序找出这两个只出现一次的数字。</p>
 <h3 id="分析-12"><a href="#分析-12" class="headerlink" title="分析"></a>分析</h3><p>使用一个列表来保存元素，因为每个元素最多出现两次，当出现第二次的时候，删除该元素，最后列表中只会留下只出现一次的元素</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
-<span class="line">    <span class="comment"># 返回[a,b] 其中ab是出现一次的两个数字</span></span>
-<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">FindNumsAppearOnce</span><span class="params">(self, array)</span>:</span></span>
-<span class="line">        <span class="string">"""</span>
-<span class="line">        遍历数组，如果已存在的结果列表中就移除，不存在则添加</span>
-<span class="line">        :param array:</span>
-<span class="line">        :return:</span>
-<span class="line">        """</span></span>
-<span class="line">        tmp = []</span>
-<span class="line">        <span class="keyword">for</span> a <span class="keyword">in</span> array:</span>
-<span class="line">            <span class="keyword">if</span> a <span class="keyword">in</span> tmp:</span>
-<span class="line">                tmp.remove(a)</span>
-<span class="line">            <span class="keyword">else</span>:</span>
-<span class="line">                tmp.append(a)</span>
-<span class="line">        <span class="keyword">return</span> tmp</span>
-</pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="comment"># 返回[a,b] 其中ab是出现一次的两个数字</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">FindNumsAppearOnce</span><span class="params">(self, array)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        遍历数组，如果已存在的结果列表中就移除，不存在则添加</span></span><br><span class="line"><span class="string">        :param array:</span></span><br><span class="line"><span class="string">        :return:</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        tmp = []</span><br><span class="line">        <span class="keyword">for</span> a <span class="keyword">in</span> array:</span><br><span class="line">            <span class="keyword">if</span> a <span class="keyword">in</span> tmp:</span><br><span class="line">                tmp.remove(a)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                tmp.append(a)</span><br><span class="line">        <span class="keyword">return</span> tmp</span><br></pre></td></tr></table></figure>
 <h2 id="和为S的连续正数序列"><a href="#和为S的连续正数序列" class="headerlink" title="和为S的连续正数序列"></a>和为S的连续正数序列</h2><h3 id="题目描述-13"><a href="#题目描述-13" class="headerlink" title="题目描述"></a>题目描述</h3><p>小明很喜欢数学,有一天他在做数学作业时,要求计算出9~16的和,他马上就写出了正确答案是100。但是他并不满足于此,他在想究竟有多少种连续的正数序列的和为100(至少包括两个数)。没多久,他就得到另一组连续正数和为100的序列:18,19,20,21,22。现在把问题交给你,你能不能也很快的找出所有和为S的连续正数序列? Good Luck!</p>
 <p>输出描述:<br>输出所有和为S的连续正数序列。序列内按照从小至大的顺序，序列间按照开始数字从小到大的顺序</p>
 <h3 id="分析-13"><a href="#分析-13" class="headerlink" title="分析"></a>分析</h3><p>这里给出的解法是最笨的方法，时间复杂度会比较高，也就是依次从0开始相加，直到等于所求的和。还可以根据序列的特点去求解，比如等差数列求和，，，可以相对降低时间复杂度</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-<span class="line">17</span>
-<span class="line">18</span>
-</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
-<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">FindContinuousSequence</span><span class="params">(self, tsum)</span>:</span></span>
-<span class="line">        <span class="comment"># 当要求的和的值小于3，不存在这样的序列</span></span>
-<span class="line">        <span class="keyword">if</span> tsum &lt; <span class="number">3</span>:</span>
-<span class="line">            <span class="keyword">return</span> []</span>
-<span class="line">        s = []</span>
-<span class="line">        <span class="comment"># 遍历从1到所求和之前的值</span></span>
-<span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, tsum):</span>
-<span class="line">            t = <span class="number">0</span></span>
-<span class="line">            j = i</span>
-<span class="line">            <span class="comment"># 从0开始依次相加，直到不小于和</span></span>
-<span class="line">            <span class="keyword">while</span> t &lt; tsum:</span>
-<span class="line">                t = t + j</span>
-<span class="line">                j = j + <span class="number">1</span></span>
-<span class="line">            <span class="comment"># 判断是否等于和</span></span>
-<span class="line">            <span class="keyword">if</span> t == tsum:</span>
-<span class="line">                s.append(range(i, j))</span>
-<span class="line">        <span class="keyword">return</span> s</span>
-</pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">FindContinuousSequence</span><span class="params">(self, tsum)</span>:</span></span><br><span class="line">        <span class="comment"># 当要求的和的值小于3，不存在这样的序列</span></span><br><span class="line">        <span class="keyword">if</span> tsum &lt; <span class="number">3</span>:</span><br><span class="line">            <span class="keyword">return</span> []</span><br><span class="line">        s = []</span><br><span class="line">        <span class="comment"># 遍历从1到所求和之前的值</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, tsum):</span><br><span class="line">            t = <span class="number">0</span></span><br><span class="line">            j = i</span><br><span class="line">            <span class="comment"># 从0开始依次相加，直到不小于和</span></span><br><span class="line">            <span class="keyword">while</span> t &lt; tsum:</span><br><span class="line">                t = t + j</span><br><span class="line">                j = j + <span class="number">1</span></span><br><span class="line">            <span class="comment"># 判断是否等于和</span></span><br><span class="line">            <span class="keyword">if</span> t == tsum:</span><br><span class="line">                s.append(range(i, j))</span><br><span class="line">        <span class="keyword">return</span> s</span><br></pre></td></tr></table></figure>
 <h2 id="和为S的两个数字"><a href="#和为S的两个数字" class="headerlink" title="和为S的两个数字"></a>和为S的两个数字</h2><h3 id="题目描述-14"><a href="#题目描述-14" class="headerlink" title="题目描述"></a>题目描述</h3><p>输入一个递增排序的数组和一个数字S，在数组中查找两个数，是的他们的和正好是S，如果有多对数字的和等于S，输出两个数的乘积最小的。</p>
 <h3 id="分析-14"><a href="#分析-14" class="headerlink" title="分析"></a>分析</h3><p>使用字典存储乘积和两个数的元组，由于递增排序，所以在字典中出现同样乘积的只保留第一组键值对。当结果字典不为空的时候，将字典进行排序取出第一组键值对的值</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
-<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">FindNumbersWithSum</span><span class="params">(self, array, tsum)</span>:</span></span>
-<span class="line">        <span class="comment"># 使用一个字典存储乘积和两个数的键值对</span></span>
-<span class="line">        res = &#123;&#125;</span>
-<span class="line">        <span class="comment"># 遍历列表</span></span>
-<span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> array:</span>
-<span class="line">            <span class="comment"># 判断和减去该元素是否在该列表中</span></span>
-<span class="line">            <span class="keyword">if</span> tsum - i <span class="keyword">in</span> array:</span>
-<span class="line">                <span class="comment"># 如果乘积的值不在字典中，将字典的值和键值对存储在字典中</span></span>
-<span class="line">                <span class="keyword">if</span> i * (tsum - i) <span class="keyword">not</span> <span class="keyword">in</span> res.keys():</span>
-<span class="line">                    res[i * (tsum - i)] = (i, tsum - i)</span>
-<span class="line">        <span class="comment"># 当字典不为空的时候，取出第一个元素的值即为最小的</span></span>
-<span class="line">        <span class="keyword">if</span> res != &#123;&#125;:</span>
-<span class="line">            <span class="keyword">return</span> list(sorted(res.items())[<span class="number">0</span>][<span class="number">1</span>])</span>
-<span class="line">        <span class="keyword">return</span> []</span>
-</pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">FindNumbersWithSum</span><span class="params">(self, array, tsum)</span>:</span></span><br><span class="line">        <span class="comment"># 使用一个字典存储乘积和两个数的键值对</span></span><br><span class="line">        res = &#123;&#125;</span><br><span class="line">        <span class="comment"># 遍历列表</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> array:</span><br><span class="line">            <span class="comment"># 判断和减去该元素是否在该列表中</span></span><br><span class="line">            <span class="keyword">if</span> tsum - i <span class="keyword">in</span> array:</span><br><span class="line">                <span class="comment"># 如果乘积的值不在字典中，将字典的值和键值对存储在字典中</span></span><br><span class="line">                <span class="keyword">if</span> i * (tsum - i) <span class="keyword">not</span> <span class="keyword">in</span> res.keys():</span><br><span class="line">                    res[i * (tsum - i)] = (i, tsum - i)</span><br><span class="line">        <span class="comment"># 当字典不为空的时候，取出第一个元素的值即为最小的</span></span><br><span class="line">        <span class="keyword">if</span> res != &#123;&#125;:</span><br><span class="line">            <span class="keyword">return</span> list(sorted(res.items())[<span class="number">0</span>][<span class="number">1</span>])</span><br><span class="line">        <span class="keyword">return</span> []</span><br></pre></td></tr></table></figure>
 <h2 id="左旋转字符串"><a href="#左旋转字符串" class="headerlink" title="左旋转字符串"></a>左旋转字符串</h2><h3 id="题目描述-15"><a href="#题目描述-15" class="headerlink" title="题目描述"></a>题目描述</h3><p>汇编语言中有一种移位指令叫做循环左移（ROL），现在有个简单的任务，就是用字符串模拟这个指令的运算结果。对于一个给定的字符序列S，请你把其循环左移K位后的序列输出。例如，字符序列S=”abcXYZdef”,要求输出循环左移3位后的结果，即“XYZdefabc”。是不是很简单？OK，搞定它！</p>
 <h3 id="分析-15"><a href="#分析-15" class="headerlink" title="分析"></a>分析</h3><p>左旋转，斟酌题意可以知道当n大于字符串长度或者小于0，字符串都是没有变化的，直接返回0即可。否则，将前n字符串拼接到后n位字符串后面即可</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
-<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">LeftRotateString</span><span class="params">(self, s, n)</span>:</span></span>
-<span class="line">        <span class="comment"># 当n大于字符串长度或者小于0的时候，等于没有变</span></span>
-<span class="line">        <span class="keyword">if</span> n &gt;= len(s) <span class="keyword">or</span> n &lt;= <span class="number">0</span>:</span>
-<span class="line">            <span class="keyword">return</span> s</span>
-<span class="line">        <span class="comment"># 将字符串的前n位拼接到字符串的最后即可</span></span>
-<span class="line">        <span class="keyword">return</span> s[n:] + s[:n]</span>
-</pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">LeftRotateString</span><span class="params">(self, s, n)</span>:</span></span><br><span class="line">        <span class="comment"># 当n大于字符串长度或者小于0的时候，等于没有变</span></span><br><span class="line">        <span class="keyword">if</span> n &gt;= len(s) <span class="keyword">or</span> n &lt;= <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> s</span><br><span class="line">        <span class="comment"># 将字符串的前n位拼接到字符串的最后即可</span></span><br><span class="line">        <span class="keyword">return</span> s[n:] + s[:n]</span><br></pre></td></tr></table></figure>
 <h2 id="翻转单词顺序列"><a href="#翻转单词顺序列" class="headerlink" title="翻转单词顺序列"></a>翻转单词顺序列</h2><h3 id="题目描述-16"><a href="#题目描述-16" class="headerlink" title="题目描述"></a>题目描述</h3><p>牛客最近来了一个新员工Fish，每天早晨总是会拿着一本英文杂志，写些句子在本子上。同事Cat对Fish写的内容颇感兴趣，有一天他向Fish借来翻看，但却读不懂它的意思。例如，“student. a am I”。后来才意识到，这家伙原来把句子单词的顺序翻转了，正确的句子应该是“I am a student.”。Cat对一一的翻转这些单词顺序可不在行，你能帮助他么？</p>
 <h3 id="分析-16"><a href="#分析-16" class="headerlink" title="分析"></a>分析</h3><p>翻转单词，首先我们需要对字符串进行空格切分，然后将其逆序，再按空格拼接为字符串</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
-<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">ReverseSentence</span><span class="params">(self, s)</span>:</span></span>
-<span class="line">        <span class="comment"># 使用空格进行字符串切割转换为列表</span></span>
-<span class="line">        l = s.split(<span class="string">' '</span>)</span>
-<span class="line">        <span class="comment"># 使用空格将字符串倒序拼成一个新的字符串</span></span>
-<span class="line">        <span class="keyword">return</span> <span class="string">' '</span>.join(l[::<span class="number">-1</span>])</span>
-</pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">ReverseSentence</span><span class="params">(self, s)</span>:</span></span><br><span class="line">        <span class="comment"># 使用空格进行字符串切割转换为列表</span></span><br><span class="line">        l = s.split(<span class="string">' '</span>)</span><br><span class="line">        <span class="comment"># 使用空格将字符串倒序拼成一个新的字符串</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">' '</span>.join(l[::<span class="number">-1</span>])</span><br></pre></td></tr></table></figure>
 <h2 id="求1-2-3-…-n"><a href="#求1-2-3-…-n" class="headerlink" title="求1+2+3+…+n"></a>求1+2+3+…+n</h2><h3 id="题目描述-17"><a href="#题目描述-17" class="headerlink" title="题目描述"></a>题目描述</h3><p>求1+2+3+…+n，要求不能使用乘除法、for、while、if、else、switch、case等关键字及条件判断语句（A?B:C）。</p>
 <h3 id="分析-17"><a href="#分析-17" class="headerlink" title="分析"></a>分析</h3><p>使用递归解决</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
-<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">Sum_Solution</span><span class="params">(self, n)</span>:</span></span>
-<span class="line">        <span class="keyword">if</span> n == <span class="number">1</span>:</span>
-<span class="line">            <span class="keyword">return</span> <span class="number">1</span></span>
-<span class="line">        <span class="keyword">return</span> n + self.Sum_Solution(n - <span class="number">1</span>)</span>
-</pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">Sum_Solution</span><span class="params">(self, n)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> n == <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> n + self.Sum_Solution(n - <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
 <h2 id="不用加减乘除做加法"><a href="#不用加减乘除做加法" class="headerlink" title="不用加减乘除做加法"></a>不用加减乘除做加法</h2><h3 id="题目描述-18"><a href="#题目描述-18" class="headerlink" title="题目描述"></a>题目描述</h3><p>写一个函数，求两个整数之和，要求在函数体内不得使用+、-、*、/四则运算符号。</p>
 <h3 id="分析-18"><a href="#分析-18" class="headerlink" title="分析"></a>分析</h3><p>这里使用内置函数sum</p>
 <p>（可以使用位运算，但是Python这里涉及到负数不知道怎么就报错了，就不展示代码了）</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
-<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">Add</span><span class="params">(self, num1, num2)</span>:</span></span>
-<span class="line">        <span class="keyword">return</span> sum([num1, num2])</span>
-</pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">Add</span><span class="params">(self, num1, num2)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> sum([num1, num2])</span><br></pre></td></tr></table></figure>
 <h2 id="把字符串转换成整数"><a href="#把字符串转换成整数" class="headerlink" title="把字符串转换成整数"></a>把字符串转换成整数</h2><h3 id="题目描述-19"><a href="#题目描述-19" class="headerlink" title="题目描述"></a>题目描述</h3><p>将一个字符串转换成一个整数，要求不能使用字符串转换整数的库函数。 数值为0或者字符串不是一个合法的数值则返回0</p>
 <h3 id="分析-19"><a href="#分析-19" class="headerlink" title="分析"></a>分析</h3><p>首先判断边界条件，最后使用ord()将字符转为数字，计算。</p>
 <p>(看答案有人使用int()函数直接解决，但个人觉得不怎么符合题意)</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-<span class="line">17</span>
-<span class="line">18</span>
-<span class="line">19</span>
-<span class="line">20</span>
-<span class="line">21</span>
-<span class="line">22</span>
-</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
-<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">StrToInt</span><span class="params">(self, s)</span>:</span></span>
-<span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> s:</span>
-<span class="line">            <span class="keyword">return</span> <span class="number">0</span></span>
-<span class="line">        number = <span class="number">0</span></span>
-<span class="line">        start = <span class="number">0</span></span>
-<span class="line">        flage = <span class="number">1</span></span>
-<span class="line">        <span class="keyword">if</span> s[<span class="number">0</span>] == <span class="string">'+'</span>:</span>
-<span class="line">        </span>
-<span class="line">            start = <span class="number">1</span></span>
-<span class="line">        <span class="keyword">elif</span> s[<span class="number">0</span>] == <span class="string">'-'</span>:</span>
-<span class="line">            flage = <span class="number">-1</span></span>
-<span class="line">            start = <span class="number">1</span></span>
-<span class="line">        <span class="comment"># 遍历字符串</span></span>
-<span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(start, len(s)):</span>
-<span class="line">            <span class="comment"># 如果不在0到9</span></span>
-<span class="line">            <span class="keyword">if</span> s[i] &lt; <span class="string">'0'</span> <span class="keyword">or</span> s[i] &gt; <span class="string">'9'</span>:</span>
-<span class="line">                <span class="keyword">return</span> <span class="number">0</span></span>
-<span class="line">            <span class="keyword">else</span>:</span>
-<span class="line">                <span class="comment"># 转换为数字</span></span>
-<span class="line">                number = number * <span class="number">10</span> + flage * (ord(s[i]) - ord(<span class="string">'0'</span>))</span>
-<span class="line">        <span class="keyword">return</span> number</span>
-</pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">StrToInt</span><span class="params">(self, s)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> s:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">        number = <span class="number">0</span></span><br><span class="line">        start = <span class="number">0</span></span><br><span class="line">        flage = <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> s[<span class="number">0</span>] == <span class="string">'+'</span>:</span><br><span class="line">        </span><br><span class="line">            start = <span class="number">1</span></span><br><span class="line">        <span class="keyword">elif</span> s[<span class="number">0</span>] == <span class="string">'-'</span>:</span><br><span class="line">            flage = <span class="number">-1</span></span><br><span class="line">            start = <span class="number">1</span></span><br><span class="line">        <span class="comment"># 遍历字符串</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(start, len(s)):</span><br><span class="line">            <span class="comment"># 如果不在0到9</span></span><br><span class="line">            <span class="keyword">if</span> s[i] &lt; <span class="string">'0'</span> <span class="keyword">or</span> s[i] &gt; <span class="string">'9'</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="comment"># 转换为数字</span></span><br><span class="line">                number = number * <span class="number">10</span> + flage * (ord(s[i]) - ord(<span class="string">'0'</span>))</span><br><span class="line">        <span class="keyword">return</span> number</span><br></pre></td></tr></table></figure>
 <h2 id="数组中重复的数字"><a href="#数组中重复的数字" class="headerlink" title="数组中重复的数字"></a>数组中重复的数字</h2><h3 id="题目描述-20"><a href="#题目描述-20" class="headerlink" title="题目描述"></a>题目描述</h3><p>在一个长度为n的数组里的所有数字都在0到n-1的范围内。 数组中某些数字是重复的，但不知道有几个数字是重复的。也不知道每个数字重复几次。请找出数组中任意一个重复的数字。 例如，如果输入长度为7的数组{2,3,1,0,2,5,3}，那么对应的输出是第一个重复的数字2</p>
 <h3 id="分析-20"><a href="#分析-20" class="headerlink" title="分析"></a>分析</h3><p>首先判断边界条件，遍历数组时，使用一个列表去保存遍历过的值，判断当前遍历的元素是否存在列表中，如果存在，将当前值保存，并返回true，窦泽将当前值保存在列表中</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
-<span class="line">    <span class="comment"># 这里要特别注意~找到任意重复的一个值并赋值到duplication[0]</span></span>
-<span class="line">    <span class="comment"># 函数返回True/False</span></span>
-<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">duplicate</span><span class="params">(self, numbers, duplication)</span>:</span></span>
-<span class="line">        <span class="comment"># 边界条件</span></span>
-<span class="line">        <span class="keyword">if</span> numbers <span class="keyword">is</span> <span class="keyword">None</span> <span class="keyword">or</span> numbers == []:</span>
-<span class="line">            <span class="keyword">return</span> <span class="keyword">False</span></span>
-<span class="line">        <span class="comment"># 使用一个列表接收遍历过的值</span></span>
-<span class="line">        s = []</span>
-<span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> numbers:</span>
-<span class="line">            <span class="comment"># 存在</span></span>
-<span class="line">            <span class="keyword">if</span> i <span class="keyword">in</span> s:</span>
-<span class="line">                duplication[<span class="number">0</span>] = i</span>
-<span class="line">                <span class="keyword">return</span> <span class="keyword">True</span></span>
-<span class="line">            s.append(i)</span>
-<span class="line">        <span class="keyword">return</span> <span class="keyword">False</span></span>
-</pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="comment"># 这里要特别注意~找到任意重复的一个值并赋值到duplication[0]</span></span><br><span class="line">    <span class="comment"># 函数返回True/False</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">duplicate</span><span class="params">(self, numbers, duplication)</span>:</span></span><br><span class="line">        <span class="comment"># 边界条件</span></span><br><span class="line">        <span class="keyword">if</span> numbers <span class="keyword">is</span> <span class="keyword">None</span> <span class="keyword">or</span> numbers == []:</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line">        <span class="comment"># 使用一个列表接收遍历过的值</span></span><br><span class="line">        s = []</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> numbers:</span><br><span class="line">            <span class="comment"># 存在</span></span><br><span class="line">            <span class="keyword">if</span> i <span class="keyword">in</span> s:</span><br><span class="line">                duplication[<span class="number">0</span>] = i</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line">            s.append(i)</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">False</span></span><br></pre></td></tr></table></figure>
 <h2 id="构建乘积数组"><a href="#构建乘积数组" class="headerlink" title="构建乘积数组"></a>构建乘积数组</h2><h3 id="题目描述-21"><a href="#题目描述-21" class="headerlink" title="题目描述"></a>题目描述</h3><p>给定一个数组A[0,1,…,n-1],请构建一个数组B[0,1,…,n-1],其中B中的元素B[i]=A[0]<em>A[1]</em>…<em>A[i-1]</em>A[i+1]<em>…</em>A[n-1]。不能使用除法。</p>
 <h3 id="分析-21"><a href="#分析-21" class="headerlink" title="分析"></a>分析</h3><p>首先初始化b，然后遍历ab，判断当前遍历的索引是否相等，不相等时，将B[i]*A[i]赋值给B[i]</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
-<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">multiply</span><span class="params">(self, A)</span>:</span></span>
-<span class="line">        <span class="comment"># 将b列表元素都初始化为1</span></span>
-<span class="line">        B = [<span class="number">1</span>] * len(A)</span>
-<span class="line">        <span class="comment"># 遍历a</span></span>
-<span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(A)):</span>
-<span class="line">            <span class="comment"># 遍历b</span></span>
-<span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> range(len(B)):</span>
-<span class="line">                <span class="comment"># 如果i不等于j</span></span>
-<span class="line">                <span class="keyword">if</span> i != j:</span>
-<span class="line">                    B[i] *= A[j]</span>
-<span class="line">        <span class="keyword">return</span> B</span>
-</pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">multiply</span><span class="params">(self, A)</span>:</span></span><br><span class="line">        <span class="comment"># 将b列表元素都初始化为1</span></span><br><span class="line">        B = [<span class="number">1</span>] * len(A)</span><br><span class="line">        <span class="comment"># 遍历a</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(A)):</span><br><span class="line">            <span class="comment"># 遍历b</span></span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> range(len(B)):</span><br><span class="line">                <span class="comment"># 如果i不等于j</span></span><br><span class="line">                <span class="keyword">if</span> i != j:</span><br><span class="line">                    B[i] *= A[j]</span><br><span class="line">        <span class="keyword">return</span> B</span><br></pre></td></tr></table></figure>
 <h2 id="正则表达式匹配"><a href="#正则表达式匹配" class="headerlink" title="正则表达式匹配"></a>正则表达式匹配</h2><h3 id="题目描述-22"><a href="#题目描述-22" class="headerlink" title="题目描述"></a>题目描述</h3><p>请实现一个函数用来匹配包括’.’和’<em>‘的正则表达式。模式中的字符’.’表示任意一个字符，而’</em>‘表示它前面的字符可以出现任意次（包含0次）。 在本题中，匹配是指字符串的所有字符匹配整个模式。例如，字符串”aaa”与模式”a.a”和”ab<em>ac</em>a”匹配，但是与”aa.a”和”ab*a”均不匹配</p>
 <h3 id="分析-22"><a href="#分析-22" class="headerlink" title="分析"></a>分析</h3><p>首先也是判断边界条件，当模式或者字符串为空的情况。</p>
 <p>然后依次判断每个字符，判断模式串第二个字符是否为*,然后只需判断第一个模式串是否为.或者与字符相等，当满足条件时，递归判断从第二个开始的字符串。</p>
 <p>如果模式串第二个字符串不为*时，则递归判断第三个开始的字符串</p>
 <p>同时还需要判断只匹配一个字符的情况</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
-<span class="line">    <span class="comment"># s, pattern都是字符串</span></span>
-<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">match</span><span class="params">(self, s, pattern)</span>:</span></span>
-<span class="line">        <span class="keyword">if</span> len(s) == <span class="number">0</span> <span class="keyword">and</span> len(pattern) == <span class="number">0</span>:  <span class="comment"># 若均为空，返回true</span></span>
-<span class="line">            <span class="keyword">return</span> <span class="keyword">True</span></span>
-<span class="line">        <span class="keyword">if</span> len(s) &gt; <span class="number">0</span> <span class="keyword">and</span> len(pattern) == <span class="number">0</span>:  <span class="comment"># 若模式串为空，而字符串不为空，返回False</span></span>
-<span class="line">            <span class="keyword">return</span> <span class="keyword">False</span></span>
-<span class="line">        <span class="keyword">if</span> len(pattern) &gt; <span class="number">1</span> <span class="keyword">and</span> pattern[<span class="number">1</span>] == <span class="string">'*'</span>:  <span class="comment"># 若模式串的第二个字符为*</span></span>
-<span class="line">            <span class="keyword">if</span> len(s) &gt; <span class="number">0</span> <span class="keyword">and</span> (s[<span class="number">0</span>] == pattern[<span class="number">0</span>] <span class="keyword">or</span> pattern[<span class="number">0</span>] == <span class="string">'.'</span>):  <span class="comment"># 若s不为0，且第一个字符匹配</span></span>
-<span class="line">                <span class="keyword">return</span> self.match(s[<span class="number">1</span>:], pattern) <span class="keyword">or</span> self.match(s, pattern[<span class="number">2</span>:]) <span class="keyword">or</span> self.match(s[<span class="number">1</span>:], pattern[<span class="number">2</span>:])</span>
-<span class="line">            <span class="comment"># 有三种情况：**表示模式串的第一个字符个数为2即重复了；*表示模式串的第一个字符个数为0；*表示模式串的第一个字符个数为1</span></span>
-<span class="line">            <span class="keyword">else</span>:  <span class="comment"># s的长度为0时，看模式串后面是否还有未匹配的项</span></span>
-<span class="line">                <span class="keyword">return</span> self.match(s, pattern[<span class="number">2</span>:])</span>
-<span class="line">        <span class="keyword">if</span> len(s) &gt; <span class="number">0</span> <span class="keyword">and</span> (pattern[<span class="number">0</span>] == <span class="string">'.'</span> <span class="keyword">or</span> pattern[<span class="number">0</span>] == s[<span class="number">0</span>]):  <span class="comment"># 只匹配一个字符的情况</span></span>
-<span class="line">            <span class="keyword">return</span> self.match(s[<span class="number">1</span>:], pattern[<span class="number">1</span>:])  <span class="comment"># 继续匹配该字符之后的字符串</span></span>
-</pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="comment"># s, pattern都是字符串</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">match</span><span class="params">(self, s, pattern)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> len(s) == <span class="number">0</span> <span class="keyword">and</span> len(pattern) == <span class="number">0</span>:  <span class="comment"># 若均为空，返回true</span></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line">        <span class="keyword">if</span> len(s) &gt; <span class="number">0</span> <span class="keyword">and</span> len(pattern) == <span class="number">0</span>:  <span class="comment"># 若模式串为空，而字符串不为空，返回False</span></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line">        <span class="keyword">if</span> len(pattern) &gt; <span class="number">1</span> <span class="keyword">and</span> pattern[<span class="number">1</span>] == <span class="string">'*'</span>:  <span class="comment"># 若模式串的第二个字符为*</span></span><br><span class="line">            <span class="keyword">if</span> len(s) &gt; <span class="number">0</span> <span class="keyword">and</span> (s[<span class="number">0</span>] == pattern[<span class="number">0</span>] <span class="keyword">or</span> pattern[<span class="number">0</span>] == <span class="string">'.'</span>):  <span class="comment"># 若s不为0，且第一个字符匹配</span></span><br><span class="line">                <span class="keyword">return</span> self.match(s[<span class="number">1</span>:], pattern) <span class="keyword">or</span> self.match(s, pattern[<span class="number">2</span>:]) <span class="keyword">or</span> self.match(s[<span class="number">1</span>:], pattern[<span class="number">2</span>:])</span><br><span class="line">            <span class="comment"># 有三种情况：**表示模式串的第一个字符个数为2即重复了；*表示模式串的第一个字符个数为0；*表示模式串的第一个字符个数为1</span></span><br><span class="line">            <span class="keyword">else</span>:  <span class="comment"># s的长度为0时，看模式串后面是否还有未匹配的项</span></span><br><span class="line">                <span class="keyword">return</span> self.match(s, pattern[<span class="number">2</span>:])</span><br><span class="line">        <span class="keyword">if</span> len(s) &gt; <span class="number">0</span> <span class="keyword">and</span> (pattern[<span class="number">0</span>] == <span class="string">'.'</span> <span class="keyword">or</span> pattern[<span class="number">0</span>] == s[<span class="number">0</span>]):  <span class="comment"># 只匹配一个字符的情况</span></span><br><span class="line">            <span class="keyword">return</span> self.match(s[<span class="number">1</span>:], pattern[<span class="number">1</span>:])  <span class="comment"># 继续匹配该字符之后的字符串</span></span><br></pre></td></tr></table></figure>
 <h2 id="表示数值的字符串"><a href="#表示数值的字符串" class="headerlink" title="表示数值的字符串"></a>表示数值的字符串</h2><h3 id="题目描述-23"><a href="#题目描述-23" class="headerlink" title="题目描述"></a>题目描述</h3><p>请实现一个函数用来判断字符串是否表示数值（包括整数和小数）。例如，字符串”+100”,”5e2”,”-123”,”3.1416”和”-1E-16”都表示数值。 但是”12e”,”1a3.14”,”1.2.3”,”+-5”和”12e+4.3”都不是。</p>
 <h3 id="分析-23"><a href="#分析-23" class="headerlink" title="分析"></a>分析</h3><p>使用float函数转为数字，当转换失败抛出异常时，返回false</p>
 <p>或者使用正则表达式去判断</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
-<span class="line">    <span class="comment"># s字符串</span></span>
-<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">isNumeric</span><span class="params">(self, s)</span>:</span></span>
-<span class="line">        <span class="comment"># write code here</span></span>
-<span class="line">        <span class="keyword">try</span>:</span>
-<span class="line">            a = float(s)</span>
-<span class="line">            <span class="keyword">return</span> <span class="keyword">True</span></span>
-<span class="line">        <span class="keyword">except</span>:</span>
-<span class="line">            <span class="keyword">return</span> <span class="keyword">False</span></span>
-</pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="comment"># s字符串</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">isNumeric</span><span class="params">(self, s)</span>:</span></span><br><span class="line">        <span class="comment"># write code here</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            a = float(s)</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">False</span></span><br></pre></td></tr></table></figure>
 <h2 id="字符流中第一个不重复的字符"><a href="#字符流中第一个不重复的字符" class="headerlink" title="字符流中第一个不重复的字符"></a>字符流中第一个不重复的字符</h2><h3 id="题目描述-24"><a href="#题目描述-24" class="headerlink" title="题目描述"></a>题目描述</h3><p>请实现一个函数用来找出字符流中第一个只出现一次的字符。例如，当从字符流中只读出前两个字符”go”时，第一个只出现一次的字符是”g”。当从该字符流中读出前六个字符“google”时，第一个只出现一次的字符是”l”。</p>
 <p>输出描述:<br>如果当前字符流没有存在出现一次的字符，返回#字符。</p>
 <h3 id="分析-24"><a href="#分析-24" class="headerlink" title="分析"></a>分析</h3><p>使用字符串和一个字典去保存字符出现的次数(字符为键，次数为值)遍历字符串，判断字典中是否含有键为字符的元素，如果有，值为1时，返回即可。否则返回‘#’</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-<span class="line">17</span>
-<span class="line">18</span>
-<span class="line">19</span>
-<span class="line">20</span>
-<span class="line">21</span>
-<span class="line">22</span>
-<span class="line">23</span>
-<span class="line">24</span>
-<span class="line">25</span>
-<span class="line">26</span>
-<span class="line">27</span>
-</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
-<span class="line">    <span class="comment"># 返回对应char</span></span>
-<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span>
-<span class="line">        <span class="string">"""</span>
-<span class="line">        使用一个字符串和一个字典保存字符串出现的次数</span>
-<span class="line">        """</span></span>
-<span class="line">        self.s = <span class="string">''</span></span>
-<span class="line">        self.dict1 = &#123;&#125;</span>
-<span class="line"></span>
-<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">FirstAppearingOnce</span><span class="params">(self)</span>:</span></span>
-<span class="line">        <span class="comment"># write code here</span></span>
-<span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> self.s:</span>
-<span class="line">            <span class="comment"># 如果键值对的值为1(出现的次数为1)</span></span>
-<span class="line">            <span class="keyword">if</span> self.dict1[i] == <span class="number">1</span>:</span>
-<span class="line">                <span class="keyword">return</span> i</span>
-<span class="line">        <span class="keyword">return</span> <span class="string">'#'</span></span>
-<span class="line"></span>
-<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">Insert</span><span class="params">(self, char)</span>:</span></span>
-<span class="line">        <span class="comment"># 每次将字符串加上新字符</span></span>
-<span class="line">        self.s = self.s + char</span>
-<span class="line">        <span class="comment"># 判断当前字符是否是字典中的键</span></span>
-<span class="line">        <span class="keyword">if</span> char <span class="keyword">in</span> self.dict1:</span>
-<span class="line">            <span class="comment"># 将对应的键值+1</span></span>
-<span class="line">            self.dict1[char] = self.dict1[char] + <span class="number">1</span></span>
-<span class="line">        <span class="keyword">else</span>:</span>
-<span class="line">            <span class="comment"># 不存在即直接赋值为1</span></span>
-<span class="line">            self.dict1[char] = <span class="number">1</span></span>
-</pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="comment"># 返回对应char</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        使用一个字符串和一个字典保存字符串出现的次数</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        self.s = <span class="string">''</span></span><br><span class="line">        self.dict1 = &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">FirstAppearingOnce</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="comment"># write code here</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> self.s:</span><br><span class="line">            <span class="comment"># 如果键值对的值为1(出现的次数为1)</span></span><br><span class="line">            <span class="keyword">if</span> self.dict1[i] == <span class="number">1</span>:</span><br><span class="line">                <span class="keyword">return</span> i</span><br><span class="line">        <span class="keyword">return</span> <span class="string">'#'</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">Insert</span><span class="params">(self, char)</span>:</span></span><br><span class="line">        <span class="comment"># 每次将字符串加上新字符</span></span><br><span class="line">        self.s = self.s + char</span><br><span class="line">        <span class="comment"># 判断当前字符是否是字典中的键</span></span><br><span class="line">        <span class="keyword">if</span> char <span class="keyword">in</span> self.dict1:</span><br><span class="line">            <span class="comment"># 将对应的键值+1</span></span><br><span class="line">            self.dict1[char] = self.dict1[char] + <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="comment"># 不存在即直接赋值为1</span></span><br><span class="line">            self.dict1[char] = <span class="number">1</span></span><br></pre></td></tr></table></figure>
 <h2 id="链表中环的入口结点"><a href="#链表中环的入口结点" class="headerlink" title="链表中环的入口结点"></a>链表中环的入口结点</h2><h3 id="题目描述-25"><a href="#题目描述-25" class="headerlink" title="题目描述"></a>题目描述</h3><p>一个链表中包含环，请找出该链表的环的入口结点。</p>
 <h3 id="分析-25"><a href="#分析-25" class="headerlink" title="分析"></a>分析</h3><p>使用一个列表保存遍历过的节点，遍历单链表判断是否在列表中。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span>
-<span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">EntryNodeOfLoop</span><span class="params">(self, pHead)</span>:</span></span>
-<span class="line">        <span class="comment"># 遍历链表，环的存在，遍历遇见的第一个重复的即为入口节点</span></span>
-<span class="line">        tempList = []</span>
-<span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> pHead <span class="keyword">or</span> <span class="keyword">not</span> pHead.next:</span>
-<span class="line">            <span class="keyword">return</span> <span class="keyword">None</span></span>
-<span class="line">        node = pHead</span>
-<span class="line">        <span class="keyword">while</span> node:</span>
-<span class="line">            <span class="keyword">if</span> node <span class="keyword">in</span> tempList:</span>
-<span class="line">                <span class="keyword">return</span> node</span>
-<span class="line">            <span class="keyword">else</span>:</span>
-<span class="line">                tempList.append(node)</span>
-<span class="line">            node = node.next</span>
-</pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">EntryNodeOfLoop</span><span class="params">(self, pHead)</span>:</span></span><br><span class="line">        <span class="comment"># 遍历链表，环的存在，遍历遇见的第一个重复的即为入口节点</span></span><br><span class="line">        tempList = []</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> pHead <span class="keyword">or</span> <span class="keyword">not</span> pHead.next:</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">None</span></span><br><span class="line">        node = pHead</span><br><span class="line">        <span class="keyword">while</span> node:</span><br><span class="line">            <span class="keyword">if</span> node <span class="keyword">in</span> tempList:</span><br><span class="line">                <span class="keyword">return</span> node</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                tempList.append(node)</span><br><span class="line">            node = node.next</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -1383,7 +562,7 @@
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/07/25/java面试要点汇总(分布式和微服务)/">java面试知识要点汇总(分布式和微服务)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/23/java面试要点汇总(框架)/">java面试知识要点汇总(框架)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/22/java面试要点汇总(缓存和消息队列)/">java面试知识要点汇总(缓存和消息队列)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/19/java面试要点汇总(web)/">java面试知识要点汇总(web部分)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/15/java面试要点汇总(线程和锁)/">java面试知识要点汇总(线程和锁)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/java面试要点汇总(基础和集合部分)/">java面试知识要点汇总(基础和集合)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/23/hbase-study/">hbase 学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/30/算法图解-study/">算法图解书中算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/27/newcoder-2017校招-1/">牛客网2017年校招真题-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/26/sql_inner_left_right_join/">sql中的inner join left join 和right join各种连接的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/21/newcoder-剑指offer-3/">牛客网剑指offer-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/06/java8-features/">java8新特性总结备忘</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/05/java-generic/">java泛型总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/05/java-refect/">java反射总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/02/newcoder-剑指offer-2/">牛客网剑指offer-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/17/newcoder-剑指offer-1/">牛客网剑指offer-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/17/MongDB-study-4/">MongoDB权威指南学习笔记(4)--应用管理和服务器管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/15/MongDB-study-3/">MongoDB权威指南学习笔记(3)--复制和分片</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/13/MongDB-study-2/">MongoDB权威指南学习笔记(2)--设计应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/11/MongDB-study-1/">MongoDB权威指南学习笔记(1)--基础知识与对文档的增删改查</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/10/manjaro安装软件脚本/">manjaro系统相关脚本和配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/04/高性能MySQL-study/">高性能MySQL学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/01/httpclientutil/">HttpClient工具类</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/14/qiniu-oss/">spring boot使用七牛云的oss(对象存储)文件上传</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/requestHolder_and_argumentResolver/">使用ThreadLocal和ArgumentResolver方便开发</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/applicationContextHelper/">在不被spring容器管理的类中使用ApplicationContext应用上下文bean</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_static_class_autowrite/">Spring boot 在静态类中注入spring组件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_diy_properties/">Spring boot 自定义配置文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/12/Elasticsearch_study_1/">Elasticsearch学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/09/深入理解java虚拟机学习笔记_1/">深入理解java虚拟机学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/23/Docker_study_Dockerfile_instructions/">Docker学习笔记---Dockerfile</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/22/Docker_study/">Docker学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/20/celery_study/">Celery-分布式任务队列学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_redis_cache/">Django使用redis作为缓存系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_channels_websocket/">Django使用Channels实现websocket</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/13/Docker_Gogs/">使用Docker搭建git服务Gogs</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_21to_40/">LeetCode刷题记录(easy难度21-40题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_1to20/">LeetCode刷题记录(easy难度1-20题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/29/es6_study/">es6学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/Webpack_study/">Webpack学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/RegularExpression_study/">正则表达式学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/08/AndroidStudio/">Android Studio 使用本地离线Gradle</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/跨域请求解决方案/">跨域请求的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_nginx_gunicorn/">django+nginx+gunicorn部署配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/ubuntu_supervisor/">ubuntu下的进程控制系统————Supervisor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/28/ubuntu修复不能挂载NTFS硬盘/">ubuntu修复linux和windows双系统下挂载ntfs硬盘出错问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/17/django_timing_task/">django使用django-crontab实现定时任务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/15/django_rest_framework_jwt/">django-rest-framework配置json web token进行接口的认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/django_rest_framework_study/">django-rest-framework框架学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/spring_SpEL/">spring中的SpEL表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/08/git_study/">Git学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/03/资源收集/">资源收集共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/06/ubuntu_open_port/">ubuntu开放指定端口</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/16/redis_study_2/">Redis学习笔记 -- 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/15/redis_study_1/">Redis学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/16/ubuntu_do_something_use/">ubuntu日常使用的安装配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/django_address_baiduapi_marker_show/">Django调用百度地图api在地图上批量增加标记点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/ubuntu_do_something_coding/">ubuntu搭建常见开发环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/10/ubuntu安装在双系统笔记本下开机或关机卡死.1/">ubuntu在双系统下开机卡死或关机卡死的解决办法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/11/python_requirements/">python生成项目所需依赖文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/10/hexo_github_coding_blog/">利用hexo和github或coding 搭免费个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django数据库操作/">Django操作数据库</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django连接mysql数据库/">Django连接MySql使用models处理数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django环境搭建/">Django环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django渲染模板/">Django渲染模板</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django常用语句/">Django常用语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/python2和Python3的区别/">Python2和Python3的区别简单总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/03/Android_qq_Menu/">Android仿qq侧滑菜单</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/16/C语言队列的基本操作/">C语言队列的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/c语言中缀表达式变后缀表达式/">C语言中缀表达式转后缀表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言共享栈/">C语言共享栈</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言逆波兰计算器/">C语言逆波兰表达式计算(后缀表达式计算器)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言二叉树基本操作/">C语言二叉树的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言中缀表达式计算器/">C语言中缀表达式计算器</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/08/09/spring-boot自定义starter/">Rspring-boot自定义starter</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/25/java面试要点汇总(分布式和微服务)/">java面试知识要点汇总(分布式和微服务)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/23/java面试要点汇总(框架)/">java面试知识要点汇总(框架)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/22/java面试要点汇总(缓存和消息队列)/">java面试知识要点汇总(缓存和消息队列)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/19/java面试要点汇总(web和数据库)/">java面试知识要点汇总(web和数据库)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/15/java面试要点汇总(线程和锁)/">java面试知识要点汇总(线程和锁)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/14/java面试要点汇总(基础和集合部分)/">java面试知识要点汇总(基础和集合)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/23/hbase-study/">hbase 学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/30/算法图解-study/">算法图解书中算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/27/newcoder-2017校招-1/">牛客网2017年校招真题-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/26/sql_inner_left_right_join/">sql中的inner join left join 和right join各种连接的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/21/newcoder-剑指offer-3/">牛客网剑指offer-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/06/java8-features/">java8新特性总结备忘</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/05/java-generic/">java泛型总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/05/java-refect/">java反射总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/02/newcoder-剑指offer-2/">牛客网剑指offer-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/17/newcoder-剑指offer-1/">牛客网剑指offer-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/17/MongDB-study-4/">MongoDB权威指南学习笔记(4)--应用管理和服务器管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/15/MongDB-study-3/">MongoDB权威指南学习笔记(3)--复制和分片</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/13/MongDB-study-2/">MongoDB权威指南学习笔记(2)--设计应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/11/MongDB-study-1/">MongoDB权威指南学习笔记(1)--基础知识与对文档的增删改查</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/10/manjaro安装软件脚本/">manjaro系统相关脚本和配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/04/高性能MySQL-study/">高性能MySQL学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/01/httpclientutil/">HttpClient工具类</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/14/qiniu-oss/">spring boot使用七牛云的oss(对象存储)文件上传</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/requestHolder_and_argumentResolver/">使用ThreadLocal和ArgumentResolver方便开发</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/13/applicationContextHelper/">在不被spring容器管理的类中使用ApplicationContext应用上下文bean</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_static_class_autowrite/">Spring boot 在静态类中注入spring组件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/springboot_diy_properties/">Spring boot 自定义配置文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/12/Elasticsearch_study_1/">Elasticsearch学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/09/深入理解java虚拟机学习笔记_1/">深入理解java虚拟机学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/23/Docker_study_Dockerfile_instructions/">Docker学习笔记---Dockerfile</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/22/Docker_study/">Docker学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/20/celery_study/">Celery-分布式任务队列学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_redis_cache/">Django使用redis作为缓存系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/18/django_channels_websocket/">Django使用Channels实现websocket</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/13/Docker_Gogs/">使用Docker搭建git服务Gogs</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_1to20/">LeetCode刷题记录(easy难度1-20题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/06/LeetCode_Record_Easy_21to_40/">LeetCode刷题记录(easy难度21-40题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/29/es6_study/">es6学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/27/Webpack_study/">Webpack学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/23/RegularExpression_study/">正则表达式学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/08/AndroidStudio/">Android Studio 使用本地离线Gradle</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/跨域请求解决方案/">跨域请求的解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/ubuntu_supervisor/">ubuntu下的进程控制系统————Supervisor</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/django_nginx_gunicorn/">django+nginx+gunicorn部署配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/28/ubuntu修复不能挂载NTFS硬盘/">ubuntu修复linux和windows双系统下挂载ntfs硬盘出错问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/17/django_timing_task/">django使用django-crontab实现定时任务</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/15/django_rest_framework_jwt/">django-rest-framework配置json web token进行接口的认证</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/spring_SpEL/">spring中的SpEL表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/12/django_rest_framework_study/">django-rest-framework框架学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/08/git_study/">Git学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/03/资源收集/">资源收集共享</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/06/ubuntu_open_port/">ubuntu开放指定端口</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/16/redis_study_2/">Redis学习笔记 -- 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/15/redis_study_1/">Redis学习笔记 -- 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/16/ubuntu_do_something_use/">ubuntu日常使用的安装配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/ubuntu_do_something_coding/">ubuntu搭建常见开发环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/15/django_address_baiduapi_marker_show/">Django调用百度地图api在地图上批量增加标记点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/10/ubuntu安装在双系统笔记本下开机或关机卡死.1/">ubuntu在双系统下开机卡死或关机卡死的解决办法</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/11/python_requirements/">python生成项目所需依赖文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/10/hexo_github_coding_blog/">利用hexo和github或coding 搭免费个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django数据库操作/">Django操作数据库</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django环境搭建/">Django环境搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django连接mysql数据库/">Django连接MySql使用models处理数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/python2和Python3的区别/">Python2和Python3的区别简单总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django常用语句/">Django常用语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/15/django渲染模板/">Django渲染模板</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/03/Android_qq_Menu/">Android仿qq侧滑菜单</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/16/C语言队列的基本操作/">C语言队列的基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言中缀表达式计算器/">C语言中缀表达式计算器</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/c语言中缀表达式变后缀表达式/">C语言中缀表达式转后缀表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言逆波兰计算器/">C语言逆波兰表达式计算(后缀表达式计算器)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言共享栈/">C语言共享栈</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/15/C语言二叉树基本操作/">C语言二叉树的基本操作</a></li></ul>
 
 
 
