@@ -303,6 +303,86 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-ubuntu_do_something_coding" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/03/15/ubuntu_do_something_coding/" class="article-date">
+      <time datetime="2017-03-15T06:40:00.000Z" itemprop="datePublished">2017-03-15</time>
+</a>
+
+ 
+    <a href="/2017/03/15/ubuntu_do_something_coding/#comments" title="查看评论">
+        <i class="fa fa-comments-o" aria-hidden="true"></i>
+        <span class="count-comment"></span>
+        
+        
+            <span class="disqus-comment-count" data-disqus-identifier="2017/03/15/ubuntu_do_something_coding/"></span>
+        
+    </a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/15/ubuntu_do_something_coding/">ubuntu搭建常见开发环境</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>由于之前使用Ubuntu16.10桌面版系统蹦了好几天，因此我也装了好几次系统了，每次都要百度或google查很多东西，去配置开发环境或使用环境，到处搜觉得很麻烦，所以，本文就总结一下Ubuntu安装好之后需要做的一些事，以及常规配置习惯</p>
+<p>在装了几次系统之后我最后还是决定降一个系统版本。。使用<strong>Ubuntu16.04lts</strong>长期维护版，希望能稳定一些吧。。。。。实在是有点伤了</p>
+<p>文本以Ubuntu16.04桌面版为环境介绍</p>
+<h2 id="常用编程环境搭建"><a href="#常用编程环境搭建" class="headerlink" title="常用编程环境搭建"></a>常用编程环境搭建</h2>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/开发/">开发</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2017/03/15/ubuntu_do_something_coding/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-ubuntu安装在双系统笔记本下开机或关机卡死.1" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -546,20 +626,20 @@
 
 
   
-    <article id="post-django环境搭建" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-django数据库操作" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/08/15/django环境搭建/" class="article-date">
+      <a href="/2016/08/15/django数据库操作/" class="article-date">
       <time datetime="2016-08-15T06:40:00.000Z" itemprop="datePublished">2016-08-15</time>
 </a>
 
  
-    <a href="/2016/08/15/django环境搭建/#comments" title="查看评论">
+    <a href="/2016/08/15/django数据库操作/#comments" title="查看评论">
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
         
-            <span class="disqus-comment-count" data-disqus-identifier="2016/08/15/django环境搭建/"></span>
+            <span class="disqus-comment-count" data-disqus-identifier="2016/08/15/django数据库操作/"></span>
         
     </a>
 
@@ -574,7 +654,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/08/15/django环境搭建/">Django环境搭建</a>
+      <a class="article-title" href="/2016/08/15/django数据库操作/">Django操作数据库</a>
     </h1>
   
 
@@ -584,17 +664,8 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <p>大家搜索django并看到本文的时候，相信已经知道django是用来干嘛的了，我也就不在多说废话了。django是一个新一代的web框架基于Python，它可以让你专注于内部逻辑而不用考虑许多外部因素也能很容易的调用本地静态文件。。 Web框架为应用程序提供了一套程序框架， 这样你可以专注于编写清晰、易维护的代码，而无需从头做起。 简单来说，这就是Django所能做的。django自带后台和登录系统，还有很多模板，降低耦合度，当你能理解django的精髓的时候你就会觉得开发一个网站是如此简单。</p>
-<blockquote>
-<p>学习django，我们首先要有有一些基础知识</p>
-<ul>
-<li>html</li>
-<li>css</li>
-<li>jss</li>
-<li>python</li>
-<li>mysql(或者其他数据库，django自带SQLite)</li>
-</ul>
-</blockquote>
+              <p>本篇主要介绍我们在使用django框架开发的时候使用的操作数据库的语句，这在动态网站部分是很重要的，因为我们需要连接数据库进行操作，然后把数据处理的结果显示在前端页面上，在其他地方我们都是直接用sql语句来手动输入，这样容易造成错误，还影响效率，在django中，内置了很多处理数据库操作的函数，能更便利的帮我们操作数据库</p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="实例代码"><a href="#实例代码" class="headerlink" title="实例代码"></a>实例代码</h3><p><strong>models.py</strong><br>
           
       
     </div>
@@ -614,89 +685,7 @@
 
       
         <p class="article-more-link">
-          <a href="/2016/08/15/django环境搭建/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-django常用语句" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/08/15/django常用语句/" class="article-date">
-      <time datetime="2016-08-15T06:40:00.000Z" itemprop="datePublished">2016-08-15</time>
-</a>
-
- 
-    <a href="/2016/08/15/django常用语句/#comments" title="查看评论">
-        <i class="fa fa-comments-o" aria-hidden="true"></i>
-        <span class="count-comment"></span>
-        
-        
-            <span class="disqus-comment-count" data-disqus-identifier="2016/08/15/django常用语句/"></span>
-        
-    </a>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/08/15/django常用语句/">Django常用语句</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>本篇主要介绍我们在使用django框架开发的时候使用的常用语句，为了增加开发效率，建议将这些语句记住并多多练习，</p>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="新建工程"><a href="#新建工程" class="headerlink" title="新建工程"></a>新建工程</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">django-admin startproject project-name</span><br></pre></td></tr></table></figure>
-<p>这是一个django开发的开始，当然也可以用pycharm这个ide创建工程，这个东西还是看个人习惯了。但最好还是记住，</p>
-<ul>
-<li>project-name —— 项目名称(需要符合Python 的变量命名规则（以下划线或字母开头))</li>
-<li>有些版本的django可能是django-admin.py(根据个人需求选择)
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/学习笔记/">学习笔记</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django/">Django</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2016/08/15/django常用语句/#more">more >></a>
+          <a href="/2016/08/15/django数据库操作/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -793,6 +782,93 @@
 
 
   
+    <article id="post-django环境搭建" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/08/15/django环境搭建/" class="article-date">
+      <time datetime="2016-08-15T06:40:00.000Z" itemprop="datePublished">2016-08-15</time>
+</a>
+
+ 
+    <a href="/2016/08/15/django环境搭建/#comments" title="查看评论">
+        <i class="fa fa-comments-o" aria-hidden="true"></i>
+        <span class="count-comment"></span>
+        
+        
+            <span class="disqus-comment-count" data-disqus-identifier="2016/08/15/django环境搭建/"></span>
+        
+    </a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/08/15/django环境搭建/">Django环境搭建</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>大家搜索django并看到本文的时候，相信已经知道django是用来干嘛的了，我也就不在多说废话了。django是一个新一代的web框架基于Python，它可以让你专注于内部逻辑而不用考虑许多外部因素也能很容易的调用本地静态文件。。 Web框架为应用程序提供了一套程序框架， 这样你可以专注于编写清晰、易维护的代码，而无需从头做起。 简单来说，这就是Django所能做的。django自带后台和登录系统，还有很多模板，降低耦合度，当你能理解django的精髓的时候你就会觉得开发一个网站是如此简单。</p>
+<blockquote>
+<p>学习django，我们首先要有有一些基础知识</p>
+<ul>
+<li>html</li>
+<li>css</li>
+<li>jss</li>
+<li>python</li>
+<li>mysql(或者其他数据库，django自带SQLite)</li>
+</ul>
+</blockquote>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/开发/">开发</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django/">Django</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2016/08/15/django环境搭建/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-django渲染模板" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -853,84 +929,6 @@
       
         <p class="article-more-link">
           <a href="/2016/08/15/django渲染模板/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-django数据库操作" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/08/15/django数据库操作/" class="article-date">
-      <time datetime="2016-08-15T06:40:00.000Z" itemprop="datePublished">2016-08-15</time>
-</a>
-
- 
-    <a href="/2016/08/15/django数据库操作/#comments" title="查看评论">
-        <i class="fa fa-comments-o" aria-hidden="true"></i>
-        <span class="count-comment"></span>
-        
-        
-            <span class="disqus-comment-count" data-disqus-identifier="2016/08/15/django数据库操作/"></span>
-        
-    </a>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/08/15/django数据库操作/">Django操作数据库</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>本篇主要介绍我们在使用django框架开发的时候使用的操作数据库的语句，这在动态网站部分是很重要的，因为我们需要连接数据库进行操作，然后把数据处理的结果显示在前端页面上，在其他地方我们都是直接用sql语句来手动输入，这样容易造成错误，还影响效率，在django中，内置了很多处理数据库操作的函数，能更便利的帮我们操作数据库</p>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="实例代码"><a href="#实例代码" class="headerlink" title="实例代码"></a>实例代码</h3><p><strong>models.py</strong><br>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/开发/">开发</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django/">Django</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2016/08/15/django数据库操作/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -1026,20 +1024,20 @@
 
 
   
-    <article id="post-Android_qq_Menu" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-django常用语句" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/08/03/Android_qq_Menu/" class="article-date">
-      <time datetime="2016-08-03T08:40:00.000Z" itemprop="datePublished">2016-08-03</time>
+      <a href="/2016/08/15/django常用语句/" class="article-date">
+      <time datetime="2016-08-15T06:40:00.000Z" itemprop="datePublished">2016-08-15</time>
 </a>
 
  
-    <a href="/2016/08/03/Android_qq_Menu/#comments" title="查看评论">
+    <a href="/2016/08/15/django常用语句/#comments" title="查看评论">
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
         
-            <span class="disqus-comment-count" data-disqus-identifier="2016/08/03/Android_qq_Menu/"></span>
+            <span class="disqus-comment-count" data-disqus-identifier="2016/08/15/django常用语句/"></span>
         
     </a>
 
@@ -1054,7 +1052,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/08/03/Android_qq_Menu/">Android仿qq侧滑菜单</a>
+      <a class="article-title" href="/2016/08/15/django常用语句/">Django常用语句</a>
     </h1>
   
 
@@ -1064,8 +1062,12 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <p>我们经常能看到各种app中都有应用侧滑菜单（SlidingMenu）,效果很好的一种显示方式，今天我就向大家展示可以说是很简单就能实现和qq的侧滑菜单很相似的效果。现在侧滑菜单的框架在github上也有很多，有兴趣的可以去搜一下，今天我就给大家展示一个简单的仿qq侧滑菜单的例子。</p>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h3><p>我们可以自定义一个view，然后用一个水平滚动条HorizontalScrollView匹配父容器<br>原理如图:<img src="http://objects.earthchen.cn/qq_menu%E5%8E%9F%E7%90%86.png" alt="qq_menu原理"><br>要有这个HorizontalScrollView要有两倍屏幕的宽度，用这个Android自带的水平滚动条来实现左右滑动的效果。是不是很简单呢。原理就是这么简单。下面我将我的代码贴出来，大家可以参考，或修改。</p>
+              <p>本篇主要介绍我们在使用django框架开发的时候使用的常用语句，为了增加开发效率，建议将这些语句记住并多多练习，</p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="新建工程"><a href="#新建工程" class="headerlink" title="新建工程"></a>新建工程</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">django-admin startproject project-name</span><br></pre></td></tr></table></figure>
+<p>这是一个django开发的开始，当然也可以用pycharm这个ide创建工程，这个东西还是看个人习惯了。但最好还是记住，</p>
+<ul>
+<li>project-name —— 项目名称(需要符合Python 的变量命名规则（以下划线或字母开头))</li>
+<li>有些版本的django可能是django-admin.py(根据个人需求选择)
           
       
     </div>
@@ -1074,18 +1076,18 @@
       
       
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/开发/">开发</a>
+    <a class="article-category-link" href="/categories/学习笔记/">学习笔记</a>
     </div>
 
 
       
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django/">Django</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
     </div>
 
       
         <p class="article-more-link">
-          <a href="/2016/08/03/Android_qq_Menu/#more">more >></a>
+          <a href="/2016/08/15/django常用语句/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
