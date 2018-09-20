@@ -7610,66 +7610,6 @@
     </entry>
     
     <entry>
-      <title><![CDATA[Django渲染模板]]></title>
-      <url>/2016/08/15/django%E6%B8%B2%E6%9F%93%E6%A8%A1%E6%9D%BF/</url>
-      <content type="html"><![CDATA[<p>在页面上显示内容可以简单的用django.http.HttpResponse来显示我们需要的内容，但是当我们需要一些处理一些复杂的数据或者从数据库读出来的操作要显示在html标签内或者js代码中就需要用渲染模板的方法。</p>
-<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="创建工程"><a href="#创建工程" class="headerlink" title="创建工程"></a>创建工程</h3><p>首先，使用一下代码创建一个名为ymxz的工程(读者可以根据需要设置自己的工程名)：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">django-admin startproject ymxz</span><br></pre></td></tr></table></figure></p>
-<a id="more"></a>
-<ul>
-<li>当然你也可以用pycharm创建一个django工程</li>
-</ul>
-<h3 id="创建app"><a href="#创建app" class="headerlink" title="创建app"></a>创建app</h3><p>创建工程之后，cd到工程目录，创建一个名为myapp的应用<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py startapp myapp</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>上面操作完成后,我们的项目的目录结构如下:<br><img src="http://objects.earthchen.cn/django%E6%B8%B2%E6%9F%93%E6%A8%A1%E6%9D%BF%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%841.png" alt="渲染模板目录结构1"></li>
-</ul>
-<h3 id="创建模板"><a href="#创建模板" class="headerlink" title="创建模板"></a>创建模板</h3><p>在myapp目录下创建一个名为templates的目录，在这个目录下面创建一个网页，我这里叫index.html</p>
-<ul>
-<li>完成后，应如图所示:<br><img src="http://objects.earthchen.cn/django%E6%B8%B2%E6%9F%93%E6%A8%A1%E6%9D%BF%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%842.png" alt="渲染模板目录结构2"></li>
-<li>在index中写入我们需要显示的内容<br><img src="http://objects.earthchen.cn/%E6%B8%B2%E6%9F%93%E6%A8%A1%E6%9D%BFindex.png" alt="渲染模板index"></li>
-</ul>
-<h3 id="修改views-py"><a href="#修改views-py" class="headerlink" title="修改views.py"></a>修改views.py</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create your views here.</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span><span class="params">(request)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> render(request,<span class="string">'index.html'</span>)</span><br></pre></td></tr></table></figure>
-<h3 id="修改urls-py"><a href="#修改urls-py" class="headerlink" title="修改urls.py"></a>修改urls.py</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.conf.urls <span class="keyword">import</span> patterns, include, url</span><br><span class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> admin</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> myapp <span class="keyword">import</span> views</span><br><span class="line"></span><br><span class="line">urlpatterns = patterns(<span class="string">''</span>,</span><br><span class="line">                       <span class="comment"># Examples:</span></span><br><span class="line">                       <span class="comment"># url(r'^$', 'ymxz.views.home', name='home'),</span></span><br><span class="line">                       <span class="comment"># url(r'^blog/', include('blog.urls')),</span></span><br><span class="line"></span><br><span class="line">                       url(<span class="string">r'^admin/'</span>, include(admin.site.urls)),</span><br><span class="line">                       url(<span class="string">r'^index/'</span>, views.index),</span><br><span class="line">                       )</span><br></pre></td></tr></table></figure>
-<h3 id="修改settings-py"><a href="#修改settings-py" class="headerlink" title="修改settings.py"></a>修改settings.py</h3><p>修改INSTALLED_APPS这个字段添加我们的app–myapp<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">INSTALLED_APPS = (</span><br><span class="line">    <span class="string">'django.contrib.admin'</span>,</span><br><span class="line">    <span class="string">'django.contrib.auth'</span>,</span><br><span class="line">    <span class="string">'django.contrib.contenttypes'</span>,</span><br><span class="line">    <span class="string">'django.contrib.sessions'</span>,</span><br><span class="line">    <span class="string">'django.contrib.messages'</span>,</span><br><span class="line">    <span class="string">'django.contrib.staticfiles'</span>,</span><br><span class="line">    <span class="string">'myapp'</span>,</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
-<h3 id="打开调试服务器"><a href="#打开调试服务器" class="headerlink" title="打开调试服务器"></a>打开调试服务器</h3><p>在cmd中执行以下语句<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py runserver</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>在浏览器地址栏输入<a href="http://127.0.0.1:8000/index/" target="_blank" rel="noopener">http://127.0.0.1:8000/index/</a><br><img src="http://objects.earthchen.cn/django%E6%B8%B2%E6%9F%93%E6%A8%A1%E6%9D%BF%E7%BB%93%E6%9E%9C1.png" alt="django渲染模板结果"><br>如上图显示即为成功。</li>
-</ul>
-<h3 id="用模板语言从后台向前端传递数据"><a href="#用模板语言从后台向前端传递数据" class="headerlink" title="用模板语言从后台向前端传递数据"></a>用模板语言从后台向前端传递数据</h3><h4 id="打开views-py修改内容为"><a href="#打开views-py修改内容为" class="headerlink" title="打开views.py修改内容为:"></a>打开<strong>views.py</strong>修改内容为:</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create your views here.</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span><span class="params">(request)</span>:</span></span><br><span class="line">    str = <span class="string">'hello world django'</span></span><br><span class="line">    <span class="keyword">return</span> render(request, <span class="string">'index.html'</span>, &#123;<span class="string">'test'</span>: str&#125;)</span><br></pre></td></tr></table></figure>
-<ul>
-<li><strong>str</strong>可以是字符串，字典，列表，元组等数据，其他的请读者自行搜索django模板语言</li>
-</ul>
-<h4 id="修改index-html内容为"><a href="#修改index-html内容为" class="headerlink" title="修改index.html内容为:"></a>修改<strong>index.html</strong>内容为:</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">&#123;&#123; test &#125;&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><strong></strong> 是最简单的模板语言的一种,还可以做到循环遍历，判断等略微复杂一点的功能，请自行了解，本文将不做介绍。</li>
-<li>在浏览器地址栏输入<a href="http://127.0.0.1:8000/index/" target="_blank" rel="noopener">http://127.0.0.1:8000/index/</a><br><img src="http://objects.earthchen.cn/django%E6%B8%B2%E6%9F%93%E6%A8%A1%E6%9D%BF%E7%BB%93%E6%9E%9C2.png" alt="django渲染模板结果"><br>如上图显示即为成功。</li>
-</ul>
-<blockquote>
-<p>注：</p>
-<ul>
-<li>上述代码在<strong>django1.7</strong>和<strong>Python2.7</strong>中编译成功运行，其他环境请自行测试</li>
-<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
-</ul>
-</blockquote>
-]]></content>
-      
-        <categories>
-            
-            <category> 开发 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> Django </tag>
-            
-            <tag> Python </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[Django环境搭建]]></title>
       <url>/2016/08/15/django%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</url>
       <content type="html"><![CDATA[<p>大家搜索django并看到本文的时候，相信已经知道django是用来干嘛的了，我也就不在多说废话了。django是一个新一代的web框架基于Python，它可以让你专注于内部逻辑而不用考虑许多外部因素也能很容易的调用本地静态文件。。 Web框架为应用程序提供了一套程序框架， 这样你可以专注于编写清晰、易维护的代码，而无需从头做起。 简单来说，这就是Django所能做的。django自带后台和登录系统，还有很多模板，降低耦合度，当你能理解django的精髓的时候你就会觉得开发一个网站是如此简单。</p>
@@ -7713,6 +7653,66 @@
 <blockquote>
 <p>注：</p>
 <ul>
+<li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
+</ul>
+</blockquote>
+]]></content>
+      
+        <categories>
+            
+            <category> 开发 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Django </tag>
+            
+            <tag> Python </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Django渲染模板]]></title>
+      <url>/2016/08/15/django%E6%B8%B2%E6%9F%93%E6%A8%A1%E6%9D%BF/</url>
+      <content type="html"><![CDATA[<p>在页面上显示内容可以简单的用django.http.HttpResponse来显示我们需要的内容，但是当我们需要一些处理一些复杂的数据或者从数据库读出来的操作要显示在html标签内或者js代码中就需要用渲染模板的方法。</p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><h3 id="创建工程"><a href="#创建工程" class="headerlink" title="创建工程"></a>创建工程</h3><p>首先，使用一下代码创建一个名为ymxz的工程(读者可以根据需要设置自己的工程名)：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">django-admin startproject ymxz</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<ul>
+<li>当然你也可以用pycharm创建一个django工程</li>
+</ul>
+<h3 id="创建app"><a href="#创建app" class="headerlink" title="创建app"></a>创建app</h3><p>创建工程之后，cd到工程目录，创建一个名为myapp的应用<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py startapp myapp</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>上面操作完成后,我们的项目的目录结构如下:<br><img src="http://objects.earthchen.cn/django%E6%B8%B2%E6%9F%93%E6%A8%A1%E6%9D%BF%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%841.png" alt="渲染模板目录结构1"></li>
+</ul>
+<h3 id="创建模板"><a href="#创建模板" class="headerlink" title="创建模板"></a>创建模板</h3><p>在myapp目录下创建一个名为templates的目录，在这个目录下面创建一个网页，我这里叫index.html</p>
+<ul>
+<li>完成后，应如图所示:<br><img src="http://objects.earthchen.cn/django%E6%B8%B2%E6%9F%93%E6%A8%A1%E6%9D%BF%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%842.png" alt="渲染模板目录结构2"></li>
+<li>在index中写入我们需要显示的内容<br><img src="http://objects.earthchen.cn/%E6%B8%B2%E6%9F%93%E6%A8%A1%E6%9D%BFindex.png" alt="渲染模板index"></li>
+</ul>
+<h3 id="修改views-py"><a href="#修改views-py" class="headerlink" title="修改views.py"></a>修改views.py</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create your views here.</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span><span class="params">(request)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> render(request,<span class="string">'index.html'</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="修改urls-py"><a href="#修改urls-py" class="headerlink" title="修改urls.py"></a>修改urls.py</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.conf.urls <span class="keyword">import</span> patterns, include, url</span><br><span class="line"><span class="keyword">from</span> django.contrib <span class="keyword">import</span> admin</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> myapp <span class="keyword">import</span> views</span><br><span class="line"></span><br><span class="line">urlpatterns = patterns(<span class="string">''</span>,</span><br><span class="line">                       <span class="comment"># Examples:</span></span><br><span class="line">                       <span class="comment"># url(r'^$', 'ymxz.views.home', name='home'),</span></span><br><span class="line">                       <span class="comment"># url(r'^blog/', include('blog.urls')),</span></span><br><span class="line"></span><br><span class="line">                       url(<span class="string">r'^admin/'</span>, include(admin.site.urls)),</span><br><span class="line">                       url(<span class="string">r'^index/'</span>, views.index),</span><br><span class="line">                       )</span><br></pre></td></tr></table></figure>
+<h3 id="修改settings-py"><a href="#修改settings-py" class="headerlink" title="修改settings.py"></a>修改settings.py</h3><p>修改INSTALLED_APPS这个字段添加我们的app–myapp<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">INSTALLED_APPS = (</span><br><span class="line">    <span class="string">'django.contrib.admin'</span>,</span><br><span class="line">    <span class="string">'django.contrib.auth'</span>,</span><br><span class="line">    <span class="string">'django.contrib.contenttypes'</span>,</span><br><span class="line">    <span class="string">'django.contrib.sessions'</span>,</span><br><span class="line">    <span class="string">'django.contrib.messages'</span>,</span><br><span class="line">    <span class="string">'django.contrib.staticfiles'</span>,</span><br><span class="line">    <span class="string">'myapp'</span>,</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+<h3 id="打开调试服务器"><a href="#打开调试服务器" class="headerlink" title="打开调试服务器"></a>打开调试服务器</h3><p>在cmd中执行以下语句<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py runserver</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>在浏览器地址栏输入<a href="http://127.0.0.1:8000/index/" target="_blank" rel="noopener">http://127.0.0.1:8000/index/</a><br><img src="http://objects.earthchen.cn/django%E6%B8%B2%E6%9F%93%E6%A8%A1%E6%9D%BF%E7%BB%93%E6%9E%9C1.png" alt="django渲染模板结果"><br>如上图显示即为成功。</li>
+</ul>
+<h3 id="用模板语言从后台向前端传递数据"><a href="#用模板语言从后台向前端传递数据" class="headerlink" title="用模板语言从后台向前端传递数据"></a>用模板语言从后台向前端传递数据</h3><h4 id="打开views-py修改内容为"><a href="#打开views-py修改内容为" class="headerlink" title="打开views.py修改内容为:"></a>打开<strong>views.py</strong>修改内容为:</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create your views here.</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span><span class="params">(request)</span>:</span></span><br><span class="line">    str = <span class="string">'hello world django'</span></span><br><span class="line">    <span class="keyword">return</span> render(request, <span class="string">'index.html'</span>, &#123;<span class="string">'test'</span>: str&#125;)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>str</strong>可以是字符串，字典，列表，元组等数据，其他的请读者自行搜索django模板语言</li>
+</ul>
+<h4 id="修改index-html内容为"><a href="#修改index-html内容为" class="headerlink" title="修改index.html内容为:"></a>修改<strong>index.html</strong>内容为:</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">&#123;&#123; test &#125;&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong></strong> 是最简单的模板语言的一种,还可以做到循环遍历，判断等略微复杂一点的功能，请自行了解，本文将不做介绍。</li>
+<li>在浏览器地址栏输入<a href="http://127.0.0.1:8000/index/" target="_blank" rel="noopener">http://127.0.0.1:8000/index/</a><br><img src="http://objects.earthchen.cn/django%E6%B8%B2%E6%9F%93%E6%A8%A1%E6%9D%BF%E7%BB%93%E6%9E%9C2.png" alt="django渲染模板结果"><br>如上图显示即为成功。</li>
+</ul>
+<blockquote>
+<p>注：</p>
+<ul>
+<li>上述代码在<strong>django1.7</strong>和<strong>Python2.7</strong>中编译成功运行，其他环境请自行测试</li>
 <li>上述文字皆为个人看法，如有错误或建议请及时联系我</li>
 </ul>
 </blockquote>
