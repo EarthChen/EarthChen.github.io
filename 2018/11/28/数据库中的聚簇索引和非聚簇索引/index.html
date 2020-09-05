@@ -349,6 +349,8 @@
 <p> 在聚簇索引中，数据会被按照顺序整理排列，当使用where进行顺序、范围、大小检索时，会大大加速检索效率。非聚簇索引在存储时不会对数据进行排序，相对产生的数据文件体积也比较大。</p>
 <h2 id="非聚簇索引"><a href="#非聚簇索引" class="headerlink" title="非聚簇索引"></a>非聚簇索引</h2><p> 以myisam为例，一个数据表table中，它是有table.frm、table.myd以及table.myi组成。table.myd记录了数据，table.myi记录了索引的数据。在用到索引时，先到table.myi（索引树）中进行查找，取到数据所在table.myd的行位置，拿到数据。所以<strong>myisam引擎的索引文件和数据文件是独立分开的，则称之为非聚簇索引</strong></p>
 <p><strong>myisam类型的索引，指向数据在行的位置</strong>。即每个索引相对独立，查询用到索引时，索引指向数据的位置。</p>
+        
+        <p>我的博客即将同步至腾讯云+社区，邀请大家一同入驻：https://cloud.tencent.com/developer/support-plan?invite_code=3soawju8zagw4</p>
 
       
     </div>
