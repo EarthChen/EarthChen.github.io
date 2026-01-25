@@ -27,10 +27,6 @@
 - Tailwind CSS
 - pnpm
 
-## 博客备份
-
-原博客内容已备份至 `blog-backup` 分支。
-
 ## 开发
 
 ```bash
