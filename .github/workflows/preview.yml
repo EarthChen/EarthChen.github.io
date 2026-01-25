@@ -13,20 +13,34 @@ permissions:
   pull-requests: write
 
 jobs:
-  preview:
+  build-preview:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
       
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+      
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      
+      - name: Build
+        run: pnpm run build
+      
       - name: Upload preview artifact
         uses: actions/upload-artifact@v4
         with:
-          name: preview-${{ github.sha }}
-          path: |
-            index.html
-            img/
-            background/
+          name: preview-build-${{ github.sha }}
+          path: ./dist
           retention-days: 7
       
       - name: Comment PR with preview info
@@ -39,5 +53,5 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `## 🚀 预览构建完成\n\n静态文件已上传，可在 [Actions Run](${runUrl}) 中下载 artifact 查看。\n\n**Commit:** \`${context.sha.substring(0, 7)}\`\n**分支:** \`${context.payload.pull_request.head.ref}\``
+              body: `## 🚀 预览构建完成\n\n构建产物已上传，可在 [Actions Run](${runUrl}) 中下载 artifact 查看。\n\n**Commit:** \`${context.sha.substring(0, 7)}\`\n**分支:** \`${context.payload.pull_request.head.ref}\``
             });

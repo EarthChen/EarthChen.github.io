@@ -22,9 +22,10 @@
 
 ## 技术栈
 
-- HTML5
-- Tailwind CSS (CDN)
-- Vanilla JavaScript
+- React 18
+- Vite
+- Tailwind CSS
+- pnpm
 
 ## 博客备份
 
@@ -32,7 +33,21 @@
 
 ## 开发
 
-直接编辑 `index.html` 文件，推送后 GitHub Pages 会自动部署。
+```bash
+# 安装依赖
+pnpm install
+
+# 启动开发服务器
+pnpm dev
+
+# 构建生产版本
+pnpm build
+
+# 预览构建结果
+pnpm preview
+```
+
+推送到 master 分支后 GitHub Actions 会自动构建并部署到 GitHub Pages。
 
 ## License
 
