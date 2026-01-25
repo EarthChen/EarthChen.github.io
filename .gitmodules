@@ -1,0 +1,6 @@
+[submodule "photo-tools"]
+	path = photo-tools
+	url = git@github.com:EarthChen/photo-tools.git
+[submodule "pdf2png"]
+	path = pdf2png
+	url = git@github.com:EarthChen/pdf2png.git

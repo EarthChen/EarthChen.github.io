@@ -11,6 +11,7 @@
 | 工具 | 描述 | 地址 |
 |------|------|------|
 | 证件照处理工具 | 智能抠图、背景替换、尺寸调整、体积压缩 | [/photo-tools/](https://earthchen.github.io/photo-tools/) |
+| PDF 转 PNG | 将 PDF 文档转换为高质量 PNG 图片（Python 命令行工具） | [GitHub](https://github.com/EarthChen/pdf2png) |
 
 ## 功能特性
 
