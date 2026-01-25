@@ -34,3 +34,7 @@ build/
 .env
 .env.local
 .env.*.local
+
+# 工作状态文件（不提交）
+plan.md
+.docs/
