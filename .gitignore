@@ -37,4 +37,4 @@ build/
 
 # 工作状态文件（不提交）
 plan.md
-.docs/
+.docs/PROPOSALS/
