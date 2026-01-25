@@ -19,13 +19,13 @@ const tools = [
   {
     id: 'pdf2png',
     title: 'PDF 转 PNG',
-    description: '将 PDF 文档转换为高质量 PNG 图片，Python 命令行工具',
-    href: 'https://github.com/EarthChen/pdf2png',
+    description: '免费在线将 PDF 文档转换为高质量 PNG 图片，支持批量下载',
+    href: '/pdf2png/',
     icon: 'document',
     gradient: 'from-red-500 to-orange-600',
-    linkText: '查看源码',
+    linkText: '立即使用',
     linkColor: 'text-orange-300',
-    external: true,
+    external: false,
   },
 ]
 
