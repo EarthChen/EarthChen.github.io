@@ -27,6 +27,17 @@ const tools = [
     linkColor: 'text-orange-300',
     external: false,
   },
+  {
+    id: 'json-tools',
+    title: 'JSON 工具集',
+    description: '格式化、压缩、对比、JSONPath 查询、修复等一站式 JSON 处理工具',
+    href: '/json-tools/',
+    icon: 'code',
+    gradient: 'from-green-500 to-teal-600',
+    linkText: '立即使用',
+    linkColor: 'text-green-300',
+    external: false,
+  },
 ]
 
 function App() {
@@ -58,18 +69,6 @@ function App() {
             {tools.map((tool) => (
               <ToolCard key={tool.id} {...tool} />
             ))}
-
-            {/* 更多工具占位 */}
-            <div className="glass rounded-2xl p-6 opacity-60">
-              <div className="w-14 h-14 rounded-xl bg-gray-500/30 flex items-center justify-center mb-4">
-                <svg className="w-8 h-8 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold text-white/70 mb-2">更多工具</h3>
-              <p className="text-white/50 text-sm mb-4">敬请期待...</p>
-              <div className="text-white/40 text-sm">即将推出</div>
-            </div>
           </section>
 
           {/* 快速链接 */}

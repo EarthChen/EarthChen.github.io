@@ -4,3 +4,6 @@
 [submodule "pdf2png"]
 	path = pdf2png
 	url = git@github.com:EarthChen/pdf2png.git
+[submodule "json-tools"]
+	path = json-tools
+	url = git@github.com:EarthChen/json-tools.git

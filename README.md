@@ -12,6 +12,7 @@
 |------|------|------|
 | 证件照处理工具 | 智能抠图、背景替换、尺寸调整、体积压缩 | [/photo-tools/](https://earthchen.github.io/photo-tools/) |
 | PDF 转 PNG | 免费在线将 PDF 文档转换为高质量 PNG 图片 | [/pdf2png/](https://earthchen.github.io/pdf2png/) |
+| JSON 工具集 | 格式化、压缩、对比、JSONPath 查询等 | [/json-tools/](https://earthchen.github.io/json-tools/) |
 
 ## 功能特性
 
