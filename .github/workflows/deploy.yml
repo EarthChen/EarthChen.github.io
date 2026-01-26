@@ -5,6 +5,9 @@ on:
   push:
     branches: ['master']
   workflow_dispatch:
+  # 每天定时更新数据
+  schedule:
+    - cron: '0 2 * * *'  # 每天 UTC 02:00 (北京时间 10:00)
 
 permissions:
   contents: read
@@ -36,8 +39,14 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       
+      - name: Fetch GitHub data
+        run: node scripts/fetch-github-data.js
+        env:
+          # 使用 GitHub 自动提供的 token，具有读取公开仓库和 starred 列表的权限
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
       - name: Build
-        run: pnpm run build
+        run: pnpm run build:local
       
       - name: Setup Pages
         uses: actions/configure-pages@v4

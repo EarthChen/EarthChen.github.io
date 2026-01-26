@@ -1,0 +1,2041 @@
+{
+  "total": 100,
+  "fetchedAt": "2026-01-26T06:55:50.260Z",
+  "categories": {
+    "AI/ML": {
+      "icon": "brain",
+      "repos": [
+        {
+          "name": "clawdbot",
+          "fullName": "clawdbot/clawdbot",
+          "description": "Your own personal AI assistant. Any OS. Any Platform. The lobster way. 🦞 ",
+          "url": "https://github.com/clawdbot/clawdbot",
+          "stars": 27560,
+          "language": "TypeScript",
+          "topics": [
+            "ai",
+            "assistant",
+            "clawd",
+            "crustacean",
+            "own-your-data",
+            "personal"
+          ],
+          "updatedAt": "2026-01-26T06:55:48Z",
+          "owner": {
+            "login": "clawdbot",
+            "avatar": "https://avatars.githubusercontent.com/u/252820863?v=4"
+          }
+        },
+        {
+          "name": "skillshare",
+          "fullName": "runkids/skillshare",
+          "description": "📚 Sync skills to all your AI CLI tools with one command across Claude Code, Clawd Bot, OpenCode, Codex & more",
+          "url": "https://github.com/runkids/skillshare",
+          "stars": 267,
+          "language": "Go",
+          "topics": [
+            "ai",
+            "amp",
+            "antigravity",
+            "claude-code",
+            "cli",
+            "codex",
+            "cross-machine-sync",
+            "cursor",
+            "dotfiles",
+            "opencode",
+            "skills",
+            "skills-management",
+            "skillshare",
+            "team-management"
+          ],
+          "updatedAt": "2026-01-26T05:38:10Z",
+          "owner": {
+            "login": "runkids",
+            "avatar": "https://avatars.githubusercontent.com/u/15520254?v=4"
+          }
+        },
+        {
+          "name": "everything-claude-code",
+          "fullName": "affaan-m/everything-claude-code",
+          "description": "Complete Claude Code configuration collection - agents, skills, hooks, commands, rules, MCPs. Battle-tested configs from an Anthropic hackathon winner.",
+          "url": "https://github.com/affaan-m/everything-claude-code",
+          "stars": 29450,
+          "language": "JavaScript",
+          "topics": [
+            "ai-agents",
+            "anthropic",
+            "claude",
+            "claude-code",
+            "developer-tools",
+            "llm",
+            "mcp",
+            "productivity"
+          ],
+          "updatedAt": "2026-01-26T06:55:40Z",
+          "owner": {
+            "login": "affaan-m",
+            "avatar": "https://avatars.githubusercontent.com/u/124439313?v=4"
+          }
+        },
+        {
+          "name": "vibe-kanban",
+          "fullName": "BloopAI/vibe-kanban",
+          "description": "Get 10X more out of Claude Code, Codex or any coding agent",
+          "url": "https://github.com/BloopAI/vibe-kanban",
+          "stars": 19058,
+          "language": "Rust",
+          "topics": [
+            "agent",
+            "ai-agents",
+            "kanban",
+            "management",
+            "task-manager"
+          ],
+          "updatedAt": "2026-01-26T06:55:03Z",
+          "owner": {
+            "login": "BloopAI",
+            "avatar": "https://avatars.githubusercontent.com/u/75376775?v=4"
+          }
+        },
+        {
+          "name": "ragflow",
+          "fullName": "infiniflow/ragflow",
+          "description": "RAGFlow is a leading open-source Retrieval-Augmented Generation (RAG) engine that fuses cutting-edge RAG with Agent capabilities to create a superior context layer for LLMs",
+          "url": "https://github.com/infiniflow/ragflow",
+          "stars": 72152,
+          "language": "Python",
+          "topics": [
+            "agent",
+            "agentic",
+            "agentic-ai",
+            "agentic-workflow",
+            "ai",
+            "ai-search",
+            "deep-learning",
+            "deep-research",
+            "deepseek",
+            "deepseek-r1",
+            "document-parser",
+            "document-understanding",
+            "graphrag",
+            "llm",
+            "mcp",
+            "multi-agent",
+            "ollama",
+            "openai",
+            "rag",
+            "retrieval-augmented-generation"
+          ],
+          "updatedAt": "2026-01-26T06:45:32Z",
+          "owner": {
+            "login": "infiniflow",
+            "avatar": "https://avatars.githubusercontent.com/u/69962740?v=4"
+          }
+        },
+        {
+          "name": "claude-skill-authoring",
+          "fullName": "IndianOldTurtledove/claude-skill-authoring",
+          "description": "A Claude Code Skill for creating and validating Claude Code Skills",
+          "url": "https://github.com/IndianOldTurtledove/claude-skill-authoring",
+          "stars": 35,
+          "language": "Python",
+          "topics": [],
+          "updatedAt": "2026-01-26T01:57:03Z",
+          "owner": {
+            "login": "IndianOldTurtledove",
+            "avatar": "https://avatars.githubusercontent.com/u/12815011?v=4"
+          }
+        },
+        {
+          "name": "all-in-rag",
+          "fullName": "datawhalechina/all-in-rag",
+          "description": "🔍大模型应用开发实战一：RAG 技术全栈指南，在线阅读地址：https://datawhalechina.github.io/all-in-rag/",
+          "url": "https://github.com/datawhalechina/all-in-rag",
+          "stars": 3386,
+          "language": "Python",
+          "topics": [
+            "ai",
+            "deepseek",
+            "embedding",
+            "kimi-k2",
+            "langchain",
+            "llama-index",
+            "llm",
+            "milvus",
+            "multimodal",
+            "neo4j",
+            "python",
+            "rag"
+          ],
+          "updatedAt": "2026-01-26T06:14:11Z",
+          "owner": {
+            "login": "datawhalechina",
+            "avatar": "https://avatars.githubusercontent.com/u/46047812?v=4"
+          }
+        },
+        {
+          "name": "awesome-claude-skills",
+          "fullName": "VoltAgent/awesome-claude-skills",
+          "description": "The awesome collection of Claude Skills and resources.",
+          "url": "https://github.com/VoltAgent/awesome-claude-skills",
+          "stars": 4181,
+          "language": null,
+          "topics": [
+            "agent-skills",
+            "ai-agents",
+            "awesome-list",
+            "claude",
+            "claude-ai",
+            "claude-code",
+            "claude-skills",
+            "skills"
+          ],
+          "updatedAt": "2026-01-26T06:52:56Z",
+          "owner": {
+            "login": "VoltAgent",
+            "avatar": "https://avatars.githubusercontent.com/u/201282378?v=4"
+          }
+        },
+        {
+          "name": "RunVSAgent",
+          "fullName": "wecode-ai/RunVSAgent",
+          "description": "Run VSCode-based coding agents and extensions seamlessly within other IDE platforms - bridging the gap between VSCode ecosystem and other development environment.",
+          "url": "https://github.com/wecode-ai/RunVSAgent",
+          "stars": 699,
+          "language": "Kotlin",
+          "topics": [
+            "ai-coding-agent",
+            "cline",
+            "jetbrains",
+            "kilo-code",
+            "roo-code"
+          ],
+          "updatedAt": "2026-01-24T09:04:51Z",
+          "owner": {
+            "login": "wecode-ai",
+            "avatar": "https://avatars.githubusercontent.com/u/214628658?v=4"
+          }
+        },
+        {
+          "name": "gemini-cli",
+          "fullName": "google-gemini/gemini-cli",
+          "description": "An open-source AI agent that brings the power of Gemini directly into your terminal.",
+          "url": "https://github.com/google-gemini/gemini-cli",
+          "stars": 92528,
+          "language": "TypeScript",
+          "topics": [
+            "ai",
+            "ai-agents",
+            "cli",
+            "gemini",
+            "gemini-api",
+            "mcp-client",
+            "mcp-server"
+          ],
+          "updatedAt": "2026-01-26T06:51:56Z",
+          "owner": {
+            "login": "google-gemini",
+            "avatar": "https://avatars.githubusercontent.com/u/161781182?v=4"
+          }
+        },
+        {
+          "name": "cursor-memory-bank",
+          "fullName": "vanzan01/cursor-memory-bank",
+          "description": "A modular, documentation-driven framework using Cursor custom modes (VAN, PLAN, CREATIVE, IMPLEMENT) to provide persistent memory and guide AI through a structured development workflow with visual process maps.",
+          "url": "https://github.com/vanzan01/cursor-memory-bank",
+          "stars": 2935,
+          "language": null,
+          "topics": [],
+          "updatedAt": "2026-01-26T06:51:03Z",
+          "owner": {
+            "login": "vanzan01",
+            "avatar": "https://avatars.githubusercontent.com/u/35181591?v=4"
+          }
+        },
+        {
+          "name": "html_ppt",
+          "fullName": "Haaaiawd/html_ppt",
+          "description": "暂无描述",
+          "url": "https://github.com/Haaaiawd/html_ppt",
+          "stars": 8,
+          "language": "HTML",
+          "topics": [],
+          "updatedAt": "2025-11-12T10:04:32Z",
+          "owner": {
+            "login": "Haaaiawd",
+            "avatar": "https://avatars.githubusercontent.com/u/129919749?v=4"
+          }
+        },
+        {
+          "name": "roo-advanced-memory-bank",
+          "fullName": "enescingoz/roo-advanced-memory-bank",
+          "description": "Advanced Roo Code Memory Bank is an almost fully automated, next-generation task management system designed for seamless integration with Roo Code custom modes. Leveraging adaptive, just-in-time rule loading and persistent memory files, it enables context-aware development workflows with minimal manual intervention. ",
+          "url": "https://github.com/enescingoz/roo-advanced-memory-bank",
+          "stars": 118,
+          "language": null,
+          "topics": [
+            "memory-bank",
+            "roo-code",
+            "task-automation",
+            "vscode"
+          ],
+          "updatedAt": "2026-01-09T00:32:31Z",
+          "owner": {
+            "login": "enescingoz",
+            "avatar": "https://avatars.githubusercontent.com/u/60349121?v=4"
+          }
+        },
+        {
+          "name": "WebAI-to-API",
+          "fullName": "Amm1rr/WebAI-to-API",
+          "description": "Gemini to API (Don't need API KEY) (ChatGPT, Claude, DeeepSeek, Grok and more)",
+          "url": "https://github.com/Amm1rr/WebAI-to-API",
+          "stars": 753,
+          "language": "Python",
+          "topics": [
+            "ai",
+            "api",
+            "api-less",
+            "bard",
+            "chatbot",
+            "chatgpt",
+            "claude",
+            "deepseek",
+            "fastapi",
+            "free",
+            "gemini",
+            "gemini-api",
+            "google-bard-api",
+            "grok",
+            "llm",
+            "python",
+            "uvicorn",
+            "webserver",
+            "webservice"
+          ],
+          "updatedAt": "2026-01-26T03:30:20Z",
+          "owner": {
+            "login": "Amm1rr",
+            "avatar": "https://avatars.githubusercontent.com/u/480468?v=4"
+          }
+        },
+        {
+          "name": "onlook",
+          "fullName": "onlook-dev/onlook",
+          "description": "The Cursor for Designers • An Open-Source AI-First Design tool • Visually build, style, and edit your React App with AI",
+          "url": "https://github.com/onlook-dev/onlook",
+          "stars": 24518,
+          "language": "TypeScript",
+          "topics": [
+            "ai",
+            "cursor",
+            "cursor-ai",
+            "design",
+            "design-to-code",
+            "drizzle",
+            "editor",
+            "figma",
+            "frontend",
+            "ide",
+            "low-code",
+            "nextjs",
+            "react",
+            "supabase",
+            "tailwindcss",
+            "typescript",
+            "ui",
+            "vibe-coding",
+            "vibecoding"
+          ],
+          "updatedAt": "2026-01-26T06:26:08Z",
+          "owner": {
+            "login": "onlook-dev",
+            "avatar": "https://avatars.githubusercontent.com/u/157326433?v=4"
+          }
+        },
+        {
+          "name": "mcp-feedback-enhanced",
+          "fullName": "Minidoracat/mcp-feedback-enhanced",
+          "description": "Enhanced MCP server for interactive user feedback and command execution in AI-assisted development, featuring dual interface support (Web UI and Desktop Application) with intelligent environment detection and cross-platform compatibility.",
+          "url": "https://github.com/Minidoracat/mcp-feedback-enhanced",
+          "stars": 3550,
+          "language": "JavaScript",
+          "topics": [],
+          "updatedAt": "2026-01-26T05:24:36Z",
+          "owner": {
+            "login": "Minidoracat",
+            "avatar": "https://avatars.githubusercontent.com/u/11269639?v=4"
+          }
+        },
+        {
+          "name": "memory-bank-mcp",
+          "fullName": "alioshr/memory-bank-mcp",
+          "description": "A Model Context Protocol (MCP) server implementation for remote memory bank management, inspired by Cline Memory Bank.",
+          "url": "https://github.com/alioshr/memory-bank-mcp",
+          "stars": 850,
+          "language": "TypeScript",
+          "topics": [
+            "antrophic",
+            "claude",
+            "cline",
+            "cline-memory-bank",
+            "cursor",
+            "mcp-server",
+            "memory-bank",
+            "model-context-protocol",
+            "windsurf"
+          ],
+          "updatedAt": "2026-01-26T01:34:31Z",
+          "owner": {
+            "login": "alioshr",
+            "avatar": "https://avatars.githubusercontent.com/u/54821977?v=4"
+          }
+        },
+        {
+          "name": "mem0",
+          "fullName": "mem0ai/mem0",
+          "description": "Universal memory layer for AI Agents",
+          "url": "https://github.com/mem0ai/mem0",
+          "stars": 45998,
+          "language": "Python",
+          "topics": [
+            "agents",
+            "ai",
+            "ai-agents",
+            "application",
+            "chatbots",
+            "chatgpt",
+            "genai",
+            "llm",
+            "long-term-memory",
+            "memory",
+            "memory-management",
+            "python",
+            "rag",
+            "state-management"
+          ],
+          "updatedAt": "2026-01-26T06:55:23Z",
+          "owner": {
+            "login": "mem0ai",
+            "avatar": "https://avatars.githubusercontent.com/u/137054526?v=4"
+          }
+        },
+        {
+          "name": "HivisionIDPhotos",
+          "fullName": "Zeyi-Lin/HivisionIDPhotos",
+          "description": "⚡️HivisionIDPhotos: a lightweight and efficient AI ID photos tools. 一个轻量级的AI证件照制作算法。",
+          "url": "https://github.com/Zeyi-Lin/HivisionIDPhotos",
+          "stars": 20639,
+          "language": "Python",
+          "topics": [
+            "cnn",
+            "demo",
+            "docker",
+            "face-recognition",
+            "fastapi",
+            "gradio",
+            "idphoto",
+            "machine-learning",
+            "matting",
+            "mtcnn",
+            "tools",
+            "unet"
+          ],
+          "updatedAt": "2026-01-26T06:18:27Z",
+          "owner": {
+            "login": "Zeyi-Lin",
+            "avatar": "https://avatars.githubusercontent.com/u/58305964?v=4"
+          }
+        },
+        {
+          "name": "gemini-balance",
+          "fullName": "snailyp/gemini-balance",
+          "description": "Gemini polling proxy service （gemini轮询代理服务）",
+          "url": "https://github.com/snailyp/gemini-balance",
+          "stars": 5780,
+          "language": "Python",
+          "topics": [
+            "gemini",
+            "gemini-api",
+            "googlesearch",
+            "imagen-3",
+            "load-balancer",
+            "openai-api"
+          ],
+          "updatedAt": "2026-01-25T17:06:20Z",
+          "owner": {
+            "login": "snailyp",
+            "avatar": "https://avatars.githubusercontent.com/u/28538217?v=4"
+          }
+        },
+        {
+          "name": "roo-code-memory-bank",
+          "fullName": "GreatScottyMac/roo-code-memory-bank",
+          "description": "🧠 Roo Code Memory Bank: Seamless project context in Roo Code.  No more repetition, just continuous development!",
+          "url": "https://github.com/GreatScottyMac/roo-code-memory-bank",
+          "stars": 1661,
+          "language": "Batchfile",
+          "topics": [],
+          "updatedAt": "2026-01-23T23:17:18Z",
+          "owner": {
+            "login": "GreatScottyMac",
+            "avatar": "https://avatars.githubusercontent.com/u/191173549?v=4"
+          }
+        },
+        {
+          "name": "Roo-Code",
+          "fullName": "RooCodeInc/Roo-Code",
+          "description": "Roo Code gives you a whole dev team of AI agents in your code editor.",
+          "url": "https://github.com/RooCodeInc/Roo-Code",
+          "stars": 21928,
+          "language": "TypeScript",
+          "topics": [],
+          "updatedAt": "2026-01-26T06:51:45Z",
+          "owner": {
+            "login": "RooCodeInc",
+            "avatar": "https://avatars.githubusercontent.com/u/211522643?v=4"
+          }
+        },
+        {
+          "name": "awesome-mcp-servers",
+          "fullName": "punkpeye/awesome-mcp-servers",
+          "description": "A collection of MCP servers.",
+          "url": "https://github.com/punkpeye/awesome-mcp-servers",
+          "stars": 79687,
+          "language": null,
+          "topics": [
+            "ai",
+            "mcp"
+          ],
+          "updatedAt": "2026-01-26T06:52:21Z",
+          "owner": {
+            "login": "punkpeye",
+            "avatar": "https://avatars.githubusercontent.com/u/108313943?v=4"
+          }
+        },
+        {
+          "name": "xiaozhi-esp32-server",
+          "fullName": "xinnan-tech/xiaozhi-esp32-server",
+          "description": "本项目为xiaozhi-esp32提供后端服务，帮助您快速搭建ESP32设备控制服务器。Backend service for xiaozhi-esp32, helps you quickly build an ESP32 device control server.",
+          "url": "https://github.com/xinnan-tech/xiaozhi-esp32-server",
+          "stars": 8424,
+          "language": "JavaScript",
+          "topics": [
+            "dify",
+            "esp32",
+            "mcp-server",
+            "xiaozhi",
+            "xiaozhi-ai",
+            "xiaozhi-esp32",
+            "xiaozhi-server"
+          ],
+          "updatedAt": "2026-01-26T06:37:06Z",
+          "owner": {
+            "login": "xinnan-tech",
+            "avatar": "https://avatars.githubusercontent.com/u/197497371?v=4"
+          }
+        },
+        {
+          "name": "browser-use",
+          "fullName": "browser-use/browser-use",
+          "description": "🌐 Make websites accessible for AI agents. Automate tasks online with ease.",
+          "url": "https://github.com/browser-use/browser-use",
+          "stars": 77074,
+          "language": "Python",
+          "topics": [
+            "ai-agents",
+            "ai-tools",
+            "browser-automation",
+            "browser-use",
+            "llm",
+            "playwright",
+            "python"
+          ],
+          "updatedAt": "2026-01-26T06:19:40Z",
+          "owner": {
+            "login": "browser-use",
+            "avatar": "https://avatars.githubusercontent.com/u/192012301?v=4"
+          }
+        },
+        {
+          "name": "1024house",
+          "fullName": "1024house/1024house",
+          "description": "让每个程序员都能享受别墅跑车的乐趣",
+          "url": "https://github.com/1024house/1024house",
+          "stars": 439,
+          "language": "HTML",
+          "topics": [],
+          "updatedAt": "2026-01-22T08:04:14Z",
+          "owner": {
+            "login": "1024house",
+            "avatar": "https://avatars.githubusercontent.com/u/196402018?v=4"
+          }
+        },
+        {
+          "name": "MiniGPT-4",
+          "fullName": "Vision-CAIR/MiniGPT-4",
+          "description": "Open-sourced codes for MiniGPT-4 and MiniGPT-v2 (https://minigpt-4.github.io, https://minigpt-v2.github.io/)",
+          "url": "https://github.com/Vision-CAIR/MiniGPT-4",
+          "stars": 25765,
+          "language": "Python",
+          "topics": [],
+          "updatedAt": "2026-01-26T03:02:44Z",
+          "owner": {
+            "login": "Vision-CAIR",
+            "avatar": "https://avatars.githubusercontent.com/u/61346166?v=4"
+          }
+        },
+        {
+          "name": "AutoGPT",
+          "fullName": "Significant-Gravitas/AutoGPT",
+          "description": "AutoGPT is the vision of accessible AI for everyone, to use and to build on. Our mission is to provide the tools, so that you can focus on what matters.",
+          "url": "https://github.com/Significant-Gravitas/AutoGPT",
+          "stars": 181435,
+          "language": "Python",
+          "topics": [
+            "ai",
+            "artificial-intelligence",
+            "autonomous-agents",
+            "gpt-4",
+            "llama-api",
+            "openai",
+            "python"
+          ],
+          "updatedAt": "2026-01-26T06:54:21Z",
+          "owner": {
+            "login": "Significant-Gravitas",
+            "avatar": "https://avatars.githubusercontent.com/u/130738209?v=4"
+          }
+        },
+        {
+          "name": "gpt_academic",
+          "fullName": "binary-husky/gpt_academic",
+          "description": "为GPT/GLM等LLM大语言模型提供实用化交互接口，特别优化论文阅读/润色/写作体验，模块化设计，支持自定义快捷按钮&函数插件，支持Python和C++等项目剖析&自译解功能，PDF/LaTex论文翻译&总结功能，支持并行问询多种LLM模型，支持chatglm3等本地模型。接入通义千问, deepseekcoder, 讯飞星火, 文心一言, llama2, rwkv, claude2, moss等。",
+          "url": "https://github.com/binary-husky/gpt_academic",
+          "stars": 70020,
+          "language": "Python",
+          "topics": [
+            "academic",
+            "chatglm-6b",
+            "chatgpt",
+            "gpt-4",
+            "large-language-models"
+          ],
+          "updatedAt": "2026-01-26T05:57:29Z",
+          "owner": {
+            "login": "binary-husky",
+            "avatar": "https://avatars.githubusercontent.com/u/96192199?v=4"
+          }
+        },
+        {
+          "name": "meetup",
+          "fullName": "baiyutang/meetup",
+          "description": "【❤️ 互联网大厂技术分享PPT 👍🏻 持续更新中！】🍻各大技术交流会、活动资料汇总 ，如 👉QCon👉全球运维技术大会 👉 GDG 👉 全球技术领导力峰会👉大前端大会👉架构师峰会👉敏捷开发DevOps👉OpenResty👉Elastic，欢迎  PR  / Issues",
+          "url": "https://github.com/baiyutang/meetup",
+          "stars": 1878,
+          "language": "Go",
+          "topics": [
+            "aiops",
+            "awsome",
+            "awsome-list",
+            "devops",
+            "docker",
+            "golang",
+            "k8s",
+            "openresty",
+            "ppt",
+            "rust",
+            "soa"
+          ],
+          "updatedAt": "2026-01-21T19:00:12Z",
+          "owner": {
+            "login": "baiyutang",
+            "avatar": "https://avatars.githubusercontent.com/u/10782183?v=4"
+          }
+        },
+        {
+          "name": "chatgpt-google-extension",
+          "fullName": "wong2/chatgpt-google-extension",
+          "description": "This project is deprecated. Check my new project ChatHub:",
+          "url": "https://github.com/wong2/chatgpt-google-extension",
+          "stars": 13165,
+          "language": "TypeScript",
+          "topics": [
+            "browser-extension",
+            "chatgpt",
+            "chrome-extension",
+            "firefox-addon"
+          ],
+          "updatedAt": "2026-01-25T22:57:25Z",
+          "owner": {
+            "login": "wong2",
+            "avatar": "https://avatars.githubusercontent.com/u/321947?v=4"
+          }
+        },
+        {
+          "name": "ChatGPT",
+          "fullName": "lencx/ChatGPT",
+          "description": "🔮 ChatGPT Desktop Application (Mac, Windows and Linux)",
+          "url": "https://github.com/lencx/ChatGPT",
+          "stars": 54391,
+          "language": "Rust",
+          "topics": [
+            "ai",
+            "app",
+            "application",
+            "chatgpt",
+            "desktop-app",
+            "gpt",
+            "gpt-3",
+            "linux",
+            "macos",
+            "notes-app",
+            "openai",
+            "rust",
+            "tauri",
+            "webview",
+            "windows"
+          ],
+          "updatedAt": "2026-01-26T06:17:10Z",
+          "owner": {
+            "login": "lencx",
+            "avatar": "https://avatars.githubusercontent.com/u/16164244?v=4"
+          }
+        },
+        {
+          "name": "wechat-chatgpt",
+          "fullName": "fuergaosi233/wechat-chatgpt",
+          "description": "Use ChatGPT On Wechat via wechaty",
+          "url": "https://github.com/fuergaosi233/wechat-chatgpt",
+          "stars": 13299,
+          "language": "TypeScript",
+          "topics": [],
+          "updatedAt": "2026-01-26T06:31:30Z",
+          "owner": {
+            "login": "fuergaosi233",
+            "avatar": "https://avatars.githubusercontent.com/u/22197568?v=4"
+          }
+        },
+        {
+          "name": "ChatGPT-wechat-bot",
+          "fullName": "AutumnWhj/ChatGPT-wechat-bot",
+          "description": "ChatGPT for wechat https://github.com/AutumnWhj/ChatGPT-wechat-bot",
+          "url": "https://github.com/AutumnWhj/ChatGPT-wechat-bot",
+          "stars": 4732,
+          "language": "TypeScript",
+          "topics": [],
+          "updatedAt": "2026-01-25T10:53:52Z",
+          "owner": {
+            "login": "AutumnWhj",
+            "avatar": "https://avatars.githubusercontent.com/u/39156049?v=4"
+          }
+        },
+        {
+          "name": "AFFiNE",
+          "fullName": "toeverything/AFFiNE",
+          "description": "There can be more than Notion and Miro. AFFiNE(pronounced [ə‘fain]) is a next-gen knowledge base that brings planning, sorting and creating all together. Privacy first, open-source, customizable and ready to use. ",
+          "url": "https://github.com/toeverything/AFFiNE",
+          "stars": 62202,
+          "language": "TypeScript",
+          "topics": [
+            "app",
+            "crdt",
+            "editor",
+            "electron",
+            "knowledge-base",
+            "markdown",
+            "miro",
+            "notes",
+            "notion",
+            "notion-alternative",
+            "rust",
+            "rust-lang",
+            "rust-language",
+            "table",
+            "tableview",
+            "whiteboard",
+            "wiki",
+            "workspace"
+          ],
+          "updatedAt": "2026-01-26T06:27:09Z",
+          "owner": {
+            "login": "toeverything",
+            "avatar": "https://avatars.githubusercontent.com/u/78728988?v=4"
+          }
+        },
+        {
+          "name": "fauxpilot",
+          "fullName": "fauxpilot/fauxpilot",
+          "description": "FauxPilot - an open-source alternative to GitHub Copilot server",
+          "url": "https://github.com/fauxpilot/fauxpilot",
+          "stars": 14759,
+          "language": "Python",
+          "topics": [],
+          "updatedAt": "2026-01-21T21:30:57Z",
+          "owner": {
+            "login": "fauxpilot",
+            "avatar": "https://avatars.githubusercontent.com/u/120729571?v=4"
+          }
+        },
+        {
+          "name": "gitpod",
+          "fullName": "gitpod-io/gitpod",
+          "description": "The developer platform for on-demand cloud development environments to create software faster and more securely.",
+          "url": "https://github.com/gitpod-io/gitpod",
+          "stars": 13593,
+          "language": "TypeScript",
+          "topics": [
+            "cde",
+            "cloud",
+            "cloud-development",
+            "cloud-development-environments",
+            "cloud-ide",
+            "code-review",
+            "dev-environment",
+            "developer-environment",
+            "developer-experience",
+            "disposable",
+            "editor",
+            "ephemeral",
+            "gitpod",
+            "ide",
+            "jetbrains",
+            "prebuilds",
+            "remote-development",
+            "remote-devtools",
+            "vscode"
+          ],
+          "updatedAt": "2026-01-24T22:12:34Z",
+          "owner": {
+            "login": "gitpod-io",
+            "avatar": "https://avatars.githubusercontent.com/u/37021919?v=4"
+          }
+        },
+        {
+          "name": "SummaryOfLoanSuspension",
+          "fullName": "WeNeedHome/SummaryOfLoanSuspension",
+          "description": "全国各省市停贷通知汇总",
+          "url": "https://github.com/WeNeedHome/SummaryOfLoanSuspension",
+          "stars": 20566,
+          "language": "HTML",
+          "topics": [],
+          "updatedAt": "2026-01-24T05:57:43Z",
+          "owner": {
+            "login": "WeNeedHome",
+            "avatar": "https://avatars.githubusercontent.com/u/109166931?v=4"
+          }
+        },
+        {
+          "name": "ecapture",
+          "fullName": "gojue/ecapture",
+          "description": "Capturing SSL/TLS plaintext without a CA certificate using eBPF. Supported on Linux/Android kernels for amd64/arm64.",
+          "url": "https://github.com/gojue/ecapture",
+          "stars": 14964,
+          "language": "C",
+          "topics": [
+            "android",
+            "android-https-capture",
+            "ebpf",
+            "ebpf-go",
+            "ebpf-tc",
+            "ebpf-uprobe",
+            "golang",
+            "https",
+            "linux",
+            "network-capture",
+            "security-audit",
+            "ssl",
+            "ssldump",
+            "tcpdump",
+            "tls"
+          ],
+          "updatedAt": "2026-01-26T06:29:08Z",
+          "owner": {
+            "login": "gojue",
+            "avatar": "https://avatars.githubusercontent.com/u/113109442?v=4"
+          }
+        },
+        {
+          "name": "EmojiPackage",
+          "fullName": "getActivity/EmojiPackage",
+          "description": "表情包资源合集，张张都是经典",
+          "url": "https://github.com/getActivity/EmojiPackage",
+          "stars": 2966,
+          "language": null,
+          "topics": [
+            "android",
+            "brow",
+            "c",
+            "emoji",
+            "expression",
+            "expression-package",
+            "face",
+            "html",
+            "ios",
+            "java",
+            "meme",
+            "phiz",
+            "php",
+            "python"
+          ],
+          "updatedAt": "2026-01-21T19:00:12Z",
+          "owner": {
+            "login": "getActivity",
+            "avatar": "https://avatars.githubusercontent.com/u/28616817?v=4"
+          }
+        },
+        {
+          "name": "dapr",
+          "fullName": "dapr/dapr",
+          "description": "Dapr is a portable runtime for building distributed applications across cloud and edge, combining event-driven architecture with workflow orchestration.",
+          "url": "https://github.com/dapr/dapr",
+          "stars": 25453,
+          "language": "Go",
+          "topics": [
+            "containers",
+            "event-driven",
+            "kubernetes",
+            "microservice",
+            "microservices",
+            "pubsub",
+            "serverless",
+            "sidecar",
+            "state-management"
+          ],
+          "updatedAt": "2026-01-26T05:04:06Z",
+          "owner": {
+            "login": "dapr",
+            "avatar": "https://avatars.githubusercontent.com/u/51932459?v=4"
+          }
+        },
+        {
+          "name": "Emby.Releases",
+          "fullName": "MediaBrowser/Emby.Releases",
+          "description": "Contains binary releases",
+          "url": "https://github.com/MediaBrowser/Emby.Releases",
+          "stars": 1475,
+          "language": null,
+          "topics": [],
+          "updatedAt": "2026-01-26T05:33:41Z",
+          "owner": {
+            "login": "MediaBrowser",
+            "avatar": "https://avatars.githubusercontent.com/u/3607473?v=4"
+          }
+        }
+      ]
+    },
+    "开发工具": {
+      "icon": "wrench",
+      "repos": [
+        {
+          "name": "remotion",
+          "fullName": "remotion-dev/remotion",
+          "description": "🎥      Make videos programmatically with React",
+          "url": "https://github.com/remotion-dev/remotion",
+          "stars": 31074,
+          "language": "TypeScript",
+          "topics": [
+            "javascript",
+            "react",
+            "video"
+          ],
+          "updatedAt": "2026-01-26T06:55:42Z",
+          "owner": {
+            "login": "remotion-dev",
+            "avatar": "https://avatars.githubusercontent.com/u/85344006?v=4"
+          }
+        },
+        {
+          "name": "excalidraw",
+          "fullName": "excalidraw/excalidraw",
+          "description": "Virtual whiteboard for sketching hand-drawn like diagrams",
+          "url": "https://github.com/excalidraw/excalidraw",
+          "stars": 115353,
+          "language": "TypeScript",
+          "topics": [
+            "canvas",
+            "collaboration",
+            "diagrams",
+            "drawing",
+            "hacktoberfest",
+            "productivity",
+            "whiteboard"
+          ],
+          "updatedAt": "2026-01-26T06:45:55Z",
+          "owner": {
+            "login": "excalidraw",
+            "avatar": "https://avatars.githubusercontent.com/u/59452120?v=4"
+          }
+        },
+        {
+          "name": "surrealdb",
+          "fullName": "surrealdb/surrealdb",
+          "description": "A scalable, distributed, collaborative, document-graph database, for the realtime web",
+          "url": "https://github.com/surrealdb/surrealdb",
+          "stars": 30941,
+          "language": "Rust",
+          "topics": [
+            "backend-as-a-service",
+            "cloud-database",
+            "database",
+            "database-as-a-service",
+            "developer-tools",
+            "devtools",
+            "distributed",
+            "distributed-database",
+            "document-database",
+            "graph-database",
+            "iot-database",
+            "nosql",
+            "realtime-database",
+            "serverless",
+            "sql",
+            "surreal",
+            "surrealdb",
+            "web"
+          ],
+          "updatedAt": "2026-01-26T06:19:23Z",
+          "owner": {
+            "login": "surrealdb",
+            "avatar": "https://avatars.githubusercontent.com/u/10982346?v=4"
+          }
+        },
+        {
+          "name": "easeprobe",
+          "fullName": "megaease/easeprobe",
+          "description": "A simple, standalone, and lightweight tool that can do health/status checking, written in Go.",
+          "url": "https://github.com/megaease/easeprobe",
+          "stars": 2293,
+          "language": "Go",
+          "topics": [
+            "alerting",
+            "go",
+            "golang",
+            "monitoring",
+            "notifications",
+            "probe",
+            "prometheus"
+          ],
+          "updatedAt": "2026-01-21T08:35:09Z",
+          "owner": {
+            "login": "megaease",
+            "avatar": "https://avatars.githubusercontent.com/u/29247155?v=4"
+          }
+        },
+        {
+          "name": "ignite",
+          "fullName": "apache/ignite",
+          "description": "Apache Ignite",
+          "url": "https://github.com/apache/ignite",
+          "stars": 5035,
+          "language": "Java",
+          "topics": [
+            "big-data",
+            "cache",
+            "cloud",
+            "data-management-platform",
+            "database",
+            "distributed-sql-database",
+            "hadoop",
+            "ignite",
+            "in-memory-computing",
+            "in-memory-database",
+            "iot",
+            "network-client",
+            "network-server",
+            "osgi",
+            "sql"
+          ],
+          "updatedAt": "2026-01-24T18:51:25Z",
+          "owner": {
+            "login": "apache",
+            "avatar": "https://avatars.githubusercontent.com/u/47359?v=4"
+          }
+        },
+        {
+          "name": "HowToCook",
+          "fullName": "Anduin2017/HowToCook",
+          "description": "程序员在家做饭方法指南。Programmer's guide about how to cook at home (Simplified Chinese only).",
+          "url": "https://github.com/Anduin2017/HowToCook",
+          "stars": 97392,
+          "language": "Dockerfile",
+          "topics": [
+            "chinese",
+            "cookbook",
+            "cooking",
+            "dishes",
+            "recipes"
+          ],
+          "updatedAt": "2026-01-26T06:05:21Z",
+          "owner": {
+            "login": "Anduin2017",
+            "avatar": "https://avatars.githubusercontent.com/u/19531547?v=4"
+          }
+        },
+        {
+          "name": "chaosblade",
+          "fullName": "chaosblade-io/chaosblade",
+          "description": "An easy to use and powerful chaos engineering experiment toolkit.（阿里巴巴开源的一款简单易用、功能强大的混沌实验注入工具）",
+          "url": "https://github.com/chaosblade-io/chaosblade",
+          "stars": 6283,
+          "language": "Go",
+          "topics": [
+            "alibaba",
+            "chaos-engineering",
+            "chaos-testing",
+            "fault",
+            "fault-injection",
+            "kubernetes",
+            "microservice",
+            "site-reliability-engineering"
+          ],
+          "updatedAt": "2026-01-22T13:13:53Z",
+          "owner": {
+            "login": "chaosblade-io",
+            "avatar": "https://avatars.githubusercontent.com/u/48477425?v=4"
+          }
+        },
+        {
+          "name": "gh-ost",
+          "fullName": "github/gh-ost",
+          "description": "GitHub's Online Schema-migration Tool for MySQL",
+          "url": "https://github.com/github/gh-ost",
+          "stars": 13180,
+          "language": "Go",
+          "topics": [
+            "mysql",
+            "schema-migrations"
+          ],
+          "updatedAt": "2026-01-26T05:37:18Z",
+          "owner": {
+            "login": "github",
+            "avatar": "https://avatars.githubusercontent.com/u/9919?v=4"
+          }
+        },
+        {
+          "name": "Emby",
+          "fullName": "MediaBrowser/Emby",
+          "description": "Emby Server is a personal media server with apps on just about every device.",
+          "url": "https://github.com/MediaBrowser/Emby",
+          "stars": 4778,
+          "language": "C#",
+          "topics": [],
+          "updatedAt": "2026-01-25T12:46:17Z",
+          "owner": {
+            "login": "MediaBrowser",
+            "avatar": "https://avatars.githubusercontent.com/u/3607473?v=4"
+          }
+        },
+        {
+          "name": "AnotherRedisDesktopManager",
+          "fullName": "qishibo/AnotherRedisDesktopManager",
+          "description": "🚀🚀🚀A faster, better and more stable Redis desktop manager [GUI client], compatible with Linux, Windows, Mac.",
+          "url": "https://github.com/qishibo/AnotherRedisDesktopManager",
+          "stars": 33834,
+          "language": "JavaScript",
+          "topics": [
+            "redis",
+            "redis-client",
+            "redis-cluster",
+            "redis-desktop-manager",
+            "redis-gui"
+          ],
+          "updatedAt": "2026-01-26T06:45:06Z",
+          "owner": {
+            "login": "qishibo",
+            "avatar": "https://avatars.githubusercontent.com/u/5136418?v=4"
+          }
+        },
+        {
+          "name": "r2dbc-spi",
+          "fullName": "r2dbc/r2dbc-spi",
+          "description": "Service Provider Interface for R2DBC Implementations",
+          "url": "https://github.com/r2dbc/r2dbc-spi",
+          "stars": 436,
+          "language": "Java",
+          "topics": [
+            "api",
+            "database",
+            "java",
+            "reactive",
+            "reactive-streams"
+          ],
+          "updatedAt": "2026-01-22T13:25:52Z",
+          "owner": {
+            "login": "r2dbc",
+            "avatar": "https://avatars.githubusercontent.com/u/40175026?v=4"
+          }
+        }
+      ]
+    },
+    "前端": {
+      "icon": "browser",
+      "repos": [
+        {
+          "name": "Yapi-MCP",
+          "fullName": "lzsheng/Yapi-MCP",
+          "description": "yapi mcp server",
+          "url": "https://github.com/lzsheng/Yapi-MCP",
+          "stars": 57,
+          "language": "TypeScript",
+          "topics": [],
+          "updatedAt": "2026-01-22T12:34:02Z",
+          "owner": {
+            "login": "lzsheng",
+            "avatar": "https://avatars.githubusercontent.com/u/8055289?v=4"
+          }
+        },
+        {
+          "name": "pulsar",
+          "fullName": "apache/pulsar",
+          "description": "Apache Pulsar - distributed pub-sub messaging system",
+          "url": "https://github.com/apache/pulsar",
+          "stars": 15065,
+          "language": "Java",
+          "topics": [
+            "event-streaming",
+            "messaging",
+            "pubsub",
+            "pulsar",
+            "queuing",
+            "streaming"
+          ],
+          "updatedAt": "2026-01-25T20:31:23Z",
+          "owner": {
+            "login": "apache",
+            "avatar": "https://avatars.githubusercontent.com/u/47359?v=4"
+          }
+        },
+        {
+          "name": "libsql",
+          "fullName": "tursodatabase/libsql",
+          "description": "libSQL is a fork of SQLite that is both Open Source, and Open Contributions.",
+          "url": "https://github.com/tursodatabase/libsql",
+          "stars": 16258,
+          "language": "C",
+          "topics": [
+            "database",
+            "embedded-database",
+            "rust",
+            "sqlite",
+            "webassembly"
+          ],
+          "updatedAt": "2026-01-26T03:25:34Z",
+          "owner": {
+            "login": "tursodatabase",
+            "avatar": "https://avatars.githubusercontent.com/u/139391156?v=4"
+          }
+        },
+        {
+          "name": "activej",
+          "fullName": "activej/activej",
+          "description": "ActiveJ is an alternative Java platform built from the ground up. ActiveJ redefines core, web and high-load programming in Java, providing simplicity, maximum performance and scalability",
+          "url": "https://github.com/activej/activej",
+          "stars": 979,
+          "language": "Java",
+          "topics": [
+            "async",
+            "code-generation",
+            "dependency-injection",
+            "framework",
+            "high-performance",
+            "java",
+            "microservice",
+            "microservices",
+            "rpc",
+            "rpc-framework",
+            "serializer",
+            "web"
+          ],
+          "updatedAt": "2026-01-20T09:21:37Z",
+          "owner": {
+            "login": "activej",
+            "avatar": "https://avatars.githubusercontent.com/u/61243917?v=4"
+          }
+        },
+        {
+          "name": "juicefs",
+          "fullName": "juicedata/juicefs",
+          "description": "JuiceFS is a distributed POSIX file system built on top of Redis and S3.",
+          "url": "https://github.com/juicedata/juicefs",
+          "stars": 13098,
+          "language": "Go",
+          "topics": [
+            "bigdata",
+            "cloud-native",
+            "distributed-systems",
+            "filesystem",
+            "go",
+            "golang",
+            "hdfs",
+            "object-storage",
+            "posix",
+            "redis",
+            "s3",
+            "storage"
+          ],
+          "updatedAt": "2026-01-26T06:08:21Z",
+          "owner": {
+            "login": "juicedata",
+            "avatar": "https://avatars.githubusercontent.com/u/27241737?v=4"
+          }
+        },
+        {
+          "name": "xquic",
+          "fullName": "alibaba/xquic",
+          "description": "XQUIC Library released by Alibaba is a cross-platform implementation of QUIC and HTTP/3 protocol.",
+          "url": "https://github.com/alibaba/xquic",
+          "stars": 1846,
+          "language": "C",
+          "topics": [
+            "http3",
+            "ietf",
+            "protocol",
+            "quic",
+            "tls13"
+          ],
+          "updatedAt": "2026-01-20T12:45:31Z",
+          "owner": {
+            "login": "alibaba",
+            "avatar": "https://avatars.githubusercontent.com/u/1961952?v=4"
+          }
+        },
+        {
+          "name": "dubbo",
+          "fullName": "apache/dubbo",
+          "description": "The java implementation of Apache Dubbo. An RPC and microservice framework.",
+          "url": "https://github.com/apache/dubbo",
+          "stars": 41716,
+          "language": "Java",
+          "topics": [
+            "distributed-systems",
+            "dubbo",
+            "framework",
+            "grpc",
+            "http",
+            "java",
+            "microservices",
+            "restful",
+            "rpc",
+            "service-mesh",
+            "web"
+          ],
+          "updatedAt": "2026-01-26T06:20:42Z",
+          "owner": {
+            "login": "apache",
+            "avatar": "https://avatars.githubusercontent.com/u/47359?v=4"
+          }
+        },
+        {
+          "name": "maven-mvnd",
+          "fullName": "apache/maven-mvnd",
+          "description": "Apache Maven Daemon",
+          "url": "https://github.com/apache/maven-mvnd",
+          "stars": 3372,
+          "language": "Java",
+          "topics": [
+            "apache-maven",
+            "build-management",
+            "java",
+            "maven"
+          ],
+          "updatedAt": "2026-01-25T13:28:26Z",
+          "owner": {
+            "login": "apache",
+            "avatar": "https://avatars.githubusercontent.com/u/47359?v=4"
+          }
+        },
+        {
+          "name": "CasaOS",
+          "fullName": "IceWhaleTech/CasaOS",
+          "description": "CasaOS - A simple, easy-to-use, elegant open-source Personal Cloud system.",
+          "url": "https://github.com/IceWhaleTech/CasaOS",
+          "stars": 33002,
+          "language": "Go",
+          "topics": [
+            "casaos",
+            "docker",
+            "golang",
+            "home-automation",
+            "home-cloud",
+            "home-server",
+            "iot",
+            "raspberry",
+            "self-hosted",
+            "vuejs"
+          ],
+          "updatedAt": "2026-01-26T01:35:44Z",
+          "owner": {
+            "login": "IceWhaleTech",
+            "avatar": "https://avatars.githubusercontent.com/u/91336243?v=4"
+          }
+        },
+        {
+          "name": "rsocket-java",
+          "fullName": "rsocket/rsocket-java",
+          "description": "Java implementation of RSocket",
+          "url": "https://github.com/rsocket/rsocket-java",
+          "stars": 2390,
+          "language": "Java",
+          "topics": [
+            "aeron",
+            "java",
+            "netty",
+            "reactive",
+            "reactor-core",
+            "rsocket",
+            "rxjava",
+            "stream"
+          ],
+          "updatedAt": "2026-01-21T10:41:23Z",
+          "owner": {
+            "login": "rsocket",
+            "avatar": "https://avatars.githubusercontent.com/u/25459855?v=4"
+          }
+        },
+        {
+          "name": "trackerslist",
+          "fullName": "ngosang/trackerslist",
+          "description": "Updated list of public BitTorrent trackers",
+          "url": "https://github.com/ngosang/trackerslist",
+          "stars": 52707,
+          "language": null,
+          "topics": [
+            "bittorrent",
+            "bittorrent-tracker",
+            "bittorrent-trackers",
+            "http",
+            "list",
+            "lists",
+            "public-tracker",
+            "public-trackers",
+            "torrent",
+            "tracker",
+            "trackers",
+            "trackerslist",
+            "udp",
+            "webtorrent",
+            "ws"
+          ],
+          "updatedAt": "2026-01-26T06:35:44Z",
+          "owner": {
+            "login": "ngosang",
+            "avatar": "https://avatars.githubusercontent.com/u/10577978?v=4"
+          }
+        },
+        {
+          "name": "netty-incubator-codec-quic",
+          "fullName": "netty/netty-incubator-codec-quic",
+          "description": "暂无描述",
+          "url": "https://github.com/netty/netty-incubator-codec-quic",
+          "stars": 345,
+          "language": "Java",
+          "topics": [],
+          "updatedAt": "2026-01-24T22:08:34Z",
+          "owner": {
+            "login": "netty",
+            "avatar": "https://avatars.githubusercontent.com/u/473791?v=4"
+          }
+        },
+        {
+          "name": "netty-incubator-codec-http3",
+          "fullName": "netty/netty-incubator-codec-http3",
+          "description": "Experimental HTTP3 codec on top of QUIC",
+          "url": "https://github.com/netty/netty-incubator-codec-http3",
+          "stars": 196,
+          "language": "Java",
+          "topics": [],
+          "updatedAt": "2026-01-25T14:02:42Z",
+          "owner": {
+            "login": "netty",
+            "avatar": "https://avatars.githubusercontent.com/u/473791?v=4"
+          }
+        },
+        {
+          "name": "reactor-core",
+          "fullName": "reactor/reactor-core",
+          "description": "Non-Blocking Reactive Foundation for the JVM",
+          "url": "https://github.com/reactor/reactor-core",
+          "stars": 5193,
+          "language": "Java",
+          "topics": [
+            "asynchronous",
+            "flow",
+            "flux",
+            "jvm",
+            "mono",
+            "reactive",
+            "reactive-extensions",
+            "reactive-streams"
+          ],
+          "updatedAt": "2026-01-22T15:23:14Z",
+          "owner": {
+            "login": "reactor",
+            "avatar": "https://avatars.githubusercontent.com/u/4201559?v=4"
+          }
+        },
+        {
+          "name": "reactive-streams-jvm",
+          "fullName": "reactive-streams/reactive-streams-jvm",
+          "description": "Reactive Streams Specification for the JVM",
+          "url": "https://github.com/reactive-streams/reactive-streams-jvm",
+          "stars": 4867,
+          "language": "Java",
+          "topics": [],
+          "updatedAt": "2026-01-17T05:28:43Z",
+          "owner": {
+            "login": "reactive-streams",
+            "avatar": "https://avatars.githubusercontent.com/u/7080130?v=4"
+          }
+        },
+        {
+          "name": "reactive-grpc",
+          "fullName": "salesforce/reactive-grpc",
+          "description": "Reactive stubs for gRPC",
+          "url": "https://github.com/salesforce/reactive-grpc",
+          "stars": 841,
+          "language": "Java",
+          "topics": [
+            "grpc-java",
+            "reactor",
+            "rxjava2"
+          ],
+          "updatedAt": "2026-01-05T11:07:27Z",
+          "owner": {
+            "login": "salesforce",
+            "avatar": "https://avatars.githubusercontent.com/u/453694?v=4"
+          }
+        }
+      ]
+    },
+    "后端": {
+      "icon": "server",
+      "repos": [
+        {
+          "name": "duckdb",
+          "fullName": "duckdb/duckdb",
+          "description": "DuckDB is an analytical in-process SQL database management system",
+          "url": "https://github.com/duckdb/duckdb",
+          "stars": 35661,
+          "language": "C++",
+          "topics": [
+            "analytics",
+            "database",
+            "embedded-database",
+            "olap",
+            "sql"
+          ],
+          "updatedAt": "2026-01-26T06:19:45Z",
+          "owner": {
+            "login": "duckdb",
+            "avatar": "https://avatars.githubusercontent.com/u/82039556?v=4"
+          }
+        },
+        {
+          "name": "grpc-java",
+          "fullName": "grpc/grpc-java",
+          "description": "The Java gRPC implementation. HTTP/2 based RPC",
+          "url": "https://github.com/grpc/grpc-java",
+          "stars": 11957,
+          "language": "Java",
+          "topics": [
+            "grpc",
+            "java",
+            "microservices",
+            "proto",
+            "rpc"
+          ],
+          "updatedAt": "2026-01-26T01:03:26Z",
+          "owner": {
+            "login": "grpc",
+            "avatar": "https://avatars.githubusercontent.com/u/7802525?v=4"
+          }
+        }
+      ]
+    },
+    "DevOps": {
+      "icon": "cloud",
+      "repos": [
+        {
+          "name": "SMSBoom",
+          "fullName": "OpenEthan/SMSBoom",
+          "description": "SMSBoom - Deprecate: Due to judicial reasons, the repository has been suspended!",
+          "url": "https://github.com/OpenEthan/SMSBoom",
+          "stars": 15310,
+          "language": "Python",
+          "topics": [
+            "deprecated"
+          ],
+          "updatedAt": "2026-01-25T01:47:13Z",
+          "owner": {
+            "login": "OpenEthan",
+            "avatar": "https://avatars.githubusercontent.com/u/108810745?v=4"
+          }
+        },
+        {
+          "name": "TechXueXi",
+          "fullName": "TechXueXi/TechXueXi",
+          "description": "强国通 科技强国 学习强国 xuexiqiangguo 全网最好用开源网页学习强国助手：TechXueXi （懒人刷分工具 自动学习）技术强国，支持答题，支持 docker 45分/天",
+          "url": "https://github.com/TechXueXi/TechXueXi",
+          "stars": 5673,
+          "language": "Python",
+          "topics": [
+            "auto-xxqg",
+            "docker",
+            "qiang-guo",
+            "qiangguo",
+            "xuexi",
+            "xuexi-qiangguo",
+            "xuexiqiangguo",
+            "xxqg"
+          ],
+          "updatedAt": "2026-01-25T09:19:58Z",
+          "owner": {
+            "login": "TechXueXi",
+            "avatar": "https://avatars.githubusercontent.com/u/63344348?v=4"
+          }
+        }
+      ]
+    },
+    "其他": {
+      "icon": "folder",
+      "repos": [
+        {
+          "name": "ragflow-plus",
+          "fullName": "zstar1003/ragflow-plus",
+          "description": "Ragflow-Plus 是 Ragflow 的二次开发版本，使其更为简洁实用",
+          "url": "https://github.com/zstar1003/ragflow-plus",
+          "stars": 1202,
+          "language": "Python",
+          "topics": [],
+          "updatedAt": "2026-01-25T12:42:30Z",
+          "owner": {
+            "login": "zstar1003",
+            "avatar": "https://avatars.githubusercontent.com/u/65890619?v=4"
+          }
+        },
+        {
+          "name": "vibe-coding-cn",
+          "fullName": "2025Emma/vibe-coding-cn",
+          "description": "暂无描述",
+          "url": "https://github.com/2025Emma/vibe-coding-cn",
+          "stars": 10240,
+          "language": "Python",
+          "topics": [],
+          "updatedAt": "2026-01-26T06:44:35Z",
+          "owner": {
+            "login": "2025Emma",
+            "avatar": "https://avatars.githubusercontent.com/u/196145255?v=4"
+          }
+        },
+        {
+          "name": "concurrency-limits",
+          "fullName": "Netflix/concurrency-limits",
+          "description": "暂无描述",
+          "url": "https://github.com/Netflix/concurrency-limits",
+          "stars": 3522,
+          "language": "Java",
+          "topics": [],
+          "updatedAt": "2026-01-26T02:56:31Z",
+          "owner": {
+            "login": "Netflix",
+            "avatar": "https://avatars.githubusercontent.com/u/913567?v=4"
+          }
+        },
+        {
+          "name": "Microsoft-Office-For-MacOS",
+          "fullName": "alsyundawy/Microsoft-Office-For-MacOS",
+          "description": "Installer & Activited Microsoft Office For MacOS",
+          "url": "https://github.com/alsyundawy/Microsoft-Office-For-MacOS",
+          "stars": 5824,
+          "language": null,
+          "topics": [],
+          "updatedAt": "2026-01-26T06:27:45Z",
+          "owner": {
+            "login": "alsyundawy",
+            "avatar": "https://avatars.githubusercontent.com/u/6451849?v=4"
+          }
+        },
+        {
+          "name": "awesome-prompt",
+          "fullName": "NeekChaw/awesome-prompt",
+          "description": "让你一眼惊艳的prompt",
+          "url": "https://github.com/NeekChaw/awesome-prompt",
+          "stars": 1078,
+          "language": "GCC Machine Description",
+          "topics": [],
+          "updatedAt": "2026-01-26T04:18:47Z",
+          "owner": {
+            "login": "NeekChaw",
+            "avatar": "https://avatars.githubusercontent.com/u/29478613?v=4"
+          }
+        },
+        {
+          "name": "dubbo-spi-extensions",
+          "fullName": "apache/dubbo-spi-extensions",
+          "description": "Apache Dubbo SPI Extensions",
+          "url": "https://github.com/apache/dubbo-spi-extensions",
+          "stars": 203,
+          "language": "Java",
+          "topics": [],
+          "updatedAt": "2026-01-18T19:12:11Z",
+          "owner": {
+            "login": "apache",
+            "avatar": "https://avatars.githubusercontent.com/u/47359?v=4"
+          }
+        },
+        {
+          "name": "FlashSpace",
+          "fullName": "wojciech-kulik/FlashSpace",
+          "description": "FlashSpace is a blazingly fast virtual workspace manager for macOS ⚡",
+          "url": "https://github.com/wojciech-kulik/FlashSpace",
+          "stars": 2893,
+          "language": "Swift",
+          "topics": [
+            "apple",
+            "macos",
+            "swift",
+            "window-manager"
+          ],
+          "updatedAt": "2026-01-26T06:29:06Z",
+          "owner": {
+            "login": "wojciech-kulik",
+            "avatar": "https://avatars.githubusercontent.com/u/3128467?v=4"
+          }
+        },
+        {
+          "name": "THXAN-2",
+          "fullName": "thxan/THXAN-2",
+          "description": "The best cursor user rules yet.",
+          "url": "https://github.com/thxan/THXAN-2",
+          "stars": 53,
+          "language": null,
+          "topics": [],
+          "updatedAt": "2026-01-14T12:42:28Z",
+          "owner": {
+            "login": "thxan",
+            "avatar": "https://avatars.githubusercontent.com/u/29044755?v=4"
+          }
+        },
+        {
+          "name": "RIPER-5",
+          "fullName": "NeekChaw/RIPER-5",
+          "description": "神级Cursor Rule",
+          "url": "https://github.com/NeekChaw/RIPER-5",
+          "stars": 2412,
+          "language": null,
+          "topics": [],
+          "updatedAt": "2026-01-25T14:02:06Z",
+          "owner": {
+            "login": "NeekChaw",
+            "avatar": "https://avatars.githubusercontent.com/u/29478613?v=4"
+          }
+        },
+        {
+          "name": "awesome-cursor-rules-mdc",
+          "fullName": "sanjeed5/awesome-cursor-rules-mdc",
+          "description": "Curated list of awesome Cursor Rules .mdc files",
+          "url": "https://github.com/sanjeed5/awesome-cursor-rules-mdc",
+          "stars": 3233,
+          "language": "Python",
+          "topics": [],
+          "updatedAt": "2026-01-26T06:52:20Z",
+          "owner": {
+            "login": "sanjeed5",
+            "avatar": "https://avatars.githubusercontent.com/u/40694326?v=4"
+          }
+        },
+        {
+          "name": "ChinaTextbook",
+          "fullName": "TapXWorld/ChinaTextbook",
+          "description": "所有小初高、大学PDF教材。",
+          "url": "https://github.com/TapXWorld/ChinaTextbook",
+          "stars": 64481,
+          "language": "Roff",
+          "topics": [],
+          "updatedAt": "2026-01-26T06:29:18Z",
+          "owner": {
+            "login": "TapXWorld",
+            "avatar": "https://avatars.githubusercontent.com/u/3353541?v=4"
+          }
+        },
+        {
+          "name": "xiaozhi-esp32",
+          "fullName": "78/xiaozhi-esp32",
+          "description": "An MCP-based chatbot | 一个基于MCP的聊天机器人",
+          "url": "https://github.com/78/xiaozhi-esp32",
+          "stars": 23514,
+          "language": "C++",
+          "topics": [
+            "chatbot",
+            "esp32",
+            "mcp"
+          ],
+          "updatedAt": "2026-01-26T05:55:53Z",
+          "owner": {
+            "login": "78",
+            "avatar": "https://avatars.githubusercontent.com/u/4488133?v=4"
+          }
+        },
+        {
+          "name": "PyWxDump",
+          "fullName": "xaoyaoo/PyWxDump",
+          "description": "删库",
+          "url": "https://github.com/xaoyaoo/PyWxDump",
+          "stars": 9783,
+          "language": null,
+          "topics": [
+            "pywxdump",
+            "wxdump",
+            "wxexport"
+          ],
+          "updatedAt": "2026-01-26T04:53:20Z",
+          "owner": {
+            "login": "xaoyaoo",
+            "avatar": "https://avatars.githubusercontent.com/u/37209452?v=4"
+          }
+        },
+        {
+          "name": "Mindustry",
+          "fullName": "Anuken/Mindustry",
+          "description": "The automation tower defense RTS",
+          "url": "https://github.com/Anuken/Mindustry",
+          "stars": 26314,
+          "language": "Java",
+          "topics": [
+            "android",
+            "desktop",
+            "game",
+            "java",
+            "mindustry",
+            "mobile-game",
+            "multiplatform",
+            "rts",
+            "sandbox-game",
+            "tower-defense"
+          ],
+          "updatedAt": "2026-01-26T06:21:39Z",
+          "owner": {
+            "login": "Anuken",
+            "avatar": "https://avatars.githubusercontent.com/u/10100000?v=4"
+          }
+        },
+        {
+          "name": "freevpn",
+          "fullName": "deezertidal/freevpn",
+          "description": "免费公益机场节点分享",
+          "url": "https://github.com/deezertidal/freevpn",
+          "stars": 772,
+          "language": null,
+          "topics": [],
+          "updatedAt": "2026-01-26T05:07:50Z",
+          "owner": {
+            "login": "deezertidal",
+            "avatar": "https://avatars.githubusercontent.com/u/539868?v=4"
+          }
+        },
+        {
+          "name": "rsocket",
+          "fullName": "rsocket/rsocket",
+          "description": "RSocket Protocol Definition",
+          "url": "https://github.com/rsocket/rsocket",
+          "stars": 1869,
+          "language": null,
+          "topics": [],
+          "updatedAt": "2026-01-11T21:12:20Z",
+          "owner": {
+            "login": "rsocket",
+            "avatar": "https://avatars.githubusercontent.com/u/25459855?v=4"
+          }
+        },
+        {
+          "name": "Rime",
+          "fullName": "scomper/Rime",
+          "description": "鼠须管配置",
+          "url": "https://github.com/scomper/Rime",
+          "stars": 429,
+          "language": "Lua",
+          "topics": [],
+          "updatedAt": "2025-12-08T13:01:19Z",
+          "owner": {
+            "login": "scomper",
+            "avatar": "https://avatars.githubusercontent.com/u/13041847?v=4"
+          }
+        },
+        {
+          "name": "sofa-ark",
+          "fullName": "sofastack/sofa-ark",
+          "description": "SOFAArk is a light-weight，java based classloader isolation framework.",
+          "url": "https://github.com/sofastack/sofa-ark",
+          "stars": 1635,
+          "language": "Java",
+          "topics": [
+            "classloader-isolation",
+            "sofa-ark",
+            "sofa-boot",
+            "sofastack"
+          ],
+          "updatedAt": "2026-01-15T13:05:13Z",
+          "owner": {
+            "login": "sofastack",
+            "avatar": "https://avatars.githubusercontent.com/u/36956638?v=4"
+          }
+        },
+        {
+          "name": "Shadowrocket-ADBlock-Rules",
+          "fullName": "zhouzhouprogram/Shadowrocket-ADBlock-Rules",
+          "description": "提供多款 Shadowrocket 规则，带广告过滤功能。用于 iOS 未越狱设备选择性地自动翻墙。",
+          "url": "https://github.com/zhouzhouprogram/Shadowrocket-ADBlock-Rules",
+          "stars": 863,
+          "language": "Python",
+          "topics": [
+            "gfw",
+            "proxy",
+            "shadowrocket",
+            "shadowsocks",
+            "shadowsocksr",
+            "ssr",
+            "surge"
+          ],
+          "updatedAt": "2026-01-25T19:00:30Z",
+          "owner": {
+            "login": "zhouzhouprogram",
+            "avatar": "https://avatars.githubusercontent.com/u/47959109?v=4"
+          }
+        },
+        {
+          "name": "Shadowrocket-ADBlock-Rules-Forever",
+          "fullName": "Johnshall/Shadowrocket-ADBlock-Rules-Forever",
+          "description": "提供多款 Shadowrocket 规则，拥有强劲的广告过滤功能。每日 8 时重新构建规则。",
+          "url": "https://github.com/Johnshall/Shadowrocket-ADBlock-Rules-Forever",
+          "stars": 21872,
+          "language": null,
+          "topics": [
+            "adblock",
+            "gfw",
+            "proxy",
+            "shadowrocket",
+            "v2ray"
+          ],
+          "updatedAt": "2026-01-26T05:28:57Z",
+          "owner": {
+            "login": "Johnshall",
+            "avatar": "https://avatars.githubusercontent.com/u/71166067?v=4"
+          }
+        },
+        {
+          "name": "weekly",
+          "fullName": "ruanyf/weekly",
+          "description": "科技爱好者周刊，每周五发布",
+          "url": "https://github.com/ruanyf/weekly",
+          "stars": 83052,
+          "language": null,
+          "topics": [],
+          "updatedAt": "2026-01-26T06:52:08Z",
+          "owner": {
+            "login": "ruanyf",
+            "avatar": "https://avatars.githubusercontent.com/u/905434?v=4"
+          }
+        },
+        {
+          "name": "Shadowrocket-Script",
+          "fullName": "Tartarus2014/Shadowrocket-Script",
+          "description": "Shadowrocket脚本收集",
+          "url": "https://github.com/Tartarus2014/Shadowrocket-Script",
+          "stars": 255,
+          "language": null,
+          "topics": [],
+          "updatedAt": "2026-01-20T02:01:47Z",
+          "owner": {
+            "login": "Tartarus2014",
+            "avatar": "https://avatars.githubusercontent.com/u/39802246?v=4"
+          }
+        },
+        {
+          "name": "HikariCP",
+          "fullName": "brettwooldridge/HikariCP",
+          "description": "光 HikariCP・A solid, high-performance, JDBC connection pool at last.",
+          "url": "https://github.com/brettwooldridge/HikariCP",
+          "stars": 20963,
+          "language": "Java",
+          "topics": [
+            "connection-pool",
+            "high-performance",
+            "java",
+            "jdbc"
+          ],
+          "updatedAt": "2026-01-25T21:15:17Z",
+          "owner": {
+            "login": "brettwooldridge",
+            "avatar": "https://avatars.githubusercontent.com/u/1538661?v=4"
+          }
+        },
+        {
+          "name": "more-lambdas-java",
+          "fullName": "PhantomThief/more-lambdas-java",
+          "description": "Some useful collectors implements for Java 8.",
+          "url": "https://github.com/PhantomThief/more-lambdas-java",
+          "stars": 180,
+          "language": "Java",
+          "topics": [],
+          "updatedAt": "2025-11-17T09:59:49Z",
+          "owner": {
+            "login": "PhantomThief",
+            "avatar": "https://avatars.githubusercontent.com/u/1650427?v=4"
+          }
+        },
+        {
+          "name": "poi-tl",
+          "fullName": "Sayi/poi-tl",
+          "description": "Generate awesome word(docx) with template",
+          "url": "https://github.com/Sayi/poi-tl",
+          "stars": 5004,
+          "language": "Java",
+          "topics": [
+            "docx",
+            "export",
+            "java",
+            "markdown",
+            "poi",
+            "template",
+            "word"
+          ],
+          "updatedAt": "2026-01-26T06:42:19Z",
+          "owner": {
+            "login": "Sayi",
+            "avatar": "https://avatars.githubusercontent.com/u/1394854?v=4"
+          }
+        },
+        {
+          "name": "wire",
+          "fullName": "square/wire",
+          "description": "gRPC and protocol buffers for Android, Kotlin, Swift and Java.",
+          "url": "https://github.com/square/wire",
+          "stars": 4402,
+          "language": "Kotlin",
+          "topics": [],
+          "updatedAt": "2026-01-26T06:45:04Z",
+          "owner": {
+            "login": "square",
+            "avatar": "https://avatars.githubusercontent.com/u/82592?v=4"
+          }
+        },
+        {
+          "name": "wire-study",
+          "fullName": "guohao/wire-study",
+          "description": "暂无描述",
+          "url": "https://github.com/guohao/wire-study",
+          "stars": 1,
+          "language": "Kotlin",
+          "topics": [],
+          "updatedAt": "2021-09-14T04:49:15Z",
+          "owner": {
+            "login": "guohao",
+            "avatar": "https://avatars.githubusercontent.com/u/13098309?v=4"
+          }
+        }
+      ]
+    }
+  }
+}
