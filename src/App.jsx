@@ -1,72 +1,14 @@
 import { useState, useEffect } from 'react'
 import Header from './components/Header'
-import ToolCard from './components/ToolCard'
 import Footer from './components/Footer'
 import AIResourceSection from './components/AIResourceSection'
 import StarredSection from './components/StarredSection'
 
-// 工具配置 URL
-const WEB_TOOLS_CONFIG_URL = 'https://earthchen.github.io/web-tools/tools.json'
-
-// 图标颜色映射
-const ICON_COLORS = {
-  camera: 'text-blue-300',
-  document: 'text-orange-300',
-  code: 'text-green-300',
-  table: 'text-emerald-300',
-}
-
-// 默认工具列表（作为 fallback）
-const defaultTools = [
-  {
-    id: 'photo-tool',
-    title: '证件照处理工具',
-    description: '智能抠图、背景替换、尺寸调整、体积压缩，一站式证件照处理',
-    href: 'https://earthchen.github.io/web-tools/photo-tool',
-    icon: 'camera',
-    gradient: 'from-blue-500 to-purple-600',
-    linkText: '立即使用',
-    linkColor: 'text-blue-300',
-    external: true,
-  },
-  {
-    id: 'pdf2png',
-    title: 'PDF 转 PNG',
-    description: '免费在线将 PDF 文档转换为高质量 PNG 图片，支持批量下载',
-    href: 'https://earthchen.github.io/web-tools/pdf2png',
-    icon: 'document',
-    gradient: 'from-red-500 to-orange-600',
-    linkText: '立即使用',
-    linkColor: 'text-orange-300',
-    external: true,
-  },
-  {
-    id: 'json-tools',
-    title: 'JSON 工具集',
-    description: '格式化、压缩、对比、JSONPath 查询、修复等一站式 JSON 处理工具',
-    href: 'https://earthchen.github.io/web-tools/json-tools',
-    icon: 'code',
-    gradient: 'from-green-500 to-teal-600',
-    linkText: '立即使用',
-    linkColor: 'text-green-300',
-    external: true,
-  },
-  {
-    id: 'excelcsv-tool',
-    title: 'CSV/Excel 互转',
-    description: '高性能 CSV/Excel 互转工具，支持 100MB+ 大文件，智能筛选与虚拟滚动',
-    href: 'https://earthchen.github.io/web-tools/excelcsv-tool',
-    icon: 'table',
-    gradient: 'from-emerald-500 to-teal-600',
-    linkText: '立即使用',
-    linkColor: 'text-emerald-300',
-    external: true,
-  },
-]
+// 工具主页 URL
+const WEB_TOOLS_URL = 'https://earthchen.github.io/web-tools/'
 
 function App() {
   const [isDark, setIsDark] = useState(false)
-  const [tools, setTools] = useState(defaultTools)
 
   // 检测系统主题偏好
   useEffect(() => {
@@ -75,31 +17,6 @@ function App() {
       setIsDark(true)
       document.documentElement.classList.add('dark')
     }
-  }, [])
-
-  // 从 web-tools 项目拉取工具列表
-  useEffect(() => {
-    fetch(WEB_TOOLS_CONFIG_URL)
-      .then(res => res.json())
-      .then(data => {
-        if (data.tools && Array.isArray(data.tools)) {
-          const mappedTools = data.tools.map(tool => ({
-            id: tool.id,
-            title: tool.title,
-            description: tool.description,
-            href: `${data.baseUrl}${tool.path}`,
-            icon: tool.icon,
-            gradient: tool.gradient,
-            linkText: '立即使用',
-            linkColor: ICON_COLORS[tool.icon] || 'text-blue-300',
-            external: true,
-          }))
-          setTools(mappedTools)
-        }
-      })
-      .catch(err => {
-        console.warn('Failed to fetch tools config, using defaults:', err)
-      })
   }, [])
 
   const toggleTheme = () => {
@@ -134,7 +51,7 @@ function App() {
           {/* AI 资源模块 */}
           <AIResourceSection />
 
-          {/* 工具集模块 */}
+          {/* 工具集入口 */}
           <section id="tools" className="mb-16 scroll-mt-20">
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-2 text-wrap-balance">
               工具集
@@ -143,11 +60,33 @@ function App() {
               免费、实用、高效的在线工具
             </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {tools.map((tool) => (
-                <ToolCard key={tool.id} {...tool} />
-              ))}
-            </div>
+            <a
+              href={WEB_TOOLS_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block glass rounded-2xl p-8 hover:scale-[1.02] transition-all duration-300 group"
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-4">
+                  <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+                    <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-white mb-1">在线工具集</h3>
+                    <p className="text-white/70">
+                      证件照处理、PDF 转换、JSON 工具、CSV/Excel 互转等实用工具
+                    </p>
+                  </div>
+                </div>
+                <div className="text-white/60 group-hover:text-white transition-colors">
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </div>
+              </div>
+            </a>
           </section>
 
           {/* GitHub Star 项目模块 */}
