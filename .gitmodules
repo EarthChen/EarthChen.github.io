@@ -1,12 +1,12 @@
 [submodule "photo-tools"]
-	path = photo-tools
+	path = tools/photo-tools
 	url = git@github.com:EarthChen/photo-tools.git
 [submodule "pdf2png"]
-	path = pdf2png
+	path = tools/pdf2png
 	url = git@github.com:EarthChen/pdf2png.git
 [submodule "json-tools"]
-	path = json-tools
+	path = tools/json-tools
 	url = git@github.com:EarthChen/json-tools.git
 [submodule "excelcsv-tool"]
-	path = excelcsv-tool
+	path = tools/excelcsv-tool
 	url = git@github.com:EarthChen/excelcsv-tool.git
