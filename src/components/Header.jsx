@@ -3,7 +3,7 @@ import { useState } from 'react'
 // 导航链接配置
 const navLinks = [
   { id: 'ai-resources', label: 'AI 资源', href: '#ai-resources' },
-  { id: 'tools', label: '工具集', href: '#tools' },
+  { id: 'tools', label: '工具集', href: 'https://earthchen.github.io/web-tools/', external: true },
   { id: 'starred', label: 'Star 项目', href: '#starred' },
 ]
 
@@ -37,14 +37,26 @@ function Header({ isDark, onToggleTheme }) {
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-6" aria-label="主导航">
           {navLinks.map((link) => (
-            <a
-              key={link.id}
-              href={link.href}
-              onClick={(e) => handleNavClick(e, link.href)}
-              className="text-white/80 hover:text-white transition-colors text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 rounded px-2 py-1"
-            >
-              {link.label}
-            </a>
+            link.external ? (
+              <a
+                key={link.id}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white/80 hover:text-white transition-colors text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 rounded px-2 py-1"
+              >
+                {link.label}
+              </a>
+            ) : (
+              <a
+                key={link.id}
+                href={link.href}
+                onClick={(e) => handleNavClick(e, link.href)}
+                className="text-white/80 hover:text-white transition-colors text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 rounded px-2 py-1"
+              >
+                {link.label}
+              </a>
+            )
           ))}
           
           <div className="flex items-center gap-2 ml-4 border-l border-white/20 pl-4">
@@ -101,14 +113,26 @@ function Header({ isDark, onToggleTheme }) {
         <nav className="md:hidden glass border-t border-white/10" aria-label="移动端导航">
           <div className="max-w-6xl mx-auto px-4 py-4 space-y-2">
             {navLinks.map((link) => (
-              <a
-                key={link.id}
-                href={link.href}
-                onClick={(e) => handleNavClick(e, link.href)}
-                className="block text-white/80 hover:text-white hover:bg-white/10 transition-colors text-sm font-medium px-3 py-2 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
-              >
-                {link.label}
-              </a>
+              link.external ? (
+                <a
+                  key={link.id}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block text-white/80 hover:text-white hover:bg-white/10 transition-colors text-sm font-medium px-3 py-2 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
+                >
+                  {link.label}
+                </a>
+              ) : (
+                <a
+                  key={link.id}
+                  href={link.href}
+                  onClick={(e) => handleNavClick(e, link.href)}
+                  className="block text-white/80 hover:text-white hover:bg-white/10 transition-colors text-sm font-medium px-3 py-2 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
+                >
+                  {link.label}
+                </a>
+              )
             ))}
             <div className="flex items-center gap-2 pt-2 border-t border-white/10">
               <a
