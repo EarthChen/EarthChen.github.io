@@ -5,13 +5,24 @@ import Footer from './components/Footer'
 import AIResourceSection from './components/AIResourceSection'
 import StarredSection from './components/StarredSection'
 
-// 工具列表配置
-const tools = [
+// 工具配置 URL
+const WEB_TOOLS_CONFIG_URL = 'https://earthchen.github.io/web-tools/tools.json'
+
+// 图标颜色映射
+const ICON_COLORS = {
+  camera: 'text-blue-300',
+  document: 'text-orange-300',
+  code: 'text-green-300',
+  table: 'text-emerald-300',
+}
+
+// 默认工具列表（作为 fallback）
+const defaultTools = [
   {
-    id: 'photo-tools',
+    id: 'photo-tool',
     title: '证件照处理工具',
     description: '智能抠图、背景替换、尺寸调整、体积压缩，一站式证件照处理',
-    href: 'https://earthchen.github.io/photo-tools/',
+    href: 'https://earthchen.github.io/web-tools/photo-tool',
     icon: 'camera',
     gradient: 'from-blue-500 to-purple-600',
     linkText: '立即使用',
@@ -22,7 +33,7 @@ const tools = [
     id: 'pdf2png',
     title: 'PDF 转 PNG',
     description: '免费在线将 PDF 文档转换为高质量 PNG 图片，支持批量下载',
-    href: 'https://earthchen.github.io/pdf2png/',
+    href: 'https://earthchen.github.io/web-tools/pdf2png',
     icon: 'document',
     gradient: 'from-red-500 to-orange-600',
     linkText: '立即使用',
@@ -33,7 +44,7 @@ const tools = [
     id: 'json-tools',
     title: 'JSON 工具集',
     description: '格式化、压缩、对比、JSONPath 查询、修复等一站式 JSON 处理工具',
-    href: 'https://earthchen.github.io/json-tools/',
+    href: 'https://earthchen.github.io/web-tools/json-tools',
     icon: 'code',
     gradient: 'from-green-500 to-teal-600',
     linkText: '立即使用',
@@ -44,7 +55,7 @@ const tools = [
     id: 'excelcsv-tool',
     title: 'CSV/Excel 互转',
     description: '高性能 CSV/Excel 互转工具，支持 100MB+ 大文件，智能筛选与虚拟滚动',
-    href: 'https://earthchen.github.io/excelcsv-tool/',
+    href: 'https://earthchen.github.io/web-tools/excelcsv-tool',
     icon: 'table',
     gradient: 'from-emerald-500 to-teal-600',
     linkText: '立即使用',
@@ -55,6 +66,7 @@ const tools = [
 
 function App() {
   const [isDark, setIsDark] = useState(false)
+  const [tools, setTools] = useState(defaultTools)
 
   // 检测系统主题偏好
   useEffect(() => {
@@ -63,6 +75,31 @@ function App() {
       setIsDark(true)
       document.documentElement.classList.add('dark')
     }
+  }, [])
+
+  // 从 web-tools 项目拉取工具列表
+  useEffect(() => {
+    fetch(WEB_TOOLS_CONFIG_URL)
+      .then(res => res.json())
+      .then(data => {
+        if (data.tools && Array.isArray(data.tools)) {
+          const mappedTools = data.tools.map(tool => ({
+            id: tool.id,
+            title: tool.title,
+            description: tool.description,
+            href: `${data.baseUrl}${tool.path}`,
+            icon: tool.icon,
+            gradient: tool.gradient,
+            linkText: '立即使用',
+            linkColor: ICON_COLORS[tool.icon] || 'text-blue-300',
+            external: true,
+          }))
+          setTools(mappedTools)
+        }
+      })
+      .catch(err => {
+        console.warn('Failed to fetch tools config, using defaults:', err)
+      })
   }, [])
 
   const toggleTheme = () => {
