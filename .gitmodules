@@ -7,3 +7,6 @@
 [submodule "json-tools"]
 	path = json-tools
 	url = git@github.com:EarthChen/json-tools.git
+[submodule "excelcsv-tool"]
+	path = excelcsv-tool
+	url = git@github.com:EarthChen/excelcsv-tool.git
