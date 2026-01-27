@@ -40,6 +40,17 @@ const tools = [
     linkColor: 'text-green-300',
     external: false,
   },
+  {
+    id: 'excelcsv-tool',
+    title: 'CSV/Excel 互转',
+    description: '高性能 CSV/Excel 互转工具，支持 100MB+ 大文件，智能筛选与虚拟滚动',
+    href: 'https://earthchen.github.io/excelcsv-tool/',
+    icon: 'table',
+    gradient: 'from-emerald-500 to-teal-600',
+    linkText: '立即使用',
+    linkColor: 'text-emerald-300',
+    external: true,
+  },
 ]
 
 function App() {
