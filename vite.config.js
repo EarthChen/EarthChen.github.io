@@ -99,11 +99,25 @@ const subAppRoutingPlugin = () => ({
   }
 })
 
+// 复制 index.html 到 404.html 以支持 SPA 路由（GitHub Pages）
+const copyIndexTo404Plugin = () => ({
+  name: 'copy-index-to-404',
+  closeBundle() {
+    const indexPath = path.join(process.cwd(), 'dist', 'index.html')
+    const notFoundPath = path.join(process.cwd(), 'dist', '404.html')
+    if (fs.existsSync(indexPath)) {
+      fs.copyFileSync(indexPath, notFoundPath)
+      console.log('📄 Copied index.html to 404.html for SPA routing')
+    }
+  }
+})
+
 export default defineConfig({
   plugins: [
     fetchGithubDataPlugin(),
     subAppRoutingPlugin(),
     react(),
+    copyIndexTo404Plugin(),
   ],
   base: '/',
   build: {

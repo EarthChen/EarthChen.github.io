@@ -1,10 +1,11 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 // 导航链接配置
 const navLinks = [
   { id: 'ai-resources', label: 'AI 资源', href: '#ai-resources' },
   { id: 'tools', label: '工具集', href: 'https://earthchen.github.io/web-tools/', external: true },
-  { id: 'games', label: '游戏', href: '/games/', external: true },
+  { id: 'games', label: '游戏', href: '/games', internal: true },
   { id: 'starred', label: 'Star 项目', href: '#starred' },
 ]
 
@@ -48,6 +49,14 @@ function Header({ isDark, onToggleTheme }) {
               >
                 {link.label}
               </a>
+            ) : link.internal ? (
+              <Link
+                key={link.id}
+                to={link.href}
+                className="text-white/80 hover:text-white transition-colors text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 rounded px-2 py-1"
+              >
+                {link.label}
+              </Link>
             ) : (
               <a
                 key={link.id}
@@ -124,6 +133,15 @@ function Header({ isDark, onToggleTheme }) {
                 >
                   {link.label}
                 </a>
+              ) : link.internal ? (
+                <Link
+                  key={link.id}
+                  to={link.href}
+                  onClick={() => setIsMenuOpen(false)}
+                  className="block text-white/80 hover:text-white hover:bg-white/10 transition-colors text-sm font-medium px-3 py-2 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
+                >
+                  {link.label}
+                </Link>
               ) : (
                 <a
                   key={link.id}
