@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import AIResourceSection from './components/AIResourceSection'
+import GameSection from './components/GameSection'
 import StarredSection from './components/StarredSection'
 
 // 工具主页 URL
@@ -50,6 +51,9 @@ function App() {
 
           {/* AI 资源模块 */}
           <AIResourceSection />
+
+          {/* 游戏模块 */}
+          <GameSection />
 
           {/* 工具集入口 */}
           <section id="tools" className="mb-16 scroll-mt-20">

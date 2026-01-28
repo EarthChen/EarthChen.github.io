@@ -4,6 +4,7 @@ import { useState } from 'react'
 const navLinks = [
   { id: 'ai-resources', label: 'AI 资源', href: '#ai-resources' },
   { id: 'tools', label: '工具集', href: 'https://earthchen.github.io/web-tools/', external: true },
+  { id: 'games', label: '游戏', href: '#games' },
   { id: 'starred', label: 'Star 项目', href: '#starred' },
 ]
 
