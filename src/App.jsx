@@ -5,6 +5,7 @@ import Footer from './components/Footer'
 import AIResourceSection from './components/AIResourceSection'
 import StarredSection from './components/StarredSection'
 import GamesPage from './pages/GamesPage'
+import { Agentation } from 'agentation'
 
 // 外部链接 URL
 const WEB_TOOLS_URL = 'https://earthchen.github.io/web-tools/'
@@ -104,10 +105,14 @@ function App() {
   }
 
   return (
-    <Routes>
-      <Route path="/" element={<HomePage isDark={isDark} onToggleTheme={toggleTheme} />} />
-      <Route path="/games" element={<GamesPage isDark={isDark} onToggleTheme={toggleTheme} />} />
-    </Routes>
+    <>
+      <Routes>
+        <Route path="/" element={<HomePage isDark={isDark} onToggleTheme={toggleTheme} />} />
+        <Route path="/games" element={<GamesPage isDark={isDark} onToggleTheme={toggleTheme} />} />
+      </Routes>
+      {/* AI 可视化反馈工具 (仅开发环境) */}
+      {import.meta.env.DEV && <Agentation />}
+    </>
   )
 }
 
