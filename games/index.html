@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>游戏中心 - EarthChen</title>
+  <meta name="description" content="EarthChen 的游戏中心，休闲娱乐好去处">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+    }
+  </script>
+  <style>
+    .gradient-bg {
+      background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #1e1b4b 100%);
+      min-height: 100vh;
+    }
+    .glass {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    .game-card {
+      transition: all 0.3s ease;
+    }
+    .game-card:hover {
+      transform: translateY(-4px);
+    }
+    .game-card:hover .game-icon {
+      transform: scale(1.1);
+    }
+    .game-icon {
+      transition: transform 0.3s ease;
+    }
+  </style>
+</head>
+<body class="gradient-bg">
+  <div class="min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="glass sticky top-0 z-50">
+      <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+        <a href="/" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
+          <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-white font-bold text-xl">
+            E
+          </div>
+          <span class="text-white font-semibold text-lg">EarthChen</span>
+        </a>
+        <nav class="flex items-center gap-6">
+          <a href="/" class="text-white/80 hover:text-white transition-colors text-sm font-medium">
+            ← 返回首页
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 max-w-6xl mx-auto px-4 py-12 w-full">
+      <!-- Hero Section -->
+      <section class="text-center mb-16">
+        <div class="text-6xl mb-4">🎮</div>
+        <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">
+          游戏中心
+        </h1>
+        <p class="text-white/80 text-lg max-w-2xl mx-auto">
+          休闲娱乐，放松一刻
+        </p>
+      </section>
+
+      <!-- Games Grid -->
+      <section class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <!-- 合成大西瓜 -->
+        <a href="https://earthchen.github.io/daxigua/" target="_blank" rel="noopener noreferrer" 
+           class="game-card glass rounded-2xl p-6 block">
+          <div class="flex flex-col items-center text-center">
+            <div class="game-icon w-24 h-24 rounded-2xl bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center mb-4 shadow-lg">
+              <span class="text-5xl" role="img" aria-label="合成大西瓜">🍉</span>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-2">合成大西瓜</h3>
+            <p class="text-white/70 text-sm mb-4 leading-relaxed">
+              经典休闲游戏，相同水果碰撞合成更大水果，合成西瓜获得高分！
+            </p>
+            <div class="flex flex-wrap gap-2 justify-center">
+              <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-green-500/20 text-green-300 text-xs font-medium">
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                在线游玩
+              </span>
+              <span class="inline-flex items-center px-3 py-1 rounded-full bg-purple-500/20 text-purple-300 text-xs font-medium">
+                休闲益智
+              </span>
+            </div>
+          </div>
+        </a>
+
+        <!-- 更多游戏占位 -->
+        <div class="glass rounded-2xl p-6 opacity-60 cursor-not-allowed">
+          <div class="flex flex-col items-center text-center">
+            <div class="w-24 h-24 rounded-2xl bg-white/10 flex items-center justify-center mb-4">
+              <span class="text-5xl" role="img" aria-label="敬请期待">🚀</span>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-2">更多游戏</h3>
+            <p class="text-white/70 text-sm mb-4">
+              正在开发中，敬请期待...
+            </p>
+            <span class="inline-flex items-center px-3 py-1 rounded-full bg-white/10 text-white/60 text-xs font-medium">
+              Coming Soon
+            </span>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="glass mt-auto">
+      <div class="max-w-6xl mx-auto px-4 py-6 text-center">
+        <p class="text-white/60 text-sm">
+          © 2024-2026 EarthChen. All rights reserved.
+        </p>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

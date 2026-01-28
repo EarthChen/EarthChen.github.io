@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import AIResourceSection from './components/AIResourceSection'
-import GameSection from './components/GameSection'
 import StarredSection from './components/StarredSection'
 
-// 工具主页 URL
+// 外部链接 URL
 const WEB_TOOLS_URL = 'https://earthchen.github.io/web-tools/'
+const GAMES_URL = '/games/'
 
 function App() {
   const [isDark, setIsDark] = useState(false)
@@ -52,8 +52,39 @@ function App() {
           {/* AI 资源模块 */}
           <AIResourceSection />
 
-          {/* 游戏模块 */}
-          <GameSection />
+          {/* 游戏中心入口 */}
+          <section id="games" className="mb-16 scroll-mt-20">
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-2 text-wrap-balance">
+              游戏
+            </h2>
+            <p className="text-white/70 mb-8">
+              休闲娱乐，放松一刻
+            </p>
+
+            <a
+              href={GAMES_URL}
+              className="block glass rounded-2xl p-8 hover:scale-[1.02] transition-all duration-300 group"
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-4">
+                  <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center">
+                    <span className="text-3xl" role="img" aria-label="游戏">🎮</span>
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-white mb-1">游戏中心</h3>
+                    <p className="text-white/70">
+                      合成大西瓜等休闲小游戏，更多游戏持续更新中
+                    </p>
+                  </div>
+                </div>
+                <div className="text-white/60 group-hover:text-white transition-colors">
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </div>
+              </div>
+            </a>
+          </section>
 
           {/* 工具集入口 */}
           <section id="tools" className="mb-16 scroll-mt-20">
