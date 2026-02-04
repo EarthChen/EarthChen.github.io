@@ -1,3 +1,5 @@
+import React from 'react'
+
 const icons = {
   camera: (
     <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -33,19 +35,39 @@ function ToolCard({ title, description, href, icon, gradient, linkText, linkColo
   return (
     <Tag
       {...linkProps}
-      className="group glass rounded-2xl p-6 hover:scale-105 transition-all duration-300 cursor-pointer"
+      className="group relative glass rounded-2xl p-6 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl overflow-hidden cursor-pointer flex flex-col h-full"
     >
-      <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${gradient} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
+      {/* Background Glow Effect */}
+      <div className={`absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-br ${gradient} opacity-0 group-hover:opacity-20 blur-3xl transition-opacity duration-500 rounded-full`} />
+      
+      {/* Icon Container */}
+      <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${gradient} flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 relative z-10`}>
         {icons[icon]}
       </div>
-      <h3 className="text-xl font-semibold text-white mb-2">{title}</h3>
-      <p className="text-white/70 text-sm mb-4">{description}</p>
-      <div className={`flex items-center ${linkColor} text-sm font-medium`}>
-        {linkText}
-        <svg className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-        </svg>
+
+      {/* Content */}
+      <div className="relative z-10 flex-1 flex flex-col">
+        <h3 className="text-xl font-bold text-white mb-2 font-display tracking-wide group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-gray-300 transition-all">
+          {title}
+        </h3>
+        
+        <p className="text-white/70 text-sm leading-relaxed mb-6 group-hover:text-white/90 transition-colors flex-1">
+          {description}
+        </p>
+
+        <div className={`flex items-center ${linkColor} text-sm font-semibold tracking-wide mt-auto`}>
+          <span className="relative">
+            {linkText}
+            <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-current transition-all duration-300 group-hover:w-full" />
+          </span>
+          <svg className="w-4 h-4 ml-2 group-hover:translate-x-1.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </div>
       </div>
+      
+      {/* Shimmer Effect on Hover */}
+      <div className="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-white/5 to-transparent z-20 pointer-events-none" />
     </Tag>
   )
 }
